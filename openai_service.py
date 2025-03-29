@@ -59,12 +59,22 @@ def analyze_journal_entry(journal_text, anxiety_level):
         return result["thought_patterns"]
         
     except Exception as e:
-        logger.error(f"Error analyzing journal entry: {str(e)}")
-        return [{
-            "pattern": "Error analyzing entry",
-            "description": "We couldn't analyze your journal entry at this time.",
-            "recommendation": "Please try again later or contact support if the problem persists."
-        }]
+        error_msg = str(e)
+        logger.error(f"Error analyzing journal entry: {error_msg}")
+        
+        # Check if this is a quota exceeded error
+        if "insufficient_quota" in error_msg or "429" in error_msg:
+            return [{
+                "pattern": "API Quota Exceeded",
+                "description": "The AI analysis service is currently unavailable due to API usage limits.",
+                "recommendation": "Your journal entry has been saved successfully. The AI analysis feature will be available once API quota is renewed."
+            }]
+        else:
+            return [{
+                "pattern": "Error analyzing entry",
+                "description": "We couldn't analyze your journal entry at this time.",
+                "recommendation": "Please try again later or contact support if the problem persists."
+            }]
 
 def generate_coping_statement(anxiety_context):
     """
@@ -99,5 +109,11 @@ def generate_coping_statement(anxiety_context):
         return response.choices[0].message.content.strip()
         
     except Exception as e:
-        logger.error(f"Error generating coping statement: {str(e)}")
-        return "Take a deep breath. This moment is temporary, and you have the strength to handle it."
+        error_msg = str(e)
+        logger.error(f"Error generating coping statement: {error_msg}")
+        
+        # Provide a default coping statement
+        if "insufficient_quota" in error_msg or "429" in error_msg:
+            return "API quota exceeded. Default coping statement: Take a deep breath. This moment is temporary, and you have the strength to handle it."
+        else:
+            return "Take a deep breath. This moment is temporary, and you have the strength to handle it."

@@ -83,9 +83,20 @@ def dashboard():
     
     coping_statement = None
     if latest_entry:
-        # Use a simplified version of the journal content for the coping statement
-        context = latest_entry.title
-        coping_statement = generate_coping_statement(context)
+        try:
+            # Use a simplified version of the journal content for the coping statement
+            context = latest_entry.title
+            coping_statement = generate_coping_statement(context)
+            
+            # Check if this is an API quota error response
+            if "API quota exceeded" in coping_statement:
+                # Provide a default coping statement without the error message
+                coping_statement = "Take a deep breath. This moment is temporary, and you have the strength to handle it."
+                # Add a flash message about API limits
+                flash('AI-generated coping statements are currently unavailable due to API usage limits.', 'info')
+        except Exception as e:
+            logging.error(f"Error generating coping statement: {str(e)}")
+            coping_statement = "Take a deep breath. This moment is temporary, and you have the strength to handle it."
     
     # Get form for mood logging
     mood_form = MoodLogForm()
@@ -130,7 +141,12 @@ def new_journal_entry():
             thought_patterns = analyze_journal_entry(form.content.data, form.anxiety_level.data)
             
             # Save the recommendations
+            is_api_error = False
             for pattern in thought_patterns:
+                # Check if this is an API error pattern
+                if pattern["pattern"] == "API Quota Exceeded":
+                    is_api_error = True
+                
                 recommendation = CBTRecommendation(
                     thought_pattern=pattern["pattern"],
                     recommendation=f"{pattern['description']} - {pattern['recommendation']}",
@@ -141,11 +157,16 @@ def new_journal_entry():
             entry.is_analyzed = True
             db.session.commit()
             
+            # Show appropriate message based on API status
+            if is_api_error:
+                flash('Your journal entry has been saved! AI analysis is currently unavailable due to API usage limits.', 'info')
+            else:
+                flash('Your journal entry has been created with AI analysis!', 'success')
+            
         except Exception as e:
             logging.error(f"Error analyzing journal entry: {str(e)}")
             flash('Entry saved, but analysis could not be completed. You can try analyzing it later.', 'warning')
-        
-        flash('Your journal entry has been created!', 'success')
+            flash('Your journal entry has been created!', 'success')
         return redirect(url_for('view_journal_entry', entry_id=entry.id))
     
     return render_template('journal_entry.html', title='New Journal Entry', 
@@ -189,7 +210,12 @@ def update_journal_entry(entry_id):
             thought_patterns = analyze_journal_entry(form.content.data, form.anxiety_level.data)
             
             # Save the new recommendations
+            is_api_error = False
             for pattern in thought_patterns:
+                # Check if this is an API error pattern
+                if pattern["pattern"] == "API Quota Exceeded":
+                    is_api_error = True
+                
                 recommendation = CBTRecommendation(
                     thought_pattern=pattern["pattern"],
                     recommendation=f"{pattern['description']} - {pattern['recommendation']}",
@@ -198,6 +224,10 @@ def update_journal_entry(entry_id):
                 db.session.add(recommendation)
             
             entry.is_analyzed = True
+            
+            # Show appropriate message based on API status
+            if is_api_error:
+                flash('Your journal entry has been updated! AI analysis is currently unavailable due to API usage limits.', 'info')
             
         except Exception as e:
             logging.error(f"Error analyzing journal entry: {str(e)}")
@@ -311,7 +341,12 @@ def api_analyze_entry(entry_id):
         thought_patterns = analyze_journal_entry(entry.content, entry.anxiety_level)
         
         # Save the recommendations
+        is_api_error = False
         for pattern in thought_patterns:
+            # Check if this is an API error pattern
+            if pattern["pattern"] == "API Quota Exceeded":
+                is_api_error = True
+                
             recommendation = CBTRecommendation(
                 thought_pattern=pattern["pattern"],
                 recommendation=f"{pattern['description']} - {pattern['recommendation']}",
@@ -322,12 +357,20 @@ def api_analyze_entry(entry_id):
         entry.is_analyzed = True
         db.session.commit()
         
-        return jsonify({
-            'success': True,
-            'message': 'Entry analyzed successfully!',
-            'recommendations': [{'pattern': r.thought_pattern, 'recommendation': r.recommendation} 
-                              for r in entry.recommendations]
-        })
+        if is_api_error:
+            return jsonify({
+                'success': True,
+                'message': 'Entry saved. AI analysis is currently unavailable due to API usage limits.',
+                'recommendations': [{'pattern': r.thought_pattern, 'recommendation': r.recommendation} 
+                                for r in entry.recommendations]
+            })
+        else:
+            return jsonify({
+                'success': True,
+                'message': 'Entry analyzed successfully!',
+                'recommendations': [{'pattern': r.thought_pattern, 'recommendation': r.recommendation} 
+                                for r in entry.recommendations]
+            })
         
     except Exception as e:
         logging.error(f"Error analyzing journal entry: {str(e)}")
