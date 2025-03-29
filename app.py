@@ -37,6 +37,12 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.login_message_category = "info"
 
+# Admin login manager setup for handling admin users
+admin_login_manager = LoginManager()
+admin_login_manager.init_app(app)
+admin_login_manager.login_view = "admin.login"
+admin_login_manager.login_message_category = "info"
+
 # Add global error handler
 @app.errorhandler(Exception)
 def handle_exception(e):
@@ -73,3 +79,14 @@ with app.app_context():
     @login_manager.user_loader
     def load_user(user_id):
         return db.session.get(User, int(user_id))
+    
+    # Import admin model for admin login
+    from admin_models import Admin
+    
+    @admin_login_manager.user_loader
+    def load_admin(user_id):
+        return Admin.get(int(user_id))
+        
+    # Register the admin blueprint
+    from admin_routes import admin_bp
+    app.register_blueprint(admin_bp)

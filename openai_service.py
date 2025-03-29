@@ -2,13 +2,38 @@ import os
 import json
 import logging
 from openai import OpenAI
+from admin_utils import get_config
+from datetime import datetime
 
 # Set up logging
 logger = logging.getLogger(__name__)
 
-# Initialize OpenAI client
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
-openai = OpenAI(api_key=OPENAI_API_KEY)
+# Initialize OpenAI client with a function to get the API key
+def get_openai_api_key():
+    """Get the OpenAI API key from environment or admin config"""
+    # First try to get from environment variable
+    api_key = os.environ.get("OPENAI_API_KEY")
+    
+    # If not in environment, try to get from admin config
+    if not api_key:
+        config = get_config()
+        api_key = config.get("openai_api_key")
+    
+    return api_key
+
+def get_openai_model():
+    """Get the OpenAI model from admin config or use default"""
+    config = get_config()
+    return config.get("model", "gpt-4o")
+
+def get_max_tokens():
+    """Get the max tokens setting from admin config or use default"""
+    config = get_config()
+    return config.get("max_tokens", 800)
+
+# Initialize client with function that will be called each time
+def get_openai_client():
+    return OpenAI(api_key=get_openai_api_key())
 
 def analyze_journal_entry(journal_text, anxiety_level):
     """
@@ -19,10 +44,14 @@ def analyze_journal_entry(journal_text, anxiety_level):
     do not change this unless explicitly requested by the user
     """
     try:
+        # Get API key and model settings
+        api_key = get_openai_api_key()
+        model = get_openai_model()
+        
         # Check if API key is available
-        if not OPENAI_API_KEY:
-            logger.error("OPENAI_API_KEY is not set")
-            raise ValueError("OpenAI API key is missing. Please check your environment variables.")
+        if not api_key:
+            logger.error("OpenAI API key is not set")
+            raise ValueError("OpenAI API key is missing. Please check your environment variables or admin settings.")
             
         prompt = f"""
         You are a therapist specializing in Cognitive Behavioral Therapy (CBT) for anxiety.
@@ -49,8 +78,11 @@ def analyze_journal_entry(journal_text, anxiety_level):
         
         # Attempt to make the API call with error handling
         try:
-            response = openai.chat.completions.create(
-                model="gpt-4o",
+            # Get a fresh client with the current API key
+            client = get_openai_client()
+            
+            response = client.chat.completions.create(
+                model=model,
                 messages=[
                     {"role": "system", "content": "You are a CBT therapist specializing in anxiety. Provide evidence-based advice."},
                     {"role": "user", "content": prompt}
@@ -115,10 +147,15 @@ def generate_journaling_coach_response(entry):
     do not change this unless explicitly requested by the user
     """
     try:
+        # Get API key and model settings
+        api_key = get_openai_api_key()
+        model = get_openai_model()
+        max_tokens = get_max_tokens()
+        
         # Check if API key is available
-        if not OPENAI_API_KEY:
-            logger.error("OPENAI_API_KEY is not set")
-            raise ValueError("OpenAI API key is missing. Please check your environment variables.")
+        if not api_key:
+            logger.error("OpenAI API key is not set")
+            raise ValueError("OpenAI API key is missing. Please check your environment variables or admin settings.")
         
         journal_text = entry.content
         anxiety_level = entry.anxiety_level
@@ -140,14 +177,17 @@ def generate_journaling_coach_response(entry):
         
         # Attempt to make the API call with error handling
         try:
-            response = openai.chat.completions.create(
-                model="gpt-4o",
+            # Get a fresh client with the current API key
+            client = get_openai_client()
+            
+            response = client.chat.completions.create(
+                model=model,
                 messages=[
                     {"role": "system", "content": "You are a warm, empathetic journaling coach who uses CBT techniques to help users process their thoughts and feelings."},
                     {"role": "user", "content": prompt}
                 ],
                 temperature=0.7,
-                max_tokens=800
+                max_tokens=max_tokens
             )
             
             coach_response = response.choices[0].message.content.strip()
@@ -210,10 +250,14 @@ def generate_coping_statement(anxiety_context):
     do not change this unless explicitly requested by the user
     """
     try:
+        # Get API key and model settings
+        api_key = get_openai_api_key()
+        model = get_openai_model()
+        
         # Check if API key is available
-        if not OPENAI_API_KEY:
-            logger.error("OPENAI_API_KEY is not set")
-            raise ValueError("OpenAI API key is missing. Please check your environment variables.")
+        if not api_key:
+            logger.error("OpenAI API key is not set")
+            raise ValueError("OpenAI API key is missing. Please check your environment variables or admin settings.")
         
         prompt = f"""
         Create a short, personalized coping statement for someone experiencing anxiety about:
@@ -232,8 +276,11 @@ def generate_coping_statement(anxiety_context):
         
         # Attempt to make the API call with error handling
         try:
-            response = openai.chat.completions.create(
-                model="gpt-4o",
+            # Get a fresh client with the current API key
+            client = get_openai_client()
+            
+            response = client.chat.completions.create(
+                model=model,
                 messages=[
                     {"role": "system", "content": "You are a CBT therapist specializing in anxiety. Generate brief coping statements."},
                     {"role": "user", "content": prompt}

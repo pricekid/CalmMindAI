@@ -1,0 +1,148 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<h1 class="mb-4">Admin Dashboard</h1>
+
+<div class="row">
+    <!-- Overall Stats -->
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Overall Stats</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <h6 class="text-muted">Total Users</h6>
+                        <h2>{{ stats.total_users }}</h2>
+                    </div>
+                    <div class="bg-secondary rounded-circle p-3">
+                        <i class="bi bi-people fs-3"></i>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <h6 class="text-muted">Journal Entries</h6>
+                        <h2>{{ stats.total_journals }}</h2>
+                    </div>
+                    <div class="bg-info rounded-circle p-3">
+                        <i class="bi bi-journal-text fs-3"></i>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h6 class="text-muted">Daily Active Users</h6>
+                        <h2>{{ stats.daily_active_users }}</h2>
+                    </div>
+                    <div class="bg-success rounded-circle p-3">
+                        <i class="bi bi-person-check fs-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Journal Activity -->
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Journal Entries (Last 7 Days)</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="journalActivityChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Anxiety Themes -->
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Top Anxiety Themes</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    {% for theme in stats.anxiety_themes %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ theme.theme }}
+                        <span class="badge bg-info rounded-pill">{{ theme.count }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <a href="{{ url_for('admin.journals', flagged='true') }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-flag-fill text-warning me-2"></i>
+                            View Flagged Entries
+                        </div>
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                    <a href="{{ url_for('admin.settings') }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-gear-fill text-primary me-2"></i>
+                            Configure API Settings
+                        </div>
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                    <a href="{{ url_for('admin.users') }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-people-fill text-success me-2"></i>
+                            Manage Users
+                        </div>
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Journal Activity Chart
+    const journalData = {{ stats.entries_by_day | tojson }};
+    const dates = journalData.map(item => item.date);
+    const counts = journalData.map(item => item.count);
+    
+    const ctx = document.getElementById('journalActivityChart').getContext('2d');
+    const journalChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: dates,
+            datasets: [{
+                label: 'Journal Entries',
+                data: counts,
+                backgroundColor: 'rgba(13, 202, 240, 0.6)', // Bootstrap info color with transparency
+                borderColor: 'rgba(13, 202, 240, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

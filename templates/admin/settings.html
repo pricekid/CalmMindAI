@@ -1,0 +1,134 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<h1 class="mb-4">Admin Settings</h1>
+
+<div class="row">
+    <div class="col-md-8">
+        <!-- API Configuration -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-gear me-2"></i> OpenAI API Configuration</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('admin.settings') }}">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.api_key.label(class="form-label") }}
+                        <div class="input-group">
+                            {{ form.api_key(class="form-control", placeholder="sk-...") }}
+                            <button class="btn btn-outline-secondary" type="button" id="toggleApiKey">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                        <small class="text-muted">If the key is set via environment variable, leave this blank.</small>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.model.label(class="form-label") }}
+                            {{ form.model(class="form-control") }}
+                            <small class="text-muted">Recommended: gpt-4o (latest model)</small>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form.max_tokens.label(class="form-label") }}
+                            {{ form.max_tokens(class="form-control", type="number") }}
+                            <small class="text-muted">Maximum tokens for API responses (1-4000)</small>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="bi bi-info-circle-fill fs-4"></i>
+                            </div>
+                            <div>
+                                <h5 class="alert-heading">API Information</h5>
+                                <p class="mb-0">Your OpenAI API key will be used to analyze journal entries and provide CBT recommendations. The key is stored securely and can be provided via environment variable.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid">
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <!-- API Usage Stats -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-bar-chart me-2"></i> API Usage Statistics</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Total Entries Analyzed</span>
+                        <span class="badge bg-info">{{ api_stats.total_entries }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Estimated Tokens Used</span>
+                        <span class="badge bg-info">{{ "{:,}".format(api_stats.estimated_tokens) }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Estimated Cost (USD)</span>
+                        <span class="badge bg-info">${{ "%.2f"|format(api_stats.estimated_cost) }}</span>
+                    </li>
+                </ul>
+                <small class="text-muted mt-2 d-block">* Estimates based on average token usage per entry</small>
+            </div>
+        </div>
+        
+        <!-- Environment Check -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-check-circle me-2"></i> Environment Check</h5>
+            </div>
+            <div class="card-body p-0">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>OpenAI API Key</span>
+                        {% if config.openai_api_key or 'OPENAI_API_KEY' in session['env_vars'] %}
+                        <span class="badge bg-success">Available</span>
+                        {% else %}
+                        <span class="badge bg-danger">Missing</span>
+                        {% endif %}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Database</span>
+                        <span class="badge bg-success">Connected</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>CSRF Protection</span>
+                        <span class="badge bg-success">Enabled</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const apiKeyInput = document.getElementById('api_key');
+    const toggleButton = document.getElementById('toggleApiKey');
+    
+    toggleButton.addEventListener('click', function() {
+        if (apiKeyInput.type === 'password') {
+            apiKeyInput.type = 'text';
+            toggleButton.innerHTML = '<i class="bi bi-eye-slash"></i>';
+        } else {
+            apiKeyInput.type = 'password';
+            toggleButton.innerHTML = '<i class="bi bi-eye"></i>';
+        }
+    });
+    
+    // Initialize as password type
+    apiKeyInput.type = 'password';
+});
+</script>
+{% endblock %}

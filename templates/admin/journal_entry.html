@@ -1,0 +1,202 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Journal Entry</h1>
+    <div>
+        <a href="{{ url_for('admin.journals') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Journals
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <!-- Journal Content -->
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">{{ entry.title }}</h5>
+                <span class="badge {{ 'bg-warning text-dark' if flagged else 'bg-success' }}">
+                    {% if flagged %}
+                    <i class="bi bi-flag-fill"></i> Flagged
+                    {% elif entry.is_analyzed %}
+                    <i class="bi bi-check-circle-fill"></i> Analyzed
+                    {% else %}
+                    <i class="bi bi-hourglass-split"></i> Pending
+                    {% endif %}
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-3">
+                    <div>
+                        <small class="text-muted">Written by:</small>
+                        <span class="ms-1">{{ user.username }}</span>
+                    </div>
+                    <div>
+                        <small class="text-muted">Created on:</small>
+                        <span class="ms-1">{{ entry.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
+                    </div>
+                    {% if entry.anxiety_level %}
+                    <div>
+                        <small class="text-muted">Anxiety Level:</small>
+                        <span class="ms-1 badge {{ 'bg-success' if entry.anxiety_level < 4 else 'bg-warning text-dark' if entry.anxiety_level < 7 else 'bg-danger' }}">
+                            {{ entry.anxiety_level }}/10
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="border-top pt-3">
+                    <p class="mb-0" style="white-space: pre-line;">{{ entry.content }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AI Analysis -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">AI Analysis</h5>
+            </div>
+            <div class="card-body">
+                {% if recommendations %}
+                    {% for rec in recommendations %}
+                    <div class="mb-4">
+                        <h6 class="fw-bold text-info">Identified Pattern:</h6>
+                        <p>{{ rec.thought_pattern }}</p>
+                        
+                        <h6 class="fw-bold text-info">CBT Recommendation:</h6>
+                        <p class="mb-0">{{ rec.recommendation }}</p>
+                    </div>
+                    {% if not loop.last %}<hr>{% endif %}
+                    {% endfor %}
+                {% else %}
+                <div class="text-center py-3">
+                    <i class="bi bi-robot fs-1 text-muted"></i>
+                    <p class="mt-2 text-muted">No AI analysis available for this entry.</p>
+                </div>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                {% if not flagged %}
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#flagModal">
+                    <i class="bi bi-flag-fill"></i> Flag this analysis
+                </button>
+                {% else %}
+                <div class="alert alert-warning mb-0">
+                    <i class="bi bi-info-circle-fill"></i> This entry has been flagged for review.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <!-- User Info -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">User Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-info rounded-circle p-3 me-3">
+                        <i class="bi bi-person-fill fs-3 text-white"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-0">{{ user.username }}</h5>
+                        <span class="text-muted">{{ user.email }}</span>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <small class="text-muted">Account Created:</small>
+                    <p class="mb-0">{{ user.created_at.strftime('%Y-%m-%d') }}</p>
+                </div>
+                
+                <a href="{{ url_for('admin.view_user', user_id=user.id) }}" class="btn btn-outline-info w-100">
+                    <i class="bi bi-person-lines-fill"></i> View User Profile
+                </a>
+            </div>
+        </div>
+        
+        <!-- Send Message -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Send Message to User</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('admin.send_message', journal_id=entry.id) }}">
+                    {{ form.hidden_tag() }}
+                    {{ form.user_id }}
+                    {{ form.journal_id }}
+                    
+                    <div class="mb-3">
+                        {{ form.message.label(class="form-label") }}
+                        {{ form.message(class="form-control", rows=4) }}
+                        {% if form.message.errors %}
+                        <div class="text-danger small mt-1">
+                            {% for error in form.message.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    {{ form.submit(class="btn btn-info w-100") }}
+                </form>
+            </div>
+        </div>
+        
+        <!-- Previous Messages -->
+        {% if messages %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Previous Messages</h5>
+            </div>
+            <div class="card-body p-0">
+                <ul class="list-group list-group-flush">
+                    {% for message in messages %}
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between mb-1">
+                            <small class="text-muted">{{ message.created_at[:16].replace('T', ' ') }}</small>
+                            <small class="badge {{ 'bg-secondary' if message.is_read else 'bg-success' }}">
+                                {% if message.is_read %}Read{% else %}Unread{% endif %}
+                            </small>
+                        </div>
+                        <p class="mb-0" style="white-space: pre-line;">{{ message.message }}</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Flag Modal -->
+<div class="modal fade" id="flagModal" tabindex="-1" aria-labelledby="flagModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="flagModalLabel">Flag Journal Analysis</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ url_for('admin.flag_journal', journal_id=entry.id) }}" method="POST">
+                <div class="modal-body">
+                    <p>Please provide a reason for flagging this journal analysis:</p>
+                    <div class="mb-3">
+                        <label for="reason" class="form-label">Reason</label>
+                        <textarea class="form-control" id="reason" name="reason" rows="3" required></textarea>
+                    </div>
+                    <div class="alert alert-warning">
+                        <i class="bi bi-info-circle-fill"></i> Flagged entries will be prioritized for review to improve AI recommendations.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-warning">Flag Analysis</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
