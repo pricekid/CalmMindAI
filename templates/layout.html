@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Calm Journey{% endblock %}</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.svg') }}" type="image/svg+xml">
     <!-- Bootstrap 5 CSS -->
     <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
     <!-- Font Awesome Icons -->
@@ -21,8 +22,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
         <div class="container">
             <a class="navbar-brand" href="{{ url_for('index') }}">
-                <i class="fas fa-cloud me-2"></i>
-                Calm Journey
+                <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Calm Journey Logo" height="40" class="d-inline-block align-text-top me-2">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -92,11 +92,28 @@
     <!-- Footer -->
     <footer class="bg-dark text-center text-white py-4 mt-5">
         <div class="container">
-            <p class="mb-0">&copy; 2024 Calm Journey | CBT-based Anxiety Management Tool</p>
-            <p class="small text-muted mt-2">
-                This application is designed to support mental health, but does not replace professional medical advice.
-                <br>If you are experiencing a mental health emergency, please contact your local emergency services.
-            </p>
+            <div class="row align-items-center">
+                <div class="col-md-4 mb-3 mb-md-0 text-md-start">
+                    <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Calm Journey Logo" height="40" class="d-inline-block">
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <p class="mb-0">&copy; 2024 Calm Journey | CBT-based Anxiety Management Tool</p>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0 text-md-end">
+                    <a href="#" class="text-white me-3"><i class="fas fa-envelope"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <hr class="mt-3 mb-3">
+            <div class="row">
+                <div class="col-12">
+                    <p class="small text-muted mb-0">
+                        This application is designed to support mental health, but does not replace professional medical advice.
+                        <br>If you are experiencing a mental health emergency, please contact your local emergency services.
+                    </p>
+                </div>
+            </div>
         </div>
     </footer>
 

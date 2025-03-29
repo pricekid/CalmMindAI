@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a3a8f" />
+      <stop offset="100%" stop-color="#3264c8" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="45" fill="#0f1f3d" opacity="0.8" filter="url(#glow)" />
+
+  <!-- Logo elements -->
+  <g fill="none" stroke="url(#logoGradient)" stroke-width="3" filter="url(#glow)" transform="translate(15, 15) scale(0.7)">
+    <!-- Profile outline -->
+    <path d="M100,140 C90,140 85,135 85,120 L85,70 C85,60 90,45 110,40 C130,35 140,50 140,65 L140,85 C140,95 130,100 120,100 C110,100 105,95 105,85" />
+    
+    <!-- Cloud inside head -->
+    <path d="M100,65 C100,60 105,55 110,55 C115,55 118,60 118,65 C118,65 125,60 130,65 C135,70 130,80 125,80 C120,80 110,80 108,75 C105,70 100,70 100,65 Z" />
+    
+    <!-- Arrow pointing up -->
+    <path d="M110,75 L125,60 M120,60 L125,60 L125,65" stroke-linecap="round" />
+  </g>
+</svg>
