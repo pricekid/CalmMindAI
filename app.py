@@ -46,8 +46,31 @@ admin_login_manager.login_message_category = "info"
 # Add global error handler
 @app.errorhandler(Exception)
 def handle_exception(e):
-    from flask import render_template
-    app.logger.error(f"Unhandled exception: {str(e)}")
+    from flask import render_template, request
+    import traceback
+    
+    # Get complete exception traceback
+    tb = traceback.format_exc()
+    app.logger.error(f"Unhandled exception: {str(e)}\n{tb}")
+    
+    # Special handling for admin routes
+    if request.path.startswith('/admin'):
+        app.logger.error(f"Admin route error: {request.path}")
+        if '/admin/login' in request.path:
+            # Specific handling for login page
+            try:
+                return render_template('admin/error.html', error=f"Login error: {str(e)}"), 500
+            except Exception as template_error:
+                app.logger.error(f"Error rendering admin error template: {str(template_error)}")
+                return f"Admin login error: {str(e)}", 500
+        
+        try:
+            return render_template('admin/error.html', error=str(e)), 500
+        except Exception as template_error:
+            app.logger.error(f"Error rendering admin error template: {str(template_error)}")
+            return f"Admin area error: {str(e)}", 500
+    
+    # Default error handling for non-admin routes
     error_message = "Your data was saved, but we couldn't complete the analysis."
     
     # Check if it's an OpenAI API error related to quota
@@ -60,10 +83,14 @@ def handle_exception(e):
     else:
         error_title = "Something went wrong"
     
-    return render_template('error.html', 
-                          error_title=error_title,
-                          error_message=error_message,
-                          show_api_error=is_api_error), 500
+    try:
+        return render_template('error.html', 
+                            error_title=error_title,
+                            error_message=error_message,
+                            show_api_error=is_api_error), 500
+    except Exception as template_error:
+        app.logger.error(f"Error rendering error template: {str(template_error)}")
+        return f"Application error: {str(e)}", 500
 
 # Import routes after app is initialized to avoid circular imports
 with app.app_context():
@@ -85,7 +112,17 @@ with app.app_context():
     
     @admin_login_manager.user_loader
     def load_admin(user_id):
-        return Admin.get(int(user_id))
+        logging.debug(f"Loading admin with ID: {user_id}")
+        try:
+            admin = Admin.get(int(user_id))
+            if admin:
+                logging.debug(f"Found admin: {admin.username}")
+            else:
+                logging.debug("Admin not found")
+            return admin
+        except Exception as e:
+            logging.error(f"Error loading admin: {str(e)}")
+            return None
         
     # Register the admin blueprint
     from admin_routes import admin_bp

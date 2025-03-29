@@ -1,1 +1,818 @@
-[]
+[
+  {
+    "id": 1,
+    "user_id": 2,
+    "title": "messed up",
+    "content": "I messed up during my presentation today. I could tell my boss was disappointed. I keep thinking I\u2019m going to get fired. I\u2019ll never recover from this",
+    "anxiety_level": 8,
+    "created_at": "2025-03-29T17:49:11.416138",
+    "updated_at": "2025-03-29T17:49:14.286956",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Error analyzing entry",
+        "recommendation": "We couldn't analyze your journal entry at this time. - Please try again later or contact support if the problem persists."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "user_id": 2,
+    "title": "Messed up today",
+    "content": "I messed up during my presentation today. I could tell my boss was disappointed. I keep thinking I\u2019m going to get fired. I\u2019ll never recover from this",
+    "anxiety_level": 8,
+    "created_at": "2025-03-29T17:49:43.808492",
+    "updated_at": "2025-03-29T17:49:45.659617",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Error analyzing entry",
+        "recommendation": "We couldn't analyze your journal entry at this time. - Please try again later or contact support if the problem persists."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "user_id": 2,
+    "title": "tried to be friendly",
+    "content": "I tried talking to someone new today and it felt awkward. People always think I\u2019m weird. I should just stop trying to socialize",
+    "anxiety_level": 7,
+    "created_at": "2025-03-29T17:56:39.327466",
+    "updated_at": "2025-03-29T17:56:41.136161",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "API Quota Exceeded",
+        "recommendation": "The AI analysis service is currently unavailable due to API usage limits. - Your journal entry has been saved successfully. The AI analysis feature will be available once API quota is renewed."
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "user_id": 2,
+    "title": "MATHS SCORE",
+    "content": "TODAY WAS A GOOD DAY. I SCORED 100% IN MATHS",
+    "anxiety_level": 1,
+    "created_at": "2025-03-29T18:37:43.125833",
+    "updated_at": "2025-03-29T18:37:46.220491",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, like thinking one must always score 100% to consider oneself successful. - Use a 'Continuum Exercise' to evaluate performance on a scale from 0 to 100 to appreciate partial successes and reduce pressure."
+      },
+      {
+        "thought_pattern": "Catastrophizing Future Outcomes",
+        "recommendation": "Assuming that not scoring perfectly in future instances will lead to failure or negative outcomes. - Practice 'Decatastrophizing' by identifying the worst-case scenario and then generating a more realistic and likely outcome."
+      },
+      {
+        "thought_pattern": "Overemphasis on External Validation",
+        "recommendation": "Deriving self-worth primarily from external achievements like grades. - Engage in 'Self-Affirmation Exercises' to focus on internal values and strengths unrelated to academic performance."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "user_id": 3,
+    "title": "Blah",
+    "content": "Title express how I\u2019m feeling. Having joint pain in my left shoulder, elbow and wrist. I took a 800 about 20 mins ago. It has not kicked in yet. Having rheumatoid arthritis sucks..\r\n\r\nI\u2019m guessing I could be triggered by how I have been feeling over the last few weeks. I feel stuck in limbo because of my current situation with my housing and my husband\u2019s attitude, or I should say a lack of I just don\u2019t know where he\u2019s at and his mind and so it\u2019s very disturbing to me right now",
+    "anxiety_level": 7,
+    "created_at": "2025-03-29T19:53:25.081344",
+    "updated_at": "2025-03-29T19:53:30.552904",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "The tendency to anticipate the worst possible outcome, such as assuming the worst about your husband's feelings and future housing situation. - Practice 'Decatastrophizing': Write down the worst-case scenario, the best-case scenario, and the most realistic scenario. This helps balance your thoughts by considering more realistic outcomes."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what others are thinking or feeling, such as not knowing where your husband is at mentally and assuming negative intentions or feelings. - Use 'Evidence-Based Thinking': List evidence for and against your assumption about your husband's thoughts. This encourages you to base conclusions on facts rather than assumptions."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Seeing situations in black-and-white terms, such as feeling completely stuck and seeing your situation as entirely negative. - Engage in 'Cognitive Restructuring': Identify and write down these black-and-white thoughts, then find exceptions or middle-ground perspectives to help you see the shades of grey in your situation."
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "user_id": 3,
+    "title": "Blah",
+    "content": "Title express how I\u2019m feeling. Having joint pain in my left shoulder, elbow and wrist. I took a 800 about 20 mins ago. It has not kicked in yet. Having rheumatoid arthritis sucks..\r\n\r\nI\u2019m guessing I could be triggered by how I have been feeling over the last few weeks. I feel stuck in limbo because of my current situation with my housing and my husband\u2019s attitude, or I should say a lack of I just don\u2019t know where he\u2019s at and his mind and so it\u2019s very disturbing to me right now",
+    "anxiety_level": 7,
+    "created_at": "2025-03-29T19:53:30.856591",
+    "updated_at": "2025-03-29T19:53:35.538015",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Focusing on the worst possible outcomes of your situation without evidence. - Challenge catastrophic thoughts by listing more realistic outcomes. For example, write down the worst-case, best-case, and most likely scenarios regarding your housing and relationship concerns."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what your husband is thinking or feeling without direct evidence. - Practice communication skills by initiating a conversation with your husband to express your feelings and ask about his thoughts, aiming for clarity and understanding."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, such as feeling entirely stuck without considering small, positive changes. - Identify small steps or actions you can take to feel more in control of your situation, such as setting a goal to explore housing options or plan a stress-reducing activity."
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 6,
+    "created_at": "2025-03-29T20:27:46.565776",
+    "updated_at": "2025-03-29T20:27:51.683687",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Thinking that the presence of strange people will lead to a negative outcome without evidence. - Use the 'worst-case, best-case, most likely' exercise by writing down what the worst possible outcome, best possible outcome, and most likely outcome of the situation might be to gain perspective."
+      },
+      {
+        "thought_pattern": "Fortune Telling",
+        "recommendation": "Predicting negative events or outcomes in the future without evidence. - Challenge this thought by asking yourself for evidence that supports it, and evidence that contradicts it. Write these down to better evaluate your predictions."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming others have negative intentions or thoughts without knowing for sure. - Practice the 'behavioral experiment' technique by gathering real evidence about the intentions of these people by observing how they act and interact, rather than assuming their intentions."
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 6,
+    "created_at": "2025-03-29T20:27:51.998567",
+    "updated_at": "2025-03-29T20:27:56.408511",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario happening without evidence. - Practice cognitive restructuring by challenging the worst-case scenario with evidence-based thinking. Ask yourself, 'What else could be happening that is less threatening?'"
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what others are thinking or their intentions without evidence. - Use the 'evidence for and against' technique. List evidence that supports your assumption and evidence that contradicts it to gain a balanced view."
+      },
+      {
+        "thought_pattern": "Intolerance of Uncertainty",
+        "recommendation": "Struggling to tolerate not knowing why something is happening. - Practice exposure to uncertainty by deliberately delaying your need to find out the reason for the strange people. Gradually increase the time you wait before seeking explanations."
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 6,
+    "created_at": "2025-03-29T20:27:56.702620",
+    "updated_at": "2025-03-29T20:28:01.507870",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario or exaggerating the potential danger of the situation. - Use the 'What If' technique: Ask yourself what is the worst that could realistically happen, the best that could happen, and then what is most likely to happen. This can help you see the situation more realistically."
+      },
+      {
+        "thought_pattern": "Jumping to Conclusions",
+        "recommendation": "Making negative assumptions without evidence, such as assuming strangers have bad intentions. - Challenge your thoughts: Write down evidence for and against your assumption about the strangers. Look for objective facts that can help you see the situation more clearly."
+      },
+      {
+        "thought_pattern": "Intolerance of Uncertainty",
+        "recommendation": "Feeling distressed by not knowing the reasons for the strangers' presence, and needing certainty. - Practice mindfulness: Focus on the present moment by engaging in a grounding exercise, such as the 5-4-3-2-1 technique, which involves identifying five things you can see, four you can touch, three you can hear, two you can smell, and one you can taste."
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 6,
+    "created_at": "2025-03-29T20:28:01.804148",
+    "updated_at": "2025-03-29T20:28:06.452432",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario about the presence of strangers, assuming they pose a threat without evidence. - Use the 'What If' technique: Challenge catastrophic thoughts by asking yourself, 'What is the worst that could happen? How likely is it to happen? What can I do if it does happen?' This can help in reducing exaggerated fears."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming to know the intentions of the strangers without any concrete information. - Practice the 'Evidence Diary': Write down what you actually know for sure versus what you are assuming about the strangers. This helps in distinguishing facts from assumptions."
+      },
+      {
+        "thought_pattern": "Fortune Telling",
+        "recommendation": "Predicting negative outcomes without sufficient evidence, such as assuming something bad will happen because of the strangers' presence. - Conduct a 'Behavioral Experiment': Test your predictions by observing the situation over a set period, noting what actually happens compared to what you feared. This can help correct inaccurate predictions."
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 6,
+    "created_at": "2025-03-29T20:28:06.753210",
+    "updated_at": "2025-03-29T20:28:15.718164",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario without evidence - Practice evidence gathering by listing factual evidence for and against your anxious thoughts."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what others are thinking without evidence - Use the 'Thought Record' exercise to challenge assumptions and consider alternative perspectives."
+      },
+      {
+        "thought_pattern": "Intolerance of Uncertainty",
+        "recommendation": "Difficulty accepting lack of certainty about situations - Engage in 'Uncertainty Exposure' by gradually exposing yourself to uncertain situations and observing outcomes."
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 6,
+    "created_at": "2025-03-29T20:28:16.027728",
+    "updated_at": "2025-03-29T20:28:21.419913",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst possible scenario about the presence of strange people. - Use the 'evidence for and against' technique: List evidence that supports your worry and evidence that contradicts it to gain a balanced perspective."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know the intentions or thoughts of the people around you without evidence. - Practice the 'behavioral experiment' technique: Approach the situation by observing if these people actually behave in a threatening way to challenge your assumptions."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Drawing a broad conclusion based on a single incident or piece of evidence. - Use 'thought record': Note down specific instances when strange people were present, and evaluate if they always led to negative outcomes."
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 6,
+    "created_at": "2025-03-29T20:28:21.721200",
+    "updated_at": "2025-03-29T20:28:26.467396",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario without evidence that it will happen. - Practice cognitive restructuring by identifying evidence for and against your fears. Write these down to gain a balanced view."
+      },
+      {
+        "thought_pattern": "Mind reading",
+        "recommendation": "Assuming you know what others are thinking or their intentions without evidence. - Challenge this by asking yourself, 'What evidence do I have?' and consider alternative explanations for the behavior of others."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Believing that a single event is indicative of a larger pattern. - Use a thought record to document specific instances and evaluate if they truly imply a broader trend or if they are isolated incidents."
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 6,
+    "created_at": "2025-03-29T20:28:26.763389",
+    "updated_at": "2025-03-29T20:28:29.881062",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst possible outcome without sufficient evidence. - Challenge the thought by asking yourself: 'What evidence do I have that something bad will happen?' and 'What are some more likely outcomes?'"
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what others are thinking without concrete evidence. - Practice reality testing by asking: 'Do I have any actual information about these people\u2019s intentions or thoughts?'"
+      },
+      {
+        "thought_pattern": "Intolerance of Uncertainty",
+        "recommendation": "Struggling with the inability to tolerate unknowns or ambiguity. - List out what you can control in this situation and what you can\u2019t. Focus on actions within your control, like staying aware of your surroundings."
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:28:30.177191",
+    "updated_at": "2025-03-29T20:28:34.111372",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario about the presence of strange people without evidence. - Practice 'Reality Testing': List possible reasons for their presence, both benign and worrying, and evaluate their likelihood based on evidence."
+      },
+      {
+        "thought_pattern": "Jumping to Conclusions",
+        "recommendation": "Assuming something negative without sufficient information. - Use a 'Thought Record': Note down evidence for and against your assumption about the people being a threat."
+      },
+      {
+        "thought_pattern": "Intolerance of Uncertainty",
+        "recommendation": "Feeling anxious due to the uncertainty about why the people are there. - Engage in 'Uncertainty Acceptance': Write down what is unknown and practice accepting that uncertainty without needing immediate answers."
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:28:34.408017",
+    "updated_at": "2025-03-29T20:28:38.316833",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario or assuming negative outcomes without evidence. - Use the 'Evidence for and Against' technique: List evidence that supports and contradicts the belief that something bad will happen due to strange people being in the area."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what others are thinking or their intentions without concrete evidence. - Practice 'Reality Testing': Ask yourself, 'What evidence do I have to support this assumption?' and 'What other explanations could there be?'"
+      },
+      {
+        "thought_pattern": "Intolerance of Uncertainty",
+        "recommendation": "Difficulty accepting uncertainty which can lead to anxiety. - Engage in 'Uncertainty Exposure': Gradually expose yourself to uncertain situations and practice sitting with the discomfort without seeking reassurance."
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:28:38.613033",
+    "updated_at": "2025-03-29T20:28:42.090742",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario without evidence - Challenge these thoughts by listing evidence for and against the worst-case scenario and then consider more realistic outcomes."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what others are thinking or intending - Practice checking the facts by asking yourself what you actually know versus what you are assuming about the strangers' intentions."
+      },
+      {
+        "thought_pattern": "Intolerance of Uncertainty",
+        "recommendation": "Struggling to accept that some aspects of life are uncertain - Use exposure exercises to gradually face situations with uncertain outcomes in a controlled way, starting with less anxiety-provoking situations."
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:28:42.392241",
+    "updated_at": "2025-03-29T20:28:45.180230",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario without sufficient evidence. - Practice 'evidence collection' by listing facts that suggest safety and normalcy in the area."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming the intentions or thoughts of others without evidence. - Challenge this by asking yourself, 'What evidence do I have about these people's intentions?'"
+      },
+      {
+        "thought_pattern": "Intolerance of Uncertainty",
+        "recommendation": "Discomfort with the unknown, leading to anxiety about undefined threats. - Use 'tolerance building' by gradually exposing yourself to uncertain situations and noting outcomes over time."
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:28:45.478046",
+    "updated_at": "2025-03-29T20:28:49.031976",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario without evidence. - Practice reality testing by listing evidence for and against your assumption that strange people pose a threat."
+      },
+      {
+        "thought_pattern": "Mind reading",
+        "recommendation": "Assuming you know what others are thinking or their intentions without concrete evidence. - Challenge this by asking yourself, 'What are the facts?' and focus on observable behaviors instead."
+      },
+      {
+        "thought_pattern": "Intolerance of uncertainty",
+        "recommendation": "Feeling anxious due to a lack of information and wanting certainty about unknown situations. - Gradually expose yourself to uncertain situations and reflect on the outcomes to build tolerance over time."
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:28:49.330622",
+    "updated_at": "2025-03-29T20:28:52.552644",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst possible outcome from an uncertain situation. - Use the 'What If' technique: List the worst-case scenario, the best-case scenario, and the most likely scenario to gain perspective."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming the intentions or thoughts of others without evidence. - Challenge assumptions by asking yourself for evidence that supports your thoughts about others' intentions."
+      },
+      {
+        "thought_pattern": "Intolerance of Uncertainty",
+        "recommendation": "Difficulty accepting the unknown aspects of a situation. - Practice 'Exposure to Uncertainty': Gradually expose yourself to uncertain situations and refrain from seeking reassurance to build tolerance."
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:28:52.849546",
+    "updated_at": "2025-03-29T20:28:57.082864",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario without concrete evidence, such as believing that strange people in the area might pose a threat. - Use the 'Evidence for and against' technique: List evidence supporting and contradicting the worst-case scenario to evaluate its likelihood."
+      },
+      {
+        "thought_pattern": "Mind reading",
+        "recommendation": "Assuming to know others' intentions or reasons for being in the area without evidence. - Practice 'Behavioral Experiment': Test your assumptions by observing these people over time to see if your initial belief holds true."
+      },
+      {
+        "thought_pattern": "Ambiguity intolerance",
+        "recommendation": "Discomfort with uncertainty or not knowing the reasons behind something, such as the presence of strangers. - Engage in 'Mindfulness': Focus on the present moment and observe your thoughts without judgment, allowing for acceptance of uncertainty."
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:28:57.382239",
+    "updated_at": "2025-03-29T20:29:00.980858",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario without definite evidence - Use a thought record to challenge and reframe catastrophic thoughts by evaluating the evidence for and against these thoughts."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what others are thinking or their intentions - Practice perspective-taking by considering multiple alternative explanations for the presence of strange people, such as a community event or visitors."
+      },
+      {
+        "thought_pattern": "Intolerance of Uncertainty",
+        "recommendation": "Struggling to accept not knowing the reason for the presence of strangers - Engage in 'worry time' by setting aside a specific time each day to focus on uncertainties, allowing you to manage anxiety more effectively."
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:29:01.278287",
+    "updated_at": "2025-03-29T20:29:04.851532",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario about the presence of strange people in the area. - Use a thought record to identify and challenge catastrophic thoughts by questioning their validity and considering more balanced outcomes."
+      },
+      {
+        "thought_pattern": "Jumping to Conclusions",
+        "recommendation": "Assuming negative intentions or danger without sufficient evidence. - Practice gathering evidence by observing the situation objectively and listing facts that support or contradict your assumption."
+      },
+      {
+        "thought_pattern": "Intolerance of Uncertainty",
+        "recommendation": "Feeling anxious due to not knowing the reason for strange people being in the area. - Engage in exposure exercises by gradually allowing yourself to sit with uncertainty for increasing durations without seeking reassurance."
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:29:05.146375",
+    "updated_at": "2025-03-29T20:29:08.668346",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario or amplifying potential threats related to unfamiliar people. - Practice cognitive restructuring by challenging the likelihood of the worst-case scenario and considering more balanced perspectives."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming negative intentions or thoughts of others without evidence. - Use the 'evidence for and against' technique to evaluate the basis of these assumptions and develop alternative interpretations."
+      },
+      {
+        "thought_pattern": "Intolerance of Uncertainty",
+        "recommendation": "Difficulty accepting uncertain situations, leading to anxiety. - Gradually expose yourself to uncertain situations while practicing relaxation techniques to build tolerance."
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:29:08.970245",
+    "updated_at": "2025-03-29T20:29:12.975647",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario due to the presence of unfamiliar people, leading to increased anxiety. - Use a thought record to identify evidence that supports and contradicts your fear, and then create a balanced perspective."
+      },
+      {
+        "thought_pattern": "Fortune Telling",
+        "recommendation": "Assuming negative outcomes without evidence, such as thinking something bad will happen because of the strangers. - Challenge these predictions by listing alternative outcomes and focusing on the most realistic scenarios."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know the intentions of the strangers, which could lead to misinterpretation and anxiety. - Practice questioning these assumptions by asking yourself what evidence you have for your thoughts and consider other possible explanations for their presence."
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:29:13.268914",
+    "updated_at": "2025-03-29T20:29:16.119630",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario about unfamiliar people without evidence. - Challenge this thought by listing evidence for and against the likelihood of a threat from these people."
+      },
+      {
+        "thought_pattern": "Fortune Telling",
+        "recommendation": "Assuming you know the outcome of events without sufficient information. - Practice mindfulness to stay present and focus on what you can observe rather than predicting potential threats."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Making broad assumptions based on limited information. - Use a thought record to document specific events and feelings, and evaluate whether this is an isolated event or a common occurrence."
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:29:16.411911",
+    "updated_at": "2025-03-29T20:29:21.005526",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario without evidence to support it. - Challenge this thought by identifying evidence for and against the belief that strange people pose a threat. List at least two pieces of evidence for each side."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what others are thinking or what their intentions are. - Practice perspective-taking by considering at least three alternative, benign reasons why these people might be in the area."
+      },
+      {
+        "thought_pattern": "Intolerance of Uncertainty",
+        "recommendation": "Difficulty tolerating uncertain or ambiguous situations, leading to anxiety. - Gradually expose yourself to uncertain situations and practice using coping statements like 'It's okay not to have all the answers right now.'"
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:29:21.300813",
+    "updated_at": "2025-03-29T20:29:26.510587",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario or imagining negative outcomes without evidence - Challenge the catastrophic thoughts by asking yourself, 'What is the most likely outcome?' and 'What evidence do I have for this fear?'"
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what others are thinking or why they are in the area without evidence - Practice perspective-taking by considering multiple reasons why the people might be in the area, such as benign or neutral activities."
+      },
+      {
+        "thought_pattern": "Intolerance of Uncertainty",
+        "recommendation": "Struggling with not knowing the reason for the presence of strangers and feeling anxious about it - Engage in an uncertainty-tolerance exercise, where you list past situations with uncertain outcomes and note how they resolved without negative consequences."
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:29:26.803646",
+    "updated_at": "2025-03-29T20:29:29.915666",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Thinking the presence of strange people automatically indicates a threat or negative outcome. - Use a thought record to challenge this assumption by listing evidence for and against this thought."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming others have harmful intentions without any evidence. - Practice asking yourself questions like, 'What evidence do I have for this belief?' and 'What else could be true?'"
+      },
+      {
+        "thought_pattern": "Intolerance of Uncertainty",
+        "recommendation": "Feeling anxious due to lack of information about the unusual situation. - Engage in an exercise of gradually exposing yourself to uncertainty, such as leaving some questions unanswered intentionally to build tolerance."
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:29:30.461290",
+    "updated_at": "2025-03-29T20:29:37.605119",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario or assuming that something bad will happen due to the presence of unfamiliar people. - Use the 'Decatastrophizing' technique: Challenge this thought by asking yourself, 'What is the most likely outcome?' and 'How have I handled similar situations in the past?'"
+      },
+      {
+        "thought_pattern": "Fortune Telling",
+        "recommendation": "Predicting negative events or assuming you know what others are thinking without evidence. - Practice 'Evidence Gathering': List out any facts that support or contradict the prediction that something negative will happen because of the strange people."
+      },
+      {
+        "thought_pattern": "Jumping to Conclusions",
+        "recommendation": "Making assumptions without having sufficient evidence, leading to anxiety about unknown intentions. - Engage in 'Behavioral Experiment': Observe the behavior of these strangers and note any neutral or positive interactions, which can help challenge initial assumptions."
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:29:37.899598",
+    "updated_at": "2025-03-29T20:29:41.499053",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario without evidence, such as believing strange people in the area automatically indicates danger. - Use a thought record to challenge catastrophic thoughts by identifying evidence for and against the perceived threat."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know the intentions or thoughts of others (e.g., assuming strangers are there for a bad reason). - Practice asking yourself, 'What evidence do I have for this belief?' and consider alternative, benign explanations for their presence."
+      },
+      {
+        "thought_pattern": "Intolerance of Uncertainty",
+        "recommendation": "Feeling anxious due to a lack of information or clarity about the situation. - Engage in an exposure exercise by gradually exposing yourself to uncertain situations, starting with less challenging scenarios to build tolerance."
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:29:41.793504",
+    "updated_at": "2025-03-29T20:29:46.239175",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst possible outcome from a situation without substantial evidence. - Use the 'What If' technique: Write down your worst-case scenario and then list alternative, less catastrophic outcomes. Reflect on the likelihood of each scenario to reduce fear."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Believing you know what others are thinking or their intentions without concrete evidence. - Practice evidence gathering: List observations about the people or situation without jumping to conclusions. Challenge these assumptions by asking if there is real evidence to support them."
+      },
+      {
+        "thought_pattern": "Intolerance of Uncertainty",
+        "recommendation": "Struggling to tolerate the unknown, leading to anxiety when uncertain situations arise. - Engage in uncertainty exposure: Gradually expose yourself to uncertain situations in a controlled manner and practice relaxation techniques to become more comfortable with uncertainty."
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:29:46.534470",
+    "updated_at": "2025-03-29T20:29:49.937052",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario about the presence of strange people without evidence. - Use the 'What If' technique: Identify the worst-case scenario, then consider the best-case scenario, and finally the most realistic outcome to balance your thoughts."
+      },
+      {
+        "thought_pattern": "Fortune Telling",
+        "recommendation": "Predicting negative outcomes about the situation without evidence. - Challenge predictions by asking, 'What evidence do I have for this outcome?' and 'What evidence do I have against it?' to assess the situation more realistically."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Drawing broad conclusions based on limited information, assuming all strange people are a threat. - Practice 'Thought Record': Write down the specific situation, the thoughts that arise, and evidence for and against these thoughts to gain a clearer perspective."
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:29:50.236095",
+    "updated_at": "2025-03-29T20:29:55.582791",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario due to uncertainty about the people in the area. - Use the 'Decatastrophizing' technique: Challenge the likelihood of the worst-case scenario occurring and consider more realistic outcomes."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming negative intentions or danger without evidence. - Practice 'Evidence Log': Write down the evidence for and against your assumptions about the people and review the log to find a balanced perspective."
+      },
+      {
+        "thought_pattern": "Intolerance of Uncertainty",
+        "recommendation": "Feeling anxious about not knowing why there are strange people in the area. - Engage in 'Uncertainty Tolerance Practice': Gradually expose yourself to uncertain situations and reflect on the outcomes to build tolerance."
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "user_id": 5,
+    "title": "Anxiety ",
+    "content": "Strange people in the area . Not sure the reason",
+    "anxiety_level": 3,
+    "created_at": "2025-03-29T20:29:55.881298",
+    "updated_at": "2025-03-29T20:29:59.344349",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario about why there are strange people in the area. - Challenge catastrophic thinking by asking yourself: 'What is the most likely non-threatening explanation for their presence?' Write down three possible non-threatening reasons."
+      },
+      {
+        "thought_pattern": "Jumping to Conclusions",
+        "recommendation": "Assuming something negative without sufficient evidence. - Practice gathering evidence by observing the situation. Note down any real signs of danger and compare them with your assumptions."
+      },
+      {
+        "thought_pattern": "Intolerance of Uncertainty",
+        "recommendation": "Feeling anxious due to the inability to know the reason for the strange people. - Use a 'tolerance of uncertainty' exercise: List previous situations where you handled uncertainty well and how they concluded without negative outcomes."
+      }
+    ]
+  }
+]

@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 from datetime import datetime, timedelta
 from models import User, JournalEntry, CBTRecommendation
@@ -15,14 +16,21 @@ CONFIG_FILE = os.path.join(DATA_DIR, 'config.json')
 
 def ensure_data_files_exist():
     """Ensure all data files exist with valid JSON"""
+    # Make sure the data directory exists
+    os.makedirs(DATA_DIR, exist_ok=True)
+    
+    logging.debug(f"Checking data files in {DATA_DIR}")
+    
     for file_path in [JOURNALS_FILE, USERS_FILE, FLAGGED_FILE, ADMIN_MESSAGES_FILE]:
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         if not os.path.exists(file_path):
+            logging.debug(f"Creating file: {file_path}")
             with open(file_path, 'w') as f:
                 json.dump([], f)
 
     # Handle config file separately since it's a dict not a list
     if not os.path.exists(CONFIG_FILE):
+        logging.debug(f"Creating config file: {CONFIG_FILE}")
         with open(CONFIG_FILE, 'w') as f:
             json.dump({
                 "openai_api_key": "",
