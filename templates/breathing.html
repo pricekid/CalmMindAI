@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block title %}Breathing Exercise - Calm Journey{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card bg-dark mb-4">
+            <div class="card-header">
+                <h3 class="mb-0"><i class="fas fa-wind me-2"></i> Guided Breathing Exercise</h3>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    This exercise will guide you through deep breathing to help reduce anxiety and promote calm.
+                    The animation will expand as you breathe in, hold, and contract as you breathe out, following
+                    a 4-4-6-2 pattern (4s inhale, 4s hold, 6s exhale, 2s hold).
+                </p>
+                
+                <div class="d-flex justify-content-center my-4">
+                    <div class="form-group me-2">
+                        <label for="breathing-duration" class="form-label">Exercise Duration:</label>
+                        <select id="breathing-duration" class="form-select">
+                            <option value="60">1 minute</option>
+                            <option value="120" selected>2 minutes</option>
+                            <option value="180">3 minutes</option>
+                            <option value="300">5 minutes</option>
+                        </select>
+                    </div>
+                    
+                    <div class="d-flex align-items-end">
+                        <button id="start-breathing" class="btn btn-primary me-2">Start</button>
+                        <button id="stop-breathing" class="btn btn-secondary" disabled>Stop</button>
+                    </div>
+                </div>
+                
+                <div class="text-center mb-3">
+                    <span id="timer-display" class="fs-4">2:00</span>
+                </div>
+                
+                <div id="breathing-container" class="mb-4">
+                    <div id="breathing-circle" class="d-flex align-items-center justify-content-center">
+                        <i class="fas fa-lungs fa-3x text-light opacity-75"></i>
+                    </div>
+                    <p id="breathing-text" class="mt-4">Click Start to begin</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card bg-dark">
+            <div class="card-header">
+                <h4 class="mb-0">About Deep Breathing</h4>
+            </div>
+            <div class="card-body">
+                <p>Deep breathing is one of the most effective ways to reduce anxiety in the moment. When you're anxious, your breathing becomes shallow and rapid, which can intensify feelings of stress and panic.</p>
+                
+                <h5 class="mt-4">Benefits of Deep Breathing:</h5>
+                <ul>
+                    <li>Activates the parasympathetic nervous system (the "rest and digest" response)</li>
+                    <li>Reduces heart rate and blood pressure</li>
+                    <li>Increases oxygen flow to the brain</li>
+                    <li>Helps you regain mental clarity during anxious moments</li>
+                    <li>Releases muscle tension</li>
+                </ul>
+                
+                <h5 class="mt-4">Tips for Effective Practice:</h5>
+                <ol>
+                    <li>Find a comfortable position, either sitting upright or lying down</li>
+                    <li>Place one hand on your chest and one on your stomach to feel the movement</li>
+                    <li>Breathe in slowly through your nose, filling your lower lungs first (your stomach should rise)</li>
+                    <li>Hold your breath briefly</li>
+                    <li>Exhale slowly and completely through your mouth</li>
+                    <li>Repeat regularly for the best results</li>
+                </ol>
+                
+                <div class="alert alert-info mt-4">
+                    <i class="fas fa-info-circle me-2"></i>
+                    For best results, practice this exercise at least once daily, even when not feeling anxious. Regular practice builds your capacity to use this technique effectively during high-anxiety moments.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/breathing.js') }}"></script>
+{% endblock %}

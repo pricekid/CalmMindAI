@@ -1,0 +1,174 @@
+/* Custom styling for Calm Journey */
+
+/* Calming color variables */
+:root {
+    --calm-primary: #6fb3b8;
+    --calm-secondary: #c2edce;
+    --calm-accent: #badfe7;
+    --calm-dark: #388087;
+    --calm-light: #f6f6f2;
+}
+
+/* Body styles */
+body {
+    background-color: var(--bs-dark);
+    color: var(--bs-light);
+    font-family: 'Poppins', 'Segoe UI', Roboto, sans-serif;
+}
+
+/* General styling */
+.card {
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Button styling */
+.btn-calm {
+    background-color: var(--calm-dark);
+    border-color: var(--calm-dark);
+    color: white;
+}
+
+.btn-calm:hover {
+    background-color: #2d6970;
+    border-color: #2d6970;
+    color: white;
+}
+
+.btn-outline-calm {
+    border-color: var(--calm-dark);
+    color: var(--calm-dark);
+}
+
+.btn-outline-calm:hover {
+    background-color: var(--calm-dark);
+    color: white;
+}
+
+/* Journal card styling */
+.journal-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.journal-card .card-body {
+    flex: 1;
+}
+
+/* Anxiety level indicators */
+.anxiety-badge {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    border-radius: 12px;
+}
+
+.anxiety-low {
+    background-color: #198754;
+    color: white;
+}
+
+.anxiety-medium {
+    background-color: #fd7e14;
+    color: white;
+}
+
+.anxiety-high {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* CBT recommendations */
+.recommendation-card {
+    border-left: 4px solid var(--calm-dark);
+    margin-bottom: 1rem;
+}
+
+/* Breathing exercise */
+#breathing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+}
+
+#breathing-circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--calm-accent), var(--calm-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 1s ease-in-out;
+    box-shadow: 0 0 30px rgba(111, 179, 184, 0.4);
+}
+
+#breathing-text {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    text-align: center;
+    font-weight: 300;
+}
+
+/* Dashboard widgets */
+.dashboard-widget {
+    padding: 20px;
+    height: 100%;
+}
+
+.dashboard-widget h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--bs-light);
+}
+
+/* Coping statement card */
+.coping-statement {
+    background: linear-gradient(135deg, var(--calm-dark), var(--calm-primary));
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1.1rem;
+    text-align: center;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+/* Mood tracking slider */
+.mood-slider {
+    width: 100%;
+}
+
+.mood-slider-wrapper {
+    position: relative;
+    padding: 20px 0;
+}
+
+.mood-value {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dashboard-widget {
+        margin-bottom: 20px;
+    }
+    
+    #breathing-circle {
+        width: 150px;
+        height: 150px;
+    }
+}

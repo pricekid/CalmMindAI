@@ -1,0 +1,249 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {% if entry %}
+        {{ entry.title }} - Calm Journey
+    {% else %}
+        New Journal Entry - Calm Journey
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <!-- Back to Journal Button -->
+        <div class="mb-3">
+            <a href="{{ url_for('journal') }}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-1"></i> Back to Journal
+            </a>
+        </div>
+        
+        {% if view_only %}
+            <!-- View Mode -->
+            <div class="card bg-dark mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0">{{ entry.title }}</h3>
+                    <span class="badge anxiety-badge 
+                        {% if entry.anxiety_level <= 3 %}anxiety-low
+                        {% elif entry.anxiety_level <= 6 %}anxiety-medium
+                        {% else %}anxiety-high{% endif %}">
+                        Anxiety: {{ entry.anxiety_level }}/10
+                    </span>
+                </div>
+                <div class="card-body">
+                    <p class="card-text text-muted mb-3">
+                        <small>
+                            <i class="far fa-calendar-alt me-1"></i> 
+                            {{ entry.created_at.strftime('%B %d, %Y at %I:%M %p') }}
+                            {% if entry.updated_at > entry.created_at %}
+                                (Edited: {{ entry.updated_at.strftime('%B %d, %Y at %I:%M %p') }})
+                            {% endif %}
+                        </small>
+                    </p>
+                    
+                    <div class="mb-4">
+                        {{ entry.content|replace('\n', '<br>')|safe }}
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{{ url_for('update_journal_entry', entry_id=entry.id) }}" class="btn btn-outline-primary">
+                            <i class="fas fa-edit me-1"></i> Edit
+                        </a>
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                            <i class="fas fa-trash-alt me-1"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CBT Recommendations -->
+            <div class="card bg-dark mb-4">
+                <div class="card-header">
+                    <h4 class="mb-0">
+                        <i class="fas fa-brain me-2"></i> 
+                        CBT Analysis
+                    </h4>
+                </div>
+                <div class="card-body">
+                    {% if entry.is_analyzed and entry.recommendations %}
+                        <p class="mb-4">Based on your journal entry, here are some thought patterns and CBT techniques that might help:</p>
+                        
+                        {% for recommendation in entry.recommendations %}
+                            <div class="recommendation-card p-3 ps-4">
+                                <h5 class="recommendation-title">{{ recommendation.thought_pattern }}</h5>
+                                <p>{{ recommendation.recommendation }}</p>
+                            </div>
+                        {% endfor %}
+                    {% elif not entry.is_analyzed %}
+                        <div class="text-center py-3">
+                            <p>This entry hasn't been analyzed yet.</p>
+                            <button id="analyze-button" class="btn btn-primary" data-entry-id="{{ entry.id }}">
+                                <i class="fas fa-magic me-1"></i> Analyze Now
+                            </button>
+                            <div id="analysis-loading" class="mt-3 d-none">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mt-2">Analyzing your entry...</p>
+                            </div>
+                            <div id="analysis-result" class="mt-3 d-none"></div>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-3">
+                            <p>No specific patterns requiring CBT techniques were identified in this entry.</p>
+                            <p class="text-muted">This is often a positive sign, indicating balanced thinking!</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Delete Confirmation Modal -->
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete this journal entry? This action cannot be undone.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <form action="{{ url_for('delete_journal_entry', entry_id=entry.id) }}" method="POST">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        {% else %}
+            <!-- Edit/Create Mode -->
+            <div class="card bg-dark">
+                <div class="card-header">
+                    <h3>{{ legend }}</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="">
+                        {{ form.hidden_tag() }}
+                        <div class="mb-3">
+                            {{ form.title.label(class="form-label") }}
+                            {% if form.title.errors %}
+                                {{ form.title(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.title.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.title(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.content.label(class="form-label") }}
+                            {% if form.content.errors %}
+                                {{ form.content(class="form-control is-invalid", rows="10") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.content.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.content(class="form-control", rows="10") }}
+                            {% endif %}
+                            <div class="form-text">
+                                <i class="fas fa-lightbulb me-1"></i> Try to be specific about your thoughts, feelings, and the situations that triggered them.
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            {{ form.anxiety_level.label(class="form-label d-block") }}
+                            <div class="d-flex align-items-center">
+                                <span class="me-2">1</span>
+                                {% if form.anxiety_level.errors %}
+                                    {{ form.anxiety_level(class="form-range is-invalid", min="1", max="10") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.anxiety_level.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.anxiety_level(class="form-range", min="1", max="10") }}
+                                {% endif %}
+                                <span class="ms-2">10</span>
+                            </div>
+                            <div class="form-text">
+                                1 = Minimal anxiety, 10 = Extreme anxiety
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('journal') }}" class="btn btn-outline-secondary">Cancel</a>
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% if view_only and not entry.is_analyzed %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const analyzeButton = document.getElementById('analyze-button');
+    const loadingIndicator = document.getElementById('analysis-loading');
+    const resultContainer = document.getElementById('analysis-result');
+    
+    if (analyzeButton) {
+        analyzeButton.addEventListener('click', function() {
+            const entryId = analyzeButton.dataset.entryId;
+            
+            // Show loading indicator
+            analyzeButton.disabled = true;
+            loadingIndicator.classList.remove('d-none');
+            
+            // Make AJAX request to analyze the entry
+            fetch(`/api/analyze_entry/${entryId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                loadingIndicator.classList.add('d-none');
+                
+                if (data.success) {
+                    // Display success message and reload the page
+                    resultContainer.classList.remove('d-none');
+                    resultContainer.innerHTML = `<div class="alert alert-success">Analysis complete! Refreshing page...</div>`;
+                    
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    // Display error message
+                    resultContainer.classList.remove('d-none');
+                    resultContainer.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+                    analyzeButton.disabled = false;
+                }
+            })
+            .catch(error => {
+                loadingIndicator.classList.add('d-none');
+                resultContainer.classList.remove('d-none');
+                resultContainer.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
+                analyzeButton.disabled = false;
+            });
+        });
+    }
+});
+</script>
+{% endif %}
+{% endblock %}
