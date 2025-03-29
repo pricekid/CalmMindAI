@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-header bg-danger text-white">
+          <h2 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Error</h2>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title mb-4">{{ error_title|default('Something went wrong') }}</h4>
+          
+          <p class="card-text">{{ error_message|default('An error occurred while processing your request.') }}</p>
+          
+          {% if show_api_error %}
+          <div class="alert alert-info">
+            <h5>API Quota Exceeded</h5>
+            <p>The AI analysis features are currently unavailable due to API usage limits. Your data has been saved, and you can continue using the app, but AI-powered analysis will be temporarily unavailable.</p>
+          </div>
+          {% endif %}
+          
+          <div class="mt-4">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary me-2">
+              <i class="fas fa-home me-1"></i>Go to Dashboard
+            </a>
+            <a href="javascript:history.back()" class="btn btn-secondary">
+              <i class="fas fa-arrow-left me-1"></i>Go Back
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

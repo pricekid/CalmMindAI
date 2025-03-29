@@ -34,6 +34,28 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.login_message_category = "info"
 
+# Add global error handler
+@app.errorhandler(Exception)
+def handle_exception(e):
+    from flask import render_template
+    app.logger.error(f"Unhandled exception: {str(e)}")
+    error_message = "Your data was saved, but we couldn't complete the analysis."
+    
+    # Check if it's an OpenAI API error related to quota
+    is_api_error = False
+    err_str = str(e).lower()
+    if "openai" in err_str and ("quota" in err_str or "429" in err_str or "insufficient" in err_str):
+        is_api_error = True
+        error_title = "API Limit Reached"
+        error_message = "Your journal entry was saved successfully, but AI analysis is currently unavailable due to API usage limits."
+    else:
+        error_title = "Something went wrong"
+    
+    return render_template('error.html', 
+                          error_title=error_title,
+                          error_message=error_message,
+                          show_api_error=is_api_error), 500
+
 # Import routes after app is initialized to avoid circular imports
 with app.app_context():
     # Import models to ensure they're registered with SQLAlchemy
