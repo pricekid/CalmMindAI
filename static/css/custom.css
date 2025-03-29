@@ -104,6 +104,17 @@ body {
     margin-bottom: 1rem;
 }
 
+/* Journal coach styling */
+.coach-message {
+    background-color: rgba(111, 179, 184, 0.15);
+    border-left: 4px solid var(--calm-primary);
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 1rem;
+    line-height: 1.6;
+    white-space: pre-line;
+}
+
 /* Breathing exercise */
 #breathing-container {
     display: flex;

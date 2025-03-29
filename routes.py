@@ -416,6 +416,50 @@ def log_mood():
     
     return redirect(url_for('dashboard'))
 
+# API endpoint for getting coaching feedback
+@app.route('/api/journal_coach/<int:entry_id>', methods=['POST'])
+@login_required
+def api_journal_coach(entry_id):
+    entry = JournalEntry.query.get_or_404(entry_id)
+    
+    # Ensure the entry belongs to the current user
+    if entry.user_id != current_user.id:
+        return jsonify({'success': False, 'message': 'Unauthorized access'})
+    
+    try:
+        from openai_service import generate_journaling_coach_response
+        
+        # Generate the coach response
+        coach_response = generate_journaling_coach_response(entry)
+        
+        return jsonify({
+            'success': True,
+            'coach_response': coach_response
+        })
+        
+    except Exception as e:
+        app.logger.error(f"Error generating coach response: {str(e)}")
+        
+        # Return more specific error messages
+        if "API_QUOTA_EXCEEDED" in str(e):
+            return jsonify({
+                'success': False,
+                'status': 'API_LIMIT',
+                'message': 'Coach feedback is currently unavailable due to API limits.'
+            }), 429
+        elif "INVALID_API_KEY" in str(e):
+            return jsonify({
+                'success': False,
+                'status': 'CONFIG_ERROR',
+                'message': 'Coach feedback is currently unavailable due to a configuration issue.'
+            }), 500
+        else:
+            return jsonify({
+                'success': False,
+                'status': 'ERROR',
+                'message': 'There was an error generating coach feedback. You can try again later.'
+            }), 500
+
 # API endpoint for analyzing a journal entry
 @app.route('/api/analyze_entry/<int:entry_id>', methods=['POST'])
 @login_required

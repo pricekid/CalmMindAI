@@ -56,6 +56,31 @@
                 </div>
             </div>
             
+            <!-- Journaling Coach -->
+            <div class="card bg-dark mb-4">
+                <div class="card-header">
+                    <h4 class="mb-0">
+                        <i class="fas fa-comments me-2"></i> 
+                        Your Journaling Coach
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div id="coach-container" class="py-3">
+                        <p>Would you like some supportive feedback on your journal entry?</p>
+                        <button id="coach-button" class="btn btn-primary" data-entry-id="{{ entry.id }}">
+                            <i class="fas fa-comment-dots me-1"></i> Get Coach Feedback
+                        </button>
+                        <div id="coach-loading" class="mt-3 d-none">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Your coach is composing a response...</p>
+                        </div>
+                        <div id="coach-response" class="mt-3 coach-message d-none"></div>
+                    </div>
+                </div>
+            </div>
+            
             <!-- CBT Recommendations -->
             <div class="card bg-dark mb-4">
                 <div class="card-header">
@@ -193,9 +218,10 @@
 {% endblock %}
 
 {% block scripts %}
-{% if view_only and not entry.is_analyzed %}
+{% if view_only %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    /* Analysis button handling */
     const analyzeButton = document.getElementById('analyze-button');
     const loadingIndicator = document.getElementById('analysis-loading');
     const resultContainer = document.getElementById('analysis-result');
@@ -240,6 +266,53 @@ document.addEventListener('DOMContentLoaded', function() {
                 resultContainer.classList.remove('d-none');
                 resultContainer.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
                 analyzeButton.disabled = false;
+            });
+        });
+    }
+    
+    /* Coach button handling */
+    const coachButton = document.getElementById('coach-button');
+    const coachLoading = document.getElementById('coach-loading');
+    const coachResponse = document.getElementById('coach-response');
+    
+    if (coachButton) {
+        coachButton.addEventListener('click', function() {
+            const entryId = coachButton.dataset.entryId;
+            
+            // Show loading indicator
+            coachButton.disabled = true;
+            coachLoading.classList.remove('d-none');
+            
+            // Make AJAX request to get coach feedback
+            fetch(`/api/journal_coach/${entryId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                coachLoading.classList.add('d-none');
+                
+                if (data.success) {
+                    // Display coach response
+                    coachResponse.classList.remove('d-none');
+                    coachResponse.textContent = data.coach_response;
+                    coachButton.textContent = 'Get Another Response';
+                    coachButton.disabled = false;
+                } else {
+                    // Display error message
+                    coachResponse.classList.remove('d-none');
+                    coachResponse.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+                    coachButton.disabled = false;
+                }
+            })
+            .catch(error => {
+                coachLoading.classList.add('d-none');
+                coachResponse.classList.remove('d-none');
+                coachResponse.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
+                coachButton.disabled = false;
             });
         });
     }
