@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
-import logging
 from admin_models import Admin
 from admin_forms import AdminLoginForm, AdminMessageForm, APIConfigForm
 from admin_utils import (
@@ -20,155 +19,25 @@ ensure_data_files_exist()
 @admin_bp.route('/login', methods=['GET', 'POST'])
 def login():
     """Admin login route"""
-    logging.debug("Admin login route accessed")
-    try:
-        # Fix potential issue with current_user not defined
-        try:
-            is_authenticated = current_user.is_authenticated
-            logging.debug(f"Current user authenticated: {is_authenticated}")
-            if is_authenticated:
-                logging.debug("User already authenticated, redirecting to dashboard")
-                return redirect(url_for('admin.dashboard'))
-        except Exception as e:
-            logging.error(f"Error checking authentication status: {str(e)}")
-            # Continue to login form
-        
-        form = AdminLoginForm()
-        logging.debug("Form created, checking validation")
-        
-        if request.method == 'POST':
-            logging.debug(f"Form submitted: username={form.username.data}")
-            if form.validate_on_submit():
-                logging.debug("Form validated")
-                # Check if it's our hardcoded admin
-                if form.username.data == "admin":
-                    logging.debug("Attempting to get admin user")
-                    admin = Admin.get(1)
-                    
-                    if admin:
-                        logging.debug("Admin user found, checking password")
-                        password_check = admin.check_password(form.password.data)
-                        logging.debug(f"Password check result: {password_check}")
-                        
-                        if password_check:
-                            logging.debug("Password correct, logging in")
-                            login_user(admin)
-                            next_page = request.args.get('next')
-                            return redirect(next_page if next_page else url_for('admin.dashboard'))
-                        else:
-                            logging.debug("Password incorrect")
-                            flash('Login unsuccessful. Please check your credentials.', 'danger')
-                    else:
-                        logging.debug("Admin user not found")
-                        flash('Login unsuccessful. Please check your credentials.', 'danger')
-                else:
-                    logging.debug("Username is not admin")
-                    flash('Login unsuccessful. Please check your credentials.', 'danger')
+    if current_user.is_authenticated:
+        return redirect(url_for('admin.dashboard'))
+    
+    form = AdminLoginForm()
+    if form.validate_on_submit():
+        # Check if it's our hardcoded admin
+        if form.username.data == "admin":
+            admin = Admin.get(1)
+            
+            if admin and admin.check_password(form.password.data):
+                login_user(admin)
+                next_page = request.args.get('next')
+                return redirect(next_page if next_page else url_for('admin.dashboard'))
             else:
-                logging.debug(f"Form validation failed: {form.errors}")
-                flash('Please correct the errors in the form.', 'danger')
-        
-        try:
-            return render_template('admin/login.html', title='Admin Login', form=form)
-        except Exception as template_error:
-            logging.error(f"Error rendering login template: {str(template_error)}")
-            # Fallback template rendering with CSRF token properly rendered
-            from flask import render_template_string
-            
-            html_template = """
-            <!DOCTYPE html>
-            <html lang="en" data-bs-theme="dark">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Admin Login | Calm Journey</title>
-                <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
-                <style>
-                    body {
-                        min-height: 100vh;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                    }
-                </style>
-            </head>
-            <body>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card shadow">
-                                <div class="card-header bg-dark">
-                                    <h4 class="text-center mb-0">Admin Login</h4>
-                                </div>
-                                <div class="card-body">
-                                    <form method="POST">
-                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                                        <div class="mb-3">
-                                            <label for="username" class="form-label">Username</label>
-                                            <input type="text" class="form-control" id="username" name="username" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="password" class="form-label">Password</label>
-                                            <input type="password" class="form-control" id="password" name="password" required>
-                                        </div>
-                                        <div class="d-grid">
-                                            <button type="submit" class="btn btn-info">Log In</button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="card-footer text-center">
-                                    <small class="text-muted">Access restricted to administrators only.</small>
-                                </div>
-                            </div>
-                            
-                            {% if get_flashed_messages() %}
-                            <div class="mt-3">
-                                {% for category, message in get_flashed_messages(with_categories=true) %}
-                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                                    {{ message }}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-            </body>
-            </html>
-            """
-            
-            try:
-                # Try to render the string template with proper Jinja context
-                return render_template_string(html_template, csrf_token=form.csrf_token._value())
-            except Exception as template_string_error:
-                logging.error(f"Error rendering template string: {str(template_string_error)}")
-                # Last resort: return a very basic HTML form
-                basic_html = f"""
-                <!DOCTYPE html>
-                <html><head><title>Admin Login</title></head>
-                <body>
-                <h2>Admin Login</h2>
-                <form method="POST">
-                <input type="hidden" name="csrf_token" value="{form.csrf_token._value()}"/>
-                Username: <input type="text" name="username" required><br><br>
-                Password: <input type="password" name="password" required><br><br>
-                <button type="submit">Log In</button>
-                </form>
-                </body></html>
-                """
-                return basic_html
-    except Exception as e:
-        logging.error(f"Error in admin login: {str(e)}")
-        try:
-            # Try to render the error template
-            return render_template('admin/error.html', error=str(e)), 500
-        except Exception as template_error:
-            logging.error(f"Error rendering error template: {str(template_error)}")
-            # Fallback plain text error
-            return f"Admin login error: {str(e)}", 500
+                flash('Login unsuccessful. Please check your credentials.', 'danger')
+        else:
+            flash('Login unsuccessful. Please check your credentials.', 'danger')
+    
+    return render_template('admin/login.html', title='Admin Login', form=form)
 
 @admin_bp.route('/logout')
 @login_required

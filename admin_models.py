@@ -1,6 +1,5 @@
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
-import logging
 
 class Admin(UserMixin):
     """
@@ -20,12 +19,8 @@ class Admin(UserMixin):
         """
         Required for Flask-Login. Returns the admin user if it matches the hardcoded ID.
         """
-        logging.debug(f"Admin.get called with user_id: {user_id}")
-        if int(user_id) == 1:
-            # Hardcoded admin account - use a static hash instead of generating it each time
-            # This ensures the same hash is used for comparison
-            admin_hash = 'pbkdf2:sha256:600000$FjFuDq25zPdKjFQd$50e83bad91b3c58c9f83ecfafe04a7e15e3cac41d03d1b79ce714fbd4c8d2d3c'  # admin123
-            logging.debug("Returning admin user")
+        if user_id == 1:
+            # Hardcoded admin account
+            admin_hash = generate_password_hash("admin123")  # Default password
             return Admin(1, "admin", admin_hash)
-        logging.debug("No admin user found")
         return None
