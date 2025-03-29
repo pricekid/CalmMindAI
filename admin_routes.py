@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
+import logging
 from admin_models import Admin
 from admin_forms import AdminLoginForm, AdminMessageForm, APIConfigForm
 from admin_utils import (
@@ -19,25 +20,32 @@ ensure_data_files_exist()
 @admin_bp.route('/login', methods=['GET', 'POST'])
 def login():
     """Admin login route"""
-    if current_user.is_authenticated:
-        return redirect(url_for('admin.dashboard'))
-    
-    form = AdminLoginForm()
-    if form.validate_on_submit():
-        # Check if it's our hardcoded admin
-        if form.username.data == "admin":
-            admin = Admin.get(1)
-            
-            if admin and admin.check_password(form.password.data):
-                login_user(admin)
-                next_page = request.args.get('next')
-                return redirect(next_page if next_page else url_for('admin.dashboard'))
+    logging.debug("Admin login route accessed")
+    try:
+        if current_user.is_authenticated:
+            logging.debug("User already authenticated, redirecting to dashboard")
+            return redirect(url_for('admin.dashboard'))
+        
+        form = AdminLoginForm()
+        logging.debug("Form created, checking validation")
+        if form.validate_on_submit():
+            # Check if it's our hardcoded admin
+            if form.username.data == "admin":
+                admin = Admin.get(1)
+                
+                if admin and admin.check_password(form.password.data):
+                    login_user(admin)
+                    next_page = request.args.get('next')
+                    return redirect(next_page if next_page else url_for('admin.dashboard'))
+                else:
+                    flash('Login unsuccessful. Please check your credentials.', 'danger')
             else:
                 flash('Login unsuccessful. Please check your credentials.', 'danger')
-        else:
-            flash('Login unsuccessful. Please check your credentials.', 'danger')
-    
-    return render_template('admin/login.html', title='Admin Login', form=form)
+        
+        return render_template('admin/login.html', title='Admin Login', form=form)
+    except Exception as e:
+        logging.error(f"Error in admin login: {str(e)}")
+        raise e
 
 @admin_bp.route('/logout')
 @login_required
