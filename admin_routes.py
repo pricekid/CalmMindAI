@@ -9,6 +9,11 @@ from admin_utils import (
 )
 from models import User, JournalEntry, CBTRecommendation
 from app import db
+import logging
+import traceback
+
+# Set up logging
+logger = logging.getLogger(__name__)
 
 # Create a blueprint for admin routes
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
@@ -19,25 +24,44 @@ ensure_data_files_exist()
 @admin_bp.route('/login', methods=['GET', 'POST'])
 def login():
     """Admin login route"""
-    if current_user.is_authenticated:
-        return redirect(url_for('admin.dashboard'))
-    
-    form = AdminLoginForm()
-    if form.validate_on_submit():
-        # Check if it's our hardcoded admin
-        if form.username.data == "admin":
-            admin = Admin.get(1)
-            
-            if admin and admin.check_password(form.password.data):
-                login_user(admin)
-                next_page = request.args.get('next')
-                return redirect(next_page if next_page else url_for('admin.dashboard'))
+    try:
+        logger.debug("Admin login route accessed")
+        if current_user.is_authenticated:
+            logger.debug("User already authenticated, redirecting to dashboard")
+            return redirect(url_for('admin.dashboard'))
+        
+        form = AdminLoginForm()
+        if form.validate_on_submit():
+            logger.debug(f"Form submitted with username: {form.username.data}")
+            # Check if it's our hardcoded admin
+            if form.username.data == "admin":
+                try:
+                    admin = Admin.get(1)
+                    logger.debug("Admin user retrieved")
+                    
+                    if admin and admin.check_password(form.password.data):
+                        login_user(admin)
+                        logger.debug("Admin login successful")
+                        next_page = request.args.get('next')
+                        return redirect(next_page if next_page else url_for('admin.dashboard'))
+                    else:
+                        logger.debug("Password check failed")
+                        flash('Login unsuccessful. Please check your credentials.', 'danger')
+                except Exception as e:
+                    logger.error(f"Error retrieving admin: {str(e)}")
+                    logger.error(traceback.format_exc())
+                    flash('An error occurred. Please try again.', 'danger')
             else:
+                logger.debug("Username is not admin")
                 flash('Login unsuccessful. Please check your credentials.', 'danger')
-        else:
-            flash('Login unsuccessful. Please check your credentials.', 'danger')
-    
-    return render_template('admin/login.html', title='Admin Login', form=form)
+        
+        logger.debug("Rendering login template")
+        return render_template('admin/login.html', title='Admin Login', form=form)
+    except Exception as e:
+        logger.error(f"Unhandled exception in admin login: {str(e)}")
+        logger.error(traceback.format_exc())
+        flash('An error occurred. Please try again.', 'danger')
+        return render_template('admin/login.html', title='Admin Login', form=form)
 
 @admin_bp.route('/logout')
 @login_required

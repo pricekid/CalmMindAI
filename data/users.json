@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "id": 1,
+    "username": "Teddy Leon",
+    "email": "teddy.leon@alumni.uwi.edu",
+    "created_at": "2025-03-29T17:44:22.883869",
+    "entry_count": 0
+  },
+  {
+    "id": 2,
+    "username": "Jeff Peter",
+    "email": "naturalarts@gmail.com",
+    "created_at": "2025-03-29T17:47:28.712804",
+    "entry_count": 4
+  },
+  {
+    "id": 3,
+    "username": "Ms. Stressless",
+    "email": "jacqueline12006@yahoo.com",
+    "created_at": "2025-03-29T19:46:56.531856",
+    "entry_count": 2
+  },
+  {
+    "id": 4,
+    "username": "Nicole Scott",
+    "email": "Nscott392@yahoo.com",
+    "created_at": "2025-03-29T20:15:18.541715",
+    "entry_count": 0
+  },
+  {
+    "id": 5,
+    "username": "Don",
+    "email": "ken.maycock@gmail.com",
+    "created_at": "2025-03-29T20:24:45.037986",
+    "entry_count": 29
+  }
+]
