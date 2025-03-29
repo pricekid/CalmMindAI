@@ -1,0 +1,240 @@
+/* Journal Visualization Styles */
+
+.visualization-container {
+    background-color: rgba(33, 37, 41, 0.6);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    transition: all 0.3s ease-in-out;
+}
+
+.visualization-animation {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    transition: all 0.5s ease-in-out;
+}
+
+.visualization-animation.visible {
+    opacity: 1;
+    max-height: 2000px;
+    margin-bottom: 30px;
+    padding: 20px;
+}
+
+.insight-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.insight-header h3 {
+    font-weight: 600;
+    color: var(--bs-info);
+    margin-bottom: 10px;
+}
+
+.insight-header p {
+    color: #adb5bd;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+/* Statistics Cards */
+.stat-card {
+    border: none;
+    transition: transform 0.2s ease;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    opacity: 0.6;
+    color: var(--bs-info);
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    color: #adb5bd;
+    font-size: 14px;
+}
+
+/* Chart Container */
+.chart-container {
+    height: 300px;
+    position: relative;
+}
+
+/* Visualization Tabs */
+.viz-tabs {
+    border-bottom: 1px solid #2c3136;
+    margin-bottom: 20px;
+}
+
+.viz-tabs .nav-link {
+    color: #adb5bd;
+    background: transparent;
+    border: none;
+    padding: 10px 15px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border-radius: 0;
+    margin-right: 2px;
+}
+
+.viz-tabs .nav-link:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.viz-tabs .nav-link.active {
+    color: var(--bs-info);
+    background-color: rgba(13, 202, 240, 0.1);
+    border-bottom: 2px solid var(--bs-info);
+}
+
+/* Word Cloud */
+.word-cloud-container {
+    height: 300px;
+    width: 100%;
+    position: relative;
+}
+
+.word-cloud-word {
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+    white-space: nowrap;
+}
+
+.word-cloud-word:hover {
+    color: var(--bs-info) !important;
+    transform: scale(1.1);
+}
+
+/* Word Info Panel */
+.word-info-panel {
+    min-height: 300px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.word-info-panel .card-header {
+    background-color: rgba(33, 37, 41, 0.8);
+    border-bottom: 1px solid #2c3136;
+    padding: 15px;
+}
+
+.word-info-panel .card-header small {
+    color: #adb5bd;
+}
+
+.word-info-panel .card-body {
+    padding: 15px;
+}
+
+.word-info-panel .entry-link {
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
+    display: block;
+    text-decoration: none;
+    color: white;
+}
+
+.word-info-panel .entry-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.word-info-panel .entry-link .entry-title {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.word-info-panel .entry-link .entry-date {
+    font-size: 12px;
+    color: #adb5bd;
+}
+
+/* Anxiety Level Badges */
+.anxiety-badge {
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.anxiety-low {
+    background-color: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+}
+
+.anxiety-medium {
+    background-color: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+}
+
+.anxiety-high {
+    background-color: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+}
+
+/* Toggle Button Animation */
+.toggle-visualization {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.toggle-visualization:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.4s ease;
+    z-index: -1;
+}
+
+.toggle-visualization:hover:before {
+    width: 200%;
+    height: 200%;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .stat-value {
+        font-size: 24px;
+    }
+    
+    .word-cloud-container {
+        height: 250px;
+    }
+    
+    .chart-container {
+        height: 250px;
+    }
+}

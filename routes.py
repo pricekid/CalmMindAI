@@ -124,7 +124,51 @@ def journal():
         .order_by(desc(JournalEntry.created_at))\
         .paginate(page=page, per_page=10)
     
-    return render_template('journal.html', title='Journal', entries=entries)
+    # Get all entries for visualization (limiting to last 30 for performance)
+    all_entries = JournalEntry.query.filter_by(user_id=current_user.id)\
+        .order_by(desc(JournalEntry.created_at))\
+        .limit(30).all()
+    
+    # Format the entry data for visualization
+    journal_data = [{
+        'id': entry.id,
+        'title': entry.title,
+        'anxiety_level': entry.anxiety_level,
+        'created_at': entry.created_at.isoformat(),
+        'content': entry.content[:100],  # Only send snippet for privacy/performance
+        'is_analyzed': entry.is_analyzed
+    } for entry in all_entries]
+    
+    # Calculate trend and statistics
+    anxiety_avg = None
+    anxiety_trend = None
+    
+    if all_entries:
+        anxiety_levels = [entry.anxiety_level for entry in all_entries]
+        anxiety_avg = sum(anxiety_levels) / len(anxiety_levels)
+        
+        # Calculate trend if we have enough entries
+        if len(all_entries) >= 5:
+            recent_entries = all_entries[:5]
+            older_entries = all_entries[-5:] if len(all_entries) > 10 else all_entries[:5]
+            
+            recent_avg = sum(entry.anxiety_level for entry in recent_entries) / len(recent_entries)
+            older_avg = sum(entry.anxiety_level for entry in older_entries) / len(older_entries)
+            
+            anxiety_trend = recent_avg - older_avg
+    
+    # Pass statistics to the template
+    stats = {
+        'total_entries': len(all_entries),
+        'anxiety_avg': round(anxiety_avg, 1) if anxiety_avg is not None else None,
+        'anxiety_trend': anxiety_trend
+    }
+    
+    return render_template('journal.html', 
+                          title='Journal', 
+                          entries=entries, 
+                          journal_data=journal_data,
+                          stats=stats)
 
 # Create new journal entry
 @app.route('/journal/new', methods=['GET', 'POST'])

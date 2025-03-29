@@ -5,9 +5,133 @@
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h1>My Journal</h1>
-    <a href="{{ url_for('new_journal_entry') }}" class="btn btn-primary">
-        <i class="fas fa-plus me-1"></i> New Entry
-    </a>
+    <div class="d-flex gap-2">
+        <button id="toggle-visualization" class="btn btn-outline-info toggle-visualization">
+            <i class="fas fa-chart-line me-1"></i> Show Insights
+        </button>
+        <a href="{{ url_for('new_journal_entry') }}" class="btn btn-primary">
+            <i class="fas fa-plus me-1"></i> New Entry
+        </a>
+    </div>
+</div>
+
+<!-- Journal Data for JS -->
+<script type="application/json" id="journal-data">
+    {{ journal_data|tojson }}
+</script>
+
+<!-- Visualization Container (Hidden by Default) -->
+<div id="visualization-container" class="visualization-container d-none visualization-animation">
+    <div class="insight-header">
+        <h3><i class="fas fa-chart-line me-2"></i> Journal Insights</h3>
+        <p>Interactive visualizations to help you understand patterns in your anxiety and journaling habits.</p>
+    </div>
+    
+    <!-- Statistics Cards -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="card bg-dark stat-card">
+                <div class="card-body position-relative p-4">
+                    <i class="fas fa-book stat-icon"></i>
+                    <h5 class="card-title mb-3">Total Entries</h5>
+                    <div class="stat-value" id="total-entries-count">{{ stats.total_entries }}</div>
+                    <div class="stat-label">journal entries tracked</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card bg-dark stat-card">
+                <div class="card-body position-relative p-4">
+                    <i class="fas fa-brain stat-icon"></i>
+                    <h5 class="card-title mb-3">Average Anxiety</h5>
+                    <div class="stat-value">{% if stats.anxiety_avg %}{{ stats.anxiety_avg }}{% else %}N/A{% endif %}</div>
+                    <div class="stat-label">out of 10</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card bg-dark stat-card">
+                <div class="card-body position-relative p-4">
+                    <i class="fas fa-chart-line stat-icon"></i>
+                    <h5 class="card-title mb-3">Anxiety Trend</h5>
+                    <div class="stat-value" id="anxiety-trend">
+                        {% if stats.anxiety_trend is not none %}
+                            {% if stats.anxiety_trend < -0.5 %}
+                                <i class="fas fa-arrow-down text-success"></i> Decreasing
+                            {% elif stats.anxiety_trend > 0.5 %}
+                                <i class="fas fa-arrow-up text-danger"></i> Increasing
+                            {% else %}
+                                <i class="fas fa-equals text-info"></i> Stable
+                            {% endif %}
+                        {% else %}
+                            Need more entries
+                        {% endif %}
+                    </div>
+                    <div class="stat-label">recent pattern</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Visualization Tabs -->
+    <ul class="nav nav-tabs viz-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="timeline-tab" data-bs-toggle="tab" data-bs-target="#timeline-tab-pane" type="button" role="tab" aria-controls="timeline-tab-pane" aria-selected="true">
+                <i class="fas fa-chart-line me-1"></i> Anxiety Timeline
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="themes-tab" data-bs-toggle="tab" data-bs-target="#themes-tab-pane" type="button" role="tab" aria-controls="themes-tab-pane" aria-selected="false">
+                <i class="fas fa-comment-dots me-1"></i> Common Themes
+            </button>
+        </li>
+    </ul>
+    
+    <div class="tab-content mb-4">
+        <!-- Timeline Tab -->
+        <div class="tab-pane fade show active" id="timeline-tab-pane" role="tabpanel" aria-labelledby="timeline-tab" tabindex="0">
+            <div class="card bg-dark">
+                <div class="card-body">
+                    <p class="card-text mb-3">This chart shows your anxiety levels over time. Click on any point to view that journal entry.</p>
+                    <div class="chart-container">
+                        <canvas id="anxiety-timeline-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Themes Tab -->
+        <div class="tab-pane fade" id="themes-tab-pane" role="tabpanel" aria-labelledby="themes-tab" tabindex="0">
+            <div class="row g-4">
+                <div class="col-md-8">
+                    <div class="card bg-dark">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">Common Words & Themes</h5>
+                            <p class="card-text mb-3">Click on any word to see journal entries that contain it.</p>
+                            <div class="word-cloud-container" id="word-cloud-container">
+                                <div class="d-flex justify-content-center align-items-center h-100">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card bg-dark word-info-panel d-none" id="word-info-panel">
+                        <div class="card-header">
+                            <h5 class="mb-0">Select a word</h5>
+                            <small>Click on any word in the cloud to see related entries</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% if entries.items %}
@@ -124,4 +248,8 @@
         <p>Our AI assistant will analyze your entries using Cognitive Behavioral Therapy principles to help you challenge negative thought patterns and develop healthier perspectives.</p>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/journal-visualization.js') }}"></script>
 {% endblock %}
