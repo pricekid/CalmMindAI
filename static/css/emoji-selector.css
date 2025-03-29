@@ -1,0 +1,126 @@
+/* Emoji Mood Selector Styling */
+.mood-selector {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+    padding: 0.5rem;
+    border-radius: 12px;
+    background-color: rgba(33, 37, 41, 0.5);
+    transition: all 0.3s ease;
+}
+
+.emoji-option {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 18%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    background-color: rgba(33, 37, 41, 0.7);
+    border: 2px solid transparent;
+}
+
+.emoji-option:hover {
+    transform: scale(1.15);
+    z-index: 5;
+    background-color: rgba(52, 58, 64, 0.7);
+    border-color: var(--bs-primary);
+}
+
+.emoji-option.selected {
+    transform: scale(1.2);
+    border: 2px solid var(--bs-primary);
+    background-color: rgba(52, 58, 64, 0.8);
+    box-shadow: 0 0 10px rgba(13, 110, 253, 0.5);
+    z-index: 10;
+}
+
+.emoji-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+    transition: all 0.2s ease;
+}
+
+.emoji-label {
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    text-align: center;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.emoji-option:hover .emoji-label,
+.emoji-option.selected .emoji-label {
+    opacity: 1;
+}
+
+.emoji-tooltip {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(33, 37, 41, 0.9);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+    white-space: nowrap;
+    z-index: 100;
+}
+
+.emoji-option:hover .emoji-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Emoji colors */
+.emoji-awful { color: var(--bs-danger); }
+.emoji-bad { color: var(--bs-orange); }
+.emoji-okay { color: var(--bs-warning); }
+.emoji-good { color: var(--bs-info); }
+.emoji-great { color: var(--bs-success); }
+
+/* Animation for required selection */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.mood-selector.shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .emoji-icon {
+        font-size: 1.5rem;
+    }
+    
+    .emoji-label {
+        font-size: 0.7rem;
+    }
+}
+
+/* Feedback message styling */
+.mood-feedback {
+    margin-top: 0.5rem;
+}
+
+.mood-form-notes {
+    margin-top: 1rem;
+}
+
+/* Hide the original form input */
+.hidden-mood-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}

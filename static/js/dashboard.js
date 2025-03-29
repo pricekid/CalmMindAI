@@ -71,33 +71,5 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('mood-chart-container').innerHTML += '<p class="text-center text-muted">No mood data available yet. Start logging your mood to see your progress!</p>';
     }
     
-    // Mood log slider value display
-    const moodSlider = document.getElementById('mood_score');
-    const moodValue = document.getElementById('mood-value');
-    
-    if (moodSlider && moodValue) {
-        // Update the displayed value when the slider changes
-        moodSlider.addEventListener('input', function() {
-            moodValue.textContent = this.value;
-            
-            // Change color based on mood value
-            let color;
-            const value = parseInt(this.value);
-            
-            if (value <= 3) {
-                color = 'var(--bs-danger)';
-            } else if (value <= 5) {
-                color = 'var(--bs-warning)';
-            } else if (value <= 7) {
-                color = 'var(--bs-info)';
-            } else {
-                color = 'var(--bs-success)';
-            }
-            
-            moodValue.style.color = color;
-        });
-        
-        // Trigger once to set initial state
-        moodSlider.dispatchEvent(new Event('input'));
-    }
+    // Mood tracking is now handled by emoji-selector.js
 });
