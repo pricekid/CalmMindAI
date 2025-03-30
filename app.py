@@ -31,17 +31,14 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 csrf.init_app(app)
 
-# Configure login manager
+# Configure login manager for regular users
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = "login"
+login_manager.login_view = "login"  # Regular user login route
 login_manager.login_message_category = "info"
-
-# Admin login manager setup for handling admin users
-admin_login_manager = LoginManager()
-admin_login_manager.init_app(app)
-admin_login_manager.login_view = "admin.login"
-admin_login_manager.login_message_category = "info"
+login_manager.blueprint_login_views = {
+    "admin": "admin.login"  # This ensures admin routes redirect to admin login
+}
 
 # Add global error handler
 @app.errorhandler(Exception)
@@ -75,18 +72,20 @@ with app.app_context():
     import routes
     
     from models import User
+    from admin_models import Admin
     
     @login_manager.user_loader
     def load_user(user_id):
-        return db.session.get(User, int(user_id))
+        # Check if this is an admin user (user_id will be a string like "admin_1")
+        if isinstance(user_id, str) and user_id.startswith('admin_'):
+            admin_id = int(user_id.split('_')[1])
+            return Admin.get(admin_id)
+        # Regular user
+        try:
+            return db.session.get(User, int(user_id))
+        except ValueError:
+            return None
     
-    # Import admin model for admin login
-    from admin_models import Admin
-    
-    @admin_login_manager.user_loader
-    def load_admin(user_id):
-        return Admin.get(int(user_id))
-        
     # Register the admin blueprint
     from admin_routes import admin_bp
     app.register_blueprint(admin_bp)

@@ -1,7 +1,19 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
-from flask_login import login_user, login_required, logout_user, current_user
+from flask_login import login_user, logout_user, current_user
+from functools import wraps
 from admin_models import Admin
 from admin_forms import AdminLoginForm, AdminMessageForm, APIConfigForm
+
+# Create a custom admin_required decorator
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        # Check if user is authenticated and is an admin
+        if not current_user.is_authenticated or not isinstance(current_user._get_current_object(), Admin):
+            flash('Please log in as admin to access this page.', 'danger')
+            return redirect(url_for('admin.login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
 from admin_utils import (
     ensure_data_files_exist, get_admin_stats, export_journal_entries, 
     export_users, flag_journal_entry, is_entry_flagged, get_flagged_entries,
@@ -64,7 +76,7 @@ def login():
         return render_template('admin/login.html', title='Admin Login', form=form)
 
 @admin_bp.route('/logout')
-@login_required
+@admin_required
 def logout():
     """Admin logout route"""
     logout_user()
@@ -72,7 +84,7 @@ def logout():
     return redirect(url_for('admin.login'))
 
 @admin_bp.route('/dashboard')
-@login_required
+@admin_required
 def dashboard():
     """Admin dashboard with statistics"""
     stats = get_admin_stats()
@@ -84,7 +96,7 @@ def dashboard():
     return render_template('admin/dashboard.html', title='Admin Dashboard', stats=stats)
 
 @admin_bp.route('/journals')
-@login_required
+@admin_required
 def journals():
     """View all journal entries"""
     page = request.args.get('page', 1, type=int)
@@ -120,7 +132,7 @@ def journals():
                           show_flagged=show_flagged)
 
 @admin_bp.route('/journal/<int:journal_id>')
-@login_required
+@admin_required
 def view_journal(journal_id):
     """View a specific journal entry"""
     entry = JournalEntry.query.get_or_404(journal_id)
@@ -148,7 +160,7 @@ def view_journal(journal_id):
                           flagged=flagged, messages=entry_messages, form=form)
 
 @admin_bp.route('/journal/<int:journal_id>/flag', methods=['POST'])
-@login_required
+@admin_required
 def flag_journal(journal_id):
     """Flag a journal entry as having incorrect AI analysis"""
     reason = request.form.get('reason', 'No reason provided')
@@ -159,7 +171,7 @@ def flag_journal(journal_id):
     return redirect(url_for('admin.view_journal', journal_id=journal_id))
 
 @admin_bp.route('/journal/<int:journal_id>/message', methods=['POST'])
-@login_required
+@admin_required
 def send_message(journal_id):
     """Send an admin message about a journal entry"""
     form = AdminMessageForm()
@@ -174,7 +186,7 @@ def send_message(journal_id):
     return redirect(url_for('admin.view_journal', journal_id=journal_id))
 
 @admin_bp.route('/users')
-@login_required
+@admin_required
 def users():
     """View all users"""
     page = request.args.get('page', 1, type=int)
@@ -191,7 +203,7 @@ def users():
                           users=users, journal_counts=journal_counts)
 
 @admin_bp.route('/user/<int:user_id>')
-@login_required
+@admin_required
 def view_user(user_id):
     """View a specific user"""
     user = User.query.get_or_404(user_id)
@@ -214,7 +226,7 @@ def view_user(user_id):
                           messages=admin_messages)
 
 @admin_bp.route('/settings', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def settings():
     """Admin settings page"""
     config = get_config()

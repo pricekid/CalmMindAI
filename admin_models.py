@@ -14,12 +14,16 @@ class Admin(UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
     
+    def get_id(self):
+        """Return a unique identifier for this admin user."""
+        return f"admin_{self.id}"
+    
     @staticmethod
     def get(user_id):
         """
         Required for Flask-Login. Returns the admin user if it matches the hardcoded ID.
         """
-        if user_id == 1:
+        if int(user_id) == 1:
             # Hardcoded admin account
             admin_hash = generate_password_hash("admin123")  # Default password
             return Admin(1, "admin", admin_hash)
