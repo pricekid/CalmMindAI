@@ -36,6 +36,12 @@ def register():
 # User login
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # Check if the request is coming from an admin page
+    next_page = request.args.get('next', '')
+    if next_page and next_page.startswith('/admin'):
+        # Redirect to admin login instead of regular login
+        return redirect(url_for('admin.login', next=next_page))
+    
     if current_user.is_authenticated:
         return redirect(url_for('dashboard'))
     
@@ -46,6 +52,10 @@ def login():
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
+            # Check again if the next page is an admin route and redirect appropriately
+            if next_page and next_page.startswith('/admin'):
+                flash('You need admin privileges to access that page.', 'warning')
+                return redirect(url_for('dashboard'))
             return redirect(next_page if next_page else url_for('dashboard'))
         else:
             flash('Login unsuccessful. Please check your email and password.', 'danger')

@@ -1,9 +1,9 @@
 import os
 import logging
-from flask import Flask
+from flask import Flask, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from flask_wtf.csrf import CSRFProtect
 
 # Configure logging
@@ -36,6 +36,14 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"  # Regular user login route
 login_manager.login_message_category = "info"
+
+# Custom unauthorized handler for login_manager
+@login_manager.unauthorized_handler
+def unauthorized():
+    # Check if the request path starts with /admin
+    if request.path.startswith('/admin'):
+        return redirect(url_for('admin.login', next=request.url))
+    return redirect(url_for('login', next=request.url))
 
 # Add global error handler
 @app.errorhandler(Exception)
