@@ -256,6 +256,7 @@ def new_journal_entry():
             else:
                 flash('Your journal entry has been saved, but analysis could not be completed. You can try analyzing it later.', 'warning')
         
+        # The coach response will be automatically generated in the view_journal_entry function
         return redirect(url_for('view_journal_entry', entry_id=entry.id))
     
     return render_template('journal_entry.html', title='New Journal Entry', 
@@ -271,8 +272,25 @@ def view_journal_entry(entry_id):
     if entry.user_id != current_user.id:
         abort(403)
     
+    # Automatically generate coach response when viewing the entry
+    coach_response = None
+    try:
+        from openai_service import generate_journaling_coach_response
+        coach_response = generate_journaling_coach_response(entry)
+    except Exception as e:
+        error_msg = str(e)
+        logging.error(f"Error generating automatic coach response: {error_msg}")
+        
+        # Provide different messages based on error type
+        if "API_QUOTA_EXCEEDED" in error_msg:
+            coach_response = "Thank you for sharing your thoughts today. While I can't provide a personalized response right now due to technical limitations, your entry has been saved. Remember that the act of journaling itself is a powerful tool for self-reflection and growth."
+        elif "INVALID_API_KEY" in error_msg:
+            coach_response = "I appreciate you taking the time to journal today. Your entry has been saved, though I'm unable to provide specific feedback at the moment. The practice of putting your thoughts into words is valuable in itself."
+        else:
+            coach_response = None  # Use None to indicate we should still show the button
+    
     return render_template('journal_entry.html', title=entry.title, 
-                          entry=entry, view_only=True)
+                          entry=entry, view_only=True, coach_response=coach_response)
 
 # Update journal entry
 @app.route('/journal/<int:entry_id>/update', methods=['GET', 'POST'])
@@ -348,6 +366,8 @@ def update_journal_entry(entry_id):
         
         # Final commit with recommendations and analysis status
         db.session.commit()
+        
+        # The coach response will be automatically generated in the view_journal_entry function
         return redirect(url_for('view_journal_entry', entry_id=entry.id))
     
     elif request.method == 'GET':

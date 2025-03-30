@@ -66,17 +66,31 @@
                 </div>
                 <div class="card-body">
                     <div id="coach-container" class="py-3">
-                        <p>Would you like some supportive feedback on your journal entry?</p>
-                        <button id="coach-button" class="btn btn-primary" data-entry-id="{{ entry.id }}">
-                            <i class="fas fa-comment-dots me-1"></i> Get Coach Feedback
-                        </button>
+                        {% if coach_response %}
+                            <!-- Display the pre-generated coach response -->
+                            <div id="coach-response" class="coach-message">
+                                {{ coach_response }}
+                            </div>
+                            <button id="coach-button" class="btn btn-primary mt-3" data-entry-id="{{ entry.id }}">
+                                <i class="fas fa-comment-dots me-1"></i> Get Another Response
+                            </button>
+                        {% else %}
+                            <!-- If no pre-generated response, show the button to request one -->
+                            <p>Would you like some supportive feedback on your journal entry?</p>
+                            <button id="coach-button" class="btn btn-primary" data-entry-id="{{ entry.id }}">
+                                <i class="fas fa-comment-dots me-1"></i> Get Coach Feedback
+                            </button>
+                        {% endif %}
                         <div id="coach-loading" class="mt-3 d-none">
                             <div class="spinner-border text-primary" role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
                             <p class="mt-2">Your coach is composing a response...</p>
                         </div>
-                        <div id="coach-response" class="mt-3 coach-message d-none"></div>
+                        <!-- This div is for displaying additional responses requested via the button -->
+                        {% if not coach_response %}
+                            <div id="coach-response" class="mt-3 coach-message d-none"></div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -296,23 +310,38 @@ document.addEventListener('DOMContentLoaded', function() {
                 coachLoading.classList.add('d-none');
                 
                 if (data.success) {
-                    // Display coach response
+                    // Update coach response
                     coachResponse.classList.remove('d-none');
                     coachResponse.textContent = data.coach_response;
                     coachButton.textContent = 'Get Another Response';
                     coachButton.disabled = false;
                 } else {
                     // Display error message
-                    coachResponse.classList.remove('d-none');
-                    coachResponse.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
-                    coachButton.disabled = false;
+                    // If we already have a response displayed, keep it and show error in alert
+                    if ({% if coach_response %}true{% else %}false{% endif %}) {
+                        alert(`${data.message}`);
+                        coachButton.disabled = false;
+                    } else {
+                        // Otherwise, display error in the response area
+                        coachResponse.classList.remove('d-none');
+                        coachResponse.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+                        coachButton.disabled = false;
+                    }
                 }
             })
             .catch(error => {
                 coachLoading.classList.add('d-none');
-                coachResponse.classList.remove('d-none');
-                coachResponse.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
-                coachButton.disabled = false;
+                
+                // If we already have a response displayed, keep it and show error in alert
+                if ({% if coach_response %}true{% else %}false{% endif %}) {
+                    alert(`Error: ${error.message}`);
+                    coachButton.disabled = false;
+                } else {
+                    // Otherwise, display error in the response area
+                    coachResponse.classList.remove('d-none');
+                    coachResponse.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
+                    coachButton.disabled = false;
+                }
             });
         });
     }
