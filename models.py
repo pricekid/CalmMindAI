@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from app import db
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -19,6 +19,34 @@ class User(UserMixin, db.Model):
         
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+    
+    def get_weekly_summary(self):
+        """Get mood summary for the past week"""
+        week_ago = datetime.utcnow() - timedelta(days=7)
+        weekly_moods = self.mood_logs.filter(MoodLog.created_at >= week_ago).all()
+        
+        if not weekly_moods:
+            return None
+            
+        avg_mood = sum(log.mood_score for log in weekly_moods) / len(weekly_moods)
+        mood_trend = 'stable'
+        if len(weekly_moods) >= 2:
+            first_half = weekly_moods[:len(weekly_moods)//2]
+            second_half = weekly_moods[len(weekly_moods)//2:]
+            first_avg = sum(log.mood_score for log in first_half) / len(first_half)
+            second_avg = sum(log.mood_score for log in second_half) / len(second_half)
+            if second_avg - first_avg > 0.5:
+                mood_trend = 'improving'
+            elif first_avg - second_avg > 0.5:
+                mood_trend = 'declining'
+                
+        return {
+            'average_mood': round(avg_mood, 1),
+            'number_of_logs': len(weekly_moods),
+            'trend': mood_trend,
+            'highest_mood': max(log.mood_score for log in weekly_moods),
+            'lowest_mood': min(log.mood_score for log in weekly_moods)
+        }
     
     def __repr__(self):
         return f'<User {self.username}>'
@@ -64,30 +92,3 @@ class MoodLog(db.Model):
     
     def __repr__(self):
         return f'<MoodLog {self.mood_score}>'
-def get_weekly_summary(self):
-    """Get mood summary for the past week"""
-    week_ago = datetime.utcnow() - timedelta(days=7)
-    weekly_moods = self.mood_logs.filter(MoodLog.created_at >= week_ago).all()
-    
-    if not weekly_moods:
-        return None
-        
-    avg_mood = sum(log.mood_score for log in weekly_moods) / len(weekly_moods)
-    mood_trend = 'stable'
-    if len(weekly_moods) >= 2:
-        first_half = weekly_moods[:len(weekly_moods)//2]
-        second_half = weekly_moods[len(weekly_moods)//2:]
-        first_avg = sum(log.mood_score for log in first_half) / len(first_half)
-        second_avg = sum(log.mood_score for log in second_half) / len(second_half)
-        if second_avg - first_avg > 0.5:
-            mood_trend = 'improving'
-        elif first_avg - second_avg > 0.5:
-            mood_trend = 'declining'
-            
-    return {
-        'average_mood': round(avg_mood, 1),
-        'number_of_logs': len(weekly_moods),
-        'trend': mood_trend,
-        'highest_mood': max(log.mood_score for log in weekly_moods),
-        'lowest_mood': min(log.mood_score for log in weekly_moods)
-    }
