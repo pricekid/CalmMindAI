@@ -81,6 +81,9 @@ def dashboard():
     if hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
         return redirect(url_for('admin.dashboard'))
         
+    # Get weekly mood summary
+    weekly_summary = current_user.get_weekly_summary()
+        
     # Get recent journal entries
     recent_entries = JournalEntry.query.filter_by(user_id=current_user.id)\
         .order_by(desc(JournalEntry.created_at)).limit(5).all()
@@ -132,7 +135,8 @@ def dashboard():
                           mood_dates=mood_dates,
                           mood_scores=mood_scores,
                           coping_statement=coping_statement,
-                          mood_form=mood_form)
+                          mood_form=mood_form,
+                          weekly_summary=weekly_summary)
 
 # Journal entry list
 @app.route('/journal')

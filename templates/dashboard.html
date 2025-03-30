@@ -25,6 +25,49 @@
 </div>
 
 <div class="row g-4">
+    <!-- Weekly Summary -->
+    {% if weekly_summary %}
+    <div class="col-12">
+        <div class="card bg-dark dashboard-widget mb-4">
+            <h3><i class="fas fa-calendar-week me-2"></i> Weekly Mood Summary</h3>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <h4>Average Mood</h4>
+                        <p class="h2">{{ weekly_summary.average_mood }}/10</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <h4>Trend</h4>
+                        <p class="h2">
+                            {% if weekly_summary.trend == 'improving' %}
+                            <i class="fas fa-arrow-up text-success"></i>
+                            {% elif weekly_summary.trend == 'declining' %}
+                            <i class="fas fa-arrow-down text-danger"></i>
+                            {% else %}
+                            <i class="fas fa-arrows-h text-info"></i>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <h4>Entries</h4>
+                        <p class="h2">{{ weekly_summary.number_of_logs }}</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <h4>Range</h4>
+                        <p class="h2">{{ weekly_summary.lowest_mood }}-{{ weekly_summary.highest_mood }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
     <!-- Mood Tracking -->
     <div class="col-md-6">
         <div class="card bg-dark dashboard-widget">
