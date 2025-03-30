@@ -9,8 +9,12 @@ def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         # Check if user is authenticated and is an admin
-        if not current_user.is_authenticated or not isinstance(current_user._get_current_object(), Admin):
+        if not current_user.is_authenticated:
             flash('Please log in as admin to access this page.', 'danger')
+            return redirect(url_for('admin.login', next=request.url))
+        # Check if user is an admin (user_id should start with "admin_")
+        if not hasattr(current_user, 'get_id') or not current_user.get_id().startswith('admin_'):
+            flash('You need admin privileges to access this page.', 'danger')
             return redirect(url_for('admin.login', next=request.url))
         return f(*args, **kwargs)
     return decorated_function
@@ -38,9 +42,15 @@ def login():
     """Admin login route"""
     try:
         logger.debug("Admin login route accessed")
+        
+        # If user is authenticated but not as admin, redirect them to the regular dashboard
         if current_user.is_authenticated:
-            logger.debug("User already authenticated, redirecting to dashboard")
-            return redirect(url_for('admin.dashboard'))
+            if not hasattr(current_user, 'get_id') or not current_user.get_id().startswith('admin_'):
+                flash('You are logged in as a regular user. Please log out first to access admin area.', 'warning')
+                return redirect(url_for('dashboard'))
+            else:
+                logger.debug("Admin already authenticated, redirecting to admin dashboard")
+                return redirect(url_for('admin.dashboard'))
         
         form = AdminLoginForm()
         if form.validate_on_submit():
