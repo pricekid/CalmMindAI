@@ -1,10 +1,11 @@
 import os
 import logging
-from flask import Flask, url_for, redirect, request
+from flask import Flask, url_for, redirect, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
-from flask_login import LoginManager, current_user
+from flask_login import LoginManager, current_user, login_required as original_login_required
 from flask_wtf.csrf import CSRFProtect
+from functools import wraps
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -67,6 +68,27 @@ def handle_exception(e):
                           error_title=error_title,
                           error_message=error_message,
                           show_api_error=is_api_error), 500
+
+# Create a custom login_required decorator that checks user type
+def login_required(f):
+    @wraps(f)
+    def decorated_view(*args, **kwargs):
+        # First check if user is authenticated at all
+        if not current_user.is_authenticated:
+            return login_manager.unauthorized()
+        
+        # Check if current route is for regular users but user is an admin
+        if not request.path.startswith('/admin') and hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
+            flash('You are logged in as an admin. Regular user pages are not accessible.', 'warning')
+            return redirect(url_for('admin.dashboard'))
+            
+        # Check if current route is for admins but user is not an admin
+        if request.path.startswith('/admin') and (not hasattr(current_user, 'get_id') or not current_user.get_id().startswith('admin_')):
+            flash('You need admin privileges to access this page.', 'warning')
+            return redirect(url_for('dashboard'))
+            
+        return f(*args, **kwargs)
+    return decorated_view
 
 # Set up the login_manager.user_loader before importing routes
 from models import User

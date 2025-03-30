@@ -1,5 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request, jsonify, abort
-from flask_login import login_user, current_user, logout_user, login_required
+from flask_login import login_user, current_user, logout_user
+from app import login_required
 from app import app, db
 from models import User, JournalEntry, CBTRecommendation, MoodLog
 from forms import RegistrationForm, LoginForm, JournalEntryForm, MoodLogForm, AccountUpdateForm

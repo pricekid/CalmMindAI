@@ -3,8 +3,9 @@ from flask_login import login_user, logout_user, current_user
 from functools import wraps
 from admin_models import Admin
 from admin_forms import AdminLoginForm, AdminMessageForm, APIConfigForm
+from app import login_required
 
-# Create a custom admin_required decorator
+# Create a custom admin_required decorator that builds on our main login_required
 def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
