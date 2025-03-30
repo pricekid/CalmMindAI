@@ -23,7 +23,8 @@ def register():
     
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
+        # Convert email to lowercase for case-insensitive matching
+        user = User(username=form.username.data, email=form.email.data.lower())
         user.set_password(form.password.data)
         
         db.session.add(user)
@@ -50,7 +51,8 @@ def login():
     
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        # Convert email to lowercase for case-insensitive matching
+        user = User.query.filter_by(email=form.email.data.lower()).first()
         
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember.data)
@@ -395,7 +397,7 @@ def account():
             return render_template('account.html', title='Account', form=form)
         
         current_user.username = form.username.data
-        current_user.email = form.email.data
+        current_user.email = form.email.data.lower()
         
         # Update password if provided
         if form.new_password.data:

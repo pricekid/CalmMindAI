@@ -16,7 +16,8 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('That username is already taken. Please choose a different one.')
     
     def validate_email(self, email):
-        user = User.query.filter_by(email=email.data).first()
+        # Convert to lowercase for case-insensitive email matching
+        user = User.query.filter_by(email=email.data.lower()).first()
         if user:
             raise ValidationError('That email is already registered. Please use a different one.')
 
@@ -57,7 +58,8 @@ class AccountUpdateForm(FlaskForm):
                 raise ValidationError('That username is already taken. Please choose a different one.')
     
     def validate_email(self, email):
-        if email.data != self.original_email:
-            user = User.query.filter_by(email=email.data).first()
+        if email.data.lower() != self.original_email.lower():
+            # Convert to lowercase for case-insensitive email matching
+            user = User.query.filter_by(email=email.data.lower()).first()
             if user:
                 raise ValidationError('That email is already registered. Please use a different one.')
