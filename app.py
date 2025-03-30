@@ -40,10 +40,11 @@ login_manager.login_message_category = "info"
 # Custom unauthorized handler for login_manager
 @login_manager.unauthorized_handler
 def unauthorized():
-    # Check if the request path starts with /admin
+    # Only redirect to admin login if the path is an admin path
     if request.path.startswith('/admin'):
-        return redirect(url_for('admin.login', next=request.url))
-    return redirect(url_for('login', next=request.url))
+        return redirect(url_for('admin.login'))
+    # For all other paths, use the regular login
+    return redirect(url_for('login'))
 
 # Add global error handler
 @app.errorhandler(Exception)
@@ -67,29 +68,30 @@ def handle_exception(e):
                           error_message=error_message,
                           show_api_error=is_api_error), 500
 
+# Set up the login_manager.user_loader before importing routes
+from models import User
+from admin_models import Admin
+
+@login_manager.user_loader
+def load_user(user_id):
+    # Check if this is an admin user (user_id will be a string like "admin_1")
+    if isinstance(user_id, str) and user_id.startswith('admin_'):
+        admin_id = int(user_id.split('_')[1])
+        return Admin.get(admin_id)
+    # Regular user
+    try:
+        return db.session.get(User, int(user_id))
+    except ValueError:
+        return None
+
 # Import routes after app is initialized to avoid circular imports
 with app.app_context():
     # Import models to ensure they're registered with SQLAlchemy
-    from models import User, JournalEntry, CBTRecommendation, MoodLog
+    from models import JournalEntry, CBTRecommendation, MoodLog
     db.create_all()
     
     # Import routes after models
     import routes
-    
-    from models import User
-    from admin_models import Admin
-    
-    @login_manager.user_loader
-    def load_user(user_id):
-        # Check if this is an admin user (user_id will be a string like "admin_1")
-        if isinstance(user_id, str) and user_id.startswith('admin_'):
-            admin_id = int(user_id.split('_')[1])
-            return Admin.get(admin_id)
-        # Regular user
-        try:
-            return db.session.get(User, int(user_id))
-        except ValueError:
-            return None
     
     # Register the admin blueprint
     from admin_routes import admin_bp

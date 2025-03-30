@@ -36,13 +36,15 @@ def register():
 # User login
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # Check if the request is coming from an admin page
-    next_page = request.args.get('next', '')
-    if next_page and next_page.startswith('/admin'):
-        # Redirect to admin login instead of regular login
-        return redirect(url_for('admin.login', next=next_page))
+    # Intentionally remove the admin route check to fix the cycle
+    # We'll rely on the login_manager.unauthorized_handler instead
     
+    # Check if user is already logged in
     if current_user.is_authenticated:
+        # If logged in as admin, redirect to admin dashboard
+        if hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
+            return redirect(url_for('admin.dashboard'))
+        # Otherwise, go to the regular dashboard
         return redirect(url_for('dashboard'))
     
     form = LoginForm()
@@ -52,11 +54,11 @@ def login():
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
-            # Check again if the next page is an admin route and redirect appropriately
+            # Don't redirect to admin pages from regular login
             if next_page and next_page.startswith('/admin'):
                 flash('You need admin privileges to access that page.', 'warning')
                 return redirect(url_for('dashboard'))
-            return redirect(next_page if next_page else url_for('dashboard'))
+            return redirect(next_page if next_page and not next_page.startswith('/admin') else url_for('dashboard'))
         else:
             flash('Login unsuccessful. Please check your email and password.', 'danger')
     
@@ -72,6 +74,10 @@ def logout():
 @app.route('/dashboard')
 @login_required
 def dashboard():
+    # Make sure we're not logged in as admin trying to access regular dashboard
+    if hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
+        return redirect(url_for('admin.dashboard'))
+        
     # Get recent journal entries
     recent_entries = JournalEntry.query.filter_by(user_id=current_user.id)\
         .order_by(desc(JournalEntry.created_at)).limit(5).all()

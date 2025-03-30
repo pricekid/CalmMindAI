@@ -43,14 +43,23 @@ def login():
     try:
         logger.debug("Admin login route accessed")
         
-        # If user is authenticated but not as admin, redirect them to the regular dashboard
+        # If user is already logged in, redirect appropriately
         if current_user.is_authenticated:
+            # If regular user, redirect to regular dashboard
             if not hasattr(current_user, 'get_id') or not current_user.get_id().startswith('admin_'):
                 flash('You are logged in as a regular user. Please log out first to access admin area.', 'warning')
                 return redirect(url_for('dashboard'))
             else:
+                # Admin is already logged in
                 logger.debug("Admin already authenticated, redirecting to admin dashboard")
                 return redirect(url_for('admin.dashboard'))
+        
+        # Check if we're being directed from a protected route that requires login
+        next_url = request.args.get('next')
+        if next_url and not next_url.startswith('/admin'):
+            # If next URL is not an admin route, redirect to regular login
+            logger.debug(f"Redirecting non-admin next URL to regular login: {next_url}")
+            return redirect(url_for('login', next=next_url))
         
         form = AdminLoginForm()
         if form.validate_on_submit():
