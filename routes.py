@@ -423,6 +423,13 @@ def account():
         current_user.username = form.username.data
         current_user.email = form.email.data.lower()
         
+        # Update email notification settings
+        current_user.notifications_enabled = form.notifications_enabled.data
+        
+        # Update SMS notification settings
+        current_user.phone_number = form.phone_number.data
+        current_user.sms_notifications_enabled = form.sms_notifications_enabled.data
+        
         # Update password if provided
         if form.new_password.data:
             current_user.set_password(form.new_password.data)
@@ -434,6 +441,9 @@ def account():
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
+        form.notifications_enabled.data = current_user.notifications_enabled
+        form.phone_number.data = current_user.phone_number
+        form.sms_notifications_enabled.data = current_user.sms_notifications_enabled
     
     return render_template('account.html', title='Account', form=form)
 

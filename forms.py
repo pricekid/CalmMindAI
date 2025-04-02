@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField, IntegerField, BooleanField
-from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError, NumberRange
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, IntegerField, BooleanField, TelField
+from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError, NumberRange, Optional, Regexp
 from models import User
 
 class RegistrationForm(FlaskForm):
@@ -41,6 +41,17 @@ class MoodLogForm(FlaskForm):
 class AccountUpdateForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=3, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
+    
+    # Email notification settings
+    notifications_enabled = BooleanField('Enable Email Notifications')
+    
+    # SMS notification settings
+    phone_number = TelField('Phone Number (with country code, e.g. +1234567890)', 
+                           validators=[Optional(), 
+                                      Regexp(r'^\+[1-9]\d{1,14}$', 
+                                             message='Phone number must be in international format (e.g., +1234567890)')])
+    sms_notifications_enabled = BooleanField('Enable SMS Notifications')
+    
     current_password = PasswordField('Current Password', validators=[DataRequired()])
     new_password = PasswordField('New Password', validators=[Length(min=6)])
     confirm_new_password = PasswordField('Confirm New Password', validators=[EqualTo('new_password')])

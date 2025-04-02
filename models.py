@@ -9,8 +9,14 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    # Email notification settings
     notifications_enabled = db.Column(db.Boolean, default=True)
     notification_time = db.Column(db.Time, default=datetime.strptime('09:00', '%H:%M').time())
+    
+    # SMS notification settings
+    phone_number = db.Column(db.String(20), nullable=True)
+    sms_notifications_enabled = db.Column(db.Boolean, default=False)
     
     # Relationships
     journal_entries = db.relationship('JournalEntry', backref='author', lazy='dynamic')

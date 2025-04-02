@@ -42,6 +42,42 @@
                     </div>
                     
                     <hr class="my-4">
+                    <h5>Notification Settings</h5>
+                    
+                    <!-- Email Notifications -->
+                    <div class="mb-3 form-check">
+                        {{ form.notifications_enabled(class="form-check-input") }}
+                        {{ form.notifications_enabled.label(class="form-check-label") }}
+                        <div class="form-text">Receive daily reminders and tips via email</div>
+                    </div>
+                    
+                    <!-- SMS Notifications -->
+                    <div class="mb-3">
+                        <h6 class="mb-2">SMS Notifications</h6>
+                        
+                        <div class="mb-3">
+                            {{ form.phone_number.label(class="form-label") }}
+                            {% if form.phone_number.errors %}
+                                {{ form.phone_number(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.phone_number.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.phone_number(class="form-control") }}
+                            {% endif %}
+                            <div class="form-text">Enter your phone number with country code (e.g., +1234567890)</div>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            {{ form.sms_notifications_enabled(class="form-check-input") }}
+                            {{ form.sms_notifications_enabled.label(class="form-check-label") }}
+                            <div class="form-text">Receive daily reminders and tips via SMS</div>
+                        </div>
+                    </div>
+                    
+                    <hr class="my-4">
                     <h5>Change Password</h5>
                     <p class="text-muted mb-3">Leave the new password fields blank if you don't want to change it</p>
                     

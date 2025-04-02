@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
 from flask_login import login_user, logout_user, current_user
 from functools import wraps
+import os
 from admin_models import Admin
-from admin_forms import AdminLoginForm, AdminMessageForm, APIConfigForm
+from admin_forms import AdminLoginForm, AdminMessageForm, APIConfigForm, TwilioConfigForm
 from app import login_required
 
 # Create a custom admin_required decorator that builds on our main login_required
@@ -22,7 +23,8 @@ def admin_required(f):
 from admin_utils import (
     ensure_data_files_exist, get_admin_stats, export_journal_entries, 
     export_users, flag_journal_entry, is_entry_flagged, get_flagged_entries,
-    save_admin_message, get_admin_messages, get_config, save_config
+    save_admin_message, get_admin_messages, get_config, save_config,
+    save_twilio_config, load_twilio_config
 )
 from models import User, JournalEntry, CBTRecommendation
 from app import db
@@ -251,24 +253,64 @@ def settings():
     """Admin settings page"""
     config = get_config()
     
-    form = APIConfigForm()
+    # OpenAI API Form
+    openai_form = APIConfigForm()
     
-    if form.validate_on_submit():
+    # Twilio API Form
+    twilio_form = TwilioConfigForm()
+    
+    # Handle OpenAI form submission
+    if 'submit' in request.form and openai_form.submit.name in request.form and openai_form.validate_on_submit():
         new_config = {
-            "openai_api_key": form.api_key.data,
-            "max_tokens": form.max_tokens.data,
-            "model": form.model.data
+            "openai_api_key": openai_form.api_key.data,
+            "max_tokens": openai_form.max_tokens.data,
+            "model": openai_form.model.data
         }
         
         save_config(new_config)
-        flash('Configuration has been updated.', 'success')
+        flash('OpenAI configuration has been updated.', 'success')
         return redirect(url_for('admin.settings'))
-    elif request.method == 'GET':
-        form.api_key.data = config.get('openai_api_key', '')
-        form.max_tokens.data = config.get('max_tokens', 800)
-        form.model.data = config.get('model', 'gpt-4o')
     
-    # Calculate some mock API usage stats
+    # Handle Twilio form submission
+    if 'submit' in request.form and twilio_form.submit.name in request.form and twilio_form.validate_on_submit():
+        # Store Twilio credentials as environment variables
+        os.environ["TWILIO_ACCOUNT_SID"] = twilio_form.account_sid.data
+        os.environ["TWILIO_AUTH_TOKEN"] = twilio_form.auth_token.data
+        os.environ["TWILIO_PHONE_NUMBER"] = twilio_form.phone_number.data
+        
+        # Save Twilio configuration to file for persistence
+        save_twilio_config(
+            twilio_form.account_sid.data,
+            twilio_form.auth_token.data,
+            twilio_form.phone_number.data
+        )
+        
+        flash('Twilio configuration has been updated.', 'success')
+        return redirect(url_for('admin.settings'))
+    
+    elif request.method == 'GET':
+        # Populate OpenAI form
+        openai_form.api_key.data = config.get('openai_api_key', '')
+        openai_form.max_tokens.data = config.get('max_tokens', 800)
+        openai_form.model.data = config.get('model', 'gpt-4o')
+        
+        # Load Twilio configuration from saved file
+        twilio_config = load_twilio_config()
+        
+        # Set environment variables from saved config if they don't exist
+        if not os.environ.get("TWILIO_ACCOUNT_SID") and twilio_config.get("account_sid"):
+            os.environ["TWILIO_ACCOUNT_SID"] = twilio_config.get("account_sid")
+        if not os.environ.get("TWILIO_AUTH_TOKEN") and twilio_config.get("auth_token"):
+            os.environ["TWILIO_AUTH_TOKEN"] = twilio_config.get("auth_token")
+        if not os.environ.get("TWILIO_PHONE_NUMBER") and twilio_config.get("phone_number"):
+            os.environ["TWILIO_PHONE_NUMBER"] = twilio_config.get("phone_number")
+        
+        # Populate Twilio form (prioritize environment variables, fallback to saved config)
+        twilio_form.account_sid.data = os.environ.get("TWILIO_ACCOUNT_SID", twilio_config.get("account_sid", ""))
+        twilio_form.auth_token.data = os.environ.get("TWILIO_AUTH_TOKEN", twilio_config.get("auth_token", ""))
+        twilio_form.phone_number.data = os.environ.get("TWILIO_PHONE_NUMBER", twilio_config.get("phone_number", ""))
+    
+    # Calculate OpenAI API usage stats
     total_entries = JournalEntry.query.count()
     avg_tokens_per_entry = 500
     estimated_tokens = total_entries * avg_tokens_per_entry
@@ -280,7 +322,73 @@ def settings():
         'estimated_cost': estimated_cost
     }
     
+    # Get SMS notification stats
+    sms_users_count = User.query.filter_by(sms_notifications_enabled=True).filter(User.phone_number.isnot(None)).count()
+    sms_stats = {
+        'sms_users_count': sms_users_count
+    }
+    
     return render_template('admin/settings.html', title='Admin Settings',
-                          form=form, api_stats=api_stats)
+                          openai_form=openai_form, twilio_form=twilio_form, 
+                          api_stats=api_stats, sms_stats=sms_stats)
+
+# Add a route to send immediate SMS notifications
+@admin_bp.route('/send_immediate_sms', methods=['POST'])
+@admin_required
+def send_immediate_sms():
+    """Send immediate SMS notifications to all users with SMS notifications enabled"""
+    try:
+        # First try to get credentials from environment variables
+        twilio_sid = os.environ.get("TWILIO_ACCOUNT_SID")
+        twilio_token = os.environ.get("TWILIO_AUTH_TOKEN")
+        twilio_phone = os.environ.get("TWILIO_PHONE_NUMBER")
+        
+        # If not found in environment, try to load from saved configuration
+        if not all([twilio_sid, twilio_token, twilio_phone]):
+            twilio_config = load_twilio_config()
+            twilio_sid = twilio_sid or twilio_config.get("account_sid", "")
+            twilio_token = twilio_token or twilio_config.get("auth_token", "")
+            twilio_phone = twilio_phone or twilio_config.get("phone_number", "")
+            
+            # Update environment variables
+            if twilio_sid:
+                os.environ["TWILIO_ACCOUNT_SID"] = twilio_sid
+            if twilio_token:
+                os.environ["TWILIO_AUTH_TOKEN"] = twilio_token
+            if twilio_phone:
+                os.environ["TWILIO_PHONE_NUMBER"] = twilio_phone
+        
+        # Final check if credentials are available
+        if not all([twilio_sid, twilio_token, twilio_phone]):
+            flash('Twilio credentials are missing. Please configure Twilio first.', 'danger')
+            return redirect(url_for('admin.settings'))
+        
+        # Check if there are users with SMS notifications enabled
+        sms_users_count = User.query.filter_by(sms_notifications_enabled=True).filter(User.phone_number.isnot(None)).count()
+        if sms_users_count == 0:
+            flash('No users have SMS notifications enabled. Configure at least one user to receive SMS notifications.', 'warning')
+            return redirect(url_for('admin.settings'))
+        
+        # Import SMS notification function
+        from sms_notification_service import send_immediate_sms_to_all_users
+        
+        # Send SMS notifications
+        result = send_immediate_sms_to_all_users()
+        
+        if result['success_count'] > 0:
+            flash(f'Successfully sent {result["success_count"]} SMS notifications.', 'success')
+        else:
+            flash('No SMS notifications were sent. Check Twilio credentials or ensure users have SMS notifications enabled.', 'warning')
+        
+        # Log any failures
+        if result['failure_count'] > 0:
+            flash(f'Failed to send {result["failure_count"]} SMS notifications.', 'warning')
+        
+    except Exception as e:
+        flash(f'Error sending SMS notifications: {str(e)}', 'danger')
+        logger.error(f"Error sending immediate SMS: {str(e)}")
+        logger.error(traceback.format_exc())
+    
+    return redirect(url_for('admin.settings'))
 
 # Register these routes with the main app (to be added to app.py)

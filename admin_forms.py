@@ -21,3 +21,11 @@ class APIConfigForm(FlaskForm):
     max_tokens = IntegerField('Max Tokens', validators=[NumberRange(min=1, max=4000)], default=800)
     model = StringField('Model Name', validators=[DataRequired()], default="gpt-4o")
     submit = SubmitField('Update Configuration')
+
+class TwilioConfigForm(FlaskForm):
+    """Form for updating Twilio API configuration"""
+    account_sid = StringField('Twilio Account SID', validators=[DataRequired()])
+    auth_token = StringField('Twilio Auth Token', validators=[DataRequired()])
+    phone_number = StringField('Twilio Phone Number', validators=[DataRequired()],
+                              description="Include the country code (e.g., +1234567890)")
+    submit = SubmitField('Update Twilio Configuration')

@@ -14,12 +14,10 @@ JOURNALING_TIPS = [
 ]
 
 def send_daily_reminder():
-    # Since this is scheduled to run at 6:00 AM, we'll send to all users who have 
-    # notifications enabled and have chosen 6:00 AM as their notification time
-    target_time = datetime.strptime('06:00', '%H:%M').time()
+    # Send daily reminders to all users who have notifications enabled
+    # Previously this was filtering by notification_time, but now we'll send to all users at 6 AM
     users = User.query.filter_by(
-        notifications_enabled=True,
-        notification_time=target_time
+        notifications_enabled=True
     ).all()
     
     for user in users:

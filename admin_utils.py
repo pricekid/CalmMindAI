@@ -7,27 +7,48 @@ from flask_login import current_user
 
 # File paths
 DATA_DIR = 'data'
+ADMIN_DIR = os.path.join(DATA_DIR, 'admin')
 JOURNALS_FILE = os.path.join(DATA_DIR, 'journals.json')
 USERS_FILE = os.path.join(DATA_DIR, 'users.json')
 FLAGGED_FILE = os.path.join(DATA_DIR, 'flagged.json')
 ADMIN_MESSAGES_FILE = os.path.join(DATA_DIR, 'admin_messages.json')
-CONFIG_FILE = os.path.join(DATA_DIR, 'config.json')
+CONFIG_FILE = os.path.join(ADMIN_DIR, 'config.json')
+TWILIO_CONFIG_FILE = os.path.join(ADMIN_DIR, 'twilio_config.json')
+
+# Set up logging
+import logging
+logger = logging.getLogger(__name__)
 
 def ensure_data_files_exist():
     """Ensure all data files exist with valid JSON"""
+    # Create data directories
+    os.makedirs(DATA_DIR, exist_ok=True)
+    os.makedirs(ADMIN_DIR, exist_ok=True)
+    
     for file_path in [JOURNALS_FILE, USERS_FILE, FLAGGED_FILE, ADMIN_MESSAGES_FILE]:
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         if not os.path.exists(file_path):
             with open(file_path, 'w') as f:
                 json.dump([], f)
 
-    # Handle config file separately since it's a dict not a list
+    # Handle config files separately since they're dicts not lists
+    os.makedirs(os.path.dirname(CONFIG_FILE), exist_ok=True)
     if not os.path.exists(CONFIG_FILE):
         with open(CONFIG_FILE, 'w') as f:
             json.dump({
                 "openai_api_key": "",
                 "max_tokens": 800,
                 "model": "gpt-4o"
+            }, f, indent=2)
+            
+    # Handle Twilio config file
+    os.makedirs(os.path.dirname(TWILIO_CONFIG_FILE), exist_ok=True)
+    if not os.path.exists(TWILIO_CONFIG_FILE):
+        with open(TWILIO_CONFIG_FILE, 'w') as f:
+            json.dump({
+                "account_sid": "",
+                "auth_token": "",
+                "phone_number": ""
             }, f, indent=2)
 
 def get_admin_stats():
@@ -267,7 +288,47 @@ def get_config():
 
 def save_config(config):
     """Save API configuration"""
+    os.makedirs(os.path.dirname(CONFIG_FILE), exist_ok=True)
     with open(CONFIG_FILE, 'w') as f:
         json.dump(config, f, indent=2)
     
     return config
+
+def save_twilio_config(account_sid, auth_token, phone_number):
+    """Save Twilio configuration to a file"""
+    os.makedirs(os.path.dirname(TWILIO_CONFIG_FILE), exist_ok=True)
+    
+    config = {
+        "account_sid": account_sid,
+        "auth_token": auth_token,
+        "phone_number": phone_number
+    }
+    
+    try:
+        with open(TWILIO_CONFIG_FILE, 'w') as f:
+            json.dump(config, f, indent=2)
+        return True
+    except Exception as e:
+        logger.error(f"Error saving Twilio config: {str(e)}")
+        return False
+
+def load_twilio_config():
+    """Load Twilio configuration from file"""
+    if not os.path.exists(TWILIO_CONFIG_FILE):
+        return {
+            "account_sid": "",
+            "auth_token": "",
+            "phone_number": ""
+        }
+    
+    try:
+        with open(TWILIO_CONFIG_FILE, 'r') as f:
+            config = json.load(f)
+        return config
+    except Exception as e:
+        logger.error(f"Error loading Twilio config: {str(e)}")
+        return {
+            "account_sid": "",
+            "auth_token": "",
+            "phone_number": ""
+        }
