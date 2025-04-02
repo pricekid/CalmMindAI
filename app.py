@@ -27,6 +27,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:/
 app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
     "pool_recycle": 300,
     "pool_pre_ping": True,
+    "pool_timeout": 60,
+    "isolation_level": "READ COMMITTED"  # More forgiving isolation level for general web apps
 }
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
@@ -119,8 +121,18 @@ def load_user(user_id):
         return Admin.get(admin_id)
     # Regular user
     try:
-        return db.session.get(User, int(user_id))
+        with db.session.begin():  # Start a new transaction
+            return db.session.get(User, int(user_id))
     except ValueError:
+        return None
+    except Exception as e:
+        # Log the error and return None to force re-login
+        app.logger.error(f"Database error in load_user: {str(e)}")
+        # Try to rollback any failed transaction
+        try:
+            db.session.rollback()
+        except:
+            pass
         return None
 
 # Import routes after app is initialized to avoid circular imports
