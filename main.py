@@ -3,10 +3,14 @@ import subprocess
 import logging
 import os
 from start_scheduler import start_scheduler, find_scheduler_process
+from journal_routes import journal_bp
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# Register blueprints
+app.register_blueprint(journal_bp)
 
 if __name__ == "__main__":
     # Start the scheduler if it's not already running
