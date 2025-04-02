@@ -38,6 +38,12 @@ app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER')
 
+# Base URL for links in emails and notifications
+# In production, this should be set to the full URL of your application
+# For example, 'https://your-app.replit.app'
+# Use environment variable if available, otherwise URLs will be relative
+app.config['BASE_URL'] = os.environ.get('BASE_URL', '')
+
 # Initialize the app with extensions
 db.init_app(app)
 csrf.init_app(app)

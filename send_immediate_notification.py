@@ -32,12 +32,18 @@ def send_immediate_notification_to_all_users():
                     recipients=[user.email]
                 )
                 
+                # Get the base URL from the app configuration or use the default
+                base_url = app.config.get('BASE_URL', '')
+                
+                # If no BASE_URL is configured, use a relative URL
+                journal_url = f"{base_url}/journal/new" if base_url else "/journal/new"
+                
                 msg.html = f"""
                 <h2>Hello {user.username}!</h2>
                 <p>This is a special reminder to take a moment for yourself today.</p>
                 <p>Writing in your journal can help you process your thoughts and feelings, reduce stress, and gain clarity.</p>
                 <p>We encourage you to spend just 5 minutes today writing about what's on your mind.</p>
-                <p><a href="https://calm-journey.repl.co/journal/new" style="background-color: #4CAF50; color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px; display: inline-block; margin-top: 10px;">Start Writing Now</a></p>
+                <p><a href="{journal_url}" style="background-color: #4CAF50; color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px; display: inline-block; margin-top: 10px;">Start Writing Now</a></p>
                 <p>Regular notifications will continue at your preferred time of 6:00 AM.</p>
                 <p>Wishing you a peaceful day,<br>The Calm Journey Team</p>
                 """

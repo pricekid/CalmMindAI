@@ -30,11 +30,17 @@ def send_daily_reminder():
             
             tip = JOURNALING_TIPS[datetime.now().day % len(JOURNALING_TIPS)]
             
+            # Get the base URL from the app configuration or use the default
+            base_url = app.config.get('BASE_URL', '')
+            
+            # If no BASE_URL is configured, use a relative URL
+            journal_url = f"{base_url}/journal/new" if base_url else "/journal/new"
+            
             msg.html = f"""
             <h2>Good morning {user.username}!</h2>
             <p>Take a moment to reflect and journal your thoughts today.</p>
             <p><strong>Daily Tip:</strong> {tip}</p>
-            <p><a href="https://calm-journey.repl.co/journal/new">Start Writing</a></p>
+            <p><a href="{journal_url}">Start Writing</a></p>
             """
             
             mail.send(msg)
