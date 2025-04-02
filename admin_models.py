@@ -24,7 +24,8 @@ class Admin(UserMixin):
         Required for Flask-Login. Returns the admin user if it matches the hardcoded ID.
         """
         if int(user_id) == 1:
-            # Hardcoded admin account
-            admin_hash = generate_password_hash("admin123")  # Default password
+            # Hardcoded admin account with pre-generated password hash for "admin123"
+            # Using a static hash so it doesn't change with every get() call
+            admin_hash = "pbkdf2:sha256:600000$zpbgMAIdCQZsHQnx$5ae4bc03dc4dde1cc18e8acf1c127aafa2bfa8c6f12beec3a683baa1a0d3a7a0"
             return Admin(1, "admin", admin_hash)
         return None

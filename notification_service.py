@@ -1,11 +1,9 @@
 
 from datetime import datetime
-from app import app, db
+from app import app, db, mail
 from models import User
-from flask_mail import Mail, Message
+from flask_mail import Message
 import logging
-
-mail = Mail(app)
 
 JOURNALING_TIPS = [
     "Writing helps process emotions and reduce anxiety",
@@ -16,10 +14,12 @@ JOURNALING_TIPS = [
 ]
 
 def send_daily_reminder():
-    current_time = datetime.now().time()
+    # Since this is scheduled to run at 6:00 AM, we'll send to all users who have 
+    # notifications enabled and have chosen 6:00 AM as their notification time
+    target_time = datetime.strptime('06:00', '%H:%M').time()
     users = User.query.filter_by(
         notifications_enabled=True,
-        notification_time=current_time.replace(minute=0, second=0, microsecond=0)
+        notification_time=target_time
     ).all()
     
     for user in users:

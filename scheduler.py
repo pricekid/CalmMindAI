@@ -6,8 +6,9 @@ import logging
 logging.basicConfig(level=logging.INFO)
 scheduler = BlockingScheduler()
 
-# Run every hour to check for users who should receive notifications
-scheduler.add_job(send_daily_reminder, 'cron', minute=0)
+# Run every day at 6 AM to send reminders
+# The function will filter users based on their preference time
+scheduler.add_job(send_daily_reminder, 'cron', hour='6', minute=0)
 
 if __name__ == '__main__':
     logging.info("Starting notification scheduler...")

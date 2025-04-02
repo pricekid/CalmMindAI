@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
 from flask_login import LoginManager, current_user, login_required as original_login_required
 from flask_wtf.csrf import CSRFProtect
+from flask_mail import Mail
 from functools import wraps
 
 # Configure logging
@@ -15,6 +16,7 @@ class Base(DeclarativeBase):
 
 db = SQLAlchemy(model_class=Base)
 csrf = CSRFProtect()
+mail = Mail()
 
 # Create the app
 app = Flask(__name__)
