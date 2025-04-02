@@ -9,6 +9,8 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    notifications_enabled = db.Column(db.Boolean, default=True)
+    notification_time = db.Column(db.Time, default=datetime.strptime('09:00', '%H:%M').time())
     
     # Relationships
     journal_entries = db.relationship('JournalEntry', backref='author', lazy='dynamic')
