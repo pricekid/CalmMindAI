@@ -28,11 +28,12 @@ db = SQLAlchemy(app)
 # Create BlockingScheduler
 scheduler = BlockingScheduler()
 
-# Run email reminders every day at 6 AM
-scheduler.add_job(send_daily_reminder, 'cron', hour='6', minute=0)
+# Run email reminders every day at 6 AM with a 1-hour grace time
+# This will ensure that if the scheduler is down at 6 AM, it will still run the job when it comes back up
+scheduler.add_job(send_daily_reminder, 'cron', hour='6', minute=0, misfire_grace_time=3600)
 
-# Run SMS reminders every day at 6 AM
-scheduler.add_job(send_daily_sms_reminder, 'cron', hour='6', minute=0)
+# Run SMS reminders every day at 6 AM with a 1-hour grace time
+scheduler.add_job(send_daily_sms_reminder, 'cron', hour='6', minute=0, misfire_grace_time=3600)
 
 # Function to load Twilio credentials before SMS job runs
 def load_twilio_credentials():
