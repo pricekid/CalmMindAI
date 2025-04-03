@@ -3,7 +3,8 @@ import sys
 import logging
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sms_notification_service import send_immediate_sms_to_all_users
+from sms_notification_service import send_sms_notification
+from twilio.rest import Client
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -24,7 +25,42 @@ db = SQLAlchemy(app)
 # Need to import models after db is initialized
 from models import User
 
-def main():
+def test_sms(phone_number):
+    """Send a test SMS to a specific phone number"""
+    message = "Calm Journey: This is a test SMS message from your journal app."
+    logger.info(f"Sending test SMS to {phone_number}...")
+    
+    # Try sending the SMS
+    twilio_sid = os.environ.get("TWILIO_ACCOUNT_SID")
+    twilio_token = os.environ.get("TWILIO_AUTH_TOKEN")
+    twilio_phone = os.environ.get("TWILIO_PHONE_NUMBER")
+    
+    # Log Twilio info (without showing actual credentials)
+    logger.info(f"Twilio SID exists: {bool(twilio_sid)}")
+    logger.info(f"Twilio token exists: {bool(twilio_token)}")
+    logger.info(f"Twilio phone exists: {bool(twilio_phone)}")
+    
+    if all([twilio_sid, twilio_token, twilio_phone]):
+        logger.info(f"Using Twilio phone number: {twilio_phone}")
+        
+        try:
+            # Direct Twilio usage for maximum debug info
+            client = Client(twilio_sid, twilio_token)
+            sent_message = client.messages.create(
+                body=message,
+                from_=twilio_phone,
+                to=phone_number
+            )
+            logger.info(f"SMS sent successfully! Message SID: {sent_message.sid}")
+            return True
+        except Exception as e:
+            logger.error(f"Failed to send test SMS: {str(e)}")
+            return False
+    else:
+        logger.error("Missing Twilio credentials. Cannot send test SMS.")
+        return False
+
+def send_immediate_sms_to_all():
     """Send an immediate SMS notification to all users with SMS notifications enabled."""
     with app.app_context():
         # First try to get Twilio credentials from environment variables
@@ -72,7 +108,9 @@ def main():
             logger.info("No users with SMS notifications enabled. Exiting.")
             return 0
         
-        # Send SMS notifications
+        # Send SMS notifications to all eligible users
+        from sms_notification_service import send_immediate_sms_to_all_users
+        
         try:
             result = send_immediate_sms_to_all_users()
             
@@ -86,6 +124,20 @@ def main():
         except Exception as e:
             logger.error(f"Error sending SMS notifications: {str(e)}")
             return 1
+
+def main():
+    """Main function to handle different modes of operation"""
+    # Check if a specific phone number was provided for testing
+    if len(sys.argv) > 1 and sys.argv[1].startswith('+'):
+        # Test mode - send to specific phone number
+        test_phone = sys.argv[1]
+        logger.info(f"Running in test mode with phone number: {test_phone}")
+        success = test_sms(test_phone)
+        return 0 if success else 1
+    else:
+        # Regular mode - send to all eligible users
+        logger.info("Running in regular mode - sending to all eligible users")
+        return send_immediate_sms_to_all()
 
 if __name__ == "__main__":
     sys.exit(main())
