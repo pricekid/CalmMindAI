@@ -3,15 +3,51 @@ from models import User
 from flask_mail import Message
 import logging
 import sys
+import os
 
-# Set up logging
-logging.basicConfig(level=logging.INFO)
+# Set up logging with more detailed format
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
 logger = logging.getLogger(__name__)
+
+def send_test_email(recipient_email):
+    """Send a test email to verify mail configuration."""
+    try:
+        logger.info(f"Sending test email to {recipient_email}...")
+        logger.info(f"Mail server: {app.config.get('MAIL_SERVER')}")
+        logger.info(f"Mail port: {app.config.get('MAIL_PORT')}")
+        logger.info(f"Mail use TLS: {app.config.get('MAIL_USE_TLS')}")
+        logger.info(f"Mail sender: {app.config.get('MAIL_DEFAULT_SENDER')}")
+        
+        msg = Message(
+            'Calm Journey: Test Email',
+            sender=app.config['MAIL_DEFAULT_SENDER'],
+            recipients=[recipient_email]
+        )
+        
+        msg.body = "This is a test email from Calm Journey to verify that the email configuration is working correctly."
+        
+        mail.send(msg)
+        logger.info(f"Test email sent successfully to {recipient_email}")
+        return True
+    except Exception as e:
+        logger.error(f"Failed to send test email: {str(e)}")
+        return False
 
 def send_immediate_notification_to_all_users():
     """Send an immediate notification to all users reminding them to journal."""
     
     with app.app_context():
+        # Log mail configuration
+        logger.info("Mail configuration:")
+        logger.info(f"MAIL_SERVER: {app.config.get('MAIL_SERVER')}")
+        logger.info(f"MAIL_PORT: {app.config.get('MAIL_PORT')}")
+        logger.info(f"MAIL_USERNAME: {'Set' if os.environ.get('MAIL_USERNAME') else 'Not set'}")
+        logger.info(f"MAIL_PASSWORD: {'Set' if os.environ.get('MAIL_PASSWORD') else 'Not set'}")
+        logger.info(f"MAIL_DEFAULT_SENDER: {app.config.get('MAIL_DEFAULT_SENDER')}")
+        
         # Get all users with notifications enabled
         users = User.query.filter_by(notifications_enabled=True).all()
         
@@ -57,11 +93,24 @@ def send_immediate_notification_to_all_users():
                 logger.error(f"Failed to send notification to {user.email}: {str(e)}")
         
         logger.info(f"Notification sending complete. Success: {success_count}, Errors: {error_count}")
+        return {"success": success_count, "errors": error_count}
 
 if __name__ == "__main__":
     try:
         logger.info("Starting immediate notification to all users...")
-        send_immediate_notification_to_all_users()
+        
+        # Check if we're testing with a specific email
+        if len(sys.argv) > 1 and '@' in sys.argv[1]:
+            test_recipient = sys.argv[1]
+            logger.info(f"Running in test mode with recipient: {test_recipient}")
+            with app.app_context():
+                send_test_email(test_recipient)
+        else:
+            # Regular operation - send to all users
+            result = send_immediate_notification_to_all_users()
+            if result:
+                logger.info(f"Notification stats: {result}")
+            
         logger.info("Notification process complete!")
     except Exception as e:
         logger.error(f"An error occurred during the notification process: {str(e)}")
