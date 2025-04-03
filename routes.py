@@ -199,20 +199,43 @@ def journal():
 def new_journal_entry():
     form = JournalEntryForm()
     if form.validate_on_submit():
-        # First, save the journal entry so it's not lost if analysis fails
+        # Save the journal entry immediately
         entry = JournalEntry(
             title=form.title.data,
             content=form.content.data,
             anxiety_level=form.anxiety_level.data,
-            author=current_user
+            author=current_user,
+            is_analyzed=False  # Start with is_analyzed=False, will be analyzed on view
         )
         
         db.session.add(entry)
         db.session.commit()
         
-        # Analyze the entry using OpenAI
+        # Redirect immediately after saving, analysis will happen when viewing the entry
+        flash('Your journal entry has been saved! Analysis will be performed when you view the entry.', 'success')
+        return redirect(url_for("journal.view_journal_entry", entry_id=entry.id))
+    
+    return render_template('journal_entry.html', title='New Journal Entry', 
+                          form=form, legend='New Journal Entry')
+
+# View journal entry
+@app.route('/journal/<int:entry_id>')
+@login_required
+def view_journal_entry(entry_id):
+    entry = JournalEntry.query.get_or_404(entry_id)
+    
+    # Ensure the entry belongs to the current user
+    if entry.user_id != current_user.id:
+        abort(403)
+    
+    # If the entry hasn't been analyzed yet, analyze it now
+    if not entry.is_analyzed:
         try:
-            thought_patterns = analyze_journal_entry(form.content.data, form.anxiety_level.data)
+            # Clear old recommendations if any
+            CBTRecommendation.query.filter_by(journal_entry_id=entry.id).delete()
+            
+            # Analyze the entry
+            thought_patterns = analyze_journal_entry(entry.content, entry.anxiety_level)
             
             # Save the recommendations
             is_api_error = False
@@ -236,47 +259,12 @@ def new_journal_entry():
             entry.is_analyzed = True
             db.session.commit()
             
-            # Show appropriate message based on error type
-            if is_api_error:
-                flash('Your journal entry has been saved! AI analysis is currently unavailable due to API usage limits.', 'info')
-            elif is_config_error:
-                flash('Your journal entry has been saved! AI analysis is currently unavailable due to a configuration issue.', 'info')
-            else:
-                flash('Your journal entry has been created with AI analysis!', 'success')
-            
         except Exception as e:
             error_msg = str(e)
-            logging.error(f"Error analyzing journal entry: {error_msg}")
-            
-            # Update the entry to indicate analysis failed
-            entry.is_analyzed = False
-            db.session.commit()
-            
-            # Show specific error messages based on error type
-            if "API_QUOTA_EXCEEDED" in error_msg:
-                flash('Your journal entry has been saved! AI analysis is currently unavailable due to API usage limits.', 'info')
-            elif "INVALID_API_KEY" in error_msg:
-                flash('Your journal entry has been saved! AI analysis is currently unavailable due to a configuration issue.', 'info')
-            else:
-                flash('Your journal entry has been saved, but analysis could not be completed. You can try analyzing it later.', 'warning')
-        
-        # The coach response will be automatically generated in the view_journal_entry function
-        return redirect(url_for("journal.view_journal_entry", entry_id=entry.id))
+            logging.error(f"Error analyzing journal entry on view: {error_msg}")
+            # We'll still show the entry without analysis
     
-    return render_template('journal_entry.html', title='New Journal Entry', 
-                          form=form, legend='New Journal Entry')
-
-# View journal entry
-@app.route('/journal/<int:entry_id>')
-@login_required
-def view_journal_entry(entry_id):
-    entry = JournalEntry.query.get_or_404(entry_id)
-    
-    # Ensure the entry belongs to the current user
-    if entry.user_id != current_user.id:
-        abort(403)
-    
-    # Automatically generate coach response when viewing the entry
+    # Generate coach response when viewing the entry
     coach_response = None
     try:
         from openai_service import generate_journaling_coach_response
@@ -308,70 +296,25 @@ def update_journal_entry(entry_id):
     
     form = JournalEntryForm()
     if form.validate_on_submit():
-        # First update the basic entry data
+        # Update the basic entry data
         entry.title = form.title.data
         entry.content = form.content.data
         entry.anxiety_level = form.anxiety_level.data
         entry.updated_at = datetime.utcnow()
         
-        # Save the changes immediately so they're not lost if analysis fails
-        db.session.commit()
-        
         # Clear old recommendations
         CBTRecommendation.query.filter_by(journal_entry_id=entry.id).delete()
         
-        # Re-analyze the entry
-        try:
-            thought_patterns = analyze_journal_entry(form.content.data, form.anxiety_level.data)
-            
-            # Save the new recommendations
-            is_api_error = False
-            is_config_error = False
-            
-            for pattern in thought_patterns:
-                # Check for different error patterns
-                if pattern["pattern"] == "API Quota Exceeded":
-                    is_api_error = True
-                elif pattern["pattern"] == "API Configuration Issue":
-                    is_config_error = True
-                
-                # Save recommendation to database
-                recommendation = CBTRecommendation(
-                    thought_pattern=pattern["pattern"],
-                    recommendation=f"{pattern['description']} - {pattern['recommendation']}",
-                    journal_entry_id=entry.id
-                )
-                db.session.add(recommendation)
-            
-            entry.is_analyzed = True
-            
-            # Show appropriate message based on error type
-            if is_api_error:
-                flash('Your journal entry has been updated! AI analysis is currently unavailable due to API usage limits.', 'info')
-            elif is_config_error:
-                flash('Your journal entry has been updated! AI analysis is currently unavailable due to a configuration issue.', 'info')
-            else:
-                flash('Your journal entry has been updated with new AI analysis!', 'success')
-            
-        except Exception as e:
-            error_msg = str(e)
-            logging.error(f"Error analyzing journal entry: {error_msg}")
-            
-            # Update the entry to indicate analysis failed
-            entry.is_analyzed = False
-            
-            # Show specific error messages based on error type
-            if "API_QUOTA_EXCEEDED" in error_msg:
-                flash('Your journal entry has been updated! AI analysis is currently unavailable due to API usage limits.', 'info')
-            elif "INVALID_API_KEY" in error_msg:
-                flash('Your journal entry has been updated! AI analysis is currently unavailable due to a configuration issue.', 'info')
-            else:
-                flash('Entry updated, but analysis could not be completed. You can try analyzing it later.', 'warning')
+        # Mark entry as not analyzed so it will be analyzed when viewed
+        entry.is_analyzed = False
         
-        # Final commit with recommendations and analysis status
+        # Save all changes
         db.session.commit()
         
-        # The coach response will be automatically generated in the view_journal_entry function
+        # Flash a message and redirect immediately
+        flash('Your journal entry has been updated! Analysis will be performed when you view the entry.', 'success')
+        
+        # Redirect to view page - analysis will happen there
         return redirect(url_for("journal.view_journal_entry", entry_id=entry.id))
     
     elif request.method == 'GET':
