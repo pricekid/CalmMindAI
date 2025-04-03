@@ -261,7 +261,7 @@ def new_journal_entry():
                 flash('Your journal entry has been saved, but analysis could not be completed. You can try analyzing it later.', 'warning')
         
         # The coach response will be automatically generated in the view_journal_entry function
-        return redirect(url_for('view_journal_entry', entry_id=entry.id))
+        return redirect(url_for("journal.view_journal_entry", entry_id=entry.id))
     
     return render_template('journal_entry.html', title='New Journal Entry', 
                           form=form, legend='New Journal Entry')
@@ -372,7 +372,7 @@ def update_journal_entry(entry_id):
         db.session.commit()
         
         # The coach response will be automatically generated in the view_journal_entry function
-        return redirect(url_for('view_journal_entry', entry_id=entry.id))
+        return redirect(url_for("journal.view_journal_entry", entry_id=entry.id))
     
     elif request.method == 'GET':
         form.title.data = entry.title
@@ -400,7 +400,7 @@ def delete_journal_entry(entry_id):
     db.session.commit()
     
     flash('Your journal entry has been deleted!', 'success')
-    return redirect(url_for('journal'))
+    return redirect(url_for("journal.journal_list"))
 
 # Breathing exercise page
 @app.route('/breathing')
