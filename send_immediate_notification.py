@@ -68,11 +68,21 @@ def send_immediate_notification_to_all_users():
                     recipients=[user.email]
                 )
                 
-                # Get the base URL from the app configuration or use the default
-                base_url = app.config.get('BASE_URL', '')
+                # Get the base URL from the app configuration or use a default replit URL
+                if 'BASE_URL' in app.config and app.config['BASE_URL']:
+                    base_url = app.config['BASE_URL']
+                    journal_url = f"{base_url}/journal/new"
+                else:
+                    # If BASE_URL isn't set, use the Replit domain if available
+                    replit_domain = os.environ.get('REPL_SLUG', None)
+                    if replit_domain:
+                        journal_url = f"https://{replit_domain}.replit.app/journal/new"
+                    else:
+                        # Fallback to a relative URL only if running locally
+                        journal_url = "/journal/new"
                 
-                # If no BASE_URL is configured, use a relative URL
-                journal_url = f"{base_url}/journal/new" if base_url else "/journal/new"
+                # Log the URL for debugging
+                logger.info(f"Generated journal URL: {journal_url}")
                 
                 msg.html = f"""
                 <h2>Hello {user.username}!</h2>
