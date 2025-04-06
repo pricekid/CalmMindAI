@@ -332,64 +332,10 @@ def settings():
                           openai_form=openai_form, twilio_form=twilio_form, 
                           api_stats=api_stats, sms_stats=sms_stats)
 
-# Add a route to send immediate SMS notifications
-@admin_bp.route('/send_immediate_sms', methods=['POST'])
-@admin_required
-def send_immediate_sms():
-    """Send immediate SMS notifications to all users with SMS notifications enabled"""
-    try:
-        # First try to get credentials from environment variables
-        twilio_sid = os.environ.get("TWILIO_ACCOUNT_SID")
-        twilio_token = os.environ.get("TWILIO_AUTH_TOKEN")
-        twilio_phone = os.environ.get("TWILIO_PHONE_NUMBER")
-        
-        # If not found in environment, try to load from saved configuration
-        if not all([twilio_sid, twilio_token, twilio_phone]):
-            twilio_config = load_twilio_config()
-            twilio_sid = twilio_sid or twilio_config.get("account_sid", "")
-            twilio_token = twilio_token or twilio_config.get("auth_token", "")
-            twilio_phone = twilio_phone or twilio_config.get("phone_number", "")
-            
-            # Update environment variables
-            if twilio_sid:
-                os.environ["TWILIO_ACCOUNT_SID"] = twilio_sid
-            if twilio_token:
-                os.environ["TWILIO_AUTH_TOKEN"] = twilio_token
-            if twilio_phone:
-                os.environ["TWILIO_PHONE_NUMBER"] = twilio_phone
-        
-        # Final check if credentials are available
-        if not all([twilio_sid, twilio_token, twilio_phone]):
-            flash('Twilio credentials are missing. Please configure Twilio first.', 'danger')
-            return redirect(url_for('admin.settings'))
-        
-        # Check if there are users with SMS notifications enabled
-        sms_users_count = User.query.filter_by(sms_notifications_enabled=True).filter(User.phone_number.isnot(None)).count()
-        if sms_users_count == 0:
-            flash('No users have SMS notifications enabled. Configure at least one user to receive SMS notifications.', 'warning')
-            return redirect(url_for('admin.settings'))
-        
-        # Import SMS notification function
-        from sms_notification_service import send_immediate_sms_to_all_users
-        
-        # Send SMS notifications
-        result = send_immediate_sms_to_all_users()
-        
-        if result['success_count'] > 0:
-            flash(f'Successfully sent {result["success_count"]} SMS notifications.', 'success')
-        else:
-            flash('No SMS notifications were sent. Check Twilio credentials or ensure users have SMS notifications enabled.', 'warning')
-        
-        # Log any failures
-        if result['failure_count'] > 0:
-            flash(f'Failed to send {result["failure_count"]} SMS notifications.', 'warning')
-        
-    except Exception as e:
-        flash(f'Error sending SMS notifications: {str(e)}', 'danger')
-        logger.error(f"Error sending immediate SMS: {str(e)}")
-        logger.error(traceback.format_exc())
-    
-    return redirect(url_for('admin.settings'))
+# These routes have been moved to notification_routes.py
+# The following routes have been migrated to the notification_bp blueprint:
+# - /test_sms -> notification.test_sms_notification
+# - /send_immediate_sms -> notification.send_immediate_sms_notification
 
 # Add a route to view scheduler logs
 @admin_bp.route('/scheduler-logs')

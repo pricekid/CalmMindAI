@@ -4,6 +4,7 @@ import logging
 import os
 from start_scheduler import start_scheduler, find_scheduler_process
 from journal_routes import journal_bp
+from notification_routes import notification_bp
 import startup  # Import the startup script to ensure scheduler is running
 
 # Configure logging
@@ -12,6 +13,7 @@ logger = logging.getLogger(__name__)
 
 # Register blueprints
 app.register_blueprint(journal_bp)
+app.register_blueprint(notification_bp)
 
 if __name__ == "__main__":
     # The scheduler is already started by the startup module

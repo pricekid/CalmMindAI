@@ -292,5 +292,29 @@
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-06 22:19:25",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1047 at 2025-04-06 22:19:25",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-06 22:19:59",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 1047",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-06 22:44:27",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-06 22:44:27.369516",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-06 22:44:27",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
   }
 ]

@@ -50,8 +50,15 @@
                         </div>
                     </div>
                     
-                    <div class="d-grid">
-                        {{ openai_form.submit(class="btn btn-primary") }}
+                    <div class="d-flex">
+                        <div class="me-2 flex-grow-1">
+                            {{ openai_form.submit(class="btn btn-primary w-100") }}
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#testEmailModal">
+                                <i class="bi bi-envelope me-1"></i> Test Email
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -100,12 +107,20 @@
                             <div>
                                 <h5 class="alert-heading">SMS Information</h5>
                                 <p class="mb-0">Twilio credentials are used to send SMS notifications to users. You'll need a Twilio account with a verified phone number to send SMS messages.</p>
+                                <p class="mt-2 mb-0"><strong>Important:</strong> For trial accounts, you can only send SMS to verified phone numbers in your Twilio console.</p>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="d-grid">
-                        {{ twilio_form.submit(class="btn btn-primary") }}
+                    <div class="d-flex">
+                        <div class="me-2 flex-grow-1">
+                            {{ twilio_form.submit(class="btn btn-primary w-100") }}
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#testSmsModal">
+                                <i class="bi bi-phone me-1"></i> Test SMS
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -151,7 +166,7 @@
                 </ul>
                 <div class="mt-3">
                     <h6>SMS Notification Actions:</h6>
-                    <form method="POST" action="{{ url_for('admin.send_immediate_sms') }}">
+                    <form method="POST" action="{{ url_for('notification.send_immediate_sms_notification') }}">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <button type="submit" class="btn btn-sm btn-outline-primary mt-2" onclick="return confirm('Are you sure you want to send an immediate SMS notification to all users with SMS notifications enabled?')">
                             <i class="bi bi-send me-1"></i> Send Immediate SMS Reminder
@@ -230,4 +245,62 @@ document.addEventListener('DOMContentLoaded', function() {
     setupToggle('twilio_auth_token', 'toggleAuthToken');
 });
 </script>
+<!-- Test SMS Modal -->
+<div class="modal fade" id="testSmsModal" tabindex="-1" aria-labelledby="testSmsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="testSmsModalLabel">Test SMS Message</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{ url_for('notification.test_sms_notification') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="test_phone_number" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" id="test_phone_number" name="phone_number" placeholder="+1234567890" required>
+                        <small class="text-muted">Include the country code (e.g., +1234567890)</small>
+                    </div>
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        <strong>Important:</strong> For Twilio trial accounts, you can only send SMS messages to verified phone numbers in your Twilio console.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Send Test SMS</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Test Email Modal -->
+<div class="modal fade" id="testEmailModal" tabindex="-1" aria-labelledby="testEmailModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="testEmailModalLabel">Test Email Message</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{ url_for('notification.test_email_notification') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="test_email_address" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="test_email_address" name="email_address" placeholder="user@example.com" required>
+                    </div>
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle-fill me-2"></i>
+                        <strong>Note:</strong> This will send a test email to verify your email configuration is working correctly.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Send Test Email</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

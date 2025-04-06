@@ -147,3 +147,7 @@ with app.app_context():
     # Register the admin blueprint
     from admin_routes import admin_bp
     app.register_blueprint(admin_bp)
+    
+    # Register the notification blueprint
+    from notification_routes import notification_bp
+    app.register_blueprint(notification_bp)

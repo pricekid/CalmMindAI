@@ -814,5 +814,2045 @@
         "recommendation": "Feeling anxious due to the inability to know the reason for the strange people. - Use a 'tolerance of uncertainty' exercise: List previous situations where you handled uncertainty well and how they concluded without negative outcomes."
       }
     ]
+  },
+  {
+    "id": 36,
+    "user_id": 7,
+    "title": "Saturday March 29th ",
+    "content": "Today was another busy day as a mama of three. Taking Elijah to football Elaina to gymnastics Christopher to jujutsu then grocery shopping picking up stuff for my mom and my grandmother and forgetting about a hair consultation that I had and had to turn around to go back to that consultation, then coming home for like 30 minutes to then take Elaina to a birthday party. Everything was good. I was just tired. My ex-husband called while I was at the birthday party and was making small talk. I told him he could call the boys at home and then he decides to thank me for being a good mom to our children. I\u2019m a little confused about that it\u2019s random.",
+    "anxiety_level": 4,
+    "created_at": "2025-03-30T02:38:19.034185",
+    "updated_at": "2025-03-30T02:38:23.076238",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario or interpreting situations as more severe than they are. - Practice cognitive restructuring by listing evidence for and against your catastrophic thoughts. Challenge these thoughts by writing down more balanced alternatives."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Drawing broad conclusions from a single event or situation, often leading to a negative outlook. - Use thought records to document specific instances where you feel anxious, and identify if you're making sweeping conclusions. Look for factual evidence and exceptions to these thoughts."
+      },
+      {
+        "thought_pattern": "Mind-reading",
+        "recommendation": "Assuming you know what others are thinking or that they are judging you negatively without evidence. - Engage in the 'evidence-based thought examination' exercise. Write down your assumptions, then gather actual evidence to either support or refute these thoughts. Consider alternative interpretations."
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "user_id": 7,
+    "title": "Saturday March 29th ",
+    "content": "Today was another busy day as a mama of three. Taking Elijah to football Elaina to gymnastics Christopher to jujutsu then grocery shopping picking up stuff for my mom and my grandmother and forgetting about a hair consultation that I had and had to turn around to go back to that consultation, then coming home for like 30 minutes to then take Elaina to a birthday party. Everything was good. I was just tired. My ex-husband called while I was at the birthday party and was making small talk. I told him he could call the boys at home and then he decides to thank me for being a good mom to our children. I\u2019m a little confused about that it\u2019s random.",
+    "anxiety_level": 4,
+    "created_at": "2025-03-30T02:38:23.376954",
+    "updated_at": "2025-03-30T02:38:28.552414",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Assuming that a single event is indicative of an overall trend or pattern in life. - Practice reality testing by writing down evidence for and against the belief that this busy day is representative of all days. Challenge the thought by identifying days that have felt more manageable."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what others are thinking, such as interpreting the ex-husband's compliment as random or having a hidden meaning. - Use Socratic questioning to explore alternative reasons why your ex-husband might have thanked you. Write down at least three possible explanations and assess their likelihood."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Viewing situations as worse than they actually are, often leading to heightened anxiety. - Use a thought record to document the worst-case scenario, the best-case scenario, and the most realistic scenario for potential future interactions with your ex-husband. Reflect on the outcomes to reduce anxiety."
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "user_id": 1,
+    "title": "march 31",
+    "content": "i am in a good mood today.looking forward to what teh day has in store",
+    "anxiety_level": 1,
+    "created_at": "2025-03-30T14:04:16.992373",
+    "updated_at": "2025-03-30T14:04:22.003372",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Negative Filtering",
+        "recommendation": "The tendency to ignore positive events and focus only on the negative aspects of a situation. - Practice daily gratitude journaling by writing down three positive things that happen each day to shift focus towards positive experiences."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst possible outcome will happen, even when it's unlikely. - Use the 'worst-case scenario' technique to logically assess the likelihood of your fears, followed by considering the best-case and most realistic outcomes."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, without recognizing the shades of gray. - Challenge this thinking by identifying and writing down evidence for and against your all-or-nothing thoughts, to find a more balanced perspective."
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "user_id": 1,
+    "title": "march 31",
+    "content": "i am in a good mood today.looking forward to what teh day has in store",
+    "anxiety_level": 1,
+    "created_at": "2025-03-30T14:04:33.503945",
+    "updated_at": "2025-03-30T14:04:37.780384",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "This involves making broad interpretations from a single or few events. Although today's mood is positive, there might be a tendency to assume that negative days will generally follow. - Keep a daily mood journal to identify patterns and remind yourself that each day is unique. This can help prevent overgeneralizing future moods based on past experiences."
+      },
+      {
+        "thought_pattern": "Fortune Telling",
+        "recommendation": "This is the tendency to predict negative outcomes in the future without evidence. While today is positive, there may still be underlying assumptions about future days turning out poorly. - Practice mindfulness by focusing on the present moment through a 5-minute breathing exercise. This can reduce the urge to predict future outcomes."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Also known as black-and-white thinking, this involves seeing things in absolute terms. There might be a risk of labeling days as entirely 'good' or 'bad' without acknowledging the complexity. - Use a thought record to note down and challenge extreme thoughts by identifying evidence for and against them, encouraging a more balanced view."
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "user_id": 1,
+    "title": "march 31",
+    "content": "i am in a good mood today.looking forward to what teh day has in store",
+    "anxiety_level": 1,
+    "created_at": "2025-03-30T14:04:37.990019",
+    "updated_at": "2025-03-30T14:04:42.181585",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Overthinking",
+        "recommendation": "Even at low anxiety levels, there may be a tendency to overthink or worry about potential future events. - Practice mindfulness exercises, such as focusing on your breathing for a few minutes, to help stay grounded in the present moment."
+      },
+      {
+        "thought_pattern": "Perfectionism",
+        "recommendation": "Expecting things to go perfectly can lead to anxiety if the day does not unfold as anticipated. - Set realistic and flexible goals for the day, acknowledging that it's okay if things don't go exactly as planned."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Even when feeling good, there can be an underlying fear that things might suddenly go wrong. - Use the technique of 'evidence gathering' by writing down three positive things you expect from the day and reviewing them to counterbalance negative automatic thoughts."
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "user_id": 1,
+    "title": "march 31",
+    "content": "i am in a good mood today.looking forward to what teh day has in store",
+    "anxiety_level": 1,
+    "created_at": "2025-03-30T14:04:42.402026",
+    "updated_at": "2025-03-30T14:04:46.007527",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Cognitive Distortion: All-or-Nothing Thinking",
+        "recommendation": "Interpreting situations in black-or-white terms, without acknowledging the gray areas in between. - Practice cognitive restructuring by identifying situations where you see things as 'all good' or 'all bad' and write down a more balanced perspective."
+      },
+      {
+        "thought_pattern": "Fortune Telling",
+        "recommendation": "Predicting the future negatively without concrete evidence to support those predictions. - Use a thought record to note down predictions about the future, then revisit them later to evaluate their accuracy and learn from the experience."
+      },
+      {
+        "thought_pattern": "Discounting the Positive",
+        "recommendation": "Downplaying or dismissing positive experiences and achievements. - Keep a daily log of positive events or achievements, no matter how small, to reinforce positive experiences and counteract negative bias."
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "user_id": 1,
+    "title": "march 31",
+    "content": "i am in a good mood today.looking forward to what the day has in store",
+    "anxiety_level": 1,
+    "created_at": "2025-03-30T14:04:55.630886",
+    "updated_at": "2025-03-30T14:04:58.216499",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Negative Filtering",
+        "recommendation": "This is when an individual focuses on the negatives and excludes the positives. - Practice gratitude journaling daily to consciously acknowledge positive events and achievements."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst will happen, even if it is not realistic. - Use the 'worst-case scenario' technique: write down the worst, best, and most likely outcomes of a situation to gain perspective."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Making broad interpretations from a single or few events. - Challenge overgeneralizations by identifying evidence that contradicts these thoughts and writing down alternative, balanced thoughts."
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "user_id": 10,
+    "title": "Testing ",
+    "content": "My boo thing hugged me up all night and then drop my oldest on the bus and helped me out so it was a great morning. My head hurts and my back hurts and my tummy hurts just a little but it\u2019s still a beautiful morning.",
+    "anxiety_level": 3,
+    "created_at": "2025-03-30T14:12:05.096496",
+    "updated_at": "2025-03-30T14:12:10.461076",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Focusing on physical discomfort and imagining it could worsen, even though it's currently mild. - Practice 'decatastrophizing' by writing down the worst-case scenario, the best-case scenario, and the most likely scenario for your physical symptoms. This helps in assessing the realistic impact."
+      },
+      {
+        "thought_pattern": "Selective Attention",
+        "recommendation": "Paying more attention to physical discomforts despite having a positive start to the day. - Use a 'Positive Data Log' to record positive experiences and outcomes each day. This shifts focus towards the positive aspects of your day."
+      },
+      {
+        "thought_pattern": "Mind-Body Connection",
+        "recommendation": "Physical symptoms might be linked to emotional states, leading to heightened awareness of minor discomforts. - Engage in a brief 'mindfulness body scan' exercise to acknowledge and accept physical sensations without judgment, reducing physiological tension."
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "user_id": 6,
+    "title": "Headache from something so petty ",
+    "content": "I am annoyed to see that I am living with someone who is supposed to be the man of the house but is not doing what they should do. Anyway, today he's cleaning, and all I said to him was, 'Don't cut down the plant.' He starts acting out and saying to me that I am not the one cleaning it and I am not going to maintain it. I can't understand why it's always a fuss. That fuss gets me so heavy because, as a child growing up, every day there was a fight at my family home. But yet the person I am with tends to love a fuss while saying he doesn't, though he keeps starting it. \r\nSo far I was able to walk away, but the day isn't over he's going to find something else to fuss about. But I will be praying he doesn't. My thing is, he never acknowledges anything good I do. Either he pretends to forget that I am the one who always goes outside and cleans up while still trying to clean inside, or he just doesn't care. I would have our kids outside picking up the leaves that I put in piles to dispose of. But now I am pregnant and unable to do much for myself, yet he forgets that I am always the one trying. He's starting to change me. Or is it that I am starting to see that he just doesn't care about me or my opinion? Because lately, I am still hurt by things he says to me. I am left with a headache in my thoughts, asking myself why he is still with me and always treating me badly why? ",
+    "anxiety_level": 2,
+    "created_at": "2025-03-30T14:24:26.596369",
+    "updated_at": "2025-03-30T14:24:31.091506",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenarios, such as assuming there will be more conflicts throughout the day. - Practice 'Decatastrophizing' by identifying the worst-case scenario, best-case scenario, and most likely scenario to challenge and balance your thoughts."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what your partner is thinking, such as believing he doesn't care or is intentionally forgetting your efforts. - Use 'Evidence Charting' by writing down evidence for and against these assumptions to develop a more balanced view."
+      },
+      {
+        "thought_pattern": "Personalization",
+        "recommendation": "Taking your partner's behavior personally, assuming his actions are a reflection of his feelings toward you. - Practice 'Distancing' by acknowledging that his actions may be influenced by factors unrelated to you and apply a more objective perspective."
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "user_id": 9,
+    "title": "march 31",
+    "content": "i am wprking on my new Calm journey app today. i enjoy working on it, working on new things. but i do have to give up on other things including human interaction in order to get things going",
+    "anxiety_level": 2,
+    "created_at": "2025-03-30T18:16:23.966082",
+    "updated_at": "2025-03-30T18:16:27.554506",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Believing that working on new things always requires sacrificing other important aspects like human interaction. - Challenge this belief by listing specific examples where you have successfully balanced new projects with social interactions. Set small, realistic goals to integrate brief social activities into your schedule."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing the situation as needing to completely give up on other things to succeed in one area. - Practice cognitive restructuring by identifying the gray areas. Create a schedule that allows small time slots for both work and relaxation or social activities, proving to yourself that both can coexist."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst outcome, where giving up human interaction will have significant negative consequences. - Use the Decatastrophizing technique to question the likelihood of the worst-case scenario happening. Write down evidence for and against this belief to gain a more balanced perspective."
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "user_id": 9,
+    "title": "test 2",
+    "content": "Today during a team meeting, I presented an idea I was really excited about. But my manager quickly shot it down and moved on without much discussion. I felt embarrassed, like everyone thought it was a dumb suggestion. For the rest of the day, I kept replaying it in my head and wondering if I\u2019m even good at this job. I left work feeling small and discouraged",
+    "anxiety_level": 7,
+    "created_at": "2025-03-30T18:29:05.038998",
+    "updated_at": "2025-03-30T18:29:09.397987",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing the situation in absolute terms, such as seeing yourself as a complete failure because of one event. - Challenge all-or-nothing thinking by writing down evidence that contradicts this belief. List your accomplishments and positive feedback from others to remind yourself that one meeting does not define your overall competence."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what others are thinking, such as believing everyone thought your idea was dumb. - Practice reality testing by asking yourself: 'What evidence do I have that everyone thought my idea was dumb?' and 'Is there a more balanced way to view the situation?'"
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst possible outcome, like questioning your competency at your job over a single event. - Use the 'Worst, Best, Most Likely' technique: Write down the worst-case scenario, the best-case scenario, and the most likely outcome. This can help you see the situation more realistically."
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "user_id": 12,
+    "title": "Flu ",
+    "content": "Well I am feeling pretty good today but down with the flu but also reflective given I had a cautious decision to make ",
+    "anxiety_level": 3,
+    "created_at": "2025-03-30T18:54:43.289862",
+    "updated_at": "2025-03-30T18:54:48.698244",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "The tendency to imagine the worst-case scenario when faced with uncertainty or a decision. - Use the 'Decatastrophizing' technique: Challenge the worst-case scenario by asking yourself, 'What is the worst that could happen?' then think about how you would cope with that situation."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms without recognizing the middle ground. - Practice 'Cognitive Restructuring': Identify and write down evidence for and against your thoughts to find a more balanced view."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Making broad conclusions based on a single event or piece of evidence. - Use 'Thought Records': Keep track of situations, thoughts, emotions, and alternative perspectives to recognize and challenge overgeneralized thinking."
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "user_id": 12,
+    "title": "Flu ",
+    "content": "Well I am feeling pretty good today but down with the flu but also reflective given I had a cautious decision to make ",
+    "anxiety_level": 3,
+    "created_at": "2025-03-30T18:54:48.988707",
+    "updated_at": "2025-03-30T18:54:54.197326",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, such as considering a decision only as good or bad without recognizing the nuances. - Use a 'Thought Record' to list the pros and cons of the decision, helping to see it from a balanced perspective and reduce anxiety about making a 'wrong' choice."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario will happen, possibly related to being down with the flu and needing to make a decision. - Practice 'Decatastrophizing' by writing down the worst-case scenario and then challenging it by listing more realistic outcomes."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Drawing broad conclusions from a single event, such as feeling flu-related fatigue and assuming it will negatively impact decision-making. - Conduct a 'Behavioral Experiment' by testing assumptions in real life. Make the decision while acknowledging the flu, then note the actual outcome to see if initial fears were accurate."
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "user_id": 12,
+    "title": "Flu ",
+    "content": "Well I am feeling pretty good today but down with the flu but also reflective given I had a cautious decision to make ",
+    "anxiety_level": 3,
+    "created_at": "2025-03-30T18:54:54.473108",
+    "updated_at": "2025-03-30T18:54:58.885744",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "The tendency to make broad interpretations from a single or few events. - Challenge overgeneralization by identifying evidence that contradicts the broad belief. Write down specific examples of when things went well despite similar circumstances."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario or exaggerating potential negative outcomes. - Use the 'Decatastrophizing' technique. Write down the worst-case scenario, the best-case scenario, and the most likely scenario, then focus on planning for the most likely scenario."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, without recognizing the spectrum in between. - Practice recognizing the gray areas by listing all possible outcomes of the decision and rating them on a scale from bad to good. This helps to see the situation in more nuanced terms."
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "user_id": 12,
+    "title": "Flu ",
+    "content": "Well I am feeling pretty good today but down with the flu but also reflective given I had a cautious decision to make ",
+    "anxiety_level": 3,
+    "created_at": "2025-03-30T18:54:59.208942",
+    "updated_at": "2025-03-30T18:55:03.061051",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario will happen when faced with a decision or situation. - Use the 'Decatastrophizing' technique by writing down the worst-case, best-case, and most likely scenarios, then evaluate the likelihood of each."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, without recognizing the spectrum of possibilities. - Practice 'Cognitive Restructuring' by identifying and challenging these thoughts, replacing them with more balanced alternatives."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Drawing broad conclusions based on a single event or piece of evidence. - Engage in 'Evidence Collection' by listing evidence for and against the anxious thought, aiming to develop a more nuanced perspective."
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "user_id": 12,
+    "title": "Flu ",
+    "content": "Well I am feeling pretty good today but down with the flu but also reflective given I had a cautious decision to make ",
+    "anxiety_level": 3,
+    "created_at": "2025-03-30T18:55:03.348611",
+    "updated_at": "2025-03-30T18:55:07.390903",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Cautious Decision-Making",
+        "recommendation": "Being overly cautious can indicate a fear of making mistakes or facing negative outcomes, which can contribute to anxiety. - Use the Decisional Balance Sheet technique. List the pros and cons of each decision to gain clarity and reduce anxiety about making the wrong choice."
+      },
+      {
+        "thought_pattern": "Reflective Thinking",
+        "recommendation": "Reflecting on decisions can lead to rumination, especially if focused on potential negative outcomes or past decisions. - Practice Mindfulness Meditation to stay present and reduce the tendency to dwell on past decisions or future worries. Set aside 5 minutes a day for mindful breathing."
+      },
+      {
+        "thought_pattern": "Impact of Physical Health on Mood",
+        "recommendation": "Physical illness, such as the flu, can negatively impact mood and exacerbate anxiety symptoms. - Engage in Progressive Muscle Relaxation to help manage physical tension and improve mood. Dedicate 10 minutes daily to relax each muscle group from head to toe."
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "user_id": 6,
+    "title": "It's not what I want but what I know",
+    "content": "So the day isn't over and he's picking at my son we both know he's not his child but he's the one that decided to stay after finding out that he's not his son but what I don't understand is why he has to be treating him differently he's all in his face saying to him I am not your father you have to many father's and it's bad he is just a child and one that love him and respect him yes my son gives trouble at times and do some foolish things that makes no sense and it leaves me so angry I let him know when he is doing foolishness be I try not to hit him like before because when my hb hit him wow them lick leaves an impact not a good one and I can't be having my son thinking that no one love him cause that's not true I love my son so much anyway so my hb started fussing at my son and then he's turning his sisters against him and it's wrong yes my son over works in the house and when I have to say something he's angry and telling me I putting foolishness in the child head this is crazy I am trying my best with all my babies I love them all the same but my hb trying to pull the children apart is really getting yo me he thinks that he's right about everything and then be telling me that I am mad I am so fed up but trying so hard to keep it together this isn't something that is now happening I have been putting up with it a while now and I am to a point now where I get though about doing things that I would have never tough of hmm ",
+    "anxiety_level": 5,
+    "created_at": "2025-03-30T20:14:59.599502",
+    "updated_at": "2025-03-30T20:15:04.278029",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "The tendency to anticipate the worst possible outcome, such as believing that the family dynamics will irreparably damage relationships. - Practice cognitive restructuring by identifying these catastrophic thoughts, challenging their validity, and replacing them with more balanced, realistic thoughts."
+      },
+      {
+        "thought_pattern": "Black-and-white thinking",
+        "recommendation": "Viewing situations in extremes, such as seeing the situation as entirely negative without acknowledging any positives. - Use a thought record to explore and identify any positive aspects or neutral facts about the situation to create a more balanced perspective."
+      },
+      {
+        "thought_pattern": "Personalization",
+        "recommendation": "Assuming personal responsibility for events outside one's control, such as feeling solely responsible for family dynamics. - Develop a list of things within your control versus things outside your control to better understand and manage your role in situations."
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "user_id": 6,
+    "title": "It's not what I want but what I know",
+    "content": "So the day isn't over and he's picking at my son we both know he's not his child but he's the one that decided to stay after finding out that he's not his son but what I don't understand is why he has to be treating him differently he's all in his face saying to him I am not your father you have to many father's and it's bad he is just a child and one that love him and respect him yes my son gives trouble at times and do some foolish things that makes no sense and it leaves me so angry I let him know when he is doing foolishness be I try not to hit him like before because when my hb hit him wow them lick leaves an impact not a good one and I can't be having my son thinking that no one love him cause that's not true I love my son so much anyway so my hb started fussing at my son and then he's turning his sisters against him and it's wrong yes my son over works in the house and when I have to say something he's angry and telling me I putting foolishness in the child head this is crazy I am trying my best with all my babies I love them all the same but my hb trying to pull the children apart is really getting yo me he thinks that he's right about everything and then be telling me that I am mad I am so fed up but trying so hard to keep it together this isn't something that is now happening I have been putting up with it a while now and I am to a point now where I get though about doing things that I would have never tough of hmm ",
+    "anxiety_level": 5,
+    "created_at": "2025-03-30T20:15:15.918618",
+    "updated_at": "2025-03-30T20:15:20.798854",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "The user is expecting the worst-case scenario by worrying that their partner's actions will permanently harm their son's self-esteem and the family dynamics. - Try a thought record exercise. When you notice catastrophic thinking, write down the thought, assess how likely it is to happen, and generate a more balanced perspective."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "The user assumes they understand their partner's motives and beliefs without evidence, such as thinking the partner is intentionally turning the children against each other. - Use evidence-based questioning. List the evidence that supports and contradicts the assumption about your partner's motives, and consider alternative explanations."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "The user perceives the situation in black-and-white terms, such as thinking that either the family is entirely together or completely falling apart. - Practice cognitive reframing by identifying the shades of gray in the situation. Write down the nuances and positive aspects of the family dynamic to balance your view."
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "user_id": 7,
+    "title": "March 30-31st",
+    "content": "I\u2019m at the doctors an office in my first day of spring break so not starting in a high note. But last night my mind was racing so much I wanted to journal about it. I let my twins sleep in the room with me and for some reason I kept feeling like I don\u2019t spend enough time with them as I was looking at them. I was wondering if they really know how much I love them. My mind was also racing throughout the night about the relationship I\u2019m in. When we met last year January, I told him I didn\u2019t want a relationship I was still separated from my husband but not divorced yet. He still pursued. We\u2019ve been together ever since then. I feel like it\u2019s been a back and forth battle in my mind ever since. Last night, particularly, I was feeling like this relationship is some how blocking my spiritual relationship. I feel less connected to spiritually. Mostly because we have sex and I grew up believing you are not supposed to have sex outside of marriage. I love him and think he is a wonderful man and great life partner  in many ways but not spiritually. Ironically my ex husband was overly spiritual and pushed his beliefs on me and I hated that. I would really love some peace and clarity. Not to mention good sleep at night. ",
+    "anxiety_level": 8,
+    "created_at": "2025-03-31T13:23:17.788651",
+    "updated_at": "2025-03-31T13:23:25.223937",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "The tendency to imagine and believe the worst possible outcome, such as worrying excessively about not spending enough time with the twins and doubting if they know they are loved. - Use the 'Decatastrophizing' technique: Write down the worst-case, best-case, and most realistic scenarios for your concerns about your children. This will help you see that the worst-case scenario is unlikely and provide a more balanced perspective."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Seeing situations in black and white terms, such as viewing the relationship as either entirely good or entirely bad based on spiritual alignment. - Practice 'Cognitive Restructuring': Identify and challenge these black-and-white thoughts by listing positives and negatives of the relationship. Acknowledge the nuance and complexity, which can reduce anxiety about needing everything to be perfect."
+      },
+      {
+        "thought_pattern": "Should Statements",
+        "recommendation": "Using 'should' statements that reflect rigid rules, like believing one should not have sex outside of marriage, causing guilt and anxiety. - Try the 'Reframing' technique: Replace 'should' statements with more flexible language, such as 'I prefer' or 'I would like to.' This shift can ease the pressure and reduce anxiety associated with rigid beliefs."
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "user_id": 7,
+    "title": "March 30-31st",
+    "content": "I\u2019m at the doctors an office in my first day of spring break so not starting in a high note. But last night my mind was racing so much I wanted to journal about it. I let my twins sleep in the room with me and for some reason I kept feeling like I don\u2019t spend enough time with them as I was looking at them. I was wondering if they really know how much I love them. My mind was also racing throughout the night about the relationship I\u2019m in. When we met last year January, I told him I didn\u2019t want a relationship I was still separated from my husband but not divorced yet. He still pursued. We\u2019ve been together ever since then. I feel like it\u2019s been a back and forth battle in my mind ever since. Last night, particularly, I was feeling like this relationship is some how blocking my spiritual relationship. I feel less connected to spiritually. Mostly because we have sex and I grew up believing you are not supposed to have sex outside of marriage. I love him and think he is a wonderful man and great life partner  in many ways but not spiritually. Ironically my ex husband was overly spiritual and pushed his beliefs on me and I hated that. I would really love some peace and clarity. Not to mention good sleep at night. ",
+    "anxiety_level": 8,
+    "created_at": "2025-03-31T13:23:53.939279",
+    "updated_at": "2025-03-31T13:23:58.605625",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Thinking that not spending enough time with the twins means they might not know how much they're loved. - Use the 'evidence for and against' technique. Write down evidence that supports this thought and evidence that contradicts it. Reflect on whether the thought is as catastrophic as it seems."
+      },
+      {
+        "thought_pattern": "All-or-nothing thinking",
+        "recommendation": "Believing that having a relationship necessarily blocks spiritual growth due to premarital sex beliefs. - Practice cognitive restructuring. Identify and write down more balanced thoughts, such as ways to maintain spiritual growth while in a relationship."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Assuming that feeling less spiritually connected now means it will always be this way. - Keep a thought record. Note specific instances when you felt spiritually connected, even while in the relationship, to identify patterns and triggers for these feelings."
+      }
+    ]
+  },
+  {
+    "id": 56,
+    "user_id": 4,
+    "title": "Travel",
+    "content": "The day or two before travel I don't sleep well. I need the \ud83d\ude34.  I am pretty prepared, yet sleep is not as easy. I am going to try for a nap because it is raining.",
+    "anxiety_level": 7,
+    "created_at": "2025-03-31T16:18:04.212459",
+    "updated_at": "2025-03-31T16:18:10.077038",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Anticipatory Anxiety",
+        "recommendation": "Worrying about future events, such as travel, which disrupts sleep and increases anxiety. - Practice 'worry postponement' by scheduling a specific time earlier in the day to focus on and write down travel-related worries, freeing up mental space at night."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Belief that inadequate sleep will completely ruin the travel experience, increasing stress and anxiety. - Use cognitive restructuring to challenge these thoughts by listing past instances where you managed travel well despite less sleep, proving flexibility in outcomes."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining worst-case scenarios about the implications of not sleeping well before travel. - Engage in thought challenging by asking 'What is the worst that could happen?' and 'How would I cope?', writing down realistic outcomes to reduce exaggerated fears."
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "user_id": 4,
+    "title": "Travel",
+    "content": "The day or two before travel I don't sleep well. I need the \ud83d\ude34.  I am pretty prepared, yet sleep is not as easy. I am going to try for a nap because it is raining.",
+    "anxiety_level": 7,
+    "created_at": "2025-03-31T16:18:10.379813",
+    "updated_at": "2025-03-31T16:18:14.262523",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenarios about not getting enough sleep before travel. - Use a thought record to challenge catastrophic thoughts. Write down the worst-case scenario, the best-case scenario, and the most realistic scenario to gain perspective."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Believing that if sleep isn't perfect, the travel will be ruined. - Practice cognitive restructuring by identifying and reframing all-or-nothing thoughts. Remind yourself that even some rest is better than none and travel can still be enjoyable."
+      },
+      {
+        "thought_pattern": "Fortune Telling",
+        "recommendation": "Predicting that you won't sleep well because it has happened before. - Use the evidence-based technique of evaluating predictions. List evidence for and against the prediction that you won\u2019t sleep well to reduce certainty about negative outcomes."
+      }
+    ]
+  },
+  {
+    "id": 58,
+    "user_id": 4,
+    "title": "Travel",
+    "content": "The day or two before travel I don't sleep well. I need the \ud83d\ude34.  I am pretty prepared, yet sleep is not as easy. I am going to try for a nap because it is raining.",
+    "anxiety_level": 7,
+    "created_at": "2025-03-31T16:18:14.583663",
+    "updated_at": "2025-03-31T16:18:18.418231",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Anticipating the worst-case scenario, such as not sleeping well and its impact on the trip. - Challenge these thoughts by asking yourself, 'What evidence do I have that this will happen?' and 'What are some possible outcomes other than the worst-case scenario?'"
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Believing that sleep must be perfect or the travel experience will be ruined. - Practice cognitive restructuring by identifying cognitive distortions and rephrasing them to be more balanced, such as 'Even if I don\u2019t sleep perfectly, I can still enjoy the trip and handle the day.'"
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Assuming that because one aspect (sleep) is problematic, the whole event (travel) will be negative. - Use the 'Evidence Log' technique where you write down instances when you handled similar situations well, to remind yourself that one factor does not determine the entire outcome."
+      }
+    ]
+  },
+  {
+    "id": 59,
+    "user_id": 4,
+    "title": "Travel",
+    "content": "The day or two before travel I don't sleep well. I need the \ud83d\ude34.  I am pretty prepared, yet sleep is not as easy. I am going to try for a nap because it is raining.",
+    "anxiety_level": 7,
+    "created_at": "2025-03-31T16:18:18.705252",
+    "updated_at": "2025-03-31T16:18:22.410362",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario about not sleeping well before travel. - Use the 'Decatastrophizing' technique by writing down the worst, best, and most likely outcomes of lack of sleep and focus on the evidence supporting the most likely outcome."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Believing that not sleeping well will completely ruin the travel experience. - Challenge this by identifying gray areas; list past instances where lack of sleep did not entirely ruin your experience and focus on those outcomes."
+      },
+      {
+        "thought_pattern": "Fortune Telling",
+        "recommendation": "Predicting that you will not be able to sleep well before travel. - Practice 'Thought Record' by noting down the prediction, evidence for and against it, and reframe the thought with a more balanced perspective."
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "user_id": 4,
+    "title": "Travel",
+    "content": "The day or two before travel I don't sleep well. I need the \ud83d\ude34.  I am pretty prepared, yet sleep is not as easy. I am going to try for a nap because it is raining.",
+    "anxiety_level": 7,
+    "created_at": "2025-03-31T16:18:22.702957",
+    "updated_at": "2025-03-31T16:18:29.925662",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario about sleep deprivation affecting travel negatively. - Challenge this thought by listing past experiences where lack of sleep did not ruin the trip, and develop a balanced thought: 'I might feel tired, but I can still enjoy the trip.'"
+      },
+      {
+        "thought_pattern": "Perfectionism",
+        "recommendation": "Believing that everything must go perfectly, including sleep, for a successful trip. - Practice self-compassion and remind yourself that imperfection is normal. Use the phrase: 'It\u2019s okay not to sleep perfectly, and the trip can still be enjoyable.'"
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing sleep as an absolute requirement for a good trip or wellbeing. - Use a thought record to identify and reframe this thinking. Note other factors that contribute to a good trip, emphasizing flexibility and adaptability."
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:34:14.159463",
+    "updated_at": "2025-04-02T19:34:23.394383",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario or exaggerating the potential negative outcomes of being tired and busy. - Practice cognitive restructuring by identifying these thoughts and challenging them with more balanced perspectives. Ask yourself: 'What is the worst that can happen? How would I cope if that happened? What is more likely to happen?'"
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing the situation in black-and-white terms, such as feeling like the day must be perfect or a failure with no middle ground. - Use a thought record to identify and write down these thoughts. Challenge them by considering the gray areas and acknowledging any small successes or partial achievements throughout the day."
+      },
+      {
+        "thought_pattern": "Overcommitment",
+        "recommendation": "Taking on too many activities or responsibilities without leaving room for rest, leading to overwhelm. - Practice assertiveness training by prioritizing tasks and setting boundaries. Use the 'ABC model' to analyze the situation: identify the Activating event, your Beliefs about it, and the Consequences. Consider delegating tasks or rescheduling to allow time for rest."
+      }
+    ]
+  },
+  {
+    "id": 62,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:34:23.684934",
+    "updated_at": "2025-04-02T19:34:27.707443",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Overestimation of demands",
+        "recommendation": "Perceiving tasks as more demanding than they might be, leading to feelings of being overwhelmed. - Use a priority matrix to categorize tasks into urgent/important to focus on what truly needs immediate attention and plan rest."
+      },
+      {
+        "thought_pattern": "All-or-nothing thinking",
+        "recommendation": "Believing that because you can't rest now, you won't be able to rest at all, increasing stress. - Practice cognitive restructuring by challenging this thought and identifying small, manageable breaks you can take throughout the day."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario about lack of sleep affecting the whole day. - Engage in thought record exercises to examine the evidence for and against this belief and consider alternative, less extreme outcomes."
+      }
+    ]
+  },
+  {
+    "id": 63,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:34:39.346482",
+    "updated_at": "2025-04-02T19:34:42.815728",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "The tendency to imagine the worst possible outcome or to blow things out of proportion. - Practice cognitive restructuring by identifying and challenging these thoughts: Ask yourself, 'What evidence do I have that this will go poorly?' and 'What are some more balanced or realistic outcomes?'"
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, without recognizing the spectrum of possibilities. - Use a thought diary to record situations where this thinking occurs and write down more nuanced thoughts. For example, 'Even if I don't get as much rest as I hoped, I can still manage my tasks.'"
+      },
+      {
+        "thought_pattern": "Time Urgency",
+        "recommendation": "Feeling pressured by time constraints, leading to stress and anxiety. - Implement time management techniques like prioritizing tasks using a 'must do' versus 'can do later' list. Practice mindful breathing to reduce stress in moments of urgency."
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:34:51.545095",
+    "updated_at": "2025-04-02T19:34:55.215545",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "The tendency to imagine the worst-case scenario or see the situation as more disastrous than it actually is. - Practice thought challenging by identifying the worst-case, best-case, and most likely scenario for your current situation. Focus on the most likely scenario to reduce anxiety."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms without recognizing the spectrum of possibilities. - Use cognitive restructuring to identify gray areas. Write down at least three alternative outcomes for your busy day that aren't just 'success' or 'failure.'"
+      },
+      {
+        "thought_pattern": "Should Statements",
+        "recommendation": "Using phrases like 'should have' can create pressure and lead to feelings of failure or frustration. - Reframe 'should' statements into preference statements. For example, replace 'I should have been home earlier' with 'I would have preferred to be home earlier, but I managed to attend the funeral and run errands.'"
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:34:55.685280",
+    "updated_at": "2025-04-02T19:35:00.016007",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "The tendency to expect the worst-case scenario or exaggerate the negative aspects of a situation. - Use the 'What If' technique by asking yourself: 'What if the worst happens? How would I deal with it?' This helps to realistically assess the situation and reduce anxiety."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms without recognizing the grey areas or middle ground. - Practice 'Cognitive Restructuring' by identifying the middle ground or alternative outcomes, such as recognizing that although the day is busy, it won't always be this way."
+      },
+      {
+        "thought_pattern": "Overcommitting",
+        "recommendation": "Taking on too many tasks without allowing for adequate rest, leading to increased stress and anxiety. - Implement 'Activity Scheduling' by planning and prioritizing tasks to allow for breaks and rest, ensuring a balance between obligations and self-care."
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:35:00.297852",
+    "updated_at": "2025-04-02T19:35:04.061953",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario about not having enough time to rest and complete tasks. - Use cognitive restructuring to challenge catastrophic thoughts by identifying evidence against them and considering more realistic outcomes."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Believing that not getting sufficient rest means the rest of the day will be completely unmanageable. - Practice cognitive reframing by identifying shades of gray, such as noting small accomplishments or breaks you can incorporate into your day."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Assuming that because today is hectic, future days will also be overwhelming. - Keep a thought record to document specific instances when things do not turn out as expected, helping to identify patterns and exceptions."
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:35:04.339540",
+    "updated_at": "2025-04-02T19:35:08.316449",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Overestimating the impact of being tired and underestimating your ability to cope with it. - Use the 'Thinking in Shades of Gray' technique by evaluating the situation on a scale from 0 to 100 to recognize it's not as severe as it feels."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Believing you must accomplish everything perfectly today despite being tired. - Practice 'Flexible Thinking' by identifying one small task you can let go of or delegate, to reduce pressure."
+      },
+      {
+        "thought_pattern": "Time Pressure",
+        "recommendation": "Feeling rushed and overwhelmed by the tight schedule, leading to heightened anxiety. - Engage in 'Time Management Planning' by listing tasks in order of priority and allowing for short breaks to manage energy levels."
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:35:08.604111",
+    "updated_at": "2025-04-02T19:35:12.364697",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming that not getting enough rest will lead to major problems or an inability to cope with the day. - Practice cognitive restructuring by challenging this thought: 'Even though I'm tired, I've managed busy days before and can handle this.'"
+      },
+      {
+        "thought_pattern": "All-or-nothing thinking",
+        "recommendation": "Believing that if the day doesn't go as planned, it is a failure. - Reframe your thinking by identifying the gray areas: 'Even if I didn't get as much rest, I accomplished important tasks today.'"
+      },
+      {
+        "thought_pattern": "Time urgency",
+        "recommendation": "Feeling rushed and pressured by a tight schedule, leading to stress. - Use time management techniques, such as prioritizing tasks and allowing small buffers between activities, to reduce this pressure."
+      }
+    ]
+  },
+  {
+    "id": 69,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:35:12.646180",
+    "updated_at": "2025-04-02T19:35:16.577562",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenarios and feeling overwhelmed by the thought of not having enough time to complete tasks. - Use a thought record to challenge catastrophic thoughts by listing evidence for and against them, and generating more balanced perspectives."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Believing that if you don't get enough rest, everything will go wrong or you won't manage the day effectively. - Practice cognitive restructuring by identifying these extreme thoughts and replacing them with more realistic assessments of your capabilities and outcomes."
+      },
+      {
+        "thought_pattern": "Overcommitment",
+        "recommendation": "Taking on too many tasks and feeling anxious about meeting all obligations without adequate rest. - Prioritize tasks using a time management worksheet to categorize which activities are urgent and important, enabling better planning and reduced pressure."
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:35:16.860351",
+    "updated_at": "2025-04-02T19:35:21.943210",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Thinking that the lack of sleep and busy schedule will lead to an overwhelming day or inability to cope. - Practice cognitive restructuring by identifying and challenging this thought. Ask yourself, 'What evidence do I have that I cannot cope?' and 'What would I tell a friend in this situation?'"
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Believing that if you can't get home early to rest, the rest of the day will be ruined. - Use a thought record to differentiate between 'all-or-nothing' thoughts and more balanced perspectives. Consider, 'What small things can I do to rest or recharge even if I can't get home early?'"
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Assuming that because today is hectic, future days will also be overwhelming. - Counter this by creating a list of past experiences where a busy day turned out fine. Reflect on how you managed those situations successfully."
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:35:22.223537",
+    "updated_at": "2025-04-02T19:35:29.660038",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "The user may be expecting the worst outcomes from feeling tired and having little time, amplifying stress levels. - Use the 'worst-case scenario' technique: Write down the worst-case, best-case, and most realistic outcomes of the current situation to gain perspective."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "The user might think they have to accomplish everything perfectly or not at all, which can increase pressure. - Practice 'graded exposure': Break tasks into smaller, manageable parts and tackle them one at a time to reduce overwhelm."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "The user might be drawing broad conclusions from a single event of being tired and pressed for time, affecting their overall mood. - Challenge overgeneralizations: Identify and write down evidence for and against the belief that this day sets a pattern for future days."
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:35:29.942756",
+    "updated_at": "2025-04-02T19:35:34.644365",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "The individual might be interpreting the situation in a way that exaggerates the potential negative outcomes, such as feeling overwhelmed by the day's obligations. - Use cognitive restructuring to challenge exaggerated thoughts. Ask yourself, 'What's the worst that could happen?' and then, 'How likely is that to occur?'"
+      },
+      {
+        "thought_pattern": "All-or-nothing thinking",
+        "recommendation": "The person seems to have a rigid view of the day's schedule, perceiving any deviation from the plan as a failure. - Practice cognitive flexibility by identifying areas where you can be more adaptable. Remind yourself that it's okay if the day doesn't go exactly as planned."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "The user might be drawing broad conclusions based on limited events, such as believing the day's busyness signifies an inability to cope. - Engage in evidence gathering by listing past instances where you managed similar situations successfully to counter overgeneralized thoughts."
+      }
+    ]
+  },
+  {
+    "id": 73,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:35:34.939965",
+    "updated_at": "2025-04-02T19:35:40.755636",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst possible outcome from being tired and busy, like not being able to handle the tasks or feeling overwhelmed. - Use cognitive restructuring by challenging catastrophic thoughts. Ask yourself, 'What is the worst that can happen?' and 'How likely is it that this will really occur?'"
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing the situation as all bad due to lack of rest, rather than recognizing any positive aspects or manageable parts of the day. - Practice finding the gray areas. Identify both positive and negative aspects of your day to create a balanced perspective. For example, acknowledge what you accomplished despite being tired."
+      },
+      {
+        "thought_pattern": "Time Pressure",
+        "recommendation": "Feeling rushed and overwhelmed by the limited time available to complete tasks, which increases anxiety. - Prioritize tasks using a to-do list. Break down tasks into smaller, manageable steps and prioritize them based on urgency. This can help in feeling more in control of time."
+      }
+    ]
+  },
+  {
+    "id": 74,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:36:23.650437",
+    "updated_at": "2025-04-02T19:36:28.386336",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Interpreting a situation as worse than it actually is, such as fearing the inability to cope due to lack of rest. - Use the 'Worst, Best, Most Likely' technique: Write down the worst-case scenario, the best-case scenario, and the most likely scenario to gain perspective."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Seeing a situation in black and white terms, such as feeling the day is ruined because the schedule didn't go as planned. - Practice cognitive restructuring: Identify these thoughts and reframe them by considering gray areas or alternative outcomes."
+      },
+      {
+        "thought_pattern": "Overcommitment",
+        "recommendation": "Taking on too many tasks in a short period, leading to stress and anxiety. - Implement time management strategies: Prioritize tasks by urgency and importance, and practice saying 'no' to non-essential activities."
+      }
+    ]
+  },
+  {
+    "id": 75,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 4,
+    "created_at": "2025-04-02T19:36:29.146880",
+    "updated_at": "2025-04-02T19:36:34.514713",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the lack of rest will have severe negative impacts on the day. - Use cognitive restructuring to challenge and reframe this thought by asking yourself, 'What's the worst that could happen if I am tired today, and how likely is that to happen?' This helps in reducing the intensity of the worry."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Believing that the day must go perfectly and any deviation is a failure. - Practice cognitive flexibility by identifying and writing down a few positive outcomes that could occur even if the day doesn't go as planned, to foster a more balanced perspective."
+      },
+      {
+        "thought_pattern": "Overcommitment",
+        "recommendation": "Taking on too many tasks without considering personal limits, leading to stress. - Apply time management and assertiveness skills by prioritizing tasks and delegating or postponing less critical errands to relieve pressure and allow for rest."
+      }
+    ]
+  },
+  {
+    "id": 76,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 4,
+    "created_at": "2025-04-02T19:36:34.796545",
+    "updated_at": "2025-04-02T19:36:39.002516",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Thinking of the worst-case scenario about not having enough time to rest. - Use thought challenging by listing evidence for and against the belief that not resting will have serious consequences."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Believing that not having a perfect amount of rest will ruin the day. - Practice cognitive restructuring by identifying and rephrasing these thoughts into more balanced ones, such as 'I might be tired, but I can still manage to get through the day.'"
+      },
+      {
+        "thought_pattern": "Time Pressure",
+        "recommendation": "Feeling overwhelmed by the tight schedule and the need to accomplish many tasks in a short time. - Implement time management techniques, such as prioritizing tasks to focus on what is most important and allowing flexibility for rest."
+      }
+    ]
+  },
+  {
+    "id": 77,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 4,
+    "created_at": "2025-04-02T19:36:39.284808",
+    "updated_at": "2025-04-02T19:36:43.378847",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Assuming that because you're tired today, you might always feel overwhelmed by your responsibilities. - Use a thought record to challenge this pattern by identifying evidence against the idea that today\u2019s tiredness will persist. Reflect on past instances when you felt better after rest."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Exaggerating the negative impact of not getting rest today, anticipating it will lead to significant problems. - Practice cognitive restructuring by asking yourself, 'What is the worst that could happen?' and 'How likely is it?' to put the situation into perspective."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing the situation as a complete failure because your day didn\u2019t go as planned. - Implement a 'shades of gray' exercise by listing aspects of the day that went well, even if small, to recognize that not everything was negative."
+      }
+    ]
+  },
+  {
+    "id": 78,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:37:02.569962",
+    "updated_at": "2025-04-02T19:37:06.452238",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "The user may be imagining the worst-case scenario about not getting enough rest, which can heighten anxiety. - Practice cognitive restructuring by challenging catastrophic thoughts. Ask yourself, 'What is the worst that can happen, and how likely is it?' Then, 'What is a more realistic outcome?'"
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "The user may believe that if they can't get home early for rest, the entire day is ruined. - Use a thought record to identify and reframe all-or-nothing thoughts. Remind yourself that while not ideal, you can still manage the rest of the day effectively."
+      },
+      {
+        "thought_pattern": "Should Statements",
+        "recommendation": "The user is setting rigid expectations on when they should be home, which can lead to stress and disappointment. - Replace 'should' statements with more flexible language. For example, 'I would have liked to be home earlier, but I can adjust my evening plans to still get some rest.'"
+      }
+    ]
+  },
+  {
+    "id": 79,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:37:16.591245",
+    "updated_at": "2025-04-02T19:37:20.195253",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing the day as either completely successful or entirely unproductive due to not meeting personal expectations. - Practice cognitive restructuring by listing what you did accomplish today and recognizing that partial success is valuable."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Assuming that not meeting today's plans will lead to ongoing failure or continued fatigue. - Use a thought record to challenge this belief by identifying evidence against this pattern and considering alternative outcomes."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Expecting the worst-case scenario of not having enough rest to handle the day effectively. - Engage in a 5-minute mindfulness exercise focused on breathing to ground yourself and reduce the sense of urgency."
+      }
+    ]
+  },
+  {
+    "id": 80,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:37:20.474700",
+    "updated_at": "2025-04-02T19:37:27.598428",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Believing that because the day started with tiredness and lack of sleep, it will continue to be overwhelming and stressful. - Use cognitive restructuring to challenge and reframe this thought by identifying specific aspects of the day that went well, such as completing errands or getting your hair done."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Anticipating that the lack of rest will lead to significant negative outcomes, like not being able to handle the rest of the day. - Practice thought stopping by recognizing when you're jumping to worst-case scenarios and replace it with more balanced thoughts, reminding yourself of your ability to manage similar situations in the past."
+      },
+      {
+        "thought_pattern": "All-or-nothing thinking",
+        "recommendation": "Viewing the day as either entirely successful or a failure based on the amount of rest you get. - Engage in a thought diary exercise to record instances where you notice this thinking, and challenge it by identifying shades of gray, noting accomplishments and manageable moments even when things aren't perfect."
+      }
+    ]
+  },
+  {
+    "id": 81,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:37:27.878326",
+    "updated_at": "2025-04-02T19:37:31.481579",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "The belief that not getting enough rest will ruin the rest of the day or make it impossible to function. - Use a thought record to challenge this belief by listing evidence for and against the idea that lack of sleep will ruin your day, and consider alternative outcomes."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing the day as either successful if everything goes perfectly, or a failure if it doesn't. - Engage in cognitive restructuring by identifying middle-ground thoughts, such as acknowledging that even if the day doesn't go as planned, it can still be productive and meaningful."
+      },
+      {
+        "thought_pattern": "Overcommitment",
+        "recommendation": "Feeling the need to accomplish many tasks despite being tired, leading to increased stress. - Practice time management by prioritizing tasks and delegating or postponing non-essential activities to reduce the immediate pressure."
+      }
+    ]
+  },
+  {
+    "id": 82,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:37:31.760147",
+    "updated_at": "2025-04-02T19:37:35.721158",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario, such as feeling overwhelmed by the busy schedule and lack of rest. - Practice the Decatastrophizing exercise by writing down the worst-case scenario, best-case scenario, and most realistic outcomes for your day. This can help put your situation into perspective."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing the day's success solely on whether everything goes as planned, leading to stress when things deviate. - Use cognitive restructuring by identifying all-or-nothing thoughts and challenging them with more balanced thoughts, like 'Even if I can't rest as much as I want, I can still manage my tasks effectively.'"
+      },
+      {
+        "thought_pattern": "Time Pressure",
+        "recommendation": "Feeling anxious due to the perceived lack of time to accomplish tasks, adding stress to daily activities. - Implement time-management techniques such as listing tasks in order of priority and setting realistic time frames for each, allowing for flexibility and breaks to reduce pressure."
+      }
+    ]
+  },
+  {
+    "id": 83,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:37:36.001602",
+    "updated_at": "2025-04-02T19:37:39.444279",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario about not having enough time to rest and complete tasks. - Practice thought challenging by listing possible outcomes for the day, including neutral and positive ones, and reassess how realistic the catastrophic outcome is."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing the day as a failure because it didn't go exactly as planned. - Use a cognitive restructuring worksheet to reframe thoughts by identifying evidence for and against the belief that the day was a failure."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Believing that not getting rest today means always being exhausted and overwhelmed. - Keep a thought record to track specific instances where you felt rested and completed tasks successfully, which can provide evidence against this belief."
+      }
+    ]
+  },
+  {
+    "id": 84,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:37:39.725870",
+    "updated_at": "2025-04-02T19:37:44.725598",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "The individual may be perceiving the lack of rest and numerous tasks as overwhelming, expecting the worst outcomes. - Practice cognitive restructuring by identifying and challenging catastrophic thoughts. Ask, 'What is the worst that could happen?' and 'How likely is that to actually occur?' to gain perspective."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "The person might be viewing their day in black-and-white terms, believing that not achieving rest means the day is a failure. - Reframe the situation by recognizing small accomplishments. Reflect on what has been managed well today despite the tiredness, acknowledging shades of gray."
+      },
+      {
+        "thought_pattern": "Time Pressure",
+        "recommendation": "There is a sense of urgency and pressure about the schedule, contributing to anxiety about not having enough time. - Use time management techniques such as list-making or prioritization. Break tasks into smaller, manageable steps and focus on completing one thing at a time."
+      }
+    ]
+  },
+  {
+    "id": 85,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T19:37:45.004304",
+    "updated_at": "2025-04-02T19:37:48.815892",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario or exaggerating the implications of a situation, such as worrying excessively about being late or not getting enough rest. - Use a 'Thought Record' to challenge catastrophic thoughts by identifying evidence for and against the thought, and then generating a more balanced perspective."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, such as feeling that not being home early is a complete failure. - Practice 'Cognitive Restructuring' to find the middle ground by listing potential positive outcomes or partial successes despite not meeting initial expectations."
+      },
+      {
+        "thought_pattern": "Overwhelm",
+        "recommendation": "Feeling stressed by having too many tasks at once, which can intensify anxiety. - Apply 'Task Breakdown' to manage overwhelm by listing tasks in smaller, manageable steps, prioritizing them, and tackling one task at a time."
+      }
+    ]
+  },
+  {
+    "id": 114,
+    "user_id": 1,
+    "title": "Ugly ones ",
+    "content": "However happy I am with my looks, I have been comparing myself with other women and get super sad because my ex cheated on me even with the ugly ones.",
+    "anxiety_level": 8,
+    "created_at": "2025-04-03T13:38:53.406526",
+    "updated_at": "2025-04-03T13:38:59.103079",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Comparison with others",
+        "recommendation": "The habit of comparing oneself to others, often leading to negative self-evaluation. - Practice 'Compare and Despair' technique: Make a list of positive attributes or achievements without reference to others, focusing on personal growth."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario or exaggerating negative outcomes. - Use 'Decatastrophizing' worksheet: Identify the worst-case scenario, then list realistic outcomes and likelihood of each, to challenge exaggerated fears."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Drawing broad conclusions based on a single event, like believing all future relationships will be negative due to one experience. - Practice 'Evidence for and against': Write down evidence supporting the belief and evidence against it, to see a balanced view."
+      }
+    ]
+  },
+  {
+    "id": 115,
+    "user_id": 16,
+    "title": "Days of loneliness ",
+    "content": "I feel really abandoned by every person I need in my life..people I truly love leaving \ud83d\ude2a some jus distant ...it's hard to show my true feelings since I'm suppose to be a strong person .",
+    "anxiety_level": 5,
+    "created_at": "2025-04-03T18:11:26.411278",
+    "updated_at": "2025-04-03T18:11:30.211054",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst outcome will happen, such as being permanently abandoned by loved ones. - Use the 'Decatastrophizing' technique: Write down the worst-case scenario, best-case scenario, and most likely scenario to challenge the catastrophic thoughts."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, like needing to always appear strong or else be vulnerable. - Practice 'Cognitive Restructuring': Identify and write down evidence for and against the belief of needing to always appear strong, then find a balanced perspective."
+      },
+      {
+        "thought_pattern": "Emotional Reasoning",
+        "recommendation": "Believing emotions reflect reality, such as feeling abandoned equating to actually being abandoned. - Engage in 'Thought Record': Keep a journal to distinguish between feelings and facts, noting evidence that supports or contradicts your emotional response."
+      }
+    ]
+  },
+  {
+    "id": 86,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 2,
+    "created_at": "2025-04-02T19:37:49.100043",
+    "updated_at": "2025-04-02T19:37:52.748517",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario of feeling too exhausted to manage the rest of the day's tasks. - Use the 'Decatastrophizing' exercise: Write down the worst-case, best-case, and most realistic outcomes of feeling tired today, and focus on the most realistic scenario."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Believing that not getting enough rest will completely ruin the day. - Practice 'Cognitive Restructuring': Challenge this thought by identifying evidence that supports and contradicts it, and then reframe it to a more balanced view (e.g., 'I may be tired, but I can still manage my tasks with breaks')."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Generalizing the experience of tiredness today to assume future days will be similar. - Try the 'Evidence Collection' technique: List specific instances where you felt tired but managed your responsibilities effectively, reinforcing the idea that today is not indicative of future days."
+      }
+    ]
+  },
+  {
+    "id": 87,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 2,
+    "created_at": "2025-04-02T19:37:53.029547",
+    "updated_at": "2025-04-02T19:38:01.228917",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Interpreting situations in extremes without seeing the middle ground, such as needing to accomplish all tasks perfectly or not at all. - Practice 'Cognitive Restructuring' by identifying and challenging extreme thoughts. Replace them with balanced alternatives, like acknowledging that even partial rest is beneficial."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario and believing that it will happen, such as assuming lack of rest will ruin your day. - Use the 'Decatastrophizing' technique by asking yourself, 'What is the worst that can happen?' and 'How likely is it?' to gain perspective on the actual impact."
+      },
+      {
+        "thought_pattern": "Should Statements",
+        "recommendation": "Having rigid expectations about how things should be, like expecting to be home earlier to rest. - Implement 'Thought Challenging' by rephrasing 'should' statements into more flexible terms like 'it would be nice if,' reducing pressure and allowing for adaptability."
+      }
+    ]
+  },
+  {
+    "id": 88,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 2,
+    "created_at": "2025-04-02T19:38:01.508858",
+    "updated_at": "2025-04-02T19:38:06.582732",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario about not getting enough rest and its potential impact on the day. - Use the 'Decatastrophizing' technique: Challenge the thought by asking, 'What's the worst that can happen if I'm tired today? How likely is it? How could I cope with it?'"
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Believing that not being home earlier means the day is ruined because it didn't go perfectly as planned. - Practice 'Cognitive Restructuring': Identify this black-and-white thinking and reframe it by acknowledging that while the day isn't perfect, it still has positive aspects."
+      },
+      {
+        "thought_pattern": "Should Statements",
+        "recommendation": "Feeling a strong obligation about what the day should have been like, leading to disappointment. - Use 'Reframing Should Statements': Replace 'I should have been home earlier' with 'It would have been nice to be home earlier, but I can still make the most of my time now.'"
+      }
+    ]
+  },
+  {
+    "id": 89,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Just  got home from leaving pretty early to attend a funeral this morning.  I was really tired and sleepy.  I had only about 3 hours sleep last night.  After the funeral I ran a few errands including getting my hair did.  \r\n\r\nHome now have about an hour to shower eat and get back on the road again to pick up the others from work and school.  Was hoping to be home much earlier to get some rest. ",
+    "anxiety_level": 2,
+    "created_at": "2025-04-02T19:38:06.868097",
+    "updated_at": "2025-04-02T19:38:11.129722",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst possible outcome, such as being overly worried about not getting enough rest or not being able to manage the schedule. - Use the 'Decatastrophizing' technique by asking yourself, 'What is the worst that could happen? How likely is it? How would I cope if it did happen?' This helps to put the situation in perspective."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, such as believing you must have everything done perfectly or else it is a failure. - Practice 'Cognitive Restructuring' by identifying these thoughts and considering more balanced alternatives. For example, acknowledge that doing your best given the circumstances is good enough."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Drawing broad conclusions based on a single event, such as expecting future events to also prevent rest due to today's busy schedule. - Use 'Evidence Gathering' by writing down evidence for and against the thought. This helps to challenge and change the belief that one busy day determines all future days."
+      }
+    ]
+  },
+  {
+    "id": 90,
+    "user_id": 15,
+    "title": "Missing Jake ",
+    "content": "I keep thinking about my friend who dies a year ago. I know he is in a better place but I am missing him so much. Amd I wonder what I could have done to make his life better. ",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T21:19:40.819718",
+    "updated_at": "2025-04-02T21:19:45.045629",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Rumination",
+        "recommendation": "Repetitive thinking about the past, particularly focusing on the death of a friend and what could have been different. - Schedule a 'worry time' each day where you allow yourself 15 minutes to reflect on these thoughts, then shift focus to the present moment using mindfulness techniques."
+      },
+      {
+        "thought_pattern": "Personalization",
+        "recommendation": "Taking excessive responsibility for the well-being of others, as seen in wondering what you could have done to make your friend's life better. - Challenge this thought by listing factors outside your control and remind yourself of positive actions you did take in the friendship."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario regarding your friend's past well-being and your role in it. - Practice cognitive restructuring by identifying evidence that contradicts these catastrophic thoughts and consider more balanced perspectives."
+      }
+    ]
+  },
+  {
+    "id": 91,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Had a busy day.  I am tired and just got home.",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T23:19:18.471593",
+    "updated_at": "2025-04-02T23:19:26.339148",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, such as considering a day either completely successful or entirely wasted. - Practice cognitive restructuring by listing both positive and challenging aspects of the day to recognize a balanced perspective."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Drawing broad conclusions based on limited experiences, like assuming a busy day equals failure or inadequacy. - Use the 'Evidence Chart' technique: Split a page into two columns and write down evidence for and against your conclusion to gain a balanced view."
+      },
+      {
+        "thought_pattern": "Mental Filter",
+        "recommendation": "Focusing only on the negative aspects of the day and ignoring the positives, which can amplify stress and anxiety. - Implement a daily gratitude journal where you write down three positive things that happened each day to shift focus towards positive experiences."
+      }
+    ]
+  },
+  {
+    "id": 92,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Had a busy day.  I am tired and just got home.",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T23:19:26.847803",
+    "updated_at": "2025-04-02T23:19:30.164552",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing the day as either entirely successful or entirely exhausting without recognizing any middle ground. - Practice cognitive reframing: List three positive accomplishments from the day to balance the perception of the day as only tiring."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming that being tired after a busy day will lead to negative consequences, like not being able to manage responsibilities. - Use cognitive restructuring: Write down the worst-case, best-case, and most likely scenarios to gain perspective."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Drawing broad conclusions from a single event, like being tired today means you will always feel overwhelmed. - Challenge overgeneralizing thoughts by identifying specific evidence: Note past instances when you managed busy days successfully."
+      }
+    ]
+  },
+  {
+    "id": 93,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Had a busy day.  I am tired and just got home.",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T23:19:30.675395",
+    "updated_at": "2025-04-02T23:19:34.989218",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst possible outcome of a situation, such as assuming that being tired will lead to negative consequences. - Use a 'worst-case scenario' exercise to challenge this thought. Write down the worst possible outcome, the best possible outcome, and the most likely outcome, then assess how realistic each scenario is."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Drawing broad conclusions from a single event, like assuming that feeling tired today means being unproductive always. - Practice 'evidence gathering' by listing specific instances when being tired did not prevent you from completing tasks effectively in the past."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, such as thinking a day is either completely successful or a total failure based on feeling tired. - Apply a 'continuum technique' by rating your day on a scale of 0-100 instead of seeing it as completely good or bad. Reflect on what aspects worked well despite feeling tired."
+      }
+    ]
+  },
+  {
+    "id": 94,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Had a busy day.  I am tired and just got home.",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T23:19:35.483188",
+    "updated_at": "2025-04-02T23:19:38.530944",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario about being tired after a busy day. - Challenge this thought by asking yourself, 'What is the worst that could happen, and how likely is it?' Then consider alternative, more realistic outcomes."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing being tired as a complete failure or inadequacy. - Practice cognitive restructuring by identifying any middle ground or gray areas, such as recognizing accomplishments despite fatigue."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Believing that feeling tired today means every day will be overwhelming. - Use a daily thought record to track instances of feeling tired and note specific circumstances, helping to see patterns and exceptions."
+      }
+    ]
+  },
+  {
+    "id": 95,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Had a busy day.  I am tired and just got home.",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T23:19:39.020373",
+    "updated_at": "2025-04-02T23:19:42.227201",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst possible outcomes or exaggerating the difficulties of a situation. - Use the 'Evidence For and Against' technique. Write down your worst fears about the situation, then list evidence that supports and contradicts those fears to gain a more realistic perspective."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, without acknowledging the gray areas. - Practice 'Cognitive Restructuring'. Challenge this thinking by identifying more balanced alternatives. For example, 'I am tired, but I accomplished a lot today.'"
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Taking one instance or experience and generalizing it to all instances. - Try the 'Thought Record' exercise. Note the specific situation causing anxiety, the thoughts associated with it, and then identify more rational and specific thoughts that counter overgeneralization."
+      }
+    ]
+  },
+  {
+    "id": 96,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Had a busy day.  I am tired and just got home.",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T23:19:42.713773",
+    "updated_at": "2025-04-02T23:19:52.224261",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "The tendency to jump to the worst-case scenario or exaggerate the impact of events. - Use the 'Worst-Case, Best-Case, Most Likely' exercise to evaluate the situation more realistically."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, without recognizing any middle ground. - Practice reframing by identifying and writing down the gray areas or middle ground in your busy day."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Applying a broad conclusion based on a single event or piece of evidence. - Keep a log of past situations where busy days ended positively to challenge and correct overgeneralized thoughts."
+      }
+    ]
+  },
+  {
+    "id": 97,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Had a busy day.  I am tired and just got home.",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T23:20:25.651896",
+    "updated_at": "2025-04-02T23:20:29.926021",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario or exaggerating the impact of being tired after a busy day. - Use the 'Decatastrophizing' technique: Write down the worst-case scenario, the best-case scenario, and the most likely scenario to gain perspective."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing the day as either completely successful or a failure based on being tired. - Practice 'Cognitive Restructuring': Identify these thoughts and reframe them by recognizing shades of gray, such as acknowledging accomplishments despite feeling tired."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Applying the experience of one busy day to all days, leading to a belief that every day will be overwhelming. - Keep a 'Thought Diary': Track instances of overgeneralization and challenge them by finding evidence of days that were not as busy or tiring."
+      }
+    ]
+  },
+  {
+    "id": 98,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Had a busy day.  I am tired and just got home.",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T23:20:30.477526",
+    "updated_at": "2025-04-02T23:20:34.873322",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-nothing thinking",
+        "recommendation": "Viewing the day as either entirely busy or not, without acknowledging any in-between. - Use a thought diary to list moments from the day that were not busy to challenge this pattern."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Assuming that being tired after a busy day is a persistent issue rather than a situational one. - Reflect on previous days to identify times when you were not tired and busy, using these instances as evidence against the overgeneralization."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Exaggerating the impact of being tired by assuming it will lead to negative outcomes. - Practice the 'worst-case, best-case, most realistic' exercise to assess the true impact of being tired, focusing on realistic outcomes."
+      }
+    ]
+  },
+  {
+    "id": 99,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Had a busy day.  I am tired and just got home.",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T23:20:35.374177",
+    "updated_at": "2025-04-02T23:20:39.113251",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario or exaggerating the consequences of feeling tired after a busy day. - Use the 'What If' technique: Write down the worst-case scenario and a more realistic outcome for being tired. Challenge the likelihood of the worst-case scenario actually happening."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing the day as entirely busy and overwhelming without recognizing any small accomplishments or breaks. - Practice 'Cognitive Restructuring': List three positive or manageable aspects of the day to balance the view of the day being just 'busy'."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Drawing a broad conclusion based on the feeling of tiredness, such as believing every day will be equally exhausting. - Use 'Thought Record': Document specific thoughts about tiredness and examine evidence for and against the belief that all days will feel this way."
+      }
+    ]
+  },
+  {
+    "id": 100,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Had a busy day.  I am tired and just got home.",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T23:20:39.618504",
+    "updated_at": "2025-04-02T23:20:42.966114",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the busy day will lead to negative outcomes or that things will get worse. - Use thought challenging by identifying evidence for and against the catastrophic thought to reframe it more realistically."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing the day as entirely busy or overwhelming, without recognizing any moments of calm or productivity. - Practice cognitive restructuring by identifying specific moments in the day that were manageable or positive, and remind yourself of them."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Taking the experience of a busy day and applying it to the expectation of future days being similarly overwhelming. - Keep a daily journal to track and highlight days that are less busy, noting differences to reduce overgeneralization."
+      }
+    ]
+  },
+  {
+    "id": 101,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Had a busy day.  I am tired and just got home.",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T23:20:43.464000",
+    "updated_at": "2025-04-02T23:20:47.262967",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Assuming that because today was busy and tiring, all days will be overwhelming and exhausting. - Use a 'thought record' to challenge this pattern by writing down evidence for and against the thought that all days will be as busy."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Believing that feeling tired will lead to negative consequences, such as being unable to cope with future tasks. - Practice 'decatastrophizing' by asking, 'What is the worst that could happen?' and then assess how likely and manageable that outcome truly is."
+      },
+      {
+        "thought_pattern": "All-or-nothing thinking",
+        "recommendation": "Viewing the day as either completely successful or entirely exhausting without acknowledging any middle ground. - Implement 'cognitive restructuring' by identifying and listing parts of the day that were manageable or positive, to create a more balanced perspective."
+      }
+    ]
+  },
+  {
+    "id": 102,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Had a busy day.  I am tired and just got home.",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T23:20:47.762492",
+    "updated_at": "2025-04-02T23:20:52.304981",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario will happen or exaggerating the impact of the day's events. - Practice 'Decatastrophizing' by writing down the worst-case scenario, then list the best-case and most likely scenarios to gain a balanced perspective."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing the day as either completely successful or completely unsuccessful based on busyness. - Use the 'Scaling' technique by rating the day's success on a scale from 1 to 10, identifying specific parts that went well and those that didn't."
+      },
+      {
+        "thought_pattern": "Mental Filter",
+        "recommendation": "Focusing on the negative aspects of the day and filtering out the positives. - Try the 'Positive Data Log' by listing three positive things about the day, no matter how small, to counterbalance the focus on negatives."
+      }
+    ]
+  },
+  {
+    "id": 103,
+    "user_id": 14,
+    "title": "On the run",
+    "content": "Had a busy day.  I am tired and just got home.",
+    "anxiety_level": 6,
+    "created_at": "2025-04-02T23:20:52.800251",
+    "updated_at": "2025-04-02T23:20:56.202156",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "The tendency to assume the worst possible outcome will happen. - Engage in a thought record exercise by writing down the worst-case scenario, the best-case scenario, and the most likely outcome to gain perspective on the situation."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms without recognizing the spectrum of possibilities. - Practice cognitive restructuring by identifying and challenging extreme thoughts, asking yourself if there is evidence to support a more balanced perspective."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Drawing broad conclusions based on a single event or piece of evidence. - Use a thought diary to document specific evidence for and against your conclusions, helping to differentiate between one-time events and patterns."
+      }
+    ]
+  },
+  {
+    "id": 104,
+    "user_id": 1,
+    "title": "april 2",
+    "content": "I had plans to meet up with friends tonight, but they cancelled last minute. They said something came up, but I can\u2019t help feeling like they just didn\u2019t want to hang out with me. I always feel like the one putting in effort. Maybe I\u2019m just not that important to them. I stayed home and tried to distract myself, but the loneliness hit hard",
+    "anxiety_level": 7,
+    "created_at": "2025-04-03T00:08:07.479385",
+    "updated_at": "2025-04-03T00:08:11.387434",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming others are thinking negatively about you without evidence. - Challenge this thought by listing evidence for and against the belief that your friends didn't want to hang out. Consider other plausible explanations."
+      },
+      {
+        "thought_pattern": "Personalization",
+        "recommendation": "Taking things personally or assuming excessive responsibility for external events. - Reframe the situation by reminding yourself that your friends' cancellation could have reasons unrelated to you. Practice self-compassion and consider reaching out to confirm their well-being."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, without recognizing the spectrum of possibilities. - Use a thought record to explore the gray areas and write down alternative interpretations of your friends' behavior. Reflect on times they have shown appreciation for your friendship."
+      }
+    ]
+  },
+  {
+    "id": 105,
+    "user_id": 1,
+    "title": "april 2",
+    "content": "I had plans to meet up with friends tonight, but they cancelled last minute. They said something came up, but I can\u2019t help feeling like they just didn\u2019t want to hang out with me. I always feel like the one putting in effort. Maybe I\u2019m just not that important to them. I stayed home and tried to distract myself, but the loneliness hit hard",
+    "anxiety_level": 7,
+    "created_at": "2025-04-03T00:08:21.300390",
+    "updated_at": "2025-04-03T00:08:26.251590",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what others are thinking without concrete evidence, such as believing your friends didn't want to hang out with you. - Use the 'Evidence Examination' technique: List the evidence for and against the belief that your friends don't want to hang out with you, and consider alternative explanations."
+      },
+      {
+        "thought_pattern": "Personalization",
+        "recommendation": "Taking things personally or attributing others' actions to yourself without basis, like feeling solely responsible for the effort in the friendship. - Practice 'Reattribution': Identify other factors that might explain your friends' behavior, reducing the tendency to blame yourself."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario, such as feeling unimportant and assuming loneliness will persist. - Engage in 'Decatastrophizing': Ask yourself what the worst, best, and most likely outcomes are, and how you would handle each situation."
+      }
+    ]
+  },
+  {
+    "id": 106,
+    "user_id": 1,
+    "title": "april 2",
+    "content": "I had plans to meet up with friends tonight, but they cancelled last minute. They said something came up, but I can\u2019t help feeling like they just didn\u2019t want to hang out with me. I always feel like the one putting in effort. Maybe I\u2019m just not that important to them. I stayed home and tried to distract myself, but the loneliness hit hard",
+    "anxiety_level": 7,
+    "created_at": "2025-04-03T00:08:26.609183",
+    "updated_at": "2025-04-03T00:08:31.062490",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming others' thoughts or intentions without evidence, such as believing friends cancelled because they don't want to spend time with you. - Practice Reality Testing: Challenge this assumption by asking yourself, 'What evidence do I have that supports this thought? What evidence do I have against it?' Write down both sides."
+      },
+      {
+        "thought_pattern": "Personalization",
+        "recommendation": "Interpreting events as being related to oneself when they may not be, like assuming the cancellation is due to your value to them. - Use Alternative Explanations: List other possible reasons for their cancellation that are not related to your worth or actions."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, such as believing you're always the one putting in effort. - Balance Your Thinking: Identify times when your friends have made efforts. Write these down to create a more balanced view of your interactions."
+      }
+    ]
+  },
+  {
+    "id": 107,
+    "user_id": 1,
+    "title": "april 2",
+    "content": "I had plans to meet up with friends tonight, but they cancelled last minute. They said something came up, but I can\u2019t help feeling like they just didn\u2019t want to hang out with me. I always feel like the one putting in effort. Maybe I\u2019m just not that important to them. I stayed home and tried to distract myself, but the loneliness hit hard",
+    "anxiety_level": 7,
+    "created_at": "2025-04-03T00:08:31.416425",
+    "updated_at": "2025-04-03T00:08:34.698887",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what others are thinking, such as believing your friends didn't want to hang out with you. - Practice 'Reality Testing' by asking yourself for evidence of your belief and consider alternative explanations, like their reason might actually be true."
+      },
+      {
+        "thought_pattern": "Personalization",
+        "recommendation": "Believing that you are personally responsible for or the cause of others' actions, like thinking you are not important to them. - Use 'Reattribution' by identifying all possible factors that might have led to the situation, not just your involvement."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-or-white terms, such as feeling like you always put in the effort and they never do. - Engage in 'Cognitive Restructuring' by identifying and writing down examples where your friends have shown effort in the past."
+      }
+    ]
+  },
+  {
+    "id": 108,
+    "user_id": 1,
+    "title": "april 2",
+    "content": "I had plans to meet up with friends tonight, but they cancelled last minute. They said something came up, but I can\u2019t help feeling like they just didn\u2019t want to hang out with me. I always feel like the one putting in effort. Maybe I\u2019m just not that important to them. I stayed home and tried to distract myself, but the loneliness hit hard",
+    "anxiety_level": 7,
+    "created_at": "2025-04-03T00:08:35.082378",
+    "updated_at": "2025-04-03T00:08:38.241113",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what others are thinking, often without evidence. - Challenge this by asking yourself for evidence of your assumption. Write down alternative reasons why your friends cancelled, like genuine emergencies or scheduling conflicts."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, such as believing friends either value you completely or not at all. - Practice cognitive restructuring by considering the middle ground. List examples of times when your friends have shown they care, acknowledging complexity in relationships."
+      },
+      {
+        "thought_pattern": "Personalization",
+        "recommendation": "Taking things personally or blaming yourself for events outside your control. - Use the 'pie chart' technique: Divide a circle into sections representing all possible reasons for the cancellation, allocating a portion to each, to see that not everything is about you."
+      }
+    ]
+  },
+  {
+    "id": 109,
+    "user_id": 1,
+    "title": "april 2",
+    "content": "I had plans to meet up with friends tonight, but they cancelled last minute. They said something came up, but I can\u2019t help feeling like they just didn\u2019t want to hang out with me. I always feel like the one putting in effort. Maybe I\u2019m just not that important to them. I stayed home and tried to distract myself, but the loneliness hit hard",
+    "anxiety_level": 7,
+    "created_at": "2025-04-03T00:08:38.593852",
+    "updated_at": "2025-04-03T00:08:42.050048",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what others are thinking without evidence. In this case, assuming friends don't want to hang out. - Challenge this thought by asking yourself: 'Is there any evidence that supports this belief?' Write down alternative explanations for why they canceled."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-or-white terms. Here, believing you are not important because of one event. - Identify examples where your friends have shown they value your friendship. Keep a 'positivity log' to remind yourself of these instances."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Expecting the worst-case scenario. Thinking you are alone forever because of one canceled plan. - Practice grounding techniques, such as deep breathing or the 5-4-3-2-1 technique, to refocus your mind and reduce the urge to catastrophize."
+      }
+    ]
+  },
+  {
+    "id": 110,
+    "user_id": 1,
+    "title": "april 2",
+    "content": "I had plans to meet up with friends tonight, but they cancelled last minute. They said something came up, but I can\u2019t help feeling like they just didn\u2019t want to hang out with me. I always feel like the one putting in effort. Maybe I\u2019m just not that important to them. I stayed home and tried to distract myself, but the loneliness hit hard",
+    "anxiety_level": 7,
+    "created_at": "2025-04-03T00:08:53.390475",
+    "updated_at": "2025-04-03T00:08:56.770514",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what others are thinking without having evidence. - Practice evidence-based thinking by writing down what you know for sure versus assumptions. Challenge assumptions by asking for clarification from friends next time."
+      },
+      {
+        "thought_pattern": "Personalization",
+        "recommendation": "Taking situations too personally and assuming responsibility for external events. - List other possible explanations for your friends canceling, focusing on factors unrelated to you, to gain a more balanced perspective."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms without recognizing the middle ground. - Identify and write down examples of times your friends have shown care, which helps reinforce a more nuanced view of your relationships."
+      }
+    ]
+  },
+  {
+    "id": 111,
+    "user_id": 1,
+    "title": "april 3",
+    "content": "I have to present in front of my team tomorrow, and I can\u2019t stop thinking about it. My heart keeps racing, and I\u2019ve had stomach cramps all day. I\u2019m terrified I\u2019ll freeze or mess up. What if they think I\u2019m unprepared or not smart enough? I even thought about calling in sick to avoid it. I can\u2019t handle this level of pressure\u2014it feels overwhelming",
+    "anxiety_level": 8,
+    "created_at": "2025-04-03T10:24:08.079620",
+    "updated_at": "2025-04-03T10:24:15.261983",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario, such as freezing or being judged harshly by the team. - Use the 'Worst-Case Scenario' exercise: Write down the worst-case scenario, then write down the best-case scenario, and finally the most likely scenario. This helps in balancing thoughts."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming others will think you\u2019re unprepared or not smart enough without evidence. - Practice 'Thought Record': Write down the thought, evidence for and against it, and create a balanced thought. This helps in challenging assumptions."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Believing you can't handle the pressure or that you'll completely fail. - Engage in 'Cognitive Restructuring': Identify absolute terms like 'can\u2019t handle' and replace them with more balanced views, acknowledging past successes in similar situations."
+      }
+    ]
+  },
+  {
+    "id": 112,
+    "user_id": 1,
+    "title": "Ugly ones ",
+    "content": "However happy I am with my looks, I have been comparing myself with other women and get super sad because my ex cheated on me even with the ugly ones.",
+    "anxiety_level": 8,
+    "created_at": "2025-04-03T13:38:39.835088",
+    "updated_at": "2025-04-03T13:38:46.047880",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Comparison with others",
+        "recommendation": "Engaging in negative self-comparison with others, which can lead to feelings of inadequacy and sadness. - Practice gratitude journaling by writing down three things you appreciate about yourself each day, focusing on your strengths and achievements."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Drawing broad conclusions based on a single event, such as believing that all relationships will be unfaithful because of one cheating incident. - Challenge overgeneralizations by listing evidence that contradicts the belief, such as examples of loyal relationships you know."
+      },
+      {
+        "thought_pattern": "Labeling",
+        "recommendation": "Assigning negative and unhelpful labels to others (e.g., 'ugly ones'), which can perpetuate negative feelings and judgments. - Use a thought record to examine and reframe these labels by considering more balanced and neutral descriptions of others."
+      }
+    ]
+  },
+  {
+    "id": 113,
+    "user_id": 1,
+    "title": "Ugly ones ",
+    "content": "However happy I am with my looks, I have been comparing myself with other women and get super sad because my ex cheated on me even with the ugly ones.",
+    "anxiety_level": 8,
+    "created_at": "2025-04-03T13:38:46.573968",
+    "updated_at": "2025-04-03T13:38:52.904926",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Comparison",
+        "recommendation": "Frequently comparing oneself to others, especially in negative contexts, can amplify feelings of inadequacy and anxiety. - Practice self-compassion exercises by writing down three positive qualities about yourself daily, focusing on your strengths rather than comparisons."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Assuming that because one negative event happened, it will continue to happen or is universally true. - Challenge overgeneralized thoughts by keeping a thought record. Note down the triggering situation, your automatic thought, and then examine the evidence for and against this thought."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Expecting the worst-case scenario or exaggerating the negative aspects of a situation. - Use the 'Decatastrophizing' technique by asking yourself, 'What is the worst that could happen?' and 'How likely is that outcome?' Then, plan how you would cope with the worst-case scenario."
+      }
+    ]
+  },
+  {
+    "id": 116,
+    "user_id": 3,
+    "title": "Sad",
+    "content": "I had a hard conversation with my husband today. I pretty much ask him for a divorce and told him I was tired of his selfishness and that he has all his chosen himself first I am angry, but I do not hate him. It is just that we both have changed and we don\u2019t want the same things. I\u2019m tired of him lying to me. I\u2019m tired of him not supporting me. I\u2019m tired of him, saying one thing and doing something else I\u2019m just tired of his craziness. I wished him the best of luck thank you for my children and let him know that it was time to move forward and that God\u2018s got both of Us. It is a lot I explained to him that I do not want to have discussions about my decision or less the discussion is about moving forward and what we\u2019re gonna do. This is all I can do for right now.",
+    "anxiety_level": 8,
+    "created_at": "2025-04-03T19:20:05.468370",
+    "updated_at": "2025-04-03T19:20:09.865842",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, such as seeing the relationship as wholly negative or irreparable. - Practice cognitive restructuring by listing positive aspects or moments in the relationship to provide a more balanced perspective."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Drawing broad conclusions from a single event, like believing all interactions with your husband are negative based on recent conflicts. - Keep a journal to document specific instances where interactions were positive or neutral, helping to challenge overgeneralized thoughts."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst possible outcome, such as believing that the decision to divorce will lead to overwhelmingly negative consequences. - Use a thought record to identify and evaluate the evidence for and against your catastrophic predictions, and generate more balanced outcomes."
+      }
+    ]
+  },
+  {
+    "id": 117,
+    "user_id": 3,
+    "title": "Sad",
+    "content": "I had a hard conversation with my husband today. I pretty much ask him for a divorce and told him I was tired of his selfishness and that he has all his chosen himself first I am angry, but I do not hate him. It is just that we both have changed and we don\u2019t want the same things. I\u2019m tired of him lying to me. I\u2019m tired of him not supporting me. I\u2019m tired of him, saying one thing and doing something else I\u2019m just tired of his craziness. I wished him the best of luck thank you for my children and let him know that it was time to move forward and that God\u2018s got both of Us. It is a lot I explained to him that I do not want to have discussions about my decision or less the discussion is about moving forward and what we\u2019re gonna do. This is all I can do for right now.",
+    "anxiety_level": 8,
+    "created_at": "2025-04-03T19:20:10.351181",
+    "updated_at": "2025-04-03T19:20:15.013453",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Interpreting a situation in the worst possible light, such as assuming the conversation will lead to drastic negative outcomes. - Practice 'Decatastrophizing' by writing down the worst-case, best-case, and most realistic scenarios to gain perspective."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, like seeing the relationship as entirely negative without recognizing any positives. - Use 'Cognitive Restructuring' by listing at least three positive aspects or shared successes in the relationship to balance perceptions."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Drawing broad conclusions based on a single event, such as thinking all future interactions will be as negative as past ones. - Implement the 'Evidence-Based Analysis' technique by identifying specific examples that counter the overgeneralized belief."
+      }
+    ]
+  },
+  {
+    "id": 118,
+    "user_id": 3,
+    "title": "Sad",
+    "content": "I had a hard conversation with my husband today. I pretty much ask him for a divorce and told him I was tired of his selfishness and that he has all his chosen himself first I am angry, but I do not hate him. It is just that we both have changed and we don\u2019t want the same things. I\u2019m tired of him lying to me. I\u2019m tired of him not supporting me. I\u2019m tired of him, saying one thing and doing something else I\u2019m just tired of his craziness. I wished him the best of luck thank you for my children and let him know that it was time to move forward and that God\u2018s got both of Us. It is a lot I explained to him that I do not want to have discussions about my decision or less the discussion is about moving forward and what we\u2019re gonna do. This is all I can do for right now.",
+    "anxiety_level": 8,
+    "created_at": "2025-04-03T19:20:30.689631",
+    "updated_at": "2025-04-03T19:20:34.589651",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, without recognizing any middle ground. - Challenge this pattern by identifying examples of times when your husband did support you or was truthful. This can help create a more balanced perspective."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Expecting the worst possible outcome or viewing situations as worse than they likely are. - Use a 'Decatastrophizing Worksheet' to explore the most likely outcomes of your decision and evaluate their actual impact on your life."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Making broad interpretations from a single or few events (e.g., 'He always lies'). - Keep a 'Thought Record' to document specific instances when he fulfilled your expectations versus when he did not. This can help you see patterns more clearly."
+      }
+    ]
+  },
+  {
+    "id": 119,
+    "user_id": 3,
+    "title": "Sad",
+    "content": "I had a hard conversation with my husband today. I pretty much ask him for a divorce and told him I was tired of his selfishness and that he has all his chosen himself first I am angry, but I do not hate him. It is just that we both have changed and we don\u2019t want the same things. I\u2019m tired of him lying to me. I\u2019m tired of him not supporting me. I\u2019m tired of him, saying one thing and doing something else I\u2019m just tired of his craziness. I wished him the best of luck thank you for my children and let him know that it was time to move forward and that God\u2018s got both of Us. It is a lot I explained to him that I do not want to have discussions about my decision or less the discussion is about moving forward and what we\u2019re gonna do. This is all I can do for right now.",
+    "anxiety_level": 8,
+    "created_at": "2025-04-03T19:20:46.981540",
+    "updated_at": "2025-04-03T19:20:50.462168",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario about the future after the conversation. - Use a thought record to challenge catastrophic thoughts by examining evidence for and against the feared outcome."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, such as seeing the relationship as entirely negative. - Practice cognitive restructuring by identifying shades of gray and recognizing both positive and negative aspects of the relationship."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Using words like 'always' or 'never,' which can amplify stress and anxiety. - Identify and replace overgeneralized statements with specific, evidence-based reflections on the situation."
+      }
+    ]
+  },
+  {
+    "id": 120,
+    "user_id": 18,
+    "title": "Sunday 5 apr",
+    "content": "Just finished some work on the house. Hopefully the electrician will finish up quickly so I can move in. He is really taking too long to complete and it is aggregating",
+    "anxiety_level": 2,
+    "created_at": "2025-04-06T17:33:24.953214",
+    "updated_at": "2025-04-06T17:33:29.522026",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Thinking that the delay is more significant and problematic than it might actually be. - Use the 'Decatastrophizing' technique. Ask yourself, 'What is the worst that could happen if the electrician is delayed?' and 'How likely is that outcome?'"
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Assuming that because the electrician is taking longer now, it will always be this way. - Practice 'Thought Record'. Write down evidence for and against the thought that the electrician will always take too long, helping to gain a balanced view."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing the situation as a complete failure because of the delay. - Engage in 'Reframing'. Identify positive aspects or progress made in the situation, helping to see the scenario in shades of gray rather than black-and-white."
+      }
+    ]
   }
 ]

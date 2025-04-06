@@ -30,10 +30,34 @@ def test_sms(phone_number):
     message = "Calm Journey: This is a test SMS message from your journal app."
     logger.info(f"Sending test SMS to {phone_number}...")
     
-    # Try sending the SMS
+    # First try to get Twilio credentials from environment variables
     twilio_sid = os.environ.get("TWILIO_ACCOUNT_SID")
     twilio_token = os.environ.get("TWILIO_AUTH_TOKEN")
     twilio_phone = os.environ.get("TWILIO_PHONE_NUMBER")
+    
+    # If not found in environment, try to load from saved configuration
+    if not all([twilio_sid, twilio_token, twilio_phone]):
+        try:
+            # Import admin utils to load Twilio config
+            from admin_utils import load_twilio_config
+            
+            twilio_config = load_twilio_config()
+            if twilio_config:
+                twilio_sid = twilio_sid or twilio_config.get("account_sid", "")
+                twilio_token = twilio_token or twilio_config.get("auth_token", "")
+                twilio_phone = twilio_phone or twilio_config.get("phone_number", "")
+                
+                # Set environment variables for the SMS service to use
+                if twilio_sid:
+                    os.environ["TWILIO_ACCOUNT_SID"] = twilio_sid
+                if twilio_token:
+                    os.environ["TWILIO_AUTH_TOKEN"] = twilio_token
+                if twilio_phone:
+                    os.environ["TWILIO_PHONE_NUMBER"] = twilio_phone
+                    
+                logger.info("Loaded Twilio credentials from saved configuration.")
+        except Exception as e:
+            logger.error(f"Error loading Twilio config: {str(e)}")
     
     # Log Twilio info (without showing actual credentials)
     logger.info(f"Twilio SID exists: {bool(twilio_sid)}")
@@ -52,13 +76,28 @@ def test_sms(phone_number):
                 to=phone_number
             )
             logger.info(f"SMS sent successfully! Message SID: {sent_message.sid}")
-            return True
+            return {
+                'success': True,
+                'message_sid': sent_message.sid,
+                'to': phone_number,
+                'from': twilio_phone
+            }
         except Exception as e:
-            logger.error(f"Failed to send test SMS: {str(e)}")
-            return False
+            error_message = str(e)
+            logger.error(f"Failed to send test SMS: {error_message}")
+            return {
+                'success': False,
+                'error': error_message,
+                'to': phone_number
+            }
     else:
-        logger.error("Missing Twilio credentials. Cannot send test SMS.")
-        return False
+        error_message = "Missing Twilio credentials. Please configure Twilio in the admin settings."
+        logger.error(error_message)
+        return {
+            'success': False,
+            'error': error_message,
+            'to': phone_number
+        }
 
 def send_immediate_sms_to_all():
     """Send an immediate SMS notification to all users with SMS notifications enabled."""
@@ -132,8 +171,14 @@ def main():
         # Test mode - send to specific phone number
         test_phone = sys.argv[1]
         logger.info(f"Running in test mode with phone number: {test_phone}")
-        success = test_sms(test_phone)
-        return 0 if success else 1
+        result = test_sms(test_phone)
+        
+        if result.get('success', False):
+            logger.info(f"Test SMS sent successfully to {test_phone}")
+            return 0
+        else:
+            logger.error(f"Failed to send test SMS: {result.get('error', 'Unknown error')}")
+            return 1
     else:
         # Regular mode - send to all eligible users
         logger.info("Running in regular mode - sending to all eligible users")
