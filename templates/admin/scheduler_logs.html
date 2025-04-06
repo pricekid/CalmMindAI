@@ -1,0 +1,150 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Scheduler Logs{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Scheduler Activity Logs</h1>
+    <p class="lead">View logs from the notification scheduler to diagnose notification issues.</p>
+    
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Notifications</h5>
+                    <p class="card-text display-4">{{ notification_count }}</p>
+                    <p class="card-text small">Notification-related log entries</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white {% if error_count > 0 %}bg-danger{% else %}bg-success{% endif %}">
+                <div class="card-body">
+                    <h5 class="card-title">Errors</h5>
+                    <p class="card-text display-4">{{ error_count }}</p>
+                    <p class="card-text small">Error log entries</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-info">
+                <div class="card-body">
+                    <h5 class="card-title">Health Checks</h5>
+                    <p class="card-text display-4">{{ health_check_count }}</p>
+                    <p class="card-text small">Scheduler health check entries</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card mb-4">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" id="logTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="all-logs-tab" data-toggle="tab" href="#all-logs" role="tab" aria-controls="all-logs" aria-selected="true">All Logs ({{ logs|length }})</a>
+                </li>
+                {% for log_type, logs_group in log_groups.items() %}
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="{{ log_type }}-tab" data-toggle="tab" href="#{{ log_type }}" role="tab" aria-controls="{{ log_type }}" aria-selected="false">{{ log_type }} ({{ logs_group|length }})</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content" id="logTabsContent">
+                <div class="tab-pane fade show active" id="all-logs" role="tabpanel" aria-labelledby="all-logs-tab">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>Type</th>
+                                    <th>Message</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for log in logs|sort(attribute='timestamp', reverse=True) %}
+                                <tr class="{% if not log.success %}table-danger{% endif %}">
+                                    <td>{{ log.timestamp }}</td>
+                                    <td><span class="badge {% if 'error' in log.type %}badge-danger{% elif 'notification' in log.type %}badge-primary{% elif 'health' in log.type %}badge-info{% else %}badge-secondary{% endif %}">{{ log.type }}</span></td>
+                                    <td>{{ log.message }}</td>
+                                    <td>
+                                        {% if log.success %}
+                                        <span class="badge badge-success">Success</span>
+                                        {% else %}
+                                        <span class="badge badge-danger">Failed</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="4" class="text-center">No logs found</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                {% for log_type, logs_group in log_groups.items() %}
+                <div class="tab-pane fade" id="{{ log_type }}" role="tabpanel" aria-labelledby="{{ log_type }}-tab">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>Message</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for log in logs_group|sort(attribute='timestamp', reverse=True) %}
+                                <tr class="{% if not log.success %}table-danger{% endif %}">
+                                    <td>{{ log.timestamp }}</td>
+                                    <td>{{ log.message }}</td>
+                                    <td>
+                                        {% if log.success %}
+                                        <span class="badge badge-success">Success</span>
+                                        {% else %}
+                                        <span class="badge badge-danger">Failed</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="3" class="text-center">No logs found</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="mb-4">
+        <h4>Notification Schedule</h4>
+        <div class="alert alert-info">
+            <p><strong>Email and SMS notifications</strong> are scheduled to be sent daily at <strong>6:00 AM</strong>.</p>
+            <p>If notifications are not being sent, check the logs above for errors or verify that:</p>
+            <ul>
+                <li>The scheduler process is running</li>
+                <li>Email credentials are properly configured</li>
+                <li>Twilio credentials are properly configured (for SMS)</li>
+                <li>Users have enabled notifications in their account settings</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="d-flex justify-content-between mb-4">
+        <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+        <form method="post" action="{{ url_for('notification.send_immediate_notification') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn-primary">Send Immediate Email Notification</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -4,6 +4,8 @@ import os
 import signal
 import sys
 import time
+import datetime
+from scheduler_logs import log_scheduler_activity
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -39,6 +41,7 @@ def start_scheduler():
         # Check if the process started successfully
         if process.poll() is None:  # None means the process is still running
             logger.info(f"Scheduler started successfully with PID {process.pid}")
+            log_scheduler_activity("process_start", f"Scheduler started successfully with PID {process.pid}")
             
             # Write the PID to a file for later reference
             with open("scheduler.pid", "w") as f:
@@ -62,10 +65,12 @@ def start_scheduler():
             stdout, stderr = process.communicate()
             error_msg = stderr.decode() if stderr else "Unknown error"
             logger.error(f"Failed to start scheduler. Error: {error_msg}")
+            log_scheduler_activity("process_start_error", f"Failed to start scheduler. Error: {error_msg}", success=False)
             return None
     
     except Exception as e:
         logger.error(f"An error occurred while starting the scheduler: {str(e)}")
+        log_scheduler_activity("process_start_exception", f"An error occurred while starting the scheduler: {str(e)}", success=False)
         return None
 
 def find_scheduler_process():
@@ -96,6 +101,7 @@ def find_scheduler_process():
                         return pid
                     else:
                         logger.warning(f"Process {pid} exists but doesn't appear to be scheduler.py: {ps_output}")
+                        log_scheduler_activity("process_check", f"Process {pid} exists but doesn't appear to be scheduler.py: {ps_output}", success=False)
                         # Since the PID exists but it's not our process, remove the stale PID file
                         os.remove("scheduler.pid")
                         return None
@@ -110,11 +116,13 @@ def find_scheduler_process():
             except OSError:
                 # Process doesn't exist
                 logger.warning(f"Process {pid} from PID file doesn't exist. Removing stale file.")
+                log_scheduler_activity("process_check", f"Process {pid} from PID file doesn't exist. Removing stale file.", success=False)
                 os.remove("scheduler.pid")
                 return None
         return None
     except Exception as e:
         logger.error(f"Error checking for running scheduler: {str(e)}")
+        log_scheduler_activity("process_check_error", f"Error checking for running scheduler: {str(e)}", success=False)
         return None
 
 def stop_scheduler():
@@ -151,39 +159,67 @@ def stop_scheduler():
                     os.remove("scheduler.pid")
                     
                 logger.info("Scheduler stopped successfully")
+                log_scheduler_activity("process_stop", f"Scheduler with PID {pid} stopped successfully")
                 return True
             except Exception as e:
                 logger.error(f"Failed to stop scheduler: {str(e)}")
+                log_scheduler_activity("process_stop_error", f"Failed to stop scheduler with PID {pid}: {str(e)}", success=False)
                 return False
         else:
             logger.info("No running scheduler found")
+            log_scheduler_activity("process_stop", "No running scheduler found to stop")
             return True
     except Exception as e:
         logger.error(f"Error stopping scheduler: {str(e)}")
+        log_scheduler_activity("process_stop_exception", f"Error stopping scheduler: {str(e)}", success=False)
         return False
 
 if __name__ == "__main__":
     command = sys.argv[1] if len(sys.argv) > 1 else "start"
     
+    # Log the command being executed
+    log_scheduler_activity("command_execution", f"Executing command: {command}")
+    
     if command == "start":
         pid = start_scheduler()
+        result_success = pid is not None
+        log_scheduler_activity(
+            "command_result", 
+            f"Command 'start' completed with {'success' if result_success else 'failure'}", 
+            success=result_success
+        )
         sys.exit(0 if pid else 1)
     elif command == "stop":
         success = stop_scheduler()
+        log_scheduler_activity(
+            "command_result", 
+            f"Command 'stop' completed with {'success' if success else 'failure'}", 
+            success=success
+        )
         sys.exit(0 if success else 1)
     elif command == "restart":
         stop_success = stop_scheduler()
         pid = start_scheduler()
-        sys.exit(0 if (stop_success and pid) else 1)
+        result_success = stop_success and pid is not None
+        log_scheduler_activity(
+            "command_result", 
+            f"Command 'restart' completed with {'success' if result_success else 'failure'}", 
+            success=result_success
+        )
+        sys.exit(0 if result_success else 1)
     elif command == "status":
         pid = find_scheduler_process()
+        status_msg = f"Scheduler is {'running' if pid else 'not running'}"
         if pid:
             print(f"Scheduler is running with PID {pid}")
+            log_scheduler_activity("status_check", f"Status check: {status_msg} with PID {pid}")
             sys.exit(0)
         else:
             print("Scheduler is not running")
+            log_scheduler_activity("status_check", f"Status check: {status_msg}")
             sys.exit(1)
     else:
         logger.error(f"Unknown command: {command}")
+        log_scheduler_activity("command_error", f"Unknown command: {command}", success=False)
         print("Usage: python start_scheduler.py [start|stop|restart|status]")
         sys.exit(1)

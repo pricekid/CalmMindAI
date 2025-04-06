@@ -391,4 +391,44 @@ def send_immediate_sms():
     
     return redirect(url_for('admin.settings'))
 
+# Add a route to view scheduler logs
+@admin_bp.route('/scheduler-logs')
+@admin_required
+def scheduler_logs():
+    """View scheduler activity logs to help diagnose notification issues"""
+    try:
+        from scheduler_logs import get_latest_scheduler_logs
+        
+        # Get the latest 50 logs by default, or use the count parameter if provided
+        count = request.args.get('count', 50, type=int)
+        logs = get_latest_scheduler_logs(count)
+        
+        # Group logs by type for easier analysis
+        log_groups = {}
+        for log in logs:
+            log_type = log.get('type', 'unknown')
+            if log_type not in log_groups:
+                log_groups[log_type] = []
+            log_groups[log_type].append(log)
+        
+        # Get counts for quick stats
+        notification_count = sum(1 for log in logs if 'notification' in log.get('type', ''))
+        error_count = sum(1 for log in logs if not log.get('success', True))
+        health_check_count = sum(1 for log in logs if 'health' in log.get('type', ''))
+        
+        return render_template(
+            'admin/scheduler_logs.html', 
+            logs=logs,
+            log_groups=log_groups,
+            notification_count=notification_count,
+            error_count=error_count,
+            health_check_count=health_check_count,
+            count=count
+        )
+    except Exception as e:
+        flash(f'Failed to retrieve scheduler logs: {str(e)}', 'danger')
+        logger.error(f"Error retrieving scheduler logs: {str(e)}")
+        logger.error(traceback.format_exc())
+        return redirect(url_for('admin.dashboard'))
+
 # Register these routes with the main app (to be added to app.py)

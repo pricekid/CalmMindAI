@@ -1,17 +1,29 @@
-import os
+"""
+Scheduler logging service for tracking notification system activity.
+This helps diagnose notification issues by providing a detailed log of scheduler activity.
+"""
+
 import json
+import os
 import logging
 from datetime import datetime
+from typing import List, Dict, Any, Optional
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Ensure the data directory exists
-def ensure_data_directory():
-    os.makedirs("data", exist_ok=True)
+# Constants
+DATA_DIR = "data"
+SCHEDULER_LOGS_FILE = os.path.join(DATA_DIR, "scheduler_logs.json")
 
-def log_scheduler_activity(activity_type, message, success=True):
+def ensure_data_directory():
+    """Ensure the data directory exists"""
+    if not os.path.exists(DATA_DIR):
+        os.makedirs(DATA_DIR)
+        logger.info(f"Created data directory: {DATA_DIR}")
+
+def log_scheduler_activity(activity_type: str, message: str, success: bool = True):
     """
     Log scheduler activity to help diagnose issues.
     
@@ -20,53 +32,63 @@ def log_scheduler_activity(activity_type, message, success=True):
         message: Description of the activity
         success: Whether the activity was successful
     """
+    ensure_data_directory()
+    
+    # Create the log entry
+    log_entry = {
+        "timestamp": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
+        "type": activity_type,
+        "message": message,
+        "success": success
+    }
+    
     try:
-        ensure_data_directory()
-        log_file = "data/scheduler_activity.json"
-        
-        # Create the file with an empty list if it doesn't exist
-        if not os.path.exists(log_file):
-            with open(log_file, "w") as f:
-                json.dump([], f)
-        
-        # Read existing logs
-        with open(log_file, "r") as f:
-            logs = json.load(f)
+        # Load existing logs
+        logs = []
+        if os.path.exists(SCHEDULER_LOGS_FILE):
+            with open(SCHEDULER_LOGS_FILE, 'r') as f:
+                try:
+                    logs = json.load(f)
+                except json.JSONDecodeError:
+                    logger.error(f"Could not parse {SCHEDULER_LOGS_FILE}, creating new log file")
+                    logs = []
         
         # Add new log entry
-        logs.append({
-            "timestamp": datetime.now().isoformat(),
-            "type": activity_type,
-            "message": message,
-            "success": success
-        })
+        logs.append(log_entry)
         
-        # Keep only the most recent 100 logs to prevent file growth
-        if len(logs) > 100:
-            logs = logs[-100:]
+        # Truncate logs if they get too large (keep last 1000 entries)
+        if len(logs) > 1000:
+            logs = logs[-1000:]
         
-        # Write updated logs
-        with open(log_file, "w") as f:
+        # Save updated logs
+        with open(SCHEDULER_LOGS_FILE, 'w') as f:
             json.dump(logs, f, indent=2)
-            
-        return True
+        
+        logger.info(f"Logged scheduler activity: {activity_type} - {message} (success: {success})")
     except Exception as e:
         logger.error(f"Failed to log scheduler activity: {str(e)}")
-        return False
 
-def get_latest_scheduler_logs(count=10):
-    """Get the most recent scheduler activity logs."""
-    try:
-        log_file = "data/scheduler_activity.json"
+def get_latest_scheduler_logs(count: int = 50) -> List[Dict[str, Any]]:
+    """
+    Get the most recent scheduler activity logs.
+    
+    Args:
+        count: Maximum number of logs to return
         
-        if not os.path.exists(log_file):
+    Returns:
+        List of log entries sorted by timestamp (newest first)
+    """
+    ensure_data_directory()
+    
+    logs = []
+    if os.path.exists(SCHEDULER_LOGS_FILE):
+        try:
+            with open(SCHEDULER_LOGS_FILE, 'r') as f:
+                logs = json.load(f)
+        except (json.JSONDecodeError, IOError) as e:
+            logger.error(f"Error reading scheduler logs: {str(e)}")
             return []
-        
-        with open(log_file, "r") as f:
-            logs = json.load(f)
-        
-        # Return the most recent logs
-        return logs[-count:] if logs else []
-    except Exception as e:
-        logger.error(f"Failed to get scheduler logs: {str(e)}")
-        return []
+    
+    # Sort logs by timestamp (newest first) and limit to count
+    sorted_logs = sorted(logs, key=lambda x: x.get('timestamp', ''), reverse=True)
+    return sorted_logs[:count]
