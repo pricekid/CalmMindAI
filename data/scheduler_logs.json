@@ -202,5 +202,47 @@
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-06 22:12:42",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 250). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-06 22:12:43",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 750",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-06 22:12:43",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 7adcc69759a4 at 2025-04-06 22:12:43.254089",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-06 22:12:43",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-06 22:12:43.929447",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-06 22:12:43",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-06 22:12:43.930154",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-06 22:12:43",
+    "type": "scheduler_health_error",
+    "message": "Error in scheduler health check: 'Job' object has no attribute 'next_run_time'",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-06 22:12:43",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
   }
 ]
