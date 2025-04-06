@@ -146,7 +146,7 @@
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <button type="submit" class="btn btn-primary">Send Immediate Email Notification</button>
             </form>
-            <form method="post" action="{{ url_for('admin.send_immediate_sms') }}" class="d-inline-block">
+            <form method="post" action="{{ url_for('notification.send_immediate_sms_notification') }}" class="d-inline-block">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <button type="submit" class="btn btn-info">Send Immediate SMS Notification</button>
             </form>
