@@ -73,10 +73,13 @@ def send_immediate_notification_to_all_users():
                     base_url = app.config['BASE_URL']
                     journal_url = f"{base_url}/journal/new"
                 else:
-                    # If BASE_URL isn't set, use the Replit domain if available
-                    replit_domain = os.environ.get('REPL_SLUG', None)
-                    if replit_domain:
-                        journal_url = f"https://{replit_domain}.replit.app/journal/new"
+                    # For deployed apps, use the REPL_ID to ensure we get the correct URL
+                    repl_id = os.environ.get('REPL_ID', None)
+                    repl_owner = os.environ.get('REPL_OWNER', None)
+                    
+                    if repl_id and repl_owner:
+                        # Use the proper Replit deployed URL format
+                        journal_url = f"https://{repl_owner}-calm-journey.replit.app/journal/new"
                     else:
                         # Fallback to a relative URL only if running locally
                         journal_url = "/journal/new"
