@@ -142,11 +142,11 @@
     <div class="d-flex justify-content-between mb-4">
         <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
         <div>
-            <form method="post" action="{{ url_for('notification.send_immediate_notification') }}" class="d-inline-block mr-2">
+            <form method="post" action="{{ url_for('notification.send_immediate') }}" class="d-inline-block mr-2">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <button type="submit" class="btn btn-primary">Send Immediate Email Notification</button>
             </form>
-            <form method="post" action="{{ url_for('notification.send_immediate_sms_notification') }}" class="d-inline-block">
+            <form method="post" action="{{ url_for('notification.send_immediate_sms') }}" class="d-inline-block">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <button type="submit" class="btn btn-info">Send Immediate SMS Notification</button>
             </form>

@@ -6,6 +6,9 @@ from admin_models import Admin
 from admin_forms import AdminLoginForm, AdminMessageForm, APIConfigForm, TwilioConfigForm
 from app import login_required
 
+# Create a blueprint for admin routes
+admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
+
 # Create a custom admin_required decorator that builds on our main login_required
 def admin_required(f):
     @wraps(f)
@@ -377,4 +380,3 @@ def scheduler_logs():
         logger.error(traceback.format_exc())
         return redirect(url_for('admin.dashboard'))
 
-# Register these routes with the main app (to be added to app.py)

@@ -12,7 +12,8 @@ from admin_routes import admin_required
 logger = logging.getLogger(__name__)
 
 # Create a blueprint for notification routes
-notification_bp = Blueprint('notification', __name__, url_prefix='/notification')
+# Use a unique name to avoid conflicts in registration
+notification_bp = Blueprint('notification_routes', __name__, url_prefix='/notification')
 
 @notification_bp.route('/send-immediate', methods=['POST'])
 @login_required

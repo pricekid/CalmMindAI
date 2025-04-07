@@ -11,9 +11,8 @@ import startup  # Import the startup script to ensure scheduler is running
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Register blueprints
+# Register blueprints but don't re-register those already imported in app.py
 app.register_blueprint(journal_bp)
-app.register_blueprint(notification_bp)
 
 # Import admin_routes but don't register the blueprint again since it's imported in app.py
 import admin_routes

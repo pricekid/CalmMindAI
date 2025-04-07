@@ -340,5 +340,71 @@
     "type": "job_success",
     "message": "Job scheduler_health_check executed successfully",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-07 00:59:29",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 1047). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-07 00:59:30",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 723",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-07 00:59:30",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 398e5194a425 at 2025-04-07 00:59:30.987990",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-07 00:59:31",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-07 00:59:31.660508",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-07 00:59:31",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-07 00:59:31.661419",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-07 00:59:31",
+    "type": "scheduler_health_error",
+    "message": "Error in scheduler health check: 'Job' object has no attribute 'next_run_time'",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-07 00:59:31",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-07 01:20:56",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 723",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-07 01:20:58",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 723",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-07 01:29:31",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-07 01:29:31.661019",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-07 01:29:31",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
   }
 ]
