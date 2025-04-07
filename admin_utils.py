@@ -85,6 +85,9 @@ def get_admin_stats():
     # Count users with SMS notifications enabled
     sms_enabled_users = User.query.filter_by(sms_notifications_enabled=True).count()
     
+    # Count users with email notifications enabled
+    email_enabled_users = User.query.filter_by(notifications_enabled=True).count()
+    
     # Mock top anxiety themes (would normally use NLP or tags)
     anxiety_themes = [
         {'theme': 'Work Stress', 'count': 12},
@@ -98,7 +101,8 @@ def get_admin_stats():
         'daily_active_users': daily_active,
         'entries_by_day': entries_by_day,
         'anxiety_themes': anxiety_themes,
-        'sms_enabled_users': sms_enabled_users
+        'sms_enabled_users': sms_enabled_users,
+        'email_enabled_users': email_enabled_users
     }
 
 def export_journal_entries():

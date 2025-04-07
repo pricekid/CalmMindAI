@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 # Create a blueprint for notification routes
 # Use a unique name to avoid conflicts in registration
-notification_bp = Blueprint('notification_routes', __name__, url_prefix='/notification')
+notification_bp = Blueprint('notification', __name__, url_prefix='/notification')
 
 @notification_bp.route('/send-immediate', methods=['POST'])
 @login_required

@@ -327,9 +327,15 @@ def settings():
         'sms_users_count': sms_users_count
     }
     
+    # Get email notification stats
+    email_users_count = User.query.filter_by(notifications_enabled=True).count()
+    email_stats = {
+        'email_users_count': email_users_count
+    }
+    
     return render_template('admin/settings.html', title='Admin Settings',
                           openai_form=openai_form, twilio_form=twilio_form, 
-                          api_stats=api_stats, sms_stats=sms_stats)
+                          api_stats=api_stats, sms_stats=sms_stats, email_stats=email_stats)
 
 # These routes have been moved to notification_routes.py
 # The following routes have been migrated to the notification_bp blueprint:
