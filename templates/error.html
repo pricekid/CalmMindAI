@@ -20,6 +20,13 @@
           </div>
           {% endif %}
           
+          {% if show_csrf_error %}
+          <div class="alert alert-warning">
+            <h5>Session Expired</h5>
+            <p>Your session has expired. This usually happens when a form has been open for too long before submitting. Please refresh the page and try again.</p>
+          </div>
+          {% endif %}
+          
           <div class="mt-4">
             <a href="{{ url_for('dashboard') }}" class="btn btn-primary me-2">
               <i class="fas fa-home me-1"></i>Go to Dashboard

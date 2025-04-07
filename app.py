@@ -32,6 +32,9 @@ app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
 }
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
+# Configure CSRF protection with a longer timeout
+app.config["WTF_CSRF_TIME_LIMIT"] = 3600  # Extend CSRF token expiration to 1 hour
+
 # Email configuration
 app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
 app.config['MAIL_PORT'] = int(os.environ.get('MAIL_PORT', 587))
@@ -73,9 +76,18 @@ def handle_exception(e):
     app.logger.error(f"Unhandled exception: {str(e)}")
     error_message = "Your data was saved, but we couldn't complete the analysis."
     
+    # Check if it's a CSRF error
+    err_str = str(e).lower()
+    if "csrf" in err_str:
+        error_title = "Session Expired"
+        error_message = "Your session has expired. Please refresh the page and try again."
+        return render_template('error.html', 
+                              error_title=error_title,
+                              error_message=error_message,
+                              show_csrf_error=True), 400
+    
     # Check if it's an OpenAI API error related to quota
     is_api_error = False
-    err_str = str(e).lower()
     if "openai" in err_str and ("quota" in err_str or "429" in err_str or "insufficient" in err_str):
         is_api_error = True
         error_title = "API Limit Reached"

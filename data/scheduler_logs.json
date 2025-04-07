@@ -802,5 +802,65 @@
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-07 12:20:03",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 148",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-07 12:20:13",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 148",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-07 12:22:14",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 148",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-07 12:22:31",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 148). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-07 12:22:32",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 804",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-07 12:22:32",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 5a25aaed1d4c at 2025-04-07 12:22:32.944007",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-07 12:22:33",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-07 12:22:33.639298",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-07 12:22:33",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-07 12:22:33.640879",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-07 12:22:33",
+    "type": "scheduler_health_error",
+    "message": "Error in scheduler health check: 'Job' object has no attribute 'next_run_time'",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-07 12:22:33",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
   }
 ]

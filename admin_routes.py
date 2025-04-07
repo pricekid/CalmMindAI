@@ -2,9 +2,21 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request,
 from flask_login import login_user, logout_user, current_user
 from functools import wraps
 import os
+import logging
+import traceback
 from admin_models import Admin
 from admin_forms import AdminLoginForm, AdminMessageForm, APIConfigForm, TwilioConfigForm
-from app import login_required
+from app import login_required, db
+from admin_utils import (
+    ensure_data_files_exist, get_admin_stats, export_journal_entries, 
+    export_users, flag_journal_entry, is_entry_flagged, get_flagged_entries,
+    save_admin_message, get_admin_messages, get_config, save_config,
+    save_twilio_config, load_twilio_config
+)
+from models import User, JournalEntry, CBTRecommendation
+
+# Set up logging
+logger = logging.getLogger(__name__)
 
 # Create a blueprint for admin routes
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
@@ -23,22 +35,6 @@ def admin_required(f):
             return redirect(url_for('admin.login', next=request.url))
         return f(*args, **kwargs)
     return decorated_function
-from admin_utils import (
-    ensure_data_files_exist, get_admin_stats, export_journal_entries, 
-    export_users, flag_journal_entry, is_entry_flagged, get_flagged_entries,
-    save_admin_message, get_admin_messages, get_config, save_config,
-    save_twilio_config, load_twilio_config
-)
-from models import User, JournalEntry, CBTRecommendation
-from app import db
-import logging
-import traceback
-
-# Set up logging
-logger = logging.getLogger(__name__)
-
-# Create a blueprint for admin routes
-admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 # Make sure data files exist
 ensure_data_files_exist()
