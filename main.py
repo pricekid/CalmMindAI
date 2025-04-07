@@ -4,7 +4,7 @@ import logging
 import os
 from start_scheduler import start_scheduler, find_scheduler_process
 from journal_routes import journal_bp
-from notification_routes import notification_bp
+# Don't import notification_bp here as it's already imported and registered in app.py
 import startup  # Import the startup script to ensure scheduler is running
 
 # Configure logging
