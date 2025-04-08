@@ -257,12 +257,16 @@ def view_journal_entry(entry_id):
     if entry_count >= 3:
         recurring_patterns = get_recurring_patterns(current_user.id)
     
+    # Add a flag to show the emergency call button when anxiety level is high (8 or higher)
+    show_call_button = entry.anxiety_level >= 8
+    
     return render_template('journal_entry.html', 
                           title=entry.title, 
                           entry=entry, 
                           view_only=True, 
                           coach_response=coach_response,
-                          recurring_patterns=recurring_patterns)
+                          recurring_patterns=recurring_patterns,
+                          show_call_button=show_call_button)
 
 # Update journal entry
 @journal_bp.route('/journal/<int:entry_id>/update', methods=['GET', 'POST'])

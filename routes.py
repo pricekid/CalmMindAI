@@ -281,8 +281,12 @@ def view_journal_entry(entry_id):
         else:
             coach_response = None  # Use None to indicate we should still show the button
     
+    # Add a flag to show the emergency call button when anxiety level is high (8 or higher)
+    show_call_button = entry.anxiety_level >= 8
+    
     return render_template('journal_entry.html', title=entry.title, 
-                          entry=entry, view_only=True, coach_response=coach_response)
+                          entry=entry, view_only=True, coach_response=coach_response,
+                          show_call_button=show_call_button)
 
 # Update journal entry
 @app.route('/journal/<int:entry_id>/update', methods=['GET', 'POST'])

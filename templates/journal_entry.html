@@ -71,6 +71,30 @@
                             <div id="coach-response" class="coach-message">
                                 {{ coach_response }}
                             </div>
+                            
+                            {% if show_call_button %}
+                            <div id="mobile-call-button" class="mt-4 d-none">
+                                <a href="tel:5364500" class="btn btn-danger btn-lg w-100 d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-phone-alt me-2"></i> Call Lifeline Barbados Now
+                                </a>
+                                <p class="text-muted mt-2 text-center">
+                                    Available 24/7 for emotional support from trained counselors.
+                                </p>
+                            </div>
+                            {% endif %}
+                            
+                            <button id="coach-button" class="btn btn-primary mt-3" data-entry-id="{{ entry.id }}">
+                                <i class="fas fa-comment-dots me-1"></i> Get Another Response
+                            </button>
+                                <a href="tel:5364500" class="btn btn-danger btn-lg w-100 d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-phone-alt me-2"></i> Call Lifeline Barbados Now
+                                </a>
+                                <p class="text-muted mt-2 text-center">
+                                    Available 24/7 for emotional support from trained counselors.
+                                </p>
+                            </div>
+                            {% endif %}
+                            
                             <button id="coach-button" class="btn btn-primary mt-3" data-entry-id="{{ entry.id }}">
                                 <i class="fas fa-comment-dots me-1"></i> Get Another Response
                             </button>
@@ -234,6 +258,17 @@
 {% block scripts %}
 {% if view_only %}
 <script>
+
+    /* Mobile detection for emergency call button */
+    function isMobileDevice() {
+        return (window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+    }
+    
+    const mobileCallButton = document.getElementById("mobile-call-button");
+    if (mobileCallButton && isMobileDevice()) {
+        mobileCallButton.classList.remove("d-none");
+    }
+
 document.addEventListener('DOMContentLoaded', function() {
     /* Analysis button handling */
     const analyzeButton = document.getElementById('analyze-button');
