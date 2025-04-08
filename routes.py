@@ -330,7 +330,7 @@ def update_journal_entry(entry_id):
                           form=form, legend='Update Journal Entry')
 
 # Delete journal entry - redirects to the blueprint route
-@app.route('/journal/<int:entry_id>/delete', methods=['POST'])
+@app.route('/journal/<int:entry_id>/delete', methods=['GET', 'POST'])
 @login_required
 def delete_journal_entry(entry_id):
     # This route exists for backward compatibility
