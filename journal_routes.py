@@ -8,7 +8,7 @@ from journal_service import (
     get_journal_entries_for_user, count_user_entries,
     get_recurring_patterns
 )
-from datetime import datetime
+from datetime import datetime, timedelta
 from sqlalchemy import desc
 import logging
 
@@ -90,6 +90,19 @@ def journal_list():
 def new_journal_entry():
     form = JournalEntryForm()
     if form.validate_on_submit():
+        # Check for recently created similar entries to prevent duplicates
+        five_minutes_ago = datetime.utcnow() - timedelta(minutes=5)
+        recent_entries = JournalEntry.query.filter_by(
+            user_id=current_user.id,
+            title=form.title.data
+        ).filter(JournalEntry.created_at >= five_minutes_ago).all()
+        
+        # If a similar entry was recently created, redirect to that entry
+        if recent_entries:
+            logger.info(f"Prevented duplicate entry: {form.title.data}")
+            flash('A similar journal entry was just created. Redirecting to the existing entry.', 'info')
+            return redirect(url_for('journal.view_journal_entry', entry_id=recent_entries[0].id))
+        
         # First, save the journal entry so it's not lost if analysis fails
         logger.debug("Saving journal entry to database")
         try:
