@@ -91,15 +91,24 @@ def new_journal_entry():
     form = JournalEntryForm()
     if form.validate_on_submit():
         # First, save the journal entry so it's not lost if analysis fails
-        entry = JournalEntry(
-            title=form.title.data,
-            content=form.content.data,
-            anxiety_level=form.anxiety_level.data,
-            author=current_user
-        )
-        
-        db.session.add(entry)
-        db.session.commit()
+        logger.debug("Saving journal entry to database")
+        try:
+            entry = JournalEntry(
+                title=form.title.data,
+                content=form.content.data,
+                anxiety_level=form.anxiety_level.data,
+                author=current_user
+            )
+            
+            db.session.add(entry)
+            db.session.commit()
+            logger.debug(f"Successfully saved journal entry with ID: {entry.id}")
+        except Exception as db_error:
+            logger.error(f"Database error when saving journal entry: {str(db_error)}")
+            db.session.rollback()
+            flash('Error saving your journal entry. Please try again.', 'danger')
+            return render_template('journal_entry.html', title='New Journal Entry', 
+                                  form=form, legend='New Journal Entry')
         
         # Analyze the entry using the improved GPT analysis
         try:

@@ -104,19 +104,44 @@ def save_journal_entry(
         gpt_response: The GPT-generated response
         cbt_patterns: List of CBT patterns identified
     """
-    ensure_journals_file()
-    
-    with open(JOURNALS_FILE, 'r') as f:
-        entries = json.load(f)
-    
-    # Convert datetime objects to ISO format strings
-    created_at_str = created_at.isoformat() if isinstance(created_at, datetime) else created_at
-    updated_at_str = updated_at.isoformat() if isinstance(updated_at, datetime) else updated_at
-    
-    # Check if we're updating an existing entry
-    for i, entry in enumerate(entries):
-        if entry.get('id') == entry_id and entry.get('user_id') == user_id:
-            entries[i] = {
+    logger.debug(f"Saving journal entry {entry_id} for user {user_id}")
+    try:
+        ensure_journals_file()
+        
+        with open(JOURNALS_FILE, 'r') as f:
+            entries = json.load(f)
+        
+        # Convert datetime objects to ISO format strings
+        created_at_str = created_at.isoformat() if isinstance(created_at, datetime) else created_at
+        updated_at_str = updated_at.isoformat() if isinstance(updated_at, datetime) else updated_at
+        
+        # Clean up cbt_patterns to ensure it's a valid list
+        clean_patterns = cbt_patterns if cbt_patterns else []
+        
+        # Check if we're updating an existing entry
+        entry_found = False
+        for i, entry in enumerate(entries):
+            if entry.get('id') == entry_id and entry.get('user_id') == user_id:
+                logger.debug(f"Updating existing journal entry {entry_id}")
+                entries[i] = {
+                    'id': entry_id,
+                    'user_id': user_id,
+                    'title': title,
+                    'content': content,
+                    'anxiety_level': anxiety_level,
+                    'created_at': created_at_str,
+                    'updated_at': updated_at_str,
+                    'is_analyzed': is_analyzed,
+                    'gpt_response': gpt_response,
+                    'cbt_patterns': clean_patterns
+                }
+                entry_found = True
+                break
+        
+        if not entry_found:
+            # Entry not found, add a new one
+            logger.debug(f"Adding new journal entry {entry_id}")
+            entries.append({
                 'id': entry_id,
                 'user_id': user_id,
                 'title': title,
@@ -126,26 +151,16 @@ def save_journal_entry(
                 'updated_at': updated_at_str,
                 'is_analyzed': is_analyzed,
                 'gpt_response': gpt_response,
-                'cbt_patterns': cbt_patterns if cbt_patterns else []
-            }
-            break
-    else:
-        # Entry not found, add a new one
-        entries.append({
-            'id': entry_id,
-            'user_id': user_id,
-            'title': title,
-            'content': content,
-            'anxiety_level': anxiety_level,
-            'created_at': created_at_str,
-            'updated_at': updated_at_str,
-            'is_analyzed': is_analyzed,
-            'gpt_response': gpt_response,
-            'cbt_patterns': cbt_patterns if cbt_patterns else []
-        })
-    
-    with open(JOURNALS_FILE, 'w') as f:
-        json.dump(entries, f, indent=2)
+                'cbt_patterns': clean_patterns
+            })
+        
+        with open(JOURNALS_FILE, 'w') as f:
+            json.dump(entries, f, indent=2)
+            
+        logger.debug(f"Successfully saved journal entry {entry_id}")
+    except Exception as e:
+        logger.error(f"Error saving journal entry to JSON file: {str(e)}")
+        # Continue without failing the app - we already have DB record
 
 def count_user_entries(user_id: int) -> int:
     """
