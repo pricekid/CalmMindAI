@@ -2104,5 +2104,47 @@
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-08 18:56:49",
+    "type": "health_check",
+    "message": "Scheduler running with PID 7822 at 2025-04-08 18:56:49",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-08 18:57:20",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 7822). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-08 18:57:21",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 8457",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-08 18:57:21",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 4be930fdc488 at 2025-04-08 18:57:21.030213",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-08 18:57:21",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-08 18:57:21.660685",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-08 18:57:21",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-08 18:57:21.664493",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-08 18:57:21",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
   }
 ]
