@@ -462,7 +462,7 @@ def api_journal_coach(entry_id):
     return jsonify({'coach_response': coach_response})
 
 # Delete journal entry
-@journal_bp.route('/journal/<int:entry_id>/delete', methods=['GET', 'POST'])
+@journal_bp.route('/journal/<int:entry_id>/delete_entry', methods=['GET', 'POST'])
 @login_required
 def delete_journal_entry(entry_id):
     entry = JournalEntry.query.get_or_404(entry_id)

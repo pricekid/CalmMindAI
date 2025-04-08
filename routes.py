@@ -333,9 +333,32 @@ def update_journal_entry(entry_id):
 @app.route('/journal/<int:entry_id>/delete', methods=['GET', 'POST'])
 @login_required
 def delete_journal_entry(entry_id):
-    # This route exists for backward compatibility
-    # We now use the blueprint route in journal_routes.py
-    return redirect(url_for('journal.delete_journal_entry', entry_id=entry_id))
+    # Directly handle the deletion here instead of redirecting
+    entry = JournalEntry.query.get_or_404(entry_id)
+    
+    # Ensure the entry belongs to the current user
+    if entry.user_id != current_user.id:
+        abort(403)
+    
+    try:
+        # Delete recommendations first (cascade doesn't work with SQLAlchemy without setup)
+        CBTRecommendation.query.filter_by(journal_entry_id=entry.id).delete()
+        
+        # Delete the entry from database
+        db.session.delete(entry)
+        db.session.commit()
+        
+        # Also delete from JSON storage to update insights/patterns
+        from journal_service import delete_journal_entry as delete_json_entry
+        delete_success = delete_json_entry(entry_id, current_user.id)
+        
+        flash('Your journal entry has been deleted!', 'success')
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error deleting journal entry {entry_id}: {str(e)}")
+        flash('An error occurred while deleting your journal entry. Please try again.', 'danger')
+    
+    return redirect(url_for('journal'))
 
 # Breathing exercise page
 @app.route('/breathing')
