@@ -91,11 +91,34 @@ def analyze_journal_entry(journal_text, anxiety_level):
                 temperature=0.7
             )
             
-            # Parse the response
-            result = json.loads(response.choices[0].message.content)
-            logger.debug(f"OpenAI analysis result: {result}")
-            
-            return result["thought_patterns"]
+            # Parse the response with improved error handling
+            try:
+                # Get the raw response content and debug log it
+                content = response.choices[0].message.content
+                logger.debug(f"Raw OpenAI response content: {content}")
+                
+                # Parse the JSON with error handling
+                result = json.loads(content)
+                logger.debug(f"OpenAI analysis result: {result}")
+                
+                # Use get() with a default empty list to prevent KeyError
+                thought_patterns = result.get("thought_patterns", [])
+                
+                # Validate that thought_patterns is actually a list
+                if not isinstance(thought_patterns, list):
+                    logger.warning("OpenAI result didn't contain a valid thought_patterns list")
+                    thought_patterns = []
+                    
+                return thought_patterns
+                
+            except json.JSONDecodeError as json_err:
+                logger.error(f"JSON parsing error: {json_err}")
+                # Return a fallback response when JSON parsing fails
+                return [{
+                    "pattern": "Journal Processing Error",
+                    "description": "We couldn't fully analyze this entry due to a technical issue.",
+                    "recommendation": "Your journal has been saved successfully. Try analyzing it again later."
+                }]
             
         except Exception as api_error:
             # Log the specific API error

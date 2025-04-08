@@ -346,22 +346,47 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                 temperature=0.7
             )
             
-            # Parse the response
-            result = json.loads(response.choices[0].message.content)
-            
-            # Format response to add recurring patterns analysis for users with 3+ entries
-            coach_response = result["response"]
-            recurring_patterns = get_recurring_patterns(user_id)
-            if entry_count >= 3 and recurring_patterns:
-                pattern_insight = "\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n"
-                for pattern in recurring_patterns[:2]:  # Limit to top 2
-                    pattern_insight += f"- {pattern['pattern']}\n"
-                coach_response += pattern_insight
-            
-            return {
-                "gpt_response": coach_response,
-                "cbt_patterns": result["patterns"]
-            }
+            # Parse the response with improved error handling
+            try:
+                # Get the raw response content and debug log it
+                content = response.choices[0].message.content
+                logger.debug(f"Raw OpenAI response content: {content}")
+                
+                # Parse the JSON
+                result = json.loads(content)
+                
+                # Format response to add recurring patterns analysis for users with 3+ entries
+                coach_response = result.get("response", "Thank you for sharing your journal entry.")
+                recurring_patterns = get_recurring_patterns(user_id)
+                
+                if entry_count >= 3 and recurring_patterns:
+                    pattern_insight = "\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n"
+                    for pattern in recurring_patterns[:2]:  # Limit to top 2
+                        pattern_insight += f"- {pattern['pattern']}\n"
+                    coach_response += pattern_insight
+                
+                # Ensure patterns is a valid list
+                cbt_patterns = result.get("patterns", [])
+                if not isinstance(cbt_patterns, list):
+                    cbt_patterns = []
+                
+                # Return formatted results
+                return {
+                    "gpt_response": coach_response,
+                    "cbt_patterns": cbt_patterns
+                }
+                
+            except json.JSONDecodeError as json_err:
+                logger.error(f"JSON parsing error: {json_err}")
+                # Provide a fallback response when JSON parsing fails
+                return {
+                    "gpt_response": "Thank you for sharing your journal entry. I've read through your thoughts, but am experiencing some technical difficulties in generating a detailed response.",
+                    "cbt_patterns": [{
+                        "pattern": "Journal Processing Error",
+                        "description": "We couldn't fully analyze this entry due to a technical issue.",
+                        "recommendation": "Your journal has been saved successfully. Try analyzing it again later."
+                    }]
+                }
             
         except Exception as api_error:
             # Log the specific API error
