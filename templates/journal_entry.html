@@ -61,7 +61,7 @@
                 <div class="card-header">
                     <h4 class="mb-0">
                         <i class="fas fa-comments me-2"></i> 
-                        Your Journaling Coach
+                        Mira, Your Journaling Coach
                     </h4>
                 </div>
                 <div class="card-body">
@@ -91,20 +91,20 @@
                             {% endif %}
                             
                             <button id="coach-button" class="btn btn-primary mt-3" data-entry-id="{{ entry.id }}">
-                                <i class="fas fa-comment-dots me-1"></i> Get Another Response
+                                <i class="fas fa-comment-dots me-1"></i> Get Another Response from Mira
                             </button>
                         {% else %}
                             <!-- If no pre-generated response, show the button to request one -->
-                            <p>Would you like some supportive feedback on your journal entry?</p>
+                            <p>Would you like Mira to offer some supportive feedback on your journal entry?</p>
                             <button id="coach-button" class="btn btn-primary" data-entry-id="{{ entry.id }}">
-                                <i class="fas fa-comment-dots me-1"></i> Get Coach Feedback
+                                <i class="fas fa-comment-dots me-1"></i> Get Mira's Feedback
                             </button>
                         {% endif %}
                         <div id="coach-loading" class="mt-3 d-none">
                             <div class="spinner-border text-primary" role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
-                            <p class="mt-2">Your coach is composing a response...</p>
+                            <p class="mt-2">Mira is composing a thoughtful response for you...</p>
                         </div>
                         <!-- This div is for displaying additional responses requested via the button -->
                         {% if not coach_response %}
@@ -341,7 +341,7 @@
                     coachResponse.innerHTML = data.response;
                     
                     // Update button text to indicate another response can be requested
-                    coachButton.innerHTML = '<i class="fas fa-comment-dots me-1"></i> Get Another Response';
+                    coachButton.innerHTML = '<i class="fas fa-comment-dots me-1"></i> Get Another Response from Mira';
                     coachButton.disabled = false;
                 } else {
                     // Display error message

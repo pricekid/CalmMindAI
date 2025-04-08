@@ -1924,5 +1924,77 @@
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-08 18:33:23",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 5261",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-08 18:33:38",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 5261",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-08 18:33:52",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 5261",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-08 18:34:03",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 5261",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-08 18:34:14",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 5261",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-08 18:34:20",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 5261",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-08 18:34:30",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 5261). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-08 18:34:31",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 5838",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-08 18:34:31",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 4be930fdc488 at 2025-04-08 18:34:31.028970",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-08 18:34:31",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-08 18:34:31.592204",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-08 18:34:31",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-08 18:34:31.594933",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-08 18:34:31",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
   }
 ]

@@ -162,7 +162,7 @@ def generate_journaling_coach_response(entry):
         title = entry.title
         
         prompt = f"""
-        You are a warm, supportive CBT journaling coach inside an app called Calm Journey. A user has just submitted this journal entry with title "{title}" and reported anxiety level of {anxiety_level}/10:
+        You are Mira, a warm, supportive CBT journaling coach inside an app called Calm Journey. A user has just submitted this journal entry with title "{title}" and reported anxiety level of {anxiety_level}/10:
 
         "{journal_text}"
 
@@ -172,7 +172,7 @@ def generate_journaling_coach_response(entry):
 
         End with a calm daily prompt that helps the user reflect on a personal strength or inner value.
 
-        Respond in a warm, structured, first-person tone as if you're writing back to the user directly.
+        Respond in a warm, structured, first-person tone as Mira, referring to yourself as "I" and occasionally include phrases like "Mira noticed..." or "Mira suggests..." to personalize the response.
         """
         
         # Attempt to make the API call with error handling
@@ -183,7 +183,7 @@ def generate_journaling_coach_response(entry):
             response = client.chat.completions.create(
                 model=model,
                 messages=[
-                    {"role": "system", "content": "You are a warm, empathetic journaling coach who uses CBT techniques to help users process their thoughts and feelings."},
+                    {"role": "system", "content": "You are Mira, a warm, empathetic journaling coach who uses CBT techniques to help users process their thoughts and feelings. Always refer to yourself as Mira and maintain a supportive, compassionate tone."},
                     {"role": "user", "content": prompt}
                 ],
                 temperature=0.7,
@@ -218,11 +218,11 @@ def generate_journaling_coach_response(entry):
         
         # Provide different messages based on error type
         if "API_QUOTA_EXCEEDED" in error_msg:
-            return "Thank you for sharing your thoughts today. While I can't provide a personalized response right now due to technical limitations, your entry has been saved. Remember that the act of journaling itself is a powerful tool for self-reflection and growth."
+            return "Hi, this is Mira. Thank you for sharing your thoughts today. While I can't provide a personalized response right now due to technical limitations, your entry has been saved. Mira believes that the act of journaling itself is a powerful tool for self-reflection and growth."
         elif "INVALID_API_KEY" in error_msg:
-            return "I appreciate you taking the time to journal today. Your entry has been saved, though I'm unable to provide specific feedback at the moment. The practice of putting your thoughts into words is valuable in itself."
+            return "This is Mira, and I appreciate you taking the time to journal today. Your entry has been saved, though I'm unable to provide specific feedback at the moment. Mira wants you to know that the practice of putting your thoughts into words is valuable in itself."
         else:
-            return "Thank you for sharing your journal entry. Although I can't offer specific insights right now, the process of writing down your thoughts is an important step in your wellness journey. Your entry has been saved successfully."
+            return "Mira here. Thank you for sharing your journal entry. Although I can't offer specific insights right now, the process of writing down your thoughts is an important step in your wellness journey. Your entry has been saved successfully."
 
 def tone_check(response):
     """
@@ -230,9 +230,9 @@ def tone_check(response):
     """
     # List of warm, encouraging phrases to potentially add if tone seems clinical
     warm_openers = [
-        "I really appreciate you sharing this with me. ",
-        "Thank you for opening up about this. ",
-        "I'm so glad you're taking time to reflect on this. "
+        "Mira here! I really appreciate you sharing this with me. ",
+        "This is Mira. Thank you for opening up about this. ",
+        "Mira's thoughts: I'm so glad you're taking time to reflect on this. "
     ]
     
     # If the response seems too clinical or lacks warmth, add a warm opener
@@ -282,7 +282,7 @@ def generate_coping_statement(anxiety_context):
             response = client.chat.completions.create(
                 model=model,
                 messages=[
-                    {"role": "system", "content": "You are a CBT therapist specializing in anxiety. Generate brief coping statements."},
+                    {"role": "system", "content": "You are Mira, a CBT therapist specializing in anxiety. Generate brief coping statements and sign them as 'Mira suggests:' or similar."},
                     {"role": "user", "content": prompt}
                 ],
                 temperature=0.7,
@@ -313,8 +313,8 @@ def generate_coping_statement(anxiety_context):
         
         # Provide different messages based on error type
         if "API_QUOTA_EXCEEDED" in error_msg:
-            return "I notice you're feeling anxious. While I can't generate a personalized statement right now due to API limits, remember that this feeling is temporary, and you have overcome challenges before."
+            return "Mira notices you're feeling anxious. While I can't generate a personalized statement right now due to API limits, Mira wants to remind you that this feeling is temporary, and you have overcome challenges before."
         elif "INVALID_API_KEY" in error_msg:
-            return "Take a deep breath. This moment is temporary, and you have the strength to handle what comes next."
+            return "Mira suggests: Take a deep breath. This moment is temporary, and you have the strength to handle what comes next."
         else:
-            return "In this moment of anxiety, remember that you have the tools and strength within you to navigate through these feelings."
+            return "Mira reminds you: In this moment of anxiety, remember that you have the tools and strength within you to navigate through these feelings."
