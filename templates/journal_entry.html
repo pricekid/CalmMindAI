@@ -238,9 +238,17 @@
                             </div>
                         </div>
                         
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between align-items-center">
                             <a href="{{ url_for('journal') }}" class="btn btn-outline-secondary">Cancel</a>
-                            {{ form.submit(class="btn btn-primary") }}
+                            <div>
+                                <div id="save-spinner" class="d-none">
+                                    <div class="spinner-border spinner-border-sm text-light me-2" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <span>Saving your entry and analyzing...</span>
+                                </div>
+                                {{ form.submit(class="btn btn-primary", id="submit-button") }}
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -376,6 +384,26 @@
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                 mobileCallButton.classList.remove('d-none');
             }
+        }
+    });
+</script>
+{% else %}
+<!-- Script for journal entry form -->
+<script>
+    // Show spinner when Save Entry button is clicked
+    document.addEventListener('DOMContentLoaded', function() {
+        const submitButton = document.getElementById('submit-button');
+        const saveSpinner = document.getElementById('save-spinner');
+        const journalForm = document.querySelector('form');
+        
+        if (submitButton && saveSpinner && journalForm) {
+            journalForm.addEventListener('submit', function(e) {
+                // Only show spinner if form validates
+                if (journalForm.checkValidity()) {
+                    submitButton.classList.add('d-none');
+                    saveSpinner.classList.remove('d-none');
+                }
+            });
         }
     });
 </script>
