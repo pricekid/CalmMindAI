@@ -2935,5 +2935,123 @@
         "recommendation": "Assuming that difficulties in tying up this semester's work will apply to all future academic tasks. - Practice 'Thought Records' to track specific incidents, evaluate evidence, and counter overgeneralized beliefs."
       }
     ]
+  },
+  {
+    "id": 126,
+    "user_id": 1,
+    "title": "Test",
+    "content": "feeling abit miserable today. nothing seems to eb going right",
+    "anxiety_level": 9,
+    "created_at": "2025-04-08T17:57:20.704274",
+    "updated_at": "2025-04-08T17:57:25.448488",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Perceiving situations in black-and-white terms, without recognizing the middle ground. - Use a thought record to list evidence for and against the belief that 'nothing is going right' to identify more balanced thoughts."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Drawing broad conclusions from a single event or small number of events. - Challenge this pattern by identifying specific instances where things have gone right recently, no matter how small."
+      },
+      {
+        "thought_pattern": "Negative Filtering",
+        "recommendation": "Focusing on the negatives while dismissing the positives. - Practice gratitude journaling by writing down three positive things that happened each day to shift focus to positive experiences."
+      }
+    ]
+  },
+  {
+    "id": 127,
+    "user_id": 1,
+    "title": "Test",
+    "content": "feeling abit miserable today. nothing seems to eb going right",
+    "anxiety_level": 9,
+    "created_at": "2025-04-08T17:57:54.114556",
+    "updated_at": "2025-04-08T17:57:54.114559",
+    "is_analyzed": false,
+    "recommendations": []
+  },
+  {
+    "id": 128,
+    "user_id": 1,
+    "title": "Test",
+    "content": "feeling abit miserable today. nothing seems to eb going right",
+    "anxiety_level": 9,
+    "created_at": "2025-04-08T17:57:54.451925",
+    "updated_at": "2025-04-08T17:57:54.451928",
+    "is_analyzed": false,
+    "recommendations": []
+  },
+  {
+    "id": 129,
+    "user_id": 1,
+    "title": "Test",
+    "content": "feeling abit miserable today. nothing seems to eb going right",
+    "anxiety_level": 9,
+    "created_at": "2025-04-08T17:57:54.785573",
+    "updated_at": "2025-04-08T17:57:58.933823",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in extreme terms, such as 'nothing seems to be going right', without acknowledging any middle ground. - Challenge this thought by listing three things that did go right today, no matter how small, to introduce a more balanced perspective."
+      },
+      {
+        "thought_pattern": "Mental Filtering",
+        "recommendation": "Focusing solely on the negative aspects of a situation while ignoring any positives. - Write down positive events or aspects of the day, even if they seem minor, to help shift focus from negatives."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario will happen or has happened, leading to heightened anxiety. - Practice the 'Decatastrophizing' technique by asking yourself, 'What is the worst that could realistically happen?' and 'How likely is it to actually occur?'"
+      }
+    ]
+  },
+  {
+    "id": 130,
+    "user_id": 1,
+    "title": "test 2",
+    "content": "I am very unhappy",
+    "anxiety_level": 9,
+    "created_at": "2025-04-08T18:04:52.299339",
+    "updated_at": "2025-04-08T18:04:55.904392",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, without recognizing any middle ground. - Practice identifying gray areas by listing three alternative interpretations of your situation on paper."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst possible outcome, even if it's unlikely. - Challenge catastrophic thoughts by asking yourself, 'What is the worst that can realistically happen?' and 'How likely is it?'"
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Making broad conclusions based on a single event or limited information. - Keep a thought journal to identify overgeneralizations and reframe them by identifying specific evidence that contradicts the generalized belief."
+      }
+    ]
+  },
+  {
+    "id": 131,
+    "user_id": 1,
+    "title": "test",
+    "content": "i am very unhappy today",
+    "anxiety_level": 9,
+    "created_at": "2025-04-08T18:25:07.100612",
+    "updated_at": "2025-04-08T18:25:11.943938",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, without recognizing any middle ground or shades of gray. - Practice cognitive restructuring by identifying evidence for and against your thoughts to find a more balanced perspective."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming the worst-case scenario will happen, even if it's unlikely. - Use the 'What If' technique: write down the worst-case scenario, the best-case scenario, and the most realistic outcome to reduce anxiety."
+      },
+      {
+        "thought_pattern": "Emotional Reasoning",
+        "recommendation": "Believing that because you feel something strongly, it must be true. - Challenge emotional reasoning by asking yourself, 'What evidence do I have that this feeling accurately reflects the situation?' and consider alternative interpretations."
+      }
+    ]
   }
 ]
