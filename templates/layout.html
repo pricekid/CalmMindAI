@@ -43,6 +43,9 @@
                             <a class="nav-link {% if '/breathing' in request.path %}active{% endif %}" href="{{ url_for('breathing') }}">Breathing</a>
                         </li>
                     {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if '/crisis' in request.path %}active{% endif %}" href="{{ url_for('crisis') }}">Crisis Resources</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav">
                     {% if current_user.is_authenticated %}

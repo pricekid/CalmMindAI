@@ -548,3 +548,12 @@ def api_analyze_entry(entry_id):
                 'status': 'ERROR',
                 'message': 'Your entry was saved, but there was an error during analysis. You can try again later.'
             }), 500
+
+# Crisis Resources page
+@app.route('/crisis')
+def crisis():
+    """
+    Display mental health crisis resources in a calm, accessible format.
+    This page is available to all users, whether logged in or not.
+    """
+    return render_template('crisis.html', title='Crisis Resources')

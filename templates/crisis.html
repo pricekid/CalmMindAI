@@ -1,0 +1,120 @@
+{% extends "layout.html" %}
+
+{% block title %}Crisis Resources - Calm Journey{% endblock %}
+
+{% block styles %}
+<style>
+    .crisis-container {
+        background-color: #f8f9fa;
+        color: #212529;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .crisis-header {
+        color: var(--warm-peach);
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+        text-align: center;
+    }
+    
+    .crisis-card {
+        background-color: white;
+        border-left: 4px solid var(--warm-peach);
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        transition: transform 0.3s ease;
+    }
+    
+    .crisis-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .crisis-resource-name {
+        color: #2d2d2d;
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+    
+    .crisis-contact {
+        background-color: var(--warm-peach);
+        color: #2d2d2d;
+        font-weight: 600;
+        padding: 8px 15px;
+        border-radius: 50px;
+        display: inline-block;
+        margin-bottom: 0.5rem;
+    }
+    
+    .crisis-description {
+        color: #495057;
+    }
+    
+    .crisis-message {
+        background-color: rgba(230, 185, 128, 0.2);
+        padding: 20px;
+        border-radius: 10px;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-top: 2rem;
+    }
+    
+    .back-to-app {
+        margin-top: 2rem;
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="crisis-container">
+            <h2 class="crisis-header">Crisis Resources</h2>
+            
+            <div class="crisis-message mb-4">
+                <p class="mb-0">It's okay to ask for help when you're feeling overwhelmed. Reaching out is a sign of strength, not weakness. You don't have to face difficult moments alone.</p>
+            </div>
+            
+            <div class="crisis-card">
+                <h3 class="crisis-resource-name">Lifeline Barbados</h3>
+                <div class="crisis-contact">536-4500</div>
+                <p class="crisis-description">Free, confidential support from trained counselors. Available 24/7 for anyone experiencing emotional distress or thoughts of suicide.</p>
+            </div>
+            
+            <div class="crisis-card">
+                <h3 class="crisis-resource-name">Crisis Text Line (International)</h3>
+                <div class="crisis-contact">Text HOME to 741741</div>
+                <p class="crisis-description">Available in US, Canada, UK, and Ireland. Free, 24/7 text support with trained crisis counselors.</p>
+            </div>
+            
+            <div class="crisis-card">
+                <h3 class="crisis-resource-name">International Association for Suicide Prevention</h3>
+                <div class="crisis-contact"><a href="https://www.iasp.info/resources/Crisis_Centres/" target="_blank" style="color: #2d2d2d;">Find a Crisis Center</a></div>
+                <p class="crisis-description">Resources for finding local crisis centers worldwide.</p>
+            </div>
+            
+            <div class="crisis-message">
+                <p class="mb-1"><strong>Remember:</strong></p>
+                <ul>
+                    <li>Your feelings are valid, but they're not the whole story.</li>
+                    <li>This difficult moment will pass.</li>
+                    <li>You've overcome challenges before, and you can do it again.</li>
+                    <li>There are people who want to help and who care about your wellbeing.</li>
+                </ul>
+            </div>
+            
+            <div class="back-to-app">
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('dashboard') }}" class="btn btn-warm">Return to Dashboard</a>
+                {% else %}
+                <a href="{{ url_for('index') }}" class="btn btn-warm">Return to Home</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
