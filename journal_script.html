@@ -1,25 +1,32 @@
-{% block scripts %}
 <!-- Journal form spinner scripts -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Journal entry form spinner
     const journalForm = document.getElementById('journal-form');
-    const submitButton = document.getElementById('journal-submit-button');
     
-    if (journalForm && submitButton) {
-        journalForm.addEventListener('submit', function(event) {
-            if (journalForm.checkValidity()) {
-                // Add loading spinner directly inside the button
-                const originalText = submitButton.innerHTML;
-                submitButton.disabled = true;
-                submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Saving...';
-                
-                // Log to console for debugging
-                console.log('Journal form submitted, showing spinner');
-            }
-        });
+    if (journalForm) {
+        // Find the submit button
+        const submitButton = document.querySelector('#journal-form button[type="submit"]');
+        
+        if (submitButton) {
+            console.log('Found journal submit button:', submitButton.id || 'no id');
+            
+            // Add form submission handler
+            journalForm.addEventListener('submit', function(event) {
+                // Check if form is valid before showing spinner
+                if (journalForm.checkValidity()) {
+                    // Store original button text
+                    const originalContent = submitButton.innerHTML;
+                    
+                    // Replace button content with spinner and text
+                    submitButton.innerHTML = '<div class="d-flex align-items-center justify-content-center"><span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving...</div>';
+                    submitButton.disabled = true;
+                    
+                    // Debug log
+                    console.log('Showing spinner on journal submit');
+                }
+            });
+        }
     }
 });
 </script>
-
-{% if view_only %}
