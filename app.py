@@ -72,12 +72,32 @@ def unauthorized():
 # Add global error handler
 @app.errorhandler(Exception)
 def handle_exception(e):
-    from flask import render_template
+    from flask import render_template, redirect, url_for
+    from json.decoder import JSONDecodeError
+    
     app.logger.error(f"Unhandled exception: {str(e)}")
     error_message = "Your data was saved, but we couldn't complete the analysis."
     
-    # Check if it's a CSRF error
+    # Check if it's a JSON parsing error (which is likely from OpenAI response)
     err_str = str(e).lower()
+    
+    # Special handler for the specific JSON parsing error we're seeing
+    if isinstance(e, JSONDecodeError) or "expected token" in err_str or "json" in err_str:
+        app.logger.error(f"JSON parsing error: {str(e)}")
+        
+        # For dashboard route, just redirect to the dashboard without the analysis
+        if request.path == '/dashboard':
+            flash("Your dashboard is ready, but we couldn't generate a personalized message at this time.", "info")
+            return redirect(url_for('dashboard'))
+            
+        # For other routes with JSON parsing errors, show a friendly message
+        error_title = "Processing Issue"
+        error_message = "We had a minor issue processing your data, but your information was saved successfully."
+        return render_template('error.html', 
+                              error_title=error_title,
+                              error_message=error_message), 200
+    
+    # Check if it's a CSRF error
     if "csrf" in err_str:
         error_title = "Session Expired"
         error_message = "Your session has expired. Please refresh the page and try again."
