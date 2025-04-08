@@ -43,6 +43,10 @@ body {
     box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
 }
 
+.card-header {
+    border-bottom: 2px solid var(--warm-peach);
+}
+
 /* Button styling - Updated with warm peach */
 .btn-calm {
     background-color: var(--warm-peach);
@@ -258,4 +262,9 @@ footer a:hover {
     footer .text-md-end {
         text-align: center !important;
     }
+}
+
+/* Style card headers to match the admin panel */
+.card-header {
+    border-bottom: 2px solid var(--warm-peach);
 }
