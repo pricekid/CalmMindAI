@@ -466,6 +466,120 @@ def api_journal_coach(entry_id):
     
     return jsonify({'coach_response': coach_response})
 
+# API endpoint for analyzing a journal entry
+@journal_bp.route('/api/analyze_entry/<int:entry_id>', methods=['POST'])
+@login_required
+def api_analyze_entry(entry_id):
+    entry = JournalEntry.query.get_or_404(entry_id)
+    
+    # Ensure the entry belongs to the current user
+    if entry.user_id != current_user.id:
+        abort(403)
+    
+    try:
+        # Clear old recommendations
+        CBTRecommendation.query.filter_by(journal_entry_id=entry.id).delete()
+        
+        # Analyze the entry using the GPT service
+        analysis_result = analyze_journal_with_gpt(
+            journal_text=entry.content, 
+            anxiety_level=entry.anxiety_level,
+            user_id=current_user.id
+        )
+        
+        gpt_response = analysis_result.get("gpt_response")
+        cbt_patterns = analysis_result.get("cbt_patterns", [])
+        
+        # Save the patterns to the database
+        is_api_error = False
+        is_config_error = False
+        
+        for pattern in cbt_patterns:
+            # Check for different error patterns
+            if pattern["pattern"] == "API Quota Exceeded":
+                is_api_error = True
+            elif pattern["pattern"] == "API Configuration Issue":
+                is_config_error = True
+                
+            # Save recommendation to database
+            recommendation = CBTRecommendation(
+                thought_pattern=pattern["pattern"],
+                recommendation=f"{pattern['description']} - {pattern['recommendation']}",
+                journal_entry_id=entry.id
+            )
+            db.session.add(recommendation)
+        
+        entry.is_analyzed = True
+        db.session.commit()
+        
+        # Save the complete journal entry to JSON file
+        save_journal_entry(
+            entry_id=entry.id,
+            user_id=current_user.id,
+            title=entry.title,
+            content=entry.content,
+            anxiety_level=entry.anxiety_level,
+            created_at=entry.created_at,
+            updated_at=entry.updated_at,
+            is_analyzed=entry.is_analyzed,
+            gpt_response=gpt_response,
+            cbt_patterns=cbt_patterns
+        )
+        
+        # Return appropriate response based on error type
+        if is_api_error:
+            return jsonify({
+                'success': True,
+                'status': 'API_LIMIT',
+                'message': 'Entry saved. AI analysis is currently unavailable due to API usage limits.',
+                'recommendations': [{'pattern': r.thought_pattern, 'recommendation': r.recommendation} 
+                                for r in entry.recommendations]
+            })
+        elif is_config_error:
+            return jsonify({
+                'success': True,
+                'status': 'CONFIG_ERROR',
+                'message': 'Entry saved. AI analysis is currently unavailable due to a configuration issue.',
+                'recommendations': [{'pattern': r.thought_pattern, 'recommendation': r.recommendation} 
+                                for r in entry.recommendations]
+            })
+        else:
+            return jsonify({
+                'success': True,
+                'status': 'SUCCESS',
+                'message': 'Entry analyzed successfully!',
+                'recommendations': [{'pattern': r.thought_pattern, 'recommendation': r.recommendation} 
+                                for r in entry.recommendations]
+            })
+        
+    except Exception as e:
+        error_msg = str(e)
+        logger.error(f"Error analyzing journal entry: {error_msg}")
+        
+        # Save the entry even if analysis fails
+        entry.is_analyzed = False
+        db.session.commit()
+        
+        # Return more specific error messages
+        if "API_QUOTA_EXCEEDED" in error_msg:
+            return jsonify({
+                'success': False,
+                'status': 'API_LIMIT',
+                'message': 'Your entry was saved, but AI analysis is currently unavailable due to API limits.'
+            }), 429
+        elif "INVALID_API_KEY" in error_msg:
+            return jsonify({
+                'success': False,
+                'status': 'CONFIG_ERROR',
+                'message': 'Your entry was saved, but AI analysis is currently unavailable due to a configuration issue.'
+            }), 500
+        else:
+            return jsonify({
+                'success': False,
+                'status': 'ERROR',
+                'message': 'Your entry was saved, but there was an error during analysis. You can try again later.'
+            }), 500
+
 # Delete journal entry
 @journal_bp.route('/<int:entry_id>/delete_entry', methods=['GET', 'POST'])
 @login_required
