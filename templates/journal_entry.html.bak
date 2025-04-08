@@ -294,42 +294,6 @@
             });
         });
     }
-    
-    /* Coach button handling */
-    const coachButton = document.getElementById('coach-button');
-    const coachLoadingIndicator = document.getElementById('coach-loading');
-    const coachResponse = document.getElementById('coach-response');
-    
-    if (coachButton) {
-        coachButton.addEventListener('click', function() {
-            const entryId = coachButton.dataset.entryId;
-            
-            // Show loading indicator
-            coachButton.disabled = true;
-            coachLoadingIndicator.classList.remove('d-none');
-            
-            // Make AJAX request for coaching response
-            fetch(`/api/journal_coach/${entryId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token() }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                coachLoadingIndicator.classList.add('d-none');
-                
-                if (data.success) {
-                    // Display coach response
-                    coachResponse.classList.remove('d-none');
-                    coachResponse.innerHTML = data.response;
-                    
-                    // Update button text to indicate another response can be requested
-                    coachButton.innerHTML = '<i class="fas fa-comment-dots me-1"></i> Get Another Response';
-                    coachButton.disabled = false;
-                } else {
-                    // Display error message
                     // If we already have a response displayed, keep it and show error in alert
                     const hasExistingResponse = {% if coach_response %}true{% else %}false{% endif %};
                     if (hasExistingResponse) {
@@ -341,12 +305,11 @@
                         coachResponse.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
                         coachButton.disabled = false;
                     }
-                }
-            })
-            .catch(error => {
-                coachLoadingIndicator.classList.add('d-none');
-                
-                // If we already have a response displayed, keep it and show error in alert
+            const entryId = coachButton.dataset.entryId;
+            
+            // Show loading indicator
+            coachButton.disabled = true;
+                // Show error in alert if we already have a response, otherwise in response area
                 const hasExistingResponse = {% if coach_response %}true{% else %}false{% endif %};
                 if (hasExistingResponse) {
                     alert(`Error: ${error.message}`);
@@ -357,20 +320,52 @@
                     coachResponse.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
                     coachButton.disabled = false;
                 }
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                coachLoading.classList.add('d-none');
+                
+                if (data.success) {
+                    // Update coach response
+                    coachResponse.classList.remove('d-none');
+                    coachResponse.textContent = data.coach_response;
+                    coachButton.textContent = 'Get Another Response';
+                    coachButton.disabled = false;
+                } else {
+                    // Display error message
+                    // If we already have a response displayed, keep it and show error in alert
+                    const hasExistingResponse = {% if coach_response %}true{% else %}false{% endif %};
+                    if (hasExistingResponse) {
+                        alert(`${data.message}`);
+                        coachButton.disabled = false;
+                    } else {
+                        // Otherwise, display error in the response area
+                        coachResponse.classList.remove('d-none');
+                        coachResponse.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+                        coachButton.disabled = false;
+                    }
+                }
+            })
+            .catch(error => {
+                coachLoading.classList.add('d-none');
+                
+                // If we already have a response displayed, keep it and show error in alert
+                if ({% if coach_response %}true{% else %}false{% endif %}) {
+                    alert(`Error: ${error.message}`);
+                    coachButton.disabled = false;
+                } else {
+                    // Otherwise, display error in the response area
+                    coachResponse.classList.remove('d-none');
+                    coachResponse.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
+                    coachButton.disabled = false;
+                }
             });
         });
     }
-    
-    // Check if we're on a mobile device to show the call button
-    document.addEventListener('DOMContentLoaded', function() {
-        const mobileCallButton = document.getElementById('mobile-call-button');
-        if (mobileCallButton) {
-            // Simple mobile detection
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                mobileCallButton.classList.remove('d-none');
-            }
-        }
-    });
+});
 </script>
 {% endif %}
 {% endblock %}
