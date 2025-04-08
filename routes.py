@@ -103,34 +103,30 @@ def dashboard():
     latest_entry = JournalEntry.query.filter_by(user_id=current_user.id)\
         .order_by(desc(JournalEntry.created_at)).first()
     
-    coping_statement = None
+    # Default coping statement that doesn't require API
+    coping_statement = "Mira suggests: Take a moment to breathe deeply. Remember that your thoughts don't define you, and this moment will pass."
+    
+    # Only try to get a personalized one if we have a journal entry
     if latest_entry:
         try:
             # Use a simplified version of the journal content for the coping statement
             context = latest_entry.title or "anxiety management"
             
-            # Add a try-except block specifically for the API call
             try:
                 # Generate coping statement with improved error handling
-                coping_statement = generate_coping_statement(context)
+                api_statement = generate_coping_statement(context)
                 
-                # Check for specific error messages in the response
-                if coping_statement and any(err_type in coping_statement for err_type in ["API quota exceeded", "API_QUOTA_EXCEEDED"]):
-                    # Add a flash message about API limits
-                    flash('AI-generated coping statements are currently unavailable due to API usage limits.', 'info')
-                
+                # Only use API statement if it's valid
+                if api_statement and len(api_statement.strip()) > 10:
+                    coping_statement = api_statement
+                    
             except Exception as api_error:
-                # Log the specific API error
+                # Log the specific API error, but continue with default statement
                 logging.error(f"OpenAI API error in dashboard: {str(api_error)}")
                 
-                # Use a fallback coping statement
-                coping_statement = "Mira suggests: Take a moment to breathe deeply. Remember that your thoughts don't define you, and this moment will pass."
-                
         except Exception as e:
+            # Log any other errors but don't crash 
             logging.error(f"General error generating coping statement: {str(e)}")
-            
-            # Provide a default statement that doesn't rely on API
-            coping_statement = "In this moment of anxiety, remember that you have the tools and strength within you to navigate through these feelings."
     
     # Get form for mood logging
     mood_form = MoodLogForm()
