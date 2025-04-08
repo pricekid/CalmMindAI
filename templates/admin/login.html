@@ -3,28 +3,34 @@
 {% block content %}
 <div class="row justify-content-center align-items-center" style="min-height: 80vh;">
     <div class="col-md-6 col-lg-4">
-        <div class="card">
-            <div class="card-header bg-dark">
-                <h4 class="text-center mb-0">Admin Login</h4>
+        <div class="card" style="border: 1px solid var(--warm-peach);">
+            <div class="card-header bg-dark" style="background: linear-gradient(145deg, rgba(33, 37, 41, 0.97), rgba(33, 37, 41, 0.95)) !important; border-bottom: 2px solid var(--warm-peach);">
+                <h4 class="text-center mb-0" style="color: var(--warm-peach);">Admin Login</h4>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="background: linear-gradient(135deg, rgba(33, 37, 41, 0.97), rgba(33, 37, 41, 0.95));">
+                <div class="text-center mb-4">
+                    <div style="width: 70px; height: 70px; margin: 0 auto; background: radial-gradient(circle, var(--warm-peach), #d1a673); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(230, 185, 128, 0.4);">
+                        <i class="fas fa-user-shield" style="font-size: 2rem; color: #2d2d2d;"></i>
+                    </div>
+                </div>
+                
                 <form method="POST" action="">
                     {{ form.hidden_tag() }}
                     <div class="mb-3">
-                        {{ form.username.label(class="form-label") }}
-                        {{ form.username(class="form-control") }}
+                        {{ form.username.label(class="form-label", style="color: var(--warm-peach);") }}
+                        {{ form.username(class="form-control", style="border-color: var(--warm-peach); background-color: rgba(33, 37, 41, 0.8);") }}
                     </div>
                     <div class="mb-3">
-                        {{ form.password.label(class="form-label") }}
-                        {{ form.password(class="form-control") }}
+                        {{ form.password.label(class="form-label", style="color: var(--warm-peach);") }}
+                        {{ form.password(class="form-control", style="border-color: var(--warm-peach); background-color: rgba(33, 37, 41, 0.8);") }}
                     </div>
                     <div class="d-grid">
-                        {{ form.submit(class="btn btn-info") }}
+                        {{ form.submit(class="btn", style="background-color: var(--warm-peach); border-color: var(--warm-peach); color: #2d2d2d; font-weight: 600; box-shadow: 0 4px 8px rgba(209, 166, 115, 0.3);") }}
                     </div>
                 </form>
             </div>
-            <div class="card-footer text-center">
-                <small class="text-muted">Access restricted to administrators only.</small>
+            <div class="card-footer text-center" style="background: linear-gradient(145deg, rgba(230, 185, 128, 0.1), rgba(230, 185, 128, 0.2));">
+                <small class="text-muted" style="color: rgba(230, 185, 128, 0.7) !important;">Access restricted to administrators only.</small>
             </div>
         </div>
     </div>

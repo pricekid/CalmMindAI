@@ -5,65 +5,71 @@
 {% block content %}
 <div class="row">
     <div class="col-md-6 mx-auto">
-        <div class="card bg-dark">
-            <div class="card-header">
-                <h3 class="text-center mb-0">Welcome Back</h3>
+        <div class="card bg-dark" style="border: 1px solid var(--warm-peach);">
+            <div class="card-header" style="background: linear-gradient(145deg, rgba(230, 185, 128, 0.1), rgba(230, 185, 128, 0.2));">
+                <h3 class="text-center mb-0" style="color: var(--warm-peach);">Welcome Back</h3>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="background: linear-gradient(135deg, rgba(33, 37, 41, 0.97), rgba(33, 37, 41, 0.95));">
+                <div class="text-center mb-4">
+                    <div style="width: 80px; height: 80px; margin: 0 auto; background: radial-gradient(circle, var(--warm-peach), #d1a673); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(230, 185, 128, 0.4);">
+                        <i class="fas fa-user" style="font-size: 2.5rem; color: #2d2d2d;"></i>
+                    </div>
+                </div>
+                
                 <form method="POST" action="">
                     {{ form.hidden_tag() }}
                     <div class="mb-3">
-                        {{ form.email.label(class="form-label") }}
+                        {{ form.email.label(class="form-label", style="color: var(--warm-peach);") }}
                         {% if form.email.errors %}
-                            {{ form.email(class="form-control is-invalid") }}
+                            {{ form.email(class="form-control is-invalid", style="border-color: var(--warm-peach); background-color: rgba(33, 37, 41, 0.8);") }}
                             <div class="invalid-feedback">
                                 {% for error in form.email.errors %}
                                     <span>{{ error }}</span>
                                 {% endfor %}
                             </div>
                         {% else %}
-                            {{ form.email(class="form-control") }}
+                            {{ form.email(class="form-control", style="border-color: var(--warm-peach); background-color: rgba(33, 37, 41, 0.8);") }}
                         {% endif %}
                     </div>
                     
                     <div class="mb-3">
-                        {{ form.password.label(class="form-label") }}
+                        {{ form.password.label(class="form-label", style="color: var(--warm-peach);") }}
                         {% if form.password.errors %}
-                            {{ form.password(class="form-control is-invalid") }}
+                            {{ form.password(class="form-control is-invalid", style="border-color: var(--warm-peach); background-color: rgba(33, 37, 41, 0.8);") }}
                             <div class="invalid-feedback">
                                 {% for error in form.password.errors %}
                                     <span>{{ error }}</span>
                                 {% endfor %}
                             </div>
                         {% else %}
-                            {{ form.password(class="form-control") }}
+                            {{ form.password(class="form-control", style="border-color: var(--warm-peach); background-color: rgba(33, 37, 41, 0.8);") }}
                         {% endif %}
                     </div>
                     
                     <div class="mb-3 form-check">
-                        {{ form.remember(class="form-check-input") }}
+                        {{ form.remember(class="form-check-input", style="background-color: var(--warm-peach); border-color: var(--warm-peach);") }}
                         {{ form.remember.label(class="form-check-label") }}
                     </div>
                     
                     <div class="d-grid mb-3">
-                        {{ form.submit(class="btn btn-warm btn-lg") }}
+                        {{ form.submit(class="btn btn-warm btn-lg", style="font-weight: 600; box-shadow: 0 4px 8px rgba(209, 166, 115, 0.3);") }}
                     </div>
                     
                     <div class="text-center">
                         <small>
-                            <a href="#">Forgot Password?</a>
+                            <a href="#" style="color: var(--warm-peach); text-decoration: none;">Forgot Password?</a>
                         </small>
                     </div>
                 </form>
             </div>
-            <div class="card-footer text-center">
-                <p class="mb-0">Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
+            <div class="card-footer text-center" style="background: linear-gradient(145deg, rgba(230, 185, 128, 0.1), rgba(230, 185, 128, 0.2));">
+                <p class="mb-0">Don't have an account? <a href="{{ url_for('register') }}" style="color: var(--warm-peach); font-weight: 500; text-decoration: none;">Register here</a></p>
             </div>
         </div>
         
         <div class="text-center mt-4">
             <p>
-                <small class="text-muted">
+                <small class="text-muted" style="color: var(--warm-peach) !important; opacity: 0.8;">
                     Continue your journey to mental wellness with Calm Journey.
                 </small>
             </p>
