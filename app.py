@@ -85,17 +85,70 @@ def handle_exception(e):
     if isinstance(e, JSONDecodeError) or "expected token" in err_str or "json" in err_str:
         app.logger.error(f"JSON parsing error: {str(e)}")
         
-        # For dashboard route, just redirect to the dashboard without the analysis
-        if request.path == '/dashboard':
+        # Check if we're already processing an error to prevent redirect loops
+        if request.path == '/dashboard' and 'handling_error' not in request.environ:
+            # Set a flag in the request environment to prevent loops
+            request.environ['handling_error'] = True
+            
+            # Just render the dashboard template with minimal data
+            from models import JournalEntry, MoodLog
+            from sqlalchemy import desc
+            from datetime import datetime, timedelta
+            
+            # Get basic data for dashboard
+            recent_entries = []
+            mood_dates = []
+            mood_scores = []
+            weekly_summary = {}
+            
+            # Only try to get current_user data if authenticated
+            if hasattr(current_user, 'is_authenticated') and current_user.is_authenticated:
+                try:
+                    # Get recent journal entries
+                    recent_entries = JournalEntry.query.filter_by(user_id=current_user.id)\
+                        .order_by(desc(JournalEntry.created_at)).limit(5).all()
+                    
+                    # Get mood data for chart (last 7 days)
+                    seven_days_ago = datetime.utcnow() - timedelta(days=7)
+                    mood_logs = MoodLog.query.filter(
+                        MoodLog.user_id == current_user.id,
+                        MoodLog.created_at >= seven_days_ago
+                    ).order_by(MoodLog.created_at).all()
+                    
+                    # Format mood data for chart.js
+                    mood_dates = [log.created_at.strftime('%Y-%m-%d') for log in mood_logs]
+                    mood_scores = [log.mood_score for log in mood_logs]
+                    
+                    # Get weekly summary if available
+                    weekly_summary = current_user.get_weekly_summary()
+                except Exception as inner_e:
+                    app.logger.error(f"Error fetching dashboard data: {str(inner_e)}")
+            
+            # Use a default coping statement
+            coping_statement = "Mira suggests: Take a moment to breathe deeply. Remember that your thoughts don't define you, and this feeling will pass."
+            
+            # Get form for mood logging
+            from forms import MoodLogForm
+            mood_form = MoodLogForm()
+            
+            # Show a flash message about the error
             flash("Your dashboard is ready, but we couldn't generate a personalized message at this time.", "info")
-            return redirect(url_for('dashboard'))
+            
+            return render_template('dashboard.html', 
+                                  title='Dashboard',
+                                  recent_entries=recent_entries,
+                                  mood_dates=mood_dates,
+                                  mood_scores=mood_scores,
+                                  coping_statement=coping_statement,
+                                  mood_form=mood_form,
+                                  weekly_summary=weekly_summary), 200
             
         # For other routes with JSON parsing errors, show a friendly message
         error_title = "Processing Issue"
         error_message = "We had a minor issue processing your data, but your information was saved successfully."
         return render_template('error.html', 
-                              error_title=error_title,
-                              error_message=error_message), 200
+                             error_title=error_title,
+                             error_message=error_message), 200
     
     # Check if it's a CSRF error
     if "csrf" in err_str:
