@@ -208,4 +208,4 @@ with app.app_context():
     
     # Register the journal blueprint
     from journal_routes import journal_bp
-    app.register_blueprint(journal_bp)
+    app.register_blueprint(journal_bp, name='journal_blueprint')
