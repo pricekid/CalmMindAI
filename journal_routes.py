@@ -16,10 +16,10 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Create blueprint
-journal_bp = Blueprint('journal', __name__)
+journal_bp = Blueprint('journal_blueprint', __name__, url_prefix='/journal_api')
 
 # Journal entry list
-@journal_bp.route('/journal')
+@journal_bp.route('/')
 @login_required
 def journal_list():
     page = request.args.get('page', 1, type=int)
@@ -85,7 +85,7 @@ def journal_list():
                           stats=stats)
 
 # Create new journal entry
-@journal_bp.route('/journal/new', methods=['GET', 'POST'])
+@journal_bp.route('/new', methods=['GET', 'POST'])
 @login_required
 def new_journal_entry():
     form = JournalEntryForm()
@@ -101,7 +101,7 @@ def new_journal_entry():
         if recent_entries:
             logger.info(f"Prevented duplicate entry: {form.title.data}")
             flash('A similar journal entry was just created. Redirecting to the existing entry.', 'info')
-            return redirect(url_for('journal.view_journal_entry', entry_id=recent_entries[0].id))
+            return redirect(url_for('journal_blueprint.view_journal_entry', entry_id=recent_entries[0].id))
         
         # First, save the journal entry so it's not lost if analysis fails
         logger.debug("Saving journal entry to database")
@@ -212,13 +212,13 @@ def new_journal_entry():
             else:
                 flash('Your journal entry has been saved, but analysis could not be completed. You can try analyzing it later.', 'warning')
         
-        return redirect(url_for('journal.view_journal_entry', entry_id=entry.id))
+        return redirect(url_for('journal_blueprint.view_journal_entry', entry_id=entry.id))
     
     return render_template('journal_entry.html', title='New Journal Entry', 
                           form=form, legend='New Journal Entry')
 
 # View journal entry
-@journal_bp.route('/journal/<int:entry_id>')
+@journal_bp.route('/<int:entry_id>')
 @login_required
 def view_journal_entry(entry_id):
     entry = JournalEntry.query.get_or_404(entry_id)
@@ -282,16 +282,20 @@ def view_journal_entry(entry_id):
     # Add a flag to show the emergency call button when anxiety level is high (8 or higher)
     show_call_button = entry.anxiety_level >= 8
     
+    # Create a form object to pass to the template
+    form = JournalEntryForm()
+    
     return render_template('journal_entry.html', 
                           title=entry.title, 
                           entry=entry, 
+                          form=form,
                           view_only=True, 
                           coach_response=coach_response,
                           recurring_patterns=recurring_patterns,
                           show_call_button=show_call_button)
 
 # Update journal entry
-@journal_bp.route('/journal/<int:entry_id>/update', methods=['GET', 'POST'])
+@journal_bp.route('/<int:entry_id>/update', methods=['GET', 'POST'])
 @login_required
 def update_journal_entry(entry_id):
     entry = JournalEntry.query.get_or_404(entry_id)
@@ -403,7 +407,7 @@ def update_journal_entry(entry_id):
             else:
                 flash('Your journal entry has been updated, but analysis could not be completed. You can try analyzing it later.', 'warning')
         
-        return redirect(url_for('journal.view_journal_entry', entry_id=entry.id))
+        return redirect(url_for('journal_blueprint.view_journal_entry', entry_id=entry.id))
     
     # Pre-populate the form with existing data
     elif request.method == 'GET':
@@ -417,7 +421,7 @@ def update_journal_entry(entry_id):
                           legend='Update Journal Entry')
 
 # API route to get the coach response for a journal entry
-@journal_bp.route('/api/journal/<int:entry_id>/coach', methods=['GET'])
+@journal_bp.route('/api/<int:entry_id>/coach', methods=['GET'])
 @login_required
 def api_journal_coach(entry_id):
     entry = JournalEntry.query.get_or_404(entry_id)
@@ -462,7 +466,7 @@ def api_journal_coach(entry_id):
     return jsonify({'coach_response': coach_response})
 
 # Delete journal entry
-@journal_bp.route('/journal/<int:entry_id>/delete_entry', methods=['GET', 'POST'])
+@journal_bp.route('/<int:entry_id>/delete_entry', methods=['GET', 'POST'])
 @login_required
 def delete_journal_entry(entry_id):
     entry = JournalEntry.query.get_or_404(entry_id)
@@ -494,4 +498,4 @@ def delete_journal_entry(entry_id):
         logger.error(f"Error deleting journal entry {entry_id}: {str(e)}")
         flash('An error occurred while deleting your journal entry. Please try again.', 'danger')
     
-    return redirect(url_for('journal.journal_list'))
+    return redirect(url_for('journal_blueprint.journal_list'))

@@ -114,13 +114,33 @@ def handle_exception(e):
         is_api_error = True
         error_title = "API Limit Reached"
         error_message = "Your journal entry was saved successfully, but AI analysis is currently unavailable due to API usage limits."
+    # Check for 'form' is undefined errors
+    elif "'form' is undefined" in err_str or "'form'" in err_str:
+        # Redirect to journal list page with a friendly message
+        flash("Your journal entry was saved! You can view it in your journal list.", "success")
+        if 'entry_id' in request.view_args:
+            # Try to use the entry_id from the URL if available
+            entry_id = request.view_args.get('entry_id')
+            try:
+                return redirect(url_for('journal_blueprint.journal_list')), 302
+            except:
+                pass
+        return redirect(url_for('journal_blueprint.journal_list')), 302
     else:
         error_title = "Something went wrong"
     
-    return render_template('error.html', 
-                          error_title=error_title,
-                          error_message=error_message,
-                          show_api_error=is_api_error), 500
+    # Add any potentially missing template variables
+    template_vars = {
+        'error_title': error_title,
+        'error_message': error_message,
+        'show_api_error': is_api_error
+    }
+    
+    # Make sure standard forms are available for templates
+    from forms import JournalEntryForm
+    template_vars['form'] = JournalEntryForm()
+    
+    return render_template('error.html', **template_vars), 500
 
 # Create a custom login_required decorator that checks user type
 def login_required(f):
@@ -185,3 +205,7 @@ with app.app_context():
     # Register the notification blueprint
     from notification_routes import notification_bp
     app.register_blueprint(notification_bp)
+    
+    # Register the journal blueprint
+    from journal_routes import journal_bp
+    app.register_blueprint(journal_bp)
