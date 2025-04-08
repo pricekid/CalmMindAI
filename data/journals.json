@@ -2854,5 +2854,86 @@
         "recommendation": "Viewing the situation as a complete failure because of the delay. - Engage in 'Reframing'. Identify positive aspects or progress made in the situation, helping to see the scenario in shades of gray rather than black-and-white."
       }
     ]
+  },
+  {
+    "id": 121,
+    "user_id": 19,
+    "title": "Hopeful",
+    "content": "Just to tie up the semester\u2019s work.",
+    "anxiety_level": 3,
+    "created_at": "2025-04-08T10:58:17.674374",
+    "updated_at": "2025-04-08T10:58:22.074580",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Assuming that one situation or event will be the same as all future ones. - Challenge overgeneralizing thoughts by identifying exceptions; write down specific instances where tying up work went smoothly."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Expecting the worst-case scenario to happen. - Use a 'What-if' exercise to explore the worst-case, best-case, and most likely scenario, then focus on the most realistic outcome."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, without recognizing the grey areas. - Practice cognitive restructuring by identifying and listing out nuances or middle-ground perspectives about finishing the semester's work."
+      }
+    ]
+  },
+  {
+    "id": 122,
+    "user_id": 19,
+    "title": "Hopeful",
+    "content": "Just to tie up the semester\u2019s work.",
+    "anxiety_level": 3,
+    "created_at": "2025-04-08T10:58:30.705807",
+    "updated_at": "2025-04-08T10:58:30.705811",
+    "is_analyzed": false,
+    "recommendations": []
+  },
+  {
+    "id": 123,
+    "user_id": 19,
+    "title": "Hopeful",
+    "content": "Just to tie up the semester\u2019s work.",
+    "anxiety_level": 3,
+    "created_at": "2025-04-08T10:58:31.219027",
+    "updated_at": "2025-04-08T10:58:31.219031",
+    "is_analyzed": false,
+    "recommendations": []
+  },
+  {
+    "id": 124,
+    "user_id": 19,
+    "title": "Hopeful",
+    "content": "Just to tie up the semester\u2019s work.",
+    "anxiety_level": 3,
+    "created_at": "2025-04-08T10:58:31.705314",
+    "updated_at": "2025-04-08T10:58:31.705319",
+    "is_analyzed": false,
+    "recommendations": []
+  },
+  {
+    "id": 125,
+    "user_id": 19,
+    "title": "Hopeful",
+    "content": "Just to tie up the semester\u2019s work.",
+    "anxiety_level": 3,
+    "created_at": "2025-04-08T10:58:32.156319",
+    "updated_at": "2025-04-08T10:58:37.258950",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst possible outcome from tying up semester work, even if it's unlikely. - Use the 'Decatastrophizing' technique by listing the worst-case, best-case, and most realistic outcomes."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing the completion of semester work as a total success or failure without acknowledging any in-between. - Apply 'Cognitive Restructuring' by identifying and challenging these absolute thoughts, then reframing them more realistically."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Assuming that difficulties in tying up this semester's work will apply to all future academic tasks. - Practice 'Thought Records' to track specific incidents, evaluate evidence, and counter overgeneralized beliefs."
+      }
+    ]
   }
 ]

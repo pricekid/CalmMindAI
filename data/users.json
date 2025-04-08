@@ -124,5 +124,19 @@
     "email": "dawnoneal@outlook.com",
     "created_at": "2025-04-06T17:30:56.284345",
     "entry_count": 1
+  },
+  {
+    "id": 19,
+    "username": "Chilled",
+    "email": "dazasi09@gmail.com",
+    "created_at": "2025-04-08T02:45:56.542109",
+    "entry_count": 5
+  },
+  {
+    "id": 20,
+    "username": "Kindspire",
+    "email": "teddy@kindspire.app",
+    "created_at": "2025-04-08T10:39:40.641561",
+    "entry_count": 0
   }
 ]

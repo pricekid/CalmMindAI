@@ -155,10 +155,17 @@ def scheduler_health_check():
         upcoming_jobs = scheduler.get_jobs()
         job_details = []
         for job in upcoming_jobs:
-            next_run = job.next_run_time.strftime("%Y-%m-%d %H:%M:%S") if job.next_run_time else "None"
-            job_details.append(f"{job.name}: Next run at {next_run}")
+            try:
+                next_run = job.next_run_time.strftime("%Y-%m-%d %H:%M:%S") if hasattr(job, 'next_run_time') and job.next_run_time else "None"
+                job_details.append(f"{job.name}: Next run at {next_run}")
+            except Exception as job_error:
+                logger.warning(f"Could not get next run time for job {job.name}: {str(job_error)}")
+                job_details.append(f"{job.name}: Next run time unknown")
         
-        logger.info(f"Upcoming scheduled jobs: {', '.join(job_details)}")
+        if job_details:
+            logger.info(f"Upcoming scheduled jobs: {', '.join(job_details)}")
+        else:
+            logger.info("No upcoming scheduled jobs found")
         
         return True
     except Exception as e:
