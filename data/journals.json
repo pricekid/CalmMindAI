@@ -3005,53 +3005,5 @@
         "recommendation": "Assuming the worst-case scenario will happen or has happened, leading to heightened anxiety. - Practice the 'Decatastrophizing' technique by asking yourself, 'What is the worst that could realistically happen?' and 'How likely is it to actually occur?'"
       }
     ]
-  },
-  {
-    "id": 130,
-    "user_id": 1,
-    "title": "test 2",
-    "content": "I am very unhappy",
-    "anxiety_level": 9,
-    "created_at": "2025-04-08T18:04:52.299339",
-    "updated_at": "2025-04-08T18:04:55.904392",
-    "is_analyzed": true,
-    "recommendations": [
-      {
-        "thought_pattern": "All-or-Nothing Thinking",
-        "recommendation": "Viewing situations in black-and-white terms, without recognizing any middle ground. - Practice identifying gray areas by listing three alternative interpretations of your situation on paper."
-      },
-      {
-        "thought_pattern": "Catastrophizing",
-        "recommendation": "Imagining the worst possible outcome, even if it's unlikely. - Challenge catastrophic thoughts by asking yourself, 'What is the worst that can realistically happen?' and 'How likely is it?'"
-      },
-      {
-        "thought_pattern": "Overgeneralization",
-        "recommendation": "Making broad conclusions based on a single event or limited information. - Keep a thought journal to identify overgeneralizations and reframe them by identifying specific evidence that contradicts the generalized belief."
-      }
-    ]
-  },
-  {
-    "id": 131,
-    "user_id": 1,
-    "title": "test",
-    "content": "i am very unhappy today",
-    "anxiety_level": 9,
-    "created_at": "2025-04-08T18:25:07.100612",
-    "updated_at": "2025-04-08T18:25:11.943938",
-    "is_analyzed": true,
-    "recommendations": [
-      {
-        "thought_pattern": "All-or-Nothing Thinking",
-        "recommendation": "Viewing situations in black-and-white terms, without recognizing any middle ground or shades of gray. - Practice cognitive restructuring by identifying evidence for and against your thoughts to find a more balanced perspective."
-      },
-      {
-        "thought_pattern": "Catastrophizing",
-        "recommendation": "Assuming the worst-case scenario will happen, even if it's unlikely. - Use the 'What If' technique: write down the worst-case scenario, the best-case scenario, and the most realistic outcome to reduce anxiety."
-      },
-      {
-        "thought_pattern": "Emotional Reasoning",
-        "recommendation": "Believing that because you feel something strongly, it must be true. - Challenge emotional reasoning by asking yourself, 'What evidence do I have that this feeling accurately reflects the situation?' and consider alternative interpretations."
-      }
-    ]
   }
 ]

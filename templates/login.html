@@ -52,7 +52,7 @@
                     </div>
                     
                     <div class="d-grid mb-3">
-                        {{ form.submit(class="btn btn-warm btn-lg", style="font-weight: 600; box-shadow: 0 4px 8px rgba(209, 166, 115, 0.3);") }}
+                        {{ form.submit(class="btn btn-warm btn-lg" id="login-button", id="login-button", style="font-weight: 600; box-shadow: 0 4px 8px rgba(209, 166, 115, 0.3);") }}
                     </div>
                     
                     <div class="text-center">
@@ -76,4 +76,23 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Add loading spinner to login button
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const loginButton = document.getElementById('login-button');
+        
+        if (form && loginButton) {
+            form.addEventListener('submit', function(e) {
+                if (form.checkValidity()) {
+                    loginButton.disabled = true;
+                    loginButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Logging in...';
+                }
+            });
+        }
+    });
+</script>
 {% endblock %}

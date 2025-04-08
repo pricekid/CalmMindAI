@@ -42,6 +42,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Show a message
                 showMessage('Please select your mood first', 'warning');
+            } else {
+                // If form is valid, show loading spinner
+                const submitButton = document.getElementById('mood-submit-button');
+                if (submitButton) {
+                    submitButton.disabled = true;
+                    submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Saving...';
+                }
             }
         });
     }
