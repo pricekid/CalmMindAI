@@ -1,0 +1,25 @@
+{% block scripts %}
+<!-- Journal form spinner scripts -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Journal entry form spinner
+    const journalForm = document.getElementById('journal-form');
+    const submitButton = document.getElementById('journal-submit-button');
+    
+    if (journalForm && submitButton) {
+        journalForm.addEventListener('submit', function(event) {
+            if (journalForm.checkValidity()) {
+                // Add loading spinner directly inside the button
+                const originalText = submitButton.innerHTML;
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Saving...';
+                
+                // Log to console for debugging
+                console.log('Journal form submitted, showing spinner');
+            }
+        });
+    }
+});
+</script>
+
+{% if view_only %}

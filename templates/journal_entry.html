@@ -169,7 +169,7 @@
                     <h3>{{ legend }}</h3>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="">
+                    <form method="POST" action="" id="journal-form">
                         {{ form.hidden_tag() }}
                         <div class="mb-3">
                             {{ form.title.label(class="form-label") }}
@@ -226,7 +226,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="{{ url_for('journal') }}" class="btn btn-outline-secondary">Cancel</a>
                             <div>
-                                {{ form.submit(class="btn btn-primary", id="submit-button") }}
+                                {{ form.submit(class="btn btn-primary", id="journal-submit-button") }}
                             </div>
                         </div>
                     </form>
@@ -238,6 +238,29 @@
 {% endblock %}
 
 {% block scripts %}
+<!-- Journal form spinner scripts -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Journal entry form spinner
+    const journalForm = document.getElementById('journal-form');
+    const submitButton = document.getElementById('journal-submit-button');
+    
+    if (journalForm && submitButton) {
+        journalForm.addEventListener('submit', function(event) {
+            if (journalForm.checkValidity()) {
+                // Add loading spinner directly inside the button
+                const originalText = submitButton.innerHTML;
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Saving...';
+                
+                // Log to console for debugging
+                console.log('Journal form submitted, showing spinner');
+            }
+        });
+    }
+});
+</script>
+
 {% if view_only %}
 <script>
     /* Analysis button handling */
@@ -317,69 +340,44 @@
                     
                     // Update button text to indicate another response can be requested
                     coachButton.innerHTML = '<i class="fas fa-comment-dots me-1"></i> Get Another Response from Mira';
+                    
+                    // Check if high anxiety level and show support resources
+                    if (data.show_call_button) {
+                        // Check if user is on mobile
+                        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                            // Show mobile call button
+                            document.getElementById('desktop-support-info').classList.add('d-none');
+                            document.getElementById('mobile-call-button').classList.remove('d-none');
+                        } else {
+                            // Show desktop support info
+                            document.getElementById('desktop-support-info').classList.remove('d-none');
+                            if (document.getElementById('mobile-call-button')) {
+                                document.getElementById('mobile-call-button').classList.add('d-none');
+                            }
+                        }
+                    }
                 } else {
                     // Display error message
-                    // If we already have a response displayed, keep it and show error in alert
-                    const hasExistingResponse = {% if coach_response %}true{% else %}false{% endif %};
-                    if (hasExistingResponse) {
-                        alert(`${data.message}`);
-                    } else {
-                        // Otherwise, display error in the response area
-                        coachResponse.classList.remove("d-none");
-                        coachResponse.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
-                    }
+                    coachResponse.classList.remove('d-none');
+                    coachResponse.innerHTML = `<div class="alert alert-danger">${data.message || 'An error occurred.'}</div>`;
                 }
             })
             .catch(error => {
                 hideButtonSpinner(coachButton);
-                
-                // If we already have a response displayed, keep it and show error in alert
-                const hasExistingResponse = {% if coach_response %}true{% else %}false{% endif %};
-                if (hasExistingResponse) {
-                    alert(`Error: ${error.message}`);
-                } else {
-                    // Otherwise, display error in the response area
-                    coachResponse.classList.remove("d-none");
-                    coachResponse.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
-                }
+                coachResponse.classList.remove('d-none');
+                coachResponse.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
             });
         });
     }
     
-    // Check if user is on mobile device to show appropriate support options
-    document.addEventListener('DOMContentLoaded', function() {
-        // Simple mobile detection
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
-        const desktopSupportInfo = document.getElementById('desktop-support-info');
-        const mobileCallButton = document.getElementById('mobile-call-button');
-        
-        if (desktopSupportInfo && mobileCallButton) {
-            if (isMobile) {
-                desktopSupportInfo.classList.add('d-none');
-                mobileCallButton.classList.remove('d-none');
-            }
+    // Check if user is on mobile and show appropriate emergency support option
+    if (document.getElementById('desktop-support-info') && document.getElementById('mobile-call-button')) {
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            // User is on mobile, show call button
+            document.getElementById('desktop-support-info').classList.add('d-none');
+            document.getElementById('mobile-call-button').classList.remove('d-none');
         }
-    });
-</script>
-{% endif %}
-
-{% if not view_only %}
-<script>
-    // Add loading spinner to form submit
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.querySelector('form');
-        const submitButton = document.getElementById('submit-button');
-        
-        if (form && submitButton) {
-            form.addEventListener('submit', function(e) {
-                if (form.checkValidity()) {
-                    submitButton.disabled = true;
-                    submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Saving...';
-                }
-            });
-        }
-    });
+    }
 </script>
 {% endif %}
 {% endblock %}
