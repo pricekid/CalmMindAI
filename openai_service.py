@@ -287,6 +287,14 @@ def generate_coping_statement(anxiety_context):
     # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
     do not change this unless explicitly requested by the user
     """
+    # First, provide a fallback statement in case we need it
+    fallback_statement = "Mira suggests: Take a moment to breathe deeply. Remember that your thoughts don't define you, and this feeling will pass."
+    
+    # Safety check for empty context
+    if not anxiety_context or anxiety_context.strip() == "":
+        logger.warning("Empty anxiety context provided to generate_coping_statement")
+        return fallback_statement
+    
     try:
         # Get API key and model settings
         api_key = get_openai_api_key()
@@ -295,7 +303,7 @@ def generate_coping_statement(anxiety_context):
         # Check if API key is available
         if not api_key:
             logger.error("OpenAI API key is not set")
-            raise ValueError("OpenAI API key is missing. Please check your environment variables or admin settings.")
+            return fallback_statement
         
         prompt = f"""
         Create a short, personalized coping statement for someone experiencing anxiety about:
@@ -309,7 +317,8 @@ def generate_coping_statement(anxiety_context):
         4. Present-focused
         5. Realistic and grounding
         
-        Return only the statement text, no quotation marks or additional commentary.
+        Return only the statement text, no quotation marks, JSON formatting, or additional commentary.
+        Start with 'Mira suggests:' and then provide the coping statement.
         """
         
         # Attempt to make the API call with error handling
@@ -317,58 +326,64 @@ def generate_coping_statement(anxiety_context):
             # Get a fresh client with the current API key
             client = get_openai_client()
             
+            # Specifically NOT requesting JSON format for this plain text response
             response = client.chat.completions.create(
                 model=model,
                 messages=[
-                    {"role": "system", "content": "You are Mira, a CBT therapist specializing in anxiety. Generate brief coping statements and sign them as 'Mira suggests:' or similar."},
+                    {"role": "system", "content": "You are Mira, a CBT therapist specializing in anxiety. Generate brief coping statements."},
                     {"role": "user", "content": prompt}
                 ],
                 temperature=0.7,
                 max_tokens=100
             )
             
-            # Get the response content with error handling
+            # Get the response content with improved error handling
             try:
-                if not response.choices or not hasattr(response.choices[0], 'message'):
-                    logger.error("Unexpected response format from OpenAI API")
-                    return "Mira suggests: Take a deep breath and focus on the present moment. You have the strength to handle this."
+                # Check if we have a valid response
+                if not response.choices or len(response.choices) == 0:
+                    logger.error("No choices in OpenAI API response")
+                    return fallback_statement
                 
-                content = response.choices[0].message.content
+                # Check if choices[0] has a message attribute
+                choice = response.choices[0]
+                if not hasattr(choice, 'message') or choice.message is None:
+                    logger.error("No message in OpenAI API response choice")
+                    return fallback_statement
+                
+                # Check if message has content attribute
+                if not hasattr(choice.message, 'content') or choice.message.content is None:
+                    logger.error("No content in OpenAI API response message")
+                    return fallback_statement
+                
+                # Get and clean the content
+                content = choice.message.content.strip()
                 if not content:
-                    logger.error("Empty response content from OpenAI API")
-                    return "Mira suggests: Remember that anxiety is temporary. This feeling will pass."
+                    logger.error("Empty content in OpenAI API response")
+                    return fallback_statement
                 
-                # Return the stripped content
-                return content.strip()
+                # Log for debugging
+                logger.debug(f"Raw coping statement: {content}")
+                
+                # Ensure it starts with "Mira suggests:" if it doesn't already
+                if not content.startswith("Mira suggests:") and not content.startswith("Mira's suggestion:"):
+                    content = f"Mira suggests: {content}"
+                
+                # Return the final content
+                return content
                 
             except Exception as parse_error:
                 logger.error(f"Error parsing OpenAI response: {parse_error}")
-                return "Mira suggests: Focus on what you can control in this moment. Your reactions are within your power."
+                return fallback_statement
             
         except Exception as api_error:
             # Log the specific API error
             error_details = str(api_error)
-            if "insufficient_quota" in error_details or "429" in error_details:
-                logger.error(f"OpenAI API quota exceeded: {error_details}")
-                error_type = "API_QUOTA_EXCEEDED"
-            elif "invalid_api_key" in error_details:
-                logger.error(f"Invalid OpenAI API key: {error_details}")
-                error_type = "INVALID_API_KEY"
-            else:
-                logger.error(f"OpenAI API error: {error_details}")
-                error_type = "API_ERROR"
-                
-            # Re-raise with more context
-            raise ValueError(f"{error_type}: {error_details}")
+            logger.error(f"OpenAI API error: {error_details}")
+            
+            # No need to re-raise, just return the fallback
+            return fallback_statement
             
     except Exception as e:
         error_msg = str(e)
-        logger.error(f"Error generating coping statement: {error_msg}")
-        
-        # Provide different messages based on error type
-        if "API_QUOTA_EXCEEDED" in error_msg:
-            return "Mira notices you're feeling anxious. While I can't generate a personalized statement right now due to API limits, Mira wants to remind you that this feeling is temporary, and you have overcome challenges before."
-        elif "INVALID_API_KEY" in error_msg:
-            return "Mira suggests: Take a deep breath. This moment is temporary, and you have the strength to handle what comes next."
-        else:
-            return "Mira reminds you: In this moment of anxiety, remember that you have the tools and strength within you to navigate through these feelings."
+        logger.error(f"General error generating coping statement: {error_msg}")
+        return fallback_statement
