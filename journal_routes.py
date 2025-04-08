@@ -471,12 +471,27 @@ def delete_journal_entry(entry_id):
     if entry.user_id != current_user.id:
         abort(403)
     
-    # Delete recommendations first (cascade doesn't work with SQLAlchemy without setup)
-    CBTRecommendation.query.filter_by(journal_entry_id=entry.id).delete()
+    try:
+        # Delete recommendations first (cascade doesn't work with SQLAlchemy without setup)
+        CBTRecommendation.query.filter_by(journal_entry_id=entry.id).delete()
+        
+        # Delete the entry from database
+        db.session.delete(entry)
+        db.session.commit()
+        
+        # Also delete from JSON storage to update insights/patterns
+        from journal_service import delete_journal_entry as delete_json_entry
+        delete_success = delete_json_entry(entry_id, current_user.id)
+        
+        if delete_success:
+            logger.debug(f"Successfully deleted journal entry {entry_id} from database and JSON storage")
+        else:
+            logger.warning(f"Deleted journal entry {entry_id} from database but not found in JSON storage")
+        
+        flash('Your journal entry has been deleted!', 'success')
+    except Exception as e:
+        db.session.rollback()
+        logger.error(f"Error deleting journal entry {entry_id}: {str(e)}")
+        flash('An error occurred while deleting your journal entry. Please try again.', 'danger')
     
-    # Delete the entry
-    db.session.delete(entry)
-    db.session.commit()
-    
-    flash('Your journal entry has been deleted!', 'success')
     return redirect(url_for('journal.journal_list'))

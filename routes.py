@@ -329,25 +329,13 @@ def update_journal_entry(entry_id):
     return render_template('journal_entry.html', title='Update Journal Entry', 
                           form=form, legend='Update Journal Entry')
 
-# Delete journal entry
+# Delete journal entry - redirects to the blueprint route
 @app.route('/journal/<int:entry_id>/delete', methods=['POST'])
 @login_required
 def delete_journal_entry(entry_id):
-    entry = JournalEntry.query.get_or_404(entry_id)
-    
-    # Ensure the entry belongs to the current user
-    if entry.user_id != current_user.id:
-        abort(403)
-    
-    # Delete associated recommendations first
-    CBTRecommendation.query.filter_by(journal_entry_id=entry.id).delete()
-    
-    # Delete the entry
-    db.session.delete(entry)
-    db.session.commit()
-    
-    flash('Your journal entry has been deleted!', 'success')
-    return redirect(url_for("journal.journal_list"))
+    # This route exists for backward compatibility
+    # We now use the blueprint route in journal_routes.py
+    return redirect(url_for('journal.delete_journal_entry', entry_id=entry_id))
 
 # Breathing exercise page
 @app.route('/breathing')

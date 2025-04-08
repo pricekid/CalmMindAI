@@ -174,6 +174,42 @@ def count_user_entries(user_id: int) -> int:
     """
     return len(get_journal_entries_for_user(user_id))
 
+def delete_journal_entry(entry_id: int, user_id: int) -> bool:
+    """
+    Delete a journal entry from the journals.json file.
+    
+    Args:
+        entry_id: The ID of the journal entry to delete
+        user_id: The ID of the user who owns the entry
+        
+    Returns:
+        True if entry was found and deleted, False otherwise
+    """
+    logger.debug(f"Deleting journal entry {entry_id} for user {user_id} from JSON file")
+    try:
+        ensure_journals_file()
+        
+        with open(JOURNALS_FILE, 'r') as f:
+            entries = json.load(f)
+        
+        # Filter out the entry to be deleted
+        original_length = len(entries)
+        entries = [entry for entry in entries if not (entry.get('id') == entry_id and entry.get('user_id') == user_id)]
+        
+        # Check if an entry was removed
+        if len(entries) < original_length:
+            logger.debug(f"Journal entry {entry_id} found and removed from JSON file")
+            with open(JOURNALS_FILE, 'w') as f:
+                json.dump(entries, f, indent=2)
+            return True
+        else:
+            logger.debug(f"Journal entry {entry_id} not found in JSON file")
+            return False
+            
+    except Exception as e:
+        logger.error(f"Error deleting journal entry from JSON file: {str(e)}")
+        return False
+
 def get_recurring_patterns(user_id: int, min_entries: int = 3) -> List[Dict[str, int]]:
     """
     Identify recurring thought patterns from a user's journal entries.
