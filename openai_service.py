@@ -213,11 +213,26 @@ def generate_journaling_coach_response(entry):
                 max_tokens=max_tokens
             )
             
-            coach_response = response.choices[0].message.content.strip()
-            # Simple tone check to ensure the response is warm and supportive
-            coach_response = tone_check(coach_response)
-            
-            return coach_response
+            # Get the response content with error handling
+            try:
+                if not response.choices or not hasattr(response.choices[0], 'message'):
+                    logger.error("Unexpected response format from OpenAI API")
+                    return "Mira is experiencing some technical difficulties, but your journal has been saved. Thank you for sharing."
+                
+                coach_response = response.choices[0].message.content
+                if not coach_response:
+                    logger.error("Empty response content from OpenAI API")
+                    return "Mira is here, but having trouble responding right now. Your journal has been saved."
+                
+                # Strip and apply tone check
+                coach_response = coach_response.strip()
+                coach_response = tone_check(coach_response)
+                
+                return coach_response
+                
+            except Exception as parse_error:
+                logger.error(f"Error parsing OpenAI response: {parse_error}")
+                return "Mira appreciates you sharing your thoughts. Your journal has been saved, though I'm having some technical difficulties with my response."
             
         except Exception as api_error:
             # Log the specific API error
@@ -312,7 +327,23 @@ def generate_coping_statement(anxiety_context):
                 max_tokens=100
             )
             
-            return response.choices[0].message.content.strip()
+            # Get the response content with error handling
+            try:
+                if not response.choices or not hasattr(response.choices[0], 'message'):
+                    logger.error("Unexpected response format from OpenAI API")
+                    return "Mira suggests: Take a deep breath and focus on the present moment. You have the strength to handle this."
+                
+                content = response.choices[0].message.content
+                if not content:
+                    logger.error("Empty response content from OpenAI API")
+                    return "Mira suggests: Remember that anxiety is temporary. This feeling will pass."
+                
+                # Return the stripped content
+                return content.strip()
+                
+            except Exception as parse_error:
+                logger.error(f"Error parsing OpenAI response: {parse_error}")
+                return "Mira suggests: Focus on what you can control in this moment. Your reactions are within your power."
             
         except Exception as api_error:
             # Log the specific API error
