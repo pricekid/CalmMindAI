@@ -1,410 +1,322 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    {% if entry %}
-        {{ entry.title }} - Calm Journey
-    {% else %}
-        New Journal Entry - Calm Journey
-    {% endif %}
-{% endblock %}
+{% block title %}Journal Entry{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-8 mx-auto">
-        <!-- Back to Journal Button -->
-        <div class="mb-3">
-            <a href="{{ url_for('journal') }}" class="btn btn-outline-secondary">
-                <i class="fas fa-arrow-left me-1"></i> Back to Journal
-            </a>
-        </div>
-        
-        {% if view_only %}
-            <!-- View Mode -->
-            <div class="card bg-dark mb-4">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h3 class="mb-0">{{ entry.title }}</h3>
-                    <span class="badge anxiety-badge 
-                        {% if entry.anxiety_level <= 3 %}anxiety-low
-                        {% elif entry.anxiety_level <= 6 %}anxiety-medium
-                        {% else %}anxiety-high{% endif %}">
-                        Anxiety: {{ entry.anxiety_level }}/10
-                    </span>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">{% if entry %}Edit{% else %}New{% endif %} Journal Entry</h2>
                 </div>
                 <div class="card-body">
-                    <p class="card-text text-muted mb-3">
-                        <small>
-                            <i class="far fa-calendar-alt me-1"></i> 
-                            {{ entry.created_at.strftime('%B %d, %Y at %I:%M %p') }}
-                            {% if entry.updated_at > entry.created_at %}
-                                (Edited: {{ entry.updated_at.strftime('%B %d, %Y at %I:%M %p') }})
-                            {% endif %}
-                        </small>
-                    </p>
-                    
-                    <div class="mb-4">
-                        {{ entry.content|replace('\n', '<br>')|safe }}
-                    </div>
-                    
-                    <div class="d-flex justify-content-between mt-4">
-                        <a href="{{ url_for('update_journal_entry', entry_id=entry.id) }}" class="btn btn-outline-primary">
-                            <i class="fas fa-edit me-1"></i> Edit
-                        </a>
-                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                            <i class="fas fa-trash-alt me-1"></i> Delete
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Journaling Coach -->
-            <div class="card bg-dark mb-4">
-                <div class="card-header">
-                    <h4 class="mb-0">
-                        <i class="fas fa-comments me-2"></i> 
-                        Mira, Your Journaling Coach
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <div id="coach-container" class="py-3">
-                        {% if coach_response %}
-                            <!-- Display the pre-generated coach response -->
-                            <div id="coach-response" class="coach-message">
-                                {{ coach_response }}
-                            </div>
-                            
-                            {% if show_call_button %}
-                            <!-- Desktop support info box (default visible) -->
-                            <div id="desktop-support-info" class="mt-4 alert alert-info">
-                                <h5 class="alert-heading"><i class="fas fa-info-circle me-2"></i>Need immediate support?</h5>
-                                <p>You can call Lifeline Barbados at 536-4500, available 24/7 with trained counselors ready to listen. Please use your phone to call directly.</p>
-                            </div>
-                            
-                            <!-- Mobile call button (hidden by default, shown via JS for mobile) -->
-                            <div id="mobile-call-button" class="mt-4 d-none">
-                                <a href="tel:5364500" class="btn btn-danger btn-lg w-100 d-flex align-items-center justify-content-center">
-                                    <i class="fas fa-phone-alt me-2"></i> Call Lifeline Barbados Now
-                                </a>
-                                <p class="text-muted mt-2 text-center">
-                                    Available 24/7 for emotional support from trained counselors.
-                                </p>
-                            </div>
-                            {% endif %}
-                            
-                            <button id="coach-button" class="btn btn-primary mt-3 ajax-button" data-entry-id="{{ entry.id }}">
-                                <i class="fas fa-comment-dots me-1"></i> Get Another Response from Mira
-                            </button>
-                        {% else %}
-                            <!-- If no pre-generated response, show the button to request one -->
-                            <p>Would you like Mira to offer some supportive feedback on your journal entry?</p>
-                            <button id="coach-button" class="btn btn-primary ajax-button" data-entry-id="{{ entry.id }}">
-                                <i class="fas fa-comment-dots me-1"></i> Get Mira's Feedback
-                            </button>
-                        {% endif %}
-                        <div id="coach-response" class="mt-3 coach-message {% if not coach_response %}d-none{% endif %}"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- CBT Recommendations -->
-            <div class="card bg-dark mb-4">
-                <div class="card-header">
-                    <h4 class="mb-0">
-                        <i class="fas fa-brain me-2"></i> 
-                        CBT Analysis
-                    </h4>
-                </div>
-                <div class="card-body">
-                    {% if entry.is_analyzed and entry.recommendations %}
-                        <p class="mb-4">Based on your journal entry, here are some thought patterns and CBT techniques that might help:</p>
-                        
-                        {% for recommendation in entry.recommendations %}
-                            <div class="recommendation-card p-3 ps-4">
-                                <h5 class="recommendation-title">{{ recommendation.thought_pattern }}</h5>
-                                <p>{{ recommendation.recommendation }}</p>
-                            </div>
-                        {% endfor %}
-                    {% elif not entry.is_analyzed %}
-                        <div class="text-center py-3">
-                            <p>This entry hasn't been analyzed yet.</p>
-                            <button id="analyze-button" class="btn btn-primary ajax-button" data-entry-id="{{ entry.id }}">
-                                <i class="fas fa-magic me-1"></i> Analyze Now
-                            </button>
-                            <div id="analysis-result" class="mt-3 d-none"></div>
-                        </div>
-                    {% else %}
-                        <div class="text-center py-3">
-                            <p>No specific patterns requiring CBT techniques were identified in this entry.</p>
-                            <p class="text-muted">This is often a positive sign, indicating balanced thinking!</p>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-            
-            <!-- Delete Confirmation Modal -->
-            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            Are you sure you want to delete this journal entry? This action cannot be undone.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <form action="{{ url_for('delete_journal_entry', entry_id=entry.id) }}" method="POST">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-        {% else %}
-            <!-- Edit/Create Mode -->
-            <div class="card bg-dark">
-                <div class="card-header">
-                    <h3>{{ legend }}</h3>
-                </div>
-                <div class="card-body">
-                    <form method="POST" action="" id="journal-form">
+                    <form id="journal-form" method="POST">
                         {{ form.hidden_tag() }}
-                        <div class="mb-3">
+                        <div class="form-group mb-3">
                             {{ form.title.label(class="form-label") }}
                             {% if form.title.errors %}
                                 {{ form.title(class="form-control is-invalid") }}
                                 <div class="invalid-feedback">
                                     {% for error in form.title.errors %}
-                                        <span>{{ error }}</span>
+                                        {{ error }}
                                     {% endfor %}
                                 </div>
                             {% else %}
                                 {{ form.title(class="form-control") }}
                             {% endif %}
                         </div>
-                        
-                        <div class="mb-3">
+                        <div class="form-group mb-3">
                             {{ form.content.label(class="form-label") }}
                             {% if form.content.errors %}
-                                {{ form.content(class="form-control is-invalid", rows="10") }}
+                                {{ form.content(class="form-control is-invalid", rows=8) }}
                                 <div class="invalid-feedback">
                                     {% for error in form.content.errors %}
-                                        <span>{{ error }}</span>
+                                        {{ error }}
                                     {% endfor %}
                                 </div>
                             {% else %}
-                                {{ form.content(class="form-control", rows="10") }}
+                                {{ form.content(class="form-control", rows=8) }}
                             {% endif %}
                             <div class="form-text">
-                                <i class="fas fa-lightbulb me-1"></i> Try to be specific about your thoughts, feelings, and the situations that triggered them.
+                                Express yourself freely. This journal is private to you, and the AI 
+                                analysis is only used to help you identify patterns and suggest coping strategies.
                             </div>
                         </div>
-                        
-                        <div class="mb-4">
-                            {{ form.anxiety_level.label(class="form-label d-block") }}
-                            <div class="d-flex align-items-center">
-                                <span class="me-2">1</span>
-                                {% if form.anxiety_level.errors %}
-                                    {{ form.anxiety_level(class="form-range is-invalid", min="1", max="10") }}
-                                    <div class="invalid-feedback">
-                                        {% for error in form.anxiety_level.errors %}
-                                            <span>{{ error }}</span>
-                                        {% endfor %}
-                                    </div>
-                                {% else %}
-                                    {{ form.anxiety_level(class="form-range", min="1", max="10") }}
-                                {% endif %}
-                                <span class="ms-2">10</span>
+                        <div class="form-group mb-4">
+                            {{ form.anxiety_level.label(class="form-label") }}
+                            <div class="range-container">
+                                <input type="range" class="form-range" id="anxiety-slider" min="1" max="10" value="{{ form.anxiety_level.data or 5 }}" oninput="updateAnxietyLabel(this.value)">
+                                <div class="range-labels d-flex justify-content-between">
+                                    <span>Low</span>
+                                    <span>Medium</span>
+                                    <span>High</span>
+                                </div>
                             </div>
-                            <div class="form-text">
-                                1 = Minimal anxiety, 10 = Extreme anxiety
+                            <div class="text-center mb-2">
+                                <span id="anxiety-value" class="badge bg-primary">{{ form.anxiety_level.data or 5 }}</span>/10
                             </div>
+                            {{ form.anxiety_level(class="d-none", id="anxiety-input") }}
                         </div>
-                        
-                        <div class="d-flex justify-content-between align-items-center">
-                            <a href="{{ url_for('journal') }}" class="btn btn-outline-secondary">Cancel</a>
-                            <div>
-                                {{ form.submit(class="btn btn-primary", id="journal-submit-button") }}
-                            </div>
+                        <div class="text-center">
+                            <button type="submit" id="journal-submit-button" class="btn btn-primary">
+                                <i class="bi bi-journal-check"></i> Save Entry
+                            </button>
+                            <a href="{{ url_for('journal') }}" class="btn btn-outline-secondary ms-2">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </a>
                         </div>
                     </form>
                 </div>
             </div>
-        {% endif %}
+        </div>
+    </div>
+</div>
+
+{% if entry and entry.is_analyzed %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow" id="analysis-card">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0">Mira's Insights</h3>
+                    <button type="button" class="btn btn-sm btn-outline-light" id="refresh-analysis" data-journal-id="{{ entry.id }}">
+                        <i class="bi bi-arrow-repeat"></i> Refresh Analysis
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div id="analysis-content">
+                        {{ entry.gpt_response | safe }}
+                    </div>
+                    
+                    <!-- Placeholder for AI coaching button -->
+                    <div class="text-center mt-4">
+                        <button class="btn btn-outline-success" id="ask-coach" data-journal-id="{{ entry.id }}">
+                            <i class="bi bi-chat-dots"></i> 
+                            Ask Mira for Personalized Guidance
+                        </button>
+                    </div>
+                    
+                    <!-- Response area (hidden initially) -->
+                    <div id="coach-response" class="mt-4 bg-light p-3 rounded" style="display: none;">
+                        <h5><i class="bi bi-chat-heart-fill text-success"></i> Mira's Personal Guidance:</h5>
+                        <div id="coach-message" class="mt-2">
+                            <!-- Will be filled by AJAX response -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if entry and not entry.is_analyzed %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow" id="analyze-card">
+                <div class="card-header bg-info text-white">
+                    <h3 class="mb-0">Ready for Analysis</h3>
+                </div>
+                <div class="card-body text-center">
+                    <p>Your entry hasn't been analyzed yet. Would you like Mira to help identify thought patterns and suggest coping strategies?</p>
+                    <button class="btn btn-primary" id="analyze-entry" data-journal-id="{{ entry.id }}">
+                        <i class="bi bi-lightbulb"></i> 
+                        Analyze My Entry
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Additional information -->
+<div class="container mt-4 mb-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="mb-0">About Journal Analysis</h3>
+                </div>
+                <div class="card-body">
+                    <p>The AI analysis helps identify thought patterns from cognitive behavioral therapy (CBT) and suggests personalized coping strategies. Your data is private and secure.</p>
+                    
+                    <h5 class="mt-3">Common Thought Patterns:</h5>
+                    <ul>
+                        <li><strong>Catastrophizing:</strong> Assuming the worst will happen</li>
+                        <li><strong>Black-and-White Thinking:</strong> Viewing things as all good or all bad</li>
+                        <li><strong>Overgeneralization:</strong> Applying one negative experience to all situations</li>
+                        <li><strong>Mind Reading:</strong> Assuming you know what others are thinking</li>
+                        <li><strong>Emotional Reasoning:</strong> Believing feelings reflect reality</li>
+                    </ul>
+                    
+                    <p class="text-info mt-3">
+                        <i class="bi bi-info-circle"></i> 
+                        Analysis takes about 5-10 seconds to complete.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
-<!-- Journal form spinner scripts -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Journal entry form spinner
-    const journalForm = document.getElementById('journal-form');
+    // Function to update the anxiety level display
+    function updateAnxietyLabel(value) {
+        document.getElementById('anxiety-value').textContent = value;
+        document.getElementById('anxiety-input').value = value;
+        
+        // Change badge color based on anxiety level
+        const badge = document.getElementById('anxiety-value');
+        if (value <= 3) {
+            badge.className = 'badge bg-success';
+        } else if (value <= 6) {
+            badge.className = 'badge bg-warning text-dark';
+        } else {
+            badge.className = 'badge bg-danger';
+        }
+    }
     
-    if (journalForm) {
-        // Find the submit button by ID
+    // Set up event listeners when document is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set the initial anxiety level
+        const sliderValue = document.getElementById('anxiety-slider').value;
+        updateAnxietyLabel(sliderValue);
+        
+        // Set up the form handling with spinner
+        const journalForm = document.getElementById('journal-form');
         const submitButton = document.getElementById('journal-submit-button');
         
-        // If that doesn't work, try finding by type and parent
-        if (!submitButton) {
-            submitButton = journalForm.querySelector('button[type="submit"]');
-        }
-        
-        if (submitButton) {
-            console.log('Found journal submit button:', submitButton.id || 'no id');
-            
-            // Add form submission handler
+        if (journalForm && submitButton) {
             journalForm.addEventListener('submit', function(event) {
                 // Check if form is valid before showing spinner
                 if (journalForm.checkValidity()) {
-                    // Store original button text
-                    const originalContent = submitButton.innerHTML;
-                    
                     // Replace button content with spinner and text
                     submitButton.innerHTML = '<div class="d-flex align-items-center justify-content-center"><span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving...</div>';
                     submitButton.disabled = true;
-                    
-                    // Also add a more visible spinner below the button
-                    const spinnerContainer = document.createElement('div');
-                    spinnerContainer.className = 'mt-3 text-center';
-                    spinnerContainer.innerHTML = '<div class="spinner-border text-primary" role="status"></div><div class="mt-2">Processing your journal entry...</div>';
-                    submitButton.parentNode.appendChild(spinnerContainer);
-                    
-                    // Also add a more visible spinner below the button
-                    const spinnerContainer = document.createElement('div');
-                    spinnerContainer.className = 'mt-3 text-center';
-                    spinnerContainer.innerHTML = '<div class="spinner-border text-primary" role="status"></div><div class="mt-2">Processing your journal entry...</div>';
-                    submitButton.parentNode.appendChild(spinnerContainer);
                     
                     // Debug log
                     console.log('Showing spinner on journal submit');
                 }
             });
         }
-    }
-});
-</script>
-
-{% if view_only %}
-<script>
-    /* Analysis button handling */
-    const analyzeButton = document.getElementById('analyze-button');
-    const resultContainer = document.getElementById('analysis-result');
-    
-    if (analyzeButton) {
-        analyzeButton.addEventListener('click', function() {
-            const entryId = analyzeButton.dataset.entryId;
-            
-            // Show loading spinner
-            showButtonSpinner(analyzeButton);
-            
-            // Make AJAX request to analyze the entry
-            fetch(`/api/analyze_entry/${entryId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token() }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Hide loading spinner
-                hideButtonSpinner(analyzeButton);
+        
+        // Set up the analyze button with spinner
+        const analyzeButton = document.getElementById('analyze-entry');
+        if (analyzeButton) {
+            analyzeButton.addEventListener('click', function() {
+                const journalId = this.getAttribute('data-journal-id');
                 
-                if (data.success) {
-                    // Display success message and reload the page
-                    resultContainer.classList.remove('d-none');
-                    resultContainer.innerHTML = `<div class="alert alert-success">Analysis complete! Refreshing page...</div>`;
-                    
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1500);
-                } else {
-                    // Display error message
-                    resultContainer.classList.remove('d-none');
-                    resultContainer.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
-                }
-            })
-            .catch(error => {
-                hideButtonSpinner(analyzeButton);
-                resultContainer.classList.remove('d-none');
-                resultContainer.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
-            });
-        });
-    }
-    
-    /* Coach button handling */
-    const coachButton = document.getElementById('coach-button');
-    const coachResponse = document.getElementById('coach-response');
-    
-    if (coachButton) {
-        coachButton.addEventListener('click', function() {
-            const entryId = coachButton.dataset.entryId;
-            
-            // Show loading spinner
-            showButtonSpinner(coachButton);
-            
-            // Make AJAX request for coaching response
-            fetch(`/api/journal_coach/${entryId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token() }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Hide loading spinner
-                hideButtonSpinner(coachButton);
+                // Show spinner in button
+                this.innerHTML = '<div class="d-flex align-items-center justify-content-center"><span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Analyzing...</div>';
+                this.disabled = true;
                 
-                if (data.success) {
-                    // Display coach response
-                    coachResponse.classList.remove('d-none');
-                    coachResponse.innerHTML = data.coach_response;
-                    
-                    // Update button text to indicate another response can be requested
-                    coachButton.innerHTML = '<i class="fas fa-comment-dots me-1"></i> Get Another Response from Mira';
-                    
-                    // Check if high anxiety level and show support resources
-                    if (data.show_call_button) {
-                        // Check if user is on mobile
-                        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                            // Show mobile call button
-                            document.getElementById('desktop-support-info').classList.add('d-none');
-                            document.getElementById('mobile-call-button').classList.remove('d-none');
+                // Call API to analyze entry
+                fetch(`/api/analyze-entry/${journalId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Reload the page to show new analysis
+                            window.location.reload();
                         } else {
-                            // Show desktop support info
-                            document.getElementById('desktop-support-info').classList.remove('d-none');
-                            if (document.getElementById('mobile-call-button')) {
-                                document.getElementById('mobile-call-button').classList.add('d-none');
-                            }
+                            alert('Error analyzing entry: ' + data.error);
+                            // Reset button
+                            this.innerHTML = '<i class="bi bi-lightbulb"></i> Analyze My Entry';
+                            this.disabled = false;
                         }
-                    }
-                } else {
-                    // Display error message
-                    coachResponse.classList.remove('d-none');
-                    coachResponse.innerHTML = `<div class="alert alert-danger">${data.message || 'An error occurred.'}</div>`;
-                }
-            })
-            .catch(error => {
-                hideButtonSpinner(coachButton);
-                coachResponse.classList.remove('d-none');
-                coachResponse.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred during analysis. Please try again.');
+                        // Reset button
+                        this.innerHTML = '<i class="bi bi-lightbulb"></i> Analyze My Entry';
+                        this.disabled = false;
+                    });
             });
-        });
-    }
-    
-    // Check if user is on mobile and show appropriate emergency support option
-    if (document.getElementById('desktop-support-info') && document.getElementById('mobile-call-button')) {
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-            // User is on mobile, show call button
-            document.getElementById('desktop-support-info').classList.add('d-none');
-            document.getElementById('mobile-call-button').classList.remove('d-none');
         }
-    }
+        
+        // Set up the ask coach button with spinner
+        const coachButton = document.getElementById('ask-coach');
+        if (coachButton) {
+            coachButton.addEventListener('click', function() {
+                const journalId = this.getAttribute('data-journal-id');
+                
+                // Show spinner in button
+                this.innerHTML = '<div class="d-flex align-items-center justify-content-center"><span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Asking Mira...</div>';
+                this.disabled = true;
+                
+                // Call API to get coaching
+                fetch(`/api/journal-coach/${journalId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Show coach response area and populate it
+                            document.getElementById('coach-response').style.display = 'block';
+                            document.getElementById('coach-message').innerHTML = data.response;
+                            
+                            // Reset button
+                            this.innerHTML = '<i class="bi bi-chat-dots"></i> Ask Mira Again';
+                            this.disabled = false;
+                            
+                            // Scroll to response
+                            document.getElementById('coach-response').scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        } else {
+                            alert('Error getting coaching: ' + data.error);
+                            // Reset button
+                            this.innerHTML = '<i class="bi bi-chat-dots"></i> Ask Mira for Personalized Guidance';
+                            this.disabled = false;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while asking Mira. Please try again.');
+                        // Reset button
+                        this.innerHTML = '<i class="bi bi-chat-dots"></i> Ask Mira for Personalized Guidance';
+                        this.disabled = false;
+                    });
+            });
+        }
+        
+        // Set up the refresh analysis button
+        const refreshButton = document.getElementById('refresh-analysis');
+        if (refreshButton) {
+            refreshButton.addEventListener('click', function() {
+                const journalId = this.getAttribute('data-journal-id');
+                
+                // Show spinner in button
+                this.innerHTML = '<div class="d-flex align-items-center justify-content-center"><span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Refreshing...</div>';
+                this.disabled = true;
+                
+                // Call API to analyze entry
+                fetch(`/api/analyze-entry/${journalId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Reload the page to show new analysis
+                            window.location.reload();
+                        } else {
+                            alert('Error refreshing analysis: ' + data.error);
+                            // Reset button
+                            this.innerHTML = '<i class="bi bi-arrow-repeat"></i> Refresh Analysis';
+                            this.disabled = false;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred during refresh. Please try again.');
+                        // Reset button
+                        this.innerHTML = '<i class="bi bi-arrow-repeat"></i> Refresh Analysis';
+                        this.disabled = false;
+                    });
+            });
+        }
+    });
 </script>
-{% endif %}
 {% endblock %}
