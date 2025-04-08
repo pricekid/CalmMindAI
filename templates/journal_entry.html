@@ -73,6 +73,13 @@
                             </div>
                             
                             {% if show_call_button %}
+                            <!-- Desktop support info box (default visible) -->
+                            <div id="desktop-support-info" class="mt-4 alert alert-info">
+                                <h5 class="alert-heading"><i class="fas fa-info-circle me-2"></i>Need immediate support?</h5>
+                                <p>You can call Lifeline Barbados at 536-4500, available 24/7 with trained counselors ready to listen. Please use your phone to call directly.</p>
+                            </div>
+                            
+                            <!-- Mobile call button (hidden by default, shown via JS for mobile) -->
                             <div id="mobile-call-button" class="mt-4 d-none">
                                 <a href="tel:5364500" class="btn btn-danger btn-lg w-100 d-flex align-items-center justify-content-center">
                                     <i class="fas fa-phone-alt me-2"></i> Call Lifeline Barbados Now
