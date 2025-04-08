@@ -107,24 +107,30 @@ def dashboard():
     if latest_entry:
         try:
             # Use a simplified version of the journal content for the coping statement
-            context = latest_entry.title
-            coping_statement = generate_coping_statement(context)
+            context = latest_entry.title or "anxiety management"
             
-            # Check for specific error messages in the response
-            if any(err_type in coping_statement for err_type in ["API quota exceeded", "API_QUOTA_EXCEEDED"]):
-                # Add a flash message about API limits
-                flash('AI-generated coping statements are currently unavailable due to API usage limits.', 'info')
-            
+            # Add a try-except block specifically for the API call
+            try:
+                # Generate coping statement with improved error handling
+                coping_statement = generate_coping_statement(context)
+                
+                # Check for specific error messages in the response
+                if coping_statement and any(err_type in coping_statement for err_type in ["API quota exceeded", "API_QUOTA_EXCEEDED"]):
+                    # Add a flash message about API limits
+                    flash('AI-generated coping statements are currently unavailable due to API usage limits.', 'info')
+                
+            except Exception as api_error:
+                # Log the specific API error
+                logging.error(f"OpenAI API error in dashboard: {str(api_error)}")
+                
+                # Use a fallback coping statement
+                coping_statement = "Mira suggests: Take a moment to breathe deeply. Remember that your thoughts don't define you, and this moment will pass."
+                
         except Exception as e:
-            logging.error(f"Error generating coping statement: {str(e)}")
-            err_str = str(e).lower()
+            logging.error(f"General error generating coping statement: {str(e)}")
             
-            # Customize error handling based on the type of error
-            if "openai" in err_str and ("quota" in err_str or "429" in err_str):
-                flash('AI-generated coping statements are currently unavailable due to API usage limits.', 'info')
-                coping_statement = "I notice you're feeling anxious. While I can't generate a personalized statement right now, remember that this feeling is temporary, and you have overcome challenges before."
-            else:
-                coping_statement = "In this moment of anxiety, remember that you have the tools and strength within you to navigate through these feelings."
+            # Provide a default statement that doesn't rely on API
+            coping_statement = "In this moment of anxiety, remember that you have the tools and strength within you to navigate through these feelings."
     
     # Get form for mood logging
     mood_form = MoodLogForm()
