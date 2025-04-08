@@ -86,13 +86,6 @@
                             <button id="coach-button" class="btn btn-primary mt-3" data-entry-id="{{ entry.id }}">
                                 <i class="fas fa-comment-dots me-1"></i> Get Another Response
                             </button>
-                                <a href="tel:5364500" class="btn btn-danger btn-lg w-100 d-flex align-items-center justify-content-center">
-                                    <i class="fas fa-phone-alt me-2"></i> Call Lifeline Barbados Now
-                                </a>
-                                <p class="text-muted mt-2 text-center">
-                                    Available 24/7 for emotional support from trained counselors.
-                                </p>
-                            </div>
                             {% endif %}
                             
                             <button id="coach-button" class="btn btn-primary mt-3" data-entry-id="{{ entry.id }}">
@@ -258,18 +251,6 @@
 {% block scripts %}
 {% if view_only %}
 <script>
-
-    /* Mobile detection for emergency call button */
-    function isMobileDevice() {
-        return (window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
-    }
-    
-    const mobileCallButton = document.getElementById("mobile-call-button");
-    if (mobileCallButton && isMobileDevice()) {
-        mobileCallButton.classList.remove("d-none");
-    }
-
-document.addEventListener('DOMContentLoaded', function() {
     /* Analysis button handling */
     const analyzeButton = document.getElementById('analyze-button');
     const loadingIndicator = document.getElementById('analysis-loading');
@@ -318,24 +299,32 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-    
-    /* Coach button handling */
-    const coachButton = document.getElementById('coach-button');
-    const coachLoading = document.getElementById('coach-loading');
-    const coachResponse = document.getElementById('coach-response');
-    
-    if (coachButton) {
-        coachButton.addEventListener('click', function() {
+                    // If we already have a response displayed, keep it and show error in alert
+                    const hasExistingResponse = {% if coach_response %}true{% else %}false{% endif %};
+                    if (hasExistingResponse) {
+                        alert(`${data.message}`);
+                        coachButton.disabled = false;
+                    } else {
+                        // Otherwise, display error in the response area
+                        coachResponse.classList.remove("d-none");
+                        coachResponse.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+                        coachButton.disabled = false;
+                    }
             const entryId = coachButton.dataset.entryId;
             
             // Show loading indicator
             coachButton.disabled = true;
-            coachLoading.classList.remove('d-none');
-            
-            // Make AJAX request to get coach feedback
-            fetch(`/api/journal_coach/${entryId}`, {
-                method: 'POST',
-                headers: {
+                // Show error in alert if we already have a response, otherwise in response area
+                const hasExistingResponse = {% if coach_response %}true{% else %}false{% endif %};
+                if (hasExistingResponse) {
+                    alert(`Error: ${error.message}`);
+                    coachButton.disabled = false;
+                } else {
+                    // Otherwise, display error in the response area
+                    coachResponse.classList.remove("d-none");
+                    coachResponse.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
+                    coachButton.disabled = false;
+                }
                     'Content-Type': 'application/json',
                     'X-CSRFToken': '{{ csrf_token() }}'
                 }
@@ -353,7 +342,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     // Display error message
                     // If we already have a response displayed, keep it and show error in alert
-                    if ({% if coach_response %}true{% else %}false{% endif %}) {
+                    const hasExistingResponse = {% if coach_response %}true{% else %}false{% endif %};
+                    if (hasExistingResponse) {
                         alert(`${data.message}`);
                         coachButton.disabled = false;
                     } else {
