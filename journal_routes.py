@@ -422,6 +422,7 @@ def update_journal_entry(entry_id):
 
 # API route to get the coach response for a journal entry
 @journal_bp.route('/api/<int:entry_id>/coach', methods=['GET'])
+@journal_bp.route('/api/journal_coach/<int:entry_id>', methods=['POST'])
 @login_required
 def api_journal_coach(entry_id):
     entry = JournalEntry.query.get_or_404(entry_id)

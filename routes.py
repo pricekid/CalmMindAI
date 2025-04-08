@@ -140,14 +140,12 @@ def dashboard():
                           mood_form=mood_form,
                           weekly_summary=weekly_summary)
 
-# Journal entry list
+# Redirect to journal list
 @app.route('/journal')
 @login_required
 def journal():
-    page = request.args.get('page', 1, type=int)
-    entries = JournalEntry.query.filter_by(user_id=current_user.id)\
-        .order_by(desc(JournalEntry.created_at))\
-        .paginate(page=page, per_page=10)
+    # Redirect to the journal blueprint route
+    return redirect(url_for('journal_blueprint.journal_list'))
     
     # Get all entries for visualization (limiting to last 30 for performance)
     all_entries = JournalEntry.query.filter_by(user_id=current_user.id)\
@@ -195,172 +193,36 @@ def journal():
                           journal_data=journal_data,
                           stats=stats)
 
-# Create new journal entry
+# Redirect to new journal entry page
 @app.route('/journal/new', methods=['GET', 'POST'])
 @login_required
 def new_journal_entry():
-    form = JournalEntryForm()
-    if form.validate_on_submit():
-        # Save the journal entry immediately
-        entry = JournalEntry(
-            title=form.title.data,
-            content=form.content.data,
-            anxiety_level=form.anxiety_level.data,
-            author=current_user,
-            is_analyzed=False  # Start with is_analyzed=False, will be analyzed on view
-        )
-        
-        db.session.add(entry)
-        db.session.commit()
-        
-        # Redirect immediately after saving, analysis will happen when viewing the entry
-        flash('Your journal entry has been saved! Analysis will be performed when you view the entry.', 'success')
-        return redirect(url_for("journal.view_journal_entry", entry_id=entry.id))
+    # Redirect to the blueprint route
+    return redirect(url_for('journal_blueprint.new_journal_entry'))
     
     return render_template('journal_entry.html', title='New Journal Entry', 
                           form=form, legend='New Journal Entry')
 
-# View journal entry
+# Redirect to view journal entry
 @app.route('/journal/<int:entry_id>')
 @login_required
 def view_journal_entry(entry_id):
-    entry = JournalEntry.query.get_or_404(entry_id)
-    
-    # Ensure the entry belongs to the current user
-    if entry.user_id != current_user.id:
-        abort(403)
-    
-    # If the entry hasn't been analyzed yet, analyze it now
-    if not entry.is_analyzed:
-        try:
-            # Clear old recommendations if any
-            CBTRecommendation.query.filter_by(journal_entry_id=entry.id).delete()
-            
-            # Analyze the entry
-            thought_patterns = analyze_journal_entry(entry.content, entry.anxiety_level)
-            
-            # Save the recommendations
-            is_api_error = False
-            is_config_error = False
-            
-            for pattern in thought_patterns:
-                # Check for different error patterns
-                if pattern["pattern"] == "API Quota Exceeded":
-                    is_api_error = True
-                elif pattern["pattern"] == "API Configuration Issue":
-                    is_config_error = True
-                
-                # Save recommendation to database
-                recommendation = CBTRecommendation(
-                    thought_pattern=pattern["pattern"],
-                    recommendation=f"{pattern['description']} - {pattern['recommendation']}",
-                    journal_entry_id=entry.id
-                )
-                db.session.add(recommendation)
-            
-            entry.is_analyzed = True
-            db.session.commit()
-            
-        except Exception as e:
-            error_msg = str(e)
-            logging.error(f"Error analyzing journal entry on view: {error_msg}")
-            # We'll still show the entry without analysis
-    
-    # Generate coach response when viewing the entry
-    coach_response = None
-    try:
-        from openai_service import generate_journaling_coach_response
-        coach_response = generate_journaling_coach_response(entry)
-    except Exception as e:
-        error_msg = str(e)
-        logging.error(f"Error generating automatic coach response: {error_msg}")
-        
-        # Provide different messages based on error type
-        if "API_QUOTA_EXCEEDED" in error_msg:
-            coach_response = "Thank you for sharing your thoughts today. While I can't provide a personalized response right now due to technical limitations, your entry has been saved. Remember that the act of journaling itself is a powerful tool for self-reflection and growth."
-        elif "INVALID_API_KEY" in error_msg:
-            coach_response = "I appreciate you taking the time to journal today. Your entry has been saved, though I'm unable to provide specific feedback at the moment. The practice of putting your thoughts into words is valuable in itself."
-        else:
-            coach_response = None  # Use None to indicate we should still show the button
-    
-    # Add a flag to show the emergency call button when anxiety level is high (8 or higher)
-    show_call_button = entry.anxiety_level >= 8
-    
-    return render_template('journal_entry.html', title=entry.title, 
-                          entry=entry, view_only=True, coach_response=coach_response,
-                          show_call_button=show_call_button)
+    # Redirect to the blueprint route
+    return redirect(url_for('journal_blueprint.view_journal_entry', entry_id=entry_id))
 
-# Update journal entry
+# Redirect to update journal entry
 @app.route('/journal/<int:entry_id>/update', methods=['GET', 'POST'])
 @login_required
 def update_journal_entry(entry_id):
-    entry = JournalEntry.query.get_or_404(entry_id)
-    
-    # Ensure the entry belongs to the current user
-    if entry.user_id != current_user.id:
-        abort(403)
-    
-    form = JournalEntryForm()
-    if form.validate_on_submit():
-        # Update the basic entry data
-        entry.title = form.title.data
-        entry.content = form.content.data
-        entry.anxiety_level = form.anxiety_level.data
-        entry.updated_at = datetime.utcnow()
-        
-        # Clear old recommendations
-        CBTRecommendation.query.filter_by(journal_entry_id=entry.id).delete()
-        
-        # Mark entry as not analyzed so it will be analyzed when viewed
-        entry.is_analyzed = False
-        
-        # Save all changes
-        db.session.commit()
-        
-        # Flash a message and redirect immediately
-        flash('Your journal entry has been updated! Analysis will be performed when you view the entry.', 'success')
-        
-        # Redirect to view page - analysis will happen there
-        return redirect(url_for("journal.view_journal_entry", entry_id=entry.id))
-    
-    elif request.method == 'GET':
-        form.title.data = entry.title
-        form.content.data = entry.content
-        form.anxiety_level.data = entry.anxiety_level
-    
-    return render_template('journal_entry.html', title='Update Journal Entry', 
-                          form=form, legend='Update Journal Entry')
+    # Redirect to the blueprint route
+    return redirect(url_for('journal_blueprint.update_journal_entry', entry_id=entry_id))
 
-# Delete journal entry - redirects to the blueprint route
+# Redirect to delete journal entry
 @app.route('/journal/<int:entry_id>/delete', methods=['GET', 'POST'])
 @login_required
 def delete_journal_entry(entry_id):
-    # Directly handle the deletion here instead of redirecting
-    entry = JournalEntry.query.get_or_404(entry_id)
-    
-    # Ensure the entry belongs to the current user
-    if entry.user_id != current_user.id:
-        abort(403)
-    
-    try:
-        # Delete recommendations first (cascade doesn't work with SQLAlchemy without setup)
-        CBTRecommendation.query.filter_by(journal_entry_id=entry.id).delete()
-        
-        # Delete the entry from database
-        db.session.delete(entry)
-        db.session.commit()
-        
-        # Also delete from JSON storage to update insights/patterns
-        from journal_service import delete_journal_entry as delete_json_entry
-        delete_success = delete_json_entry(entry_id, current_user.id)
-        
-        flash('Your journal entry has been deleted!', 'success')
-    except Exception as e:
-        db.session.rollback()
-        logging.error(f"Error deleting journal entry {entry_id}: {str(e)}")
-        flash('An error occurred while deleting your journal entry. Please try again.', 'danger')
-    
-    return redirect(url_for('journal'))
+    # Redirect to the blueprint route
+    return redirect(url_for('journal_blueprint.delete_journal_entry', entry_id=entry_id))
 
 # Breathing exercise page
 @app.route('/breathing')
@@ -429,142 +291,19 @@ def log_mood():
     
     return redirect(url_for('dashboard'))
 
-# API endpoint for getting coaching feedback
+# Redirect API endpoint for getting coaching feedback
 @app.route('/api/journal_coach/<int:entry_id>', methods=['POST'])
 @login_required
 def api_journal_coach(entry_id):
-    entry = JournalEntry.query.get_or_404(entry_id)
-    
-    # Ensure the entry belongs to the current user
-    if entry.user_id != current_user.id:
-        return jsonify({'success': False, 'message': 'Unauthorized access'})
-    
-    try:
-        from openai_service import generate_journaling_coach_response
-        
-        # Generate the coach response
-        coach_response = generate_journaling_coach_response(entry)
-        
-        return jsonify({
-            'success': True,
-            'coach_response': coach_response
-        })
-        
-    except Exception as e:
-        app.logger.error(f"Error generating coach response: {str(e)}")
-        
-        # Return more specific error messages
-        if "API_QUOTA_EXCEEDED" in str(e):
-            return jsonify({
-                'success': False,
-                'status': 'API_LIMIT',
-                'message': 'Coach feedback is currently unavailable due to API limits.'
-            }), 429
-        elif "INVALID_API_KEY" in str(e):
-            return jsonify({
-                'success': False,
-                'status': 'CONFIG_ERROR',
-                'message': 'Coach feedback is currently unavailable due to a configuration issue.'
-            }), 500
-        else:
-            return jsonify({
-                'success': False,
-                'status': 'ERROR',
-                'message': 'There was an error generating coach feedback. You can try again later.'
-            }), 500
+    # Redirect to the blueprint route
+    return redirect(url_for('journal_blueprint.api_journal_coach', entry_id=entry_id))
 
-# API endpoint for analyzing a journal entry
+# Redirect API endpoint for analyzing a journal entry
 @app.route('/api/analyze_entry/<int:entry_id>', methods=['POST'])
 @login_required
 def api_analyze_entry(entry_id):
-    entry = JournalEntry.query.get_or_404(entry_id)
-    
-    # Ensure the entry belongs to the current user
-    if entry.user_id != current_user.id:
-        abort(403)
-    
-    try:
-        # Clear old recommendations
-        CBTRecommendation.query.filter_by(journal_entry_id=entry.id).delete()
-        
-        # Analyze the entry using OpenAI API
-        thought_patterns = analyze_journal_entry(entry.content, entry.anxiety_level)
-        
-        # Save the recommendations
-        is_api_error = False
-        is_config_error = False
-        
-        for pattern in thought_patterns:
-            # Check for different error patterns
-            if pattern["pattern"] == "API Quota Exceeded":
-                is_api_error = True
-            elif pattern["pattern"] == "API Configuration Issue":
-                is_config_error = True
-                
-            # Save recommendation to database
-            recommendation = CBTRecommendation(
-                thought_pattern=pattern["pattern"],
-                recommendation=f"{pattern['description']} - {pattern['recommendation']}",
-                journal_entry_id=entry.id
-            )
-            db.session.add(recommendation)
-        
-        entry.is_analyzed = True
-        db.session.commit()
-        
-        # Return appropriate response based on error type
-        if is_api_error:
-            return jsonify({
-                'success': True,
-                'status': 'API_LIMIT',
-                'message': 'Entry saved. AI analysis is currently unavailable due to API usage limits.',
-                'recommendations': [{'pattern': r.thought_pattern, 'recommendation': r.recommendation} 
-                                for r in entry.recommendations]
-            })
-        elif is_config_error:
-            return jsonify({
-                'success': True,
-                'status': 'CONFIG_ERROR',
-                'message': 'Entry saved. AI analysis is currently unavailable due to a configuration issue.',
-                'recommendations': [{'pattern': r.thought_pattern, 'recommendation': r.recommendation} 
-                                for r in entry.recommendations]
-            })
-        else:
-            return jsonify({
-                'success': True,
-                'status': 'SUCCESS',
-                'message': 'Entry analyzed successfully!',
-                'recommendations': [{'pattern': r.thought_pattern, 'recommendation': r.recommendation} 
-                                for r in entry.recommendations]
-            })
-        
-    except Exception as e:
-        error_msg = str(e)
-        logging.error(f"Error analyzing journal entry: {error_msg}")
-        
-        # Save the entry even if analysis fails
-        entry.is_analyzed = False
-        db.session.commit()
-        
-        # Return more specific error messages
-        if "API_QUOTA_EXCEEDED" in error_msg:
-            return jsonify({
-                'success': False,
-                'status': 'API_LIMIT',
-                'message': 'Your entry was saved, but AI analysis is currently unavailable due to API limits.'
-            }), 429
-        elif "INVALID_API_KEY" in error_msg:
-            return jsonify({
-                'success': False,
-                'status': 'CONFIG_ERROR',
-                'message': 'Your entry was saved, but AI analysis is currently unavailable due to a configuration issue.'
-            }), 500
-        else:
-            return jsonify({
-                'success': False,
-                'status': 'ERROR',
-                'message': 'Your entry was saved, but there was an error during analysis. You can try again later.'
-            }), 500
+    # Redirect to the blueprint route
+    return redirect(url_for('journal_blueprint.api_analyze_entry', entry_id=entry_id))
 
 # Crisis Resources page
 @app.route('/crisis')
