@@ -1,0 +1,69 @@
+/* 
+ * Enhanced Loading Spinners CSS
+ * Custom spinner styles for better visibility during forms and API requests
+ */
+
+/* Large overlay spinner for important actions */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.loading-overlay .spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+.loading-overlay .loading-message {
+    color: white;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+}
+
+/* Inline form spinner - more visible */
+.form-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    background-color: #212529;
+    border: 1px solid #343a40;
+}
+
+.form-spinner .spinner-border {
+    margin-right: 1rem;
+}
+
+/* Journal entry specific spinner */
+.journal-processing-spinner {
+    display: none;
+    margin: 1rem 0;
+    text-align: center;
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.journal-processing-spinner .spinner-border {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.journal-processing-spinner .processing-message {
+    margin-top: 0.5rem;
+    font-weight: 500;
+}

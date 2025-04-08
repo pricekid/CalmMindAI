@@ -267,6 +267,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     submitButton.innerHTML = '<div class="d-flex align-items-center justify-content-center"><span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving...</div>';
                     submitButton.disabled = true;
                     
+                    // Also add a more visible spinner below the button
+                    const spinnerContainer = document.createElement('div');
+                    spinnerContainer.className = 'mt-3 text-center';
+                    spinnerContainer.innerHTML = '<div class="spinner-border text-primary" role="status"></div><div class="mt-2">Processing your journal entry...</div>';
+                    submitButton.parentNode.appendChild(spinnerContainer);
+                    
+                    // Also add a more visible spinner below the button
+                    const spinnerContainer = document.createElement('div');
+                    spinnerContainer.className = 'mt-3 text-center';
+                    spinnerContainer.innerHTML = '<div class="spinner-border text-primary" role="status"></div><div class="mt-2">Processing your journal entry...</div>';
+                    submitButton.parentNode.appendChild(spinnerContainer);
+                    
                     // Debug log
                     console.log('Showing spinner on journal submit');
                 }
