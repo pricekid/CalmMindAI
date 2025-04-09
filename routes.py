@@ -238,10 +238,11 @@ def breathing():
 # User account management - Now moved to account_routes.py blueprint
 # This is commented out to avoid conflicts with the blueprint version
 """
-@app.route('/account', methods=['GET', 'POST'])
-@login_required
-def account():
-    # We'll let the global error handler handle any exceptions
+# Route moved to account_routes.py to fix JSON parsing issues
+# @app.route('/account', methods=['GET', 'POST'])
+# @login_required
+# def account():
+#     # We'll let the global error handler handle any exceptions
     form = AccountUpdateForm(current_user.username, current_user.email)
     
     if form.validate_on_submit():
