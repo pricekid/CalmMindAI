@@ -291,8 +291,23 @@ def view_journal_entry(entry_id):
     logger.debug(f"coach_response length: {len(coach_response) if coach_response else 0}")
     logger.debug(f"coach_response: {coach_response[:100]}...")
     
-    # Wrap the coach response in styled HTML to ensure it's visible
-    styled_coach_response = f'<div style="color: #000000;">{coach_response}</div>'
+    # Format the coach response with paragraphs and sections
+    if coach_response:
+        # Replace newlines with <br> tags for proper paragraph breaks
+        formatted_response = coach_response.replace("\n\n", "</p><p>").replace("\n", "<br>")
+        
+        # Format section headers with more emphasis
+        formatted_response = formatted_response.replace("Here are a few thought patterns", "<h5 class='mt-4 mb-3'>Thought Patterns</h5>")
+        formatted_response = formatted_response.replace("Here are a few gentle CBT strategies", "<h5 class='mt-4 mb-3'>CBT Strategies</h5>")
+        formatted_response = formatted_response.replace("And a little reflection for today:", "<h5 class='mt-4 mb-3'>Reflection Prompt</h5>")
+        
+        # Add paragraph tags around the whole response if they're not already there
+        if not formatted_response.startswith("<p>"):
+            formatted_response = f"<p>{formatted_response}</p>"
+            
+        styled_coach_response = f'<div style="color: #000000;">{formatted_response}</div>'
+    else:
+        styled_coach_response = f'<div style="color: #000000;">{coach_response}</div>'
     
     return render_template('journal_entry.html', 
                           title=entry.title, 
@@ -474,8 +489,23 @@ def api_journal_coach(entry_id):
             else:
                 coach_response = "Thank you for sharing your journal entry. Although I can't offer specific insights right now, the process of writing down your thoughts is an important step in your wellness journey."
     
-    # Style the response for better visibility
-    styled_coach_response = f'<div style="color: #000000; font-weight: normal; background-color: white;">{coach_response}</div>'
+    # Format the coach response with paragraphs and sections
+    if coach_response:
+        # Replace newlines with <br> tags for proper paragraph breaks
+        formatted_response = coach_response.replace("\n\n", "</p><p>").replace("\n", "<br>")
+        
+        # Format section headers with more emphasis
+        formatted_response = formatted_response.replace("Here are a few thought patterns", "<h5 class='mt-4 mb-3'>Thought Patterns</h5>")
+        formatted_response = formatted_response.replace("Here are a few gentle CBT strategies", "<h5 class='mt-4 mb-3'>CBT Strategies</h5>")
+        formatted_response = formatted_response.replace("And a little reflection for today:", "<h5 class='mt-4 mb-3'>Reflection Prompt</h5>")
+        
+        # Add paragraph tags around the whole response if they're not already there
+        if not formatted_response.startswith("<p>"):
+            formatted_response = f"<p>{formatted_response}</p>"
+            
+        styled_coach_response = f'<div style="color: #000000; font-weight: normal; background-color: white;">{formatted_response}</div>'
+    else:
+        styled_coach_response = f'<div style="color: #000000; font-weight: normal; background-color: white;">{coach_response}</div>'
     
     return jsonify({'success': True, 'response': styled_coach_response})
 

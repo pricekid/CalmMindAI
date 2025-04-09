@@ -127,9 +127,26 @@
                     </button>
                 </div>
                 <div class="card-body" style="background-color: white !important;">
-                    <div id="analysis-content" style="background-color: white !important; color: #212529 !important; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef;">
-                        <span style="color: black !important; background-color: white !important;">{{ coach_response | safe }}</span>
+                    <div id="analysis-content" style="background-color: white !important; color: #212529 !important; padding: 20px; border-radius: 8px; border: 1px solid #e9ecef; line-height: 1.6;">
+                        <div class="coach-insights">
+                            {{ coach_response | safe }}
+                        </div>
                     </div>
+                    
+                    <style>
+                        .coach-insights p {
+                            margin-bottom: 1rem;
+                            font-size: 1rem;
+                        }
+                        .coach-insights h5 {
+                            margin-top: 1.5rem;
+                            margin-bottom: 1rem;
+                            color: #007bff;
+                            font-weight: 600;
+                            border-bottom: 1px solid #e9ecef;
+                            padding-bottom: 0.5rem;
+                        }
+                    </style>
                     
                     <!-- Placeholder for AI coaching button -->
                     <div class="text-center mt-4">
@@ -307,7 +324,9 @@
                             // Show coach response area and populate it
                             document.getElementById('coach-response').style.display = 'block';
                             const coachMessage = document.getElementById('coach-message');
-                            coachMessage.innerHTML = data.response;
+                            
+                            // Apply the same CSS as the main response 
+                            coachMessage.innerHTML = `<div class="coach-insights">${data.response}</div>`;
                             coachMessage.style.color = 'black';
                             coachMessage.style.backgroundColor = 'white';
                             

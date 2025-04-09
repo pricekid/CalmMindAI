@@ -3309,17 +3309,17 @@
     "created_at": "2025-04-09T13:33:50.537294",
     "updated_at": "2025-04-09T13:33:56.958139",
     "is_analyzed": true,
-    "gpt_response": "It's great that you're recognizing how these situations make you feel and that you're reflecting on your response. This awareness is the first step towards making positive changes. You're showing courage by looking into these patterns, and that's something to commend.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
+    "gpt_response": "I want to start by saying how much I appreciate your openness in sharing this. It's not easy to admit when we're feeling overwhelmed or frustrated, and your willingness to look at what's going on is a big step forward. \n\nIt sounds like you had every intention of keeping your plate clear this week, but then the moment came, and you found yourself saying yes instead. It's like there's a part of you that really wants to help and be seen as reliable, and another part that's now feeling the weight of that decision. It's tough when we end up feeling drained instead of accomplished.\n\nLet's look at a couple of thought patterns that might be playing a role here:\n\nAll-or-Nothing Thinking: This is when we see things in black and white terms, like feeling you have to either help fully or not at all. But life often lives in the gray areas, where helping a bit can still be valuable without overextending yourself.\nOvercommitment: This is saying yes to too many things because you want to be helpful or avoid seeming unreliable. It can lead to feeling stretched thin and not being able to meet your own needs.\n\nHere are a few gentle CBT strategies you might try:\n\nThought Reframing: When you notice yourself thinking \"I have to help or I'll seem selfish,\" try reframing it to \"Helping is great, but taking care of my workload is important too.\"\nBoundary Setting: Practice saying no gently but firmly. You could try something like, \"I'd love to help, but I need to focus on my own priorities this week.\"\nGratitude Practice: At the end of each day, jot down something you did manage well or a moment you took for yourself, no matter how small.\n\nAnd here's a reflection prompt for today:\n\"What would setting a respectful boundary look like for me, and how could it help me manage my commitments better?\"\n\nRemember, you're doing meaningful inner work by recognizing these patterns. Each step you take toward balance is a step toward well-being.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
     "cbt_patterns": [
       {
-        "pattern": "Overcommitment",
-        "description": "Overcommitment happens when you agree to more than you can realistically handle, often because of a desire to help or fear of saying no. It can lead to feeling overwhelmed and stressed, as you've experienced.",
-        "recommendation": "Practice saying no by setting small boundaries, even in low-stakes situations, to build confidence."
+        "pattern": "All-or-Nothing Thinking",
+        "description": "Seeing things in black and white terms, without recognizing the gray areas",
+        "recommendation": "Thought Reframing: Challenge the idea that you have to help fully or not at all. Look for a balanced perspective."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "This pattern involves seeing things in black-and-white terms, such as viewing yourself as either completely reliable or entirely selfish. It can be helpful to remember that setting boundaries is not selfish, but a necessary part of self-care.",
-        "recommendation": "Challenge this thinking by finding a middle ground, like considering how setting limits can actually improve your reliability."
+        "pattern": "Overcommitment",
+        "description": "Saying yes to too many things, leading to feeling stretched thin",
+        "recommendation": "Boundary Setting: Practice saying no gently but firmly to maintain your own priorities."
       }
     ]
   }

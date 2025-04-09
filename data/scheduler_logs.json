@@ -3556,5 +3556,77 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 4629",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-09 13:42:24",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4629 at 2025-04-09 13:42:24",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 13:47:24",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4629 at 2025-04-09 13:47:24",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 13:52:24",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4629 at 2025-04-09 13:52:24",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 13:57:24",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4629 at 2025-04-09 13:57:24",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 13:58:11",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-09 13:58:11.070993",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 13:58:11",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:02:24",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4629 at 2025-04-09 14:02:24",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:07:24",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4629 at 2025-04-09 14:07:24",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:12:24",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4629 at 2025-04-09 14:12:24",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:17:24",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4629 at 2025-04-09 14:17:24",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:19:02",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 4629",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:19:12",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 4629",
+    "success": true
   }
 ]
