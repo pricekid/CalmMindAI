@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, request, jsonify, abort
+from flask import render_template, url_for, flash, redirect, request, jsonify, abort, make_response
 from flask_login import login_user, current_user, logout_user
 from app import login_required
 from app import app, db
@@ -8,6 +8,8 @@ from openai_service import analyze_journal_entry, generate_coping_statement
 from werkzeug.security import check_password_hash
 from sqlalchemy import desc
 import logging
+import csv
+from io import StringIO
 from datetime import datetime, timedelta
 
 # Home page
@@ -356,3 +358,137 @@ def crisis():
     This page is available to all users, whether logged in or not.
     """
     return render_template('crisis.html', title='Crisis Resources')
+
+# Data download routes
+@app.route('/download/journal-entries')
+@login_required
+def download_journal_entries():
+    """Download all journal entries for the current user as CSV"""
+    entries = JournalEntry.query.filter_by(user_id=current_user.id).order_by(JournalEntry.created_at.desc()).all()
+    
+    # Create CSV file in memory
+    output = StringIO()
+    writer = csv.writer(output)
+    
+    # Write header
+    writer.writerow(['Entry ID', 'Title', 'Content', 'Anxiety Level', 'Created', 'Last Updated', 'AI Analysis'])
+    
+    # Write data
+    for entry in entries:
+        # Get recommendations
+        recommendations = []
+        for rec in entry.recommendations:
+            recommendations.append(f"{rec.thought_pattern}: {rec.recommendation}")
+        
+        writer.writerow([
+            entry.id,
+            entry.title,
+            entry.content,
+            entry.anxiety_level,
+            entry.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+            entry.updated_at.strftime('%Y-%m-%d %H:%M:%S'),
+            '; '.join(recommendations)
+        ])
+    
+    # Prepare response
+    output.seek(0)
+    response = make_response(output.getvalue())
+    response.headers["Content-Disposition"] = "attachment; filename=journal_entries.csv"
+    response.headers["Content-type"] = "text/csv"
+    
+    return response
+
+@app.route('/download/mood-logs')
+@login_required
+def download_mood_logs():
+    """Download all mood logs for the current user as CSV"""
+    logs = MoodLog.query.filter_by(user_id=current_user.id).order_by(MoodLog.created_at.desc()).all()
+    
+    # Create CSV file in memory
+    output = StringIO()
+    writer = csv.writer(output)
+    
+    # Write header
+    writer.writerow(['Log ID', 'Mood Score', 'Notes', 'Created'])
+    
+    # Write data
+    for log in logs:
+        writer.writerow([
+            log.id,
+            log.mood_score,
+            log.notes,
+            log.created_at.strftime('%Y-%m-%d %H:%M:%S')
+        ])
+    
+    # Prepare response
+    output.seek(0)
+    response = make_response(output.getvalue())
+    response.headers["Content-Disposition"] = "attachment; filename=mood_logs.csv"
+    response.headers["Content-type"] = "text/csv"
+    
+    return response
+
+@app.route('/download/all-data')
+@login_required
+def download_all_data():
+    """Download all user data including profile, journal entries, and mood logs as JSON"""
+    # Get user data
+    user_data = {
+        'username': current_user.username,
+        'email': current_user.email,
+        'created_at': current_user.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+        'notifications_enabled': current_user.notifications_enabled,
+        'phone_number': current_user.phone_number,
+        'sms_notifications_enabled': current_user.sms_notifications_enabled
+    }
+    
+    # Get journal entries
+    entries = JournalEntry.query.filter_by(user_id=current_user.id).order_by(JournalEntry.created_at.desc()).all()
+    journal_entries = []
+    
+    for entry in entries:
+        recommendations = []
+        for rec in entry.recommendations:
+            recommendations.append({
+                'thought_pattern': rec.thought_pattern,
+                'recommendation': rec.recommendation,
+                'created_at': rec.created_at.strftime('%Y-%m-%d %H:%M:%S')
+            })
+        
+        journal_entries.append({
+            'id': entry.id,
+            'title': entry.title,
+            'content': entry.content,
+            'anxiety_level': entry.anxiety_level,
+            'created_at': entry.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+            'updated_at': entry.updated_at.strftime('%Y-%m-%d %H:%M:%S'),
+            'is_analyzed': entry.is_analyzed,
+            'recommendations': recommendations
+        })
+    
+    # Get mood logs
+    logs = MoodLog.query.filter_by(user_id=current_user.id).order_by(MoodLog.created_at.desc()).all()
+    mood_logs = []
+    
+    for log in logs:
+        mood_logs.append({
+            'id': log.id,
+            'mood_score': log.mood_score,
+            'notes': log.notes,
+            'created_at': log.created_at.strftime('%Y-%m-%d %H:%M:%S')
+        })
+    
+    # Combine all data
+    all_data = {
+        'user': user_data,
+        'journal_entries': journal_entries,
+        'mood_logs': mood_logs,
+        'export_date': datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+    }
+    
+    # Prepare response
+    response = make_response(jsonify(all_data))
+    response.headers["Content-Disposition"] = "attachment; filename=calm_journey_all_data.json"
+    response.headers["Content-type"] = "application/json"
+    
+    return response

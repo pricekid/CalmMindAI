@@ -62,6 +62,13 @@ def account():
             'hidden_tag': lambda: ''
         }
         
+        # Get user statistics
+        stats = {
+            'journal_count': current_user.journal_entries.count(),
+            'mood_count': current_user.mood_logs.count(),
+            'member_since': current_user.created_at.strftime('%B %d, %Y') if current_user.created_at else 'N/A'
+        }
+        
         if request.method == 'POST':
             # Get values directly from the request form instead of the WTForms validation
             username = request.form.get('username', '')
@@ -76,17 +83,17 @@ def account():
             # Perform basic validation
             if not username or not email or not current_password:
                 flash('Username, email, and current password are required.', 'danger')
-                return render_template('simple_account.html', form=form)
+                return render_template('simple_account.html', form=form, stats=stats)
             
             # Check if current password is correct
             if not current_user.check_password(current_password):
                 flash('Current password is incorrect.', 'danger')
-                return render_template('simple_account.html', form=form)
+                return render_template('simple_account.html', form=form, stats=stats)
                 
             # Check if new passwords match
             if new_password and new_password != confirm_new_password:
                 flash('New passwords do not match.', 'danger')
-                return render_template('simple_account.html', form=form)
+                return render_template('simple_account.html', form=form, stats=stats)
                 
             try:
                 # Update user information
@@ -178,7 +185,7 @@ def account():
                 return Response(error_html, 500, content_type='text/html')
         
         # For GET requests, just show the form
-        return render_template('simple_account.html', form=form)
+        return render_template('simple_account.html', form=form, stats=stats)
         
     except Exception as e:
         # Log the error

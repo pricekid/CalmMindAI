@@ -118,25 +118,95 @@
                             <hr class="my-4">
                             <h5>Notification Settings</h5>
                             
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="notifications_enabled" name="notifications_enabled" {% if form['notifications_enabled']['data'] %}checked{% endif %}>
-                                <label class="form-check-label" for="notifications_enabled">Enable Email Notifications</label>
-                                <div class="form-text">Receive daily reminders and tips via email</div>
+                            <div class="card bg-dark border-secondary mb-3">
+                                <div class="card-header">Email Notifications</div>
+                                <div class="card-body">
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="notifications_enabled" name="notifications_enabled" {% if form['notifications_enabled']['data'] %}checked{% endif %}>
+                                        <label class="form-check-label" for="notifications_enabled">Enable Email Notifications</label>
+                                        <div class="form-text">Receive reminders and tips via email</div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="notification_time" class="form-label">Preferred Notification Time</label>
+                                        <select class="form-select bg-dark text-light border-secondary" id="notification_time" name="notification_time">
+                                            <option value="morning" selected>Morning (6:00 - 9:00 AM)</option>
+                                            <option value="afternoon">Afternoon (12:00 - 3:00 PM)</option>
+                                            <option value="evening">Evening (6:00 - 9:00 PM)</option>
+                                        </select>
+                                        <div class="form-text">When would you prefer to receive notification emails?</div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="notification_frequency" class="form-label">Notification Frequency</label>
+                                        <select class="form-select bg-dark text-light border-secondary" id="notification_frequency" name="notification_frequency">
+                                            <option value="daily" selected>Daily</option>
+                                            <option value="workdays">Weekdays only</option>
+                                            <option value="weekly">Weekly</option>
+                                        </select>
+                                        <div class="form-text">How often would you like to receive reminder emails?</div>
+                                    </div>
+                                    
+                                    <div class="mt-3">
+                                        <h6 class="mb-2">Notification Types</h6>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="journaling_reminders" name="journaling_reminders" checked>
+                                            <label class="form-check-label" for="journaling_reminders">
+                                                Journaling Reminders
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="mood_tracking_reminders" name="mood_tracking_reminders" checked>
+                                            <label class="form-check-label" for="mood_tracking_reminders">
+                                                Mood Tracking Reminders
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="cbt_tips" name="cbt_tips" checked>
+                                            <label class="form-check-label" for="cbt_tips">
+                                                CBT Tips & Techniques
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="weekly_summaries" name="weekly_summaries" checked>
+                                            <label class="form-check-label" for="weekly_summaries">
+                                                Weekly Progress Summaries
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             
-                            <div class="mb-3">
-                                <h6 class="mb-2">SMS Notifications</h6>
-                                
-                                <div class="mb-3">
-                                    <label for="phone_number" class="form-label">Phone Number (with country code, e.g. +1234567890)</label>
-                                    <input type="tel" class="form-control" id="phone_number" name="phone_number" value="{{ form['phone_number']['data'] or '' }}">
-                                    <div class="form-text">Enter your phone number with country code (e.g., +1234567890)</div>
-                                </div>
-                                
-                                <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="sms_notifications_enabled" name="sms_notifications_enabled" {% if form['sms_notifications_enabled']['data'] %}checked{% endif %}>
-                                    <label class="form-check-label" for="sms_notifications_enabled">Enable SMS Notifications</label>
-                                    <div class="form-text">Receive daily reminders and tips via SMS</div>
+                            <div class="card bg-dark border-secondary mb-3">
+                                <div class="card-header">SMS Notifications</div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label for="phone_number" class="form-label">Phone Number (with country code, e.g. +1234567890)</label>
+                                        <input type="tel" class="form-control bg-dark text-light border-secondary" id="phone_number" name="phone_number" value="{{ form['phone_number']['data'] or '' }}">
+                                        <div class="form-text">Enter your phone number with country code (e.g., +1234567890)</div>
+                                    </div>
+                                    
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="sms_notifications_enabled" name="sms_notifications_enabled" {% if form['sms_notifications_enabled']['data'] %}checked{% endif %}>
+                                        <label class="form-check-label" for="sms_notifications_enabled">Enable SMS Notifications</label>
+                                        <div class="form-text">Receive reminders and tips via SMS</div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="sms_frequency" class="form-label">SMS Frequency</label>
+                                        <select class="form-select bg-dark text-light border-secondary" id="sms_frequency" name="sms_frequency">
+                                            <option value="daily" selected>Daily</option>
+                                            <option value="workdays">Weekdays only</option>
+                                            <option value="weekly">Weekly</option>
+                                            <option value="urgent_only">Urgent Reminders Only</option>
+                                        </select>
+                                        <div class="form-text">How often would you like to receive SMS notifications?</div>
+                                    </div>
+                                    
+                                    <div class="alert alert-info bg-dark text-info border-info">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        Standard SMS rates may apply based on your carrier.
+                                    </div>
                                 </div>
                             </div>
                             
@@ -164,6 +234,49 @@
                                 <button type="submit" class="btn btn-primary" id="account-update-button">Update Account</button>
                             </div>
                         </form>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-header bg-dark text-white">
+                        <h4 class="mb-0"><i class="fas fa-download me-2"></i> Data Management</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <h5>Download Your Data</h5>
+                            <p>You can download all of your data from Calm Journey at any time.</p>
+                            <div class="d-grid gap-2 d-md-block">
+                                <a href="/download/journal-entries" class="btn btn-outline-primary me-2">
+                                    <i class="fas fa-file-alt me-2"></i>Journal Entries
+                                </a>
+                                <a href="/download/mood-logs" class="btn btn-outline-primary me-2">
+                                    <i class="fas fa-chart-line me-2"></i>Mood Logs
+                                </a>
+                                <a href="/download/all-data" class="btn btn-outline-primary">
+                                    <i class="fas fa-archive me-2"></i>All Data
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <div class="mb-3">
+                            <h5>Account Statistics</h5>
+                            <ul class="list-group list-group-flush bg-dark">
+                                <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-light border-secondary">
+                                    Total Journal Entries
+                                    <span class="badge bg-primary rounded-pill">{{ stats.journal_count if stats is defined else 0 }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-light border-secondary">
+                                    Mood Logs
+                                    <span class="badge bg-primary rounded-pill">{{ stats.mood_count if stats is defined else 0 }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-light border-secondary">
+                                    Member Since
+                                    <span class="badge bg-secondary">{{ stats.member_since if stats is defined else 'N/A' }}</span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 
