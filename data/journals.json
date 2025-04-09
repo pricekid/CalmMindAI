@@ -3171,17 +3171,17 @@
     "created_at": "2025-04-09T12:28:31.615527",
     "updated_at": "2025-04-09T12:28:36.146448",
     "is_analyzed": true,
-    "gpt_response": "It's great that you're self-aware and recognizing when you're feeling overwhelmed. This awareness is the first step towards making changes that align better with your needs.\n\n- **Overcommitment**: This happens when you take on too much, often from a desire to please others or avoid seeming unreliable. It can lead to feeling drained and behind on your own priorities.\n- **All-or-Nothing Thinking**: This involves seeing situations in black-and-white terms, such as feeling selfish for setting boundaries, even though it's a healthy practice.\n\nTry practicing saying 'no' in low-stakes situations to build confidence in setting boundaries.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
+    "gpt_response": "It's great that you're reflecting on your feelings and recognizing the importance of setting boundaries. This awareness is a significant step toward making changes that will help you feel more balanced and less overwhelmed.\n\n- **Overcommitment**: This pattern involves taking on too much due to fear of seeming unreliable or selfish. It often leads to stress and feelings of being overwhelmed. Consider prioritizing tasks and saying 'no' to additional commitments when your plate is full to manage your workload better.\n\n- **All-or-Nothing Thinking**: This involves seeing situations in black-and-white terms, such as feeling either completely reliable or completely selfish. Try to find a middle ground by reminding yourself that setting boundaries is an act of self-care, not selfishness.\n\nTo start, try practicing saying 'no' in low-stakes situations to build confidence in setting boundaries.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
     "cbt_patterns": [
       {
         "pattern": "Overcommitment",
-        "description": "This happens when you take on too much, often from a desire to please others or avoid seeming unreliable. It can lead to feeling drained and behind on your own priorities.",
-        "recommendation": "Try practicing saying 'no' in low-stakes situations to build confidence in setting boundaries."
+        "description": "This pattern involves taking on too much due to fear of seeming unreliable or selfish. It often leads to stress and feelings of being overwhelmed.",
+        "recommendation": "Consider prioritizing tasks and saying 'no' to additional commitments when your plate is full to manage your workload better."
       },
       {
         "pattern": "All-or-Nothing Thinking",
-        "description": "This involves seeing situations in black-and-white terms, such as feeling selfish for setting boundaries, even though it's a healthy practice.",
-        "recommendation": "Challenge these thoughts by acknowledging the value in setting boundaries."
+        "description": "This involves seeing situations in black-and-white terms, such as feeling either completely reliable or completely selfish.",
+        "recommendation": "Try to find a middle ground by reminding yourself that setting boundaries is an act of self-care, not selfishness."
       }
     ]
   }
