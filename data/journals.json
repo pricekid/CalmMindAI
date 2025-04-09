@@ -3120,5 +3120,23 @@
         "recommendation": "Try identifying the shades of gray in this opportunity and remind yourself of the small steps that lead to success."
       }
     ]
+  },
+  {
+    "id": 141,
+    "user_id": 1,
+    "title": "test 12 april 11",
+    "content": "came across this story online.\r\nmake syou wonder about how the things you do aligns with other\r\nYears ago I found a hefty bag of money - paper money, in the clothes section of a store. I immediately decided, without second thought to hand it in. I came downstairs and saw a few persons working in the stock-room. I handed the money to a guy and told him in the presence of other persons that I just found it upstairs in the clothes section on top of the clothes rack. The guy took the money and I left the store after paying for my purchase. Weeks later, I remembered the incident while speaking to my sister-in-law. Curious, she asked me the name of the store and a description of the person I gave the money to. Unknown to me she did some inquiries and reported back to me. She told me that she knew the guy I gave the money to, and that since then, he started to wear the best of clothes, a change from his former attire, and even later quitted the job.\r\nI reckon it was now her concern; not mine. My conscience was clear.",
+    "anxiety_level": 1,
+    "created_at": "2025-04-09T12:04:41.958470",
+    "updated_at": "2025-04-09T12:04:45.232736",
+    "is_analyzed": true,
+    "gpt_response": "It's wonderful that you chose to act with integrity by handing in the money you found. This reflects your strong values and clear conscience, which can be reassuring during moments of doubt. It's important to remember that your actions were guided by your principles, regardless of the outcome.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- Overcommitment\n- All-or-Nothing Thinking\n",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "This pattern involves seeing situations in black-and-white terms, such as believing the outcome of your action was either entirely good or bad. It can lead to unnecessary stress if things don't align perfectly with expectations.",
+        "recommendation": "Practice recognizing shades of gray by listing multiple possible outcomes and acknowledging the nuances in situations."
+      }
+    ]
   }
 ]

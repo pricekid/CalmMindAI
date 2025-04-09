@@ -120,14 +120,14 @@
     <div class="row">
         <div class="col-lg-8 mx-auto">
             <div class="card shadow" id="analysis-card">
-                <div class="card-header insights-header d-flex justify-content-between align-items-center">
+                <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #007bff; color: white;">
                     <h3 class="mb-0">Mira's Insights</h3>
                     <button type="button" class="btn btn-sm btn-outline-light" id="refresh-analysis" data-journal-id="{{ entry.id }}">
                         <i class="bi bi-arrow-repeat"></i> Refresh Analysis
                     </button>
                 </div>
-                <div class="card-body bg-light">
-                    <div id="analysis-content">
+                <div class="card-body" style="background-color: white;">
+                    <div id="analysis-content" style="background-color: white; color: #212529; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef;">
                         {{ coach_response | safe }}
                     </div>
                     
@@ -179,7 +179,7 @@
     <div class="row">
         <div class="col-lg-8 mx-auto">
             <div class="card shadow">
-                <div class="card-header insights-header">
+                <div class="card-header" style="background-color: #6c757d; color: white;">
                     <h3 class="mb-0">About Journal Analysis</h3>
                 </div>
                 <div class="card-body">
