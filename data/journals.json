@@ -1,1 +1,48 @@
-[]
+[
+  {
+    "id": 151,
+    "user_id": 1,
+    "title": "test12",
+    "content": "just testing. thanks",
+    "anxiety_level": 1,
+    "created_at": "2025-04-09T15:04:51.612805",
+    "updated_at": "2025-04-09T15:05:55.031988",
+    "is_analyzed": true,
+    "gpt_response": "Hey there! I'm really glad you took the step to test this out and share a bit with me. It might seem small, but even just trying this shows a willingness to explore and understand yourself better, which is really important.\n\nIt sounds like you're checking in and getting a feel for what this process is like. Even if it's just a simple 'thanks,' it signals a readiness to engage, even on a low-key level, which is perfectly fine.\n\nI noticed a couple of thought patterns that might be worth considering:\n\nMinimalizing: Sometimes, we downplay our actions or feelings as 'just testing' without recognizing their value. It\u2019s easy to overlook how meaningful small steps can be.\n\nAssuming Irrelevance: By saying 'just testing,' you might be implying that what you\u2019re doing isn\u2019t significant. But every step you take in self-discovery is important, regardless of size.\n\nHere are some gentle techniques you could try:\n\nGratitude Practice: Take a moment to acknowledge yourself for testing this out. What\u2019s one thing you\u2019re grateful you did today, even if it feels small?\n\nThought Reframing: Instead of 'just testing,' how about thinking of it as 'beginning to explore'? This slight shift can open up a world of possibilities.\n\nDaily Reflection Prompt:\n\"What small step have I taken today that I can acknowledge as a positive step forward?\"\n\nRemember, even the smallest actions are part of the bigger picture, and you're doing great by being curious about this journey. Keep going at your own pace!\n\nWarmly,\nCoach Mira",
+    "cbt_patterns": [
+      {
+        "pattern": "Minimalizing",
+        "description": "Downplaying actions or feelings, not recognizing their value.",
+        "recommendation": "Gratitude Practice: Acknowledge yourself for testing this out, focusing on small positives."
+      },
+      {
+        "pattern": "Assuming Irrelevance",
+        "description": "Thinking that actions or steps aren\u2019t significant.",
+        "recommendation": "Thought Reframing: Shift 'just testing' to 'beginning to explore' to open possibilities."
+      }
+    ]
+  },
+  {
+    "id": 145,
+    "user_id": 1,
+    "title": "saying yes too often",
+    "content": "I told myself I wouldn\u2019t take on anything extra this week, but when a colleague asked for help with their project, I said yes anyway. Now I\u2019m feeling overwhelmed, behind on my own work, and frustrated with myself for not setting a boundary. I didn\u2019t want to seem selfish or unreliable, but now I just feel drained. Why do I keep doing this to myself?",
+    "anxiety_level": 5,
+    "created_at": "2025-04-09T12:29:26.987109",
+    "updated_at": "2025-04-09T12:29:33.761947",
+    "is_analyzed": true,
+    "gpt_response": "First off, I want to acknowledge how brave it is for you to share this. It's not easy to open up about feeling overwhelmed, especially when it comes to setting boundaries. You're definitely not alone in this, and your self-awareness is already a big step forward.\n\nFrom what you've shared, it seems like you're grappling with the pressure to help others while also trying to stay on top of your own responsibilities. It's like you're in a tug-of-war between wanting to be supportive and needing to protect your own time and energy. That can be so draining, especially when you're left feeling frustrated with yourself.\n\nThere are a couple of thought patterns that might be at play here:\n\n1. **People Pleasing**: It sounds like there's a strong desire to be seen as helpful and reliable. This often leads us to say 'yes' when we're already stretched thin. But remember, it's okay to prioritize your needs too.\n\n2. **All-or-Nothing Thinking**: You might be seeing setting boundaries as being either 'selfless' or 'selfish,' when really, there's a lot of middle ground. It\u2019s possible to be supportive without overextending yourself.\n\nHere are a few strategies that might help:\n\n- **Boundary Setting Practice**: Try writing down one small boundary you could set this week. It doesn't have to be big\u2014maybe it's about taking a short break for yourself during the day.\n- **Thought Reframing**: When you catch yourself thinking \"If I don't help, I'm being selfish,\" try reframing it to \"By setting boundaries, I'm taking care of myself so I can help others better in the long run.\"\n- **Compassionate Self-Talk**: What would you say to a friend who's feeling overwhelmed? Write those words down and read them back to yourself when you need a reminder.\n\nFor today\u2019s reflection, consider pondering this: \"What is one small thing I can do to respect my own needs without feeling guilty about it?\"\n\nYou're making real progress just by being here and reflecting on these patterns. Be kind to yourself as you navigate this journey. You're doing amazing work, one step at a time.\n\nWarmly,\nCoach Mira",
+    "cbt_patterns": [
+      {
+        "pattern": "People Pleasing",
+        "description": "The strong desire to be seen as helpful and reliable, often leading to saying 'yes' despite personal costs.",
+        "recommendation": "Boundary Setting Practice: Write down one small boundary you could set this week."
+      },
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "Seeing situations in black-and-white terms, like being either 'selfless' or 'selfish.'",
+        "recommendation": "Thought Reframing: Reframe thoughts to acknowledge the value of setting boundaries for self-care."
+      }
+    ]
+  }
+]
