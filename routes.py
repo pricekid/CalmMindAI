@@ -305,11 +305,8 @@ def account():
     return render_template('account.html', title='Account', form=form)
 """
 
-# Redirect /account to the blueprint version
-@app.route('/account')
-@login_required
-def account_redirect():
-    return redirect(url_for('account.account'))
+# Remove the main account route to avoid conflicts with the account blueprint
+# The account blueprint will handle the /account URL directly
 
 # Log mood
 @app.route('/log_mood', methods=['POST'])

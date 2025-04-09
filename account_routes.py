@@ -69,7 +69,7 @@ def account():
             # Save changes
             db.session.commit()
             flash('Your account has been updated!', 'success')
-            return redirect(url_for('account.account'))
+            return render_template('account.html', title='Account', form=form)
             
         except Exception as e:
             # Rollback changes and restore original values
