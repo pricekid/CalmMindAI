@@ -24,32 +24,21 @@ def account():
     # Extra safety for None values
     if not current_user or not hasattr(current_user, 'username') or not hasattr(current_user, 'email'):
         flash('There was an issue loading your account information. Please try logging out and back in.', 'danger')
-        emergency_html = """
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Calm Journey - Account Error</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <style>
-                body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #1a1a1a; color: #f8f9fa; }
-                .container { max-width: 800px; margin: 40px auto; padding: 20px; background-color: #212529; border-radius: 8px; }
-                h1 { color: #dc3545; }
-                .btn { display: inline-block; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-top: 20px; }
-                .btn-primary { background-color: #0d6efd; color: white; }
-                .btn-light { background-color: #f8f9fa; color: #212529; }
-            </style>
-        </head>
-        <body>
-            <div class="container">
-                <h1>Account Loading Error</h1>
-                <p>Your account data couldn't be loaded.</p>
-                <p>Please try logging out and back in to fix this issue.</p>
-                <p><a href="/dashboard" class="btn btn-primary">Go to Dashboard</a> &nbsp; <a href="/logout" class="btn btn-light">Logout</a></p>
-            </div>
-        </body>
-        </html>
-        """
-        return Response(emergency_html, 200, content_type='text/html')
+        
+        return render_template('error.html', 
+                             title='Account Loading Error',
+                             color='#dc3545',
+                             alert_type='danger',
+                             alert_heading='Error',
+                             alert_message='Your account information could not be loaded.',
+                             messages=[
+                                 'Your account data couldn\'t be loaded.',
+                                 'Please try logging out and back in to fix this issue.'
+                             ],
+                             buttons=[
+                                 {'url': '/dashboard', 'class': 'btn-primary', 'text': 'Go to Dashboard'},
+                                 {'url': '/logout', 'class': 'btn-light', 'text': 'Logout'}
+                             ])
     
     try:
         # Use a simple dictionary to hold form data
@@ -111,37 +100,20 @@ def account():
                 db.session.commit()
                 flash('Your account has been updated!', 'success')
                 
-                # Send a simple success page
-                success_html = """
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>Calm Journey - Account Updated</title>
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <style>
-                        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #1a1a1a; color: #f8f9fa; }
-                        .container { max-width: 800px; margin: 40px auto; padding: 20px; background-color: #212529; border-radius: 8px; }
-                        h1 { color: #28a745; }
-                        .alert { padding: 15px; border-radius: 4px; margin-bottom: 20px; }
-                        .alert-success { background-color: rgba(40, 167, 69, 0.2); border: 1px solid #28a745; }
-                        .btn { display: inline-block; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-top: 20px; }
-                        .btn-primary { background-color: #0d6efd; color: white; }
-                        .btn-light { background-color: #f8f9fa; color: #212529; }
-                    </style>
-                </head>
-                <body>
-                    <div class="container">
-                        <div class="alert alert-success">
-                            <strong>Success!</strong> Your account has been updated successfully.
-                        </div>
-                        <h1>Account Updated</h1>
-                        <p>Your account information has been saved successfully.</p>
-                        <p><a href="/dashboard" class="btn btn-primary">Go to Dashboard</a> &nbsp; <a href="/journal" class="btn btn-light">View Journal</a></p>
-                    </div>
-                </body>
-                </html>
-                """
-                return Response(success_html, 200, content_type='text/html')
+                # Send a success page using our template
+                return render_template('error.html', 
+                                     title='Account Updated',
+                                     color='#28a745',
+                                     alert_type='success',
+                                     alert_heading='Success',
+                                     alert_message='Your account has been updated successfully.',
+                                     messages=[
+                                         'Your account information has been saved successfully.'
+                                     ],
+                                     buttons=[
+                                         {'url': '/dashboard', 'class': 'btn-primary', 'text': 'Go to Dashboard'},
+                                         {'url': '/journal', 'class': 'btn-light', 'text': 'View Journal'}
+                                     ])
                 
             except Exception as update_error:
                 # Rollback changes
@@ -150,39 +122,21 @@ def account():
                 # Log the error
                 logger.error(f"Database error updating account: {str(update_error)}")
                 
-                # Show an error page
-                from flask import Response
-                error_html = f"""
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>Calm Journey - Update Error</title>
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <style>
-                        body {{ font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #1a1a1a; color: #f8f9fa; }}
-                        .container {{ max-width: 800px; margin: 40px auto; padding: 20px; background-color: #212529; border-radius: 8px; }}
-                        h1 {{ color: #dc3545; }}
-                        .alert {{ padding: 15px; border-radius: 4px; margin-bottom: 20px; }}
-                        .alert-danger {{ background-color: rgba(220, 53, 69, 0.2); border: 1px solid #dc3545; }}
-                        .btn {{ display: inline-block; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-top: 20px; }}
-                        .btn-primary {{ background-color: #0d6efd; color: white; }}
-                        .btn-light {{ background-color: #f8f9fa; color: #212529; }}
-                    </style>
-                </head>
-                <body>
-                    <div class="container">
-                        <div class="alert alert-danger">
-                            <strong>Error!</strong> There was a problem updating your account.
-                        </div>
-                        <h1>Account Update Error</h1>
-                        <p>We encountered an issue while updating your account. Your information has not been changed.</p>
-                        <p>Error: Unable to save account updates</p>
-                        <p><a href="/dashboard" class="btn btn-primary">Go to Dashboard</a> &nbsp; <a href="/account/account" class="btn btn-light">Try Again</a></p>
-                    </div>
-                </body>
-                </html>
-                """
-                return Response(error_html, 500, content_type='text/html')
+                # Show an error page using our template
+                return render_template('error.html', 
+                                     title='Account Update Error',
+                                     color='#dc3545',
+                                     alert_type='danger',
+                                     alert_heading='Error',
+                                     alert_message='There was a problem updating your account.',
+                                     messages=[
+                                         'We encountered an issue while updating your account. Your information has not been changed.',
+                                         'Error: Unable to save account updates'
+                                     ],
+                                     buttons=[
+                                         {'url': '/dashboard', 'class': 'btn-primary', 'text': 'Go to Dashboard'},
+                                         {'url': '/account', 'class': 'btn-light', 'text': 'Try Again'}
+                                     ]), 500
         
         # For GET requests, just show the form
         return render_template('simple_account.html', form=form, stats=stats)
@@ -191,31 +145,18 @@ def account():
         # Log the error
         logger.error(f"Error loading account page: {str(e)}")
         
-        # Show a generic error page
-        from flask import Response
-        emergency_html = """
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Calm Journey - Account Error</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <style>
-                body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #1a1a1a; color: #f8f9fa; }
-                .container { max-width: 800px; margin: 40px auto; padding: 20px; background-color: #212529; border-radius: 8px; }
-                h1 { color: #dc3545; }
-                .btn { display: inline-block; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-top: 20px; }
-                .btn-primary { background-color: #0d6efd; color: white; }
-                .btn-light { background-color: #f8f9fa; color: #212529; }
-            </style>
-        </head>
-        <body>
-            <div class="container">
-                <h1>Account Page Error</h1>
-                <p>We're having trouble loading your account settings page. This could be due to temporary technical issues.</p>
-                <p>Your account information is still secure and functioning normally.</p>
-                <p><a href="/dashboard" class="btn btn-primary">Go to Dashboard</a> &nbsp; <a href="/journal" class="btn btn-light">View Journal</a></p>
-            </div>
-        </body>
-        </html>
-        """
-        return Response(emergency_html, 500, content_type='text/html')
+        # Show a generic error page using our template
+        return render_template('error.html', 
+                             title='Account Page Error',
+                             color='#dc3545',
+                             alert_type='danger',
+                             alert_heading='Error',
+                             alert_message='We\'re having trouble loading your account settings page.',
+                             messages=[
+                                 'We\'re having trouble loading your account settings page. This could be due to temporary technical issues.',
+                                 'Your account information is still secure and functioning normally.'
+                             ],
+                             buttons=[
+                                 {'url': '/dashboard', 'class': 'btn-primary', 'text': 'Go to Dashboard'},
+                                 {'url': '/journal', 'class': 'btn-light', 'text': 'View Journal'}
+                             ]), 500

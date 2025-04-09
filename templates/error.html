@@ -1,45 +1,7 @@
 {% extends "error_layout.html" %}
 
-{% block title %}{{ title }}{% endblock %}
-
 {% block content %}
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-lg-8 mx-auto">
-            <div class="card shadow bg-dark mb-4">
-                <div class="card-header bg-danger text-white">
-                    <h3 class="mb-0">
-                        <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ error_title }}
-                    </h3>
-                </div>
-                <div class="card-body">
-                    <p class="lead">{{ error_message }}</p>
-                    
-                    {% if suggestion %}
-                    <div class="alert alert-info mt-4">
-                        <h5>Suggestion</h5>
-                        <p>{{ suggestion }}</p>
-                    </div>
-                    {% endif %}
-                    
-                    {% if data_error %}
-                    <div class="alert alert-warning mt-4">
-                        <h5>Data Error</h5>
-                        <p>{{ data_error }}</p>
-                    </div>
-                    {% endif %}
-                    
-                    <div class="d-flex justify-content-between mt-4">
-                        <a href="/dashboard" class="btn btn-outline-light">
-                            <i class="bi bi-arrow-left"></i> Go to Dashboard
-                        </a>
-                        <a href="javascript:history.back()" class="btn btn-outline-primary">
-                            <i class="bi bi-box-arrow-in-right"></i> Go Back
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
 {% endblock %}
