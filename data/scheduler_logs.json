@@ -3766,5 +3766,71 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 4629",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:57:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4629 at 2025-04-09 14:57:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:58:11",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-09 14:58:11.070968",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:58:11",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:02:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4629 at 2025-04-09 15:02:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:07:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4629 at 2025-04-09 15:07:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:12:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4629 at 2025-04-09 15:12:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:17:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4629 at 2025-04-09 15:17:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:22:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4629 at 2025-04-09 15:22:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:27:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4629 at 2025-04-09 15:27:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:28:11",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-09 15:28:11.070931",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:28:11",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
   }
 ]
