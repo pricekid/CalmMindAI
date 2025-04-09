@@ -80,7 +80,7 @@ def unauthorized():
 # Add global error handler
 @app.errorhandler(Exception)
 def handle_exception(e):
-    from flask import render_template, redirect, url_for
+    from flask import render_template, redirect, url_for, Response
     from json.decoder import JSONDecodeError
     
     app.logger.error(f"Unhandled exception: {str(e)}")
@@ -88,6 +88,35 @@ def handle_exception(e):
     
     # Check if it's a JSON parsing error (which is likely from OpenAI response)
     err_str = str(e).lower()
+    
+    # For BuildError exceptions (URL building issues) - avoid template rendering which might cause infinite recursion
+    if "builderror" in err_str or "could not build url" in err_str:
+        app.logger.error(f"URL build error: {str(e)}")
+        emergency_html = """
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Calm Journey - Error</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+                body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #1a1a1a; color: #f8f9fa; }
+                .container { max-width: 800px; margin: 40px auto; padding: 20px; background-color: #212529; border-radius: 8px; }
+                h1 { color: #dc3545; }
+                .btn { display: inline-block; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-top: 20px; }
+                .btn-primary { background-color: #0d6efd; color: white; }
+                .btn-light { background-color: #f8f9fa; color: #212529; }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Navigation Error</h1>
+                <p>We're having trouble with some of our internal links. We're working to fix this issue.</p>
+                <p><a href="/" class="btn btn-primary">Go to Home Page</a> &nbsp; <a href="javascript:history.back()" class="btn btn-light">Go Back</a></p>
+            </div>
+        </body>
+        </html>
+        """
+        return Response(emergency_html, 500, content_type='text/html')
     
     # Special handler for the specific JSON parsing error we're seeing
     if isinstance(e, JSONDecodeError) or "expected token" in err_str or "json" in err_str:
@@ -100,21 +129,46 @@ def handle_exception(e):
             # Redirect instead of trying to render the template directly
             return redirect(url_for('dashboard'))
             
-        # For other routes with JSON parsing errors, show a friendly message
-        error_title = "Processing Issue"
-        error_message = "We had a minor issue processing your data, but your information was saved successfully."
-        return render_template('error.html', 
-                             error_title=error_title,
-                             error_message=error_message), 200
+        # For other routes with JSON parsing errors, use a simple response to avoid template issues
+        emergency_html = """
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Calm Journey - Processing Issue</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+                body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #1a1a1a; color: #f8f9fa; }
+                .container { max-width: 800px; margin: 40px auto; padding: 20px; background-color: #212529; border-radius: 8px; }
+                h1 { color: #dc3545; }
+                .btn { display: inline-block; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-top: 20px; }
+                .btn-primary { background-color: #0d6efd; color: white; }
+                .btn-light { background-color: #f8f9fa; color: #212529; }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Processing Issue</h1>
+                <p>We had a minor issue processing your data, but your information was saved successfully.</p>
+                <p>This is likely a temporary issue. You can try refreshing the page or go back to the dashboard.</p>
+                <p><a href="/dashboard" class="btn btn-primary">Go to Dashboard</a> &nbsp; <a href="javascript:history.back()" class="btn btn-light">Go Back</a></p>
+            </div>
+        </body>
+        </html>
+        """
+        return Response(emergency_html, 200, content_type='text/html')
     
     # Check if it's a CSRF error
     if "csrf" in err_str:
         error_title = "Session Expired"
         error_message = "Your session has expired. Please refresh the page and try again."
-        return render_template('error.html', 
-                              error_title=error_title,
-                              error_message=error_message,
-                              show_csrf_error=True), 400
+        try:
+            return render_template('error.html', 
+                                  error_title=error_title,
+                                  error_message=error_message,
+                                  show_csrf_error=True), 400
+        except Exception as template_error:
+            app.logger.error(f"Error rendering template: {str(template_error)}")
+            return Response(f"Session expired. Please <a href='/'>return to homepage</a> and try again.", 400, content_type='text/html')
     
     # Check if it's an OpenAI API error related to quota
     is_api_error = False
@@ -133,7 +187,10 @@ def handle_exception(e):
                 return redirect(url_for('journal_blueprint.journal_list')), 302
             except:
                 pass
-        return redirect(url_for('journal_blueprint.journal_list')), 302
+        try:
+            return redirect(url_for('journal_blueprint.journal_list')), 302
+        except:
+            return redirect('/journal'), 302
     else:
         error_title = "Something went wrong"
     
@@ -144,11 +201,36 @@ def handle_exception(e):
         'show_api_error': is_api_error
     }
     
-    # Make sure standard forms are available for templates
-    from forms import JournalEntryForm
-    template_vars['form'] = JournalEntryForm()
-    
-    return render_template('error.html', **template_vars), 500
+    try:
+        return render_template('error.html', **template_vars), 500
+    except Exception as template_error:
+        app.logger.error(f"Error rendering template: {str(template_error)}")
+        emergency_html = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Calm Journey - Error</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+                body {{ font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #1a1a1a; color: #f8f9fa; }}
+                .container {{ max-width: 800px; margin: 40px auto; padding: 20px; background-color: #212529; border-radius: 8px; }}
+                h1 {{ color: #dc3545; }}
+                .btn {{ display: inline-block; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-top: 20px; }}
+                .btn-primary {{ background-color: #0d6efd; color: white; }}
+                .btn-light {{ background-color: #f8f9fa; color: #212529; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>{error_title}</h1>
+                <p>{error_message}</p>
+                <p>We encountered an issue while processing your request. The application is still running normally though.</p>
+                <p><a href="/dashboard" class="btn btn-primary">Go to Dashboard</a> &nbsp; <a href="javascript:history.back()" class="btn btn-light">Go Back</a></p>
+            </div>
+        </body>
+        </html>
+        """
+        return Response(emergency_html, 500, content_type='text/html')
 
 # Create a custom login_required decorator that checks user type
 def login_required(f):
