@@ -285,6 +285,12 @@ def view_journal_entry(entry_id):
     # Create a form object to pass to the template
     form = JournalEntryForm()
     
+    # Debug logging to help identify issues
+    logger.debug(f"Journal entry {entry_id} details:")
+    logger.debug(f"is_analyzed: {entry.is_analyzed}")
+    logger.debug(f"coach_response length: {len(coach_response) if coach_response else 0}")
+    logger.debug(f"coach_response: {coach_response[:100]}...")
+    
     return render_template('journal_entry.html', 
                           title=entry.title, 
                           entry=entry, 
