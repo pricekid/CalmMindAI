@@ -13,12 +13,35 @@
     <style>
         body { 
             background-color: #1a1a1a; 
-            color: #f8f9fa; 
+            color: #ffffff; 
         }
         .card { 
             background-color: #212529; 
-            border: none;
+            border: 1px solid #444;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .form-control, .form-select {
+            background-color: #333 !important;
+            color: #fff !important;
+            border-color: #555 !important;
+        }
+        .form-control:focus, .form-select:focus {
+            background-color: #444 !important;
+            color: #fff !important;
+            border-color: #4e73df !important;
+            box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25) !important;
+        }
+        .form-text {
+            color: #adb5bd !important;
+        }
+        .card-header {
+            background-color: #343a40 !important;
+            border-bottom: 1px solid #444 !important;
+        }
+        .list-group-item {
+            background-color: #2c3034 !important;
+            color: #ffffff !important;
+            border-color: #444 !important;
         }
         .btn-primary {
             background-color: #4e73df;
@@ -28,17 +51,6 @@
             background-color: #2e59d9;
             border-color: #2e59d9;
         }
-        .form-control {
-            background-color: #2a2a2a;
-            border-color: #444;
-            color: #f8f9fa;
-        }
-        .form-control:focus {
-            background-color: #333;
-            color: #fff;
-            border-color: #4e73df;
-            box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
-        }
         .form-check-input {
             background-color: #2a2a2a;
             border-color: #444;
@@ -46,6 +58,22 @@
         .form-check-input:checked {
             background-color: #4e73df;
             border-color: #4e73df;
+        }
+        /* Make alert text more visible */
+        .alert-info {
+            color: #ffffff !important;
+            background-color: #0f3a5f !important;
+            border-color: #0a58ca !important;
+        }
+        /* Make badges more visible */
+        .badge {
+            color: #ffffff !important;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        /* Better contrast for form field borders */
+        select, input, textarea {
+            border: 2px solid #555 !important;
         }
     </style>
 </head>
@@ -203,7 +231,7 @@
                                         <div class="form-text">How often would you like to receive SMS notifications?</div>
                                     </div>
                                     
-                                    <div class="alert alert-info bg-dark text-info border-info">
+                                    <div class="alert alert-info">
                                         <i class="fas fa-info-circle me-2"></i>
                                         Standard SMS rates may apply based on your carrier.
                                     </div>
@@ -295,7 +323,7 @@
                             </ul>
                         </div>
                         
-                        <div class="alert alert-info bg-dark text-white border-info">
+                        <div class="alert alert-info">
                             <i class="fas fa-info-circle me-2"></i>
                             Your information is encrypted and securely stored. We never share your personal data with third parties.
                         </div>
