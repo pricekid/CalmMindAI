@@ -233,7 +233,9 @@ def delete_journal_entry(entry_id):
 def breathing():
     return render_template('breathing.html', title='Breathing Exercise')
 
-# User account management
+# User account management - Now moved to account_routes.py blueprint
+# This is commented out to avoid conflicts with the blueprint version
+"""
 @app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
@@ -301,6 +303,13 @@ def account():
         form.sms_notifications_enabled.data = current_user.sms_notifications_enabled
     
     return render_template('account.html', title='Account', form=form)
+"""
+
+# Redirect /account to the blueprint version
+@app.route('/account')
+@login_required
+def account_redirect():
+    return redirect(url_for('account.account'))
 
 # Log mood
 @app.route('/log_mood', methods=['POST'])
