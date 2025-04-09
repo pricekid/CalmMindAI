@@ -103,8 +103,13 @@ def handle_exception(e):
         # Handle account settings JSON parsing error
         if request.path == '/account':
             app.logger.error(f"Account settings JSON parsing error: {str(e)}")
-            flash("There was an issue updating your account. Please try again.", "warning")
-            return redirect(url_for('account'))
+            error_title = "Account Settings Error"
+            error_message = "There was an issue updating your account. Please try again later or contact support."
+            # Return error page instead of redirecting to avoid redirect loop
+            return render_template('error.html', 
+                                error_title=error_title,
+                                error_message=error_message,
+                                show_dashboard_link=True), 200
             
         # For other routes with JSON parsing errors, show a friendly message
         error_title = "Processing Issue"

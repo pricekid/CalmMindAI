@@ -3844,5 +3844,59 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 4629",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:34:19",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 4629). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-09 15:34:20",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 7902",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:34:20",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 7cab0e71ee43 at 2025-04-09 15:34:20.432365",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:34:21",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-09 15:34:21.107913",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:34:21",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-09 15:34:21.112471",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:34:21",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:34:27",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 7902",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:34:41",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 7902",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:35:10",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 7902",
+    "success": true
   }
 ]

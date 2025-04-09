@@ -8,6 +8,8 @@ from openai_service import analyze_journal_entry, generate_coping_statement
 from werkzeug.security import check_password_hash
 from sqlalchemy import desc
 import logging
+import traceback
+import json
 from datetime import datetime, timedelta
 
 # Home page
@@ -238,33 +240,55 @@ def account():
     import logging
     logging.getLogger().setLevel(logging.DEBUG)
     
+    # Add detailed debug information for troubleshooting
+    logging.debug("------ ACCOUNT SETTINGS DEBUG ------")
+    logging.debug(f"Current user: {current_user.id} - {current_user.username}")
+    
     form = AccountUpdateForm(current_user.username, current_user.email)
     
     if form.validate_on_submit():
         try:
-            # Verify current password
-            if not current_user.check_password(form.current_password.data):
+            # Verify current password with explicit debugging
+            logging.debug("Checking password...")
+            password_valid = current_user.check_password(form.current_password.data)
+            logging.debug(f"Password valid: {password_valid}")
+            
+            if not password_valid:
                 flash('Current password is incorrect.', 'danger')
                 return render_template('account.html', title='Account', form=form)
             
             # Log before updating
             logging.debug(f"Updating user: {current_user.id}, {current_user.username}")
             
-            current_user.username = form.username.data
-            current_user.email = form.email.data.lower() if form.email.data else current_user.email
+            # Handle form data with safety checks
+            username = form.username.data
+            email = form.email.data.lower() if form.email.data else current_user.email
             
-            # Update email notification settings 
-            current_user.notifications_enabled = form.notifications_enabled.data
+            # Debug display the data being used
+            logging.debug(f"New username: {username}")
+            logging.debug(f"New email: {email}")
+            
+            # Update basic info
+            current_user.username = username
+            current_user.email = email
+            
+            # Update email notification settings with safety check
+            current_user.notifications_enabled = bool(form.notifications_enabled.data)
+            logging.debug(f"Email notifications: {current_user.notifications_enabled}")
             
             # Update SMS notification settings (handle potential None values)
             current_user.phone_number = form.phone_number.data if form.phone_number.data else None
-            current_user.sms_notifications_enabled = form.sms_notifications_enabled.data
+            current_user.sms_notifications_enabled = bool(form.sms_notifications_enabled.data)
+            logging.debug(f"Phone number: {current_user.phone_number}")
+            logging.debug(f"SMS notifications: {current_user.sms_notifications_enabled}")
             
             # Update password if provided
             if form.new_password.data:
+                logging.debug("Setting new password")
                 current_user.set_password(form.new_password.data)
             
             db.session.commit()
+            logging.debug("Account updated successfully")
             flash('Your account has been updated!', 'success')
             return redirect(url_for('account'))
         except Exception as e:
