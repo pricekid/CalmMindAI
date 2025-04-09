@@ -3850,5 +3850,17 @@
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-09 21:47:30",
+    "type": "health_check",
+    "message": "Scheduler running with PID 457 at 2025-04-09 21:47:30",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 21:48:01",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 457",
+    "success": true
   }
 ]

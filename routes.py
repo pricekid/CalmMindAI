@@ -235,40 +235,55 @@ def breathing():
 @app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
-    form = AccountUpdateForm(current_user.username, current_user.email)
-    
-    if form.validate_on_submit():
-        # Verify current password
-        if not current_user.check_password(form.current_password.data):
-            flash('Current password is incorrect.', 'danger')
-            return render_template('account.html', title='Account', form=form)
+    try:
+        form = AccountUpdateForm(current_user.username, current_user.email)
         
-        current_user.username = form.username.data
-        current_user.email = form.email.data.lower()
+        if form.validate_on_submit():
+            # Verify current password
+            if not current_user.check_password(form.current_password.data):
+                flash('Current password is incorrect.', 'danger')
+                return render_template('account.html', title='Account', form=form)
+            
+            current_user.username = form.username.data
+            current_user.email = form.email.data.lower()
+            
+            # Update email notification settings
+            current_user.notifications_enabled = form.notifications_enabled.data
+            
+            # Update SMS notification settings
+            current_user.phone_number = form.phone_number.data
+            current_user.sms_notifications_enabled = form.sms_notifications_enabled.data
+            
+            # Update password if provided
+            if form.new_password.data:
+                current_user.set_password(form.new_password.data)
+            
+            try:
+                db.session.commit()
+                flash('Your account has been updated!', 'success')
+                return redirect(url_for('account'))
+            except Exception as e:
+                db.session.rollback()
+                app.logger.error(f"Database error updating account: {str(e)}")
+                flash('An error occurred while updating your account. Please try again.', 'danger')
         
-        # Update email notification settings
-        current_user.notifications_enabled = form.notifications_enabled.data
+        elif request.method == 'GET':
+            form.username.data = current_user.username
+            form.email.data = current_user.email
+            form.notifications_enabled.data = current_user.notifications_enabled
+            form.phone_number.data = current_user.phone_number
+            form.sms_notifications_enabled.data = current_user.sms_notifications_enabled
         
-        # Update SMS notification settings
-        current_user.phone_number = form.phone_number.data
-        current_user.sms_notifications_enabled = form.sms_notifications_enabled.data
+        return render_template('account.html', title='Account', form=form)
         
-        # Update password if provided
-        if form.new_password.data:
-            current_user.set_password(form.new_password.data)
-        
-        db.session.commit()
-        flash('Your account has been updated!', 'success')
-        return redirect(url_for('account'))
-    
-    elif request.method == 'GET':
-        form.username.data = current_user.username
-        form.email.data = current_user.email
-        form.notifications_enabled.data = current_user.notifications_enabled
-        form.phone_number.data = current_user.phone_number
-        form.sms_notifications_enabled.data = current_user.sms_notifications_enabled
-    
-    return render_template('account.html', title='Account', form=form)
+    except Exception as e:
+        app.logger.error(f"Account settings error: {str(e)}")
+        flash('There was an issue updating your account information.', 'danger')
+        return render_template('error.html', 
+                              title='Account Settings Error',
+                              error_title="Something went wrong",
+                              error_message="There was an issue updating your account information.",
+                              suggestion="This is likely caused by a temporary data issue. You can try refreshing the page or logging out and back in.")
 
 # Log mood
 @app.route('/log_mood', methods=['POST'])

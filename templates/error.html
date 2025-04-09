@@ -1,43 +1,45 @@
 {% extends "layout.html" %}
 
+{% block title %}{{ title }}{% endblock %}
+
 {% block content %}
-<div class="container py-5">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card shadow">
-        <div class="card-header bg-danger text-white">
-          <h2 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Error</h2>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow bg-dark mb-4">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ error_title }}
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <p class="lead">{{ error_message }}</p>
+                    
+                    {% if suggestion %}
+                    <div class="alert alert-info mt-4">
+                        <h5>Suggestion</h5>
+                        <p>{{ suggestion }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if data_error %}
+                    <div class="alert alert-warning mt-4">
+                        <h5>Data Error</h5>
+                        <p>{{ data_error }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-outline-light">
+                            <i class="bi bi-arrow-left"></i> Go to Dashboard
+                        </a>
+                        <a href="{{ url_for('login') }}" class="btn btn-outline-primary">
+                            <i class="bi bi-box-arrow-in-right"></i> Go Back
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-          <h4 class="card-title mb-4">{{ error_title|default('Something went wrong') }}</h4>
-          
-          <p class="card-text">{{ error_message|default('An error occurred while processing your request.') }}</p>
-          
-          {% if show_api_error %}
-          <div class="alert alert-info">
-            <h5>API Quota Exceeded</h5>
-            <p>The AI analysis features are currently unavailable due to API usage limits. Your data has been saved, and you can continue using the app, but AI-powered analysis will be temporarily unavailable.</p>
-          </div>
-          {% endif %}
-          
-          {% if show_csrf_error %}
-          <div class="alert alert-warning">
-            <h5>Session Expired</h5>
-            <p>Your session has expired. This usually happens when a form has been open for too long before submitting. Please refresh the page and try again.</p>
-          </div>
-          {% endif %}
-          
-          <div class="mt-4">
-            <a href="{{ url_for('dashboard') }}" class="btn btn-primary me-2">
-              <i class="fas fa-home me-1"></i>Go to Dashboard
-            </a>
-            <a href="javascript:history.back()" class="btn btn-secondary">
-              <i class="fas fa-arrow-left me-1"></i>Go Back
-            </a>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 {% endblock %}
