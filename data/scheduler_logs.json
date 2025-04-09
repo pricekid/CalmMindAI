@@ -3958,5 +3958,11 @@
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-09 22:09:04",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2614",
+    "success": true
   }
 ]
