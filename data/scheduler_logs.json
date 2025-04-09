@@ -2962,5 +2962,41 @@
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-09 10:30:45",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 160). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-09 10:30:46",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 164",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 10:30:46",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 7cab0e71ee43 at 2025-04-09 10:30:46.485227",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 10:30:46",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-09 10:30:46.879888",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 10:30:46",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-09 10:30:46.883097",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 10:30:46",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
   }
 ]
