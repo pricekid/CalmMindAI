@@ -235,31 +235,43 @@ def breathing():
 @app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
+    import logging
+    logging.getLogger().setLevel(logging.DEBUG)
+    
     form = AccountUpdateForm(current_user.username, current_user.email)
     
     if form.validate_on_submit():
-        # Verify current password
-        if not current_user.check_password(form.current_password.data):
-            flash('Current password is incorrect.', 'danger')
+        try:
+            # Verify current password
+            if not current_user.check_password(form.current_password.data):
+                flash('Current password is incorrect.', 'danger')
+                return render_template('account.html', title='Account', form=form)
+            
+            # Log before updating
+            logging.debug(f"Updating user: {current_user.id}, {current_user.username}")
+            
+            current_user.username = form.username.data
+            current_user.email = form.email.data.lower() if form.email.data else current_user.email
+            
+            # Update email notification settings 
+            current_user.notifications_enabled = form.notifications_enabled.data
+            
+            # Update SMS notification settings (handle potential None values)
+            current_user.phone_number = form.phone_number.data if form.phone_number.data else None
+            current_user.sms_notifications_enabled = form.sms_notifications_enabled.data
+            
+            # Update password if provided
+            if form.new_password.data:
+                current_user.set_password(form.new_password.data)
+            
+            db.session.commit()
+            flash('Your account has been updated!', 'success')
+            return redirect(url_for('account'))
+        except Exception as e:
+            db.session.rollback()
+            logging.error(f"Error updating account: {str(e)}")
+            flash('There was an error updating your account. Please try again.', 'danger')
             return render_template('account.html', title='Account', form=form)
-        
-        current_user.username = form.username.data
-        current_user.email = form.email.data.lower()
-        
-        # Update email notification settings
-        current_user.notifications_enabled = form.notifications_enabled.data
-        
-        # Update SMS notification settings
-        current_user.phone_number = form.phone_number.data
-        current_user.sms_notifications_enabled = form.sms_notifications_enabled.data
-        
-        # Update password if provided
-        if form.new_password.data:
-            current_user.set_password(form.new_password.data)
-        
-        db.session.commit()
-        flash('Your account has been updated!', 'success')
-        return redirect(url_for('account'))
     
     elif request.method == 'GET':
         form.username.data = current_user.username
