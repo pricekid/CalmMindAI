@@ -299,15 +299,16 @@ def generate_journaling_coach_response(entry):
         
         # Provide different messages based on error type
         if "API_QUOTA_EXCEEDED" in error_msg:
-            return "Hi, this is Mira. Thank you for sharing your thoughts today. While I can't provide a personalized response right now due to technical limitations, your entry has been saved. Mira believes that the act of journaling itself is a powerful tool for self-reflection and growth."
+            return "Hi, this is Mira. Thank you for sharing your thoughts today. While I can't provide a personalized response right now due to technical limitations, your entry has been saved. Mira believes that the act of journaling itself is a powerful tool for self-reflection and growth.\n\nWarmly,\nCoach Mira"
         elif "INVALID_API_KEY" in error_msg:
-            return "This is Mira, and I appreciate you taking the time to journal today. Your entry has been saved, though I'm unable to provide specific feedback at the moment. Mira wants you to know that the practice of putting your thoughts into words is valuable in itself."
+            return "This is Mira, and I appreciate you taking the time to journal today. Your entry has been saved, though I'm unable to provide specific feedback at the moment. Mira wants you to know that the practice of putting your thoughts into words is valuable in itself.\n\nWarmly,\nCoach Mira"
         else:
-            return "Mira here. Thank you for sharing your journal entry. Although I can't offer specific insights right now, the process of writing down your thoughts is an important step in your wellness journey. Your entry has been saved successfully."
+            return "Mira here. Thank you for sharing your journal entry. Although I can't offer specific insights right now, the process of writing down your thoughts is an important step in your wellness journey. Your entry has been saved successfully.\n\nWarmly,\nCoach Mira"
 
 def tone_check(response):
     """
-    A simple function to ensure the coach's response maintains a warm, supportive tone.
+    A simple function to ensure the coach's response maintains a warm, supportive tone
+    and always includes the Coach Mira signature.
     """
     # List of warm, encouraging phrases to potentially add if tone seems clinical
     warm_openers = [
@@ -321,6 +322,12 @@ def tone_check(response):
         import random
         response = random.choice(warm_openers) + response
     
+    # Add signature if it doesn't already exist
+    if not "Warmly,\nCoach Mira" in response:
+        if not response.endswith("\n\n"):
+            response += "\n\n"
+        response += "Warmly,\nCoach Mira"
+    
     return response
 
 def generate_coping_statement(anxiety_context):
@@ -331,7 +338,7 @@ def generate_coping_statement(anxiety_context):
     do not change this unless explicitly requested by the user
     """
     # First, provide a fallback statement in case we need it
-    fallback_statement = "Mira suggests: Take a moment to breathe deeply. Remember that your thoughts don't define you, and this feeling will pass."
+    fallback_statement = "Mira suggests: Take a moment to breathe deeply. Remember that your thoughts don't define you, and this feeling will pass.\n\nWarmly,\nCoach Mira"
     
     # Safety check for empty context
     if not anxiety_context or anxiety_context.strip() == "":
@@ -410,6 +417,12 @@ def generate_coping_statement(anxiety_context):
                 # Ensure it starts with "Mira suggests:" if it doesn't already
                 if not content.startswith("Mira suggests:") and not content.startswith("Mira's suggestion:"):
                     content = f"Mira suggests: {content}"
+                
+                # Add signature if it doesn't already exist
+                if not "Warmly,\nCoach Mira" in content:
+                    if not content.endswith("\n\n"):
+                        content += "\n\n"
+                    content += "Warmly,\nCoach Mira"
                 
                 # Return the final content
                 return content
