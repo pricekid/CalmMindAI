@@ -129,7 +129,7 @@
                                     
                                     <div class="mb-3">
                                         <label for="notification_time" class="form-label">Preferred Notification Time</label>
-                                        <select class="form-select bg-dark text-light border-secondary" id="notification_time" name="notification_time">
+                                        <select class="form-select bg-dark text-white border-secondary" id="notification_time" name="notification_time">
                                             <option value="morning" selected>Morning (6:00 - 9:00 AM)</option>
                                             <option value="afternoon">Afternoon (12:00 - 3:00 PM)</option>
                                             <option value="evening">Evening (6:00 - 9:00 PM)</option>
@@ -139,7 +139,7 @@
                                     
                                     <div class="mb-3">
                                         <label for="notification_frequency" class="form-label">Notification Frequency</label>
-                                        <select class="form-select bg-dark text-light border-secondary" id="notification_frequency" name="notification_frequency">
+                                        <select class="form-select bg-dark text-white border-secondary" id="notification_frequency" name="notification_frequency">
                                             <option value="daily" selected>Daily</option>
                                             <option value="workdays">Weekdays only</option>
                                             <option value="weekly">Weekly</option>
@@ -182,7 +182,7 @@
                                 <div class="card-body">
                                     <div class="mb-3">
                                         <label for="phone_number" class="form-label">Phone Number (with country code, e.g. +1234567890)</label>
-                                        <input type="tel" class="form-control bg-dark text-light border-secondary" id="phone_number" name="phone_number" value="{{ form['phone_number']['data'] or '' }}">
+                                        <input type="tel" class="form-control bg-dark text-white border-secondary" id="phone_number" name="phone_number" value="{{ form['phone_number']['data'] or '' }}">
                                         <div class="form-text">Enter your phone number with country code (e.g., +1234567890)</div>
                                     </div>
                                     
@@ -194,7 +194,7 @@
                                     
                                     <div class="mb-3">
                                         <label for="sms_frequency" class="form-label">SMS Frequency</label>
-                                        <select class="form-select bg-dark text-light border-secondary" id="sms_frequency" name="sms_frequency">
+                                        <select class="form-select bg-dark text-white border-secondary" id="sms_frequency" name="sms_frequency">
                                             <option value="daily" selected>Daily</option>
                                             <option value="workdays">Weekdays only</option>
                                             <option value="weekly">Weekly</option>
@@ -212,7 +212,7 @@
                             
                             <hr class="my-4">
                             <h5>Change Password</h5>
-                            <p class="text-muted mb-3">Leave the new password fields blank if you don't want to change it</p>
+                            <p class="text-white-50 mb-3">Leave the new password fields blank if you don't want to change it</p>
                             
                             <div class="mb-3">
                                 <label for="current_password" class="form-label">Current Password</label>
@@ -263,15 +263,15 @@
                         <div class="mb-3">
                             <h5>Account Statistics</h5>
                             <ul class="list-group list-group-flush bg-dark">
-                                <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-light border-secondary">
+                                <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white border-secondary">
                                     Total Journal Entries
                                     <span class="badge bg-primary rounded-pill">{{ stats.journal_count if stats is defined else 0 }}</span>
                                 </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-light border-secondary">
+                                <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white border-secondary">
                                     Mood Logs
                                     <span class="badge bg-primary rounded-pill">{{ stats.mood_count if stats is defined else 0 }}</span>
                                 </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-light border-secondary">
+                                <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white border-secondary">
                                     Member Since
                                     <span class="badge bg-secondary">{{ stats.member_since if stats is defined else 'N/A' }}</span>
                                 </li>
@@ -295,7 +295,7 @@
                             </ul>
                         </div>
                         
-                        <div class="alert alert-info">
+                        <div class="alert alert-info bg-dark text-white border-info">
                             <i class="fas fa-info-circle me-2"></i>
                             Your information is encrypted and securely stored. We never share your personal data with third parties.
                         </div>
@@ -316,7 +316,7 @@
             <hr class="mt-3 mb-3">
             <div class="row">
                 <div class="col-12">
-                    <p class="small text-muted mb-0">
+                    <p class="small text-white-50 mb-0">
                         This application is designed to support mental health, but does not replace professional medical advice.
                         <br>If you are experiencing a mental health emergency, please contact your local emergency services.
                     </p>

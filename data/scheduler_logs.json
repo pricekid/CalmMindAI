@@ -4036,5 +4036,53 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 2614",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-09 22:27:50",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2614 at 2025-04-09 22:27:50",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 22:32:50",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2614 at 2025-04-09 22:32:50",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 22:35:59",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-09 22:35:59.381975",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 22:35:59",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 22:37:50",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2614 at 2025-04-09 22:37:50",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 22:42:50",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2614 at 2025-04-09 22:42:50",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 22:47:50",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2614 at 2025-04-09 22:47:50",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 22:52:50",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2614 at 2025-04-09 22:52:50",
+    "success": true
   }
 ]
