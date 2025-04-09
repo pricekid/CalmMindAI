@@ -3394,5 +3394,65 @@
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-09 12:47:06",
+    "type": "health_check",
+    "message": "Scheduler running with PID 3960 at 2025-04-09 12:47:06",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 12:52:06",
+    "type": "health_check",
+    "message": "Scheduler running with PID 3960 at 2025-04-09 12:52:06",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 12:57:06",
+    "type": "health_check",
+    "message": "Scheduler running with PID 3960 at 2025-04-09 12:57:06",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 13:02:06",
+    "type": "health_check",
+    "message": "Scheduler running with PID 3960 at 2025-04-09 13:02:06",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 13:07:06",
+    "type": "health_check",
+    "message": "Scheduler running with PID 3960 at 2025-04-09 13:07:06",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 13:12:06",
+    "type": "health_check",
+    "message": "Scheduler running with PID 3960 at 2025-04-09 13:12:06",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 13:12:08",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-09 13:12:08.087889",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 13:12:08",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 13:15:40",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 3960",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 13:15:50",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 3960",
+    "success": true
   }
 ]

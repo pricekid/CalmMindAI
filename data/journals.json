@@ -3217,17 +3217,63 @@
     "created_at": "2025-04-09T12:38:11.491261",
     "updated_at": "2025-04-09T12:38:14.769923",
     "is_analyzed": true,
-    "gpt_response": "It's great that you're recognizing these feelings and taking a step back to understand why they arise. This awareness is the first step towards making meaningful changes. Remember, it's okay to set boundaries and prioritize your well-being.\n\n- All-or-Nothing Thinking: This pattern makes you view situations in black-and-white terms, like seeing yourself as either selfish or reliable, with no in-between. Recognizing the gray areas can help you find a balance.\n- Overcommitment: Taking on too much at once can leave you feeling overwhelmed and drained. It's important to assess your capacity and practice saying no when necessary.\n\nTry practicing saying 'Let me think about it and get back to you' when asked to take on additional tasks.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
+    "gpt_response": "It's great that you're recognizing the pattern of overcommitting, which is an important step toward making changes. This shows self-awareness and a desire to grow, both of which are very positive traits. Remember, it's okay to prioritize your own needs and set boundaries.\n\n- Overcommitment: This pattern involves taking on too many responsibilities, often due to a fear of appearing selfish or unreliable. It can lead to feeling overwhelmed and drained because your own needs are sidelined. Practice saying \"no\" to smaller requests to build confidence in setting boundaries.\n\n- All-or-Nothing Thinking: This distortion involves seeing situations in black-and-white terms, like feeling you're either selfish or completely helpful. It can create unnecessary pressure and stress. Challenge this by identifying a middle ground where you can help others while respecting your limits.\n\nConsider practicing saying \"I need to finish my current work first\" as a way to set boundaries with confidence.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Overcommitment",
+        "description": "This pattern involves taking on too many responsibilities, often due to a fear of appearing selfish or unreliable. It can lead to feeling overwhelmed and drained because your own needs are sidelined.",
+        "recommendation": "Practice saying \"no\" to smaller requests to build confidence in setting boundaries."
+      },
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "This distortion involves seeing situations in black-and-white terms, like feeling you're either selfish or completely helpful. It can create unnecessary pressure and stress.",
+        "recommendation": "Challenge this by identifying a middle ground where you can help others while respecting your limits."
+      }
+    ]
+  },
+  {
+    "id": 147,
+    "user_id": 1,
+    "title": "why me",
+    "content": " told myself I wouldn\u2019t take on anything extra this week, but when a colleague asked for help with their project, I said yes anyway. Now I\u2019m feeling overwhelmed, behind on my own work, and frustrated with myself for not setting a boundary. I didn\u2019t want to seem selfish or unreliable, but now I just feel drained. Why do I keep doing this to myself?",
+    "anxiety_level": 6,
+    "created_at": "2025-04-09T12:43:38.738942",
+    "updated_at": "2025-04-09T12:43:42.920317",
+    "is_analyzed": true,
+    "gpt_response": "It's great that you are reflecting on your feelings and recognizing the impact of overcommitting. This awareness is an important first step toward making positive changes.\n\n- All-or-Nothing Thinking: This pattern involves seeing situations in only two categories instead of on a continuum. It can make you feel like you either have to help everyone or no one at all.\n- Overcommitment: Taking on too much often stems from a desire to please others, but it can lead to stress and exhaustion, affecting your own priorities.\n\nTry practicing saying 'no' gently but firmly, and remind yourself that setting boundaries is a form of self-care.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
     "cbt_patterns": [
       {
         "pattern": "All-or-Nothing Thinking",
-        "description": "This pattern makes you view situations in black-and-white terms, like seeing yourself as either selfish or reliable, with no in-between.",
-        "recommendation": "Recognizing the gray areas can help you find a balance."
+        "description": "This pattern involves seeing situations in only two categories instead of on a continuum. It can make you feel like you either have to help everyone or no one at all.",
+        "recommendation": "Try recognizing the middle ground by setting small, manageable boundaries."
       },
       {
         "pattern": "Overcommitment",
-        "description": "Taking on too much at once can leave you feeling overwhelmed and drained.",
-        "recommendation": "It's important to assess your capacity and practice saying no when necessary."
+        "description": "Taking on too much often stems from a desire to please others, but it can lead to stress and exhaustion, affecting your own priorities.",
+        "recommendation": "Practice saying 'no' to maintain balance and focus on your own tasks."
+      }
+    ]
+  },
+  {
+    "id": 148,
+    "user_id": 1,
+    "title": "why me 2",
+    "content": "old myself I wouldn\u2019t take on anything extra this week, but when a colleague asked for help with their project, I said yes anyway. Now I\u2019m feeling overwhelmed, behind on my own work, and frustrated with myself for not setting a boundary. I didn\u2019t want to seem selfish or unreliable, but now I just feel drained. Why do I keep doing this to myself?",
+    "anxiety_level": 6,
+    "created_at": "2025-04-09T13:11:34.660730",
+    "updated_at": "2025-04-09T13:11:40.655347",
+    "is_analyzed": true,
+    "gpt_response": "It's great that you're aware of how taking on extra tasks affects you. This awareness is a solid step toward making changes that support your well-being. Remember, it's okay to prioritize your own needs.\n\n- **Overcommitment**: It's common to want to help others, but overcommitting can lead to feeling overwhelmed and drained. Learning to set boundaries can help protect your time and energy.\n- **All-or-Nothing Thinking**: This can occur when you think helping others means neglecting your own needs. Remember, you can be supportive and still prioritize your tasks.\n\nConsider practicing saying 'no' in a kind, assertive way, or offer help when it fits your schedule better.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Overcommitment",
+        "description": "It's common to want to help others, but overcommitting can lead to feeling overwhelmed and drained. Learning to set boundaries can help protect your time and energy.",
+        "recommendation": "Practice saying 'no' in a kind, assertive way, or offer help when it fits your schedule better."
+      },
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "This can occur when you think helping others means neglecting your own needs. Remember, you can be supportive and still prioritize your tasks.",
+        "recommendation": "Reflect on how you can support others while still taking care of your own responsibilities."
       }
     ]
   }
