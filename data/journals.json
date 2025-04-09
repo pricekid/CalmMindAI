@@ -3299,5 +3299,28 @@
         "recommendation": "Consider setting a small goal, like attending for just an hour, to reduce pressure and maintain your boundaries."
       }
     ]
+  },
+  {
+    "id": 150,
+    "user_id": 1,
+    "title": "yes all the time",
+    "content": "I told myself I wouldn\u2019t take on anything extra this week, but when a colleague asked for help with their project, I said yes anyway. Now I\u2019m feeling overwhelmed, behind on my own work, and frustrated with myself for not setting a boundary. I didn\u2019t want to seem selfish or unreliable, but now I just feel drained. Why do I keep doing this to myself?",
+    "anxiety_level": 6,
+    "created_at": "2025-04-09T13:33:50.537294",
+    "updated_at": "2025-04-09T13:33:56.958139",
+    "is_analyzed": true,
+    "gpt_response": "It's great that you're recognizing how these situations make you feel and that you're reflecting on your response. This awareness is the first step towards making positive changes. You're showing courage by looking into these patterns, and that's something to commend.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Overcommitment",
+        "description": "Overcommitment happens when you agree to more than you can realistically handle, often because of a desire to help or fear of saying no. It can lead to feeling overwhelmed and stressed, as you've experienced.",
+        "recommendation": "Practice saying no by setting small boundaries, even in low-stakes situations, to build confidence."
+      },
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "This pattern involves seeing things in black-and-white terms, such as viewing yourself as either completely reliable or entirely selfish. It can be helpful to remember that setting boundaries is not selfish, but a necessary part of self-care.",
+        "recommendation": "Challenge this thinking by finding a middle ground, like considering how setting limits can actually improve your reliability."
+      }
+    ]
   }
 ]
