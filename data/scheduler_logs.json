@@ -3208,5 +3208,23 @@
     "type": "health_check",
     "message": "Scheduler running with PID 164 at 2025-04-09 12:02:04",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-09 12:07:04",
+    "type": "health_check",
+    "message": "Scheduler running with PID 164 at 2025-04-09 12:07:04",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 12:10:21",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 164",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 12:10:33",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 164",
+    "success": true
   }
 ]

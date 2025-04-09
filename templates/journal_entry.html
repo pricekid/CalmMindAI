@@ -126,9 +126,9 @@
                         <i class="bi bi-arrow-repeat"></i> Refresh Analysis
                     </button>
                 </div>
-                <div class="card-body" style="background-color: white;">
-                    <div id="analysis-content" style="background-color: white; color: #212529; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef;">
-                        {{ coach_response | safe }}
+                <div class="card-body" style="background-color: white !important;">
+                    <div id="analysis-content" style="background-color: white !important; color: #212529 !important; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef;">
+                        <span style="color: black !important; background-color: white !important;">{{ coach_response | safe }}</span>
                     </div>
                     
                     <!-- Placeholder for AI coaching button -->
@@ -306,7 +306,10 @@
                         if (data.success) {
                             // Show coach response area and populate it
                             document.getElementById('coach-response').style.display = 'block';
-                            document.getElementById('coach-message').innerHTML = data.response;
+                            const coachMessage = document.getElementById('coach-message');
+                            coachMessage.innerHTML = data.response;
+                            coachMessage.style.color = 'black';
+                            coachMessage.style.backgroundColor = 'white';
                             
                             // Reset button
                             this.innerHTML = '<i class="bi bi-chat-dots"></i> Ask Mira Again';

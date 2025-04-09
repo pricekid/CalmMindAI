@@ -291,12 +291,15 @@ def view_journal_entry(entry_id):
     logger.debug(f"coach_response length: {len(coach_response) if coach_response else 0}")
     logger.debug(f"coach_response: {coach_response[:100]}...")
     
+    # Wrap the coach response in styled HTML to ensure it's visible
+    styled_coach_response = f'<div style="color: #000000;">{coach_response}</div>'
+    
     return render_template('journal_entry.html', 
                           title=entry.title, 
                           entry=entry, 
                           form=form,
                           view_only=True, 
-                          coach_response=coach_response,
+                          coach_response=styled_coach_response,
                           recurring_patterns=recurring_patterns,
                           show_call_button=show_call_button)
 
@@ -471,7 +474,10 @@ def api_journal_coach(entry_id):
             else:
                 coach_response = "Thank you for sharing your journal entry. Although I can't offer specific insights right now, the process of writing down your thoughts is an important step in your wellness journey."
     
-    return jsonify({'success': True, 'response': coach_response})
+    # Style the response for better visibility
+    styled_coach_response = f'<div style="color: #000000; font-weight: normal; background-color: white;">{coach_response}</div>'
+    
+    return jsonify({'success': True, 'response': styled_coach_response})
 
 # API endpoint for analyzing a journal entry
 @journal_bp.route('/api/analyze-entry/<int:entry_id>', methods=['GET', 'POST'])
