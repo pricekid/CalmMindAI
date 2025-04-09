@@ -130,12 +130,6 @@
                     <div id="analysis-content" style="background-color: white !important; color: #212529 !important; padding: 20px; border-radius: 8px; border: 1px solid #e9ecef; line-height: 1.6;">
                         <div class="coach-insights">
                             {{ coach_response | safe }}
-                            {% if "Warmly," not in coach_response and "Coach Mira" not in coach_response %}
-                            <p class="mt-4">
-                                <br>Warmly,<br>
-                                Coach Mira
-                            </p>
-                            {% endif %}
                         </div>
                     </div>
                     

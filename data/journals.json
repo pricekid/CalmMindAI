@@ -3322,5 +3322,28 @@
         "recommendation": "Boundary Setting: Practice saying no gently but firmly to maintain your own priorities."
       }
     ]
+  },
+  {
+    "id": 151,
+    "user_id": 1,
+    "title": "test12",
+    "content": "just testing. thanks",
+    "anxiety_level": 1,
+    "created_at": "2025-04-09T15:04:51.612805",
+    "updated_at": "2025-04-09T15:05:55.031988",
+    "is_analyzed": true,
+    "gpt_response": "Hey there! Thanks for taking a moment to check in and share your thoughts, even if it's just a quick 'test.' Every small step in this journey counts, and I\u2019m glad you're here.\n\nEven a simple entry like this shows that you\u2019re engaging with your feelings and habits, which is a great way to stay aware and mindful. It\u2019s like keeping a pulse on your mental space. \n\nFrom what you've shared before, there are some thought patterns that might pop up more often:\n\nAll-or-Nothing Thinking: This is when things are seen in black or white, with no middle ground. It can make you feel like you're either totally on top of things or completely off track.\nOvercommitment: Sometimes taking on too much can leave you feeling stretched thin, making relaxation feel like another task on your to-do list.\n\nHere are a few gentle strategies that might help:\n\nThought Reframing: When all-or-nothing thinking kicks in, try to find a middle ground. Instead of \"I have to do it all perfectly,\" how about \"I\u2019ll focus on doing my best with what I can today.\"\nBoundary Setting: With overcommitment, maybe take a moment to prioritize. Could you write down one or two things that are most important today and give yourself permission to let the rest wait?\n\nAnd here's a little reflection prompt for you:\n\"What's one small thing I can do today that would bring me joy or relaxation, even if just for a few minutes?\"\n\nRemember, you\u2019re doing some seriously valuable work by checking in with yourself. Keep being kind to yourself \u2014 you deserve it.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n\n\nWarmly,\nCoach Mira",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "This is when things are seen in black or white, with no middle ground. It can make you feel like you're either totally on top of things or completely off track.",
+        "recommendation": "Thought Reframing: When all-or-nothing thinking kicks in, try to find a middle ground. Instead of \"I have to do it all perfectly,\" how about \"I\u2019ll focus on doing my best with what I can today.\""
+      },
+      {
+        "pattern": "Overcommitment",
+        "description": "Sometimes taking on too much can leave you feeling stretched thin, making relaxation feel like another task on your to-do list.",
+        "recommendation": "Boundary Setting: With overcommitment, maybe take a moment to prioritize. Could you write down one or two things that are most important today and give yourself permission to let the rest wait?"
+      }
+    ]
   }
 ]

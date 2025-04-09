@@ -3766,5 +3766,47 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 4629",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:44:58",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 4629). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-09 15:44:59",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 9505",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:44:59",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 7cab0e71ee43 at 2025-04-09 15:44:59.107105",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:44:59",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-09 15:44:59.838590",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:44:59",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-09 15:44:59.844003",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:44:59",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 15:47:21",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 9505",
+    "success": true
   }
 ]
