@@ -1,26 +1,17 @@
 {% extends "layout.html" %}
 
-{% block title %}{{ title|default('Error') }} - Calm Journey{% endblock %}
-
 {% block content %}
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card shadow">
         <div class="card-header bg-danger text-white">
-          <h2 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>{{ title|default('Error') }}</h2>
+          <h2 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Error</h2>
         </div>
         <div class="card-body">
           <h4 class="card-title mb-4">{{ error_title|default('Something went wrong') }}</h4>
           
-          <p class="card-text">{{ error|default('An error occurred while processing your request.') }}</p>
-          
-          {% if suggestion %}
-          <div class="alert alert-info mt-3">
-            <h5>Suggestion</h5>
-            <p>{{ suggestion }}</p>
-          </div>
-          {% endif %}
+          <p class="card-text">{{ error_message|default('An error occurred while processing your request.') }}</p>
           
           {% if show_api_error %}
           <div class="alert alert-info">
@@ -36,19 +27,10 @@
           </div>
           {% endif %}
           
-          {% if show_json_error %}
-          <div class="alert alert-warning">
-            <h5>Data Error</h5>
-            <p>There was an error processing some data. This might be caused by corrupted files. Try refreshing the page or logging out and back in.</p>
-          </div>
-          {% endif %}
-          
           <div class="mt-4">
-            {% if show_dashboard_link or show_dashboard_link is not defined %}
             <a href="{{ url_for('dashboard') }}" class="btn btn-primary me-2">
               <i class="fas fa-home me-1"></i>Go to Dashboard
             </a>
-            {% endif %}
             <a href="javascript:history.back()" class="btn btn-secondary">
               <i class="fas fa-arrow-left me-1"></i>Go Back
             </a>

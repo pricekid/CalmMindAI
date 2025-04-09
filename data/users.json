@@ -1,1 +1,142 @@
-[]
+[
+  {
+    "id": 2,
+    "username": "Jeff Peter",
+    "email": "naturalarts@gmail.com",
+    "created_at": "2025-03-29T17:47:28.712804",
+    "entry_count": 4
+  },
+  {
+    "id": 3,
+    "username": "Ms. Stressless",
+    "email": "jacqueline12006@yahoo.com",
+    "created_at": "2025-03-29T19:46:56.531856",
+    "entry_count": 6
+  },
+  {
+    "id": 5,
+    "username": "Don",
+    "email": "ken.maycock@gmail.com",
+    "created_at": "2025-03-29T20:24:45.037986",
+    "entry_count": 29
+  },
+  {
+    "id": 6,
+    "username": "Peaceful ",
+    "email": "josiahjosey6@gmail.com",
+    "created_at": "2025-03-30T00:29:25.401807",
+    "entry_count": 3
+  },
+  {
+    "id": 8,
+    "username": "Naturalarts",
+    "email": "naturalarts2@gmail.com",
+    "created_at": "2025-03-30T02:17:35.738188",
+    "entry_count": 0
+  },
+  {
+    "id": 4,
+    "username": "Nicole Scott",
+    "email": "nscott392@yahoo.com",
+    "created_at": "2025-03-29T20:15:18.541715",
+    "entry_count": 5
+  },
+  {
+    "id": 7,
+    "username": "monique22004",
+    "email": "tonia.chapman246@gmail.com",
+    "created_at": "2025-03-30T01:55:52.019665",
+    "entry_count": 4
+  },
+  {
+    "id": 9,
+    "username": "Terry john",
+    "email": "naturalarts@hotmail.com",
+    "created_at": "2025-03-30T13:37:37.516723",
+    "entry_count": 2
+  },
+  {
+    "id": 10,
+    "username": "Toetoe86",
+    "email": "mrschap24@icloud.com",
+    "created_at": "2025-03-30T14:08:46.224109",
+    "entry_count": 1
+  },
+  {
+    "id": 11,
+    "username": "Claudia",
+    "email": "graham.claudia2019@gmail.com",
+    "created_at": "2025-03-30T17:02:08.684481",
+    "entry_count": 0
+  },
+  {
+    "id": 12,
+    "username": "Ginger",
+    "email": "amber0288@gmail.com",
+    "created_at": "2025-03-30T18:49:29.325822",
+    "entry_count": 5
+  },
+  {
+    "id": 13,
+    "username": "Alea",
+    "email": "kilaboo0518@gmail.com",
+    "created_at": "2025-03-31T12:05:16.391986",
+    "entry_count": 0
+  },
+  {
+    "id": 14,
+    "username": "AndreRW",
+    "email": "dre_me@hotmail.com",
+    "created_at": "2025-04-02T19:30:47.520561",
+    "entry_count": 42
+  },
+  {
+    "id": 15,
+    "username": "Kk246",
+    "email": "jeharka@hotmail.com",
+    "created_at": "2025-04-02T21:16:00.796474",
+    "entry_count": 1
+  },
+  {
+    "id": 1,
+    "username": "Teddy Leon",
+    "email": "teddy.leon@alumni.uwi.edu",
+    "created_at": "2025-03-29T17:44:22.883869",
+    "entry_count": 22
+  },
+  {
+    "id": 16,
+    "username": "Peace",
+    "email": "rakayla03@gmail.com",
+    "created_at": "2025-04-03T18:07:04.225498",
+    "entry_count": 1
+  },
+  {
+    "id": 17,
+    "username": "Sheldhl",
+    "email": "shellyannroach@gmail.com",
+    "created_at": "2025-04-05T13:56:14.197775",
+    "entry_count": 0
+  },
+  {
+    "id": 18,
+    "username": "Dawn",
+    "email": "dawnoneal@outlook.com",
+    "created_at": "2025-04-06T17:30:56.284345",
+    "entry_count": 1
+  },
+  {
+    "id": 19,
+    "username": "Chilled",
+    "email": "dazasi09@gmail.com",
+    "created_at": "2025-04-08T02:45:56.542109",
+    "entry_count": 5
+  },
+  {
+    "id": 20,
+    "username": "Kindspire",
+    "email": "teddy@kindspire.app",
+    "created_at": "2025-04-08T10:39:40.641561",
+    "entry_count": 0
+  }
+]

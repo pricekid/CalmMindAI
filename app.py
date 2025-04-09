@@ -100,43 +100,30 @@ def handle_exception(e):
             # Redirect instead of trying to render the template directly
             return redirect(url_for('dashboard'))
             
-        # Handle account settings JSON parsing error
-        if request.path == '/account':
-            app.logger.error(f"Account settings JSON parsing error: {str(e)}")
-            # Return error page instead of redirecting to avoid redirect loop
-            return render_template('error.html', 
-                                title="Account Settings Error",
-                                error="There was an issue updating your account information.",
-                                suggestion="This is likely caused by a temporary data issue. You can try refreshing the page or logging out and back in.",
-                                show_dashboard_link=True,
-                                show_json_error=True), 200
-            
         # For other routes with JSON parsing errors, show a friendly message
+        error_title = "Processing Issue"
+        error_message = "We had a minor issue processing your data, but your information was saved successfully."
         return render_template('error.html', 
-                             title="Processing Issue",
-                             error="We had a minor issue processing your data, but your information was saved successfully.",
-                             suggestion="The system encountered a JSON parsing error but handled it gracefully. You can continue using the application normally.",
-                             show_json_error=True), 200
+                             error_title=error_title,
+                             error_message=error_message), 200
     
     # Check if it's a CSRF error
     if "csrf" in err_str:
+        error_title = "Session Expired"
+        error_message = "Your session has expired. Please refresh the page and try again."
         return render_template('error.html', 
-                              title="Session Expired",
-                              error="Your session has expired. Please refresh the page and try again.",
-                              suggestion="This usually happens when a form is open for too long. Log in again and your data will be available.",
+                              error_title=error_title,
+                              error_message=error_message,
                               show_csrf_error=True), 400
     
     # Check if it's an OpenAI API error related to quota
+    is_api_error = False
     if "openai" in err_str and ("quota" in err_str or "429" in err_str or "insufficient" in err_str):
-        # Return error page for API quota issues
-        return render_template('error.html',
-                              title="AI Analysis Unavailable",
-                              error="Your journal entry was saved successfully, but AI analysis is currently unavailable due to API usage limits.",
-                              suggestion="The system will automatically retry your analysis when the API becomes available again. You can still access all your journal entries and other app features.",
-                              show_api_error=True), 200
-    
+        is_api_error = True
+        error_title = "API Limit Reached"
+        error_message = "Your journal entry was saved successfully, but AI analysis is currently unavailable due to API usage limits."
     # Check for 'form' is undefined errors
-    if "'form' is undefined" in err_str or "'form'" in err_str:
+    elif "'form' is undefined" in err_str or "'form'" in err_str:
         # Redirect to journal list page with a friendly message
         flash("Your journal entry was saved! You can view it in your journal list.", "success")
         if 'entry_id' in request.view_args:
@@ -147,12 +134,21 @@ def handle_exception(e):
             except:
                 pass
         return redirect(url_for('journal_blueprint.journal_list')), 302
+    else:
+        error_title = "Something went wrong"
     
-    # For all other errors, show a generic error page
-    return render_template('error.html',
-                         title="Something Went Wrong",
-                         error="We encountered an unexpected error while processing your request.",
-                         suggestion="This is likely a temporary issue. Please try again or contact support if the problem persists."), 500
+    # Add any potentially missing template variables
+    template_vars = {
+        'error_title': error_title,
+        'error_message': error_message,
+        'show_api_error': is_api_error
+    }
+    
+    # Make sure standard forms are available for templates
+    from forms import JournalEntryForm
+    template_vars['form'] = JournalEntryForm()
+    
+    return render_template('error.html', **template_vars), 500
 
 # Create a custom login_required decorator that checks user type
 def login_required(f):

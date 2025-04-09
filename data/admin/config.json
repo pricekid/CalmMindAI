@@ -1,1 +1,5 @@
-{"openai_api_key":"","max_tokens":800,"model":"gpt-4o"}
+{
+  "openai_api_key": "",
+  "max_tokens": 800,
+  "model": "gpt-4o"
+}

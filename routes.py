@@ -8,8 +8,6 @@ from openai_service import analyze_journal_entry, generate_coping_statement
 from werkzeug.security import check_password_hash
 from sqlalchemy import desc
 import logging
-import traceback
-import json
 from datetime import datetime, timedelta
 
 # Home page
@@ -237,112 +235,40 @@ def breathing():
 @app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
-    import logging, traceback, json
-    logging.getLogger().setLevel(logging.DEBUG)
+    form = AccountUpdateForm(current_user.username, current_user.email)
     
-    # Create the form first - before we do anything else
-    form = None
+    if form.validate_on_submit():
+        # Verify current password
+        if not current_user.check_password(form.current_password.data):
+            flash('Current password is incorrect.', 'danger')
+            return render_template('account.html', title='Account', form=form)
+        
+        current_user.username = form.username.data
+        current_user.email = form.email.data.lower()
+        
+        # Update email notification settings
+        current_user.notifications_enabled = form.notifications_enabled.data
+        
+        # Update SMS notification settings
+        current_user.phone_number = form.phone_number.data
+        current_user.sms_notifications_enabled = form.sms_notifications_enabled.data
+        
+        # Update password if provided
+        if form.new_password.data:
+            current_user.set_password(form.new_password.data)
+        
+        db.session.commit()
+        flash('Your account has been updated!', 'success')
+        return redirect(url_for('account'))
     
-    try:
-        # Add detailed debug information for troubleshooting
-        logging.debug("------ ACCOUNT SETTINGS DEBUG ------")
-        logging.debug(f"Current user: {current_user.id} - {current_user.username}")
-        
-        # Log the request method
-        logging.debug(f"Request method: {request.method}")
-        if request.form:
-            logging.debug(f"Form data present with {len(request.form)} fields")
-        else:
-            logging.debug("No form data present")
-            
-        # Create form with user's current data
-        form = AccountUpdateForm(current_user.username, current_user.email)
-        
-        if form.validate_on_submit():
-            try:
-                # Verify current password with explicit debugging
-                logging.debug("Checking password...")
-                password_valid = current_user.check_password(form.current_password.data)
-                logging.debug(f"Password valid: {password_valid}")
-                
-                if not password_valid:
-                    flash('Current password is incorrect.', 'danger')
-                    return render_template('account.html', title='Account', form=form)
-                
-                # Log before updating
-                logging.debug(f"Updating user: {current_user.id}, {current_user.username}")
-                
-                # Handle form data with safety checks
-                username = form.username.data
-                email = form.email.data.lower() if form.email.data else current_user.email
-                
-                # Debug display the data being used
-                logging.debug(f"New username: {username}")
-                logging.debug(f"New email: {email}")
-                
-                # Update basic info
-                current_user.username = username
-                current_user.email = email
-                
-                # Update email notification settings with safety check
-                current_user.notifications_enabled = bool(form.notifications_enabled.data)
-                logging.debug(f"Email notifications: {current_user.notifications_enabled}")
-                
-                # Update SMS notification settings (handle potential None values)
-                current_user.phone_number = form.phone_number.data if form.phone_number.data else None
-                current_user.sms_notifications_enabled = bool(form.sms_notifications_enabled.data)
-                logging.debug(f"Phone number: {current_user.phone_number}")
-                logging.debug(f"SMS notifications: {current_user.sms_notifications_enabled}")
-                
-                # Update password if provided
-                if form.new_password.data:
-                    logging.debug("Setting new password")
-                    current_user.set_password(form.new_password.data)
-                
-                db.session.commit()
-                logging.debug("Account updated successfully")
-                flash('Your account has been updated!', 'success')
-                return redirect(url_for('account'))
-            except Exception as e:
-                db.session.rollback()
-                logging.error(f"Error updating account: {str(e)}")
-                logging.error(traceback.format_exc())
-                flash('There was an error updating your account. Please try again.', 'danger')
-                return render_template('account.html', title='Account', form=form)
-        
-        elif request.method == 'GET':
-            try:
-                form.username.data = current_user.username
-                form.email.data = current_user.email
-                form.notifications_enabled.data = current_user.notifications_enabled
-                form.phone_number.data = current_user.phone_number
-                form.sms_notifications_enabled.data = current_user.sms_notifications_enabled
-                logging.debug("Form populated with current user data for GET request")
-            except Exception as e:
-                logging.error(f"Error populating form data: {str(e)}")
-                logging.error(traceback.format_exc())
-        
-        return render_template('account.html', title='Account', form=form)
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+        form.notifications_enabled.data = current_user.notifications_enabled
+        form.phone_number.data = current_user.phone_number
+        form.sms_notifications_enabled.data = current_user.sms_notifications_enabled
     
-    except json.decoder.JSONDecodeError as json_err:
-        logging.error(f"JSON Decode Error in account page: {str(json_err)}")
-        logging.error(traceback.format_exc())
-        # Handle JSON error specifically
-        error_message = f"Invalid JSON format detected: {str(json_err)}"
-        return render_template('error.html', title="JSON Error", error=error_message, 
-                              suggestion="This may be caused by corrupted data files. Please contact support.")
-    
-    except Exception as e:
-        logging.error(f"Critical error in account page: {str(e)}")
-        logging.error(traceback.format_exc())
-        # Handle other errors
-        if form is None:
-            # If form creation failed, we need to create a blank one
-            form = AccountUpdateForm("", "")
-        
-        error_message = f"An unexpected error occurred: {str(e)}"
-        flash(error_message, 'danger')
-        return render_template('account.html', title='Account', form=form)
+    return render_template('account.html', title='Account', form=form)
 
 # Log mood
 @app.route('/log_mood', methods=['POST'])
