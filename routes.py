@@ -24,7 +24,8 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         # Convert email to lowercase for case-insensitive matching
-        user = User(username=form.username.data, email=form.email.data.lower())
+        email = form.email.data.lower() if form.email.data else None
+        user = User(username=form.username.data, email=email)
         user.set_password(form.password.data)
         
         db.session.add(user)
@@ -52,7 +53,8 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         # Convert email to lowercase for case-insensitive matching
-        user = User.query.filter_by(email=form.email.data.lower()).first()
+        email = form.email.data.lower() if form.email.data else None
+        user = User.query.filter_by(email=email).first()
         
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember.data)
@@ -235,17 +237,28 @@ def breathing():
 @app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
-    try:
-        form = AccountUpdateForm(current_user.username, current_user.email)
+    # We'll let the global error handler handle any exceptions
+    form = AccountUpdateForm(current_user.username, current_user.email)
+    
+    if form.validate_on_submit():
+        # Verify current password
+        if not current_user.check_password(form.current_password.data):
+            flash('Current password is incorrect.', 'danger')
+            return render_template('account.html', title='Account', form=form)
         
-        if form.validate_on_submit():
-            # Verify current password
-            if not current_user.check_password(form.current_password.data):
-                flash('Current password is incorrect.', 'danger')
-                return render_template('account.html', title='Account', form=form)
-            
+        # Store original values for error handling
+        original_username = current_user.username
+        original_email = current_user.email
+        original_notifications = current_user.notifications_enabled
+        original_phone = current_user.phone_number
+        original_sms = current_user.sms_notifications_enabled
+        
+        try:
+            # Update user information
             current_user.username = form.username.data
-            current_user.email = form.email.data.lower()
+            # Handle email with null safety
+            if form.email.data:
+                current_user.email = form.email.data.lower()
             
             # Update email notification settings
             current_user.notifications_enabled = form.notifications_enabled.data
@@ -258,32 +271,36 @@ def account():
             if form.new_password.data:
                 current_user.set_password(form.new_password.data)
             
-            try:
-                db.session.commit()
-                flash('Your account has been updated!', 'success')
-                return redirect(url_for('account'))
-            except Exception as e:
-                db.session.rollback()
-                app.logger.error(f"Database error updating account: {str(e)}")
-                flash('An error occurred while updating your account. Please try again.', 'danger')
+            db.session.commit()
+            flash('Your account has been updated!', 'success')
+            return redirect(url_for('account'))
         
-        elif request.method == 'GET':
+        except Exception as e:
+            # Rollback changes and restore original values
+            db.session.rollback()
+            current_user.username = original_username
+            current_user.email = original_email
+            current_user.notifications_enabled = original_notifications
+            current_user.phone_number = original_phone
+            current_user.sms_notifications_enabled = original_sms
+            
+            # Log the specific error
+            app.logger.error(f"Database error updating account: {str(e)}")
+            flash('An error occurred while updating your account. Please try again.', 'danger')
+            # Let the global error handler take over for JSON errors
+            raise
+    
+    elif request.method == 'GET':
+        # Pre-populate the form with current user data
+        if current_user.username:
             form.username.data = current_user.username
+        if current_user.email:
             form.email.data = current_user.email
-            form.notifications_enabled.data = current_user.notifications_enabled
-            form.phone_number.data = current_user.phone_number
-            form.sms_notifications_enabled.data = current_user.sms_notifications_enabled
-        
-        return render_template('account.html', title='Account', form=form)
-        
-    except Exception as e:
-        app.logger.error(f"Account settings error: {str(e)}")
-        flash('There was an issue updating your account information.', 'danger')
-        return render_template('error.html', 
-                              title='Account Settings Error',
-                              error_title="Something went wrong",
-                              error_message="There was an issue updating your account information.",
-                              suggestion="This is likely caused by a temporary data issue. You can try refreshing the page or logging out and back in.")
+        form.notifications_enabled.data = current_user.notifications_enabled
+        form.phone_number.data = current_user.phone_number
+        form.sms_notifications_enabled.data = current_user.sms_notifications_enabled
+    
+    return render_template('account.html', title='Account', form=form)
 
 # Log mood
 @app.route('/log_mood', methods=['POST'])
