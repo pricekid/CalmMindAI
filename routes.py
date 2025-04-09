@@ -193,15 +193,13 @@ def journal():
                           journal_data=journal_data,
                           stats=stats)
 
-# Redirect to new journal entry page
+# Direct new journal entry page (no redirect)
 @app.route('/journal/new', methods=['GET', 'POST'])
 @login_required
 def new_journal_entry():
-    # Redirect to the blueprint route
-    return redirect(url_for('journal_blueprint.new_journal_entry'))
-    
-    return render_template('journal_entry.html', title='New Journal Entry', 
-                          form=form, legend='New Journal Entry')
+    # Use blueprint function directly to avoid redirect loop
+    from journal_routes import new_journal_entry as blueprint_new
+    return blueprint_new()
 
 # Direct view for journal entry (no redirect)
 @app.route('/journal/<int:entry_id>')

@@ -3028,5 +3028,28 @@
         "recommendation": "Try to identify which projects can be adjusted or scaled down instead of completely dropped."
       }
     ]
+  },
+  {
+    "id": 136,
+    "user_id": 1,
+    "title": "testing 6",
+    "content": "testing jpurnal entry",
+    "anxiety_level": 5,
+    "created_at": "2025-04-08T20:05:58.962644",
+    "updated_at": "2025-04-08T20:06:02.978983",
+    "is_analyzed": true,
+    "gpt_response": "It's great that you're taking the time to journal, even if it's just a quick entry. This shows your commitment to understanding your thoughts and feelings. Keep up the good work!\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- Overcommitment\n- All-or-Nothing Thinking\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Overcommitment",
+        "description": "Overcommitment involves taking on more tasks or responsibilities than one can handle, leading to stress and exhaustion. It's important to recognize the limits of your time and energy to prevent feeling overwhelmed.",
+        "recommendation": "Try prioritizing your tasks and saying 'no' to extra commitments to manage your workload better."
+      },
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "All-or-nothing thinking is a cognitive distortion where situations are viewed in extremes, such as seeing things as either perfect or a complete failure. This can lead to unnecessary stress and disappointment.",
+        "recommendation": "Practice finding a middle ground by acknowledging small successes and progress, even if things aren't perfect."
+      }
+    ]
   }
 ]

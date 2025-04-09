@@ -8,9 +8,50 @@
         <div class="col-lg-8 mx-auto">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
-                    <h2 class="mb-0">{% if entry %}Edit{% else %}New{% endif %} Journal Entry</h2>
+                    <h2 class="mb-0">
+                        {% if view_only %}
+                        Journal Entry: {{ entry.title }}
+                        {% else %}
+                        {% if entry %}Edit{% else %}New{% endif %} Journal Entry
+                        {% endif %}
+                    </h2>
                 </div>
                 <div class="card-body">
+                    {% if view_only and entry %}
+                    <!-- View only mode -->
+                    <div class="mb-3">
+                        <h5 class="form-label">Date</h5>
+                        <p>{{ entry.created_at.strftime('%B %d, %Y at %I:%M %p') }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <h5 class="form-label">Anxiety Level</h5>
+                        <p>
+                            {% if entry.anxiety_level <= 3 %}
+                            <span class="badge bg-success">{{ entry.anxiety_level }}</span>
+                            {% elif entry.anxiety_level <= 6 %}
+                            <span class="badge bg-warning text-dark">{{ entry.anxiety_level }}</span>
+                            {% else %}
+                            <span class="badge bg-danger">{{ entry.anxiety_level }}</span>
+                            {% endif %}
+                            /10
+                        </p>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="form-label">Journal Content</h5>
+                        <div class="p-3 bg-light rounded">
+                            {{ entry.content | nl2br }}
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <a href="{{ url_for('journal_blueprint.update_journal_entry', entry_id=entry.id) }}" class="btn btn-primary">
+                            <i class="bi bi-pencil"></i> Edit Entry
+                        </a>
+                        <a href="{{ url_for('journal_blueprint.journal_list') }}" class="btn btn-outline-secondary ms-2">
+                            <i class="bi bi-arrow-left"></i> Back to Journal
+                        </a>
+                    </div>
+                    {% else %}
+                    <!-- Edit/New mode -->
                     <form id="journal-form" method="POST">
                         {{ form.hidden_tag() }}
                         <div class="form-group mb-3">
@@ -62,11 +103,12 @@
                             <button type="submit" id="journal-submit-button" class="btn btn-primary">
                                 <i class="bi bi-journal-check"></i> Save Entry
                             </button>
-                            <a href="{{ url_for('journal') }}" class="btn btn-outline-secondary ms-2">
+                            <a href="{{ url_for('journal_blueprint.journal_list') }}" class="btn btn-outline-secondary ms-2">
                                 <i class="bi bi-x-circle"></i> Cancel
                             </a>
                         </div>
                     </form>
+                    {% endif %}
                 </div>
             </div>
         </div>

@@ -22,6 +22,14 @@ mail = Mail()
 app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET")
 
+# Add custom Jinja2 filters
+@app.template_filter('nl2br')
+def nl2br_filter(s):
+    """Convert newlines to HTML line breaks"""
+    if s is None:
+        return ""
+    return s.replace('\n', '<br>')
+
 # Configure the database
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///calm_journey.db")
 app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
