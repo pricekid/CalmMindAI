@@ -1,0 +1,43 @@
+/* Custom styles for Mira's Insights components */
+
+.insights-header {
+  background-color: var(--bs-primary) !important;
+  color: white !important;
+  padding: 1rem;
+  border-radius: 4px 4px 0 0;
+}
+
+.insights-content {
+  background-color: white;
+  color: var(--bs-dark);
+  padding: 1.5rem;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for the coach message containers */
+#analysis-content, 
+#coach-message {
+  background-color: white !important;
+  color: var(--bs-dark) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  padding: 1rem;
+  line-height: 1.6;
+}
+
+/* Smaller header for the insight cards */
+.insights-header h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0;
+}
+
+/* Style for the refresh button */
+#refresh-analysis {
+  border-color: white;
+  color: white;
+}
+
+#refresh-analysis:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}

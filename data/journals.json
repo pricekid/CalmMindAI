@@ -3084,17 +3084,40 @@
     "created_at": "2025-04-09T11:47:59.508457",
     "updated_at": "2025-04-09T11:48:02.759418",
     "is_analyzed": true,
-    "gpt_response": "It's fantastic to hear about this new opportunity with the foreign firm! This could be a wonderful step forward in your project and career, and your excitement is truly inspiring.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- Overcommitment\n- All-or-Nothing Thinking\n",
+    "gpt_response": "Congratulations on your exciting opportunity to work with a foreign firm! This is a wonderful step forward for your project and a testament to your hard work and dedication.\n\n- Overcommitment: This pattern involves taking on too many responsibilities, which can lead to feeling overwhelmed. Consider setting clear boundaries to maintain a healthy balance.\n- All-or-Nothing Thinking: This is when situations are viewed in extremes, such as seeing success or failure as the only outcomes. Try to acknowledge the spectrum of possibilities and the progress you make.\n\nTo support your journey, try setting small, realistic goals to avoid feeling overwhelmed.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- Overcommitment\n- All-or-Nothing Thinking\n",
     "cbt_patterns": [
       {
         "pattern": "Overcommitment",
-        "description": "Overcommitment involves taking on too many tasks or responsibilities, leading to stress and burnout. It might be helpful to evaluate if this new opportunity aligns with your current goals and capacity.",
-        "recommendation": "Consider setting clear priorities to ensure balance."
+        "description": "This pattern involves taking on too many responsibilities, which can lead to feeling overwhelmed.",
+        "recommendation": "Consider setting clear boundaries to maintain a healthy balance."
       },
       {
         "pattern": "All-or-Nothing Thinking",
-        "description": "All-or-Nothing Thinking involves seeing situations in black-and-white terms, without appreciating the nuances. This can lead to unrealistic expectations about outcomes.",
-        "recommendation": "Try to recognize and appreciate the small wins along the journey."
+        "description": "This is when situations are viewed in extremes, such as seeing success or failure as the only outcomes.",
+        "recommendation": "Try to acknowledge the spectrum of possibilities and the progress you make."
+      }
+    ]
+  },
+  {
+    "id": 140,
+    "user_id": 1,
+    "title": "testing 11 april 9",
+    "content": "have an opportunity to work with a foreign firm to take my project foward!!",
+    "anxiety_level": 1,
+    "created_at": "2025-04-09T11:55:10.892862",
+    "updated_at": "2025-04-09T11:55:13.951659",
+    "is_analyzed": true,
+    "gpt_response": "Congratulations on the exciting opportunity to work with a foreign firm! It sounds like a wonderful step forward for your project, and it's great to see your hard work paying off.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- Overcommitment\n- All-or-Nothing Thinking\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Overcommitment",
+        "description": "This pattern involves taking on more tasks or responsibilities than one can realistically manage. It can lead to stress and burnout, making it important to prioritize and set boundaries.",
+        "recommendation": "Consider listing your current commitments and see where you can delegate or postpone tasks."
+      },
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "This involves seeing situations in black-and-white terms, without recognizing the middle ground. It can lead to unnecessary pressure and stress.",
+        "recommendation": "Try identifying the shades of gray in this opportunity and remind yourself of the small steps that lead to success."
       }
     ]
   }

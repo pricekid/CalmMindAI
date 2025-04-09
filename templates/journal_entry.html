@@ -120,14 +120,14 @@
     <div class="row">
         <div class="col-lg-8 mx-auto">
             <div class="card shadow" id="analysis-card">
-                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                <div class="card-header insights-header d-flex justify-content-between align-items-center">
                     <h3 class="mb-0">Mira's Insights</h3>
                     <button type="button" class="btn btn-sm btn-outline-light" id="refresh-analysis" data-journal-id="{{ entry.id }}">
                         <i class="bi bi-arrow-repeat"></i> Refresh Analysis
                     </button>
                 </div>
-                <div class="card-body">
-                    <div id="analysis-content" class="text-dark">
+                <div class="card-body bg-light">
+                    <div id="analysis-content">
                         {{ coach_response | safe }}
                     </div>
                     
@@ -142,7 +142,7 @@
                     <!-- Response area (hidden initially) -->
                     <div id="coach-response" class="mt-4 bg-light p-3 rounded" style="display: none;">
                         <h5><i class="bi bi-chat-heart-fill text-success"></i> Mira's Personal Guidance:</h5>
-                        <div id="coach-message" class="mt-2">
+                        <div id="coach-message" class="mt-2 bg-white p-3 rounded text-dark">
                             <!-- Will be filled by AJAX response -->
                         </div>
                     </div>
@@ -179,7 +179,7 @@
     <div class="row">
         <div class="col-lg-8 mx-auto">
             <div class="card shadow">
-                <div class="card-header bg-secondary text-white">
+                <div class="card-header insights-header">
                     <h3 class="mb-0">About Journal Analysis</h3>
                 </div>
                 <div class="card-body">
