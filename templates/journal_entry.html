@@ -38,8 +38,8 @@
                     </div>
                     <div class="mb-4">
                         <h5 class="form-label">Journal Content</h5>
-                        <div class="p-3 bg-light rounded">
-                            {{ entry.content | nl2br }}
+                        <div class="p-3 bg-light rounded text-dark">
+                            {{ entry.content | nl2br | safe }}
                         </div>
                     </div>
                     <div class="text-center">
@@ -127,8 +127,8 @@
                     </button>
                 </div>
                 <div class="card-body">
-                    <div id="analysis-content">
-                        {{ entry.gpt_response | safe }}
+                    <div id="analysis-content" class="text-dark">
+                        {{ coach_response | safe }}
                     </div>
                     
                     <!-- Placeholder for AI coaching button -->
@@ -209,25 +209,33 @@
 <script>
     // Function to update the anxiety level display
     function updateAnxietyLabel(value) {
-        document.getElementById('anxiety-value').textContent = value;
-        document.getElementById('anxiety-input').value = value;
+        const anxietyValue = document.getElementById('anxiety-value');
+        const anxietyInput = document.getElementById('anxiety-input');
         
-        // Change badge color based on anxiety level
-        const badge = document.getElementById('anxiety-value');
-        if (value <= 3) {
-            badge.className = 'badge bg-success';
-        } else if (value <= 6) {
-            badge.className = 'badge bg-warning text-dark';
-        } else {
-            badge.className = 'badge bg-danger';
+        // Only proceed if the elements exist (they won't in view-only mode)
+        if (anxietyValue && anxietyInput) {
+            anxietyValue.textContent = value;
+            anxietyInput.value = value;
+            
+            // Change badge color based on anxiety level
+            if (value <= 3) {
+                anxietyValue.className = 'badge bg-success';
+            } else if (value <= 6) {
+                anxietyValue.className = 'badge bg-warning text-dark';
+            } else {
+                anxietyValue.className = 'badge bg-danger';
+            }
         }
     }
     
     // Set up event listeners when document is ready
     document.addEventListener('DOMContentLoaded', function() {
-        // Set the initial anxiety level
-        const sliderValue = document.getElementById('anxiety-slider').value;
-        updateAnxietyLabel(sliderValue);
+        // Set the initial anxiety level (only if we're in edit mode)
+        const anxietySlider = document.getElementById('anxiety-slider');
+        if (anxietySlider) {
+            const sliderValue = anxietySlider.value;
+            updateAnxietyLabel(sliderValue);
+        }
         
         // Set up the form handling with spinner
         const journalForm = document.getElementById('journal-form');

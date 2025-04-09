@@ -3051,5 +3051,28 @@
         "recommendation": "Practice finding a middle ground by acknowledging small successes and progress, even if things aren't perfect."
       }
     ]
+  },
+  {
+    "id": 138,
+    "user_id": 1,
+    "title": "April 9th test",
+    "content": "testing this app",
+    "anxiety_level": 3,
+    "created_at": "2025-04-09T10:56:27.630938",
+    "updated_at": "2025-04-09T10:56:31.596985",
+    "is_analyzed": true,
+    "gpt_response": "It's great that you're exploring the app and taking steps to understand your thoughts and feelings better. Your curiosity is a positive sign in your journey towards personal growth. Let's consider some common thought patterns that might affect how you're feeling.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- Overcommitment\n- All-or-Nothing Thinking\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Overcommitment",
+        "description": "Overcommitment occurs when you take on more tasks or responsibilities than you can realistically manage. This can lead to feelings of stress and overwhelm, affecting your overall well-being.",
+        "recommendation": "Try setting clear priorities and practicing saying no to less important tasks."
+      },
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "All-or-nothing thinking involves viewing situations in black-and-white terms, without recognizing the middle ground. This can lead to unrealistic expectations and disappointment.",
+        "recommendation": "Practice acknowledging the gray areas and celebrate small wins, even if they aren't perfect."
+      }
+    ]
   }
 ]

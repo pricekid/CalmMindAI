@@ -228,13 +228,13 @@ def view_journal_entry(entry_id):
         abort(403)
     
     # Get the GPT response from JSON file or generate it if missing
-    coach_response = None
+    coach_response = ""
     
     # Try to get from saved journal entries first
     user_entries = get_journal_entries_for_user(current_user.id)
     for json_entry in user_entries:
         if json_entry.get('id') == entry_id:
-            coach_response = json_entry.get('gpt_response')
+            coach_response = json_entry.get('gpt_response', "")
             break
     
     # If not found, generate a new one
@@ -433,13 +433,13 @@ def api_journal_coach(entry_id):
         abort(403)
     
     # Get the GPT response from JSON file or generate it if missing
-    coach_response = None
+    coach_response = ""
     
     # Try to get from saved journal entries first
     user_entries = get_journal_entries_for_user(current_user.id)
     for json_entry in user_entries:
         if json_entry.get('id') == entry_id:
-            coach_response = json_entry.get('gpt_response')
+            coach_response = json_entry.get('gpt_response', "")
             break
     
     # If not found, generate a new one
