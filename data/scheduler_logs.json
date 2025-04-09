@@ -3298,5 +3298,11 @@
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-09 12:32:12",
+    "type": "health_check",
+    "message": "Scheduler running with PID 3371 at 2025-04-09 12:32:12",
+    "success": true
   }
 ]

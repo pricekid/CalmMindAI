@@ -3161,5 +3161,28 @@
         "recommendation": "Practice gratitude for your own milestones, no matter their size."
       }
     ]
+  },
+  {
+    "id": 144,
+    "user_id": 1,
+    "title": "Saying Yes Too Often",
+    "content": "I told myself I wouldn\u2019t take on anything extra this week, but when a colleague asked for help with their project, I said yes anyway. Now I\u2019m feeling overwhelmed, behind on my own work, and frustrated with myself for not setting a boundary. I didn\u2019t want to seem selfish or unreliable, but now I just feel drained. Why do I keep doing this to myself?",
+    "anxiety_level": 5,
+    "created_at": "2025-04-09T12:28:31.615527",
+    "updated_at": "2025-04-09T12:28:36.146448",
+    "is_analyzed": true,
+    "gpt_response": "It's great that you're self-aware and recognizing when you're feeling overwhelmed. This awareness is the first step towards making changes that align better with your needs.\n\n- **Overcommitment**: This happens when you take on too much, often from a desire to please others or avoid seeming unreliable. It can lead to feeling drained and behind on your own priorities.\n- **All-or-Nothing Thinking**: This involves seeing situations in black-and-white terms, such as feeling selfish for setting boundaries, even though it's a healthy practice.\n\nTry practicing saying 'no' in low-stakes situations to build confidence in setting boundaries.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Overcommitment",
+        "description": "This happens when you take on too much, often from a desire to please others or avoid seeming unreliable. It can lead to feeling drained and behind on your own priorities.",
+        "recommendation": "Try practicing saying 'no' in low-stakes situations to build confidence in setting boundaries."
+      },
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "This involves seeing situations in black-and-white terms, such as feeling selfish for setting boundaries, even though it's a healthy practice.",
+        "recommendation": "Challenge these thoughts by acknowledging the value in setting boundaries."
+      }
+    ]
   }
 ]
