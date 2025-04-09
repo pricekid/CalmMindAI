@@ -3276,5 +3276,28 @@
         "recommendation": "Reflect on how you can support others while still taking care of your own responsibilities."
       }
     ]
+  },
+  {
+    "id": 149,
+    "user_id": 1,
+    "title": "Avoiding the Event",
+    "content": "I was invited to a social event this weekend, but I\u2019ve been thinking of canceling. I keep imagining myself saying something awkward or not knowing what to say. I feel like I\u2019ll just come off as weird or boring. I\u2019ve avoided a few gatherings like this lately because it just feels safer to stay home. But at the same time, I feel bad for always backing out. It\u2019s like I\u2019m stuck between wanting to connect and being afraid I\u2019ll mess it up",
+    "anxiety_level": 7,
+    "created_at": "2025-04-09T13:20:25.033623",
+    "updated_at": "2025-04-09T13:20:30.116848",
+    "is_analyzed": true,
+    "gpt_response": "It\u2019s great that you recognize the importance of connecting with others, even when it feels challenging. This shows a strong desire to find balance between your needs for safety and connection. Remember, noticing these patterns is a big step toward making changes.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "This pattern involves viewing situations in extremes, like believing you'll either be perfectly social or entirely awkward. It can create unnecessary pressure and anxiety around social events.",
+        "recommendation": "Try to identify a middle ground, such as envisioning a realistic scenario where you have both comfortable and awkward moments."
+      },
+      {
+        "pattern": "Overcommitment",
+        "description": "Feeling guilty for backing out can lead you to commit to more than feels comfortable, creating a cycle of stress and avoidance. This pattern can make social situations feel overwhelming.",
+        "recommendation": "Consider setting a small goal, like attending for just an hour, to reduce pressure and maintain your boundaries."
+      }
+    ]
   }
 ]
