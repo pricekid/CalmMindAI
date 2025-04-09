@@ -3628,5 +3628,95 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 4629",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:24:12",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4629 at 2025-04-09 14:24:12",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:25:15",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 4629",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:25:34",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 4629",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:25:41",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 4629",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:25:48",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 4629",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:25:54",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 4629",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:26:29",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 4629",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:26:34",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 4629",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:26:51",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 4629",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:27:00",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 4629",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:28:11",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-09 14:28:11.071035",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:28:11",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:28:35",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 4629",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:28:39",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 4629",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 14:29:25",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 4629",
+    "success": true
   }
 ]

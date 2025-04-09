@@ -398,6 +398,10 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                         pattern_insight += f"- {pattern['pattern']}\n"
                     coach_response += pattern_insight
                 
+                # Add a sign-off by Coach Mira if not already present
+                if "Coach Mira" not in coach_response:
+                    coach_response += "\n\nWarmly,\nCoach Mira"
+                
                 # Ensure patterns is a valid list
                 cbt_patterns = result.get("patterns", [])
                 if not isinstance(cbt_patterns, list):
@@ -413,7 +417,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                 logger.error(f"JSON parsing error: {json_err}")
                 # Provide a fallback response when JSON parsing fails
                 return {
-                    "gpt_response": "Thank you for sharing your journal entry. I've read through your thoughts, but am experiencing some technical difficulties in generating a detailed response.",
+                    "gpt_response": "Thank you for sharing your journal entry. I've read through your thoughts, but am experiencing some technical difficulties in generating a detailed response.\n\nWarmly,\nCoach Mira",
                     "cbt_patterns": [{
                         "pattern": "Journal Processing Error",
                         "description": "We couldn't fully analyze this entry due to a technical issue.",
@@ -444,7 +448,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         # Check error types from the refined error handling
         if "API_QUOTA_EXCEEDED" in error_msg:
             return {
-                "gpt_response": "Thank you for sharing your thoughts today. While I can't provide a personalized response right now due to technical limitations, your entry has been saved. Remember that the act of journaling itself is a powerful tool for self-reflection and growth.",
+                "gpt_response": "Thank you for sharing your thoughts today. While I can't provide a personalized response right now due to technical limitations, your entry has been saved. Remember that the act of journaling itself is a powerful tool for self-reflection and growth.\n\nWarmly,\nCoach Mira",
                 "cbt_patterns": [{
                     "pattern": "API Quota Exceeded",
                     "description": "The AI analysis service is currently unavailable due to API usage limits.",
@@ -453,7 +457,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
             }
         elif "INVALID_API_KEY" in error_msg:
             return {
-                "gpt_response": "I appreciate you taking the time to journal today. Your entry has been saved, though I'm unable to provide specific feedback at the moment. The practice of putting your thoughts into words is valuable in itself.",
+                "gpt_response": "I appreciate you taking the time to journal today. Your entry has been saved, though I'm unable to provide specific feedback at the moment. The practice of putting your thoughts into words is valuable in itself.\n\nWarmly,\nCoach Mira",
                 "cbt_patterns": [{
                     "pattern": "API Configuration Issue",
                     "description": "The AI analysis service is currently unavailable due to a configuration issue.",
@@ -462,7 +466,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
             }
         else:
             return {
-                "gpt_response": "Thank you for sharing your journal entry. Although I can't offer specific insights right now, the process of writing down your thoughts is an important step in your wellness journey. Your entry has been saved successfully.",
+                "gpt_response": "Thank you for sharing your journal entry. Although I can't offer specific insights right now, the process of writing down your thoughts is an important step in your wellness journey. Your entry has been saved successfully.\n\nWarmly,\nCoach Mira",
                 "cbt_patterns": [{
                     "pattern": "Error analyzing entry",
                     "description": "We couldn't analyze your journal entry at this time.",
