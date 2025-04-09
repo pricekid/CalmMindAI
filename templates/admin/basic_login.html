@@ -1,0 +1,51 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="col-md-6 col-lg-4">
+        <div class="card">
+            <div class="card-header bg-dark">
+                <h4 class="text-center mb-0">Admin Login</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary" id="admin-login-button">Login</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                <small class="text-muted">Access restricted to administrators only.</small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Add loading spinner to admin login button
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const loginButton = document.getElementById('admin-login-button');
+        
+        if (form && loginButton) {
+            form.addEventListener('submit', function(e) {
+                if (form.checkValidity()) {
+                    loginButton.disabled = true;
+                    loginButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Logging in...';
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

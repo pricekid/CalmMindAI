@@ -63,16 +63,19 @@ def login():
             logger.debug(f"Redirecting non-admin next URL to regular login: {next_url}")
             return redirect(url_for('login', next=next_url))
         
-        form = AdminLoginForm()
-        if form.validate_on_submit():
-            logger.debug(f"Form submitted with username: {form.username.data}")
+        # Handle form submission manually instead of using form.validate_on_submit()
+        if request.method == 'POST':
+            username = request.form.get('username')
+            password = request.form.get('password')
+            
+            logger.debug(f"Form submitted with username: {username}")
             # Check if it's our hardcoded admin
-            if form.username.data == "admin":
+            if username == "admin":
                 try:
                     admin = Admin.get(1)
                     logger.debug("Admin user retrieved")
                     
-                    if admin and admin.check_password(form.password.data):
+                    if admin and admin.check_password(password):
                         login_user(admin)
                         logger.debug("Admin login successful")
                         next_page = request.args.get('next')
@@ -88,13 +91,13 @@ def login():
                 logger.debug("Username is not admin")
                 flash('Login unsuccessful. Please check your credentials.', 'danger')
         
-        logger.debug("Rendering login template")
-        return render_template('admin/login.html', title='Admin Login', form=form)
+        logger.debug("Rendering basic login template")
+        return render_template('admin/basic_login.html', title='Admin Login')
     except Exception as e:
         logger.error(f"Unhandled exception in admin login: {str(e)}")
         logger.error(traceback.format_exc())
         flash('An error occurred. Please try again.', 'danger')
-        return render_template('admin/login.html', title='Admin Login', form=form)
+        return render_template('admin/basic_login.html', title='Admin Login')
 
 @admin_bp.route('/logout')
 @admin_required
