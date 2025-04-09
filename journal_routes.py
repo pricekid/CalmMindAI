@@ -16,7 +16,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Create blueprint
-journal_bp = Blueprint('journal_blueprint', __name__, url_prefix='/journal_api')
+journal_bp = Blueprint('journal_blueprint', __name__, url_prefix='/journal')
 
 # Journal entry list
 @journal_bp.route('/')
@@ -423,6 +423,7 @@ def update_journal_entry(entry_id):
 # API route to get the coach response for a journal entry
 @journal_bp.route('/api/<int:entry_id>/coach', methods=['GET'])
 @journal_bp.route('/api/journal-coach/<int:entry_id>', methods=['GET', 'POST'])
+@journal_bp.route('/api_journal_coach/<int:entry_id>', methods=['GET', 'POST'])  # Legacy support
 @login_required
 def api_journal_coach(entry_id):
     entry = JournalEntry.query.get_or_404(entry_id)
@@ -468,6 +469,7 @@ def api_journal_coach(entry_id):
 
 # API endpoint for analyzing a journal entry
 @journal_bp.route('/api/analyze-entry/<int:entry_id>', methods=['GET', 'POST'])
+@journal_bp.route('/api_analyze_entry/<int:entry_id>', methods=['GET', 'POST'])  # Legacy support
 @login_required
 def api_analyze_entry(entry_id):
     entry = JournalEntry.query.get_or_404(entry_id)
