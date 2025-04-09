@@ -11,69 +11,99 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <style>
+        /* Clean dark theme with better contrast */
         body { 
-            background-color: #1a1a1a; 
-            color: #ffffff; 
+            background-color: #2b2b2b; 
+            color: #f0f0f0; 
         }
         .card { 
-            background-color: #212529; 
-            border: 1px solid #444;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .form-control, .form-select {
-            background-color: #333 !important;
-            color: #fff !important;
-            border-color: #555 !important;
-        }
-        .form-control:focus, .form-select:focus {
-            background-color: #444 !important;
-            color: #fff !important;
-            border-color: #4e73df !important;
-            box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25) !important;
-        }
-        .form-text {
-            color: #adb5bd !important;
+            background-color: #333333; 
+            border: 1px solid #555;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
         }
         .card-header {
-            background-color: #343a40 !important;
-            border-bottom: 1px solid #444 !important;
+            background-color: #444444 !important;
+            color: white !important;
+            border-bottom: 1px solid #666 !important;
         }
+        .form-control, .form-select {
+            background-color: #444444 !important;
+            color: white !important;
+            border: 2px solid #666 !important;
+        }
+        .form-control:focus, .form-select:focus {
+            background-color: #505050 !important;
+            color: white !important;
+            border-color: #6c9fff !important;
+            box-shadow: 0 0 0 0.25rem rgba(108, 159, 255, 0.25) !important;
+        }
+        /* Labels and text */
+        label, .form-label, p, h1, h2, h3, h4, h5, h6, .card-title {
+            color: white !important;
+            font-weight: 500;
+        }
+        .form-text {
+            color: #cccccc !important;
+        }
+        .text-muted, .text-white-50 {
+            color: #bbbbbb !important;
+        }
+        /* List items */
         .list-group-item {
-            background-color: #2c3034 !important;
-            color: #ffffff !important;
-            border-color: #444 !important;
+            background-color: #444444 !important;
+            color: white !important;
+            border-color: #666 !important;
         }
+        /* Buttons */
         .btn-primary {
-            background-color: #4e73df;
-            border-color: #4e73df;
+            background-color: #0d6efd;
+            border-color: #0d6efd;
         }
         .btn-primary:hover {
-            background-color: #2e59d9;
-            border-color: #2e59d9;
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
         }
+        .btn-outline-primary {
+            color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        .btn-outline-primary:hover {
+            background-color: #0d6efd;
+            color: white;
+        }
+        /* Form controls */
         .form-check-input {
-            background-color: #2a2a2a;
-            border-color: #444;
+            background-color: #444444;
+            border-color: #666;
         }
         .form-check-input:checked {
-            background-color: #4e73df;
-            border-color: #4e73df;
+            background-color: #0d6efd;
+            border-color: #0d6efd;
         }
-        /* Make alert text more visible */
+        /* Alert boxes */
         .alert-info {
-            color: #ffffff !important;
-            background-color: #0f3a5f !important;
-            border-color: #0a58ca !important;
+            color: #055160 !important;
+            background-color: #cff4fc !important;
+            border-color: #b6effb !important;
         }
-        /* Make badges more visible */
+        /* Badges */
         .badge {
-            color: #ffffff !important;
+            color: white !important;
             font-size: 0.9em;
             font-weight: 500;
         }
-        /* Better contrast for form field borders */
-        select, input, textarea {
-            border: 2px solid #555 !important;
+        /* Navigation */
+        .navbar-dark {
+            background-color: #222222 !important;
+        }
+        /* Footer */
+        footer {
+            background-color: #222222 !important;
+        }
+        /* Specific fixes */
+        .bg-dark {
+            background-color: #333333 !important;
         }
     </style>
 </head>
@@ -126,7 +156,7 @@
         <div class="row">
             <div class="col-md-8 mx-auto">
                 <div class="card mb-4">
-                    <div class="card-header bg-dark text-white">
+                    <div class="card-header">
                         <h3 class="mb-0"><i class="fas fa-user-cog me-2"></i> Account Settings</h3>
                     </div>
                     <div class="card-body">
@@ -146,7 +176,7 @@
                             <hr class="my-4">
                             <h5>Notification Settings</h5>
                             
-                            <div class="card bg-dark border-secondary mb-3">
+                            <div class="card mb-3">
                                 <div class="card-header">Email Notifications</div>
                                 <div class="card-body">
                                     <div class="mb-3 form-check">
@@ -157,7 +187,7 @@
                                     
                                     <div class="mb-3">
                                         <label for="notification_time" class="form-label">Preferred Notification Time</label>
-                                        <select class="form-select bg-dark text-white border-secondary" id="notification_time" name="notification_time">
+                                        <select class="form-select" id="notification_time" name="notification_time">
                                             <option value="morning" selected>Morning (6:00 - 9:00 AM)</option>
                                             <option value="afternoon">Afternoon (12:00 - 3:00 PM)</option>
                                             <option value="evening">Evening (6:00 - 9:00 PM)</option>
@@ -167,7 +197,7 @@
                                     
                                     <div class="mb-3">
                                         <label for="notification_frequency" class="form-label">Notification Frequency</label>
-                                        <select class="form-select bg-dark text-white border-secondary" id="notification_frequency" name="notification_frequency">
+                                        <select class="form-select" id="notification_frequency" name="notification_frequency">
                                             <option value="daily" selected>Daily</option>
                                             <option value="workdays">Weekdays only</option>
                                             <option value="weekly">Weekly</option>
@@ -205,12 +235,12 @@
                                 </div>
                             </div>
                             
-                            <div class="card bg-dark border-secondary mb-3">
+                            <div class="card mb-3">
                                 <div class="card-header">SMS Notifications</div>
                                 <div class="card-body">
                                     <div class="mb-3">
                                         <label for="phone_number" class="form-label">Phone Number (with country code, e.g. +1234567890)</label>
-                                        <input type="tel" class="form-control bg-dark text-white border-secondary" id="phone_number" name="phone_number" value="{{ form['phone_number']['data'] or '' }}">
+                                        <input type="tel" class="form-control" id="phone_number" name="phone_number" value="{{ form['phone_number']['data'] or '' }}">
                                         <div class="form-text">Enter your phone number with country code (e.g., +1234567890)</div>
                                     </div>
                                     
@@ -222,7 +252,7 @@
                                     
                                     <div class="mb-3">
                                         <label for="sms_frequency" class="form-label">SMS Frequency</label>
-                                        <select class="form-select bg-dark text-white border-secondary" id="sms_frequency" name="sms_frequency">
+                                        <select class="form-select" id="sms_frequency" name="sms_frequency">
                                             <option value="daily" selected>Daily</option>
                                             <option value="workdays">Weekdays only</option>
                                             <option value="weekly">Weekly</option>
@@ -266,7 +296,7 @@
                 </div>
                 
                 <div class="card mb-4">
-                    <div class="card-header bg-dark text-white">
+                    <div class="card-header">
                         <h4 class="mb-0"><i class="fas fa-download me-2"></i> Data Management</h4>
                     </div>
                     <div class="card-body">
@@ -290,16 +320,16 @@
                         
                         <div class="mb-3">
                             <h5>Account Statistics</h5>
-                            <ul class="list-group list-group-flush bg-dark">
-                                <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white border-secondary">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Total Journal Entries
                                     <span class="badge bg-primary rounded-pill">{{ stats.journal_count if stats is defined else 0 }}</span>
                                 </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white border-secondary">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Mood Logs
                                     <span class="badge bg-primary rounded-pill">{{ stats.mood_count if stats is defined else 0 }}</span>
                                 </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white border-secondary">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Member Since
                                     <span class="badge bg-secondary">{{ stats.member_since if stats is defined else 'N/A' }}</span>
                                 </li>
@@ -309,7 +339,7 @@
                 </div>
                 
                 <div class="card mb-4">
-                    <div class="card-header bg-dark text-white">
+                    <div class="card-header">
                         <h4 class="mb-0"><i class="fas fa-shield-alt me-2"></i> Account Security</h4>
                     </div>
                     <div class="card-body">
