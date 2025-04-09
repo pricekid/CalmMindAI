@@ -1,9 +1,9 @@
-from flask import Blueprint, redirect, url_for, flash, request, render_template
+from flask import Blueprint, redirect, url_for, flash, request, render_template, current_app as app
 from flask_login import current_user, login_required
 import logging
 import os
 import traceback
-from send_immediate_notification import send_immediate_notification_to_all_users, send_test_email
+from models import User
 from send_immediate_sms import test_sms, send_immediate_sms_to_all
 from admin_utils import load_twilio_config
 from admin_routes import admin_required
@@ -21,6 +21,48 @@ notification_bp = Blueprint('notification', __name__, url_prefix='/notification'
 def send_immediate_notification():
     """Send an immediate email notification to all users with notifications enabled"""
     try:
+        # Use the improved email service
+        from improved_email_service import send_immediate_notification_to_all_users
+        
+        # Count users with notifications enabled
+        notification_users_count = User.query.filter_by(notifications_enabled=True).count()
+        
+        if notification_users_count == 0:
+            flash('No users have email notifications enabled. Please enable notifications for at least one user.', 'warning')
+            return redirect(url_for('admin.scheduler_logs'))
+            
+        # Log detailed email configuration for debugging
+        logger.info(f"Mail configuration for immediate notification:")
+        logger.info(f"MAIL_SERVER: {app.config.get('MAIL_SERVER')}")
+        logger.info(f"MAIL_PORT: {app.config.get('MAIL_PORT')}")
+        logger.info(f"MAIL_USE_TLS: {app.config.get('MAIL_USE_TLS')}")
+        logger.info(f"MAIL_USERNAME: {'Set' if app.config.get('MAIL_USERNAME') else 'Not set'}")
+        logger.info(f"MAIL_PASSWORD: {'Set' if app.config.get('MAIL_PASSWORD') else 'Not set'}")
+        logger.info(f"MAIL_DEFAULT_SENDER: {app.config.get('MAIL_DEFAULT_SENDER')}")
+        logger.info(f"Number of users with notifications enabled: {notification_users_count}")
+        
+        # Check for missing email configuration
+        if not all([
+            app.config.get('MAIL_SERVER'),
+            app.config.get('MAIL_PORT'),
+            app.config.get('MAIL_USERNAME'),
+            app.config.get('MAIL_PASSWORD'),
+            app.config.get('MAIL_DEFAULT_SENDER')
+        ]):
+            missing = []
+            if not app.config.get('MAIL_SERVER'): missing.append("MAIL_SERVER")
+            if not app.config.get('MAIL_PORT'): missing.append("MAIL_PORT")
+            if not app.config.get('MAIL_USERNAME'): missing.append("MAIL_USERNAME")
+            if not app.config.get('MAIL_PASSWORD'): missing.append("MAIL_PASSWORD")
+            if not app.config.get('MAIL_DEFAULT_SENDER'): missing.append("MAIL_DEFAULT_SENDER")
+            
+            error_msg = f"Missing email configuration: {', '.join(missing)}"
+            logger.error(error_msg)
+            flash(f"Cannot send emails: {error_msg}", 'danger')
+            flash("Please check your email settings in the .env file or environment variables.", 'danger')
+            return redirect(url_for('admin.scheduler_logs'))
+        
+        # All checks passed, send the notifications
         result = send_immediate_notification_to_all_users()
         
         if result and 'success' in result:
@@ -29,12 +71,19 @@ def send_immediate_notification():
             # Log any failures
             if 'errors' in result and result['errors'] > 0:
                 flash(f'Failed to send {result["errors"]} email notifications.', 'warning')
+                logger.error(f"Email notification failures: {result.get('errors', 0)}")
+                
+                # Add troubleshooting options
+                flash('To diagnose email issues, run the "python diagnose_notification_issue.py" script from the command line.', 'info')
         else:
-            flash('No email notifications were sent. Check mail configuration or ensure users have notifications enabled.', 'warning')
+            flash('No email notifications were sent. This could be due to missing email configuration or no enabled users.', 'warning')
+            flash('Please run "python diagnose_notification_issue.py" to diagnose the issue.', 'info')
             
     except Exception as e:
         logger.error(f"Error sending email notifications: {str(e)}")
+        logger.exception("Detailed error when sending email notifications")
         flash(f'Error sending email notifications: {str(e)}', 'danger')
+        flash('For detailed diagnosis, run the "python diagnose_notification_issue.py" script.', 'info')
     
     return redirect(url_for('admin.scheduler_logs'))
 
@@ -51,13 +100,33 @@ def test_email_notification():
             return redirect(url_for('admin.settings'))
         
         try:
+            # Use the improved email service
+            from improved_email_service import send_test_email
+            
+            # Log the email configuration
+            logger.info(f"Testing email with configuration:")
+            logger.info(f"MAIL_SERVER: {app.config.get('MAIL_SERVER')}")
+            logger.info(f"MAIL_PORT: {app.config.get('MAIL_PORT')}")
+            logger.info(f"MAIL_USE_TLS: {app.config.get('MAIL_USE_TLS')}")
+            logger.info(f"MAIL_USERNAME: {'Set' if app.config.get('MAIL_USERNAME') else 'Not set'}")
+            logger.info(f"MAIL_PASSWORD: {'Set' if app.config.get('MAIL_PASSWORD') else 'Not set'}")
+            logger.info(f"MAIL_DEFAULT_SENDER: {app.config.get('MAIL_DEFAULT_SENDER')}")
+            
             success = send_test_email(email)
             
             if success:
                 flash(f'Test email sent successfully to {email}', 'success')
             else:
                 flash(f'Failed to send test email to {email}. Check mail configuration.', 'danger')
+                
+                # Add more detailed diagnostics
+                if not app.config.get('MAIL_USERNAME') or not app.config.get('MAIL_PASSWORD'):
+                    flash('Email credentials may be missing or incorrect. Check your mail configuration in the admin settings.', 'danger')
+                elif not app.config.get('MAIL_DEFAULT_SENDER'):
+                    flash('Default sender email is missing. Check your mail configuration.', 'danger')
         except Exception as e:
+            logger.error(f"Error sending test email: {str(e)}")
+            logger.exception("Detailed error when sending test email")
             flash(f'Error sending test email: {str(e)}', 'danger')
             
         return redirect(url_for('admin.settings'))

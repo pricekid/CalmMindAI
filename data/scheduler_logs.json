@@ -4144,5 +4144,77 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 2614",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-09 23:29:26",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 2614). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-09 23:29:27",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 7273",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 23:29:27",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 9dfca99b64e5 at 2025-04-09 23:29:27.811897",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 23:29:28",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-09 23:29:28.389964",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 23:29:28",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-09 23:29:28.396314",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 23:29:28",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 23:33:29",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 7273",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 23:33:49",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 7273",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 23:34:14",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 7273",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 23:36:43",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 7273",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 23:36:47",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 7273",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-09 23:38:26",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 7273",
+    "success": true
   }
 ]
