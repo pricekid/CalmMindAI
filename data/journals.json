@@ -3007,25 +3007,94 @@
     ]
   },
   {
-    "id": 137,
+    "id": 138,
     "user_id": 1,
-    "title": "April 9th",
-    "content": "i am thinking about ways in whihc i can drop at least one project i am working on since i am working on so many. they all seem promising , but i dont have teh energy for all of them",
-    "anxiety_level": 5,
-    "created_at": "2025-04-09T10:35:47.668335",
-    "updated_at": "2025-04-09T10:35:50.600343",
+    "title": "April 9th test",
+    "content": "testing this app",
+    "anxiety_level": 3,
+    "created_at": "2025-04-09T10:56:27.630938",
+    "updated_at": "2025-04-09T10:56:31.596985",
     "is_analyzed": true,
-    "gpt_response": "It's great that you're considering ways to manage your workload. Recognizing that you need to drop a project shows a strong sense of self-awareness and prioritization.",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Overcommitment",
-        "description": "This occurs when you take on too many tasks, leading to stress and reduced productivity. It happens when we believe we need to do everything ourselves or feel guilty for saying no.",
-        "recommendation": "Practice saying no to new commitments and reassess current priorities."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This pattern involves seeing things in black and white terms, without recognizing the middle ground. It can lead to viewing situations as all good or all bad. - When you catch yourself thinking in extremes, try to identify the shades of gray in the situation."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "This involves seeing situations in black-and-white terms, thinking everything must be done perfectly or not at all. It can lead to feeling overwhelmed by your workload.",
-        "recommendation": "Try to identify which projects can be adjusted or scaled down instead of completely dropped."
+        "thought_pattern": "Overcommitment",
+        "recommendation": "This pattern involves taking on too many tasks or responsibilities, often leading to stress and burnout. It may result from a desire to please others or not wanting to miss out. - Practice saying no to new commitments that don't align with your priorities."
+      }
+    ]
+  },
+  {
+    "id": 132,
+    "user_id": 1,
+    "title": "test 3 ",
+    "content": "i am very unhappy",
+    "anxiety_level": 8,
+    "created_at": "2025-04-08T19:17:34.048356",
+    "updated_at": "2025-04-08T19:17:37.181727",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-nothing thinking",
+        "recommendation": "Viewing situations in black-and-white terms, without recognizing the middle ground. - Try identifying 'gray areas' by listing three positive aspects of the situation to gain a balanced perspective."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Drawing broad conclusions based on a single event or piece of evidence. - Practice evidence gathering by writing down specific instances or examples that contradict the negative belief."
+      },
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Anticipating the worst-case scenario without considering more likely outcomes. - Use the 'Decatastrophizing' worksheet to assess the realistic probability of feared outcomes and plan constructive responses."
+      }
+    ]
+  },
+  {
+    "id": 133,
+    "user_id": 1,
+    "title": "test 5",
+    "content": "i am not sure whsat to write\r\n",
+    "anxiety_level": 6,
+    "created_at": "2025-04-08T19:24:00.198883",
+    "updated_at": "2025-04-08T19:24:03.718546",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Uncertainty Intolerance",
+        "recommendation": "Feeling uncomfortable with the uncertainty or lack of clarity, leading to anxiety. - Practice 'Decatastrophizing': Write down the worst-case, best-case, and most likely scenarios about the uncertainty to gain perspective."
+      },
+      {
+        "thought_pattern": "Perfectionism",
+        "recommendation": "Fear of making mistakes or not meeting personal standards, causing hesitation and anxiety. - Use 'Cognitive Restructuring': Challenge unrealistic standards by asking what would happen if things weren\u2019t perfect and how you would cope."
+      },
+      {
+        "thought_pattern": "Negative Self-Talk",
+        "recommendation": "Engaging in critical internal dialogue that increases self-doubt and anxiety. - Implement 'Thought Record': Identify and record anxious thoughts, then counter them with evidence-based, realistic responses."
+      }
+    ]
+  },
+  {
+    "id": 135,
+    "user_id": 1,
+    "title": "test 5",
+    "content": "this is a test entry",
+    "anxiety_level": 1,
+    "created_at": "2025-04-08T19:55:47.511333",
+    "updated_at": "2025-04-08T19:55:51.169141",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Overestimating the likelihood or impact of a negative outcome. - Use the 'Decatastrophizing' technique by asking yourself: 'What is the worst that could realistically happen? How would I cope if it did?'"
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, without recognizing the middle ground or shades of gray. - Practice 'Finding the Middle Ground' by listing evidence for and against your thought and then identifying a balanced perspective."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Seeing a single negative event as a never-ending pattern of defeat. - Challenge this with 'Evidence Collection' by keeping a journal of experiences that contradict the overgeneralized thought."
       }
     ]
   },
@@ -3038,40 +3107,38 @@
     "created_at": "2025-04-08T20:05:58.962644",
     "updated_at": "2025-04-08T20:06:02.978983",
     "is_analyzed": true,
-    "gpt_response": "It's great that you're taking the time to journal, even if it's just a quick entry. This shows your commitment to understanding your thoughts and feelings. Keep up the good work!\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- Overcommitment\n- All-or-Nothing Thinking\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Overcommitment",
-        "description": "Overcommitment involves taking on more tasks or responsibilities than one can handle, leading to stress and exhaustion. It's important to recognize the limits of your time and energy to prevent feeling overwhelmed.",
-        "recommendation": "Try prioritizing your tasks and saying 'no' to extra commitments to manage your workload better."
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Drawing broad conclusions from a single event or piece of evidence. - Use the 'Evidence Diary' technique: Write down specific evidence for and against your thoughts to see if they hold true across different situations."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "All-or-nothing thinking is a cognitive distortion where situations are viewed in extremes, such as seeing things as either perfect or a complete failure. This can lead to unnecessary stress and disappointment.",
-        "recommendation": "Practice finding a middle ground by acknowledging small successes and progress, even if things aren't perfect."
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Expecting the worst possible outcome or viewing situations as far worse than they are. - Practice 'Decatastrophizing': Challenge your thoughts by asking yourself, 'What is the worst that can happen? How likely is it, and what could I do to cope?'"
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, without seeing middle ground. - Engage in 'Cognitive Restructuring': Identify and write down a more balanced and realistic thought that acknowledges the complexity of the situation."
       }
     ]
   },
   {
-    "id": 138,
+    "id": 137,
     "user_id": 1,
-    "title": "April 9th test",
-    "content": "testing this app",
-    "anxiety_level": 3,
-    "created_at": "2025-04-09T10:56:27.630938",
-    "updated_at": "2025-04-09T10:56:31.596985",
+    "title": "April 9th",
+    "content": "i am thinking about ways in whihc i can drop at least one project i am working on since i am working on so many. they all seem promising , but i dont have teh energy for all of them",
+    "anxiety_level": 5,
+    "created_at": "2025-04-09T10:35:47.668335",
+    "updated_at": "2025-04-09T10:35:50.600343",
     "is_analyzed": true,
-    "gpt_response": "It's great that you're exploring this app and taking steps towards self-awareness. Recognizing your feelings is a positive start, no matter how simple the entry might seem.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "This pattern involves seeing things in black and white terms, without recognizing the middle ground. It can lead to viewing situations as all good or all bad.",
-        "recommendation": "When you catch yourself thinking in extremes, try to identify the shades of gray in the situation."
+        "thought_pattern": "Overcommitment",
+        "recommendation": "This occurs when you take on too many tasks, leading to stress and reduced productivity. It happens when we believe we need to do everything ourselves or feel guilty for saying no. - Practice saying no to new commitments and reassess current priorities."
       },
       {
-        "pattern": "Overcommitment",
-        "description": "This pattern involves taking on too many tasks or responsibilities, often leading to stress and burnout. It may result from a desire to please others or not wanting to miss out.",
-        "recommendation": "Practice saying no to new commitments that don't align with your priorities."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This involves seeing situations in black-and-white terms, thinking everything must be done perfectly or not at all. It can lead to feeling overwhelmed by your workload. - Try to identify which projects can be adjusted or scaled down instead of completely dropped."
       }
     ]
   },
@@ -3084,17 +3151,14 @@
     "created_at": "2025-04-09T11:47:59.508457",
     "updated_at": "2025-04-09T11:48:02.759418",
     "is_analyzed": true,
-    "gpt_response": "Congratulations on your exciting opportunity to work with a foreign firm! This is a wonderful step forward for your project and a testament to your hard work and dedication.\n\n- Overcommitment: This pattern involves taking on too many responsibilities, which can lead to feeling overwhelmed. Consider setting clear boundaries to maintain a healthy balance.\n- All-or-Nothing Thinking: This is when situations are viewed in extremes, such as seeing success or failure as the only outcomes. Try to acknowledge the spectrum of possibilities and the progress you make.\n\nTo support your journey, try setting small, realistic goals to avoid feeling overwhelmed.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- Overcommitment\n- All-or-Nothing Thinking\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Overcommitment",
-        "description": "This pattern involves taking on too many responsibilities, which can lead to feeling overwhelmed.",
-        "recommendation": "Consider setting clear boundaries to maintain a healthy balance."
+        "thought_pattern": "Overcommitment",
+        "recommendation": "This pattern involves taking on too many responsibilities, which can lead to feeling overwhelmed. - Consider setting clear boundaries to maintain a healthy balance."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "This is when situations are viewed in extremes, such as seeing success or failure as the only outcomes.",
-        "recommendation": "Try to acknowledge the spectrum of possibilities and the progress you make."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This is when situations are viewed in extremes, such as seeing success or failure as the only outcomes. - Try to acknowledge the spectrum of possibilities and the progress you make."
       }
     ]
   },
@@ -3107,17 +3171,14 @@
     "created_at": "2025-04-09T11:55:10.892862",
     "updated_at": "2025-04-09T11:55:13.951659",
     "is_analyzed": true,
-    "gpt_response": "Congratulations on the exciting opportunity to work with a foreign firm! It sounds like a wonderful step forward for your project, and it's great to see your hard work paying off.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- Overcommitment\n- All-or-Nothing Thinking\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Overcommitment",
-        "description": "This pattern involves taking on more tasks or responsibilities than one can realistically manage. It can lead to stress and burnout, making it important to prioritize and set boundaries.",
-        "recommendation": "Consider listing your current commitments and see where you can delegate or postpone tasks."
+        "thought_pattern": "Overcommitment",
+        "recommendation": "This pattern involves taking on more tasks or responsibilities than one can realistically manage. It can lead to stress and burnout, making it important to prioritize and set boundaries. - Consider listing your current commitments and see where you can delegate or postpone tasks."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "This involves seeing situations in black-and-white terms, without recognizing the middle ground. It can lead to unnecessary pressure and stress.",
-        "recommendation": "Try identifying the shades of gray in this opportunity and remind yourself of the small steps that lead to success."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This involves seeing situations in black-and-white terms, without recognizing the middle ground. It can lead to unnecessary pressure and stress. - Try identifying the shades of gray in this opportunity and remind yourself of the small steps that lead to success."
       }
     ]
   },
@@ -3130,12 +3191,34 @@
     "created_at": "2025-04-09T12:04:41.958470",
     "updated_at": "2025-04-09T12:04:45.232736",
     "is_analyzed": true,
-    "gpt_response": "It's wonderful that you chose to act with integrity by handing in the money you found. This reflects your strong values and clear conscience, which can be reassuring during moments of doubt. It's important to remember that your actions were guided by your principles, regardless of the outcome.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- Overcommitment\n- All-or-Nothing Thinking\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "This pattern involves seeing situations in black-and-white terms, such as believing the outcome of your action was either entirely good or bad. It can lead to unnecessary stress if things don't align perfectly with expectations.",
-        "recommendation": "Practice recognizing shades of gray by listing multiple possible outcomes and acknowledging the nuances in situations."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This pattern involves seeing situations in black-and-white terms, such as believing the outcome of your action was either entirely good or bad. It can lead to unnecessary stress if things don't align perfectly with expectations. - Practice recognizing shades of gray by listing multiple possible outcomes and acknowledging the nuances in situations."
+      }
+    ]
+  },
+  {
+    "id": 142,
+    "user_id": 1,
+    "title": "Feeling Left Behind",
+    "content": "Lately I\u2019ve been seeing all my friends moving forward in life \u2014 new jobs, relationships, big milestones. Meanwhile, I feel like I\u2019m stuck in the same place. I know I\u2019m trying, but it never feels like enough. I keep thinking maybe I\u2019ve missed my chance or that something\u2019s wrong with me. It\u2019s hard not to compare, and when I do, I just feel more anxious and unmotivated.",
+    "anxiety_level": 7,
+    "created_at": "2025-04-09T12:17:58.871680",
+    "updated_at": "2025-04-09T12:18:06.972590",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Thinking that not achieving milestones at the same pace as others means something is fundamentally wrong or that you've missed your chance. - Practice 'Cognitive Restructuring': Identify these catastrophic thoughts, challenge their validity by asking for evidence, and reframe them into more balanced thoughts."
+      },
+      {
+        "thought_pattern": "Comparison Trap",
+        "recommendation": "Constantly comparing yourself to others, which leads to feeling inadequate or left behind. - Use 'Gratitude Journaling': Each day, write down three things you are grateful for or personal achievements you are proud of, to shift focus from others to your own journey."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Believing that efforts are only valuable if they lead to monumental success, dismissing smaller progress. - Engage in 'Breaking Down Tasks': Break goals into smaller, manageable steps, and celebrate each completed step to recognize progress and reduce feelings of being stuck."
       }
     ]
   },
@@ -3148,17 +3231,14 @@
     "created_at": "2025-04-09T12:20:36.762905",
     "updated_at": "2025-04-09T12:20:40.531279",
     "is_analyzed": true,
-    "gpt_response": "It's completely normal to feel the way you do, and it's commendable that you're acknowledging these feelings. Recognizing your efforts is vital, and remember, your journey is unique and valuable in its own way. \n\n- **All-or-Nothing Thinking**: This pattern makes you see situations in black and white, without middle ground. It can lead to feeling stuck when life doesn't meet exact expectations. \n- **Comparison Trap**: Comparing yourself to others often disregards your unique journey and achievements, increasing feelings of inadequacy. \n\nTry focusing on small daily accomplishments and celebrate them, no matter how minor they seem.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "This pattern makes you see situations in black and white, without middle ground. It can lead to feeling stuck when life doesn't meet exact expectations.",
-        "recommendation": "Challenge this by identifying grey areas and acknowledging partial successes."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This pattern makes you see situations in black and white, without middle ground. It can lead to feeling stuck when life doesn't meet exact expectations. - Challenge this by identifying grey areas and acknowledging partial successes."
       },
       {
-        "pattern": "Comparison Trap",
-        "description": "Comparing yourself to others often disregards your unique journey and achievements, increasing feelings of inadequacy.",
-        "recommendation": "Practice gratitude for your own milestones, no matter their size."
+        "thought_pattern": "Comparison Trap",
+        "recommendation": "Comparing yourself to others often disregards your unique journey and achievements, increasing feelings of inadequacy. - Practice gratitude for your own milestones, no matter their size."
       }
     ]
   },
@@ -3171,17 +3251,14 @@
     "created_at": "2025-04-09T12:28:31.615527",
     "updated_at": "2025-04-09T12:28:36.146448",
     "is_analyzed": true,
-    "gpt_response": "It's great that you're reflecting on your feelings and recognizing the importance of setting boundaries. This awareness is a significant step toward making changes that will help you feel more balanced and less overwhelmed.\n\n- **Overcommitment**: This pattern involves taking on too much due to fear of seeming unreliable or selfish. It often leads to stress and feelings of being overwhelmed. Consider prioritizing tasks and saying 'no' to additional commitments when your plate is full to manage your workload better.\n\n- **All-or-Nothing Thinking**: This involves seeing situations in black-and-white terms, such as feeling either completely reliable or completely selfish. Try to find a middle ground by reminding yourself that setting boundaries is an act of self-care, not selfishness.\n\nTo start, try practicing saying 'no' in low-stakes situations to build confidence in setting boundaries.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Overcommitment",
-        "description": "This pattern involves taking on too much due to fear of seeming unreliable or selfish. It often leads to stress and feelings of being overwhelmed.",
-        "recommendation": "Consider prioritizing tasks and saying 'no' to additional commitments when your plate is full to manage your workload better."
+        "thought_pattern": "Overcommitment",
+        "recommendation": "This pattern involves taking on too much due to fear of seeming unreliable or selfish. It often leads to stress and feelings of being overwhelmed. - Consider prioritizing tasks and saying 'no' to additional commitments when your plate is full to manage your workload better."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "This involves seeing situations in black-and-white terms, such as feeling either completely reliable or completely selfish.",
-        "recommendation": "Try to find a middle ground by reminding yourself that setting boundaries is an act of self-care, not selfishness."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This involves seeing situations in black-and-white terms, such as feeling either completely reliable or completely selfish. - Try to find a middle ground by reminding yourself that setting boundaries is an act of self-care, not selfishness."
       }
     ]
   },
@@ -3194,17 +3271,14 @@
     "created_at": "2025-04-09T12:29:26.987109",
     "updated_at": "2025-04-09T12:29:33.761947",
     "is_analyzed": true,
-    "gpt_response": "It's commendable that you're aware of your feelings and the impact of your choices. Recognizing this pattern is the first step to making positive changes. This shows your commitment to personal growth and self-care.\n\n- **Overcommitment**: This pattern involves taking on too many responsibilities, often due to a desire to please others or avoid guilt. It can lead to feelings of overwhelm and burnout.\n- **All-or-Nothing Thinking**: This distortion might make you feel that saying 'no' is selfish or unreliable, ignoring the balanced options in between.\n\nTry practicing saying 'no' gently and assertively to small requests this week to build your boundary-setting skills.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Overcommitment",
-        "description": "This pattern involves taking on too many responsibilities, often due to a desire to please others or avoid guilt. It can lead to feelings of overwhelm and burnout.",
-        "recommendation": "Practice saying 'no' to small requests to build boundary-setting skills."
+        "thought_pattern": "Overcommitment",
+        "recommendation": "This pattern involves taking on too many responsibilities, often due to a desire to please others or avoid guilt. It can lead to feelings of overwhelm and burnout. - Practice saying 'no' to small requests to build boundary-setting skills."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "This distortion might make you feel that saying 'no' is selfish or unreliable, ignoring the balanced options in between.",
-        "recommendation": "Identify middle-ground options and practice balanced thinking."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This distortion might make you feel that saying 'no' is selfish or unreliable, ignoring the balanced options in between. - Identify middle-ground options and practice balanced thinking."
       }
     ]
   },
@@ -3217,17 +3291,14 @@
     "created_at": "2025-04-09T12:38:11.491261",
     "updated_at": "2025-04-09T12:38:14.769923",
     "is_analyzed": true,
-    "gpt_response": "It's great that you're recognizing the pattern of overcommitting, which is an important step toward making changes. This shows self-awareness and a desire to grow, both of which are very positive traits. Remember, it's okay to prioritize your own needs and set boundaries.\n\n- Overcommitment: This pattern involves taking on too many responsibilities, often due to a fear of appearing selfish or unreliable. It can lead to feeling overwhelmed and drained because your own needs are sidelined. Practice saying \"no\" to smaller requests to build confidence in setting boundaries.\n\n- All-or-Nothing Thinking: This distortion involves seeing situations in black-and-white terms, like feeling you're either selfish or completely helpful. It can create unnecessary pressure and stress. Challenge this by identifying a middle ground where you can help others while respecting your limits.\n\nConsider practicing saying \"I need to finish my current work first\" as a way to set boundaries with confidence.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Overcommitment",
-        "description": "This pattern involves taking on too many responsibilities, often due to a fear of appearing selfish or unreliable. It can lead to feeling overwhelmed and drained because your own needs are sidelined.",
-        "recommendation": "Practice saying \"no\" to smaller requests to build confidence in setting boundaries."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations as only having two extreme options, without recognizing the middle ground. - Thought Reframing: Challenge the extremes by considering a balanced perspective."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "This distortion involves seeing situations in black-and-white terms, like feeling you're either selfish or completely helpful. It can create unnecessary pressure and stress.",
-        "recommendation": "Challenge this by identifying a middle ground where you can help others while respecting your limits."
+        "thought_pattern": "Overcommitment",
+        "recommendation": "Taking on more responsibilities than you can handle comfortably, often to meet perceived expectations. - Boundary Setting: Practice small-scale 'no's to build confidence in setting boundaries."
       }
     ]
   },
@@ -3240,17 +3311,14 @@
     "created_at": "2025-04-09T12:43:38.738942",
     "updated_at": "2025-04-09T12:43:42.920317",
     "is_analyzed": true,
-    "gpt_response": "It's great that you are reflecting on your feelings and recognizing the impact of overcommitting. This awareness is an important first step toward making positive changes.\n\n- All-or-Nothing Thinking: This pattern involves seeing situations in only two categories instead of on a continuum. It can make you feel like you either have to help everyone or no one at all.\n- Overcommitment: Taking on too much often stems from a desire to please others, but it can lead to stress and exhaustion, affecting your own priorities.\n\nTry practicing saying 'no' gently but firmly, and remind yourself that setting boundaries is a form of self-care.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "This pattern involves seeing situations in only two categories instead of on a continuum. It can make you feel like you either have to help everyone or no one at all.",
-        "recommendation": "Try recognizing the middle ground by setting small, manageable boundaries."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This pattern involves seeing situations in only two categories instead of on a continuum. It can make you feel like you either have to help everyone or no one at all. - Try recognizing the middle ground by setting small, manageable boundaries."
       },
       {
-        "pattern": "Overcommitment",
-        "description": "Taking on too much often stems from a desire to please others, but it can lead to stress and exhaustion, affecting your own priorities.",
-        "recommendation": "Practice saying 'no' to maintain balance and focus on your own tasks."
+        "thought_pattern": "Overcommitment",
+        "recommendation": "Taking on too much often stems from a desire to please others, but it can lead to stress and exhaustion, affecting your own priorities. - Practice saying 'no' to maintain balance and focus on your own tasks."
       }
     ]
   },
@@ -3263,17 +3331,14 @@
     "created_at": "2025-04-09T13:11:34.660730",
     "updated_at": "2025-04-09T13:11:40.655347",
     "is_analyzed": true,
-    "gpt_response": "It's great that you're aware of how taking on extra tasks affects you. This awareness is a solid step toward making changes that support your well-being. Remember, it's okay to prioritize your own needs.\n\n- **Overcommitment**: It's common to want to help others, but overcommitting can lead to feeling overwhelmed and drained. Learning to set boundaries can help protect your time and energy.\n- **All-or-Nothing Thinking**: This can occur when you think helping others means neglecting your own needs. Remember, you can be supportive and still prioritize your tasks.\n\nConsider practicing saying 'no' in a kind, assertive way, or offer help when it fits your schedule better.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Overcommitment",
-        "description": "It's common to want to help others, but overcommitting can lead to feeling overwhelmed and drained. Learning to set boundaries can help protect your time and energy.",
-        "recommendation": "Practice saying 'no' in a kind, assertive way, or offer help when it fits your schedule better."
+        "thought_pattern": "Overcommitment",
+        "recommendation": "It's common to want to help others, but overcommitting can lead to feeling overwhelmed and drained. Learning to set boundaries can help protect your time and energy. - Practice saying 'no' in a kind, assertive way, or offer help when it fits your schedule better."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "This can occur when you think helping others means neglecting your own needs. Remember, you can be supportive and still prioritize your tasks.",
-        "recommendation": "Reflect on how you can support others while still taking care of your own responsibilities."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This can occur when you think helping others means neglecting your own needs. Remember, you can be supportive and still prioritize your tasks. - Reflect on how you can support others while still taking care of your own responsibilities."
       }
     ]
   },
@@ -3286,17 +3351,14 @@
     "created_at": "2025-04-09T13:20:25.033623",
     "updated_at": "2025-04-09T13:20:30.116848",
     "is_analyzed": true,
-    "gpt_response": "It\u2019s great that you recognize the importance of connecting with others, even when it feels challenging. This shows a strong desire to find balance between your needs for safety and connection. Remember, noticing these patterns is a big step toward making changes.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "This pattern involves viewing situations in extremes, like believing you'll either be perfectly social or entirely awkward. It can create unnecessary pressure and anxiety around social events.",
-        "recommendation": "Try to identify a middle ground, such as envisioning a realistic scenario where you have both comfortable and awkward moments."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This pattern involves viewing situations in extremes, like believing you'll either be perfectly social or entirely awkward. It can create unnecessary pressure and anxiety around social events. - Try to identify a middle ground, such as envisioning a realistic scenario where you have both comfortable and awkward moments."
       },
       {
-        "pattern": "Overcommitment",
-        "description": "Feeling guilty for backing out can lead you to commit to more than feels comfortable, creating a cycle of stress and avoidance. This pattern can make social situations feel overwhelming.",
-        "recommendation": "Consider setting a small goal, like attending for just an hour, to reduce pressure and maintain your boundaries."
+        "thought_pattern": "Overcommitment",
+        "recommendation": "Feeling guilty for backing out can lead you to commit to more than feels comfortable, creating a cycle of stress and avoidance. This pattern can make social situations feel overwhelming. - Consider setting a small goal, like attending for just an hour, to reduce pressure and maintain your boundaries."
       }
     ]
   },
@@ -3309,17 +3371,14 @@
     "created_at": "2025-04-09T13:33:50.537294",
     "updated_at": "2025-04-09T13:33:56.958139",
     "is_analyzed": true,
-    "gpt_response": "I want to start by saying how much I appreciate your openness in sharing this. It's not easy to admit when we're feeling overwhelmed or frustrated, and your willingness to look at what's going on is a big step forward. \n\nIt sounds like you had every intention of keeping your plate clear this week, but then the moment came, and you found yourself saying yes instead. It's like there's a part of you that really wants to help and be seen as reliable, and another part that's now feeling the weight of that decision. It's tough when we end up feeling drained instead of accomplished.\n\nLet's look at a couple of thought patterns that might be playing a role here:\n\nAll-or-Nothing Thinking: This is when we see things in black and white terms, like feeling you have to either help fully or not at all. But life often lives in the gray areas, where helping a bit can still be valuable without overextending yourself.\nOvercommitment: This is saying yes to too many things because you want to be helpful or avoid seeming unreliable. It can lead to feeling stretched thin and not being able to meet your own needs.\n\nHere are a few gentle CBT strategies you might try:\n\nThought Reframing: When you notice yourself thinking \"I have to help or I'll seem selfish,\" try reframing it to \"Helping is great, but taking care of my workload is important too.\"\nBoundary Setting: Practice saying no gently but firmly. You could try something like, \"I'd love to help, but I need to focus on my own priorities this week.\"\nGratitude Practice: At the end of each day, jot down something you did manage well or a moment you took for yourself, no matter how small.\n\nAnd here's a reflection prompt for today:\n\"What would setting a respectful boundary look like for me, and how could it help me manage my commitments better?\"\n\nRemember, you're doing meaningful inner work by recognizing these patterns. Each step you take toward balance is a step toward well-being.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Seeing things in black and white terms, without recognizing the gray areas",
-        "recommendation": "Thought Reframing: Challenge the idea that you have to help fully or not at all. Look for a balanced perspective."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Seeing things in black and white terms, without recognizing the gray areas - Thought Reframing: Challenge the idea that you have to help fully or not at all. Look for a balanced perspective."
       },
       {
-        "pattern": "Overcommitment",
-        "description": "Saying yes to too many things, leading to feeling stretched thin",
-        "recommendation": "Boundary Setting: Practice saying no gently but firmly to maintain your own priorities."
+        "thought_pattern": "Overcommitment",
+        "recommendation": "Saying yes to too many things, leading to feeling stretched thin - Boundary Setting: Practice saying no gently but firmly to maintain your own priorities."
       }
     ]
   },
@@ -3332,17 +3391,14 @@
     "created_at": "2025-04-09T15:04:51.612805",
     "updated_at": "2025-04-09T15:05:55.031988",
     "is_analyzed": true,
-    "gpt_response": "Hey there! Thanks for taking a moment to check in and share your thoughts, even if it's just a quick 'test.' Every small step in this journey counts, and I\u2019m glad you're here.\n\nEven a simple entry like this shows that you\u2019re engaging with your feelings and habits, which is a great way to stay aware and mindful. It\u2019s like keeping a pulse on your mental space. \n\nFrom what you've shared before, there are some thought patterns that might pop up more often:\n\nAll-or-Nothing Thinking: This is when things are seen in black or white, with no middle ground. It can make you feel like you're either totally on top of things or completely off track.\nOvercommitment: Sometimes taking on too much can leave you feeling stretched thin, making relaxation feel like another task on your to-do list.\n\nHere are a few gentle strategies that might help:\n\nThought Reframing: When all-or-nothing thinking kicks in, try to find a middle ground. Instead of \"I have to do it all perfectly,\" how about \"I\u2019ll focus on doing my best with what I can today.\"\nBoundary Setting: With overcommitment, maybe take a moment to prioritize. Could you write down one or two things that are most important today and give yourself permission to let the rest wait?\n\nAnd here's a little reflection prompt for you:\n\"What's one small thing I can do today that would bring me joy or relaxation, even if just for a few minutes?\"\n\nRemember, you\u2019re doing some seriously valuable work by checking in with yourself. Keep being kind to yourself \u2014 you deserve it.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n\n\nWarmly,\nCoach Mira",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "This is when things are seen in black or white, with no middle ground. It can make you feel like you're either totally on top of things or completely off track.",
-        "recommendation": "Thought Reframing: When all-or-nothing thinking kicks in, try to find a middle ground. Instead of \"I have to do it all perfectly,\" how about \"I\u2019ll focus on doing my best with what I can today.\""
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This is when you view situations in extreme terms, like seeing things as either a complete success or a total failure, without recognizing the middle ground. - Thought Reframing: Practice seeing the nuances and middle ground in situations instead of only the extremes."
       },
       {
-        "pattern": "Overcommitment",
-        "description": "Sometimes taking on too much can leave you feeling stretched thin, making relaxation feel like another task on your to-do list.",
-        "recommendation": "Boundary Setting: With overcommitment, maybe take a moment to prioritize. Could you write down one or two things that are most important today and give yourself permission to let the rest wait?"
+        "thought_pattern": "Comparison Trap",
+        "recommendation": "This involves constantly comparing yourself to others, which can lead to feelings of inadequacy and decreased self-esteem. - Gratitude Practice: Focus on three things you\u2019re grateful for in your own life to shift attention away from comparisons."
       }
     ]
   }

@@ -1,0 +1,120 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-lg border-0">
+                <div class="card-header text-white" style="background: linear-gradient(135deg, var(--warm-peach), #d1a673);">
+                    <h1 class="display-5 mb-0">About Calm Journey</h1>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-7">
+                            <h2 class="mb-4">Our Mission</h2>
+                            <p class="lead">
+                                Calm Journey is dedicated to making mental wellness accessible through 
+                                technology that understands and responds to human emotions with compassion.
+                            </p>
+                            <p>
+                                We believe that journaling, combined with cognitive behavioral therapy techniques, 
+                                can help individuals identify thought patterns, manage anxiety, and build resilience.
+                            </p>
+                            <p class="mt-4 mb-4 fw-bold" style="color: var(--warm-peach);">
+                                Calm Journey is dedicated to those who carry invisible burdens. In memory of Emmanuel — your story matters.
+                            </p>
+                        </div>
+                        <div class="col-md-5 d-flex align-items-center justify-content-center">
+                            <div class="p-3 rounded-circle" style="background: radial-gradient(circle, rgba(230, 185, 128, 0.2), rgba(230, 185, 128, 0.1));">
+                                <i class="bi bi-journal-text" style="font-size: 8rem; color: var(--warm-peach);"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h2 class="mb-3">Our Approach</h2>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card mb-3 h-100 border-0 shadow-sm">
+                                        <div class="card-body">
+                                            <h4 class="mb-3" style="color: var(--warm-peach);">
+                                                <i class="bi bi-heart-pulse me-2"></i>
+                                                Compassionate Technology
+                                            </h4>
+                                            <p>
+                                                We design with empathy at the core, ensuring every interaction 
+                                                feels supportive and understanding, never clinical or judgmental.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card mb-3 h-100 border-0 shadow-sm">
+                                        <div class="card-body">
+                                            <h4 class="mb-3" style="color: var(--warm-peach);">
+                                                <i class="bi bi-shield-check me-2"></i>
+                                                Evidence-Based Methods
+                                            </h4>
+                                            <p>
+                                                Our approach is grounded in cognitive behavioral therapy principles, 
+                                                which have proven effective for managing anxiety, stress, and negative thought patterns.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card mb-3 h-100 border-0 shadow-sm">
+                                        <div class="card-body">
+                                            <h4 class="mb-3" style="color: var(--warm-peach);">
+                                                <i class="bi bi-lock me-2"></i>
+                                                Privacy First
+                                            </h4>
+                                            <p>
+                                                Your thoughts are yours alone. We prioritize security and privacy 
+                                                in all aspects of our application.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card mb-3 h-100 border-0 shadow-sm">
+                                        <div class="card-body">
+                                            <h4 class="mb-3" style="color: var(--warm-peach);">
+                                                <i class="bi bi-graph-up me-2"></i>
+                                                Growth-Oriented
+                                            </h4>
+                                            <p>
+                                                Beyond just tracking, we focus on helping you understand patterns 
+                                                and develop strategies for managing your emotional well-being.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="row">
+                        <div class="col-12 text-center mb-4">
+                            <h2>Not a Replacement for Professional Help</h2>
+                            <p class="lead">
+                                While Calm Journey can be a valuable tool for self-reflection and emotional awareness, 
+                                it is not a substitute for professional mental health care.
+                            </p>
+                            <p>
+                                If you're experiencing a crisis or need immediate support, please visit our 
+                                <a href="{{ url_for('crisis') }}" class="text-decoration-none">Crisis Resources</a> page.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

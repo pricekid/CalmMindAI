@@ -359,6 +359,15 @@ def crisis():
     """
     return render_template('crisis.html', title='Crisis Resources')
 
+# About page
+@app.route('/about')
+def about():
+    """
+    Display information about Calm Journey and its mission.
+    This page is available to all users, whether logged in or not.
+    """
+    return render_template('about.html', title='About Calm Journey')
+
 # Data download routes
 @app.route('/download/journal-entries')
 @login_required

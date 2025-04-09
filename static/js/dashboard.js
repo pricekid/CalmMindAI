@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Check if welcome modal exists (for first-time users) and show it
+    const welcomeModal = document.getElementById('welcomeModal');
+    if (welcomeModal) {
+        const welcomeModalObj = new bootstrap.Modal(welcomeModal);
+        welcomeModalObj.show();
+    }
+    
     // Get mood data from the server (passed as variables to the template)
     const moodDates = JSON.parse(document.getElementById('mood-dates-data').textContent);
     const moodScores = JSON.parse(document.getElementById('mood-scores-data').textContent);

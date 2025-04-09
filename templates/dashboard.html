@@ -11,6 +11,30 @@
     {{ mood_scores|tojson }}
 </script>
 
+<!-- First-time user welcome modal -->
+{% if not recent_entries %}
+<div class="modal fade" id="welcomeModal" tabindex="-1" aria-labelledby="welcomeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0">
+            <div class="modal-header" style="background: linear-gradient(135deg, var(--warm-peach), #d1a673); color: white; border: none;">
+                <h5 class="modal-title" id="welcomeModalLabel">Welcome to Calm Journey</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center p-4">
+                <div class="mb-3">
+                    <i class="bi bi-journal-text" style="font-size: 3rem; color: var(--warm-peach);"></i>
+                </div>
+                <p class="lead">This app was built with real people in mind — and in memory of one who is no longer here. May it bring comfort and clarity to those who need it most.</p>
+                <p class="mb-0">We're honored to be a part of your wellness journey.</p>
+            </div>
+            <div class="modal-footer border-0 justify-content-center">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style="background-color: var(--warm-peach); border-color: var(--warm-peach);">Begin My Journey</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 <div class="row mb-4">
     <div class="col-12">
         <h1 class="mb-4">Welcome, {{ current_user.username }}</h1>
