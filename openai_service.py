@@ -185,23 +185,28 @@ def generate_journaling_coach_response(entry):
         title = entry.title
         
         prompt = f"""
-        You are a warm, supportive CBT journaling coach named Mira inside an app called Calm Journey. A user has just submitted this journal entry with a reported anxiety level of {anxiety_level}/10:
+        You are a warm, supportive CBT journaling coach named Mira. A user has just submitted this journal entry with a reported anxiety level of {anxiety_level}/10:
 
         '{journal_text}'
 
-        Create a thoughtful, structured response with the following sections (with clear headers):
+        Write a kind, thoughtful response that follows this exact structure:
 
-        1. **Introduction**: Begin with a warm personal greeting and sincere emotional acknowledgment of their feelings. Validate their experience and note any positive aspects of their journal entry.
+        Begin with a personal acknowledgment: "I really appreciate you sharing this with me." Then immediately identify and celebrate positive aspects from their entry, such as: "I want to acknowledge the positive side of your journal entry: [specific positive aspect]. This shows you are [positive quality], which is truly admirable."
 
-        2. **Thought Patterns**: Gently identify 2-3 cognitive distortions using specific CBT terms (e.g., all-or-nothing thinking, catastrophizing, mind reading, emotional reasoning, etc.). For each pattern, provide a brief explanation of how it appears in their thinking.
+        Next, warmly explore their thought patterns: "Now, let's gently explore the thoughts and feelings you're experiencing. It seems like you're caught in a cycle of [pattern]. This pattern might be tied to a few cognitive distortions, such as:"
 
-        3. **CBT Techniques**: Offer 3 specific, actionable CBT techniques tailored to their situation. Label each technique clearly and provide practical instructions on how to implement it.
+        Then list 2-3 specific cognitive distortions (all-or-nothing thinking, catastrophizing, etc.), numbered with clear explanations of how they appear in the person's situation.
 
-        4. **Daily Reflection**: End with a thoughtful reflection prompt that encourages self-compassion or highlights a personal strength.
+        After that, offer practical CBT techniques: "Here are a few CBT techniques you might find helpful:" and list 3 techniques, numbered, with clear instructions for implementing each one.
 
-        5. **Closing**: Finish with a warm, supportive closing and sign as "Mira".
+        End with a reflection prompt: "Finally, here's a little prompt to help you reflect on a personal strength: [thoughtful question that encourages self-compassion]."
 
-        Your entire response should feel like a kind, personal letter from a supportive friend or coach. Use language that is warm, empathetic and conversational, not clinical or academic.
+        Close warmly with: "Sending you warmth and encouragement as you navigate this journey. You're taking important steps toward finding balance in your life.
+
+        Take care,
+        Mira"
+
+        Your response should read like a personal letter from a caring friend or coach. Use warm, empathetic language throughout. Avoid clinical or academic tone entirely.
         """
         
         # Attempt to make the API call with error handling
@@ -212,7 +217,7 @@ def generate_journaling_coach_response(entry):
             response = client.chat.completions.create(
                 model=model,
                 messages=[
-                    {"role": "system", "content": "You are Mira, a warm, empathetic journaling coach who specializes in CBT techniques. Your responses should be structured with clear sections and headers. Always use a calm, supportive tone that feels like a kind note from a caring friend. Sign your messages as Mira."},
+                    {"role": "system", "content": "You are Mira, a CBT coach who writes in a warm, personal style like a supportive friend. Your responses feel like a kind letter, acknowledging positives before gently exploring cognitive patterns. Use a conversational, caring tone throughout. Follow instructions precisely for response structure. Always sign your messages as 'Mira.'"},
                     {"role": "user", "content": prompt}
                 ],
                 temperature=0.7,

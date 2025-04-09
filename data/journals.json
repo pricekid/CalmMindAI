@@ -3184,5 +3184,51 @@
         "recommendation": "Try to find a middle ground by reminding yourself that setting boundaries is an act of self-care, not selfishness."
       }
     ]
+  },
+  {
+    "id": 145,
+    "user_id": 1,
+    "title": "saying yes too often",
+    "content": "I told myself I wouldn\u2019t take on anything extra this week, but when a colleague asked for help with their project, I said yes anyway. Now I\u2019m feeling overwhelmed, behind on my own work, and frustrated with myself for not setting a boundary. I didn\u2019t want to seem selfish or unreliable, but now I just feel drained. Why do I keep doing this to myself?",
+    "anxiety_level": 5,
+    "created_at": "2025-04-09T12:29:26.987109",
+    "updated_at": "2025-04-09T12:29:33.761947",
+    "is_analyzed": true,
+    "gpt_response": "It's commendable that you're aware of your feelings and the impact of your choices. Recognizing this pattern is the first step to making positive changes. This shows your commitment to personal growth and self-care.\n\n- **Overcommitment**: This pattern involves taking on too many responsibilities, often due to a desire to please others or avoid guilt. It can lead to feelings of overwhelm and burnout.\n- **All-or-Nothing Thinking**: This distortion might make you feel that saying 'no' is selfish or unreliable, ignoring the balanced options in between.\n\nTry practicing saying 'no' gently and assertively to small requests this week to build your boundary-setting skills.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Overcommitment",
+        "description": "This pattern involves taking on too many responsibilities, often due to a desire to please others or avoid guilt. It can lead to feelings of overwhelm and burnout.",
+        "recommendation": "Practice saying 'no' to small requests to build boundary-setting skills."
+      },
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "This distortion might make you feel that saying 'no' is selfish or unreliable, ignoring the balanced options in between.",
+        "recommendation": "Identify middle-ground options and practice balanced thinking."
+      }
+    ]
+  },
+  {
+    "id": 146,
+    "user_id": 1,
+    "title": "why do i do this",
+    "content": "I told myself I wouldn\u2019t take on anything extra this week, but when a colleague asked for help with their project, I said yes anyway. Now I\u2019m feeling overwhelmed, behind on my own work, and frustrated with myself for not setting a boundary. I didn\u2019t want to seem selfish or unreliable, but now I just feel drained. Why do I keep doing this to myself?",
+    "anxiety_level": 5,
+    "created_at": "2025-04-09T12:38:11.491261",
+    "updated_at": "2025-04-09T12:38:14.769923",
+    "is_analyzed": true,
+    "gpt_response": "It's great that you're recognizing these feelings and taking a step back to understand why they arise. This awareness is the first step towards making meaningful changes. Remember, it's okay to set boundaries and prioritize your well-being.\n\n- All-or-Nothing Thinking: This pattern makes you view situations in black-and-white terms, like seeing yourself as either selfish or reliable, with no in-between. Recognizing the gray areas can help you find a balance.\n- Overcommitment: Taking on too much at once can leave you feeling overwhelmed and drained. It's important to assess your capacity and practice saying no when necessary.\n\nTry practicing saying 'Let me think about it and get back to you' when asked to take on additional tasks.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Overcommitment\n",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "This pattern makes you view situations in black-and-white terms, like seeing yourself as either selfish or reliable, with no in-between.",
+        "recommendation": "Recognizing the gray areas can help you find a balance."
+      },
+      {
+        "pattern": "Overcommitment",
+        "description": "Taking on too much at once can leave you feeling overwhelmed and drained.",
+        "recommendation": "It's important to assess your capacity and practice saying no when necessary."
+      }
+    ]
   }
 ]
