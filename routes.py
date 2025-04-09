@@ -203,26 +203,29 @@ def new_journal_entry():
     return render_template('journal_entry.html', title='New Journal Entry', 
                           form=form, legend='New Journal Entry')
 
-# Redirect to view journal entry
+# Direct view for journal entry (no redirect)
 @app.route('/journal/<int:entry_id>')
 @login_required
 def view_journal_entry(entry_id):
-    # Redirect to the blueprint route
-    return redirect(url_for('journal_blueprint.view_journal_entry', entry_id=entry_id))
+    # Use blueprint function directly to avoid redirect loop
+    from journal_routes import view_journal_entry as blueprint_view
+    return blueprint_view(entry_id)
 
-# Redirect to update journal entry
+# Direct update for journal entry (no redirect)
 @app.route('/journal/<int:entry_id>/update', methods=['GET', 'POST'])
 @login_required
 def update_journal_entry(entry_id):
-    # Redirect to the blueprint route
-    return redirect(url_for('journal_blueprint.update_journal_entry', entry_id=entry_id))
+    # Use blueprint function directly to avoid redirect loop
+    from journal_routes import update_journal_entry as blueprint_update
+    return blueprint_update(entry_id)
 
-# Redirect to delete journal entry
+# Direct delete for journal entry (no redirect)
 @app.route('/journal/<int:entry_id>/delete', methods=['GET', 'POST'])
 @login_required
 def delete_journal_entry(entry_id):
-    # Redirect to the blueprint route
-    return redirect(url_for('journal_blueprint.delete_journal_entry', entry_id=entry_id))
+    # Use blueprint function directly to avoid redirect loop
+    from journal_routes import delete_journal_entry as blueprint_delete
+    return blueprint_delete(entry_id)
 
 # Breathing exercise page
 @app.route('/breathing')
@@ -291,19 +294,23 @@ def log_mood():
     
     return redirect(url_for('dashboard'))
 
-# Redirect API endpoint for getting coaching feedback
-@app.route('/api/journal_coach/<int:entry_id>', methods=['POST'])
+# Direct API endpoint for getting coaching feedback
+@app.route('/api/journal_coach/<int:entry_id>', methods=['GET', 'POST'])
+@app.route('/api/journal-coach/<int:entry_id>', methods=['GET', 'POST'])
 @login_required
 def api_journal_coach(entry_id):
-    # Redirect to the blueprint route
-    return redirect(url_for('journal_blueprint.api_journal_coach', entry_id=entry_id))
+    # Use blueprint function directly to avoid redirect loop
+    from journal_routes import api_journal_coach as blueprint_coach
+    return blueprint_coach(entry_id)
 
-# Redirect API endpoint for analyzing a journal entry
-@app.route('/api/analyze_entry/<int:entry_id>', methods=['POST'])
+# Direct API endpoint for analyzing a journal entry
+@app.route('/api/analyze_entry/<int:entry_id>', methods=['GET', 'POST'])
+@app.route('/api/analyze-entry/<int:entry_id>', methods=['GET', 'POST'])
 @login_required
 def api_analyze_entry(entry_id):
-    # Redirect to the blueprint route
-    return redirect(url_for('journal_blueprint.api_analyze_entry', entry_id=entry_id))
+    # Use blueprint function directly to avoid redirect loop
+    from journal_routes import api_analyze_entry as blueprint_analyze
+    return blueprint_analyze(entry_id)
 
 # Crisis Resources page
 @app.route('/crisis')
