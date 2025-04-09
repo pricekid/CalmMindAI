@@ -3005,5 +3005,28 @@
         "recommendation": "Assuming the worst-case scenario will happen or has happened, leading to heightened anxiety. - Practice the 'Decatastrophizing' technique by asking yourself, 'What is the worst that could realistically happen?' and 'How likely is it to actually occur?'"
       }
     ]
+  },
+  {
+    "id": 137,
+    "user_id": 1,
+    "title": "April 9th",
+    "content": "i am thinking about ways in whihc i can drop at least one project i am working on since i am working on so many. they all seem promising , but i dont have teh energy for all of them",
+    "anxiety_level": 5,
+    "created_at": "2025-04-09T10:35:47.668335",
+    "updated_at": "2025-04-09T10:35:50.600343",
+    "is_analyzed": true,
+    "gpt_response": "It's great that you're considering ways to manage your workload. Recognizing that you need to drop a project shows a strong sense of self-awareness and prioritization.",
+    "cbt_patterns": [
+      {
+        "pattern": "Overcommitment",
+        "description": "This occurs when you take on too many tasks, leading to stress and reduced productivity. It happens when we believe we need to do everything ourselves or feel guilty for saying no.",
+        "recommendation": "Practice saying no to new commitments and reassess current priorities."
+      },
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "This involves seeing situations in black-and-white terms, thinking everything must be done perfectly or not at all. It can lead to feeling overwhelmed by your workload.",
+        "recommendation": "Try to identify which projects can be adjusted or scaled down instead of completely dropped."
+      }
+    ]
   }
 ]

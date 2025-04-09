@@ -422,7 +422,7 @@ def update_journal_entry(entry_id):
 
 # API route to get the coach response for a journal entry
 @journal_bp.route('/api/<int:entry_id>/coach', methods=['GET'])
-@journal_bp.route('/api/journal_coach/<int:entry_id>', methods=['POST'])
+@journal_bp.route('/api/journal-coach/<int:entry_id>', methods=['GET', 'POST'])
 @login_required
 def api_journal_coach(entry_id):
     entry = JournalEntry.query.get_or_404(entry_id)
@@ -464,10 +464,10 @@ def api_journal_coach(entry_id):
             else:
                 coach_response = "Thank you for sharing your journal entry. Although I can't offer specific insights right now, the process of writing down your thoughts is an important step in your wellness journey."
     
-    return jsonify({'coach_response': coach_response})
+    return jsonify({'success': True, 'response': coach_response})
 
 # API endpoint for analyzing a journal entry
-@journal_bp.route('/api/analyze_entry/<int:entry_id>', methods=['POST'])
+@journal_bp.route('/api/analyze-entry/<int:entry_id>', methods=['GET', 'POST'])
 @login_required
 def api_analyze_entry(entry_id):
     entry = JournalEntry.query.get_or_404(entry_id)
