@@ -1022,11 +1022,11 @@
                 }
                 
                 // Chrome and Edge can sometimes benefit from these Speech Synthesis properties
-                const u = utterance as any; // Typecast to access non-standard properties
+                // Access non-standard properties safely
                 
                 // Some browsers support pitch contour for more expressive speech
-                if (typeof u.pitchContour !== 'undefined') {
-                    u.pitchContour = [
+                if (typeof utterance.pitchContour !== 'undefined') {
+                    utterance.pitchContour = [
                         [0, -2],   // Start slightly lower
                         [0.33, 2],  // Rise in the middle
                         [0.66, 0],  // Return to normal
@@ -1035,17 +1035,27 @@
                 }
                 
                 // Some Microsoft Edge versions support these
-                if (typeof u.prosody !== 'undefined') {
-                    u.prosody = {
-                        rate: 'medium',
-                        pitch: 'medium',
-                        volume: 'loud'
-                    };
+                try {
+                    // Access non-standard properties only available in some browsers
+                    if (utterance.prosody) {
+                        utterance.prosody = {
+                            rate: 'medium',
+                            pitch: 'medium',
+                            volume: 'loud'
+                        };
+                    }
+                } catch (e) {
+                    // Ignore error - this property doesn't exist on this browser
                 }
                 
                 // Try to influence the conversation style (Microsoft Edge)
-                if (typeof u.style !== 'undefined') {
-                    u.style = 'conversational';
+                try {
+                    // Access non-standard properties only available in Edge
+                    if (utterance.style) {
+                        utterance.style = 'conversational';
+                    }
+                } catch (e) {
+                    // Ignore error - this property doesn't exist on this browser
                 }
             } catch (e) {
                 console.log('Advanced speech settings not supported:', e);

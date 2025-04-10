@@ -1,41 +1,5 @@
 [
   {
-    "timestamp": "2025-04-06 19:32:26",
-    "type": "startup_check",
-    "message": "Found stale PID file for scheduler (PID 108). Removing.",
-    "success": false
-  },
-  {
-    "timestamp": "2025-04-06 19:32:27",
-    "type": "process_start",
-    "message": "Scheduler started successfully with PID 1068",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-06 19:32:27",
-    "type": "scheduler_startup",
-    "message": "Started scheduler on host 9f8cae3f4bd8 at 2025-04-06 19:32:27.426969",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-06 19:32:27",
-    "type": "scheduler_startup",
-    "message": "Starting notification scheduler at 2025-04-06 19:32:27.962150",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-06 19:32:27",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-06 19:32:27.962719",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-06 19:32:27",
-    "type": "scheduler_health_error",
-    "message": "Error in scheduler health check: 'Job' object has no attribute 'next_run_time'",
-    "success": false
-  },
-  {
     "timestamp": "2025-04-06 19:32:27",
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
@@ -5995,6 +5959,42 @@
   },
   {
     "timestamp": "2025-04-10 20:27:57",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 20:29:41",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 2586). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-10 20:29:42",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 2738",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 20:29:42",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host aacc3f889c5b at 2025-04-10 20:29:42.903212",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 20:29:43",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-10 20:29:43.446853",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 20:29:43",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-10 20:29:43.455140",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 20:29:43",
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
     "success": true
