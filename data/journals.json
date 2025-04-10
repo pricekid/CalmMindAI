@@ -3411,14 +3411,17 @@
     "created_at": "2025-04-10T00:11:36.145374",
     "updated_at": "2025-04-10T00:11:47.830394",
     "is_analyzed": true,
-    "recommendations": [
+    "gpt_response": "First, I want to acknowledge how brave it is for you to share your feelings. It\u2019s not easy to admit when things feel off with someone we care about, and your openness here is a big step.\n\nFrom what you\u2019ve written, it seems like you\u2019re feeling undervalued in your relationship. That can be really tough, especially when you\u2019re hoping for your feelings to be acknowledged and met with genuine care.\n\nThere might be a couple of thought patterns at play here:\n\nMind Reading: You might be assuming your partner doesn\u2019t care because you\u2019re interpreting their actions this way. But unless they\u2019ve explicitly told you this, it might be your anxiety filling in the gaps.\n\nAll-or-Nothing Thinking: It\u2019s easy to slip into thinking that they either care completely or not at all, when in reality, feelings and actions often exist in a gray area.\n\nHere are some gentle CBT strategies you might find helpful:\n\nThought Reframing: Try to catch yourself when you\u2019re thinking \"They don\u2019t care at all\" and reframe it to \"There are moments when I feel unheard, but it doesn\u2019t mean they never care.\"\n\nBoundary Setting: Consider what you need to feel valued and how you could communicate this to your partner. Practicing assertive communication might help in expressing your needs more clearly.\n\nGratitude Practice: Reflect on any small moments where you did feel cared for. This isn\u2019t to ignore your feelings but to create a balanced view of your relationship.\n\nFor today\u2019s reflection:\n\"What would feeling cared for look like in your relationship? How might you express this to your partner?\"\n\nRemember, recognizing these feelings is a vital part of understanding and strengthening your relationship. You're doing important work by addressing this.\n\nWarmly,\nCoach Mira",
+    "cbt_patterns": [
       {
-        "thought_pattern": "All-or-Nothing Thinking",
-        "recommendation": "Viewing situations in black-and-white terms, without acknowledging the shades of grey in between. - Thought Reframing: Look for evidence of care, even if it's not as frequent or grand as you might hope."
+        "pattern": "Mind Reading",
+        "description": "Assuming you know what someone else is thinking without them telling you.",
+        "recommendation": "Thought Reframing to challenge and adjust these assumptions."
       },
       {
-        "thought_pattern": "Mind Reading",
-        "recommendation": "Assuming you know what others are thinking without having factual evidence to support it. - Open Communication: Discuss your feelings and invite your partner to share their thoughts."
+        "pattern": "All-or-Nothing Thinking",
+        "description": "Seeing things in black and white terms, without recognizing the gray areas.",
+        "recommendation": "Boundary Setting to define and communicate your emotional needs."
       }
     ]
   }

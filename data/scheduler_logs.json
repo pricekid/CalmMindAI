@@ -1,23 +1,5 @@
 [
   {
-    "timestamp": "2025-04-06 19:30:46",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 108",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-06 19:31:06",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 108",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-06 19:31:13",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 108",
-    "success": true
-  },
-  {
     "timestamp": "2025-04-06 19:31:22",
     "type": "startup_check",
     "message": "Scheduler already running with PID 108",
@@ -5971,6 +5953,48 @@
   },
   {
     "timestamp": "2025-04-10 20:21:53",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 20:22:58",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2114",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 20:25:12",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 2114). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-10 20:25:13",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 2331",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 20:25:13",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host aacc3f889c5b at 2025-04-10 20:25:13.839781",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 20:25:16",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-10 20:25:16.337910",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 20:25:16",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-10 20:25:16.346201",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 20:25:16",
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
     "success": true

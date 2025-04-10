@@ -898,10 +898,30 @@
             // Clean the text - remove extra whitespace and HTML tags
             text = text.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
             
+            // Preprocess the text to make it sound more natural
+            
+            // First, extract any quotation marks and emphasized words
+            text = text
+                .replace(/\"([^\"]+)\"/g, (match, p1) => '. , "' + p1 + '". , ') // Add pauses around quotes
+                .replace(/\*([^\*]+)\*/g, (match, p1) => ' ! ' + p1 + ' ! '); // Emphasize *text* 
+                
+            // Add small pauses at punctuation for more natural sounding speech
+            text = text
+                .replace(/\.\s+/g, '. , ') // Add a small pause after periods
+                .replace(/\?\s+/g, '? , ') // Add a small pause after question marks
+                .replace(/!\s+/g, '! , ')  // Add a small pause after exclamation marks
+                .replace(/:\s+/g, ': , ')  // Add a small pause after colons
+                .replace(/;\s+/g, '; , ') // Add a small pause after semicolons
+                .replace(/,\s+/g, ', '); // Ensure proper pause after commas
+                
+            // Handle lists with numbers or bullets for better reading
+            text = text
+                .replace(/(\d+\.\s+|\-\s+|\•\s+)/g, ' , $1 '); // Add pause before list items
+            
             // Create utterance and configure it
             const utterance = new SpeechSynthesisUtterance(text);
-            utterance.rate = 0.9;  // Slightly slower than default for better comprehension
-            utterance.pitch = 1.0; // Normal pitch
+            utterance.rate = 0.85;  // Slightly slower than default for better comprehension
+            utterance.pitch = 1.05; // Slightly higher pitch for more engaging sound
             utterance.volume = 1.0; // Full volume
             
             // Function to get the best voice
@@ -913,8 +933,45 @@
                     return null;
                 }
                 
-                // First try to find a female English voice
-                const preferredVoice = voices.find(voice => 
+                // Premium quality voices first (typically more natural sounding)
+                const highQualityVoices = [
+                    // macOS/iOS voices
+                    "Samantha", "Ava", "Susan", "Allison", "Victoria",
+                    // Windows voices
+                    "Microsoft Zira", "Microsoft Linda", "Microsoft Catherine",
+                    // Google voices
+                    "Google UK English Female", "Google US English", 
+                    // Amazon Polly voices (if available in browser)
+                    "Joanna", "Ivy", "Kendra", "Kimberly", "Salli"
+                ];
+                
+                // Try to find high-quality English voices first
+                for (const voiceName of highQualityVoices) {
+                    const foundVoice = voices.find(v => 
+                        v.name === voiceName || 
+                        v.name.includes(voiceName)
+                    );
+                    if (foundVoice) {
+                        return foundVoice;
+                    }
+                }
+                
+                // If no specific high-quality voice is found, try by more general criteria
+                // First, try to find any premium/enhanced/neural voice for English
+                const premiumVoice = voices.find(voice => 
+                    (voice.name.toLowerCase().includes('premium') || 
+                     voice.name.toLowerCase().includes('enhanced') ||
+                     voice.name.toLowerCase().includes('neural') ||
+                     voice.name.toLowerCase().includes('natural')) &&
+                    (voice.lang.startsWith('en-'))
+                );
+                
+                if (premiumVoice) {
+                    return premiumVoice;
+                }
+                
+                // Next, try to find any female English voice
+                const femaleVoice = voices.find(voice => 
                     (voice.name.toLowerCase().includes('female') || 
                      voice.name.toLowerCase().includes('woman') || 
                      voice.name.toLowerCase().includes('girl') ||
@@ -925,8 +982,8 @@
                     (voice.lang.startsWith('en-'))
                 );
                 
-                if (preferredVoice) {
-                    return preferredVoice;
+                if (femaleVoice) {
+                    return femaleVoice;
                 }
                 
                 // Fall back to any English voice
@@ -988,7 +1045,22 @@
         
         // Load voices when they are available (needed for some browsers)
         speechSynthesis.onvoiceschanged = function() {
-            console.log('Speech synthesis voices loaded');
+            const voices = speechSynthesis.getVoices();
+            console.log('Speech synthesis voices loaded. Available voices:', voices.length);
+            
+            // Log the available voices for debugging
+            if (voices.length > 0) {
+                console.log('Available voices:');
+                voices.forEach((voice, index) => {
+                    console.log(`${index + 1}. ${voice.name} (${voice.lang})${voice.default ? ' - DEFAULT' : ''}`);
+                });
+                
+                // Show which voice would be selected by our algorithm
+                const selectedVoice = getBestVoice();
+                if (selectedVoice) {
+                    console.log('Selected voice:', selectedVoice.name);
+                }
+            }
         };
         
         // Initialize voices
