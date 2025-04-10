@@ -60,23 +60,30 @@ def send_email(recipient, subject, html_body, text_body=None):
         message.attach(MIMEText(html_body, "html"))
     
     try:
-        # Connect to the mail server
+        # Connect to the mail server with timeout
         if mail_use_tls:
-            server = smtplib.SMTP(mail_server, mail_port)
+            server = smtplib.SMTP(mail_server, mail_port, timeout=10)  # 10 second timeout
             server.starttls()
         else:
-            server = smtplib.SMTP_SSL(mail_server, mail_port)
+            server = smtplib.SMTP_SSL(mail_server, mail_port, timeout=10)  # 10 second timeout
         
         # Log in to the mail server
         logger.debug(f"Attempting to log in to mail server {mail_server}:{mail_port} as {mail_username}")
         server.login(mail_username, mail_password)
         
-        # Send the email
+        # Send the email with a timeout
         logger.info(f"Sending email to {recipient} with subject '{subject}'")
-        server.sendmail(mail_sender, recipient, message.as_string())
-        
-        # Close the connection
-        server.quit()
+        try:
+            server.sendmail(mail_sender, recipient, message.as_string())
+            # Close the connection properly
+            server.quit()
+        except Exception as e:
+            # Make sure to close the connection even if there's an error
+            try:
+                server.quit()
+            except:
+                pass
+            raise e  # Re-raise the original exception
         
         logger.info(f"Email sent successfully to {recipient}")
         return {"success": True}
@@ -162,12 +169,8 @@ def send_immediate_notification_to_all_users():
             repl_id = os.environ.get('REPL_ID', None)
             repl_owner = os.environ.get('REPL_OWNER', None)
             
-            if repl_id and repl_owner:
-                # Use the proper Replit deployed URL format
-                journal_url = f"https://{repl_owner}-calm-journey.replit.app/journal/new"
-            else:
-                # Fallback to a relative URL only if running locally
-                journal_url = "/journal/new"
+            # Use the correct Replit URL
+            journal_url = "https://calm-mind-ai-naturalarts.replit.app/journal/new"
         
         for user in users:
             subject = 'Special Reminder: Take a Moment to Journal - Calm Journey'

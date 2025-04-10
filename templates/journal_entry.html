@@ -69,19 +69,39 @@
                         </div>
                         <div class="form-group mb-3">
                             {{ form.content.label(class="form-label") }}
-                            {% if form.content.errors %}
-                                {{ form.content(class="form-control is-invalid", rows=8) }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.content.errors %}
-                                        {{ error }}
-                                    {% endfor %}
+                            <div class="voice-input-container">
+                                {% if form.content.errors %}
+                                    {{ form.content(class="form-control is-invalid", rows=8, id="journal-content") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.content.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.content(class="form-control", rows=8, id="journal-content") }}
+                                {% endif %}
+                                
+                                <div class="voice-input-controls">
+                                    <button type="button" id="voice-input-button" class="btn btn-outline-primary" 
+                                            title="Start Voice Input (Click again to stop)">
+                                        <i class="bi bi-mic"></i>
+                                    </button>
                                 </div>
-                            {% else %}
-                                {{ form.content(class="form-control", rows=8) }}
-                            {% endif %}
-                            <div class="form-text">
+                            </div>
+                            
+                            <div id="voice-input-status" class="voice-status mt-2 d-none">
+                                <div class="d-flex align-items-center">
+                                    <div class="spinner-grow spinner-grow-sm text-primary me-2" role="status">
+                                        <span class="visually-hidden">Listening...</span>
+                                    </div>
+                                    <span id="voice-status-text">Listening... Click mic button again to stop</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-text mt-2">
                                 Express yourself freely. This journal is private to you, and the AI 
                                 analysis is only used to help you identify patterns and suggest coping strategies.
+                                <span class="text-primary ms-2"><i class="bi bi-info-circle"></i> Voice input is available!</span>
                             </div>
                         </div>
                         <div class="form-group mb-4">
@@ -145,6 +165,52 @@
                             font-weight: 600;
                             border-bottom: 1px solid #e9ecef;
                             padding-bottom: 0.5rem;
+                        }
+                        /* Voice input styling */
+                        .voice-input-container {
+                            position: relative;
+                        }
+                        .voice-input-controls {
+                            position: absolute;
+                            bottom: 10px;
+                            right: 10px;
+                            z-index: 10;
+                        }
+                        #voice-input-button {
+                            border-radius: 50%;
+                            width: 40px;
+                            height: 40px;
+                            padding: 0;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                        }
+                        #voice-input-button.active {
+                            background-color: #dc3545;
+                            border-color: #dc3545;
+                            color: white;
+                            animation: pulse 1.5s infinite;
+                        }
+                        .voice-status {
+                            padding: 8px 12px;
+                            border-radius: 4px;
+                            background-color: #f8f9fa;
+                            border: 1px solid #dee2e6;
+                        }
+                        @keyframes pulse {
+                            0% {
+                                transform: scale(1);
+                                opacity: 1;
+                            }
+                            50% {
+                                transform: scale(1.05);
+                                opacity: 0.8;
+                            }
+                            100% {
+                                transform: scale(1);
+                                opacity: 1;
+                            }
                         }
                     </style>
                     
@@ -224,6 +290,139 @@
 
 {% block scripts %}
 <script>
+    // Voice input functionality
+    function setupVoiceInput() {
+        const voiceButton = document.getElementById('voice-input-button');
+        const journalContent = document.getElementById('journal-content');
+        const statusDiv = document.getElementById('voice-input-status');
+        const statusText = document.getElementById('voice-status-text');
+        
+        // Check if browser supports speech recognition
+        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+            // Hide the voice input button if speech recognition isn't supported
+            if (voiceButton) {
+                voiceButton.style.display = 'none';
+            }
+            console.log('Speech recognition not supported in this browser');
+            return;
+        }
+        
+        // Initialize speech recognition
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        
+        // Configure recognition
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = 'en-US'; // Default to English
+        
+        let isListening = false;
+        let finalTranscript = '';
+        
+        // Add event listeners for the voice button
+        if (voiceButton && journalContent) {
+            voiceButton.addEventListener('click', toggleSpeechRecognition);
+        }
+        
+        // Function to toggle speech recognition on/off
+        function toggleSpeechRecognition() {
+            if (isListening) {
+                // Stop listening
+                recognition.stop();
+                isListening = false;
+                voiceButton.classList.remove('active');
+                statusDiv.classList.add('d-none');
+                
+                // Update button
+                voiceButton.innerHTML = '<i class="bi bi-mic"></i>';
+                voiceButton.title = 'Start Voice Input (Click again to stop)';
+            } else {
+                // If there's existing content, preserve it and add a space
+                if (journalContent.value && !journalContent.value.endsWith(' ')) {
+                    finalTranscript = journalContent.value + ' ';
+                } else {
+                    finalTranscript = journalContent.value;
+                }
+                
+                // Start listening
+                try {
+                    recognition.start();
+                    isListening = true;
+                    voiceButton.classList.add('active');
+                    statusDiv.classList.remove('d-none');
+                    
+                    // Update button
+                    voiceButton.innerHTML = '<i class="bi bi-mic-fill"></i>';
+                    voiceButton.title = 'Stop Voice Input';
+                    
+                    console.log('Speech recognition started');
+                } catch (err) {
+                    console.error('Speech recognition error:', err);
+                    alert('Could not start speech recognition. Please try again.');
+                }
+            }
+        }
+        
+        // Handle results
+        recognition.onresult = function(event) {
+            let interimTranscript = '';
+            
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                const transcript = event.results[i][0].transcript;
+                
+                if (event.results[i].isFinal) {
+                    finalTranscript += transcript + ' ';
+                } else {
+                    interimTranscript += transcript;
+                }
+            }
+            
+            // Update textarea with the transcript
+            journalContent.value = finalTranscript + interimTranscript;
+            
+            // Auto-scroll to the bottom of the textarea
+            journalContent.scrollTop = journalContent.scrollHeight;
+            
+            // Update word count in status
+            const wordCount = journalContent.value.trim().split(/\s+/).filter(Boolean).length;
+            statusText.textContent = `Listening... ${wordCount} words recorded. Click mic button again to stop.`;
+        };
+        
+        // Handle errors
+        recognition.onerror = function(event) {
+            console.error('Speech recognition error:', event.error);
+            
+            // If error is not 'aborted' (which happens on normal stop)
+            if (event.error !== 'aborted') {
+                alert(`Speech recognition error: ${event.error}. Please try again.`);
+                
+                // Reset state
+                isListening = false;
+                voiceButton.classList.remove('active');
+                statusDiv.classList.add('d-none');
+                voiceButton.innerHTML = '<i class="bi bi-mic"></i>';
+            }
+        };
+        
+        // Handle end of recognition
+        recognition.onend = function() {
+            if (isListening) {
+                // If it ended unexpectedly while still in listening mode, restart
+                try {
+                    recognition.start();
+                    console.log('Restarted speech recognition after unexpected end');
+                } catch (err) {
+                    // If we can't restart, reset the UI
+                    console.error('Could not restart speech recognition:', err);
+                    isListening = false;
+                    voiceButton.classList.remove('active');
+                    statusDiv.classList.add('d-none');
+                    voiceButton.innerHTML = '<i class="bi bi-mic"></i>';
+                }
+            }
+        };
+    }
+    
     // Function to update the anxiety level display
     function updateAnxietyLabel(value) {
         const anxietyValue = document.getElementById('anxiety-value');
@@ -271,6 +470,9 @@
                 }
             });
         }
+        
+        // Setup voice input functionality
+        setupVoiceInput();
         
         // Set up the analyze button with spinner
         const analyzeButton = document.getElementById('analyze-entry');
