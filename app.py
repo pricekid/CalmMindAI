@@ -315,3 +315,7 @@ with app.app_context():
     # Register the simple text-to-speech blueprint
     from simple_tts import tts_simple_bp
     app.register_blueprint(tts_simple_bp)
+    
+    # Register the standalone TTS blueprint 
+    from standalone_tts import standalone_tts_bp
+    app.register_blueprint(standalone_tts_bp)

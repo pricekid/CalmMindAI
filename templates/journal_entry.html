@@ -1157,15 +1157,11 @@
         audio.pause();
         audio.src = '';
         
-        // Get CSRF token from meta tag
-        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-        
-        // Request TTS from server
-        fetch('/tts', {
+        // Request TTS from server using the standalone endpoint
+        fetch('/text-to-speech', {
             method: 'POST',
             headers: { 
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken || ''
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({ text: text })
         })
@@ -1213,8 +1209,8 @@
         audio.pause();
         audio.src = '';
         
-        // Request TTS from server
-        fetch('/tts', {
+        // Request TTS from server using the standalone endpoint
+        fetch('/text-to-speech', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ text: text })
