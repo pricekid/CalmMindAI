@@ -65,7 +65,7 @@ mail.init_app(app)
 # Configure login manager for regular users
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = "login_routes.login"  # Updated to use our simplified login route
+login_manager.login_view = "basic_login.basic_login"  # Updated to use our extremely simple login route
 login_manager.login_message_category = "info"
 
 # Custom unauthorized handler for login_manager
@@ -74,8 +74,8 @@ def unauthorized():
     # Only redirect to admin login if the path is an admin path
     if request.path.startswith('/admin'):
         return redirect(url_for('admin.login'))
-    # For all other paths, use the simplified login
-    return redirect(url_for('login_routes.login'))
+    # For all other paths, use the basic login
+    return redirect(url_for('basic_login.basic_login'))
 
 # Add global error handler
 @app.errorhandler(Exception)
@@ -307,3 +307,7 @@ with app.app_context():
     # Register the login blueprint for specialized login handling
     from login_routes import login_bp
     app.register_blueprint(login_bp)
+    
+    # Register the basic login blueprint with minimal dependencies
+    from basic_login import basic_login_bp
+    app.register_blueprint(basic_login_bp)
