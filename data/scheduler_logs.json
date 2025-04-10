@@ -5854,5 +5854,41 @@
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-10 20:10:23",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 1646). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-10 20:10:24",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 1867",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 20:10:24",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host aacc3f889c5b at 2025-04-10 20:10:24.683295",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 20:10:25",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-10 20:10:25.172973",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 20:10:25",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-10 20:10:25.182670",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 20:10:25",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
   }
 ]

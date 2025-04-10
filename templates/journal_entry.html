@@ -151,6 +151,14 @@
                         <div class="coach-insights">
                             {{ coach_response | safe }}
                         </div>
+                        <div class="text-center mt-3">
+                            <button id="read-analysis" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-volume-up"></i> Read Aloud
+                            </button>
+                            <button id="stop-reading" class="btn btn-outline-danger btn-sm ms-2" style="display: none;">
+                                <i class="bi bi-stop-fill"></i> Stop Reading
+                            </button>
+                        </div>
                     </div>
                     
                     <style>
@@ -273,6 +281,14 @@
                         <h5><i class="bi bi-chat-heart-fill text-success"></i> Mira's Personal Guidance:</h5>
                         <div id="coach-message" class="mt-2 bg-white p-3 rounded text-dark">
                             <!-- Will be filled by AJAX response -->
+                        </div>
+                        <div class="text-center mt-3">
+                            <button id="read-guidance" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-volume-up"></i> Read Aloud
+                            </button>
+                            <button id="stop-guidance" class="btn btn-outline-danger btn-sm ms-2" style="display: none;">
+                                <i class="bi bi-stop-fill"></i> Stop Reading
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -693,6 +709,14 @@
                             coachMessage.style.color = 'black';
                             coachMessage.style.backgroundColor = 'white';
                             
+                            // Make sure the read aloud buttons are visible
+                            const readGuidanceButton = document.getElementById('read-guidance');
+                            const stopGuidanceButton = document.getElementById('stop-guidance');
+                            if (readGuidanceButton && stopGuidanceButton) {
+                                readGuidanceButton.style.display = 'inline-block';
+                                stopGuidanceButton.style.display = 'none';
+                            }
+                            
                             // Reset button
                             this.innerHTML = '<i class="bi bi-chat-dots"></i> Ask Mira Again';
                             this.disabled = false;
@@ -752,6 +776,191 @@
                     });
             });
         }
+        
+        // Set up text-to-speech functionality
+        setupTextToSpeech();
     });
+    
+    // Text-to-speech functionality
+    function setupTextToSpeech() {
+        // Check if browser supports speech synthesis
+        if (!('speechSynthesis' in window)) {
+            console.log('Text-to-speech not supported in this browser');
+            const readButtons = document.querySelectorAll('#read-analysis, #read-guidance');
+            readButtons.forEach(button => {
+                if (button) {
+                    button.style.display = 'none';
+                }
+            });
+            return;
+        }
+        
+        // Variables to keep track of the current speech state
+        let speechSynthesis = window.speechSynthesis;
+        let speaking = false;
+        let currentUtterance = null;
+        
+        // Set up speech for the main analysis
+        const readAnalysisButton = document.getElementById('read-analysis');
+        const stopAnalysisButton = document.getElementById('stop-reading');
+        
+        if (readAnalysisButton && stopAnalysisButton) {
+            // Get the content to read
+            const analysisContent = document.querySelector('.coach-insights');
+            
+            readAnalysisButton.addEventListener('click', function() {
+                if (speaking) {
+                    // If something else is already being read, stop it first
+                    speechSynthesis.cancel();
+                    resetAllSpeechButtons();
+                }
+                
+                // Start reading the analysis
+                if (analysisContent) {
+                    speakText(analysisContent.textContent);
+                    
+                    // Update UI
+                    readAnalysisButton.style.display = 'none';
+                    stopAnalysisButton.style.display = 'inline-block';
+                    speaking = true;
+                }
+            });
+            
+            stopAnalysisButton.addEventListener('click', function() {
+                // Stop reading
+                speechSynthesis.cancel();
+                
+                // Update UI
+                stopAnalysisButton.style.display = 'none';
+                readAnalysisButton.style.display = 'inline-block';
+                speaking = false;
+                currentUtterance = null;
+            });
+        }
+        
+        // Set up speech for the personalized guidance
+        const readGuidanceButton = document.getElementById('read-guidance');
+        const stopGuidanceButton = document.getElementById('stop-guidance');
+        
+        if (readGuidanceButton && stopGuidanceButton) {
+            readGuidanceButton.addEventListener('click', function() {
+                if (speaking) {
+                    // If something else is already being read, stop it first
+                    speechSynthesis.cancel();
+                    resetAllSpeechButtons();
+                }
+                
+                // Get the content to read
+                const guidanceContent = document.getElementById('coach-message');
+                
+                if (guidanceContent) {
+                    speakText(guidanceContent.textContent);
+                    
+                    // Update UI
+                    readGuidanceButton.style.display = 'none';
+                    stopGuidanceButton.style.display = 'inline-block';
+                    speaking = true;
+                }
+            });
+            
+            stopGuidanceButton.addEventListener('click', function() {
+                // Stop reading
+                speechSynthesis.cancel();
+                
+                // Update UI
+                stopGuidanceButton.style.display = 'none';
+                readGuidanceButton.style.display = 'inline-block';
+                speaking = false;
+                currentUtterance = null;
+            });
+        }
+        
+        // Function to reset all speech buttons to their initial state
+        function resetAllSpeechButtons() {
+            // Reset analysis buttons
+            if (readAnalysisButton && stopAnalysisButton) {
+                readAnalysisButton.style.display = 'inline-block';
+                stopAnalysisButton.style.display = 'none';
+            }
+            
+            // Reset guidance buttons
+            if (readGuidanceButton && stopGuidanceButton) {
+                readGuidanceButton.style.display = 'inline-block';
+                stopGuidanceButton.style.display = 'none';
+            }
+            
+            speaking = false;
+            currentUtterance = null;
+        }
+        
+        // Function to speak text with good settings for reading coaching content
+        function speakText(text) {
+            // Clean the text - remove extra whitespace and HTML tags
+            text = text.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+            
+            // Create utterance and configure it
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9;  // Slightly slower than default for better comprehension
+            utterance.pitch = 1.0; // Normal pitch
+            utterance.volume = 1.0; // Full volume
+            
+            // Use a female voice if available for the "Mira" persona
+            const voices = speechSynthesis.getVoices();
+            const femaleVoice = voices.find(voice => 
+                voice.name.includes('female') || 
+                voice.name.includes('woman') || 
+                voice.name.includes('girl') ||
+                voice.name.includes('Samantha') || 
+                voice.name.includes('Victoria') ||
+                voice.name.includes('Karen') ||
+                voice.name.includes('Moira')
+            );
+            
+            if (femaleVoice) {
+                utterance.voice = femaleVoice;
+            }
+            
+            // Handle the end of speech
+            utterance.onend = function() {
+                resetAllSpeechButtons();
+            };
+            
+            // Handle errors
+            utterance.onerror = function(event) {
+                console.error('Speech synthesis error:', event.error);
+                resetAllSpeechButtons();
+            };
+            
+            // Start speaking
+            currentUtterance = utterance;
+            speechSynthesis.speak(utterance);
+            
+            // Chrome has a bug where it stops speaking after ~15 seconds
+            // This is a workaround to keep it going
+            const resumeSpeechSynthesis = function() {
+                if (speaking && speechSynthesis.paused) {
+                    speechSynthesis.resume();
+                }
+            };
+            
+            setInterval(resumeSpeechSynthesis, 5000);
+        }
+        
+        // Handle page visibility changes to prevent speech continuing when the user navigates away
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState !== 'visible' && speaking) {
+                speechSynthesis.cancel();
+                resetAllSpeechButtons();
+            }
+        });
+        
+        // Load voices when they are available (needed for some browsers)
+        speechSynthesis.onvoiceschanged = function() {
+            console.log('Speech synthesis voices loaded');
+        };
+        
+        // Initialize voices
+        speechSynthesis.getVoices();
+    }
 </script>
 {% endblock %}
