@@ -311,3 +311,7 @@ with app.app_context():
     # Register the basic login blueprint with minimal dependencies
     from basic_login import basic_login_bp
     app.register_blueprint(basic_login_bp)
+    
+    # Register the simple text-to-speech blueprint
+    from simple_tts import tts_simple_bp
+    app.register_blueprint(tts_simple_bp)

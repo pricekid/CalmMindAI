@@ -23,4 +23,5 @@ dependencies = [
     "requests>=2.32.3",
     "beautifulsoup4>=4.13.3",
     "anthropic>=0.49.0",
+    "gtts>=2.5.4",
 ]
