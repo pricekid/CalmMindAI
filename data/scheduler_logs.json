@@ -5626,5 +5626,23 @@
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-10 13:16:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 12884 at 2025-04-10 13:16:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 13:21:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 12884 at 2025-04-10 13:21:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 13:26:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 12884 at 2025-04-10 13:26:42",
+    "success": true
   }
 ]
