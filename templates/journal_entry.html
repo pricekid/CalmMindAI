@@ -800,6 +800,78 @@
         let speaking = false;
         let currentUtterance = null;
         
+        // Function to get the best voice - defined at this scope to be accessible to onvoiceschanged
+        function getBestVoice() {
+            const voices = speechSynthesis.getVoices();
+            
+            // No voices available
+            if (!voices || voices.length === 0) {
+                return null;
+            }
+            
+            // Premium quality voices first (typically more natural sounding)
+            const highQualityVoices = [
+                // macOS/iOS voices
+                "Samantha", "Ava", "Susan", "Allison", "Victoria",
+                // Windows voices
+                "Microsoft Zira", "Microsoft Linda", "Microsoft Catherine",
+                // Google voices
+                "Google UK English Female", "Google US English", 
+                // Amazon Polly voices (if available in browser)
+                "Joanna", "Ivy", "Kendra", "Kimberly", "Salli"
+            ];
+            
+            // Try to find high-quality English voices first
+            for (const voiceName of highQualityVoices) {
+                const foundVoice = voices.find(v => 
+                    v.name === voiceName || 
+                    v.name.includes(voiceName)
+                );
+                if (foundVoice) {
+                    return foundVoice;
+                }
+            }
+            
+            // If no specific high-quality voice is found, try by more general criteria
+            // First, try to find any premium/enhanced/neural voice for English
+            const premiumVoice = voices.find(voice => 
+                (voice.name.toLowerCase().includes('premium') || 
+                 voice.name.toLowerCase().includes('enhanced') ||
+                 voice.name.toLowerCase().includes('neural') ||
+                 voice.name.toLowerCase().includes('natural')) &&
+                (voice.lang.startsWith('en-'))
+            );
+            
+            if (premiumVoice) {
+                return premiumVoice;
+            }
+            
+            // Next, try to find any female English voice
+            const femaleVoice = voices.find(voice => 
+                (voice.name.toLowerCase().includes('female') || 
+                 voice.name.toLowerCase().includes('woman') || 
+                 voice.name.toLowerCase().includes('girl') ||
+                 voice.name.toLowerCase().includes('samantha') || 
+                 voice.name.toLowerCase().includes('victoria') ||
+                 voice.name.toLowerCase().includes('karen') ||
+                 voice.name.toLowerCase().includes('moira')) &&
+                (voice.lang.startsWith('en-'))
+            );
+            
+            if (femaleVoice) {
+                return femaleVoice;
+            }
+            
+            // Fall back to any English voice
+            const englishVoice = voices.find(voice => voice.lang.startsWith('en-'));
+            if (englishVoice) {
+                return englishVoice;
+            }
+            
+            // Fall back to the default voice
+            return voices[0];
+        }
+        
         // Set up speech for the main analysis
         const readAnalysisButton = document.getElementById('read-analysis');
         const stopAnalysisButton = document.getElementById('stop-reading');
@@ -898,105 +970,88 @@
             // Clean the text - remove extra whitespace and HTML tags
             text = text.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
             
-            // Preprocess the text to make it sound more natural
+            // Advanced text preprocessing for more natural sounding speech
+
+            // Add explicit speech breaks using SSML-like patterns for better naturalness
+            // We'll use commas as the natural break points in speech synthesis
             
-            // First, extract any quotation marks and emphasized words
+            // Step 1: Process emphasized text and quotes with appropriate pauses and intonation
             text = text
-                .replace(/\"([^\"]+)\"/g, (match, p1) => '. , "' + p1 + '". , ') // Add pauses around quotes
-                .replace(/\*([^\*]+)\*/g, (match, p1) => ' ! ' + p1 + ' ! '); // Emphasize *text* 
+                .replace(/\"([^\"]+)\"/g, (match, p1) => '. . "' + p1 + '". . ') // Add longer pauses around quotes with double break
+                .replace(/\*([^\*]+)\*/g, (match, p1) => ' ! ' + p1.toUpperCase() + ' ! ') // Capitalize and emphasize *text*
+                .replace(/\b(important|remember|note)\b/gi, (match) => '. . ' + match.toUpperCase() + '. . '); // Emphasize key words
                 
-            // Add small pauses at punctuation for more natural sounding speech
+            // Step 2: Improve sentence and phrase boundaries with strategic pauses
             text = text
-                .replace(/\.\s+/g, '. , ') // Add a small pause after periods
-                .replace(/\?\s+/g, '? , ') // Add a small pause after question marks
-                .replace(/!\s+/g, '! , ')  // Add a small pause after exclamation marks
-                .replace(/:\s+/g, ': , ')  // Add a small pause after colons
-                .replace(/;\s+/g, '; , ') // Add a small pause after semicolons
-                .replace(/,\s+/g, ', '); // Ensure proper pause after commas
+                .replace(/\.\s+/g, '. . . ') // Add a longer pause after periods (end of sentences)
+                .replace(/\?\s+/g, '? . . ') // Add a slightly longer pause after questions for contemplation
+                .replace(/!\s+/g, '! . . ')  // Add a slightly longer pause after exclamations for impact
+                .replace(/:\s+/g, ': , ')    // Add a medium pause after colons
+                .replace(/;\s+/g, '; , ')    // Add a medium pause after semicolons
+                .replace(/\s-\s/g, ' , - , ') // Add pauses around dashes used as breaks
+                .replace(/(\.\.\.)(\s|$)/g, '. . . $2'); // Make ellipses more distinct
                 
-            // Handle lists with numbers or bullets for better reading
+            // Step 3: Make commas produce actual pauses
             text = text
-                .replace(/(\d+\.\s+|\-\s+|\•\s+)/g, ' , $1 '); // Add pause before list items
+                .replace(/,\s+/g, ', ') // Ensure proper pause after commas
+                .replace(/,/g, ' , ');   // Turn all commas into pauses with spaces
+                
+            // Step 4: Handle lists and structured content for better readability
+            text = text
+                .replace(/(\d+\.\s+|\-\s+|\•\s+)/g, ' . . $1 ') // Add pause before list items
+                .replace(/(Step \d+):/g, ' . . $1 , ') // Add emphasis to step numbers
+                .replace(/\b(First|Second|Third|Fourth|Fifth|Finally)\b/g, ' . . $1 , '); // Add pause before sequence markers
             
-            // Create utterance and configure it
+            // Create utterance and configure it for a more natural sound
             const utterance = new SpeechSynthesisUtterance(text);
-            utterance.rate = 0.85;  // Slightly slower than default for better comprehension
-            utterance.pitch = 1.05; // Slightly higher pitch for more engaging sound
-            utterance.volume = 1.0; // Full volume
             
-            // Function to get the best voice
-            function getBestVoice() {
-                const voices = speechSynthesis.getVoices();
+            // Voice quality improvement settings
+            utterance.rate = 0.82;    // Slightly slower for better comprehension
+            utterance.pitch = 1.05;   // Slight pitch adjustment for more warmth
+            utterance.volume = 1.0;   // Full volume
+            
+            // Advanced settings to improve naturalness (where supported)
+            try {
+                // Try to apply SSML-inspired enhancements for supported browsers
+                // These are non-standard but work in some browsers
                 
-                // No voices available
-                if (!voices || voices.length === 0) {
-                    return null;
+                // @ts-ignore: Property may not exist on type SpeechSynthesisUtterance
+                if (typeof utterance.voiceURI !== 'undefined') {
+                    // Try to use a higher quality voice URI
+                    utterance.voiceURI = 'premium';
                 }
                 
-                // Premium quality voices first (typically more natural sounding)
-                const highQualityVoices = [
-                    // macOS/iOS voices
-                    "Samantha", "Ava", "Susan", "Allison", "Victoria",
-                    // Windows voices
-                    "Microsoft Zira", "Microsoft Linda", "Microsoft Catherine",
-                    // Google voices
-                    "Google UK English Female", "Google US English", 
-                    // Amazon Polly voices (if available in browser)
-                    "Joanna", "Ivy", "Kendra", "Kimberly", "Salli"
-                ];
+                // Chrome and Edge can sometimes benefit from these Speech Synthesis properties
+                const u = utterance as any; // Typecast to access non-standard properties
                 
-                // Try to find high-quality English voices first
-                for (const voiceName of highQualityVoices) {
-                    const foundVoice = voices.find(v => 
-                        v.name === voiceName || 
-                        v.name.includes(voiceName)
-                    );
-                    if (foundVoice) {
-                        return foundVoice;
-                    }
+                // Some browsers support pitch contour for more expressive speech
+                if (typeof u.pitchContour !== 'undefined') {
+                    u.pitchContour = [
+                        [0, -2],   // Start slightly lower
+                        [0.33, 2],  // Rise in the middle
+                        [0.66, 0],  // Return to normal
+                        [1, -1]     // End slightly lower
+                    ];
                 }
                 
-                // If no specific high-quality voice is found, try by more general criteria
-                // First, try to find any premium/enhanced/neural voice for English
-                const premiumVoice = voices.find(voice => 
-                    (voice.name.toLowerCase().includes('premium') || 
-                     voice.name.toLowerCase().includes('enhanced') ||
-                     voice.name.toLowerCase().includes('neural') ||
-                     voice.name.toLowerCase().includes('natural')) &&
-                    (voice.lang.startsWith('en-'))
-                );
-                
-                if (premiumVoice) {
-                    return premiumVoice;
+                // Some Microsoft Edge versions support these
+                if (typeof u.prosody !== 'undefined') {
+                    u.prosody = {
+                        rate: 'medium',
+                        pitch: 'medium',
+                        volume: 'loud'
+                    };
                 }
                 
-                // Next, try to find any female English voice
-                const femaleVoice = voices.find(voice => 
-                    (voice.name.toLowerCase().includes('female') || 
-                     voice.name.toLowerCase().includes('woman') || 
-                     voice.name.toLowerCase().includes('girl') ||
-                     voice.name.toLowerCase().includes('samantha') || 
-                     voice.name.toLowerCase().includes('victoria') ||
-                     voice.name.toLowerCase().includes('karen') ||
-                     voice.name.toLowerCase().includes('moira')) &&
-                    (voice.lang.startsWith('en-'))
-                );
-                
-                if (femaleVoice) {
-                    return femaleVoice;
+                // Try to influence the conversation style (Microsoft Edge)
+                if (typeof u.style !== 'undefined') {
+                    u.style = 'conversational';
                 }
-                
-                // Fall back to any English voice
-                const englishVoice = voices.find(voice => voice.lang.startsWith('en-'));
-                if (englishVoice) {
-                    return englishVoice;
-                }
-                
-                // Fall back to the default voice
-                return voices[0];
+            } catch (e) {
+                console.log('Advanced speech settings not supported:', e);
             }
             
-            // Use the best available voice
+            // Use the best available voice from our prioritized list
             const bestVoice = getBestVoice();
             if (bestVoice) {
                 utterance.voice = bestVoice;
