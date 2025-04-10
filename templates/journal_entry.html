@@ -1157,10 +1157,16 @@
         audio.pause();
         audio.src = '';
         
+        // Get CSRF token from meta tag
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+        
         // Request TTS from server
         fetch('/tts', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken || ''
+            },
             body: JSON.stringify({ text: text })
         })
         .then(response => {

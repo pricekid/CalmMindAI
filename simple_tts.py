@@ -1,7 +1,7 @@
 """
 Simple text-to-speech route using gTTS (Google Text-to-Speech).
 """
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from gtts import gTTS
 import uuid
 import os
@@ -39,4 +39,5 @@ def tts():
         # Return audio URL
         return jsonify({"audio_url": '/' + filename})
     except Exception as e:
+        current_app.logger.error(f"Error generating TTS: {str(e)}")
         return jsonify({"error": str(e)}), 500
