@@ -3391,14 +3391,35 @@
     "created_at": "2025-04-09T15:04:51.612805",
     "updated_at": "2025-04-09T15:05:55.031988",
     "is_analyzed": true,
-    "recommendations": [
+    "gpt_response": "Hey there! I just wanted to say thanks for taking the first step and sharing your thoughts, even if it\u2019s just a quick test. It\u2019s great to see you engaging with the process, and that\u2019s a win in itself!\n\nFrom your note, it seems like you\u2019re just dipping a toe in the water here. Even at a low anxiety level, it\u2019s completely valid to want to test the waters before diving in deeper. It makes a lot of sense to start slow and see how it feels.\n\nHere\u2019s a thought pattern that might be relevant:\n\nAll-or-Nothing Thinking: This is when we tend to see things in black-and-white terms, like either fully committing to something or not trying at all. But life often happens in the grey areas in between.\n\nHere are a couple of gentle CBT techniques you might consider:\n\nThought Reframing: If you find yourself thinking in absolutes, like \u201cI need to have a full entry or none at all,\u201d try to reframe this into something more balanced, like \u201cI\u2019m just seeing how this feels for now.\u201d\nBehavioral Experiment: Consider setting a small goal, like writing just a couple of sentences each day. This can help you ease into the habit without feeling overwhelmed.\n\nFor today\u2019s reflection, maybe ask yourself: \"What\u2019s one small thing I learned about myself today by just starting this process?\"\n\nRemember, every little step you take is progress, and you\u2019re doing great just by being here. Take it at your own pace, and know that I\u2019m here to support you along the way.\n\nWarmly,\nCoach Mira",
+    "cbt_patterns": [
       {
-        "thought_pattern": "All-or-Nothing Thinking",
-        "recommendation": "This is when you view situations in extreme terms, like seeing things as either a complete success or a total failure, without recognizing the middle ground. - Thought Reframing: Practice seeing the nuances and middle ground in situations instead of only the extremes."
+        "pattern": "All-or-Nothing Thinking",
+        "description": "This is when we tend to see things in black-and-white terms, like either fully committing to something or not trying at all.",
+        "recommendation": "Try thought reframing to see things in a more balanced way, such as acknowledging small efforts as valuable."
+      }
+    ]
+  },
+  {
+    "id": 152,
+    "user_id": 1,
+    "title": "Thoughts",
+    "content": "I am in a relationship with someone who seems to care little about how i feel",
+    "anxiety_level": 5,
+    "created_at": "2025-04-10T00:11:36.145374",
+    "updated_at": "2025-04-10T00:11:47.830394",
+    "is_analyzed": true,
+    "gpt_response": "First off, I want to recognize how brave it is for you to share your feelings about your relationship. It's not easy to open up about feeling like your needs and emotions aren't being considered \u2014 that takes courage, and it's a significant step towards understanding and healing.\n\nIt sounds like you're feeling a bit unseen or unappreciated in your relationship, which can be really painful. When someone we care about seems indifferent to our feelings, it can stir up a lot of anxiety and self-doubt.\n\nLet's look at a couple of thought patterns that might be playing a role here:\n\nAll-or-Nothing Thinking: It seems like there's a tendency to view your partner's care as either all or nothing. This can make small moments of care seem insignificant if they don't meet a certain threshold.\nMind Reading: You might be assuming your partner doesn't care because they're not expressing it in the way you expect. But have they actually said they don't care, or is this an interpretation?\n\nHere are a few CBT techniques you could try:\n\nThought Reframing: When you catch yourself thinking \"They don't care about how I feel,\" try to find evidence of times when they have shown care or concern. Even small gestures can be significant.\nOpen Communication: Consider having an open conversation with your partner about how you're feeling. Expressing your needs might invite them to share their perspective too.\nGratitude Practice: Each day, jot down one positive interaction or moment with your partner, however small. This can help balance the all-or-nothing thinking.\n\nFor today's reflection prompt:\n\"What small sign of care or kindness have I noticed in my relationship recently?\"\n\nYou're doing some really valuable inner work by articulating these feelings and seeking to understand them. Remember, it's okay to take this one step at a time, and I'm here to support you along the way.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n\n\nWarmly,\nCoach Mira",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "Viewing situations in black-and-white terms, without acknowledging the shades of grey in between.",
+        "recommendation": "Thought Reframing: Look for evidence of care, even if it's not as frequent or grand as you might hope."
       },
       {
-        "thought_pattern": "Comparison Trap",
-        "recommendation": "This involves constantly comparing yourself to others, which can lead to feelings of inadequacy and decreased self-esteem. - Gratitude Practice: Focus on three things you\u2019re grateful for in your own life to shift attention away from comparisons."
+        "pattern": "Mind Reading",
+        "description": "Assuming you know what others are thinking without having factual evidence to support it.",
+        "recommendation": "Open Communication: Discuss your feelings and invite your partner to share their thoughts."
       }
     ]
   }

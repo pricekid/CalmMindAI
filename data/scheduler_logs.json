@@ -4414,5 +4414,11 @@
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-10 00:13:00",
+    "type": "health_check",
+    "message": "Scheduler running with PID 10978 at 2025-04-10 00:13:00",
+    "success": true
   }
 ]
