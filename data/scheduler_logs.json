@@ -5704,5 +5704,77 @@
     "type": "health_check",
     "message": "Scheduler running with PID 12884 at 2025-04-10 14:06:42",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-10 19:58:36",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 12884). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-10 19:58:37",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 655",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 19:58:37",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host aacc3f889c5b at 2025-04-10 19:58:37.392815",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 19:58:37",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-10 19:58:37.981364",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 19:58:37",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-10 19:58:37.988856",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 19:58:37",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 19:58:46",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 655). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-10 19:58:47",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 788",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 19:58:47",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host aacc3f889c5b at 2025-04-10 19:58:47.841200",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 19:58:48",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-10 19:58:48.424323",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 19:58:48",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-10 19:58:48.433317",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 19:58:48",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
   }
 ]
