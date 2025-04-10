@@ -153,11 +153,16 @@
                         </div>
                         <div class="text-center mt-3">
                             <button id="read-analysis" class="btn btn-outline-primary btn-sm">
-                                <i class="bi bi-volume-up"></i> Read Aloud
+                                <i class="bi bi-volume-up"></i> Read Aloud (Browser)
                             </button>
                             <button id="stop-reading" class="btn btn-outline-danger btn-sm ms-2" style="display: none;">
                                 <i class="bi bi-stop-fill"></i> Stop Reading
                             </button>
+                            
+                            <button id="server-tts-button" class="btn btn-primary btn-sm ms-2" onclick="playServerTTS()">
+                                <i class="bi bi-cloud"></i> Listen to Mira's Response
+                            </button>
+                            <audio id="serverAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
                         </div>
                     </div>
                     
@@ -284,11 +289,16 @@
                         </div>
                         <div class="text-center mt-3">
                             <button id="read-guidance" class="btn btn-outline-primary btn-sm">
-                                <i class="bi bi-volume-up"></i> Read Aloud
+                                <i class="bi bi-volume-up"></i> Read Aloud (Browser)
                             </button>
                             <button id="stop-guidance" class="btn btn-outline-danger btn-sm ms-2" style="display: none;">
                                 <i class="bi bi-stop-fill"></i> Stop Reading
                             </button>
+                            
+                            <button id="server-tts-guidance-button" class="btn btn-primary btn-sm ms-2" onclick="playServerTTSGuidance()">
+                                <i class="bi bi-cloud"></i> Listen to Mira's Guidance
+                            </button>
+                            <audio id="serverGuidanceAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
                         </div>
                     </div>
                 </div>
@@ -1130,6 +1140,106 @@
         
         // Initialize voices
         speechSynthesis.getVoices();
+    }
+    
+    // Server-side TTS function for Analysis
+    function playServerTTS() {
+        // Get the coach response text
+        const text = document.querySelector('.coach-insights').textContent.trim();
+        const button = document.getElementById('server-tts-button');
+        const audio = document.getElementById('serverAudio');
+        
+        // Show loading state
+        button.disabled = true;
+        button.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating audio...';
+        
+        // Reset audio
+        audio.pause();
+        audio.src = '';
+        
+        // Request TTS from server
+        fetch('/tts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: text })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Show audio player with the generated audio
+            audio.src = data.audio_url;
+            audio.style.display = 'block';
+            
+            // Reset button state
+            button.disabled = false;
+            button.innerHTML = '<i class="bi bi-cloud-check"></i> Listen to Mira\'s Response';
+            
+            // Play the audio
+            audio.play();
+        })
+        .catch(error => {
+            console.error('Error generating speech:', error);
+            // Reset button state
+            button.disabled = false;
+            button.innerHTML = '<i class="bi bi-cloud"></i> Listen to Mira\'s Response';
+            
+            // Show error message
+            alert('Sorry, there was a problem generating the audio. Please try again.');
+        });
+    }
+    
+    // Server-side TTS function for Guidance
+    function playServerTTSGuidance() {
+        // Get the coach guidance text
+        const text = document.getElementById('coach-message').textContent.trim();
+        const button = document.getElementById('server-tts-guidance-button');
+        const audio = document.getElementById('serverGuidanceAudio');
+        
+        // Show loading state
+        button.disabled = true;
+        button.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating audio...';
+        
+        // Reset audio
+        audio.pause();
+        audio.src = '';
+        
+        // Request TTS from server
+        fetch('/tts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: text })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Show audio player with the generated audio
+            audio.src = data.audio_url;
+            audio.style.display = 'block';
+            
+            // Reset button state
+            button.disabled = false;
+            button.innerHTML = '<i class="bi bi-cloud-check"></i> Listen to Mira\'s Guidance';
+            
+            // Play the audio
+            audio.play();
+        })
+        .catch(error => {
+            console.error('Error generating speech:', error);
+            // Reset button state
+            button.disabled = false;
+            button.innerHTML = '<i class="bi bi-cloud"></i> Listen to Mira\'s Guidance';
+            
+            // Show error message
+            alert('Sorry, there was a problem generating the audio. Please try again.');
+        });
     }
 </script>
 {% endblock %}
