@@ -1157,23 +1157,30 @@
         audio.pause();
         audio.src = '';
         
-        // Request TTS from server using the CSRF-exempt endpoint
-        fetch('/api/tts', {
+        // Create form data for the request
+        const formData = new FormData();
+        formData.append('text', text);
+        
+        // Set a unique timestamp to avoid caching
+        const timestamp = new Date().getTime();
+        
+        // Request TTS directly from server and get audio response
+        fetch('/direct-tts', {
             method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ text: text })
+            body: formData
         })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.json();
+            return response.blob();
         })
-        .then(data => {
-            // Show audio player with the generated audio
-            audio.src = data.audio_url;
+        .then(blob => {
+            // Create a URL for the blob
+            const url = URL.createObjectURL(blob);
+            
+            // Set the audio source
+            audio.src = url;
             audio.style.display = 'block';
             
             // Reset button state
@@ -1209,21 +1216,30 @@
         audio.pause();
         audio.src = '';
         
-        // Request TTS from server using the CSRF-exempt endpoint
-        fetch('/api/tts', {
+        // Create form data for the request
+        const formData = new FormData();
+        formData.append('text', text);
+        
+        // Set a unique timestamp to avoid caching
+        const timestamp = new Date().getTime();
+        
+        // Request TTS directly from server and get audio response
+        fetch('/direct-tts', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: text })
+            body: formData
         })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.json();
+            return response.blob();
         })
-        .then(data => {
-            // Show audio player with the generated audio
-            audio.src = data.audio_url;
+        .then(blob => {
+            // Create a URL for the blob
+            const url = URL.createObjectURL(blob);
+            
+            // Set the audio source
+            audio.src = url;
             audio.style.display = 'block';
             
             // Reset button state
