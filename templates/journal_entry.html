@@ -1157,8 +1157,8 @@
         audio.pause();
         audio.src = '';
         
-        // Request TTS from server using the standalone endpoint
-        fetch('/text-to-speech', {
+        // Request TTS from server using the CSRF-exempt endpoint
+        fetch('/api/tts', {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json'
@@ -1209,8 +1209,8 @@
         audio.pause();
         audio.src = '';
         
-        // Request TTS from server using the standalone endpoint
-        fetch('/text-to-speech', {
+        // Request TTS from server using the CSRF-exempt endpoint
+        fetch('/api/tts', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ text: text })

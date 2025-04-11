@@ -312,10 +312,14 @@ with app.app_context():
     from basic_login import basic_login_bp
     app.register_blueprint(basic_login_bp)
     
-    # Register the simple text-to-speech blueprint
+    # Register the simple text-to-speech blueprint (keep browser-based TTS)
     from simple_tts import tts_simple_bp
     app.register_blueprint(tts_simple_bp)
     
     # Register the standalone TTS blueprint 
     from standalone_tts import standalone_tts_bp
     app.register_blueprint(standalone_tts_bp)
+    
+    # Register the completely CSRF-exempt TTS blueprint
+    from no_csrf_tts import no_csrf_bp
+    app.register_blueprint(no_csrf_bp)
