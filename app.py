@@ -324,6 +324,10 @@ with app.app_context():
     from simple_direct_tts import simple_direct_tts_bp
     app.register_blueprint(simple_direct_tts_bp)
     
+    # Register TTS routes for test page
+    from tts_routes import tts_routes_bp
+    app.register_blueprint(tts_routes_bp)
+    
     # Explicitly exempt TTS routes from CSRF protection
     csrf.exempt(direct_tts_bp)
     csrf.exempt(simple_direct_tts_bp)

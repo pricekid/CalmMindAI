@@ -1,47 +1,5 @@
 [
   {
-    "timestamp": "2025-04-07 02:59:17",
-    "type": "health_check",
-    "message": "Scheduler running with PID 270 at 2025-04-07 02:59:17",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-07 03:04:17",
-    "type": "health_check",
-    "message": "Scheduler running with PID 270 at 2025-04-07 03:04:17",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-07 03:09:17",
-    "type": "health_check",
-    "message": "Scheduler running with PID 270 at 2025-04-07 03:09:17",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-07 03:14:17",
-    "type": "health_check",
-    "message": "Scheduler running with PID 270 at 2025-04-07 03:14:17",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-07 03:14:18",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-07 03:14:18.851268",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-07 03:14:18",
-    "type": "job_success",
-    "message": "Job scheduler_health_check executed successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-07 03:19:17",
-    "type": "health_check",
-    "message": "Scheduler running with PID 270 at 2025-04-07 03:19:17",
-    "success": true
-  },
-  {
     "timestamp": "2025-04-07 03:24:17",
     "type": "health_check",
     "message": "Scheduler running with PID 270 at 2025-04-07 03:24:17",
@@ -5995,6 +5953,48 @@
   },
   {
     "timestamp": "2025-04-11 17:54:14",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-11 17:55:00",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 717",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-11 17:55:05",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 717). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-11 17:55:06",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 888",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-11 17:55:06",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 19b2f79f6330 at 2025-04-11 17:55:06.408809",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-11 17:55:07",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-11 17:55:07.024989",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-11 17:55:07",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-11 17:55:07.040760",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-11 17:55:07",
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
     "success": true
