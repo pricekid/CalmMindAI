@@ -159,22 +159,13 @@
                                 <i class="bi bi-stop-fill"></i> Stop Reading
                             </button>
                             
-                            <div class="btn-group ms-2">
+                            <div class="d-inline-flex align-items-center ms-2">
                                 <button id="server-tts-button" class="btn btn-primary btn-sm" onclick="playServerTTS()">
                                     <i class="bi bi-cloud"></i> Listen to Mira's Response
                                 </button>
-                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="visually-hidden">Select language</span>
+                                <button type="button" class="btn btn-outline-secondary btn-sm ms-1" onclick="openVoiceSettingsModal('analysis')">
+                                    <i class="bi bi-gear"></i>
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><h6 class="dropdown-header">Select Voice Type</h6></li>
-                                    <li><a class="dropdown-item tts-voice-item active" href="#" data-voice="default">Default Voice</a></li>
-                                    <li><a class="dropdown-item tts-voice-item" href="#" data-voice="female">Female Voice</a></li>
-                                    <li><a class="dropdown-item tts-voice-item" href="#" data-voice="male">Male Voice</a></li>
-                                    <li><a class="dropdown-item tts-voice-item" href="#" data-voice="calm">Calm Voice</a></li>
-                                    <li><a class="dropdown-item tts-voice-item" href="#" data-voice="enthusiastic">Enthusiastic Voice</a></li>
-                                    <li><a class="dropdown-item tts-voice-item" href="#" data-voice="serious">Serious Voice</a></li>
-                                </ul>
                             </div>
                             <audio id="serverAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
                         </div>
@@ -309,22 +300,13 @@
                                 <i class="bi bi-stop-fill"></i> Stop Reading
                             </button>
                             
-                            <div class="btn-group ms-2">
+                            <div class="d-inline-flex align-items-center ms-2">
                                 <button id="server-tts-guidance-button" class="btn btn-primary btn-sm" onclick="playServerTTSGuidance()">
                                     <i class="bi bi-cloud"></i> Listen to Mira's Guidance
                                 </button>
-                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="visually-hidden">Select language</span>
+                                <button type="button" class="btn btn-outline-secondary btn-sm ms-1" onclick="openVoiceSettingsModal('guidance')">
+                                    <i class="bi bi-gear"></i>
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><h6 class="dropdown-header">Select Voice Type</h6></li>
-                                    <li><a class="dropdown-item guidance-tts-voice-item active" href="#" data-voice="default">Default Voice</a></li>
-                                    <li><a class="dropdown-item guidance-tts-voice-item" href="#" data-voice="female">Female Voice</a></li>
-                                    <li><a class="dropdown-item guidance-tts-voice-item" href="#" data-voice="male">Male Voice</a></li>
-                                    <li><a class="dropdown-item guidance-tts-voice-item" href="#" data-voice="calm">Calm Voice</a></li>
-                                    <li><a class="dropdown-item guidance-tts-voice-item" href="#" data-voice="enthusiastic">Enthusiastic Voice</a></li>
-                                    <li><a class="dropdown-item guidance-tts-voice-item" href="#" data-voice="serious">Serious Voice</a></li>
-                                </ul>
                             </div>
                             <audio id="serverGuidanceAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
                         </div>
@@ -385,6 +367,32 @@
             </div>
         </div>
     </div>
+</div>
+<!-- Voice Settings Modal -->
+<div class="modal fade" id="voiceSettingsModal" tabindex="-1" aria-labelledby="voiceSettingsModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="voiceSettingsModalLabel">Voice Settings</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Select Voice Type</label>
+          <div class="voice-options">
+            <!-- These radio buttons will be filled in dynamically -->
+          </div>
+        </div>
+        <div class="alert alert-info small">
+          <i class="bi bi-info-circle"></i> The selected voice will be used when you click the "Listen" button.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="saveVoiceSettings">Save Settings</button>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
 
@@ -663,57 +671,95 @@
             updateAnxietyLabel(sliderValue);
         }
         
-    // Function to set up TTS voice selectors
-    function setupTTSLanguageSelectors() {
-        // Set up handlers for analysis TTS voice selection
-        const ttsVoiceItems = document.querySelectorAll('.tts-voice-item');
-        ttsVoiceItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                // Stop any currently playing audio to prevent freezing
-                const audio = document.getElementById('serverAudio');
-                if (audio) {
-                    audio.pause();
-                    audio.src = '';
-                }
-                
-                // Remove active class from all items
-                ttsVoiceItems.forEach(i => i.classList.remove('active'));
-                // Add active class to clicked item
-                this.classList.add('active');
-                
-                // Close dropdown after selection to prevent UI freezing
-                const dropdown = this.closest('.dropdown-menu');
-                if (dropdown) {
-                    bootstrap.Dropdown.getInstance(dropdown.previousElementSibling).hide();
-                }
-            });
+    // Voice selection and settings functions
+    
+    // Current voice settings stored in memory
+    const voiceSettings = {
+        analysis: {
+            voice: localStorage.getItem('analysis_voice') || 'default'
+        },
+        guidance: {
+            voice: localStorage.getItem('guidance_voice') || 'default'
+        }
+    };
+    
+    // Voice type options with display names
+    const voiceOptions = [
+        { id: 'default', name: 'Default Voice', description: 'Standard text-to-speech voice' },
+        { id: 'female', name: 'Female Voice', description: 'Female narrator voice' },
+        { id: 'male', name: 'Male Voice', description: 'Male narrator voice' },
+        { id: 'calm', name: 'Calm Voice', description: 'Relaxed, soothing tone' },
+        { id: 'enthusiastic', name: 'Enthusiastic Voice', description: 'Upbeat, energetic tone' },
+        { id: 'serious', name: 'Serious Voice', description: 'Professional, formal tone' }
+    ];
+    
+    // Function to open the voice settings modal
+    function openVoiceSettingsModal(type) {
+        // type can be 'analysis' or 'guidance'
+        const modal = document.getElementById('voiceSettingsModal');
+        const modalTitle = document.getElementById('voiceSettingsModalLabel');
+        const voiceOptionsContainer = modal.querySelector('.voice-options');
+        const saveButton = document.getElementById('saveVoiceSettings');
+        
+        // Set the title based on the type
+        modalTitle.textContent = type === 'analysis' ? 'Analysis Voice Settings' : 'Guidance Voice Settings';
+        
+        // Generate radio buttons for each voice option
+        voiceOptionsContainer.innerHTML = voiceOptions.map(option => {
+            const isSelected = voiceSettings[type].voice === option.id;
+            return `
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="voice-type" 
+                           id="voice-${option.id}" value="${option.id}" ${isSelected ? 'checked' : ''}>
+                    <label class="form-check-label" for="voice-${option.id}">
+                        <strong>${option.name}</strong>
+                        <div class="text-muted small">${option.description}</div>
+                    </label>
+                </div>
+            `;
+        }).join('');
+        
+        // Remove any previous event listeners
+        saveButton.replaceWith(saveButton.cloneNode(true));
+        
+        // Update the save button reference
+        const newSaveButton = document.getElementById('saveVoiceSettings');
+        
+        // Add event listener for save button
+        newSaveButton.addEventListener('click', function() {
+            // Get the selected voice
+            const selectedVoice = modal.querySelector('input[name="voice-type"]:checked').value;
+            
+            // Update voice settings
+            voiceSettings[type].voice = selectedVoice;
+            
+            // Save to localStorage
+            localStorage.setItem(`${type}_voice`, selectedVoice);
+            
+            // Close the modal
+            bootstrap.Modal.getInstance(modal).hide();
         });
         
-        // Set up handlers for guidance TTS voice selection
-        const guidanceTtsVoiceItems = document.querySelectorAll('.guidance-tts-voice-item');
-        guidanceTtsVoiceItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                // Stop any currently playing audio to prevent freezing
-                const audio = document.getElementById('serverGuidanceAudio');
-                if (audio) {
-                    audio.pause();
-                    audio.src = '';
-                }
-                
-                // Remove active class from all items
-                guidanceTtsVoiceItems.forEach(i => i.classList.remove('active'));
-                // Add active class to clicked item
-                this.classList.add('active');
-                
-                // Close dropdown after selection to prevent UI freezing
-                const dropdown = this.closest('.dropdown-menu');
-                if (dropdown) {
-                    bootstrap.Dropdown.getInstance(dropdown.previousElementSibling).hide();
-                }
-            });
+        // Show the modal
+        const bsModal = new bootstrap.Modal(modal);
+        bsModal.show();
+    }
+    
+    // Function to get the current voice setting for a type
+    function getVoiceSetting(type) {
+        return voiceSettings[type].voice;
+    }
+    
+    // Legacy function for backward compatibility
+    function setupTTSLanguageSelectors() {
+        // Initialize voice settings from localStorage if available
+        ['analysis', 'guidance'].forEach(type => {
+            const savedVoice = localStorage.getItem(`${type}_voice`);
+            if (savedVoice) {
+                voiceSettings[type].voice = savedVoice;
+            }
         });
+    }
     }
         
         // Set up the form handling with spinner
@@ -1233,8 +1279,8 @@
         const button = document.getElementById('server-tts-button');
         const audio = document.getElementById('serverAudio');
         
-        // Get the selected voice type
-        const selectedVoice = document.querySelector('.tts-voice-item.active').getAttribute('data-voice') || 'default';
+        // Get the selected voice from our settings
+        const selectedVoice = getVoiceSetting('analysis');
         
         // Show loading state
         button.disabled = true;
@@ -1293,8 +1339,8 @@
         const button = document.getElementById('server-tts-guidance-button');
         const audio = document.getElementById('serverGuidanceAudio');
         
-        // Get the selected voice type
-        const selectedVoice = document.querySelector('.guidance-tts-voice-item.active').getAttribute('data-voice') || 'default';
+        // Get the selected voice from our settings
+        const selectedVoice = getVoiceSetting('guidance');
         
         // Show loading state
         button.disabled = true;
