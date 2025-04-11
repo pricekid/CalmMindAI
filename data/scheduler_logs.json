@@ -1,41 +1,5 @@
 [
   {
-    "timestamp": "2025-04-07 04:39:17",
-    "type": "health_check",
-    "message": "Scheduler running with PID 270 at 2025-04-07 04:39:17",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-07 04:44:17",
-    "type": "health_check",
-    "message": "Scheduler running with PID 270 at 2025-04-07 04:44:17",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-07 04:44:18",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-07 04:44:18.851122",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-07 04:44:18",
-    "type": "job_success",
-    "message": "Job scheduler_health_check executed successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-07 04:49:17",
-    "type": "health_check",
-    "message": "Scheduler running with PID 270 at 2025-04-07 04:49:17",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-07 04:54:17",
-    "type": "health_check",
-    "message": "Scheduler running with PID 270 at 2025-04-07 04:54:17",
-    "success": true
-  },
-  {
     "timestamp": "2025-04-07 04:59:17",
     "type": "health_check",
     "message": "Scheduler running with PID 270 at 2025-04-07 04:59:17",
@@ -5995,6 +5959,42 @@
   },
   {
     "timestamp": "2025-04-11 18:01:56",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-11 18:03:27",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 1644). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-11 18:03:28",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 1865",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-11 18:03:28",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 19b2f79f6330 at 2025-04-11 18:03:28.816823",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-11 18:03:29",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-11 18:03:29.301394",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-11 18:03:29",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-11 18:03:29.311080",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-11 18:03:29",
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
     "success": true

@@ -159,9 +159,25 @@
                                 <i class="bi bi-stop-fill"></i> Stop Reading
                             </button>
                             
-                            <button id="server-tts-button" class="btn btn-primary btn-sm ms-2" onclick="playServerTTS()">
-                                <i class="bi bi-cloud"></i> Listen to Mira's Response
-                            </button>
+                            <div class="btn-group ms-2">
+                                <button id="server-tts-button" class="btn btn-primary btn-sm" onclick="playServerTTS()">
+                                    <i class="bi bi-cloud"></i> Listen to Mira's Response
+                                </button>
+                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Select language</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><h6 class="dropdown-header">Select Voice Language</h6></li>
+                                    <li><a class="dropdown-item tts-lang-item active" href="#" data-lang="en">English</a></li>
+                                    <li><a class="dropdown-item tts-lang-item" href="#" data-lang="es">Spanish</a></li>
+                                    <li><a class="dropdown-item tts-lang-item" href="#" data-lang="fr">French</a></li>
+                                    <li><a class="dropdown-item tts-lang-item" href="#" data-lang="de">German</a></li>
+                                    <li><a class="dropdown-item tts-lang-item" href="#" data-lang="it">Italian</a></li>
+                                    <li><a class="dropdown-item tts-lang-item" href="#" data-lang="ja">Japanese</a></li>
+                                    <li><a class="dropdown-item tts-lang-item" href="#" data-lang="zh-CN">Chinese</a></li>
+                                    <li><a class="dropdown-item tts-lang-item" href="#" data-lang="hi">Hindi</a></li>
+                                </ul>
+                            </div>
                             <audio id="serverAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
                         </div>
                     </div>
@@ -295,9 +311,25 @@
                                 <i class="bi bi-stop-fill"></i> Stop Reading
                             </button>
                             
-                            <button id="server-tts-guidance-button" class="btn btn-primary btn-sm ms-2" onclick="playServerTTSGuidance()">
-                                <i class="bi bi-cloud"></i> Listen to Mira's Guidance
-                            </button>
+                            <div class="btn-group ms-2">
+                                <button id="server-tts-guidance-button" class="btn btn-primary btn-sm" onclick="playServerTTSGuidance()">
+                                    <i class="bi bi-cloud"></i> Listen to Mira's Guidance
+                                </button>
+                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Select language</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><h6 class="dropdown-header">Select Voice Language</h6></li>
+                                    <li><a class="dropdown-item guidance-tts-lang-item active" href="#" data-lang="en">English</a></li>
+                                    <li><a class="dropdown-item guidance-tts-lang-item" href="#" data-lang="es">Spanish</a></li>
+                                    <li><a class="dropdown-item guidance-tts-lang-item" href="#" data-lang="fr">French</a></li>
+                                    <li><a class="dropdown-item guidance-tts-lang-item" href="#" data-lang="de">German</a></li>
+                                    <li><a class="dropdown-item guidance-tts-lang-item" href="#" data-lang="it">Italian</a></li>
+                                    <li><a class="dropdown-item guidance-tts-lang-item" href="#" data-lang="ja">Japanese</a></li>
+                                    <li><a class="dropdown-item guidance-tts-lang-item" href="#" data-lang="zh-CN">Chinese</a></li>
+                                    <li><a class="dropdown-item guidance-tts-lang-item" href="#" data-lang="hi">Hindi</a></li>
+                                </ul>
+                            </div>
                             <audio id="serverGuidanceAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
                         </div>
                     </div>
@@ -625,12 +657,42 @@
     
     // Set up event listeners when document is ready
     document.addEventListener('DOMContentLoaded', function() {
+        // Set up language selection for TTS
+        setupTTSLanguageSelectors();
+        
         // Set the initial anxiety level (only if we're in edit mode)
         const anxietySlider = document.getElementById('anxiety-slider');
         if (anxietySlider) {
             const sliderValue = anxietySlider.value;
             updateAnxietyLabel(sliderValue);
         }
+        
+    // Function to set up TTS language selectors
+    function setupTTSLanguageSelectors() {
+        // Set up handlers for analysis TTS language selection
+        const ttsLangItems = document.querySelectorAll('.tts-lang-item');
+        ttsLangItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Remove active class from all items
+                ttsLangItems.forEach(i => i.classList.remove('active'));
+                // Add active class to clicked item
+                this.classList.add('active');
+            });
+        });
+        
+        // Set up handlers for guidance TTS language selection
+        const guidanceTtsLangItems = document.querySelectorAll('.guidance-tts-lang-item');
+        guidanceTtsLangItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Remove active class from all items
+                guidanceTtsLangItems.forEach(i => i.classList.remove('active'));
+                // Add active class to clicked item
+                this.classList.add('active');
+            });
+        });
+    }
         
         // Set up the form handling with spinner
         const journalForm = document.getElementById('journal-form');
@@ -1149,6 +1211,9 @@
         const button = document.getElementById('server-tts-button');
         const audio = document.getElementById('serverAudio');
         
+        // Get the selected language
+        const selectedLang = document.querySelector('.tts-lang-item.active').getAttribute('data-lang') || 'en';
+        
         // Show loading state
         button.disabled = true;
         button.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating audio...';
@@ -1160,6 +1225,7 @@
         // Create form data for the request
         const formData = new FormData();
         formData.append('text', text);
+        formData.append('lang', selectedLang);
         
         // Set a unique timestamp to avoid caching
         const timestamp = new Date().getTime();
@@ -1205,6 +1271,9 @@
         const button = document.getElementById('server-tts-guidance-button');
         const audio = document.getElementById('serverGuidanceAudio');
         
+        // Get the selected language
+        const selectedLang = document.querySelector('.guidance-tts-lang-item.active').getAttribute('data-lang') || 'en';
+        
         // Show loading state
         button.disabled = true;
         button.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating audio...';
@@ -1216,6 +1285,7 @@
         // Create form data for the request
         const formData = new FormData();
         formData.append('text', text);
+        formData.append('lang', selectedLang);
         
         // Set a unique timestamp to avoid caching
         const timestamp = new Date().getTime();
