@@ -16,9 +16,35 @@
                         <textarea id="text-input" class="form-control" rows="5">This is a test of the text-to-speech functionality. If you can hear this, the TTS system is working properly.</textarea>
                     </div>
                     
+                    <div class="mb-3">
+                        <label for="language-select" class="form-label">Select Language (Server TTS)</label>
+                        <select id="language-select" class="form-select">
+                            <option value="en" selected>English</option>
+                            <option value="es">Spanish</option>
+                            <option value="fr">French</option>
+                            <option value="de">German</option>
+                            <option value="it">Italian</option>
+                            <option value="ja">Japanese</option>
+                            <option value="ko">Korean</option>
+                            <option value="zh-CN">Chinese (Mainland)</option>
+                            <option value="pt">Portuguese</option>
+                            <option value="ru">Russian</option>
+                            <option value="hi">Hindi</option>
+                            <option value="ar">Arabic</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3" id="browser-voice-container">
+                        <label for="browser-voice-select" class="form-label">Select Voice (Browser TTS)</label>
+                        <select id="browser-voice-select" class="form-select">
+                            <option value="" selected>Default Voice</option>
+                            <!-- Browser voices will be populated here with JavaScript -->
+                        </select>
+                    </div>
+                    
                     <div class="mb-3 d-grid gap-2">
                         <button id="simple-tts-btn" class="btn btn-primary">
-                            <i class="bi bi-volume-up"></i> Test Simple TTS
+                            <i class="bi bi-volume-up"></i> Test Server TTS
                         </button>
                         
                         <button id="browser-tts-btn" class="btn btn-outline-primary">
@@ -39,6 +65,8 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const textInput = document.getElementById('text-input');
+        const languageSelect = document.getElementById('language-select');
+        const browserVoiceSelect = document.getElementById('browser-voice-select');
         const simpleTtsBtn = document.getElementById('simple-tts-btn');
         const browserTtsBtn = document.getElementById('browser-tts-btn');
         const audioPlayer = document.getElementById('audio-player');
@@ -51,6 +79,44 @@
             ttsStatus.classList.remove('d-none');
         }
         
+        // Populate voice dropdown with available browser voices
+        function populateVoices() {
+            // Clear existing options except the default
+            while (browserVoiceSelect.options.length > 1) {
+                browserVoiceSelect.options.remove(1);
+            }
+            
+            // Get available voices
+            const voices = speechSynthesis.getVoices();
+            
+            if (voices.length > 0) {
+                // Add each voice to the select
+                voices.forEach(voice => {
+                    const option = document.createElement('option');
+                    option.value = voice.name;
+                    option.textContent = `${voice.name} (${voice.lang})${voice.default ? ' - DEFAULT' : ''}`;
+                    browserVoiceSelect.appendChild(option);
+                });
+                
+                console.log(`Populated ${voices.length} voices in the dropdown`);
+            } else {
+                console.warn('No voices available');
+            }
+        }
+        
+        // Initialize voices if available
+        if (window.speechSynthesis) {
+            // Chrome needs this event, other browsers might already have voices loaded
+            speechSynthesis.onvoiceschanged = populateVoices;
+            
+            // Try to populate immediately for browsers that already have voices
+            populateVoices();
+        } else {
+            document.getElementById('browser-voice-container').style.display = 'none';
+            browserTtsBtn.disabled = true;
+            browserTtsBtn.textContent = 'Browser TTS Not Supported';
+        }
+        
         // Simple server-side TTS
         simpleTtsBtn.addEventListener('click', function() {
             const text = textInput.value.trim();
@@ -59,13 +125,17 @@
                 return;
             }
             
+            // Get selected language
+            const lang = languageSelect.value;
+            
             // Show loading
-            showStatus('Generating audio...');
+            showStatus(`Generating audio in ${languageSelect.options[languageSelect.selectedIndex].text}...`);
             simpleTtsBtn.disabled = true;
             
             // Create form data
             const formData = new FormData();
             formData.append('text', text);
+            formData.append('lang', lang);
             
             // Make request
             fetch('/simple-tts', {
@@ -114,6 +184,17 @@
             // Create speech
             const utterance = new SpeechSynthesisUtterance(text);
             
+            // Set selected voice if one is chosen
+            const selectedVoice = browserVoiceSelect.value;
+            if (selectedVoice) {
+                const voices = speechSynthesis.getVoices();
+                const voice = voices.find(v => v.name === selectedVoice);
+                if (voice) {
+                    utterance.voice = voice;
+                    console.log(`Using voice: ${voice.name}`);
+                }
+            }
+            
             // Set up event handlers
             utterance.onend = function() {
                 showStatus('Audio played successfully!', 'success');
@@ -122,8 +203,12 @@
             
             utterance.onerror = function(event) {
                 showStatus('Error playing audio: ' + event.error, 'danger');
+                console.error('Speech synthesis error:', event.error);
                 browserTtsBtn.disabled = false;
             };
+            
+            // Cancel any ongoing speech
+            speechSynthesis.cancel();
             
             // Play the speech
             window.speechSynthesis.speak(utterance);

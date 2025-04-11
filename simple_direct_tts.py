@@ -18,11 +18,14 @@ simple_direct_tts_bp = Blueprint('simple_direct_tts', __name__)
 def simple_tts():
     """Extremely simple TTS implementation"""
     try:
-        # Get text from request
+        # Get text and voice parameters from request
         text = request.values.get('text', '')
         if not text:
             return "No text provided", 400
             
+        # Get language parameter (default to English)
+        lang = request.values.get('lang', 'en')
+        
         # Generate a unique filename
         filename = f"{uuid.uuid4()}.mp3"
         filepath = os.path.join('static', 'audio', filename)
@@ -30,8 +33,8 @@ def simple_tts():
         # Create directory if it doesn't exist
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
         
-        # Generate speech
-        tts = gTTS(text=text, lang='en')
+        # Generate speech with the selected language
+        tts = gTTS(text=text, lang=lang)
         tts.save(filepath)
         
         # Return the file path
