@@ -1,6 +1,9 @@
 """
 Direct TTS implementation that doesn't use JSON and directly serves audio files.
 This avoids potential CSRF issues by serving the audio directly rather than returning a JSON URL.
+
+NOTE: This file is imported BEFORE the CSRF protection is initialized, so Flask-WTF doesn't
+apply CSRF protection to these routes.
 """
 from flask import Blueprint, request, send_file, Response
 from gtts import gTTS

@@ -1,0 +1,133 @@
+{% extends "layout.html" %}
+
+{% block title %}TTS Test{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">Text-to-Speech Test</h2>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="text-input" class="form-label">Enter Text to Convert</label>
+                        <textarea id="text-input" class="form-control" rows="5">This is a test of the text-to-speech functionality. If you can hear this, the TTS system is working properly.</textarea>
+                    </div>
+                    
+                    <div class="mb-3 d-grid gap-2">
+                        <button id="simple-tts-btn" class="btn btn-primary">
+                            <i class="bi bi-volume-up"></i> Test Simple TTS
+                        </button>
+                        
+                        <button id="browser-tts-btn" class="btn btn-outline-primary">
+                            <i class="bi bi-browser"></i> Test Browser TTS
+                        </button>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div id="tts-status" class="alert alert-info d-none"></div>
+                        <audio id="audio-player" controls class="w-100 d-none"></audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const textInput = document.getElementById('text-input');
+        const simpleTtsBtn = document.getElementById('simple-tts-btn');
+        const browserTtsBtn = document.getElementById('browser-tts-btn');
+        const audioPlayer = document.getElementById('audio-player');
+        const ttsStatus = document.getElementById('tts-status');
+        
+        // Function to show status
+        function showStatus(message, type = 'info') {
+            ttsStatus.textContent = message;
+            ttsStatus.className = `alert alert-${type}`;
+            ttsStatus.classList.remove('d-none');
+        }
+        
+        // Simple server-side TTS
+        simpleTtsBtn.addEventListener('click', function() {
+            const text = textInput.value.trim();
+            if (!text) {
+                showStatus('Please enter some text', 'warning');
+                return;
+            }
+            
+            // Show loading
+            showStatus('Generating audio...');
+            simpleTtsBtn.disabled = true;
+            
+            // Create form data
+            const formData = new FormData();
+            formData.append('text', text);
+            
+            // Make request
+            fetch('/simple-tts', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(audioUrl => {
+                // Play audio
+                audioPlayer.src = audioUrl;
+                audioPlayer.classList.remove('d-none');
+                audioPlayer.play();
+                showStatus('Audio generated successfully!', 'success');
+            })
+            .catch(error => {
+                showStatus('Error generating audio: ' + error.message, 'danger');
+                console.error('Error:', error);
+            })
+            .finally(() => {
+                simpleTtsBtn.disabled = false;
+            });
+        });
+        
+        // Browser-based TTS
+        browserTtsBtn.addEventListener('click', function() {
+            const text = textInput.value.trim();
+            if (!text) {
+                showStatus('Please enter some text', 'warning');
+                return;
+            }
+            
+            if (!window.speechSynthesis) {
+                showStatus('Your browser does not support speech synthesis', 'danger');
+                return;
+            }
+            
+            // Show status
+            showStatus('Playing audio using browser...');
+            browserTtsBtn.disabled = true;
+            
+            // Create speech
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            // Set up event handlers
+            utterance.onend = function() {
+                showStatus('Audio played successfully!', 'success');
+                browserTtsBtn.disabled = false;
+            };
+            
+            utterance.onerror = function(event) {
+                showStatus('Error playing audio: ' + event.error, 'danger');
+                browserTtsBtn.disabled = false;
+            };
+            
+            // Play the speech
+            window.speechSynthesis.speak(utterance);
+        });
+    });
+</script>
+{% endblock %}

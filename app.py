@@ -319,3 +319,11 @@ with app.app_context():
     # Register the direct TTS blueprint (serves audio directly without CSRF issues)
     from direct_tts import direct_tts_bp
     app.register_blueprint(direct_tts_bp)
+    
+    # Register the simplified direct TTS blueprint
+    from simple_direct_tts import simple_direct_tts_bp
+    app.register_blueprint(simple_direct_tts_bp)
+    
+    # Explicitly exempt TTS routes from CSRF protection
+    csrf.exempt(direct_tts_bp)
+    csrf.exempt(simple_direct_tts_bp)
