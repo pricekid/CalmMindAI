@@ -1164,8 +1164,8 @@
         // Set a unique timestamp to avoid caching
         const timestamp = new Date().getTime();
         
-        // Request TTS directly from server and get audio response
-        fetch('/direct-tts', {
+        // Request TTS using the simple TTS endpoint
+        fetch('/simple-tts', {
             method: 'POST',
             body: formData
         })
@@ -1173,14 +1173,11 @@
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.blob();
+            return response.text();
         })
-        .then(blob => {
-            // Create a URL for the blob
-            const url = URL.createObjectURL(blob);
-            
-            // Set the audio source
-            audio.src = url;
+        .then(audioUrl => {
+            // Set the audio source to the URL returned by the server
+            audio.src = audioUrl;
             audio.style.display = 'block';
             
             // Reset button state
@@ -1223,8 +1220,8 @@
         // Set a unique timestamp to avoid caching
         const timestamp = new Date().getTime();
         
-        // Request TTS directly from server and get audio response
-        fetch('/direct-tts', {
+        // Request TTS using the simple TTS endpoint
+        fetch('/simple-tts', {
             method: 'POST',
             body: formData
         })
@@ -1232,14 +1229,11 @@
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.blob();
+            return response.text();
         })
-        .then(blob => {
-            // Create a URL for the blob
-            const url = URL.createObjectURL(blob);
-            
-            // Set the audio source
-            audio.src = url;
+        .then(audioUrl => {
+            // Set the audio source to the URL returned by the server
+            audio.src = audioUrl;
             audio.style.display = 'block';
             
             // Reset button state

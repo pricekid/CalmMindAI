@@ -1,371 +1,1263 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    {% if entry %}
-        {{ entry.title }} - Calm Journey
-    {% else %}
-        New Journal Entry - Calm Journey
-    {% endif %}
-{% endblock %}
+{% block title %}Journal Entry{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-8 mx-auto">
-        <!-- Back to Journal Button -->
-        <div class="mb-3">
-            <a href="{{ url_for('journal') }}" class="btn btn-outline-secondary">
-                <i class="fas fa-arrow-left me-1"></i> Back to Journal
-            </a>
-        </div>
-        
-        {% if view_only %}
-            <!-- View Mode -->
-            <div class="card bg-dark mb-4">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h3 class="mb-0">{{ entry.title }}</h3>
-                    <span class="badge anxiety-badge 
-                        {% if entry.anxiety_level <= 3 %}anxiety-low
-                        {% elif entry.anxiety_level <= 6 %}anxiety-medium
-                        {% else %}anxiety-high{% endif %}">
-                        Anxiety: {{ entry.anxiety_level }}/10
-                    </span>
-                </div>
-                <div class="card-body">
-                    <p class="card-text text-muted mb-3">
-                        <small>
-                            <i class="far fa-calendar-alt me-1"></i> 
-                            {{ entry.created_at.strftime('%B %d, %Y at %I:%M %p') }}
-                            {% if entry.updated_at > entry.created_at %}
-                                (Edited: {{ entry.updated_at.strftime('%B %d, %Y at %I:%M %p') }})
-                            {% endif %}
-                        </small>
-                    </p>
-                    
-                    <div class="mb-4">
-                        {{ entry.content|replace('\n', '<br>')|safe }}
-                    </div>
-                    
-                    <div class="d-flex justify-content-between mt-4">
-                        <a href="{{ url_for('update_journal_entry', entry_id=entry.id) }}" class="btn btn-outline-primary">
-                            <i class="fas fa-edit me-1"></i> Edit
-                        </a>
-                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                            <i class="fas fa-trash-alt me-1"></i> Delete
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Journaling Coach -->
-            <div class="card bg-dark mb-4">
-                <div class="card-header">
-                    <h4 class="mb-0">
-                        <i class="fas fa-comments me-2"></i> 
-                        Your Journaling Coach
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <div id="coach-container" class="py-3">
-                        {% if coach_response %}
-                            <!-- Display the pre-generated coach response -->
-                            <div id="coach-response" class="coach-message">
-                                {{ coach_response }}
-                            </div>
-                            
-                            {% if show_call_button %}
-                            <div id="mobile-call-button" class="mt-4 d-none">
-                                <a href="tel:5364500" class="btn btn-danger btn-lg w-100 d-flex align-items-center justify-content-center">
-                                    <i class="fas fa-phone-alt me-2"></i> Call Lifeline Barbados Now
-                                </a>
-                                <p class="text-muted mt-2 text-center">
-                                    Available 24/7 for emotional support from trained counselors.
-                                </p>
-                            </div>
-                            {% endif %}
-                            
-                            <button id="coach-button" class="btn btn-primary mt-3" data-entry-id="{{ entry.id }}">
-                                <i class="fas fa-comment-dots me-1"></i> Get Another Response
-                            </button>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">
+                        {% if view_only %}
+                        Journal Entry: {{ entry.title }}
                         {% else %}
-                            <!-- If no pre-generated response, show the button to request one -->
-                            <p>Would you like some supportive feedback on your journal entry?</p>
-                            <button id="coach-button" class="btn btn-primary" data-entry-id="{{ entry.id }}">
-                                <i class="fas fa-comment-dots me-1"></i> Get Coach Feedback
-                            </button>
+                        {% if entry %}Edit{% else %}New{% endif %} Journal Entry
                         {% endif %}
-                        <div id="coach-loading" class="mt-3 d-none">
-                            <div class="spinner-border text-primary" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                            <p class="mt-2">Your coach is composing a response...</p>
-                        </div>
-                        <!-- This div is for displaying additional responses requested via the button -->
-                        {% if not coach_response %}
-                            <div id="coach-response" class="mt-3 coach-message d-none"></div>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            
-            <!-- CBT Recommendations -->
-            <div class="card bg-dark mb-4">
-                <div class="card-header">
-                    <h4 class="mb-0">
-                        <i class="fas fa-brain me-2"></i> 
-                        CBT Analysis
-                    </h4>
+                    </h2>
                 </div>
                 <div class="card-body">
-                    {% if entry.is_analyzed and entry.recommendations %}
-                        <p class="mb-4">Based on your journal entry, here are some thought patterns and CBT techniques that might help:</p>
-                        
-                        {% for recommendation in entry.recommendations %}
-                            <div class="recommendation-card p-3 ps-4">
-                                <h5 class="recommendation-title">{{ recommendation.thought_pattern }}</h5>
-                                <p>{{ recommendation.recommendation }}</p>
-                            </div>
-                        {% endfor %}
-                    {% elif not entry.is_analyzed %}
-                        <div class="text-center py-3">
-                            <p>This entry hasn't been analyzed yet.</p>
-                            <button id="analyze-button" class="btn btn-primary" data-entry-id="{{ entry.id }}">
-                                <i class="fas fa-magic me-1"></i> Analyze Now
-                            </button>
-                            <div id="analysis-loading" class="mt-3 d-none">
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="visually-hidden">Loading...</span>
-                                </div>
-                                <p class="mt-2">Analyzing your entry...</p>
-                            </div>
-                            <div id="analysis-result" class="mt-3 d-none"></div>
+                    {% if view_only and entry %}
+                    <!-- View only mode -->
+                    <div class="mb-3">
+                        <h5 class="form-label">Date</h5>
+                        <p>{{ entry.created_at.strftime('%B %d, %Y at %I:%M %p') }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <h5 class="form-label">Anxiety Level</h5>
+                        <p>
+                            {% if entry.anxiety_level <= 3 %}
+                            <span class="badge bg-success">{{ entry.anxiety_level }}</span>
+                            {% elif entry.anxiety_level <= 6 %}
+                            <span class="badge bg-warning text-dark">{{ entry.anxiety_level }}</span>
+                            {% else %}
+                            <span class="badge bg-danger">{{ entry.anxiety_level }}</span>
+                            {% endif %}
+                            /10
+                        </p>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="form-label">Journal Content</h5>
+                        <div class="p-3 bg-light rounded text-dark">
+                            {{ entry.content | nl2br | safe }}
                         </div>
+                    </div>
+                    <div class="text-center">
+                        <a href="{{ url_for('journal_blueprint.update_journal_entry', entry_id=entry.id) }}" class="btn btn-primary">
+                            <i class="bi bi-pencil"></i> Edit Entry
+                        </a>
+                        <a href="{{ url_for('journal_blueprint.journal_list') }}" class="btn btn-outline-secondary ms-2">
+                            <i class="bi bi-arrow-left"></i> Back to Journal
+                        </a>
+                    </div>
                     {% else %}
-                        <div class="text-center py-3">
-                            <p>No specific patterns requiring CBT techniques were identified in this entry.</p>
-                            <p class="text-muted">This is often a positive sign, indicating balanced thinking!</p>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-            
-            <!-- Delete Confirmation Modal -->
-            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            Are you sure you want to delete this journal entry? This action cannot be undone.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <form action="{{ url_for('delete_journal_entry', entry_id=entry.id) }}" method="POST">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-        {% else %}
-            <!-- Edit/Create Mode -->
-            <div class="card bg-dark">
-                <div class="card-header">
-                    <h3>{{ legend }}</h3>
-                </div>
-                <div class="card-body">
-                    <form method="POST" action="">
+                    <!-- Edit/New mode -->
+                    <form id="journal-form" method="POST">
                         {{ form.hidden_tag() }}
-                        <div class="mb-3">
+                        <div class="form-group mb-3">
                             {{ form.title.label(class="form-label") }}
                             {% if form.title.errors %}
                                 {{ form.title(class="form-control is-invalid") }}
                                 <div class="invalid-feedback">
                                     {% for error in form.title.errors %}
-                                        <span>{{ error }}</span>
+                                        {{ error }}
                                     {% endfor %}
                                 </div>
                             {% else %}
                                 {{ form.title(class="form-control") }}
                             {% endif %}
                         </div>
-                        
-                        <div class="mb-3">
+                        <div class="form-group mb-3">
                             {{ form.content.label(class="form-label") }}
-                            {% if form.content.errors %}
-                                {{ form.content(class="form-control is-invalid", rows="10") }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.content.errors %}
-                                        <span>{{ error }}</span>
-                                    {% endfor %}
-                                </div>
-                            {% else %}
-                                {{ form.content(class="form-control", rows="10") }}
-                            {% endif %}
-                            <div class="form-text">
-                                <i class="fas fa-lightbulb me-1"></i> Try to be specific about your thoughts, feelings, and the situations that triggered them.
-                            </div>
-                        </div>
-                        
-                        <div class="mb-4">
-                            {{ form.anxiety_level.label(class="form-label d-block") }}
-                            <div class="d-flex align-items-center">
-                                <span class="me-2">1</span>
-                                {% if form.anxiety_level.errors %}
-                                    {{ form.anxiety_level(class="form-range is-invalid", min="1", max="10") }}
+                            <div class="voice-input-container">
+                                {% if form.content.errors %}
+                                    {{ form.content(class="form-control is-invalid", rows=8, id="journal-content") }}
                                     <div class="invalid-feedback">
-                                        {% for error in form.anxiety_level.errors %}
-                                            <span>{{ error }}</span>
+                                        {% for error in form.content.errors %}
+                                            {{ error }}
                                         {% endfor %}
                                     </div>
                                 {% else %}
-                                    {{ form.anxiety_level(class="form-range", min="1", max="10") }}
+                                    {{ form.content(class="form-control", rows=8, id="journal-content") }}
                                 {% endif %}
-                                <span class="ms-2">10</span>
+                                
+                                <div class="voice-input-controls">
+                                    <button type="button" id="voice-input-button" class="btn btn-outline-primary" 
+                                            title="Start Voice Input (Click again to stop)">
+                                        <i class="bi bi-mic"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="form-text">
-                                1 = Minimal anxiety, 10 = Extreme anxiety
+                            
+                            <div id="voice-input-status" class="voice-status mt-2 d-none">
+                                <div class="d-flex align-items-center">
+                                    <div class="spinner-grow spinner-grow-sm text-primary me-2" role="status">
+                                        <span class="visually-hidden">Listening...</span>
+                                    </div>
+                                    <span id="voice-status-text">Listening... Click mic button again to stop</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-text mt-2">
+                                Express yourself freely. This journal is private to you, and the AI 
+                                analysis is only used to help you identify patterns and suggest coping strategies.
+                                <span class="text-primary ms-2"><i class="bi bi-info-circle"></i> Voice input is available!</span>
                             </div>
                         </div>
-                        
-                        <div class="d-flex justify-content-between">
-                            <a href="{{ url_for('journal') }}" class="btn btn-outline-secondary">Cancel</a>
-                            {{ form.submit(class="btn btn-primary") }}
+                        <div class="form-group mb-4">
+                            {{ form.anxiety_level.label(class="form-label") }}
+                            <div class="range-container">
+                                <input type="range" class="form-range" id="anxiety-slider" min="1" max="10" value="{{ form.anxiety_level.data or 5 }}" oninput="updateAnxietyLabel(this.value)">
+                                <div class="range-labels d-flex justify-content-between">
+                                    <span>Low</span>
+                                    <span>Medium</span>
+                                    <span>High</span>
+                                </div>
+                            </div>
+                            <div class="text-center mb-2">
+                                <span id="anxiety-value" class="badge bg-primary">{{ form.anxiety_level.data or 5 }}</span>/10
+                            </div>
+                            {{ form.anxiety_level(class="d-none", id="anxiety-input") }}
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" id="journal-submit-button" class="btn btn-primary">
+                                <i class="bi bi-journal-check"></i> Save Entry
+                            </button>
+                            <a href="{{ url_for('journal_blueprint.journal_list') }}" class="btn btn-outline-secondary ms-2">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </a>
                         </div>
                     </form>
+                    {% endif %}
                 </div>
             </div>
-        {% endif %}
+        </div>
+    </div>
+</div>
+
+{% if entry and entry.is_analyzed %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow" id="analysis-card">
+                <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #007bff; color: white;">
+                    <h3 class="mb-0">Mira's Insights</h3>
+                    <button type="button" class="btn btn-sm btn-outline-light" id="refresh-analysis" data-journal-id="{{ entry.id }}">
+                        <i class="bi bi-arrow-repeat"></i> Refresh Analysis
+                    </button>
+                </div>
+                <div class="card-body" style="background-color: white !important;">
+                    <div id="analysis-content" style="background-color: white !important; color: #212529 !important; padding: 20px; border-radius: 8px; border: 1px solid #e9ecef; line-height: 1.6;">
+                        <div class="coach-insights">
+                            {{ coach_response | safe }}
+                        </div>
+                        <div class="text-center mt-3">
+                            <button id="read-analysis" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-volume-up"></i> Read Aloud (Browser)
+                            </button>
+                            <button id="stop-reading" class="btn btn-outline-danger btn-sm ms-2" style="display: none;">
+                                <i class="bi bi-stop-fill"></i> Stop Reading
+                            </button>
+                            
+                            <button id="server-tts-button" class="btn btn-primary btn-sm ms-2" onclick="playServerTTS()">
+                                <i class="bi bi-cloud"></i> Listen to Mira's Response
+                            </button>
+                            <audio id="serverAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
+                        </div>
+                    </div>
+                    
+                    <style>
+                        .coach-insights p {
+                            margin-bottom: 1rem;
+                            font-size: 1rem;
+                        }
+                        .coach-insights h5 {
+                            margin-top: 1.5rem;
+                            margin-bottom: 1rem;
+                            color: #007bff;
+                            font-weight: 600;
+                            border-bottom: 1px solid #e9ecef;
+                            padding-bottom: 0.5rem;
+                        }
+                        /* Voice input styling */
+                        .voice-input-container {
+                            position: relative;
+                        }
+                        .voice-input-controls {
+                            position: absolute;
+                            bottom: 10px;
+                            right: 10px;
+                            z-index: 10;
+                        }
+                        #voice-input-button {
+                            border-radius: 50%;
+                            width: 40px;
+                            height: 40px;
+                            padding: 0;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                        }
+                        #voice-input-button.active {
+                            background-color: #dc3545;
+                            border-color: #dc3545;
+                            color: white;
+                            animation: pulse 1.5s infinite;
+                        }
+                        .voice-status {
+                            padding: 8px 12px;
+                            border-radius: 4px;
+                            background-color: #f8f9fa;
+                            border: 1px solid #dee2e6;
+                        }
+                        @keyframes pulse {
+                            0% {
+                                transform: scale(1);
+                                opacity: 1;
+                            }
+                            50% {
+                                transform: scale(1.05);
+                                opacity: 0.8;
+                            }
+                            100% {
+                                transform: scale(1);
+                                opacity: 1;
+                            }
+                        }
+                        
+                        /* Voice tooltip styling */
+                        .voice-tooltip-container {
+                            position: fixed;
+                            z-index: 9999;
+                            bottom: 20px;
+                            right: 20px;
+                            opacity: 0;
+                            transform: translateY(20px);
+                            transition: opacity 0.3s ease, transform 0.3s ease;
+                        }
+                        
+                        .voice-tooltip-container.visible {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
+                        
+                        .voice-tooltip {
+                            background: white;
+                            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                            border-radius: 8px;
+                            padding: 0;
+                            max-width: 300px;
+                            position: relative;
+                            border: 1px solid #dee2e6;
+                        }
+                        
+                        .voice-tooltip .tooltip-content {
+                            padding: 15px;
+                        }
+                        
+                        .voice-tooltip p {
+                            margin-bottom: 8px;
+                        }
+                        
+                        .voice-tooltip .arrow {
+                            position: absolute;
+                            width: 10px;
+                            height: 10px;
+                            background: white;
+                            transform: rotate(45deg);
+                            top: -5px;
+                            right: 20px;
+                            border-left: 1px solid #dee2e6;
+                            border-top: 1px solid #dee2e6;
+                        }
+                    </style>
+                    
+                    <!-- Placeholder for AI coaching button -->
+                    <div class="text-center mt-4">
+                        <button class="btn btn-outline-success" id="ask-coach" data-journal-id="{{ entry.id }}">
+                            <i class="bi bi-chat-dots"></i> 
+                            Ask Mira for Personalized Guidance
+                        </button>
+                    </div>
+                    
+                    <!-- Response area (hidden initially) -->
+                    <div id="coach-response" class="mt-4 bg-light p-3 rounded" style="display: none;">
+                        <h5><i class="bi bi-chat-heart-fill text-success"></i> Mira's Personal Guidance:</h5>
+                        <div id="coach-message" class="mt-2 bg-white p-3 rounded text-dark">
+                            <!-- Will be filled by AJAX response -->
+                        </div>
+                        <div class="text-center mt-3">
+                            <button id="read-guidance" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-volume-up"></i> Read Aloud (Browser)
+                            </button>
+                            <button id="stop-guidance" class="btn btn-outline-danger btn-sm ms-2" style="display: none;">
+                                <i class="bi bi-stop-fill"></i> Stop Reading
+                            </button>
+                            
+                            <button id="server-tts-guidance-button" class="btn btn-primary btn-sm ms-2" onclick="playServerTTSGuidance()">
+                                <i class="bi bi-cloud"></i> Listen to Mira's Guidance
+                            </button>
+                            <audio id="serverGuidanceAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if entry and not entry.is_analyzed %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow" id="analyze-card">
+                <div class="card-header bg-info text-white">
+                    <h3 class="mb-0">Ready for Analysis</h3>
+                </div>
+                <div class="card-body text-center">
+                    <p>Your entry hasn't been analyzed yet. Would you like Mira to help identify thought patterns and suggest coping strategies?</p>
+                    <button class="btn btn-primary" id="analyze-entry" data-journal-id="{{ entry.id }}">
+                        <i class="bi bi-lightbulb"></i> 
+                        Analyze My Entry
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Additional information -->
+<div class="container mt-4 mb-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-header" style="background-color: #6c757d; color: white;">
+                    <h3 class="mb-0">About Journal Analysis</h3>
+                </div>
+                <div class="card-body">
+                    <p>The AI analysis helps identify thought patterns from cognitive behavioral therapy (CBT) and suggests personalized coping strategies. Your data is private and secure.</p>
+                    
+                    <h5 class="mt-3">Common Thought Patterns:</h5>
+                    <ul>
+                        <li><strong>Catastrophizing:</strong> Assuming the worst will happen</li>
+                        <li><strong>Black-and-White Thinking:</strong> Viewing things as all good or all bad</li>
+                        <li><strong>Overgeneralization:</strong> Applying one negative experience to all situations</li>
+                        <li><strong>Mind Reading:</strong> Assuming you know what others are thinking</li>
+                        <li><strong>Emotional Reasoning:</strong> Believing feelings reflect reality</li>
+                    </ul>
+                    
+                    <p class="text-info mt-3">
+                        <i class="bi bi-info-circle"></i> 
+                        Analysis takes about 5-10 seconds to complete.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
-{% if view_only %}
 <script>
-    /* Analysis button handling */
-    const analyzeButton = document.getElementById('analyze-button');
-    const loadingIndicator = document.getElementById('analysis-loading');
-    const resultContainer = document.getElementById('analysis-result');
-    
-    if (analyzeButton) {
-        analyzeButton.addEventListener('click', function() {
-            const entryId = analyzeButton.dataset.entryId;
-            
-            // Show loading indicator
-            analyzeButton.disabled = true;
-            loadingIndicator.classList.remove('d-none');
-            
-            // Make AJAX request to analyze the entry
-            fetch(`/api/analyze_entry/${entryId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token() }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                loadingIndicator.classList.add('d-none');
+    // Voice input functionality
+    function setupVoiceInput() {
+        const voiceButton = document.getElementById('voice-input-button');
+        const journalContent = document.getElementById('journal-content');
+        const statusDiv = document.getElementById('voice-input-status');
+        const statusText = document.getElementById('voice-status-text');
+        
+        // Check if browser supports speech recognition
+        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+            // Hide the voice input button if speech recognition isn't supported
+            if (voiceButton) {
+                voiceButton.style.display = 'none';
+            }
+            console.log('Speech recognition not supported in this browser');
+            return;
+        }
+        
+        // Initialize speech recognition
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        
+        // Configure recognition
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = 'en-US'; // Default to English
+        
+        let isListening = false;
+        let finalTranscript = '';
+        
+        // Add event listeners for the voice button
+        if (voiceButton && journalContent) {
+            voiceButton.addEventListener('click', toggleSpeechRecognition);
+        }
+        
+        // Function to toggle speech recognition on/off
+        function toggleSpeechRecognition() {
+            if (isListening) {
+                // Stop listening
+                recognition.stop();
+                isListening = false;
+                voiceButton.classList.remove('active');
+                statusDiv.classList.add('d-none');
                 
-                if (data.success) {
-                    // Display success message and reload the page
-                    resultContainer.classList.remove('d-none');
-                    resultContainer.innerHTML = `<div class="alert alert-success">Analysis complete! Refreshing page...</div>`;
+                // Update button
+                voiceButton.innerHTML = '<i class="bi bi-mic"></i>';
+                voiceButton.title = 'Start Voice Input (Click again to stop)';
+            } else {
+                // If there's existing content, preserve it and add a space
+                if (journalContent.value && !journalContent.value.endsWith(' ')) {
+                    finalTranscript = journalContent.value + ' ';
+                } else {
+                    finalTranscript = journalContent.value;
+                }
+                
+                // Start listening
+                try {
+                    recognition.start();
+                    isListening = true;
+                    voiceButton.classList.add('active');
+                    statusDiv.classList.remove('d-none');
                     
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1500);
-                } else {
-                    // Display error message
-                    resultContainer.classList.remove('d-none');
-                    resultContainer.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
-                    analyzeButton.disabled = false;
+                    // Update button
+                    voiceButton.innerHTML = '<i class="bi bi-mic-fill"></i>';
+                    voiceButton.title = 'Stop Voice Input';
+                    
+                    console.log('Speech recognition started');
+                } catch (err) {
+                    console.error('Speech recognition error:', err);
+                    alert('Could not start speech recognition. Please try again.');
                 }
-            })
-            .catch(error => {
-                loadingIndicator.classList.add('d-none');
-                resultContainer.classList.remove('d-none');
-                resultContainer.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
-                analyzeButton.disabled = false;
-            });
-        });
-    }
-                    // If we already have a response displayed, keep it and show error in alert
-                    const hasExistingResponse = {% if coach_response %}true{% else %}false{% endif %};
-                    if (hasExistingResponse) {
-                        alert(`${data.message}`);
-                        coachButton.disabled = false;
-                    } else {
-                        // Otherwise, display error in the response area
-                        coachResponse.classList.remove("d-none");
-                        coachResponse.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
-                        coachButton.disabled = false;
-                    }
-            const entryId = coachButton.dataset.entryId;
+            }
+        }
+        
+        // Handle results
+        recognition.onresult = function(event) {
+            let interimTranscript = '';
             
-            // Show loading indicator
-            coachButton.disabled = true;
-                // Show error in alert if we already have a response, otherwise in response area
-                const hasExistingResponse = {% if coach_response %}true{% else %}false{% endif %};
-                if (hasExistingResponse) {
-                    alert(`Error: ${error.message}`);
-                    coachButton.disabled = false;
-                } else {
-                    // Otherwise, display error in the response area
-                    coachResponse.classList.remove("d-none");
-                    coachResponse.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
-                    coachButton.disabled = false;
-                }
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token() }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                coachLoading.classList.add('d-none');
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                const transcript = event.results[i][0].transcript;
                 
-                if (data.success) {
-                    // Update coach response
-                    coachResponse.classList.remove('d-none');
-                    coachResponse.textContent = data.coach_response;
-                    coachButton.textContent = 'Get Another Response';
-                    coachButton.disabled = false;
+                if (event.results[i].isFinal) {
+                    finalTranscript += transcript + ' ';
                 } else {
-                    // Display error message
-                    // If we already have a response displayed, keep it and show error in alert
-                    const hasExistingResponse = {% if coach_response %}true{% else %}false{% endif %};
-                    if (hasExistingResponse) {
-                        alert(`${data.message}`);
-                        coachButton.disabled = false;
+                    interimTranscript += transcript;
+                }
+            }
+            
+            // Update textarea with the transcript
+            journalContent.value = finalTranscript + interimTranscript;
+            
+            // Auto-scroll to the bottom of the textarea
+            journalContent.scrollTop = journalContent.scrollHeight;
+            
+            // Update word count in status
+            const wordCount = journalContent.value.trim().split(/\s+/).filter(Boolean).length;
+            statusText.textContent = `Listening... ${wordCount} words recorded. Click mic button again to stop.`;
+        };
+        
+        // Handle errors
+        recognition.onerror = function(event) {
+            console.error('Speech recognition error:', event.error);
+            
+            // If error is not 'aborted' (which happens on normal stop)
+            if (event.error !== 'aborted') {
+                // Special handling for permission errors
+                if (event.error === 'not-allowed') {
+                    // Create a more helpful error message for permission issues
+                    const errorMessage = `
+                        <div class="alert alert-warning" role="alert">
+                            <h5><i class="bi bi-exclamation-triangle-fill"></i> Microphone Access Required</h5>
+                            <p>Please allow microphone access in your browser to use the voice input feature.</p>
+                            <p><strong>How to fix this:</strong></p>
+                            <ol>
+                                <li>Look for the microphone icon or permission dialog in your browser's address bar</li>
+                                <li>Click it and select "Allow" for this site</li>
+                                <li>Refresh the page and try again</li>
+                            </ol>
+                        </div>
+                    `;
+                    
+                    // Show as a modal instead of an alert for better UX
+                    const modalHtml = `
+                        <div class="modal fade" id="micPermissionModal" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Microphone Access Needed</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ${errorMessage}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">I Understand</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Append modal to body if it doesn't exist
+                    if (!document.getElementById('micPermissionModal')) {
+                        const modalContainer = document.createElement('div');
+                        modalContainer.innerHTML = modalHtml;
+                        document.body.appendChild(modalContainer.firstChild);
+                        
+                        // Initialize and show the modal
+                        const modal = new bootstrap.Modal(document.getElementById('micPermissionModal'));
+                        modal.show();
                     } else {
-                        // Otherwise, display error in the response area
-                        coachResponse.classList.remove('d-none');
-                        coachResponse.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
-                        coachButton.disabled = false;
+                        // If modal already exists, just show it
+                        const modal = new bootstrap.Modal(document.getElementById('micPermissionModal'));
+                        modal.show();
                     }
-                }
-            })
-            .catch(error => {
-                coachLoading.classList.add('d-none');
-                
-                // If we already have a response displayed, keep it and show error in alert
-                if ({% if coach_response %}true{% else %}false{% endif %}) {
-                    alert(`Error: ${error.message}`);
-                    coachButton.disabled = false;
                 } else {
-                    // Otherwise, display error in the response area
-                    coachResponse.classList.remove('d-none');
-                    coachResponse.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
-                    coachButton.disabled = false;
+                    // For other errors, show a simple alert
+                    alert(`Speech recognition error: ${event.error}. Please try again.`);
+                }
+                
+                // Reset state
+                isListening = false;
+                voiceButton.classList.remove('active');
+                statusDiv.classList.add('d-none');
+                voiceButton.innerHTML = '<i class="bi bi-mic"></i>';
+            }
+        };
+        
+        // Handle end of recognition
+        recognition.onend = function() {
+            if (isListening) {
+                // If it ended unexpectedly while still in listening mode, restart
+                try {
+                    recognition.start();
+                    console.log('Restarted speech recognition after unexpected end');
+                } catch (err) {
+                    // If we can't restart, reset the UI
+                    console.error('Could not restart speech recognition:', err);
+                    isListening = false;
+                    voiceButton.classList.remove('active');
+                    statusDiv.classList.add('d-none');
+                    voiceButton.innerHTML = '<i class="bi bi-mic"></i>';
+                }
+            }
+        };
+    }
+    
+    // Function to update the anxiety level display
+    function updateAnxietyLabel(value) {
+        const anxietyValue = document.getElementById('anxiety-value');
+        const anxietyInput = document.getElementById('anxiety-input');
+        
+        // Only proceed if the elements exist (they won't in view-only mode)
+        if (anxietyValue && anxietyInput) {
+            anxietyValue.textContent = value;
+            anxietyInput.value = value;
+            
+            // Change badge color based on anxiety level
+            if (value <= 3) {
+                anxietyValue.className = 'badge bg-success';
+            } else if (value <= 6) {
+                anxietyValue.className = 'badge bg-warning text-dark';
+            } else {
+                anxietyValue.className = 'badge bg-danger';
+            }
+        }
+    }
+    
+    // Function to show voice input tooltip
+    function showVoiceInputTooltip() {
+        const voiceButton = document.getElementById('voice-input-button');
+        
+        if (voiceButton && !localStorage.getItem('voice_tooltip_shown')) {
+            // Create tooltip content
+            const tooltipHtml = `
+                <div class="voice-tooltip">
+                    <div class="arrow"></div>
+                    <div class="tooltip-content">
+                        <p><strong>New!</strong> Try our voice input feature!</p>
+                        <p>Click the microphone to speak your journal entry instead of typing.</p>
+                        <button class="btn btn-sm btn-primary mt-2" id="voice-tooltip-got-it">Got it!</button>
+                    </div>
+                </div>
+            `;
+            
+            // Create tooltip container
+            const tooltipContainer = document.createElement('div');
+            tooltipContainer.className = 'voice-tooltip-container';
+            tooltipContainer.innerHTML = tooltipHtml;
+            
+            // Position near the voice button
+            const buttonRect = voiceButton.getBoundingClientRect();
+            document.body.appendChild(tooltipContainer);
+            
+            // Add animation class after a small delay
+            setTimeout(() => {
+                tooltipContainer.classList.add('visible');
+            }, 500);
+            
+            // Add event listener to close button
+            document.getElementById('voice-tooltip-got-it').addEventListener('click', function() {
+                tooltipContainer.classList.remove('visible');
+                setTimeout(() => {
+                    tooltipContainer.remove();
+                }, 300);
+                localStorage.setItem('voice_tooltip_shown', 'true');
+            });
+            
+            // Also close when clicking outside
+            document.addEventListener('click', function closeTooltip(e) {
+                if (!tooltipContainer.contains(e.target) && e.target !== voiceButton) {
+                    tooltipContainer.classList.remove('visible');
+                    setTimeout(() => {
+                        tooltipContainer.remove();
+                    }, 300);
+                    localStorage.setItem('voice_tooltip_shown', 'true');
+                    document.removeEventListener('click', closeTooltip);
                 }
             });
+        }
+    }
+    
+    // Set up event listeners when document is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set the initial anxiety level (only if we're in edit mode)
+        const anxietySlider = document.getElementById('anxiety-slider');
+        if (anxietySlider) {
+            const sliderValue = anxietySlider.value;
+            updateAnxietyLabel(sliderValue);
+        }
+        
+        // Set up the form handling with spinner
+        const journalForm = document.getElementById('journal-form');
+        const submitButton = document.getElementById('journal-submit-button');
+        
+        if (journalForm && submitButton) {
+            journalForm.addEventListener('submit', function(event) {
+                // Check if form is valid before showing spinner
+                if (journalForm.checkValidity()) {
+                    // Replace button content with spinner and text
+                    submitButton.innerHTML = '<div class="d-flex align-items-center justify-content-center"><span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving...</div>';
+                    submitButton.disabled = true;
+                    
+                    // Debug log
+                    console.log('Showing spinner on journal submit');
+                }
+            });
+        }
+        
+        // Setup voice input functionality
+        setupVoiceInput();
+        
+        // Show voice input tooltip after a delay
+        setTimeout(showVoiceInputTooltip, 1500);
+        
+        // Set up the analyze button with spinner
+        const analyzeButton = document.getElementById('analyze-entry');
+        if (analyzeButton) {
+            analyzeButton.addEventListener('click', function() {
+                const journalId = this.getAttribute('data-journal-id');
+                
+                // Show spinner in button
+                this.innerHTML = '<div class="d-flex align-items-center justify-content-center"><span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Analyzing...</div>';
+                this.disabled = true;
+                
+                // Call API to analyze entry
+                fetch(`/api/analyze-entry/${journalId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Reload the page to show new analysis
+                            window.location.reload();
+                        } else {
+                            alert('Error analyzing entry: ' + data.error);
+                            // Reset button
+                            this.innerHTML = '<i class="bi bi-lightbulb"></i> Analyze My Entry';
+                            this.disabled = false;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred during analysis. Please try again.');
+                        // Reset button
+                        this.innerHTML = '<i class="bi bi-lightbulb"></i> Analyze My Entry';
+                        this.disabled = false;
+                    });
+            });
+        }
+        
+        // Set up the ask coach button with spinner
+        const coachButton = document.getElementById('ask-coach');
+        if (coachButton) {
+            coachButton.addEventListener('click', function() {
+                const journalId = this.getAttribute('data-journal-id');
+                
+                // Show spinner in button
+                this.innerHTML = '<div class="d-flex align-items-center justify-content-center"><span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Asking Mira...</div>';
+                this.disabled = true;
+                
+                // Call API to get coaching
+                fetch(`/api/journal-coach/${journalId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Show coach response area and populate it
+                            document.getElementById('coach-response').style.display = 'block';
+                            const coachMessage = document.getElementById('coach-message');
+                            
+                            // Apply the same CSS as the main response
+                            let responseText = data.response;
+                            // Add signature if it doesn't already exist
+                            if (!responseText.includes("Warmly,") && !responseText.includes("Coach Mira")) {
+                                responseText += "\n\nWarmly,\nCoach Mira";
+                            }
+                            coachMessage.innerHTML = `<div class="coach-insights">${responseText}</div>`;
+                            coachMessage.style.color = 'black';
+                            coachMessage.style.backgroundColor = 'white';
+                            
+                            // Make sure the read aloud buttons are visible
+                            const readGuidanceButton = document.getElementById('read-guidance');
+                            const stopGuidanceButton = document.getElementById('stop-guidance');
+                            if (readGuidanceButton && stopGuidanceButton) {
+                                readGuidanceButton.style.display = 'inline-block';
+                                stopGuidanceButton.style.display = 'none';
+                            }
+                            
+                            // Reset button
+                            this.innerHTML = '<i class="bi bi-chat-dots"></i> Ask Mira Again';
+                            this.disabled = false;
+                            
+                            // Scroll to response
+                            document.getElementById('coach-response').scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        } else {
+                            alert('Error getting coaching: ' + data.error);
+                            // Reset button
+                            this.innerHTML = '<i class="bi bi-chat-dots"></i> Ask Mira for Personalized Guidance';
+                            this.disabled = false;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while asking Mira. Please try again.');
+                        // Reset button
+                        this.innerHTML = '<i class="bi bi-chat-dots"></i> Ask Mira for Personalized Guidance';
+                        this.disabled = false;
+                    });
+            });
+        }
+        
+        // Set up the refresh analysis button
+        const refreshButton = document.getElementById('refresh-analysis');
+        if (refreshButton) {
+            refreshButton.addEventListener('click', function() {
+                const journalId = this.getAttribute('data-journal-id');
+                
+                // Show spinner in button
+                this.innerHTML = '<div class="d-flex align-items-center justify-content-center"><span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Refreshing...</div>';
+                this.disabled = true;
+                
+                // Call API to analyze entry
+                fetch(`/api/analyze-entry/${journalId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Reload the page to show new analysis
+                            window.location.reload();
+                        } else {
+                            alert('Error refreshing analysis: ' + data.error);
+                            // Reset button
+                            this.innerHTML = '<i class="bi bi-arrow-repeat"></i> Refresh Analysis';
+                            this.disabled = false;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred during refresh. Please try again.');
+                        // Reset button
+                        this.innerHTML = '<i class="bi bi-arrow-repeat"></i> Refresh Analysis';
+                        this.disabled = false;
+                    });
+            });
+        }
+        
+        // Set up text-to-speech functionality
+        setupTextToSpeech();
+    });
+    
+    // Text-to-speech functionality
+    function setupTextToSpeech() {
+        // Check if browser supports speech synthesis
+        if (!('speechSynthesis' in window)) {
+            console.log('Text-to-speech not supported in this browser');
+            const readButtons = document.querySelectorAll('#read-analysis, #read-guidance');
+            readButtons.forEach(button => {
+                if (button) {
+                    button.style.display = 'none';
+                }
+            });
+            return;
+        }
+        
+        // Variables to keep track of the current speech state
+        let speechSynthesis = window.speechSynthesis;
+        let speaking = false;
+        let currentUtterance = null;
+        
+        // Function to get the best voice - defined at this scope to be accessible to onvoiceschanged
+        function getBestVoice() {
+            const voices = speechSynthesis.getVoices();
+            
+            // No voices available
+            if (!voices || voices.length === 0) {
+                return null;
+            }
+            
+            // Premium quality voices first (typically more natural sounding)
+            const highQualityVoices = [
+                // macOS/iOS voices
+                "Samantha", "Ava", "Susan", "Allison", "Victoria",
+                // Windows voices
+                "Microsoft Zira", "Microsoft Linda", "Microsoft Catherine",
+                // Google voices
+                "Google UK English Female", "Google US English", 
+                // Amazon Polly voices (if available in browser)
+                "Joanna", "Ivy", "Kendra", "Kimberly", "Salli"
+            ];
+            
+            // Try to find high-quality English voices first
+            for (const voiceName of highQualityVoices) {
+                const foundVoice = voices.find(v => 
+                    v.name === voiceName || 
+                    v.name.includes(voiceName)
+                );
+                if (foundVoice) {
+                    return foundVoice;
+                }
+            }
+            
+            // If no specific high-quality voice is found, try by more general criteria
+            // First, try to find any premium/enhanced/neural voice for English
+            const premiumVoice = voices.find(voice => 
+                (voice.name.toLowerCase().includes('premium') || 
+                 voice.name.toLowerCase().includes('enhanced') ||
+                 voice.name.toLowerCase().includes('neural') ||
+                 voice.name.toLowerCase().includes('natural')) &&
+                (voice.lang.startsWith('en-'))
+            );
+            
+            if (premiumVoice) {
+                return premiumVoice;
+            }
+            
+            // Next, try to find any female English voice
+            const femaleVoice = voices.find(voice => 
+                (voice.name.toLowerCase().includes('female') || 
+                 voice.name.toLowerCase().includes('woman') || 
+                 voice.name.toLowerCase().includes('girl') ||
+                 voice.name.toLowerCase().includes('samantha') || 
+                 voice.name.toLowerCase().includes('victoria') ||
+                 voice.name.toLowerCase().includes('karen') ||
+                 voice.name.toLowerCase().includes('moira')) &&
+                (voice.lang.startsWith('en-'))
+            );
+            
+            if (femaleVoice) {
+                return femaleVoice;
+            }
+            
+            // Fall back to any English voice
+            const englishVoice = voices.find(voice => voice.lang.startsWith('en-'));
+            if (englishVoice) {
+                return englishVoice;
+            }
+            
+            // Fall back to the default voice
+            return voices[0];
+        }
+        
+        // Set up speech for the main analysis
+        const readAnalysisButton = document.getElementById('read-analysis');
+        const stopAnalysisButton = document.getElementById('stop-reading');
+        
+        if (readAnalysisButton && stopAnalysisButton) {
+            // Get the content to read
+            const analysisContent = document.querySelector('.coach-insights');
+            
+            readAnalysisButton.addEventListener('click', function() {
+                if (speaking) {
+                    // If something else is already being read, stop it first
+                    speechSynthesis.cancel();
+                    resetAllSpeechButtons();
+                }
+                
+                // Start reading the analysis
+                if (analysisContent) {
+                    speakText(analysisContent.textContent);
+                    
+                    // Update UI
+                    readAnalysisButton.style.display = 'none';
+                    stopAnalysisButton.style.display = 'inline-block';
+                    speaking = true;
+                }
+            });
+            
+            stopAnalysisButton.addEventListener('click', function() {
+                // Stop reading
+                speechSynthesis.cancel();
+                
+                // Update UI
+                stopAnalysisButton.style.display = 'none';
+                readAnalysisButton.style.display = 'inline-block';
+                speaking = false;
+                currentUtterance = null;
+            });
+        }
+        
+        // Set up speech for the personalized guidance
+        const readGuidanceButton = document.getElementById('read-guidance');
+        const stopGuidanceButton = document.getElementById('stop-guidance');
+        
+        if (readGuidanceButton && stopGuidanceButton) {
+            readGuidanceButton.addEventListener('click', function() {
+                if (speaking) {
+                    // If something else is already being read, stop it first
+                    speechSynthesis.cancel();
+                    resetAllSpeechButtons();
+                }
+                
+                // Get the content to read
+                const guidanceContent = document.getElementById('coach-message');
+                
+                if (guidanceContent) {
+                    speakText(guidanceContent.textContent);
+                    
+                    // Update UI
+                    readGuidanceButton.style.display = 'none';
+                    stopGuidanceButton.style.display = 'inline-block';
+                    speaking = true;
+                }
+            });
+            
+            stopGuidanceButton.addEventListener('click', function() {
+                // Stop reading
+                speechSynthesis.cancel();
+                
+                // Update UI
+                stopGuidanceButton.style.display = 'none';
+                readGuidanceButton.style.display = 'inline-block';
+                speaking = false;
+                currentUtterance = null;
+            });
+        }
+        
+        // Function to reset all speech buttons to their initial state
+        function resetAllSpeechButtons() {
+            // Reset analysis buttons
+            if (readAnalysisButton && stopAnalysisButton) {
+                readAnalysisButton.style.display = 'inline-block';
+                stopAnalysisButton.style.display = 'none';
+            }
+            
+            // Reset guidance buttons
+            if (readGuidanceButton && stopGuidanceButton) {
+                readGuidanceButton.style.display = 'inline-block';
+                stopGuidanceButton.style.display = 'none';
+            }
+            
+            speaking = false;
+            currentUtterance = null;
+        }
+        
+        // Function to speak text with good settings for reading coaching content
+        function speakText(text) {
+            // Clean the text - remove extra whitespace and HTML tags
+            text = text.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+            
+            // Advanced text preprocessing for more natural sounding speech
+
+            // Add explicit speech breaks using SSML-like patterns for better naturalness
+            // We'll use commas as the natural break points in speech synthesis
+            
+            // Step 1: Process emphasized text and quotes with appropriate pauses and intonation
+            text = text
+                .replace(/\"([^\"]+)\"/g, (match, p1) => '. . "' + p1 + '". . ') // Add longer pauses around quotes with double break
+                .replace(/\*([^\*]+)\*/g, (match, p1) => ' ! ' + p1.toUpperCase() + ' ! ') // Capitalize and emphasize *text*
+                .replace(/\b(important|remember|note)\b/gi, (match) => '. . ' + match.toUpperCase() + '. . '); // Emphasize key words
+                
+            // Step 2: Improve sentence and phrase boundaries with strategic pauses
+            text = text
+                .replace(/\.\s+/g, '. . . ') // Add a longer pause after periods (end of sentences)
+                .replace(/\?\s+/g, '? . . ') // Add a slightly longer pause after questions for contemplation
+                .replace(/!\s+/g, '! . . ')  // Add a slightly longer pause after exclamations for impact
+                .replace(/:\s+/g, ': , ')    // Add a medium pause after colons
+                .replace(/;\s+/g, '; , ')    // Add a medium pause after semicolons
+                .replace(/\s-\s/g, ' , - , ') // Add pauses around dashes used as breaks
+                .replace(/(\.\.\.)(\s|$)/g, '. . . $2'); // Make ellipses more distinct
+                
+            // Step 3: Make commas produce actual pauses
+            text = text
+                .replace(/,\s+/g, ', ') // Ensure proper pause after commas
+                .replace(/,/g, ' , ');   // Turn all commas into pauses with spaces
+                
+            // Step 4: Handle lists and structured content for better readability
+            text = text
+                .replace(/(\d+\.\s+|\-\s+|\•\s+)/g, ' . . $1 ') // Add pause before list items
+                .replace(/(Step \d+):/g, ' . . $1 , ') // Add emphasis to step numbers
+                .replace(/\b(First|Second|Third|Fourth|Fifth|Finally)\b/g, ' . . $1 , '); // Add pause before sequence markers
+            
+            // Create utterance and configure it for a more natural sound
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            // Voice quality improvement settings
+            utterance.rate = 0.82;    // Slightly slower for better comprehension
+            utterance.pitch = 1.05;   // Slight pitch adjustment for more warmth
+            utterance.volume = 1.0;   // Full volume
+            
+            // Advanced settings to improve naturalness (where supported)
+            try {
+                // Try to apply SSML-inspired enhancements for supported browsers
+                // These are non-standard but work in some browsers
+                
+                // @ts-ignore: Property may not exist on type SpeechSynthesisUtterance
+                if (typeof utterance.voiceURI !== 'undefined') {
+                    // Try to use a higher quality voice URI
+                    utterance.voiceURI = 'premium';
+                }
+                
+                // Chrome and Edge can sometimes benefit from these Speech Synthesis properties
+                // Access non-standard properties safely
+                
+                // Some browsers support pitch contour for more expressive speech
+                if (typeof utterance.pitchContour !== 'undefined') {
+                    utterance.pitchContour = [
+                        [0, -2],   // Start slightly lower
+                        [0.33, 2],  // Rise in the middle
+                        [0.66, 0],  // Return to normal
+                        [1, -1]     // End slightly lower
+                    ];
+                }
+                
+                // Some Microsoft Edge versions support these
+                try {
+                    // Access non-standard properties only available in some browsers
+                    if (utterance.prosody) {
+                        utterance.prosody = {
+                            rate: 'medium',
+                            pitch: 'medium',
+                            volume: 'loud'
+                        };
+                    }
+                } catch (e) {
+                    // Ignore error - this property doesn't exist on this browser
+                }
+                
+                // Try to influence the conversation style (Microsoft Edge)
+                try {
+                    // Access non-standard properties only available in Edge
+                    if (utterance.style) {
+                        utterance.style = 'conversational';
+                    }
+                } catch (e) {
+                    // Ignore error - this property doesn't exist on this browser
+                }
+            } catch (e) {
+                console.log('Advanced speech settings not supported:', e);
+            }
+            
+            // Use the best available voice from our prioritized list
+            const bestVoice = getBestVoice();
+            if (bestVoice) {
+                utterance.voice = bestVoice;
+                console.log('Using voice: ' + bestVoice.name);
+            }
+            
+            // Handle the end of speech
+            utterance.onend = function() {
+                speaking = false;
+                resetAllSpeechButtons();
+                console.log('Speech completed');
+            };
+            
+            // Handle errors
+            utterance.onerror = function(event) {
+                console.error('Speech synthesis error:', event.error);
+                speaking = false;
+                resetAllSpeechButtons();
+            };
+            
+            // Start speaking
+            currentUtterance = utterance;
+            speechSynthesis.speak(utterance);
+            
+            // Chrome has a bug where it stops speaking after ~15 seconds
+            // This is a workaround to keep it going
+            const resumeTimer = setInterval(function() {
+                if (speaking && speechSynthesis.paused) {
+                    speechSynthesis.resume();
+                }
+                
+                // Clear the interval when speech is done
+                if (!speaking) {
+                    clearInterval(resumeTimer);
+                }
+            }, 5000);
+        }
+        
+        // Handle page visibility changes to prevent speech continuing when the user navigates away
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState !== 'visible' && speaking) {
+                speechSynthesis.cancel();
+                resetAllSpeechButtons();
+            }
+        });
+        
+        // Load voices when they are available (needed for some browsers)
+        speechSynthesis.onvoiceschanged = function() {
+            const voices = speechSynthesis.getVoices();
+            console.log('Speech synthesis voices loaded. Available voices:', voices.length);
+            
+            // Log the available voices for debugging
+            if (voices.length > 0) {
+                console.log('Available voices:');
+                voices.forEach((voice, index) => {
+                    console.log(`${index + 1}. ${voice.name} (${voice.lang})${voice.default ? ' - DEFAULT' : ''}`);
+                });
+                
+                // Show which voice would be selected by our algorithm
+                const selectedVoice = getBestVoice();
+                if (selectedVoice) {
+                    console.log('Selected voice:', selectedVoice.name);
+                }
+            }
+        };
+        
+        // Initialize voices
+        speechSynthesis.getVoices();
+    }
+    
+    // Server-side TTS function for Analysis
+    function playServerTTS() {
+        // Get the coach response text
+        const text = document.querySelector('.coach-insights').textContent.trim();
+        const button = document.getElementById('server-tts-button');
+        const audio = document.getElementById('serverAudio');
+        
+        // Show loading state
+        button.disabled = true;
+        button.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating audio...';
+        
+        // Reset audio
+        audio.pause();
+        audio.src = '';
+        
+        // Create form data for the request
+        const formData = new FormData();
+        formData.append('text', text);
+        
+        // Set a unique timestamp to avoid caching
+        const timestamp = new Date().getTime();
+        
+        // Request TTS directly from server and get audio response
+        fetch('/direct-tts', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            // Create a URL for the blob
+            const url = URL.createObjectURL(blob);
+            
+            // Set the audio source
+            audio.src = url;
+            audio.style.display = 'block';
+            
+            // Reset button state
+            button.disabled = false;
+            button.innerHTML = '<i class="bi bi-cloud-check"></i> Listen to Mira\'s Response';
+            
+            // Play the audio
+            audio.play();
+        })
+        .catch(error => {
+            console.error('Error generating speech:', error);
+            // Reset button state
+            button.disabled = false;
+            button.innerHTML = '<i class="bi bi-cloud"></i> Listen to Mira\'s Response';
+            
+            // Show error message
+            alert('Sorry, there was a problem generating the audio. Please try again.');
         });
     }
-});
+    
+    // Server-side TTS function for Guidance
+    function playServerTTSGuidance() {
+        // Get the coach guidance text
+        const text = document.getElementById('coach-message').textContent.trim();
+        const button = document.getElementById('server-tts-guidance-button');
+        const audio = document.getElementById('serverGuidanceAudio');
+        
+        // Show loading state
+        button.disabled = true;
+        button.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating audio...';
+        
+        // Reset audio
+        audio.pause();
+        audio.src = '';
+        
+        // Create form data for the request
+        const formData = new FormData();
+        formData.append('text', text);
+        
+        // Set a unique timestamp to avoid caching
+        const timestamp = new Date().getTime();
+        
+        // Request TTS directly from server and get audio response
+        fetch('/direct-tts', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            // Create a URL for the blob
+            const url = URL.createObjectURL(blob);
+            
+            // Set the audio source
+            audio.src = url;
+            audio.style.display = 'block';
+            
+            // Reset button state
+            button.disabled = false;
+            button.innerHTML = '<i class="bi bi-cloud-check"></i> Listen to Mira\'s Guidance';
+            
+            // Play the audio
+            audio.play();
+        })
+        .catch(error => {
+            console.error('Error generating speech:', error);
+            // Reset button state
+            button.disabled = false;
+            button.innerHTML = '<i class="bi bi-cloud"></i> Listen to Mira\'s Guidance';
+            
+            // Show error message
+            alert('Sorry, there was a problem generating the audio. Please try again.');
+        });
+    }
 </script>
-{% endif %}
 {% endblock %}
