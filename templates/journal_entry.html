@@ -167,15 +167,13 @@
                                     <span class="visually-hidden">Select language</span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><h6 class="dropdown-header">Select Voice Language</h6></li>
-                                    <li><a class="dropdown-item tts-lang-item active" href="#" data-lang="en">English</a></li>
-                                    <li><a class="dropdown-item tts-lang-item" href="#" data-lang="es">Spanish</a></li>
-                                    <li><a class="dropdown-item tts-lang-item" href="#" data-lang="fr">French</a></li>
-                                    <li><a class="dropdown-item tts-lang-item" href="#" data-lang="de">German</a></li>
-                                    <li><a class="dropdown-item tts-lang-item" href="#" data-lang="it">Italian</a></li>
-                                    <li><a class="dropdown-item tts-lang-item" href="#" data-lang="ja">Japanese</a></li>
-                                    <li><a class="dropdown-item tts-lang-item" href="#" data-lang="zh-CN">Chinese</a></li>
-                                    <li><a class="dropdown-item tts-lang-item" href="#" data-lang="hi">Hindi</a></li>
+                                    <li><h6 class="dropdown-header">Select Voice Type</h6></li>
+                                    <li><a class="dropdown-item tts-voice-item active" href="#" data-voice="default">Default Voice</a></li>
+                                    <li><a class="dropdown-item tts-voice-item" href="#" data-voice="female">Female Voice</a></li>
+                                    <li><a class="dropdown-item tts-voice-item" href="#" data-voice="male">Male Voice</a></li>
+                                    <li><a class="dropdown-item tts-voice-item" href="#" data-voice="calm">Calm Voice</a></li>
+                                    <li><a class="dropdown-item tts-voice-item" href="#" data-voice="enthusiastic">Enthusiastic Voice</a></li>
+                                    <li><a class="dropdown-item tts-voice-item" href="#" data-voice="serious">Serious Voice</a></li>
                                 </ul>
                             </div>
                             <audio id="serverAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
@@ -319,15 +317,13 @@
                                     <span class="visually-hidden">Select language</span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><h6 class="dropdown-header">Select Voice Language</h6></li>
-                                    <li><a class="dropdown-item guidance-tts-lang-item active" href="#" data-lang="en">English</a></li>
-                                    <li><a class="dropdown-item guidance-tts-lang-item" href="#" data-lang="es">Spanish</a></li>
-                                    <li><a class="dropdown-item guidance-tts-lang-item" href="#" data-lang="fr">French</a></li>
-                                    <li><a class="dropdown-item guidance-tts-lang-item" href="#" data-lang="de">German</a></li>
-                                    <li><a class="dropdown-item guidance-tts-lang-item" href="#" data-lang="it">Italian</a></li>
-                                    <li><a class="dropdown-item guidance-tts-lang-item" href="#" data-lang="ja">Japanese</a></li>
-                                    <li><a class="dropdown-item guidance-tts-lang-item" href="#" data-lang="zh-CN">Chinese</a></li>
-                                    <li><a class="dropdown-item guidance-tts-lang-item" href="#" data-lang="hi">Hindi</a></li>
+                                    <li><h6 class="dropdown-header">Select Voice Type</h6></li>
+                                    <li><a class="dropdown-item guidance-tts-voice-item active" href="#" data-voice="default">Default Voice</a></li>
+                                    <li><a class="dropdown-item guidance-tts-voice-item" href="#" data-voice="female">Female Voice</a></li>
+                                    <li><a class="dropdown-item guidance-tts-voice-item" href="#" data-voice="male">Male Voice</a></li>
+                                    <li><a class="dropdown-item guidance-tts-voice-item" href="#" data-voice="calm">Calm Voice</a></li>
+                                    <li><a class="dropdown-item guidance-tts-voice-item" href="#" data-voice="enthusiastic">Enthusiastic Voice</a></li>
+                                    <li><a class="dropdown-item guidance-tts-voice-item" href="#" data-voice="serious">Serious Voice</a></li>
                                 </ul>
                             </div>
                             <audio id="serverGuidanceAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
@@ -667,29 +663,55 @@
             updateAnxietyLabel(sliderValue);
         }
         
-    // Function to set up TTS language selectors
+    // Function to set up TTS voice selectors
     function setupTTSLanguageSelectors() {
-        // Set up handlers for analysis TTS language selection
-        const ttsLangItems = document.querySelectorAll('.tts-lang-item');
-        ttsLangItems.forEach(item => {
+        // Set up handlers for analysis TTS voice selection
+        const ttsVoiceItems = document.querySelectorAll('.tts-voice-item');
+        ttsVoiceItems.forEach(item => {
             item.addEventListener('click', function(e) {
                 e.preventDefault();
+                // Stop any currently playing audio to prevent freezing
+                const audio = document.getElementById('serverAudio');
+                if (audio) {
+                    audio.pause();
+                    audio.src = '';
+                }
+                
                 // Remove active class from all items
-                ttsLangItems.forEach(i => i.classList.remove('active'));
+                ttsVoiceItems.forEach(i => i.classList.remove('active'));
                 // Add active class to clicked item
                 this.classList.add('active');
+                
+                // Close dropdown after selection to prevent UI freezing
+                const dropdown = this.closest('.dropdown-menu');
+                if (dropdown) {
+                    bootstrap.Dropdown.getInstance(dropdown.previousElementSibling).hide();
+                }
             });
         });
         
-        // Set up handlers for guidance TTS language selection
-        const guidanceTtsLangItems = document.querySelectorAll('.guidance-tts-lang-item');
-        guidanceTtsLangItems.forEach(item => {
+        // Set up handlers for guidance TTS voice selection
+        const guidanceTtsVoiceItems = document.querySelectorAll('.guidance-tts-voice-item');
+        guidanceTtsVoiceItems.forEach(item => {
             item.addEventListener('click', function(e) {
                 e.preventDefault();
+                // Stop any currently playing audio to prevent freezing
+                const audio = document.getElementById('serverGuidanceAudio');
+                if (audio) {
+                    audio.pause();
+                    audio.src = '';
+                }
+                
                 // Remove active class from all items
-                guidanceTtsLangItems.forEach(i => i.classList.remove('active'));
+                guidanceTtsVoiceItems.forEach(i => i.classList.remove('active'));
                 // Add active class to clicked item
                 this.classList.add('active');
+                
+                // Close dropdown after selection to prevent UI freezing
+                const dropdown = this.closest('.dropdown-menu');
+                if (dropdown) {
+                    bootstrap.Dropdown.getInstance(dropdown.previousElementSibling).hide();
+                }
             });
         });
     }
@@ -1211,8 +1233,8 @@
         const button = document.getElementById('server-tts-button');
         const audio = document.getElementById('serverAudio');
         
-        // Get the selected language
-        const selectedLang = document.querySelector('.tts-lang-item.active').getAttribute('data-lang') || 'en';
+        // Get the selected voice type
+        const selectedVoice = document.querySelector('.tts-voice-item.active').getAttribute('data-voice') || 'default';
         
         // Show loading state
         button.disabled = true;
@@ -1225,7 +1247,7 @@
         // Create form data for the request
         const formData = new FormData();
         formData.append('text', text);
-        formData.append('lang', selectedLang);
+        formData.append('voice', selectedVoice);
         
         // Set a unique timestamp to avoid caching
         const timestamp = new Date().getTime();
@@ -1271,8 +1293,8 @@
         const button = document.getElementById('server-tts-guidance-button');
         const audio = document.getElementById('serverGuidanceAudio');
         
-        // Get the selected language
-        const selectedLang = document.querySelector('.guidance-tts-lang-item.active').getAttribute('data-lang') || 'en';
+        // Get the selected voice type
+        const selectedVoice = document.querySelector('.guidance-tts-voice-item.active').getAttribute('data-voice') || 'default';
         
         // Show loading state
         button.disabled = true;
@@ -1285,7 +1307,7 @@
         // Create form data for the request
         const formData = new FormData();
         formData.append('text', text);
-        formData.append('lang', selectedLang);
+        formData.append('voice', selectedVoice);
         
         // Set a unique timestamp to avoid caching
         const timestamp = new Date().getTime();
