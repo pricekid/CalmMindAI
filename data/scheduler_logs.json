@@ -1,29 +1,5 @@
 [
   {
-    "timestamp": "2025-04-06 22:19:25",
-    "type": "health_check",
-    "message": "Scheduler running with PID 1047 at 2025-04-06 22:19:25",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-06 22:19:59",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 1047",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-06 22:44:27",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-06 22:44:27.369516",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-06 22:44:27",
-    "type": "job_success",
-    "message": "Job scheduler_health_check executed successfully",
-    "success": true
-  },
-  {
     "timestamp": "2025-04-06 23:14:27",
     "type": "scheduler_health",
     "message": "Scheduler health check at 2025-04-06 23:14:27.369459",
@@ -5995,6 +5971,30 @@
   },
   {
     "timestamp": "2025-04-10 22:06:55",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 22:36:55",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-10 22:36:55.278922",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 22:36:55",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 23:06:55",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-10 23:06:55.278949",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-10 23:06:55",
     "type": "job_success",
     "message": "Job scheduler_health_check executed successfully",
     "success": true
