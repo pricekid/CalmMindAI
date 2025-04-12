@@ -152,14 +152,11 @@
                             {{ coach_response | safe }}
                         </div>
                         <div class="text-center mt-3">
-                            <button id="read-analysis" class="btn btn-outline-primary btn-sm">
-                                <i class="bi bi-volume-up"></i> Read Aloud (Browser)
-                            </button>
-                            <button id="stop-reading" class="btn btn-outline-danger btn-sm ms-2" style="display: none;">
+                            <button id="stop-reading" class="btn btn-outline-danger btn-sm" style="display: none;">
                                 <i class="bi bi-stop-fill"></i> Stop Reading
                             </button>
                             
-                            <div class="d-inline-flex align-items-center ms-2">
+                            <div class="d-inline-flex align-items-center">
                                 <button id="server-tts-button" class="btn btn-primary btn-sm" onclick="playServerTTS()">
                                     <i class="bi bi-cloud"></i> Listen to Mira's Response
                                 </button>
@@ -293,14 +290,11 @@
                             <!-- Will be filled by AJAX response -->
                         </div>
                         <div class="text-center mt-3">
-                            <button id="read-guidance" class="btn btn-outline-primary btn-sm">
-                                <i class="bi bi-volume-up"></i> Read Aloud (Browser)
-                            </button>
-                            <button id="stop-guidance" class="btn btn-outline-danger btn-sm ms-2" style="display: none;">
+                            <button id="stop-guidance" class="btn btn-outline-danger btn-sm" style="display: none;">
                                 <i class="bi bi-stop-fill"></i> Stop Reading
                             </button>
                             
-                            <div class="d-inline-flex align-items-center ms-2">
+                            <div class="d-inline-flex align-items-center">
                                 <button id="server-tts-guidance-button" class="btn btn-primary btn-sm" onclick="playServerTTSGuidance()">
                                     <i class="bi bi-cloud"></i> Listen to Mira's Guidance
                                 </button>
