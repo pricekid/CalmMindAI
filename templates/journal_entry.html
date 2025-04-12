@@ -752,13 +752,19 @@
     
     // Legacy function for backward compatibility
     function setupTTSLanguageSelectors() {
-        // Initialize voice settings from localStorage if available
-        ['analysis', 'guidance'].forEach(type => {
-            const savedVoice = localStorage.getItem(`${type}_voice`);
-            if (savedVoice) {
-                voiceSettings[type].voice = savedVoice;
-            }
-        });
+        // Clear old voice settings
+        localStorage.removeItem('analysis_voice');
+        localStorage.removeItem('guidance_voice');
+        
+        // Reset to use Shimmer voice for all
+        voiceSettings.analysis.voice = 'shimmer';
+        voiceSettings.guidance.voice = 'shimmer';
+        
+        // Save the new settings
+        localStorage.setItem('analysis_voice', 'shimmer');
+        localStorage.setItem('guidance_voice', 'shimmer');
+        
+        console.log("Voice settings initialized with Shimmer as default");
     }
     
     document.addEventListener('DOMContentLoaded', function() {

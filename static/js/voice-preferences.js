@@ -9,7 +9,7 @@ const VoicePreferences = {
     // Default settings
     defaults: {
         enabled: true,
-        voice: 'alloy',
+        voice: 'shimmer',
         autoplay: false
     },
     
