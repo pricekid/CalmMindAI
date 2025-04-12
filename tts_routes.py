@@ -20,3 +20,8 @@ def premium_tts_test():
 def enhanced_tts_test():
     """Render the enhanced TTS test page with natural voice features"""
     return render_template('enhanced_tts_test.html')
+
+@tts_routes_bp.route('/openai-tts-test')
+def openai_tts_test():
+    """Render the OpenAI TTS test page with neural voice features"""
+    return render_template('openai_tts_test.html')
