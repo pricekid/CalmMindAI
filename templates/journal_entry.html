@@ -378,13 +378,24 @@
       </div>
       <div class="modal-body">
         <div class="mb-3">
-          <label class="form-label">Select Voice Type</label>
-          <div class="voice-options">
+          <div class="d-flex align-items-center mb-2">
+            <span style="background-color: #10a37f; color: white; padding: 2px 5px; border-radius: 3px; font-size: 0.7em; font-weight: bold;">OpenAI</span>
+            <label class="form-label ms-2 mb-0">Select Neural Voice</label>
+          </div>
+          <div class="voice-options" id="openai-voice-options">
             <!-- These radio buttons will be filled in dynamically -->
           </div>
         </div>
-        <div class="alert alert-info small">
-          <i class="bi bi-info-circle"></i> The selected voice will be used when you click the "Listen" button.
+        <div class="mt-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="autoplayToggle">
+            <label class="form-check-label" for="autoplayToggle">
+              Automatically play voice for new insights
+            </label>
+          </div>
+        </div>
+        <div class="alert alert-info small mt-3">
+          <i class="bi bi-info-circle"></i> These neural voices use OpenAI's advanced technology for human-like speech. Your selection will be remembered for future sessions.
         </div>
       </div>
       <div class="modal-footer">
@@ -674,16 +685,12 @@
     
     // Voice type options with display names
     const voiceOptions = [
-        { id: 'default', name: 'Default Voice', description: 'Standard American female voice' },
-        { id: 'natural', name: 'Natural Voice', description: 'More fluid, conversational American accent' },
-        { id: 'female', name: 'Female Voice', description: 'Clear feminine American voice' },
-        { id: 'male', name: 'Male Voice', description: 'Deeper British male-sounding voice' },
-        { id: 'british', name: 'British Voice', description: 'UK English accent, more formal' },
-        { id: 'australian', name: 'Australian Voice', description: 'Australian accent, friendly tone' },
-        { id: 'indian', name: 'Indian Voice', description: 'Indian English accent' },
-        { id: 'calm', name: 'Calm Voice', description: 'Slower, soothing Canadian accent' },
-        { id: 'enthusiastic', name: 'Enthusiastic Voice', description: 'Upbeat, energetic Australian tone' },
-        { id: 'serious', name: 'Serious Voice', description: 'Professional, formal British tone' }
+        { id: 'alloy', name: 'Alloy', description: 'Versatile neutral voice that works well for many contexts' },
+        { id: 'echo', name: 'Echo', description: 'Transparent and clear voice with a friendly tone' },
+        { id: 'fable', name: 'Fable', description: 'Authoritative and wise narrative voice' },
+        { id: 'onyx', name: 'Onyx', description: 'Deep and powerful voice with gravitas' },
+        { id: 'nova', name: 'Nova', description: 'Weighted, easy-going, and bright female voice' },
+        { id: 'shimmer', name: 'Shimmer', description: 'Gentle and optimistic female voice' }
     ];
     
     // Function to open the voice settings modal
@@ -1295,29 +1302,30 @@
         const button = document.getElementById('server-tts-button');
         const audio = document.getElementById('serverAudio');
         
-        // Get the selected voice from our settings
+        // Get the selected voice from our settings (now using OpenAI voices)
         const selectedVoice = getVoiceSetting('analysis');
         
         // Show loading state
         button.disabled = true;
-        button.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating audio...';
+        button.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating neural audio...';
         
         // Reset audio
         audio.pause();
         audio.src = '';
         
-        // Create form data for the request
-        const formData = new FormData();
-        formData.append('text', text);
-        formData.append('voice', selectedVoice);
+        // Prepare request data
+        const requestData = {
+            text: text,
+            voice: selectedVoice
+        };
         
-        // Set a unique timestamp to avoid caching
-        const timestamp = new Date().getTime();
-        
-        // Request TTS using the simple TTS endpoint
-        fetch('/simple-tts', {
+        // Request TTS using the OpenAI TTS endpoint
+        fetch('/api/openai-tts', {
             method: 'POST',
-            body: formData
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
         })
         .then(response => {
             if (!response.ok) {
