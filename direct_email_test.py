@@ -11,9 +11,14 @@ from email.mime.multipart import MIMEMultipart
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-def send_direct_email(recipient_email):
+def send_direct_email(recipient_email, subject=None, message_content=None):
     """
     Send an email directly using environment variables, bypassing Flask config.
+    
+    Args:
+        recipient_email: The recipient's email address
+        subject: Optional custom subject for the email
+        message_content: Optional custom message content
     """
     # Get email configuration directly from environment
     mail_server = "smtp.gmail.com"  # Using Gmail as server
@@ -24,6 +29,12 @@ def send_direct_email(recipient_email):
     mail_username = os.environ.get('MAIL_USERNAME')
     mail_password = os.environ.get('MAIL_PASSWORD')
     mail_sender = os.environ.get('MAIL_DEFAULT_SENDER')
+    
+    # Print environment variables for debugging (without showing full password)
+    print(f"Environment variables:")
+    print(f"  MAIL_USERNAME present: {'Yes' if mail_username else 'No'}")
+    print(f"  MAIL_PASSWORD present: {'Yes' if mail_password else 'No'}")
+    print(f"  MAIL_DEFAULT_SENDER present: {'Yes' if mail_sender else 'No'}")
     
     logger.info(f"Email Configuration:")
     logger.info(f"MAIL_SERVER: {mail_server}")
@@ -45,20 +56,47 @@ def send_direct_email(recipient_email):
         logger.error(error_msg)
         return {"success": False, "error": error_msg}
     
-    # Create the email message
-    subject = "Calm Journey - Direct Email Test"
-    html_body = """
+    # Create the email message with custom content if provided
+    email_subject = subject if subject else "Calm Journey - Direct Email Test"
+    
+    custom_content = ""
+    if message_content:
+        custom_content = f"""
+        <div style="margin: 20px 0; padding: 15px; background-color: #f0f7f7; border-left: 4px solid #5f9ea0; border-radius: 3px;">
+            <p>{message_content}</p>
+        </div>
+        """
+    
+    html_body = f"""
     <html>
-    <body>
-        <h2>Calm Journey - Direct Email Test</h2>
-        <p>This is a test email using direct SMTP connection with environment variables.</p>
-        <p>If you're seeing this, it means the email configuration is working correctly!</p>
-        <hr>
-        <p><em>The Calm Journey Team</em></p>
+    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #f8f9fa; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
+            <h1 style="color: #5f9ea0; margin: 0;">Calm Journey</h1>
+            <p style="font-size: 18px; margin: 5px 0 0;">Email Test</p>
+        </div>
+        
+        <div style="padding: 20px; background-color: #fff; border-radius: 0 0 8px 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <h2 style="color: #5f9ea0; border-bottom: 1px solid #eee; padding-bottom: 10px;">Email Delivery Test</h2>
+            
+            {custom_content}
+            
+            <p>This is a test email using direct SMTP connection with environment variables.</p>
+            <p>If you're seeing this, it means the email configuration is working correctly!</p>
+            
+            <p style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #eee; font-size: 14px; color: #666;">
+                This is an automated test message.
+            </p>
+        </div>
+        
+        <div style="text-align: center; padding: 20px; font-size: 12px; color: #666;">
+            <p>The Calm Journey Team</p>
+        </div>
     </body>
     </html>
     """
-    text_body = "Calm Journey - Direct Email Test\n\nThis is a test email using direct SMTP connection with environment variables.\nIf you're seeing this, it means the email configuration is working correctly!"
+    
+    custom_text = f"{message_content}\n\n" if message_content else ""
+    text_body = f"Calm Journey - Email Test\n\n{custom_text}This is a test email using direct SMTP connection with environment variables.\nIf you're seeing this, it means the email configuration is working correctly!"
     
     message = MIMEMultipart("alternative")
     message["Subject"] = subject
@@ -107,9 +145,11 @@ def send_direct_email(recipient_email):
         return {"success": False, "error": error_msg}
 
 if __name__ == "__main__":
-    # Get email address from input
-    recipient = input("Enter email address to send test to: ")
-    if recipient:
+    import sys
+    
+    # Check if email was provided as command line argument
+    if len(sys.argv) >= 2:
+        recipient = sys.argv[1]
         print(f"Sending test email to {recipient}...")
         result = send_direct_email(recipient)
         
@@ -118,4 +158,5 @@ if __name__ == "__main__":
         else:
             print(f"❌ Error: {result.get('error', 'Unknown error')}")
     else:
-        print("No email address provided. Exiting.")
+        print("Usage: python3 direct_email_test.py [email_address]")
+        print("Example: python3 direct_email_test.py user@example.com")
