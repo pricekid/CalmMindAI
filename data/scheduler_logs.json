@@ -1,53 +1,5 @@
 [
   {
-    "timestamp": "2025-04-08 19:26:25",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-08 19:26:25.549040",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:26:25",
-    "type": "scheduler_start",
-    "message": "Scheduler started successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:29:37",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 10514",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:29:45",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 10514",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:29:55",
-    "type": "startup_check",
-    "message": "Found stale PID file for scheduler (PID 10514). Removing.",
-    "success": false
-  },
-  {
-    "timestamp": "2025-04-08 19:29:56",
-    "type": "process_start",
-    "message": "Scheduler started successfully with PID 10838",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:29:56",
-    "type": "scheduler_startup",
-    "message": "Started scheduler on host 4be930fdc488 at 2025-04-08 19:29:56.174233",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:29:56",
-    "type": "scheduler_startup",
-    "message": "Starting notification scheduler at 2025-04-08 19:29:56.790701",
-    "success": true
-  },
-  {
     "timestamp": "2025-04-08 19:29:56",
     "type": "scheduler_health",
     "message": "Scheduler health check at 2025-04-08 19:29:56.794179",
@@ -5997,6 +5949,54 @@
     "timestamp": "2025-04-12 23:25:41",
     "type": "scheduler_startup",
     "message": "Started scheduler on host 7c2849bec2f8 at 2025-04-12 23:25:41.026696",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-12 23:30:40",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-12 23:30:40. Attempt 1 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-12 23:30:41",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-12 23:30:41",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 7c2849bec2f8 at 2025-04-12 23:30:41.025955",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-12 23:35:41",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-12 23:35:41. Attempt 2 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-12 23:35:42",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-12 23:35:42",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 7c2849bec2f8 at 2025-04-12 23:35:42.063260",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-12 23:40:34",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-12 23:40:34",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 7c2849bec2f8 at 2025-04-12 23:40:34.711228",
     "success": false
   }
 ]
