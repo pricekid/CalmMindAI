@@ -62,13 +62,34 @@ def simple_tts():
         # Create directory if it doesn't exist
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
         
-        # Set slow parameter based on voice type (slower for calm, faster for enthusiastic)
+        # Set slow parameter based on voice type
         slow_setting = False
-        if voice_type.lower() == 'calm':
-            slow_setting = True
         
-        # Generate speech with the selected settings
-        tts = gTTS(text=text, lang=voice_setting['lang'], tld=voice_setting['tld'], slow=slow_setting)
+        # Make certain voices slower to sound more natural
+        if voice_type.lower() in ['calm', 'serious', 'british']:
+            slow_setting = True
+            
+        # Pre-process text to make speech sound more natural
+        processed_text = text
+        
+        # Add strategic pauses for more natural speech
+        processed_text = processed_text.replace(". ", ". . ")  # Longer pause after periods
+        processed_text = processed_text.replace("? ", "? . ")  # Pause after questions
+        processed_text = processed_text.replace("! ", "! . ")  # Pause after exclamations
+        processed_text = processed_text.replace(", ", ", ")    # Brief pause after commas
+        
+        # Handle quotes and emphasis (helps with intonation)
+        processed_text = processed_text.replace('"', ' . " . ')  # Pause around quotes
+        
+        # Add emphasis to key phrases for better intonation
+        keywords = ["important", "remember", "note", "key", "significant", "critical", "essential"]
+        for keyword in keywords:
+            processed_text = processed_text.replace(
+                f" {keyword} ", f" . {keyword} . "
+            )
+        
+        # Generate speech with the selected settings and processed text
+        tts = gTTS(text=processed_text, lang=voice_setting['lang'], tld=voice_setting['tld'], slow=slow_setting)
         tts.save(filepath)
         
         # Return the file path

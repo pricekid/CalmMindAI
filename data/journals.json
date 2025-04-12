@@ -3377,14 +3377,17 @@
     "created_at": "2025-04-09T13:33:50.537294",
     "updated_at": "2025-04-09T13:33:56.958139",
     "is_analyzed": true,
-    "recommendations": [
+    "gpt_response": "I want to start by saying that it's really brave of you to share how you're feeling. It's so easy to take on too much because of the fear of being perceived as selfish or unreliable, and you're not alone in feeling overwhelmed when this happens.\n\nYou're experiencing that familiar tug-of-war between wanting to help others and needing to protect your own time and energy. It's tough to manage those boundaries, especially when anxiety whispers that saying no might make you seem uncooperative.\n\nLet's look at a couple of thought patterns that might be at play here:\n\nAll-or-Nothing Thinking: This is when you see things in black and white, like believing that saying no makes you a bad colleague. But remember, setting boundaries doesn\u2019t mean you\u2019re unkind or unreliable.\nMind Reading: You're assuming your colleague might think less of you if you set a boundary. But have they actually expressed that, or is it anxiety filling in the gaps?\n\nHere are a few strategies you could try:\n\nThought Reframing: Try to shift from \"I have to help or they'll think I'm selfish\" to \"I can still be supportive without overextending myself.\"\nBoundary Setting: Practice saying no gently. You might say, \"I'm sorry, I can't take this on right now, but maybe I can help in a smaller way.\"\nGratitude Practice: At the end of each day, jot down one thing you accomplished or a moment you felt proud of setting a boundary, no matter how small.\n\nAnd for today's reflection, consider this question:\n\"What small boundary could I set today that would help me feel more balanced?\"\n\nYou're making progress just by being aware of these patterns. It's a journey, and you're taking important steps. Remember, even small changes count.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n\n\nWarmly,\nCoach Mira",
+    "cbt_patterns": [
       {
-        "thought_pattern": "All-or-Nothing Thinking",
-        "recommendation": "Seeing things in black and white terms, without recognizing the gray areas - Thought Reframing: Challenge the idea that you have to help fully or not at all. Look for a balanced perspective."
+        "pattern": "All-or-Nothing Thinking",
+        "description": "This is when you see things in extremes, like believing you're either completely reliable or entirely selfish.",
+        "recommendation": "Thought Reframing: Shift your perspective to find a more balanced view that acknowledges your ability to be supportive without overextending."
       },
       {
-        "thought_pattern": "Overcommitment",
-        "recommendation": "Saying yes to too many things, leading to feeling stretched thin - Boundary Setting: Practice saying no gently but firmly to maintain your own priorities."
+        "pattern": "Mind Reading",
+        "description": "You're assuming others are judging you negatively without any clear evidence.",
+        "recommendation": "Boundary Setting: Practice saying no in a kind way, to reinforce that setting limits doesn\u2019t mean you\u2019re being unhelpful."
       }
     ]
   },
