@@ -102,14 +102,15 @@ If you'd like to update your notification preferences, you can do so in your acc
     return send_email(recipient_email, subject, html_body, text_body)
 
 def main():
+    import sys
     print("Calm Journey - Send Updates Email")
     print("--------------------------------")
     
-    recipient = input("Enter email address to send updates to: ")
-    if not recipient:
-        print("No email address provided. Exiting.")
+    if len(sys.argv) < 2:
+        print("Usage: python3 send_updates_email.py [email_address]")
         return
     
+    recipient = sys.argv[1]
     print(f"Sending updates email to {recipient}...")
     result = send_updates_email(recipient)
     

@@ -1,198 +1,108 @@
 """
-Script to send an email to all users with the new login link to the app.
-This script uses the improved_email_service module for reliable email delivery.
+Script to send login links to all users with notifications enabled.
+This uses our direct email sending method to bypass Flask-Mail.
 """
 import os
-import sys
 import logging
-from app import app, db
-from models import User
-from improved_email_service import send_email
+import time
+import random
+import string
+import json
+from notification_service import send_login_link, ensure_data_directory
 
-# Configure logging
+# Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-def send_login_link_to_all_users(login_url=None):
-    """
-    Send an email with the new login URL to all users.
-    
-    Args:
-        login_url: Optional custom URL for the login page. If not provided, 
-                   a default URL will be used based on environment variables.
-    
-    Returns:
-        dict: Statistics about the email sending process
-    """
-    with app.app_context():
-        # Get all users (active accounts)
-        users = User.query.all()
-        
-        if not users:
-            logger.info("No users found in the database.")
-            return {"success": 0, "errors": 0, "total": 0}
-        
-        logger.info(f"Sending login link to {len(users)} users...")
-        
-        success_count = 0
-        error_count = 0
-        
-        # Get the base URL from the app configuration or use a default replit URL
-        if login_url:
-            # Use the provided URL
-            url = login_url
-        elif 'BASE_URL' in app.config and app.config['BASE_URL']:
-            url = f"{app.config['BASE_URL']}/login"
-        else:
-            # For deployed apps on Replit, use the standardized URL
-            url = "https://calm-mind-ai-naturalarts.replit.app/login"
-        
-        for user in users:
-            subject = 'Important: New Login Link for Calm Journey'
-            html_body = f"""
-            <html>
-            <body>
-                <h2>Hello {user.username}!</h2>
-                <p>We're reaching out to provide you with the new login link for the Calm Journey application.</p>
-                <p>Please use the following link to access your account:</p>
-                <p><a href="{url}" style="background-color: #4CAF50; color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px; display: inline-block; margin-top: 10px;">Login to Calm Journey</a></p>
-                <p>If the button above doesn't work, you can copy and paste this URL into your browser:</p>
-                <p>{url}</p>
-                <p>Thank you for being part of the Calm Journey community.</p>
-                <p>Warm regards,<br>The Calm Journey Team</p>
-            </body>
-            </html>
-            """
-            
-            text_body = f"""
-            Hello {user.username}!
-            
-            We're reaching out to provide you with the new login link for the Calm Journey application.
-            
-            Please use the following link to access your account:
-            {url}
-            
-            Thank you for being part of the Calm Journey community.
-            
-            Warm regards,
-            The Calm Journey Team
-            """
-            
-            try:
-                result = send_email(user.email, subject, html_body, text_body)
-                
-                if result.get("success"):
-                    success_count += 1
-                    logger.info(f"Sent login link to {user.email}")
-                else:
-                    error_count += 1
-                    logger.error(f"Failed to send login link to {user.email}: {result.get('error', 'Unknown error')}")
-            except Exception as e:
-                error_count += 1
-                logger.error(f"Unexpected error sending to {user.email}: {str(e)}", exc_info=True)
-        
-        logger.info(f"Email sending complete. Success: {success_count}, Errors: {error_count}, Total Users: {len(users)}")
-        return {"success": success_count, "errors": error_count, "total": len(users)}
+def generate_token(length=32):
+    """Generate a random token for login links"""
+    characters = string.ascii_letters + string.digits
+    return ''.join(random.choice(characters) for _ in range(length))
 
-def send_login_link_to_one_user(email, login_url=None):
-    """
-    Send an email with the login link to a specific user for testing.
+def get_base_url():
+    """Get the base URL for links in emails"""
+    # Use environment variable if available, otherwise use default
+    return os.environ.get('BASE_URL', 'https://calm-mind-ai-naturalarts.replit.app')
+
+def load_users():
+    """Load users from the data/users.json file"""
+    ensure_data_directory()
+    if not os.path.exists('data/users.json'):
+        logger.error("data/users.json not found")
+        return []
     
-    Args:
-        email: Email address of the recipient
-        login_url: Optional custom URL for the login page
+    try:
+        with open('data/users.json', 'r') as f:
+            return json.load(f)
+    except json.JSONDecodeError:
+        logger.error("Error decoding users.json file")
+        return []
+    except Exception as e:
+        logger.error(f"Error loading users: {str(e)}")
+        return []
+
+def main():
+    print("Calm Journey - Send Login Links to All Users")
+    print("------------------------------------------")
     
-    Returns:
-        dict: Result with success flag and error message if applicable
-    """
-    with app.app_context():
-        # Get the user by email
-        user = User.query.filter_by(email=email).first()
+    # Load users
+    users = load_users()
+    logger.info(f"Loaded {len(users)} users")
+    
+    # Stats
+    total_users = len(users)
+    sent_count = 0
+    skipped_count = 0
+    failed_count = 0
+    
+    # Base URL for login links
+    base_url = get_base_url()
+    
+    for user in users:
+        # Only send login links to users with notifications enabled
+        if not user.get('notifications_enabled', False):
+            logger.info(f"Skipping user {user.get('id')} ({user.get('email')}): Notifications disabled")
+            skipped_count += 1
+            continue
         
-        if not user:
-            error_msg = f"No user found with email: {email}"
-            logger.error(error_msg)
-            return {"success": False, "error": error_msg}
+        # Get user email
+        email = user.get('email')
+        if not email:
+            logger.warning(f"Skipping user {user.get('id')}: No email address")
+            skipped_count += 1
+            continue
         
-        # Get the base URL from the app configuration or use a default replit URL
-        if login_url:
-            # Use the provided URL
-            url = login_url
-        elif 'BASE_URL' in app.config and app.config['BASE_URL']:
-            url = f"{app.config['BASE_URL']}/login"
-        else:
-            # For deployed apps on Replit, use the standardized URL
-            url = "https://calm-mind-ai-naturalarts.replit.app/login"
+        # Generate token
+        token = generate_token()
         
-        subject = 'Important: New Login Link for Calm Journey'
-        html_body = f"""
-        <html>
-        <body>
-            <h2>Hello {user.username}!</h2>
-            <p>We're reaching out to provide you with the new login link for the Calm Journey application.</p>
-            <p>Please use the following link to access your account:</p>
-            <p><a href="{url}" style="background-color: #4CAF50; color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px; display: inline-block; margin-top: 10px;">Login to Calm Journey</a></p>
-            <p>If the button above doesn't work, you can copy and paste this URL into your browser:</p>
-            <p>{url}</p>
-            <p>Thank you for being part of the Calm Journey community.</p>
-            <p>Warm regards,<br>The Calm Journey Team</p>
-        </body>
-        </html>
-        """
+        # Generate login link
+        expiry = int(time.time()) + 86400  # 24 hours
+        link = f"{base_url}/login/token/{token}?email={email}&expires={expiry}"
         
-        text_body = f"""
-        Hello {user.username}!
-        
-        We're reaching out to provide you with the new login link for the Calm Journey application.
-        
-        Please use the following link to access your account:
-        {url}
-        
-        Thank you for being part of the Calm Journey community.
-        
-        Warm regards,
-        The Calm Journey Team
-        """
-        
+        # Send login link
+        logger.info(f"Sending login link to {email}...")
         try:
-            return send_email(user.email, subject, html_body, text_body)
+            result = send_login_link(email, link)
+            
+            if result:
+                logger.info(f"Login link sent to {email}")
+                sent_count += 1
+            else:
+                logger.error(f"Failed to send login link to {email}")
+                failed_count += 1
         except Exception as e:
-            error_msg = f"Unexpected error sending to {user.email}: {str(e)}"
-            logger.error(error_msg, exc_info=True)
-            return {"success": False, "error": error_msg}
+            logger.error(f"Error sending login link to {email}: {str(e)}")
+            failed_count += 1
+        
+        # Sleep briefly between emails to avoid rate limiting
+        time.sleep(1)
+    
+    # Print stats
+    print("\nSending complete!")
+    print(f"Total users: {total_users}")
+    print(f"Login links sent: {sent_count}")
+    print(f"Users skipped: {skipped_count}")
+    print(f"Failed to send: {failed_count}")
 
 if __name__ == "__main__":
-    # Check for command-line arguments
-    if len(sys.argv) < 2:
-        print("Usage:")
-        print("  python send_login_link_to_all_users.py all [login_url]           - Send login link to all users")
-        print("  python send_login_link_to_all_users.py test <email> [login_url]  - Send login link to one user for testing")
-        sys.exit(1)
-    
-    command = sys.argv[1].lower()
-    
-    if command == "all":
-        # Send to all users
-        login_url = sys.argv[2] if len(sys.argv) > 2 else None
-        print(f"Sending login link to all users{'with custom URL: ' + login_url if login_url else ''}...")
-        result = send_login_link_to_all_users(login_url)
-        print(f"Successfully sent: {result['success']}/{result['total']} emails")
-        print(f"Failed to send: {result['errors']}/{result['total']} emails")
-        
-    elif command == "test" and len(sys.argv) > 2:
-        # Send to one user for testing
-        email = sys.argv[2]
-        login_url = sys.argv[3] if len(sys.argv) > 3 else None
-        print(f"Sending test login link to {email}{'with custom URL: ' + login_url if login_url else ''}...")
-        result = send_login_link_to_one_user(email, login_url)
-        
-        if result.get("success"):
-            print(f"Successfully sent login link to {email}")
-        else:
-            print(f"Failed to send login link: {result.get('error', 'Unknown error')}")
-            
-    else:
-        print("Invalid command")
-        print("Usage:")
-        print("  python send_login_link_to_all_users.py all [login_url]          - Send login link to all users")
-        print("  python send_login_link_to_all_users.py test <email> [login_url] - Send login link to one user for testing")
+    main()
