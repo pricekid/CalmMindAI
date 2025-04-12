@@ -660,18 +660,7 @@
     }
     
     // Set up event listeners when document is ready
-    document.addEventListener('DOMContentLoaded', function() {
-        // Set up language selection for TTS
-        setupTTSLanguageSelectors();
-        
-        // Set the initial anxiety level (only if we're in edit mode)
-        const anxietySlider = document.getElementById('anxiety-slider');
-        if (anxietySlider) {
-            const sliderValue = anxietySlider.value;
-            updateAnxietyLabel(sliderValue);
-        }
-        
-    // Voice selection and settings functions
+    // Voice selection and settings functions - Global scope
     
     // Current voice settings stored in memory
     const voiceSettings = {
@@ -760,7 +749,17 @@
             }
         });
     }
-    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set up language selection for TTS
+        setupTTSLanguageSelectors();
+        
+        // Set the initial anxiety level (only if we're in edit mode)
+        const anxietySlider = document.getElementById('anxiety-slider');
+        if (anxietySlider) {
+            const sliderValue = anxietySlider.value;
+            updateAnxietyLabel(sliderValue);
+        }
         
         // Set up the form handling with spinner
         const journalForm = document.getElementById('journal-form');

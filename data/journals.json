@@ -3231,14 +3231,17 @@
     "created_at": "2025-04-09T12:20:36.762905",
     "updated_at": "2025-04-09T12:20:40.531279",
     "is_analyzed": true,
-    "recommendations": [
+    "gpt_response": "I want to start by saying how brave you are for sharing what\u2019s on your mind. It\u2019s completely understandable to feel anxious when it seems like everyone around you is moving forward while you're standing still. That feeling of being stuck can be so isolating, but you're not alone in this.\n\nIt sounds like you\u2019re really feeling the pressure to keep up with the pace of life around you, and it\u2019s weighing heavily on your sense of self-worth. Comparing yourself to others is something many of us do, and it can be tough when it leads to anxiety and self-doubt.\n\nHere are a couple of thought patterns that might be popping up:\n\nComparison Trap: This is when we measure our own worth against others' achievements. It\u2019s easy to forget that we all have unique paths and timelines.\n\nAll-or-Nothing Thinking: This is about seeing things in black-and-white, like feeling you\u2019re either moving forward or completely stuck. Life often has a lot more gray areas.\n\nTo help with these, here are a few things you might try:\n\nThought Reframing: When you catch yourself in the comparison trap, remind yourself of your own unique strengths and the progress you\u2019ve made, however small it might seem.\n\nGratitude Practice: Each day, jot down a couple of things you\u2019re grateful for in your life right now. It can help shift focus from what\u2019s missing to what\u2019s present.\n\nMindful Moments: Spend a few minutes each day just being present. Whether it\u2019s through meditation or simply sitting quietly, it can help ground you and reduce feelings of anxiety.\n\nAnd here\u2019s a little reflection for today:\n\"What is one small step I can take towards my goals that feels manageable right now?\"\n\nYou\u2019re doing important work by tuning into these feelings, and every step you take is valuable. Remember, progress doesn\u2019t always look like a big leap forward. Sometimes it\u2019s just about taking one small, steady step at a time.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- Mind Reading\n- All-or-Nothing Thinking\n\n\nWarmly,\nCoach Mira",
+    "cbt_patterns": [
       {
-        "thought_pattern": "All-or-Nothing Thinking",
-        "recommendation": "This pattern makes you see situations in black and white, without middle ground. It can lead to feeling stuck when life doesn't meet exact expectations. - Challenge this by identifying grey areas and acknowledging partial successes."
+        "pattern": "Comparison Trap",
+        "description": "Measuring your own worth against others' achievements, often leading to feelings of inadequacy.",
+        "recommendation": "Thought Reframing: Focus on your own strengths and unique progress."
       },
       {
-        "thought_pattern": "Comparison Trap",
-        "recommendation": "Comparing yourself to others often disregards your unique journey and achievements, increasing feelings of inadequacy. - Practice gratitude for your own milestones, no matter their size."
+        "pattern": "All-or-Nothing Thinking",
+        "description": "Seeing things in black-and-white terms, which can make you feel either completely successful or completely stuck.",
+        "recommendation": "Gratitude Practice: Helps shift focus to what you have rather than what you lack."
       }
     ]
   },
