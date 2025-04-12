@@ -1,41 +1,5 @@
 [
   {
-    "timestamp": "2025-04-08 18:41:06",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-08 18:41:06.073101",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 18:41:06",
-    "type": "scheduler_start",
-    "message": "Scheduler started successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 18:46:04",
-    "type": "health_check",
-    "message": "Scheduler running with PID 6367 at 2025-04-08 18:46:04",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 18:51:04",
-    "type": "health_check",
-    "message": "Scheduler running with PID 6367 at 2025-04-08 18:51:04",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 18:51:49",
-    "type": "startup_check",
-    "message": "Found stale PID file for scheduler (PID 6367). Removing.",
-    "success": false
-  },
-  {
-    "timestamp": "2025-04-08 18:51:50",
-    "type": "process_start",
-    "message": "Scheduler started successfully with PID 7822",
-    "success": true
-  },
-  {
     "timestamp": "2025-04-08 18:51:50",
     "type": "scheduler_startup",
     "message": "Started scheduler on host 4be930fdc488 at 2025-04-08 18:51:50.485273",
@@ -5995,6 +5959,42 @@
   },
   {
     "timestamp": "2025-04-12 20:59:24",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-12 21:03:04",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 1849). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-12 21:03:05",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 2117",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-12 21:03:05",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 7c2849bec2f8 at 2025-04-12 21:03:05.675964",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-12 21:03:06",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-12 21:03:06.376291",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-12 21:03:06",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-12 21:03:06.382679",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-12 21:03:06",
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
     "success": true

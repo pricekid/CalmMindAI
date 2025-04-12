@@ -1329,13 +1329,14 @@
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error('Network response was not ok: ' + response.statusText);
             }
-            return response.text();
+            return response.json();
         })
-        .then(audioUrl => {
+        .then(data => {
+            console.log("OpenAI TTS response:", data);
             // Set the audio source to the URL returned by the server
-            audio.src = audioUrl;
+            audio.src = data.audio_url;
             audio.style.display = 'block';
             
             // Reset button state
@@ -1390,13 +1391,14 @@
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error('Network response was not ok: ' + response.statusText);
             }
-            return response.text();
+            return response.json();
         })
-        .then(audioUrl => {
+        .then(data => {
+            console.log("OpenAI TTS guidance response:", data);
             // Set the audio source to the URL returned by the server
-            audio.src = audioUrl;
+            audio.src = data.audio_url;
             audio.style.display = 'block';
             
             // Reset button state
