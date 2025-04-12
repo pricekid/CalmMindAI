@@ -197,19 +197,25 @@ def send_to_all_users():
     
     return stats
 
-def main():
+def main(auto_confirm=False):
     print("Calm Journey - Send Update Notifications to All Users")
     print("--------------------------------------------------")
     
-    # Confirm before sending
-    print("\nReady to send update notifications to all users with notifications enabled.")
-    print("This will inform users about new app features and remind them to journal.")
-    print("Are you sure you want to continue? (y/n)")
-    confirm = input("> ").strip().lower()
-    
-    if confirm != 'y' and confirm != 'yes':
-        print("Operation cancelled.")
-        return
+    # Confirm before sending, unless auto_confirm is True
+    if not auto_confirm:
+        print("\nReady to send update notifications to all users with notifications enabled.")
+        print("This will inform users about new app features and remind them to journal.")
+        print("Are you sure you want to continue? (y/n)")
+        try:
+            confirm = input("> ").strip().lower()
+            if confirm != 'y' and confirm != 'yes':
+                print("Operation cancelled.")
+                return
+        except EOFError:
+            print("Interactive input not available. Use --auto-confirm to bypass confirmation.")
+            return
+    else:
+        print("\nAuto-confirm enabled. Proceeding without confirmation...")
     
     # Send notifications
     print("\nSending update notifications...")
@@ -223,4 +229,11 @@ def main():
     print(f"Failed to send: {stats['failed_count']}")
 
 if __name__ == "__main__":
-    main()
+    import sys
+    
+    # Check if auto_confirm flag is provided
+    auto_confirm = False
+    if len(sys.argv) > 1 and sys.argv[1] == "--auto-confirm":
+        auto_confirm = True
+    
+    main(auto_confirm)

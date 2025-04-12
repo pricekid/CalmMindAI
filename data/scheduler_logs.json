@@ -1,23 +1,5 @@
 [
   {
-    "timestamp": "2025-04-08 19:35:52",
-    "type": "startup_check",
-    "message": "Found stale PID file for scheduler (PID 11197). Removing.",
-    "success": false
-  },
-  {
-    "timestamp": "2025-04-08 19:35:53",
-    "type": "process_start",
-    "message": "Scheduler started successfully with PID 11498",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:35:53",
-    "type": "scheduler_startup",
-    "message": "Started scheduler on host 4be930fdc488 at 2025-04-08 19:35:53.779171",
-    "success": true
-  },
-  {
     "timestamp": "2025-04-08 19:35:54",
     "type": "scheduler_startup",
     "message": "Starting notification scheduler at 2025-04-08 19:35:54.238176",
@@ -5997,6 +5979,24 @@
     "timestamp": "2025-04-12 23:49:37",
     "type": "scheduler_startup",
     "message": "Started scheduler on host 7c2849bec2f8 at 2025-04-12 23:49:37.843898",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-12 23:54:36",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-12 23:54:36. Attempt 1 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-12 23:54:37",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-12 23:54:37",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 7c2849bec2f8 at 2025-04-12 23:54:37.852731",
     "success": false
   }
 ]
