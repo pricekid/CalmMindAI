@@ -1363,29 +1363,30 @@
         const button = document.getElementById('server-tts-guidance-button');
         const audio = document.getElementById('serverGuidanceAudio');
         
-        // Get the selected voice from our settings
+        // Get the selected voice from our settings (now using OpenAI voices)
         const selectedVoice = getVoiceSetting('guidance');
         
         // Show loading state
         button.disabled = true;
-        button.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating audio...';
+        button.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating neural audio...';
         
         // Reset audio
         audio.pause();
         audio.src = '';
         
-        // Create form data for the request
-        const formData = new FormData();
-        formData.append('text', text);
-        formData.append('voice', selectedVoice);
+        // Prepare request data
+        const requestData = {
+            text: text,
+            voice: selectedVoice
+        };
         
-        // Set a unique timestamp to avoid caching
-        const timestamp = new Date().getTime();
-        
-        // Request TTS using the simple TTS endpoint
-        fetch('/simple-tts', {
+        // Request TTS using the OpenAI TTS endpoint
+        fetch('/api/openai-tts', {
             method: 'POST',
-            body: formData
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
         })
         .then(response => {
             if (!response.ok) {
