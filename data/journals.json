@@ -3354,14 +3354,17 @@
     "created_at": "2025-04-09T13:20:25.033623",
     "updated_at": "2025-04-09T13:20:30.116848",
     "is_analyzed": true,
-    "recommendations": [
+    "gpt_response": "First off, thank you for sharing your thoughts with me. It takes courage to open up about these feelings, and it's completely okay to feel this way. You're not alone in this, and it's great that you're reflecting on it. \n\nIt sounds like there's a lot of pressure between wanting to connect with others and the fear of how you might come across. That push and pull can be really draining, and it makes sense that you'd feel stuck right now. \n\nLet's look at a couple of thought patterns that might be popping up:\n\nAll-or-Nothing Thinking: This is when things feel like they're either all good or all bad. For example, thinking you have to either go to the event and be perfect or stay home to avoid any awkwardness. It's helpful to remember that there's a whole gray area in between those extremes. \nMind Reading: You're predicting how you'll be perceived, like being seen as weird or boring, without real evidence. It's anxiety's way of filling in the blanks with fears, not facts. \n\nHere are a few things you might try:\n\nThought Reframing: When you catch yourself thinking \"I'll mess it up,\" try to reframe it to something like \"I might have awkward moments, but that's okay. Everyone does.\" \nBehavioral Experiment: Consider going to the event for just a short period, like 30 minutes. It's a way to dip your toes in without feeling overwhelmed by the whole night.\nGratitude Practice: After the event, jot down a few things that went well or that you appreciated. It could be as simple as a nice conversation or the fact that you showed up.\n\nAnd a small reflection for today:\n\"What\u2019s one thing I enjoy about connecting with others that I want to experience this weekend?\"\n\nYou're doing important work by being aware of these thoughts and patterns. Remember, every step you take is progress, no matter how small.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n\n\nWarmly,\nCoach Mira",
+    "cbt_patterns": [
       {
-        "thought_pattern": "All-or-Nothing Thinking",
-        "recommendation": "This pattern involves viewing situations in extremes, like believing you'll either be perfectly social or entirely awkward. It can create unnecessary pressure and anxiety around social events. - Try to identify a middle ground, such as envisioning a realistic scenario where you have both comfortable and awkward moments."
+        "pattern": "All-or-Nothing Thinking",
+        "description": "Seeing situations in black-or-white terms, without recognizing the gray areas in between.",
+        "recommendation": "Thought Reframing: Challenge the extremes by considering the middle ground."
       },
       {
-        "thought_pattern": "Overcommitment",
-        "recommendation": "Feeling guilty for backing out can lead you to commit to more than feels comfortable, creating a cycle of stress and avoidance. This pattern can make social situations feel overwhelming. - Consider setting a small goal, like attending for just an hour, to reduce pressure and maintain your boundaries."
+        "pattern": "Mind Reading",
+        "description": "Predicting what others think of you without actual evidence.",
+        "recommendation": "Behavioral Experiment: Attend the event for a short time to gather real feedback."
       }
     ]
   },

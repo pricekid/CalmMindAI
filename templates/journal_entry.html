@@ -674,12 +674,16 @@
     
     // Voice type options with display names
     const voiceOptions = [
-        { id: 'default', name: 'Default Voice', description: 'Standard text-to-speech voice' },
-        { id: 'female', name: 'Female Voice', description: 'Female narrator voice' },
-        { id: 'male', name: 'Male Voice', description: 'Male narrator voice' },
-        { id: 'calm', name: 'Calm Voice', description: 'Relaxed, soothing tone' },
-        { id: 'enthusiastic', name: 'Enthusiastic Voice', description: 'Upbeat, energetic tone' },
-        { id: 'serious', name: 'Serious Voice', description: 'Professional, formal tone' }
+        { id: 'default', name: 'Default Voice', description: 'Standard American female voice' },
+        { id: 'natural', name: 'Natural Voice', description: 'More fluid, conversational American accent' },
+        { id: 'female', name: 'Female Voice', description: 'Clear feminine American voice' },
+        { id: 'male', name: 'Male Voice', description: 'Deeper British male-sounding voice' },
+        { id: 'british', name: 'British Voice', description: 'UK English accent, more formal' },
+        { id: 'australian', name: 'Australian Voice', description: 'Australian accent, friendly tone' },
+        { id: 'indian', name: 'Indian Voice', description: 'Indian English accent' },
+        { id: 'calm', name: 'Calm Voice', description: 'Slower, soothing Canadian accent' },
+        { id: 'enthusiastic', name: 'Enthusiastic Voice', description: 'Upbeat, energetic Australian tone' },
+        { id: 'serious', name: 'Serious Voice', description: 'Professional, formal British tone' }
     ];
     
     // Function to open the voice settings modal
@@ -950,15 +954,28 @@
             
             // Premium quality voices first (typically more natural sounding)
             const highQualityVoices = [
-                // macOS/iOS voices
-                "Samantha", "Ava", "Susan", "Allison", "Victoria",
-                // Windows voices
-                "Microsoft Zira", "Microsoft Linda", "Microsoft Catherine",
+                // macOS/iOS voices (very natural sounding)
+                "Samantha", "Ava", "Allison", "Victoria", "Susan", "Karen", "Moira",
+                // Windows neural voices
+                "Microsoft Aria Online (Natural)", "Microsoft Jenny Online (Natural)", 
+                "Microsoft Guy Online (Natural)", "Microsoft Christopher Online (Natural)",
+                // Standard Windows voices
+                "Microsoft Zira", "Microsoft Linda", "Microsoft Catherine", "Microsoft David",
                 // Google voices
                 "Google UK English Female", "Google US English", 
                 // Amazon Polly voices (if available in browser)
-                "Joanna", "Ivy", "Kendra", "Kimberly", "Salli"
+                "Joanna", "Ivy", "Kendra", "Kimberly", "Salli", "Matthew", "Brian"
             ];
+            
+            // Log available voices for debugging
+            console.log("Speech synthesis voices loaded. Available voices:", voices.length);
+            console.log("Available voices:");
+            voices.forEach((voice, index) => {
+                console.log(`${index + 1}. ${voice.name} (${voice.lang})${voice.default ? ' - DEFAULT' : ''}`);
+            });
+            
+            // Try to identify the selected voice
+            let selectedVoice = null;
             
             // Try to find high-quality English voices first
             for (const voiceName of highQualityVoices) {
