@@ -332,7 +332,12 @@ with app.app_context():
     from premium_tts_service import premium_tts_bp
     app.register_blueprint(premium_tts_bp)
     
+    # Register enhanced natural-sounding TTS service
+    from enhanced_tts_service import enhanced_tts_bp
+    app.register_blueprint(enhanced_tts_bp)
+    
     # Explicitly exempt TTS routes from CSRF protection
     csrf.exempt(direct_tts_bp)
     csrf.exempt(simple_direct_tts_bp)
     csrf.exempt(premium_tts_bp)
+    csrf.exempt(enhanced_tts_bp)

@@ -15,3 +15,8 @@ def tts_test():
 def premium_tts_test():
     """Render the premium TTS test page with enhanced voice features"""
     return render_template('premium_tts_test.html')
+
+@tts_routes_bp.route('/enhanced-tts-test')
+def enhanced_tts_test():
+    """Render the enhanced TTS test page with natural voice features"""
+    return render_template('enhanced_tts_test.html')

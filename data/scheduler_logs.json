@@ -1,89 +1,5 @@
 [
   {
-    "timestamp": "2025-04-08 16:52:29",
-    "type": "process_start",
-    "message": "Scheduler started successfully with PID 1566",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 16:52:29",
-    "type": "scheduler_startup",
-    "message": "Started scheduler on host 4be930fdc488 at 2025-04-08 16:52:29.790666",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 16:52:32",
-    "type": "scheduler_startup",
-    "message": "Starting notification scheduler at 2025-04-08 16:52:32.312790",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 16:52:32",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-08 16:52:32.314897",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 16:52:32",
-    "type": "scheduler_start",
-    "message": "Scheduler started successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 16:57:28",
-    "type": "health_check",
-    "message": "Scheduler running with PID 1566 at 2025-04-08 16:57:28",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 17:02:28",
-    "type": "health_check",
-    "message": "Scheduler running with PID 1566 at 2025-04-08 17:02:28",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 17:06:24",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 1566",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 17:09:09",
-    "type": "startup_check",
-    "message": "Found stale PID file for scheduler (PID 1566). Removing.",
-    "success": false
-  },
-  {
-    "timestamp": "2025-04-08 17:09:10",
-    "type": "process_start",
-    "message": "Scheduler started successfully with PID 2024",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 17:09:10",
-    "type": "scheduler_startup",
-    "message": "Started scheduler on host 4be930fdc488 at 2025-04-08 17:09:10.808880",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 17:09:11",
-    "type": "scheduler_startup",
-    "message": "Starting notification scheduler at 2025-04-08 17:09:11.457675",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 17:09:11",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-08 17:09:11.459771",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 17:09:11",
-    "type": "scheduler_start",
-    "message": "Scheduler started successfully",
-    "success": true
-  },
-  {
     "timestamp": "2025-04-08 17:13:29",
     "type": "startup_check",
     "message": "Scheduler already running with PID 2024",
@@ -5997,6 +5913,90 @@
     "timestamp": "2025-04-12 02:01:51",
     "type": "startup_check",
     "message": "Scheduler already running with PID 2317",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-12 02:03:14",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2317",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-12 02:08:14",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2317 at 2025-04-12 02:08:14",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-12 02:13:14",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2317 at 2025-04-12 02:13:14",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-12 02:18:14",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2317 at 2025-04-12 02:18:14",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-12 16:06:06",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 2317). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-12 16:06:07",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 195",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-12 16:06:07",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 76ca0ed05477 at 2025-04-12 16:06:07.665173",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-12 16:06:08",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-12 16:06:08.453526",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-12 16:06:08",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-12 16:06:08.463900",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-12 16:06:08",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-12 16:08:16",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 195",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-12 16:19:45",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 195",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-12 16:36:08",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-12 16:36:08.454243",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-12 16:36:08",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
     "success": true
   }
 ]

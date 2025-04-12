@@ -3314,14 +3314,17 @@
     "created_at": "2025-04-09T12:43:38.738942",
     "updated_at": "2025-04-09T12:43:42.920317",
     "is_analyzed": true,
-    "recommendations": [
+    "gpt_response": "Hey there, I just want to start by acknowledging the courage it takes to share how you're feeling. It's completely understandable to feel overwhelmed and frustrated when your week isn't going as planned. You're not alone in this, and it's great that you're recognizing these patterns \u2014 that self-awareness is a big step forward.\n\nIt sounds like you're feeling caught in a difficult spot between wanting to help out and needing to take care of your own workload. It can be tough to say no, especially when you worry about how it might come across to others. That feeling of being drained is totally valid, especially when it feels like you're carrying more than you intended.\n\nLet's look at a couple of thought patterns that might be playing a role here:\n\nAll-or-Nothing Thinking: This pattern makes us see situations in extremes, like feeling either helpful or selfish. But remember, life is full of in-betweens, and setting boundaries doesn't make you any less supportive.\nMind Reading: You might be assuming your colleague will think you're selfish if you say no, but unless they've told you that, it might just be anxiety filling in the gaps.\n\nHere are a few strategies you might find helpful:\n\nThought Reframing: Try to reframe the idea of saying no. Instead of thinking \"I'm being selfish,\" consider \"I'm being responsible with my time so I can give my best when I do help.\"\nBoundary Setting Practice: Think about a small, manageable way to practice setting a boundary. Maybe start with something simple, like giving yourself a set time to work on your own projects before considering other tasks.\nGratitude Practice: At the end of the day, jot down a couple of things you're grateful for about your own work and contributions. This can help shift focus from what's overwhelming to what's fulfilling.\n\nHere's a reflection prompt for you:\n\"What is one small way I can honor my own needs while still feeling like I'm contributing positively?\"\n\nYou're doing such important work by reflecting on this. Remember, each step you take is valuable, and I'm here with you as you navigate this journey.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n\n\nWarmly,\nCoach Mira",
+    "cbt_patterns": [
       {
-        "thought_pattern": "All-or-Nothing Thinking",
-        "recommendation": "This pattern involves seeing situations in only two categories instead of on a continuum. It can make you feel like you either have to help everyone or no one at all. - Try recognizing the middle ground by setting small, manageable boundaries."
+        "pattern": "All-or-Nothing Thinking",
+        "description": "This pattern makes us see situations in extremes with no middle ground.",
+        "recommendation": "Thought reframing to find the middle ground and recognize the shades of gray in situations."
       },
       {
-        "thought_pattern": "Overcommitment",
-        "recommendation": "Taking on too much often stems from a desire to please others, but it can lead to stress and exhaustion, affecting your own priorities. - Practice saying 'no' to maintain balance and focus on your own tasks."
+        "pattern": "Mind Reading",
+        "description": "Assuming you know what others are thinking without having concrete evidence.",
+        "recommendation": "Challenge these assumptions by seeking clarification or focusing on what you know to be true."
       }
     ]
   },

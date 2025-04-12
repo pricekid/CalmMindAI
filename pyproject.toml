@@ -24,4 +24,5 @@ dependencies = [
     "beautifulsoup4>=4.13.3",
     "anthropic>=0.49.0",
     "gtts>=2.5.4",
+    "azure-cognitiveservices-speech>=1.43.0",
 ]

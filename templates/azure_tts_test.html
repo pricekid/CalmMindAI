@@ -1,0 +1,355 @@
+{% extends 'layout.html' %}
+
+{% block title %}Azure Neural Voices{% endblock %}
+
+{% block styles %}
+<style>
+    .voice-option {
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #343a40;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    
+    .voice-option:hover {
+        background-color: #343a40;
+    }
+    
+    .voice-option.selected {
+        background-color: #0d6efd;
+        color: white;
+    }
+    
+    .style-option {
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #343a40;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    
+    .style-option:hover {
+        background-color: #343a40;
+    }
+    
+    .style-option.selected {
+        background-color: #198754;
+        color: white;
+    }
+    
+    #audioPlayer {
+        margin-top: 20px;
+        width: 100%;
+    }
+    
+    .tts-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    @media (min-width: 768px) {
+        .voice-options, .style-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+    }
+    
+    .voice-description, .style-description {
+        font-size: 0.85rem;
+        opacity: 0.8;
+    }
+    
+    .loading {
+        display: none;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    
+    .loading-spinner {
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: #fff;
+        animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    
+    .azure-badge {
+        background-color: #0078d4;
+        color: white;
+        font-size: 0.7em;
+        padding: 3px 6px;
+        border-radius: 3px;
+        margin-right: 5px;
+        vertical-align: middle;
+    }
+    
+    .sample-texts {
+        margin-top: 20px;
+    }
+    
+    .sample-text {
+        cursor: pointer;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #212529;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    
+    .sample-text:hover {
+        background-color: #343a40;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">
+                <span class="azure-badge">Azure</span> Neural Voices
+            </h1>
+            <p class="lead mb-4">Experience premium-quality natural-sounding voices powered by Microsoft Azure's neural voice technology.</p>
+            
+            <!-- Text input -->
+            <div class="mb-4">
+                <label for="ttsText" class="form-label">Enter text to convert to speech:</label>
+                <textarea id="ttsText" class="form-control mb-3" rows="4" placeholder="Type text here...">Welcome to Calm Journey. I'm here to help you articulate your thoughts and feelings with a natural, soothing voice. These premium neural voices provide a more human-like experience.</textarea>
+            </div>
+            
+            <!-- Sample text options -->
+            <div class="sample-texts mb-4">
+                <h5>Sample Texts (click to use):</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="sample-text" data-text="When we're feeling anxious, our thoughts may race with worry. Try to notice these thoughts without judgment, and gently bring your attention back to the present moment. Remember that you are not your thoughts, and this moment of difficulty will pass.">
+                            <strong>Anxiety Coaching</strong>: A calming message about managing anxious thoughts
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="sample-text" data-text="Today I want you to practice a simple breathing exercise. Inhale slowly through your nose for four counts, hold your breath for two counts, and exhale through your mouth for six counts. This can help calm your nervous system when you're feeling overwhelmed.">
+                            <strong>Breathing Exercise</strong>: Instructions for a calming breathing technique
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <!-- Voice Types -->
+                <div class="col-md-6 mb-4">
+                    <h3>Voice Type</h3>
+                    <p class="text-muted">Select a neural voice that resonates with you</p>
+                    <div class="voice-options" id="voiceOptions">
+                        <!-- Voice options will be populated by JavaScript -->
+                        <div class="loading">
+                            <div class="loading-spinner"></div>
+                            <span>Loading voices...</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Voice Styles -->
+                <div class="col-md-6 mb-4">
+                    <h3>Voice Style</h3>
+                    <p class="text-muted">Choose how the voice should express itself</p>
+                    <div class="style-options" id="styleOptions">
+                        <!-- Style options will be populated by JavaScript -->
+                        <div class="loading">
+                            <div class="loading-spinner"></div>
+                            <span>Loading styles...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TTS Controls -->
+            <div class="tts-controls mb-4">
+                <button id="generateBtn" class="btn btn-primary btn-lg">
+                    <i class="fa fa-play me-2"></i> Generate Speech
+                </button>
+                
+                <!-- Loading indicator -->
+                <div id="loadingIndicator" class="loading">
+                    <div class="loading-spinner"></div>
+                    <span>Generating speech...</span>
+                </div>
+                
+                <!-- Audio player -->
+                <audio id="audioPlayer" controls></audio>
+            </div>
+            
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">About Azure Neural Voices</h4>
+                <p>These voices use Microsoft Azure's Cognitive Services Speech API to generate incredibly natural-sounding speech. Neural voices are trained using deep neural networks to produce human-like intonation and clarity.</p>
+                <hr>
+                <p class="mb-0">Different voice styles express emotions and tones appropriate for different types of content - try them all to find what works best for your journal coaching experience!</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Elements
+        const ttsText = document.getElementById('ttsText');
+        const voiceOptions = document.getElementById('voiceOptions');
+        const styleOptions = document.getElementById('styleOptions');
+        const generateBtn = document.getElementById('generateBtn');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const sampleTexts = document.querySelectorAll('.sample-text');
+        
+        // Variables to store selected options
+        let selectedVoice = null;
+        let selectedStyle = null;
+        
+        // Add click event listeners to sample texts
+        sampleTexts.forEach(sample => {
+            sample.addEventListener('click', function() {
+                ttsText.value = this.dataset.text;
+            });
+        });
+        
+        // Fetch available Azure voices and styles
+        fetch('/api/azure-voices')
+            .then(response => response.json())
+            .then(data => {
+                // Remove loading indicators
+                voiceOptions.innerHTML = '';
+                styleOptions.innerHTML = '';
+                
+                // Populate voice options
+                for (const [key, description] of Object.entries(data.voices)) {
+                    const voiceOption = document.createElement('div');
+                    voiceOption.className = 'voice-option';
+                    voiceOption.dataset.voice = key;
+                    voiceOption.innerHTML = `
+                        <strong>${key.charAt(0).toUpperCase() + key.slice(1)}</strong>
+                        <div class="voice-description">${description}</div>
+                    `;
+                    
+                    voiceOption.addEventListener('click', function() {
+                        // Remove selected class from all voice options
+                        document.querySelectorAll('.voice-option').forEach(opt => {
+                            opt.classList.remove('selected');
+                        });
+                        
+                        // Add selected class to this option
+                        this.classList.add('selected');
+                        
+                        // Store selected voice
+                        selectedVoice = this.dataset.voice;
+                    });
+                    
+                    voiceOptions.appendChild(voiceOption);
+                }
+                
+                // Select the first voice by default
+                if (voiceOptions.firstElementChild) {
+                    voiceOptions.firstElementChild.click();
+                }
+                
+                // Populate style options
+                for (const [key, description] of Object.entries(data.styles)) {
+                    const styleOption = document.createElement('div');
+                    styleOption.className = 'style-option';
+                    styleOption.dataset.style = key;
+                    styleOption.innerHTML = `
+                        <strong>${key.charAt(0).toUpperCase() + key.slice(1)}</strong>
+                        <div class="style-description">${description}</div>
+                    `;
+                    
+                    styleOption.addEventListener('click', function() {
+                        // Remove selected class from all style options
+                        document.querySelectorAll('.style-option').forEach(opt => {
+                            opt.classList.remove('selected');
+                        });
+                        
+                        // Add selected class to this option
+                        this.classList.add('selected');
+                        
+                        // Store selected style
+                        selectedStyle = this.dataset.style;
+                    });
+                    
+                    styleOptions.appendChild(styleOption);
+                }
+                
+                // Select the first style by default
+                if (styleOptions.firstElementChild) {
+                    styleOptions.firstElementChild.click();
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching voices:', error);
+                voiceOptions.innerHTML = '<div class="alert alert-danger">Error loading voices</div>';
+                styleOptions.innerHTML = '<div class="alert alert-danger">Error loading styles</div>';
+            });
+        
+        // Generate speech on button click
+        generateBtn.addEventListener('click', function() {
+            // Check if text is provided
+            if (!ttsText.value.trim()) {
+                alert('Please enter some text to convert to speech.');
+                return;
+            }
+            
+            // Check if voice and style are selected
+            if (!selectedVoice || !selectedStyle) {
+                alert('Please select a voice and style.');
+                return;
+            }
+            
+            // Show loading indicator
+            loadingIndicator.style.display = 'flex';
+            generateBtn.disabled = true;
+            
+            // Make API request
+            fetch('/api/azure-tts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    text: ttsText.value,
+                    voice_type: selectedVoice,
+                    style: selectedStyle
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                // Set audio source and play
+                audioPlayer.src = data.audio_url;
+                audioPlayer.load();
+                audioPlayer.play();
+            })
+            .catch(error => {
+                console.error('Error generating speech:', error);
+                alert('Error generating speech: ' + error.message);
+            })
+            .finally(() => {
+                // Hide loading indicator
+                loadingIndicator.style.display = 'none';
+                generateBtn.disabled = false;
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -58,7 +58,12 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="voiceToolsDropdown">
                             <li><a class="dropdown-item" href="{{ url_for('tts_routes.tts_test') }}">Basic TTS Test</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('tts_routes.premium_tts_test') }}">Premium Voices <span class="badge bg-success">New</span></a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('tts_routes.premium_tts_test') }}">Premium Voices</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ url_for('tts_routes.enhanced_tts_test') }}">
+                                <span style="background-color: #9C27B0; color: white; padding: 2px 5px; border-radius: 3px; font-size: 0.7em;">Enhanced</span>
+                                Natural Voices <span class="badge bg-danger">New!</span>
+                            </a></li>
                         </ul>
                     </li>
                 </ul>
