@@ -103,13 +103,13 @@ def openai_tts():
             logger.error("No text provided in request")
             return jsonify({"error": "No text provided"}), 400
         
-        # Get voice type
-        voice = data.get('voice', 'alloy')
+        # Get voice type (default to shimmer as per user preference)
+        voice = data.get('voice', 'shimmer')
         
         # Validate voice type
         if voice not in OPENAI_VOICES:
             logger.warning(f"Unknown voice: {voice}, using default")
-            voice = 'alloy'
+            voice = 'shimmer'
         
         # Generate unique filename
         filename = f"{uuid.uuid4()}.mp3"
