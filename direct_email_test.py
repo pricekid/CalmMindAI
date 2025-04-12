@@ -99,7 +99,7 @@ def send_direct_email(recipient_email, subject=None, message_content=None):
     text_body = f"Calm Journey - Email Test\n\n{custom_text}This is a test email using direct SMTP connection with environment variables.\nIf you're seeing this, it means the email configuration is working correctly!"
     
     message = MIMEMultipart("alternative")
-    message["Subject"] = subject
+    message["Subject"] = email_subject
     message["From"] = mail_sender
     message["To"] = recipient_email
     
@@ -120,7 +120,7 @@ def send_direct_email(recipient_email, subject=None, message_content=None):
         server.login(mail_username, mail_password)
         
         # Send the email
-        logger.info(f"Sending email to {recipient_email} with subject '{subject}'...")
+        logger.info(f"Sending email to {recipient_email} with subject '{email_subject}'...")
         server.sendmail(mail_sender, recipient_email, message.as_string())
         
         # Close the connection properly
@@ -150,13 +150,33 @@ if __name__ == "__main__":
     # Check if email was provided as command line argument
     if len(sys.argv) >= 2:
         recipient = sys.argv[1]
+        
+        # Custom subject and message if provided
+        custom_subject = None
+        custom_message = None
+        
+        if len(sys.argv) >= 3:
+            custom_subject = sys.argv[2]
+        
+        if len(sys.argv) >= 4:
+            custom_message = sys.argv[3]
+        
         print(f"Sending test email to {recipient}...")
-        result = send_direct_email(recipient)
+        if custom_subject:
+            print(f"Subject: {custom_subject}")
+        if custom_message:
+            print(f"Message: {custom_message}")
+            
+        print("\nChecking email configuration...")
+        result = send_direct_email(recipient, custom_subject, custom_message)
         
         if result["success"]:
-            print("✅ Email sent successfully!")
+            print("\n✅ Email sent successfully!")
+            print("* This doesn't guarantee delivery to inbox - check spam folder if not received")
+            print("* Some email providers may delay or filter messages from external services")
+            print("* Gmail addresses are generally more reliable for testing")
         else:
-            print(f"❌ Error: {result.get('error', 'Unknown error')}")
+            print(f"\n❌ Error: {result.get('error', 'Unknown error')}")
     else:
-        print("Usage: python3 direct_email_test.py [email_address]")
-        print("Example: python3 direct_email_test.py user@example.com")
+        print("Usage: python3 direct_email_test.py [email_address] [optional_subject] [optional_message]")
+        print("Example: python3 direct_email_test.py user@example.com \"Test Subject\" \"This is a test message\"")

@@ -27,11 +27,20 @@ def get_base_url():
 def main():
     # Check for command line argument
     if len(sys.argv) < 2:
-        print("Usage: python3 send_basic_login_link.py [email_address]")
+        print("Usage: python3 send_basic_login_link.py [email_address] [optional_message]")
+        print("Example: python3 send_basic_login_link.py user@example.com \"Welcome back to Calm Journey!\"")
         return
     
     email = sys.argv[1]
+    
+    # Optional custom message
+    custom_message = None
+    if len(sys.argv) >= 3:
+        custom_message = sys.argv[2]
+    
     print(f"Sending login link to {email}...")
+    if custom_message:
+        print(f"Custom message: {custom_message}")
     
     # Generate token
     token = generate_token()
@@ -42,15 +51,23 @@ def main():
     link = f"{base_url}/login/token/{token}?email={email}&expires={expiry}"
     
     # Send login link
-    result = send_login_link(email, link, None)
+    result = send_login_link(email, link, custom_message)
     
     if result:
-        print("✅ Login link sent successfully!")
-        print(f"\nToken: {token}")
+        print("\n✅ Login link sent successfully!")
+        print(f"Token: {token}")
         print(f"Expiry: {expiry} ({int((expiry - time.time()) / 60)} minutes from now)")
         print(f"Link: {link}")
+        print("\nNotes:")
+        print("* If the email doesn't arrive, check spam/junk folders")
+        print("* The link will work once the user account with this email exists in the system")
+        print("* Login links expire after 10 minutes for security")
     else:
-        print("❌ Failed to send login link.")
+        print("\n❌ Failed to send login link.")
+        print("Possible reasons:")
+        print("* Email server connection issues")
+        print("* Invalid email address format")
+        print("* Environment variables for email not properly configured")
 
 if __name__ == "__main__":
     main()
