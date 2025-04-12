@@ -10,3 +10,8 @@ tts_routes_bp = Blueprint('tts_routes', __name__)
 def tts_test():
     """Render the TTS test page"""
     return render_template('tts_test.html')
+
+@tts_routes_bp.route('/premium-tts-test')
+def premium_tts_test():
+    """Render the premium TTS test page with enhanced voice features"""
+    return render_template('premium_tts_test.html')

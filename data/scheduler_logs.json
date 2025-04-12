@@ -1,11 +1,5 @@
 [
   {
-    "timestamp": "2025-04-08 16:52:28",
-    "type": "startup_check",
-    "message": "Found stale PID file for scheduler (PID 1111). Removing.",
-    "success": false
-  },
-  {
     "timestamp": "2025-04-08 16:52:29",
     "type": "process_start",
     "message": "Scheduler started successfully with PID 1566",
@@ -5997,6 +5991,12 @@
     "timestamp": "2025-04-12 02:01:34",
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-12 02:01:51",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2317",
     "success": true
   }
 ]
