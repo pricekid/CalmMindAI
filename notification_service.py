@@ -180,41 +180,110 @@ def send_test_email(recipient_email):
     result = send_email(recipient_email, subject, html_body, text_body)
     return result.get('success', False)
 
-def send_login_link(email, link):
+def send_login_link(email, link, custom_message=None):
     """
     Send a login link to a user.
     
     Args:
         email: The user's email address
         link: The login link
+        custom_message: Optional custom message to include in the email
     
     Returns:
         bool: True if successful, False otherwise
     """
+    # Log the link being sent for debugging
+    logger.info(f"Sending login link to {email}: {link}")
+    
+    # Determine expiry time from link
+    expiry_str = "10 minutes"
+    if "expires=" in link:
+        try:
+            # Extract expiry from URL parameter
+            import re
+            from datetime import datetime, timedelta
+            
+            # Try to extract expiry timestamp
+            expiry_match = re.search(r'expires=(\d+)', link)
+            if expiry_match:
+                expiry_timestamp = int(expiry_match.group(1))
+                current_time = int(datetime.now().timestamp())
+                expiry_minutes = (expiry_timestamp - current_time) // 60
+                
+                if expiry_minutes > 60:
+                    expiry_str = f"{expiry_minutes // 60} hours"
+                else:
+                    expiry_str = f"{expiry_minutes} minutes"
+        except Exception as e:
+            logger.error(f"Error parsing expiry time: {str(e)}")
+    
+    # Add custom message section if provided
+    custom_message_html = ""
+    custom_message_text = ""
+    
+    if custom_message and custom_message.strip():
+        custom_message_html = f"""
+        <div style="margin: 25px 0; padding: 15px; background-color: #f0f7f7; border-left: 4px solid #5f9ea0; border-radius: 3px;">
+            <h3 style="color: #5f9ea0; margin-top: 0;">Special message from the Calm Journey team:</h3>
+            <p style="white-space: pre-line;">{custom_message}</p>
+        </div>
+        """
+        
+        custom_message_text = f"""
+Special message from the Calm Journey team:
+{custom_message}
+
+"""
+    
     subject = "Calm Journey - Your Login Link"
     html_body = f"""
     <html>
-    <body>
-        <h2>Calm Journey - Your Login Link</h2>
-        <p>Hello!</p>
-        <p>You requested a login link for Calm Journey. Click the link below to log in:</p>
-        <p><a href="{link}">{link}</a></p>
-        <p>This link will expire in 10 minutes.</p>
-        <p>If you didn't request this link, you can safely ignore this email.</p>
-        <hr>
-        <p><em>The Calm Journey Team</em></p>
+    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #f8f9fa; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
+            <h1 style="color: #5f9ea0; margin: 0;">Calm Journey</h1>
+            <p style="font-size: 18px; margin: 5px 0 0;">Secure Login Link</p>
+        </div>
+        
+        <div style="padding: 20px; background-color: #fff; border-radius: 0 0 8px 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <h2 style="color: #5f9ea0; border-bottom: 1px solid #eee; padding-bottom: 10px;">Hello!</h2>
+            
+            {custom_message_html}
+            
+            <p>You requested a secure login link for Calm Journey.</p>
+            
+            <p>Click the button below to log in to your account:</p>
+            
+            <p style="text-align: center; margin: 25px 0;">
+                <a href="{link}" style="display: inline-block; background-color: #5f9ea0; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Log In Securely</a>
+            </p>
+            
+            <p>This link will expire in {expiry_str}.</p>
+            
+            <p><strong>Having trouble with the button?</strong> Copy and paste this link into your browser:</p>
+            <p style="background-color: #f8f9fa; padding: 10px; border-radius: 5px; word-break: break-all;">
+                {link}
+            </p>
+            
+            <p style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #eee; font-size: 14px; color: #666;">
+                If you didn't request this link, you can safely ignore this email.
+            </p>
+        </div>
+        
+        <div style="text-align: center; padding: 20px; font-size: 12px; color: #666;">
+            <p>The Calm Journey Team</p>
+        </div>
     </body>
     </html>
     """
     text_body = f"""Calm Journey - Your Login Link
 
 Hello!
-
-You requested a login link for Calm Journey. Use the link below to log in:
+{custom_message_text}
+You requested a secure login link for Calm Journey. Use the link below to log in:
 
 {link}
 
-This link will expire in 10 minutes.
+This link will expire in {expiry_str}.
 
 If you didn't request this link, you can safely ignore this email.
 

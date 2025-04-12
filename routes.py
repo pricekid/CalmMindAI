@@ -71,6 +71,50 @@ def login():
     
     return render_template('login.html', title='Login', form=form)
 
+# Token-based login route for email links
+@app.route('/login/token/<token>')
+def login_with_token(token):
+    """
+    Handle token-based login from email links.
+    This expects URL parameters: email and expires
+    """
+    # Get the email and expiry from query parameters
+    email = request.args.get('email')
+    expires = request.args.get('expires')
+    
+    # Log parameters for debugging
+    app.logger.info(f"Token login attempt: token={token}, email={email}, expires={expires}")
+    
+    # Check if required parameters are present
+    if not email or not expires:
+        flash('Invalid login link. Missing parameters.', 'danger')
+        return redirect(url_for('login'))
+    
+    # Check if the link has expired
+    try:
+        expiry_time = int(expires)
+        current_time = int(datetime.now().timestamp())
+        
+        if current_time > expiry_time:
+            flash('Login link has expired. Please request a new one.', 'danger')
+            return redirect(url_for('login'))
+    except ValueError:
+        flash('Invalid login link. Malformed expiry time.', 'danger')
+        return redirect(url_for('login'))
+    
+    # Find the user by email
+    user = User.query.filter_by(email=email.lower()).first()
+    if not user:
+        flash('No account found with that email address.', 'danger')
+        return redirect(url_for('login'))
+    
+    # Successfully validate the token, log in the user
+    login_user(user, remember=True)
+    flash('You have been logged in successfully via email link!', 'success')
+    
+    # Redirect to the dashboard
+    return redirect(url_for('dashboard'))
+
 # User logout
 @app.route('/logout')
 def logout():

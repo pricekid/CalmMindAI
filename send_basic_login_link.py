@@ -42,7 +42,7 @@ def main():
     link = f"{base_url}/login/token/{token}?email={email}&expires={expiry}"
     
     # Send login link
-    result = send_login_link(email, link)
+    result = send_login_link(email, link, None)
     
     if result:
         print("✅ Login link sent successfully!")
