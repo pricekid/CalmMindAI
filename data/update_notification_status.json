@@ -1,0 +1,14 @@
+{
+  "total_users": 20,
+  "sent_count": 4,
+  "skipped_count": 0,
+  "failed_count": 0,
+  "sent_to": [
+    "naturalarts@gmail.com",
+    "jacqueline12006@yahoo.com",
+    "ken.maycock@gmail.com",
+    "josiahjosey6@gmail.com"
+  ],
+  "failures": {},
+  "timestamp": "2025-04-12 23:57:54"
+}

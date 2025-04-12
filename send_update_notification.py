@@ -151,12 +151,38 @@ def send_to_all_users():
     sent_count = 0
     skipped_count = 0
     failed_count = 0
+    sent_to = []
+    failures = {}
+    
+    # Create status file path
+    status_file = 'data/update_notification_status.json'
+    
+    # Helper function to update status file
+    def update_status():
+        stats = {
+            "total_users": total_users,
+            "sent_count": sent_count,
+            "skipped_count": skipped_count,
+            "failed_count": failed_count,
+            "sent_to": sent_to,
+            "failures": failures,
+            "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
+        }
+        
+        with open(status_file, 'w') as f:
+            json.dump(stats, f, indent=2)
+        
+        return stats
+    
+    # Initial status
+    update_status()
     
     for user in users:
         # Only send notifications to users with notifications enabled
         if not user.get('notifications_enabled', False):
             logger.info(f"Skipping user {user.get('id')} ({user.get('email')}): Notifications disabled")
             skipped_count += 1
+            update_status()
             continue
         
         # Get user email and username
@@ -166,6 +192,7 @@ def send_to_all_users():
         if not email:
             logger.warning(f"Skipping user {user.get('id')}: No email address")
             skipped_count += 1
+            update_status()
             continue
         
         # Send notification
@@ -176,26 +203,25 @@ def send_to_all_users():
             if result:
                 logger.info(f"Update notification sent to {email}")
                 sent_count += 1
+                sent_to.append(email)
             else:
                 logger.error(f"Failed to send update notification to {email}")
                 failed_count += 1
+                failures[email] = "Failed to send email"
         except Exception as e:
-            logger.error(f"Error sending update notification to {email}: {str(e)}")
+            error_msg = str(e)
+            logger.error(f"Error sending update notification to {email}: {error_msg}")
             failed_count += 1
+            failures[email] = error_msg
+        
+        # Update status after each email
+        update_status()
         
         # Sleep briefly between emails to avoid rate limiting
         time.sleep(1)
     
-    # Return stats
-    stats = {
-        "total_users": total_users,
-        "sent_count": sent_count,
-        "skipped_count": skipped_count,
-        "failed_count": failed_count,
-        "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
-    }
-    
-    return stats
+    # Final status update
+    return update_status()
 
 def main(auto_confirm=False):
     print("Calm Journey - Send Update Notifications to All Users")
