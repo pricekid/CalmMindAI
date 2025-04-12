@@ -328,6 +328,11 @@ with app.app_context():
     from tts_routes import tts_routes_bp
     app.register_blueprint(tts_routes_bp)
     
+    # Register premium TTS service
+    from premium_tts_service import premium_tts_bp
+    app.register_blueprint(premium_tts_bp)
+    
     # Explicitly exempt TTS routes from CSRF protection
     csrf.exempt(direct_tts_bp)
     csrf.exempt(simple_direct_tts_bp)
+    csrf.exempt(premium_tts_bp)
