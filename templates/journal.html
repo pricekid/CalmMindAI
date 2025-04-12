@@ -142,24 +142,26 @@
             <div class="list-group">
                 {% for entry in entries.items %}
                 <a href="{{ url_for('view_journal_entry', entry_id=entry.id) }}" class="list-group-item list-group-item-action">
-                    <div class="row">
-                        <div class="col-md-9">
-                            <h5 class="mb-1">{{ entry.title }}</h5>
-                            <p class="mb-1" style="overflow-wrap: break-word; word-wrap: break-word; white-space: normal;">{{ entry.content[:100] }}{% if entry.content|length > 100 %}...{% endif %}</p>
-                            <small>{{ entry.created_at.strftime('%B %d, %Y at %I:%M %p') }}</small>
-                        </div>
-                        <div class="col-md-3 d-flex align-items-center justify-content-end">
-                            <span class="badge anxiety-badge me-2 
-                                {% if entry.anxiety_level <= 3 %}anxiety-low
-                                {% elif entry.anxiety_level <= 6 %}anxiety-medium
-                                {% else %}anxiety-high{% endif %}">
-                                {{ entry.anxiety_level }}/10
-                            </span>
-                            {% if entry.is_analyzed %}
-                                <span class="badge bg-info">Analyzed</span>
-                            {% else %}
-                                <span class="badge bg-secondary">Not Analyzed</span>
-                            {% endif %}
+                    <div class="journal-entry-container">
+                        <div class="journal-entry-row">
+                            <div class="journal-entry-text">
+                                <h5 class="mb-1">{{ entry.title }}</h5>
+                                <p class="mb-1 journal-entry-content">{{ entry.content[:100] }}{% if entry.content|length > 100 %}...{% endif %}</p>
+                                <small>{{ entry.created_at.strftime('%B %d, %Y at %I:%M %p') }}</small>
+                            </div>
+                            <div class="journal-entry-badges">
+                                <span class="badge anxiety-badge me-2 
+                                    {% if entry.anxiety_level <= 3 %}anxiety-low
+                                    {% elif entry.anxiety_level <= 6 %}anxiety-medium
+                                    {% else %}anxiety-high{% endif %}">
+                                    {{ entry.anxiety_level }}/10
+                                </span>
+                                {% if entry.is_analyzed %}
+                                    <span class="badge bg-info">Analyzed</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Not Analyzed</span>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </a>
