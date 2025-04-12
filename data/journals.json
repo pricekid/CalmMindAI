@@ -3403,14 +3403,17 @@
     "created_at": "2025-04-09T15:04:51.612805",
     "updated_at": "2025-04-09T15:05:55.031988",
     "is_analyzed": true,
-    "recommendations": [
+    "gpt_response": "Hey there! I really appreciate you taking the time to check in, even if it's just a quick 'test.' It's a huge step to engage with your feelings, no matter how small they may seem right now.\n\nIt sounds like you're just dipping your toes into the journaling waters, and that's a great place to start. Even short entries are a way of keeping the door open to understanding yourself better.\n\nBased on what you've shared in the past, here are a couple of thought patterns that might pop up for you:\n\nAll-or-Nothing Thinking: This is when we see things in black and white terms. Maybe there's a tendency to think, 'If it's not perfect, it's a fail.'\nMind Reading: This involves assuming you know what others are thinking about you, often not in the most positive light. \n\nHere are a few gentle CBT strategies you could try:\n\nThought Reframing: Next time you catch an all-or-nothing thought, try to find a middle ground. Instead of thinking 'I have to do this perfectly,' try 'Doing my best is enough.'\nMindfulness Practice: Spend a few minutes each day practicing being in the moment. This can help reduce mind reading by bringing your focus back to the present.\n\nAnd a little reflection for today:\n\"What's one thing I can accept about myself today, just as I am?\"\n\nRemember, you're on a journey, and every little step counts. You're doing amazing work by simply being curious about your thoughts and feelings.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n\n\nWarmly,\nCoach Mira",
+    "cbt_patterns": [
       {
-        "thought_pattern": "All-or-Nothing Thinking",
-        "recommendation": "This is when you view situations in extreme terms, like seeing things as either a complete success or a total failure, without recognizing the middle ground. - Thought Reframing: Practice seeing the nuances and middle ground in situations instead of only the extremes."
+        "pattern": "All-or-Nothing Thinking",
+        "description": "Seeing situations in black-and-white terms, without recognizing any middle ground.",
+        "recommendation": "Thought Reframing: Try to find a middle ground in your thoughts."
       },
       {
-        "thought_pattern": "Comparison Trap",
-        "recommendation": "This involves constantly comparing yourself to others, which can lead to feelings of inadequacy and decreased self-esteem. - Gratitude Practice: Focus on three things you\u2019re grateful for in your own life to shift attention away from comparisons."
+        "pattern": "Mind Reading",
+        "description": "Assuming you know what others are thinking about you, often negatively.",
+        "recommendation": "Mindfulness Practice: Focus on being present to reduce assumptions about others."
       }
     ]
   },

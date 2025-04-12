@@ -3,17 +3,37 @@ Script to fix email notifications by creating a custom email configuration loade
 that directly reads from environment variables.
 """
 import os
-import logging
 import smtplib
+import logging
+import json
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from flask import Flask
-from app import app, db, mail
-from models import User
+from datetime import datetime
 
-# Configure logging
+# Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
+def ensure_data_directory():
+    """Ensure the data directory exists"""
+    if not os.path.exists('data'):
+        os.makedirs('data')
+
+def load_users():
+    """Load users from the data/users.json file"""
+    ensure_data_directory()
+    if not os.path.exists('data/users.json'):
+        return []
+    
+    try:
+        with open('data/users.json', 'r') as f:
+            return json.load(f)
+    except json.JSONDecodeError:
+        logger.error("Error decoding users.json file")
+        return []
+    except Exception as e:
+        logger.error(f"Error loading users: {str(e)}")
+        return []
 
 def get_mail_config():
     """
@@ -45,7 +65,7 @@ def direct_send_email(recipient, subject, html_body, text_body=None):
     Returns:
         dict: Result with success flag and error message if applicable
     """
-    # Get email configuration directly from environment
+    # Get email configuration from environment
     mail_config = get_mail_config()
     
     mail_server = mail_config['MAIL_SERVER']
@@ -68,15 +88,6 @@ def direct_send_email(recipient, subject, html_body, text_body=None):
         logger.error(error_msg)
         return {"success": False, "error": error_msg}
     
-    # Log configuration
-    logger.info(f"Mail configuration for direct send:")
-    logger.info(f"MAIL_SERVER: {mail_server}")
-    logger.info(f"MAIL_PORT: {mail_port}")
-    logger.info(f"MAIL_USE_TLS: {mail_use_tls}")
-    logger.info(f"MAIL_USERNAME: {'Set' if mail_username else 'Not set'}")
-    logger.info(f"MAIL_PASSWORD: {'Set' if mail_password else 'Not set'}")
-    logger.info(f"MAIL_DEFAULT_SENDER: {mail_sender}")
-    
     # Create the email message
     message = MIMEMultipart("alternative")
     message["Subject"] = subject
@@ -86,23 +97,23 @@ def direct_send_email(recipient, subject, html_body, text_body=None):
     # Add text and HTML parts
     if text_body:
         message.attach(MIMEText(text_body, "plain"))
-    if html_body:
-        message.attach(MIMEText(html_body, "html"))
+    message.attach(MIMEText(html_body, "html"))
     
     try:
         # Connect to the mail server with timeout
+        logger.info(f"Connecting to mail server {mail_server}:{mail_port}...")
         if mail_use_tls:
-            server = smtplib.SMTP(mail_server, mail_port, timeout=10)  # 10 second timeout
+            server = smtplib.SMTP(mail_server, mail_port, timeout=15)  # 15 second timeout
             server.starttls()
         else:
-            server = smtplib.SMTP_SSL(mail_server, mail_port, timeout=10)  # 10 second timeout
+            server = smtplib.SMTP_SSL(mail_server, mail_port, timeout=15)  # 15 second timeout
         
         # Log in to the mail server
-        logger.debug(f"Attempting to log in to mail server {mail_server}:{mail_port} as {mail_username}")
+        logger.info(f"Logging in to mail server as {mail_username}...")
         server.login(mail_username, mail_password)
         
         # Send the email with a timeout
-        logger.info(f"Sending email to {recipient} with subject '{subject}'")
+        logger.info(f"Sending email to {recipient} with subject '{subject}'...")
         try:
             server.sendmail(mail_sender, recipient, message.as_string())
             # Close the connection properly
@@ -143,21 +154,26 @@ def send_immediate_test_email(email_address):
     Returns:
         dict: Result with success flag and error message if applicable
     """
-    subject = "Calm Journey - Email Test (Direct Send)"
+    subject = "Calm Journey - Email Test"
     html_body = """
     <html>
     <body>
-        <h2>Calm Journey - Email Test (Direct Send)</h2>
-        <p>This is a test email using direct SMTP connection, bypassing Flask-Mail.</p>
-        <p>If you're seeing this, it means the configuration is working!</p>
+        <h2>Calm Journey - Email Test</h2>
+        <p>This is a test email sent using the direct method.</p>
+        <p>If you're seeing this email, it means the direct email sending is working correctly!</p>
         <hr>
         <p><em>The Calm Journey Team</em></p>
     </body>
     </html>
     """
-    text_body = "Calm Journey - Email Test (Direct Send)\n\nThis is a test email using direct SMTP connection, bypassing Flask-Mail.\nIf you're seeing this, it means the configuration is working!"
+    text_body = "Calm Journey - Email Test\n\nThis is a test email sent using the direct method.\nIf you're seeing this email, it means the direct email sending is working correctly!"
     
-    return direct_send_email(email_address, subject, html_body, text_body)
+    return direct_send_email(
+        recipient=email_address,
+        subject=subject,
+        html_body=html_body,
+        text_body=text_body
+    )
 
 def send_notification_to_all_users():
     """
@@ -166,101 +182,145 @@ def send_notification_to_all_users():
     Returns:
         dict: Statistics about the notification sending process
     """
-    with app.app_context():
-        # Get all users with notifications enabled
-        users = User.query.filter_by(notifications_enabled=True).all()
+    users = load_users()
+    sent_count = 0
+    failed_count = 0
+    skipped_count = 0
+    
+    for user in users:
+        # Skip users who have disabled notifications
+        if not user.get('notifications_enabled', False):
+            skipped_count += 1
+            continue
         
-        if not users:
-            logger.info("No users found with notifications enabled.")
-            return {"success": 0, "errors": 0}
+        # Get the user's email
+        email = user.get('email')
+        if not email:
+            skipped_count += 1
+            continue
         
-        logger.info(f"Sending notifications to {len(users)} users...")
-        
-        success_count = 0
-        error_count = 0
-        
-        # Use the correct Replit URL
-        base_url = "https://calm-mind-ai-naturalarts.replit.app"
-        journal_url = f"{base_url}/journal/new"
-        
-        for user in users:
-            subject = 'Special Reminder: Take a Moment to Journal - Calm Journey'
-            html_body = f"""
-            <html>
-            <body>
-                <h2>Hello {user.username}!</h2>
-                <p>This is a special reminder to take a moment for yourself today.</p>
-                <p>Writing in your journal can help you process your thoughts and feelings, reduce stress, and gain clarity.</p>
-                <p>We encourage you to spend just 5 minutes today writing about what's on your mind.</p>
-                <p><a href="{journal_url}" style="background-color: #4CAF50; color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px; display: inline-block; margin-top: 10px;">Start Writing Now</a></p>
-                <p>Regular notifications will continue at your preferred time.</p>
-                <p>Wishing you a peaceful day,<br>The Calm Journey Team</p>
-            </body>
-            </html>
-            """
-            
-            text_body = f"""
-            Hello {user.username}!
-            
-            This is a special reminder to take a moment for yourself today.
-            
-            Writing in your journal can help you process your thoughts and feelings, reduce stress, and gain clarity.
-            
-            We encourage you to spend just 5 minutes today writing about what's on your mind.
-            
-            Visit {journal_url} to start writing now.
-            
-            Regular notifications will continue at your preferred time.
-            
-            Wishing you a peaceful day,
-            The Calm Journey Team
-            """
-            
-            try:
-                result = direct_send_email(user.email, subject, html_body, text_body)
-                
-                if result.get("success"):
-                    success_count += 1
-                    logger.info(f"Sent notification to {user.email}")
-                else:
-                    error_count += 1
-                    logger.error(f"Failed to send notification to {user.email}: {result.get('error', 'Unknown error')}")
-            except Exception as e:
-                error_count += 1
-                logger.error(f"Unexpected error sending to {user.email}: {str(e)}", exc_info=True)
-        
-        logger.info(f"Notification sending complete. Success: {success_count}, Errors: {error_count}")
-        return {"success": success_count, "errors": error_count}
+        # Send the notification
+        subject = "Calm Journey - Daily Wellness Reminder"
+        html_body = f"""
+        <html>
+        <body>
+            <h2>Calm Journey - Daily Wellness Reminder</h2>
+            <p>Hello {user.get('username', 'there')}!</p>
+            <p>This is your daily reminder to take a moment for yourself and check in with your mental well-being.</p>
+            <p>We'd love to hear how you're doing today. Consider spending just 5 minutes journaling about your thoughts and feelings.</p>
+            <p><a href="https://calm-mind-ai-naturalarts.replit.app/journal/new">Click here to create a new journal entry</a></p>
+            <hr>
+            <p><em>The Calm Journey Team</em></p>
+            <p style="font-size: 0.8em; color: #666;">
+                You received this email because you enabled notifications in your Calm Journey account.
+                If you'd like to unsubscribe, please update your notification preferences in your account settings.
+            </p>
+        </body>
+        </html>
+        """
+        text_body = f"""Calm Journey - Daily Wellness Reminder
 
-if __name__ == "__main__":
-    import sys
+Hello {user.get('username', 'there')}!
+
+This is your daily reminder to take a moment for yourself and check in with your mental well-being.
+
+We'd love to hear how you're doing today. Consider spending just 5 minutes journaling about your thoughts and feelings.
+
+Visit https://calm-mind-ai-naturalarts.replit.app/journal/new to create a new journal entry.
+
+The Calm Journey Team
+
+--
+You received this email because you enabled notifications in your Calm Journey account.
+If you'd like to unsubscribe, please update your notification preferences in your account settings.
+"""
+        
+        result = direct_send_email(
+            recipient=email,
+            subject=subject,
+            html_body=html_body,
+            text_body=text_body
+        )
+        
+        if result.get('success', False):
+            sent_count += 1
+        else:
+            failed_count += 1
+            logger.error(f"Failed to send notification to {email}: {result.get('error', 'Unknown error')}")
     
-    if len(sys.argv) < 2:
-        print("Usage:")
-        print("  python fix_email_notifications.py test <email>  - Send test email")
-        print("  python fix_email_notifications.py send-all      - Send to all users")
-        sys.exit(1)
+    stats = {
+        'total_users': len(users),
+        'sent_count': sent_count,
+        'failed_count': failed_count,
+        'skipped_count': skipped_count,
+        'timestamp': datetime.now().isoformat()
+    }
     
-    command = sys.argv[1]
+    return stats
+
+def main():
+    """Main function to test email functionality"""
+    print("Email Notification Fix Script")
+    print("-----------------------------")
+    print("1. Send a test email to a specific address")
+    print("2. Send notifications to all eligible users")
+    print("3. Check email configuration")
+    print("4. Exit")
     
-    if command == "test" and len(sys.argv) > 2:
-        email = sys.argv[2]
+    choice = input("\nEnter your choice (1-4): ")
+    
+    if choice == '1':
+        email = input("Enter the email address to send the test to: ")
+        if not email:
+            print("No email address provided. Exiting.")
+            return
+        
         print(f"Sending test email to {email}...")
         result = send_immediate_test_email(email)
         
-        if result.get("success"):
-            print(f"Email sent successfully to {email}")
+        if result.get('success', False):
+            print(f"✅ Success! Email sent to {email}")
         else:
-            print(f"Failed to send email: {result.get('error', 'Unknown error')}")
-            
-    elif command == "send-all":
-        print("Sending emails to all users with notifications enabled...")
-        with app.app_context():
-            result = send_notification_to_all_users()
-            print(f"Sent {result.get('success', 0)} emails successfully")
-            print(f"Failed to send {result.get('errors', 0)} emails")
+            print(f"❌ Error: {result.get('error', 'Unknown error')}")
+    
+    elif choice == '2':
+        print("Sending notifications to all eligible users...")
+        stats = send_notification_to_all_users()
+        
+        print("\nNotification Statistics:")
+        print(f"Total users: {stats['total_users']}")
+        print(f"Emails sent: {stats['sent_count']}")
+        print(f"Emails failed: {stats['failed_count']}")
+        print(f"Users skipped (notifications disabled): {stats['skipped_count']}")
+    
+    elif choice == '3':
+        mail_config = get_mail_config()
+        
+        print("\nEmail Configuration:")
+        print(f"MAIL_SERVER: {mail_config['MAIL_SERVER']}")
+        print(f"MAIL_PORT: {mail_config['MAIL_PORT']}")
+        print(f"MAIL_USE_TLS: {mail_config['MAIL_USE_TLS']}")
+        print(f"MAIL_USERNAME: {'Set' if mail_config['MAIL_USERNAME'] else 'Not set'}")
+        print(f"MAIL_PASSWORD: {'Set' if mail_config['MAIL_PASSWORD'] else 'Not set'}")
+        print(f"MAIL_DEFAULT_SENDER: {mail_config['MAIL_DEFAULT_SENDER']}")
+        
+        if not all([
+            mail_config['MAIL_SERVER'],
+            mail_config['MAIL_PORT'],
+            mail_config['MAIL_USERNAME'],
+            mail_config['MAIL_PASSWORD'],
+            mail_config['MAIL_DEFAULT_SENDER']
+        ]):
+            print("\n❌ Warning: Some required email configuration is missing!")
+        else:
+            print("\n✅ All required email configuration is present.")
+    
+    elif choice == '4':
+        print("Exiting...")
+        return
+    
     else:
-        print("Unknown command")
-        print("Usage:")
-        print("  python fix_email_notifications.py test <email>  - Send test email")
-        print("  python fix_email_notifications.py send-all      - Send to all users")
+        print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
