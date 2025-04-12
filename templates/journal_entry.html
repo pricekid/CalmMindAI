@@ -81,12 +81,15 @@
                                     {{ form.content(class="form-control", rows=8, id="journal-content") }}
                                 {% endif %}
                                 
+                                {% if not entry %}
+                                <!-- Only show voice input for new entries -->
                                 <div class="voice-input-controls">
                                     <button type="button" id="voice-input-button" class="btn btn-outline-primary" 
                                             title="Start Voice Input (Click again to stop)">
                                         <i class="bi bi-mic"></i>
                                     </button>
                                 </div>
+                                {% endif %}
                             </div>
                             
                             <div id="voice-input-status" class="voice-status mt-2 d-none">
@@ -101,7 +104,9 @@
                             <div class="form-text mt-2">
                                 Express yourself freely. This journal is private to you, and the AI 
                                 analysis is only used to help you identify patterns and suggest coping strategies.
+                                {% if not entry %}
                                 <span class="text-primary ms-2"><i class="bi bi-info-circle"></i> Voice input is available!</span>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="form-group mb-4">
