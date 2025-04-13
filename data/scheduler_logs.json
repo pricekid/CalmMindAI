@@ -1,41 +1,5 @@
 [
   {
-    "timestamp": "2025-04-09 10:49:49",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 164",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 10:54:17",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 164",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 10:55:09",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 164",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 11:00:09",
-    "type": "health_check",
-    "message": "Scheduler running with PID 164 at 2025-04-09 11:00:09",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 11:00:46",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-09 11:00:46.880487",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 11:00:46",
-    "type": "job_success",
-    "message": "Job scheduler_health_check executed successfully",
-    "success": true
-  },
-  {
     "timestamp": "2025-04-09 11:01:50",
     "type": "startup_check",
     "message": "Scheduler already running with PID 164",
@@ -5997,6 +5961,42 @@
     "timestamp": "2025-04-13 15:54:36",
     "type": "scheduler_startup",
     "message": "Started scheduler on host 3592462c629c at 2025-04-13 15:54:36.579585",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 15:57:07",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 15:57:07",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 3592462c629c at 2025-04-13 15:57:07.600638",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 15:57:15",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 15:57:15",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 3592462c629c at 2025-04-13 15:57:15.103791",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 15:57:24",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 15:57:24",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 3592462c629c at 2025-04-13 15:57:24.443644",
     "success": false
   }
 ]

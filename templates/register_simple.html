@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block title %}Register - Calm Journey{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card bg-dark my-5">
+                <div class="card-header text-center">
+                    <h3 style="color: var(--warm-peach);">Create Your Account</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="">
+                        {{ form.hidden_tag() }}
+                        
+                        <div class="mb-3">
+                            {{ form.username.label(class="form-label", style="color: var(--warm-peach);") }}
+                            {% if form.username.errors %}
+                                {{ form.username(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.username.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.username(class="form-control") }}
+                            {% endif %}
+                            <div class="form-text text-muted">Choose a username that feels calming to you.</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.email.label(class="form-label", style="color: var(--warm-peach);") }}
+                            {% if form.email.errors %}
+                                {{ form.email(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.email.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.email(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.password.label(class="form-label", style="color: var(--warm-peach);") }}
+                            {% if form.password.errors %}
+                                {{ form.password(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.password.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.password(class="form-control") }}
+                            {% endif %}
+                            <div class="form-text text-muted">Use at least 6 characters with a mix of letters, numbers and symbols.</div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            {{ form.confirm_password.label(class="form-label", style="color: var(--warm-peach);") }}
+                            {% if form.confirm_password.errors %}
+                                {{ form.confirm_password(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.confirm_password.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.confirm_password(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="d-grid">
+                            {{ form.submit(class="btn btn-lg", style="background-color: var(--warm-peach); color: #2d2d2d; font-weight: 600;") }}
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <p class="mb-0">Already have an account? <a href="{{ url_for('login') }}" style="color: var(--warm-peach);">Login here</a></p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <p>
+                    <small class="text-muted">
+                        By creating an account, you agree to our <a href="#" style="color: var(--warm-peach);">Terms of Service</a> and <a href="#" style="color: var(--warm-peach);">Privacy Policy</a>.
+                    </small>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
