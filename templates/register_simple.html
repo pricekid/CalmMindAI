@@ -2,15 +2,100 @@
 
 {% block title %}Register - Calm Journey{% endblock %}
 
+{% block styles %}
+<style>
+    .enhanced-card {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+        border: none;
+    }
+    
+    .form-control {
+        border: 2px solid rgba(230, 185, 128, 0.3);
+        background-color: rgba(33, 37, 41, 0.6);
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: var(--warm-peach);
+        box-shadow: 0 0 0 0.25rem rgba(230, 185, 128, 0.2);
+        background-color: rgba(33, 37, 41, 0.8);
+    }
+    
+    .btn-register {
+        background: linear-gradient(135deg, var(--warm-peach), #d1a673);
+        border: none;
+        padding: 12px 15px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #2d2d2d;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 15px rgba(209, 166, 115, 0.3);
+    }
+    
+    .btn-register:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(209, 166, 115, 0.4);
+        background: linear-gradient(135deg, #d1a673, var(--warm-peach));
+    }
+    
+    .form-help {
+        font-size: 0.85rem;
+        color: rgba(230, 185, 128, 0.8);
+        margin-top: 5px;
+    }
+    
+    .card-header-custom {
+        position: relative;
+        padding-bottom: 20px;
+    }
+    
+    .card-header-custom::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(to right, var(--warm-peach), rgba(230, 185, 128, 0.3));
+        border-radius: 2px;
+    }
+    
+    .social-proof {
+        background: rgba(230, 185, 128, 0.1);
+        padding: 15px;
+        border-radius: 10px;
+        margin: 20px 0;
+        text-align: center;
+    }
+    
+    .links-footer a {
+        color: var(--warm-peach);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .links-footer a:hover {
+        color: #d1a673;
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-6 mx-auto">
-            <div class="card bg-dark my-5">
-                <div class="card-header text-center">
-                    <h3 style="color: var(--warm-peach);">Create Your Account</h3>
+        <div class="col-md-7 col-lg-6 mx-auto">
+            <div class="card enhanced-card bg-dark my-5">
+                <div class="card-header text-center card-header-custom" style="background: linear-gradient(145deg, rgba(230, 185, 128, 0.1), rgba(230, 185, 128, 0.2));">
+                    <h3 class="mb-2" style="color: var(--warm-peach);">Begin Your Wellness Journey</h3>
+                    <p class="text-muted mb-0">Join thousands finding peace with Calm Journey</p>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-4">
                     <form method="POST" action="">
                         {{ form.hidden_tag() }}
                         
@@ -26,7 +111,7 @@
                             {% else %}
                                 {{ form.username(class="form-control") }}
                             {% endif %}
-                            <div class="form-text text-muted">Choose a username that feels calming to you.</div>
+                            <div class="form-help">Choose a username that feels calming to you</div>
                         </div>
                         
                         <div class="mb-3">
@@ -55,7 +140,7 @@
                             {% else %}
                                 {{ form.password(class="form-control") }}
                             {% endif %}
-                            <div class="form-text text-muted">Use at least 6 characters with a mix of letters, numbers and symbols.</div>
+                            <div class="form-help">Use at least 6 characters with a mix of letters, numbers and symbols</div>
                         </div>
                         
                         <div class="mb-4">
@@ -72,24 +157,55 @@
                             {% endif %}
                         </div>
                         
+                        <div class="social-proof">
+                            <div><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i></div>
+                            <p class="mb-0 mt-2" style="color: rgba(255, 255, 255, 0.8);">
+                                <i>"This app has been a game-changer for my anxiety management."</i>
+                            </p>
+                        </div>
+                        
                         <div class="d-grid">
-                            {{ form.submit(class="btn btn-lg", style="background-color: var(--warm-peach); color: #2d2d2d; font-weight: 600;") }}
+                            {{ form.submit(class="btn btn-register btn-lg", id="register-button") }}
                         </div>
                     </form>
                 </div>
-                <div class="card-footer text-center">
-                    <p class="mb-0">Already have an account? <a href="{{ url_for('login') }}" style="color: var(--warm-peach);">Login here</a></p>
+                <div class="card-footer text-center links-footer" style="background: linear-gradient(145deg, rgba(230, 185, 128, 0.1), rgba(230, 185, 128, 0.2));">
+                    <p class="mb-0">Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
                 </div>
             </div>
             
-            <div class="text-center mt-4">
+            <div class="text-center mt-4 links-footer">
                 <p>
                     <small class="text-muted">
-                        By creating an account, you agree to our <a href="#" style="color: var(--warm-peach);">Terms of Service</a> and <a href="#" style="color: var(--warm-peach);">Privacy Policy</a>.
+                        By creating an account, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+                    </small>
+                </p>
+                <p>
+                    <small class="text-muted" style="color: rgba(230, 185, 128, 0.6) !important;">
+                        While Calm Journey can support your mental health journey, it is not a replacement for professional therapy.
                     </small>
                 </p>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Add loading spinner to registration button
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const registerButton = document.getElementById('register-button');
+        
+        if (form && registerButton) {
+            form.addEventListener('submit', function(e) {
+                if (form.checkValidity()) {
+                    registerButton.disabled = true;
+                    registerButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Creating your journey...';
+                }
+            });
+        }
+    });
+</script>
 {% endblock %}
