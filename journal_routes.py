@@ -11,6 +11,7 @@ from journal_service import (
 from datetime import datetime, timedelta
 from sqlalchemy import desc
 import logging
+import gamification
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -177,6 +178,39 @@ def new_journal_entry():
                 flash('Your journal entry has been saved! AI analysis is currently unavailable due to a configuration issue.', 'info')
             else:
                 flash('Your journal entry has been created with AI analysis!', 'success')
+                
+            # Process gamification elements
+            badge_result = gamification.process_journal_entry(current_user.id)
+            
+            # Flash notifications for earned badges
+            gamification.flash_badge_notifications(badge_result)
+            
+            # If user earned new badges, prepare to render the badge notification
+            if badge_result.get("new_badges"):
+                first_badge_id = badge_result["new_badges"][0]
+                badge = badge_result["badge_details"][first_badge_id]
+                
+                # Generate a wellness fact based on the badge type
+                wellness_facts = {
+                    'streak_3': "Consistent journaling creates new neural pathways in your brain that improve emotional regulation.",
+                    'streak_7': "After a week of consistent journaling, your brain starts forming new habits that can reduce stress hormones.",
+                    'streak_14': "Two weeks of consistent reflection has been shown to reduce rumination and increase mindfulness.",
+                    'streak_30': "Studies show that a month of journaling can reduce intrusive thoughts by up to 20%.",
+                    'entries_5': "Writing about emotions reduces their intensity by activating the prefrontal cortex, which helps regulate the amygdala.",
+                    'entries_20': "Regular journaling has been linked to a 28% reduction in anxiety symptoms over time.",
+                    'entries_50': "Long-term journaling strengthens neural connections between the logical and emotional centers of your brain.",
+                    'first_cbt_insight': "Recognizing thought patterns activates your brain's executive function, which helps you respond rather than react.",
+                    'mood_tracker_5': "Consistent mood tracking improves emotional awareness by activating the anterior cingulate cortex in your brain.",
+                    'breathing_session': "Controlled breathing activates your vagus nerve, which can reduce anxiety within 90 seconds."
+                }
+                
+                # Get the wellness fact for this badge type or use a default
+                wellness_fact = wellness_facts.get(first_badge_id, "Journaling regularly can improve your mental wellness by strengthening neural pathways related to self-awareness.")
+                
+                # Store the badge data and wellness fact in the session for rendering
+                from flask import session
+                session['earned_badge'] = badge
+                session['wellness_fact'] = wellness_fact
             
         except Exception as e:
             error_msg = str(e)
@@ -226,6 +260,11 @@ def view_journal_entry(entry_id):
     # Ensure the entry belongs to the current user
     if entry.user_id != current_user.id:
         abort(403)
+    
+    # Check if we have an earned badge to display
+    from flask import session
+    earned_badge = session.pop('earned_badge', None)
+    wellness_fact = session.pop('wellness_fact', None)
     
     # Get the GPT response from JSON file or generate it if missing
     coach_response = ""
@@ -316,7 +355,9 @@ def view_journal_entry(entry_id):
                           view_only=True, 
                           coach_response=styled_coach_response,
                           recurring_patterns=recurring_patterns,
-                          show_call_button=show_call_button)
+                          show_call_button=show_call_button,
+                          earned_badge=earned_badge,
+                          wellness_fact=wellness_fact)
 
 # Update journal entry
 @journal_bp.route('/<int:entry_id>/update', methods=['GET', 'POST'])

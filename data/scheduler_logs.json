@@ -40,5 +40,77 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 3592462c629c at 2025-04-13 19:52:12.663930",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-13 19:52:57",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2633",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 19:53:09",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2633",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 19:53:32",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2633",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 19:53:49",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2633",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 19:53:59",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2633",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 19:54:07",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2633",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 19:54:19",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 2633). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 19:54:19",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-13 19:54:19.847351",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 19:54:19",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-13 19:54:19.848207",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 19:54:19",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 19:54:20",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 3040",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 19:54:20",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 3592462c629c at 2025-04-13 19:54:20.093760",
+    "success": true
   }
 ]

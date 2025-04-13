@@ -11,6 +11,7 @@ import logging
 import csv
 from io import StringIO
 from datetime import datetime, timedelta
+import gamification  # Import the gamification module
 
 # Home page
 @app.route('/')
@@ -378,6 +379,33 @@ def api_analyze_entry(entry_id):
     # Use blueprint function directly to avoid redirect loop
     from journal_routes import api_analyze_entry as blueprint_analyze
     return blueprint_analyze(entry_id)
+
+# Achievements page
+@app.route('/achievements')
+@login_required
+def achievements():
+    """
+    Display user achievements, badges, and streaks.
+    This page shows the user's progress and gamification elements.
+    """
+    # Get user badges and streak data
+    badge_data = gamification.get_user_badges(current_user.id)
+    
+    # Check if streak is at risk of breaking
+    streak_status = gamification.check_streak_status(current_user.id)
+    badge_data['streak_status'] = streak_status
+    
+    # Add a Jinja2 filter for pluralization
+    @app.template_filter('pluralize')
+    def pluralize(number, singular='', plural='s'):
+        if number == 1:
+            return singular
+        else:
+            return plural
+    
+    return render_template('achievements.html', 
+                          title='Your Achievements', 
+                          badge_data=badge_data)
 
 # Crisis Resources page
 @app.route('/crisis')
