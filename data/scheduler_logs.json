@@ -1,53 +1,5 @@
 [
   {
-    "timestamp": "2025-04-09 11:42:54",
-    "type": "health_check",
-    "message": "Scheduler running with PID 164 at 2025-04-09 11:42:54",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 11:47:54",
-    "type": "health_check",
-    "message": "Scheduler running with PID 164 at 2025-04-09 11:47:54",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 11:52:04",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 164",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 11:57:04",
-    "type": "health_check",
-    "message": "Scheduler running with PID 164 at 2025-04-09 11:57:04",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 12:00:46",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-09 12:00:46.880473",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 12:00:46",
-    "type": "job_success",
-    "message": "Job scheduler_health_check executed successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 12:02:04",
-    "type": "health_check",
-    "message": "Scheduler running with PID 164 at 2025-04-09 12:02:04",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 12:07:04",
-    "type": "health_check",
-    "message": "Scheduler running with PID 164 at 2025-04-09 12:07:04",
-    "success": true
-  },
-  {
     "timestamp": "2025-04-09 12:10:21",
     "type": "startup_check",
     "message": "Scheduler already running with PID 164",
@@ -5997,6 +5949,54 @@
     "timestamp": "2025-04-13 16:05:01",
     "type": "scheduler_startup",
     "message": "Started scheduler on host 3592462c629c at 2025-04-13 16:05:01.235806",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 16:10:00",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2023 at 2025-04-13 16:10:00",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 16:15:00",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2023 at 2025-04-13 16:15:00",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 16:20:00",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2023 at 2025-04-13 16:20:00",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 16:25:00",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2023 at 2025-04-13 16:25:00",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 16:30:00",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2023 at 2025-04-13 16:30:00",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 16:35:00",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2023 at 2025-04-13 16:35:00",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 16:35:00",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-13 16:35:00.751735",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 16:35:00",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
     "success": true
   }
 ]
