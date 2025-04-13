@@ -1,0 +1,252 @@
+{% extends "layout.html" %}
+
+{% block title %}Your Achievements - Calm Journey{% endblock %}
+
+{% block styles %}
+<style>
+    .badge-card {
+        border-radius: 15px;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+    
+    .badge-earned {
+        background: linear-gradient(145deg, rgba(33, 37, 41, 0.8), rgba(33, 37, 41, 0.95));
+        border: 1px solid rgba(230, 185, 128, 0.5);
+        transform: translateY(-2px);
+    }
+    
+    .badge-locked {
+        background: linear-gradient(145deg, rgba(33, 37, 41, 0.4), rgba(33, 37, 41, 0.6));
+        border: 1px solid rgba(200, 200, 200, 0.2);
+        filter: grayscale(70%);
+    }
+    
+    .badge-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        font-size: 28px;
+    }
+    
+    .badge-header {
+        text-align: center;
+        padding: 20px 20px 10px;
+    }
+    
+    .badge-body {
+        padding: 0 20px 20px;
+    }
+    
+    .streak-display {
+        background: linear-gradient(145deg, rgba(33, 37, 41, 0.8), rgba(33, 37, 41, 0.95));
+        border: 1px solid rgba(230, 185, 128, 0.3);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 25px;
+    }
+    
+    .streak-counter {
+        font-size: 48px;
+        font-weight: 700;
+        text-align: center;
+        background: linear-gradient(to right, var(--warm-peach), #d1a673);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    
+    .streak-label {
+        font-size: 16px;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.8);
+        margin-top: 5px;
+    }
+    
+    .section-header {
+        border-bottom: 2px solid rgba(230, 185, 128, 0.3);
+        padding-bottom: 10px;
+        margin-bottom: 25px;
+        color: var(--warm-peach);
+    }
+    
+    .progress-bar {
+        height: 8px;
+        border-radius: 4px;
+        background-color: rgba(230, 185, 128, 0.7);
+    }
+    
+    .tooltip-inner {
+        max-width: 300px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="text-center mb-4" style="color: var(--warm-peach);">Your Journey Achievements</h1>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <div class="streak-display">
+                <h4 class="text-center mb-3" style="color: var(--warm-peach);">Current Streak</h4>
+                <div class="streak-counter">{{ badge_data.current_streak }}</div>
+                <div class="streak-label">{{ badge_data.current_streak | pluralize('Day', 'Days') }}</div>
+                
+                {% if badge_data.current_streak > 0 %}
+                <div class="text-center mt-3">
+                    <small class="text-muted">
+                        {% if badge_data.streak_status.at_risk %}
+                        Don't break your streak! Journal today to keep it going.
+                        {% else %}
+                        You've journaled today. Great job maintaining your practice!
+                        {% endif %}
+                    </small>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="streak-display">
+                <h4 class="text-center mb-3" style="color: var(--warm-peach);">Your Stats</h4>
+                
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <span>Journal Entries</span>
+                        <span style="color: var(--warm-peach);">{{ badge_data.stats.entry_count }}</span>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <span>Longest Streak</span>
+                        <span style="color: var(--warm-peach);">{{ badge_data.stats.longest_streak }} {{ badge_data.stats.longest_streak | pluralize('day', 'days') }}</span>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <span>Mood Logs</span>
+                        <span style="color: var(--warm-peach);">{{ badge_data.stats.mood_log_count }}</span>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <span>Insights Received</span>
+                        <span style="color: var(--warm-peach);">{{ badge_data.stats.cbt_insights_received }}</span>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="d-flex justify-content-between">
+                        <span>Breathing Sessions</span>
+                        <span style="color: var(--warm-peach);">{{ badge_data.stats.breathing_sessions }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-8">
+            <!-- Consistency badges -->
+            <h2 class="section-header">Consistency Badges</h2>
+            <div class="row">
+                {% for badge in badge_data.categorized_badges.streak %}
+                <div class="col-md-6">
+                    <div class="badge-card {% if badge.earned %}badge-earned{% else %}badge-locked{% endif %}">
+                        <div class="badge-header">
+                            <div class="badge-icon" style="background-color: {{ badge.color }};">
+                                <i class="fas {{ badge.icon }}" style="color: #fff;"></i>
+                            </div>
+                            <h4>{{ badge.name }}</h4>
+                        </div>
+                        <div class="badge-body">
+                            <p class="text-muted">{{ badge.description }}</p>
+                            
+                            {% if not badge.earned %}
+                            {% set milestone = badge.id.split('_')[1] | int %}
+                            {% set progress = badge_data.current_streak / milestone * 100 %}
+                            <div class="progress" style="height: 8px;">
+                                <div class="progress-bar" role="progressbar" style="width: {{ progress if progress <= 100 else 100 }}%;" 
+                                     aria-valuenow="{{ badge_data.current_streak }}" aria-valuemin="0" aria-valuemax="{{ milestone }}"></div>
+                            </div>
+                            <div class="text-muted text-center mt-2">
+                                <small>{{ badge_data.current_streak }} / {{ milestone }} days</small>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Journal Entry badges -->
+            <h2 class="section-header mt-4">Journal Entry Badges</h2>
+            <div class="row">
+                {% for badge in badge_data.categorized_badges.entries %}
+                <div class="col-md-6">
+                    <div class="badge-card {% if badge.earned %}badge-earned{% else %}badge-locked{% endif %}">
+                        <div class="badge-header">
+                            <div class="badge-icon" style="background-color: {{ badge.color }};">
+                                <i class="fas {{ badge.icon }}" style="color: #fff;"></i>
+                            </div>
+                            <h4>{{ badge.name }}</h4>
+                        </div>
+                        <div class="badge-body">
+                            <p class="text-muted">{{ badge.description }}</p>
+                            
+                            {% if not badge.earned %}
+                            {% set milestone = badge.id.split('_')[1] | int %}
+                            {% set progress = badge_data.stats.entry_count / milestone * 100 %}
+                            <div class="progress" style="height: 8px;">
+                                <div class="progress-bar" role="progressbar" style="width: {{ progress if progress <= 100 else 100 }}%;" 
+                                     aria-valuenow="{{ badge_data.stats.entry_count }}" aria-valuemin="0" aria-valuemax="{{ milestone }}"></div>
+                            </div>
+                            <div class="text-muted text-center mt-2">
+                                <small>{{ badge_data.stats.entry_count }} / {{ milestone }} entries</small>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Other badges (insights, mood, breathing) -->
+            <h2 class="section-header mt-4">Wellness Activity Badges</h2>
+            <div class="row">
+                {% for category in ['insights', 'mood', 'breathing'] %}
+                    {% for badge in badge_data.categorized_badges[category] %}
+                    <div class="col-md-6">
+                        <div class="badge-card {% if badge.earned %}badge-earned{% else %}badge-locked{% endif %}">
+                            <div class="badge-header">
+                                <div class="badge-icon" style="background-color: {{ badge.color }};">
+                                    <i class="fas {{ badge.icon }}" style="color: #fff;"></i>
+                                </div>
+                                <h4>{{ badge.name }}</h4>
+                            </div>
+                            <div class="badge-body">
+                                <p class="text-muted">{{ badge.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+{% endblock %}
