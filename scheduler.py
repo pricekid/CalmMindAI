@@ -1,8 +1,8 @@
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.events import EVENT_JOB_EXECUTED, EVENT_JOB_ERROR, EVENT_SCHEDULER_STARTED
-from notification_service import send_daily_reminder
-from sms_notification_service import send_daily_sms_reminder
+# Use the decoupled scheduler service instead of importing models directly
+from scheduler_service import send_daily_reminder_direct, send_daily_sms_reminder_direct
 import logging
 import os
 import sys
@@ -13,7 +13,6 @@ import time
 import flask
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import models
 from scheduler_logs import log_scheduler_activity, ensure_data_directory
 
 # Configure detailed logging
@@ -47,13 +46,13 @@ scheduler = BlockingScheduler(
 
 # Wrapper functions to add better error handling and logging
 def safe_send_daily_reminder():
-    """Wrapper around send_daily_reminder with error handling and logging"""
+    """Wrapper around send_daily_reminder_direct with error handling and logging"""
     try:
         logger.info(f"[{datetime.datetime.now()}] Starting daily email reminder job")
         log_scheduler_activity("email_notification_start", "Starting daily email notifications")
         
-        with app.app_context():
-            result = send_daily_reminder()
+        # Use the direct service function that doesn't depend on models
+        result = send_daily_reminder_direct()
         
         logger.info(f"[{datetime.datetime.now()}] Completed daily email reminder job. Result: {result}")
         log_scheduler_activity("email_notification_complete", f"Completed daily email notifications: {result}")
@@ -65,7 +64,7 @@ def safe_send_daily_reminder():
         return False
 
 def safe_send_daily_sms_reminder():
-    """Wrapper around send_daily_sms_reminder with error handling and logging"""
+    """Wrapper around send_daily_sms_reminder_direct with error handling and logging"""
     try:
         logger.info(f"[{datetime.datetime.now()}] Starting daily SMS reminder job")
         log_scheduler_activity("sms_notification_start", "Starting daily SMS notifications")
@@ -73,8 +72,8 @@ def safe_send_daily_sms_reminder():
         # First ensure Twilio credentials are loaded
         load_twilio_credentials()
         
-        with app.app_context():
-            result = send_daily_sms_reminder()
+        # Use the direct service function that doesn't depend on models
+        result = send_daily_sms_reminder_direct()
         
         logger.info(f"[{datetime.datetime.now()}] Completed daily SMS reminder job. Result: {result}")
         log_scheduler_activity("sms_notification_complete", f"Completed daily SMS notifications: {result}")

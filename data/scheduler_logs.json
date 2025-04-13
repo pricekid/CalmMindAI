@@ -1,35 +1,5 @@
 [
   {
-    "timestamp": "2025-04-09 11:27:54",
-    "type": "health_check",
-    "message": "Scheduler running with PID 164 at 2025-04-09 11:27:54",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 11:30:46",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-09 11:30:46.880490",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 11:30:46",
-    "type": "job_success",
-    "message": "Job scheduler_health_check executed successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 11:32:54",
-    "type": "health_check",
-    "message": "Scheduler running with PID 164 at 2025-04-09 11:32:54",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 11:37:54",
-    "type": "health_check",
-    "message": "Scheduler running with PID 164 at 2025-04-09 11:37:54",
-    "success": true
-  },
-  {
     "timestamp": "2025-04-09 11:42:54",
     "type": "health_check",
     "message": "Scheduler running with PID 164 at 2025-04-09 11:42:54",
@@ -5998,5 +5968,35 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 3592462c629c at 2025-04-13 16:02:01.043561",
     "success": false
+  },
+  {
+    "timestamp": "2025-04-13 16:05:00",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-13 16:05:00.751155",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 16:05:00",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-13 16:05:00.758185",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 16:05:00",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 16:05:01",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 2023",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 16:05:01",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 3592462c629c at 2025-04-13 16:05:01.235806",
+    "success": true
   }
 ]
