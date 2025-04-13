@@ -20,23 +20,8 @@ def index():
 # User registration
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))
-    
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        # Convert email to lowercase for case-insensitive matching
-        email = form.email.data.lower() if form.email.data else None
-        user = User(username=form.username.data, email=email)
-        user.set_password(form.password.data)
-        
-        db.session.add(user)
-        db.session.commit()
-        
-        flash('Your account has been created! You can now log in.', 'success')
-        return redirect(url_for('login'))
-    
-    return render_template('register.html', title='Register', form=form)
+    # Redirect to the simplified registration page that doesn't have JSON parsing issues
+    return redirect(url_for('simple_register.simple_register'))
 
 # User login
 @app.route('/login', methods=['GET', 'POST'])

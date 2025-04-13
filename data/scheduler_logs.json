@@ -1,47 +1,5 @@
 [
   {
-    "timestamp": "2025-04-09 11:01:50",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 164",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 11:02:02",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 164",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 11:02:54",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 164",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 11:07:54",
-    "type": "health_check",
-    "message": "Scheduler running with PID 164 at 2025-04-09 11:07:54",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 11:12:54",
-    "type": "health_check",
-    "message": "Scheduler running with PID 164 at 2025-04-09 11:12:54",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 11:17:54",
-    "type": "health_check",
-    "message": "Scheduler running with PID 164 at 2025-04-09 11:17:54",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 11:22:54",
-    "type": "health_check",
-    "message": "Scheduler running with PID 164 at 2025-04-09 11:22:54",
-    "success": true
-  },
-  {
     "timestamp": "2025-04-09 11:27:54",
     "type": "health_check",
     "message": "Scheduler running with PID 164 at 2025-04-09 11:27:54",
@@ -5997,6 +5955,48 @@
     "timestamp": "2025-04-13 15:57:24",
     "type": "scheduler_startup",
     "message": "Started scheduler on host 3592462c629c at 2025-04-13 15:57:24.443644",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 16:00:31",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 1494",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 16:00:31",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 3592462c629c at 2025-04-13 16:00:31.896474",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 16:01:04",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 1494). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 16:01:05",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 16:01:05",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 3592462c629c at 2025-04-13 16:01:05.204426",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 16:02:01",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 16:02:01",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 3592462c629c at 2025-04-13 16:02:01.043561",
     "success": false
   }
 ]

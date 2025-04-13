@@ -34,7 +34,7 @@ def simple_register():
             db.session.commit()
             
             flash('Your account has been created! You can now log in.', 'success')
-            return redirect(url_for('login'))
+            return redirect(url_for('login'))  # Use main login route
         except Exception as e:
             logger.error(f"Error during registration: {str(e)}")
             db.session.rollback()
