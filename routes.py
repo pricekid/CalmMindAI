@@ -380,32 +380,7 @@ def api_analyze_entry(entry_id):
     from journal_routes import api_analyze_entry as blueprint_analyze
     return blueprint_analyze(entry_id)
 
-# Achievements page
-@app.route('/achievements')
-@login_required
-def achievements():
-    """
-    Display user achievements, badges, and streaks.
-    This page shows the user's progress and gamification elements.
-    """
-    # Get user badges and streak data
-    badge_data = gamification.get_user_badges(current_user.id)
-    
-    # Check if streak is at risk of breaking
-    streak_status = gamification.check_streak_status(current_user.id)
-    badge_data['streak_status'] = streak_status
-    
-    # Add a Jinja2 filter for pluralization
-    @app.template_filter('pluralize')
-    def pluralize(number, singular='', plural='s'):
-        if number == 1:
-            return singular
-        else:
-            return plural
-    
-    return render_template('achievements.html', 
-                          title='Your Achievements', 
-                          badge_data=badge_data)
+# Achievements page - see implementation below
 
 # Crisis Resources page
 @app.route('/crisis')
@@ -424,6 +399,32 @@ def about():
     This page is available to all users, whether logged in or not.
     """
     return render_template('about.html', title='About Calm Journey')
+
+@app.route('/achievements')
+@login_required
+def achievements():
+    """
+    Display user achievements, badges, and streaks.
+    This page shows the user's progress and gamification elements.
+    """
+    user_id = current_user.id
+    
+    # Get user badge data
+    badge_data = gamification.get_user_badges(user_id)
+    
+    # Add streak status information
+    badge_data['streak_status'] = gamification.check_streak_status(user_id)
+    
+    # Custom pluralize function for templates
+    @app.template_filter('pluralize')
+    def pluralize(number, singular='', plural='s'):
+        return singular if number == 1 else plural
+    
+    return render_template(
+        'achievements.html',
+        title='Your Achievements',
+        badge_data=badge_data
+    )
 
 # Data download routes
 @app.route('/download/journal-entries')
