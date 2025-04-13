@@ -1,23 +1,5 @@
 [
   {
-    "timestamp": "2025-04-09 10:47:11",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 164",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 10:47:17",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 164",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 10:47:24",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 164",
-    "success": true
-  },
-  {
     "timestamp": "2025-04-09 10:49:31",
     "type": "startup_check",
     "message": "Scheduler already running with PID 164",
@@ -5997,6 +5979,24 @@
     "timestamp": "2025-04-13 15:47:18",
     "type": "scheduler_startup",
     "message": "Started scheduler on host 3592462c629c at 2025-04-13 15:47:18.580195",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 15:52:17",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 15:52:17. Attempt 1 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 15:52:18",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 15:52:18",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 3592462c629c at 2025-04-13 15:52:18.590814",
     "success": false
   }
 ]
