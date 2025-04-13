@@ -154,5 +154,77 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 3313",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-13 21:30:54",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 3313). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 21:30:55",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-13 21:30:55.015776",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 21:30:55",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-13 21:30:55.016453",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 21:30:55",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 21:30:55",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 262",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 21:30:55",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host e842966e01da at 2025-04-13 21:30:55.410770",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 21:31:29",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 262). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 21:31:29",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-13 21:31:29.634237",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 21:31:29",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-13 21:31:29.634868",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 21:31:29",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 21:31:30",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 474",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 21:31:30",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host e842966e01da at 2025-04-13 21:31:30.154562",
+    "success": true
   }
 ]
