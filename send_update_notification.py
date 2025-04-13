@@ -135,9 +135,12 @@ If you'd like to change your notification preferences, you can update them in yo
     result = send_email(email, subject, html_body, text_body)
     return result.get('success', False)
 
-def send_to_all_users():
+def send_to_all_users(resume=True):
     """
     Send update notifications to all users with notifications enabled.
+    
+    Args:
+        resume: If True, attempt to resume from previous state by skipping users who already received emails
     
     Returns:
         dict: Statistics about the sending process
@@ -146,16 +149,28 @@ def send_to_all_users():
     users = load_users()
     logger.info(f"Loaded {len(users)} users")
     
-    # Stats
-    total_users = len(users)
-    sent_count = 0
-    skipped_count = 0
-    failed_count = 0
-    sent_to = []
-    failures = {}
-    
     # Create status file path
     status_file = 'data/update_notification_status.json'
+    
+    # Load previous status if it exists and resume is True
+    previous_sent = []
+    if resume and os.path.exists(status_file):
+        try:
+            with open(status_file, 'r') as f:
+                previous_status = json.load(f)
+                previous_sent = previous_status.get('sent_to', [])
+                logger.info(f"Found previous status file with {len(previous_sent)} emails sent")
+        except (json.JSONDecodeError, FileNotFoundError):
+            logger.warning("Could not read previous status file, starting fresh")
+            previous_sent = []
+    
+    # Stats
+    total_users = len(users)
+    sent_count = len(previous_sent)
+    skipped_count = 0
+    failed_count = 0
+    sent_to = previous_sent.copy()
+    failures = {}
     
     # Helper function to update status file
     def update_status():
@@ -178,19 +193,25 @@ def send_to_all_users():
     update_status()
     
     for user in users:
-        # Only send notifications to users with notifications enabled
-        if not user.get('notifications_enabled', False):
-            logger.info(f"Skipping user {user.get('id')} ({user.get('email')}): Notifications disabled")
-            skipped_count += 1
-            update_status()
-            continue
-        
         # Get user email and username
         email = user.get('email')
         username = user.get('username', 'there')
         
         if not email:
             logger.warning(f"Skipping user {user.get('id')}: No email address")
+            skipped_count += 1
+            update_status()
+            continue
+        
+        # Skip users who have already received emails in a previous run
+        if email in previous_sent:
+            logger.info(f"Skipping user {user.get('id')} ({email}): Already sent in previous run")
+            update_status()
+            continue
+        
+        # Only send notifications to users with notifications enabled
+        if not user.get('notifications_enabled', False):
+            logger.info(f"Skipping user {user.get('id')} ({email}): Notifications disabled")
             skipped_count += 1
             update_status()
             continue

@@ -1,17 +1,5 @@
 [
   {
-    "timestamp": "2025-04-08 19:35:54",
-    "type": "scheduler_start",
-    "message": "Scheduler started successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:38:16",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 11498",
-    "success": true
-  },
-  {
     "timestamp": "2025-04-08 19:38:28",
     "type": "startup_check",
     "message": "Found stale PID file for scheduler (PID 11498). Removing.",
@@ -5998,5 +5986,17 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 7c2849bec2f8 at 2025-04-12 23:58:05.587402",
     "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:00:18",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 6558",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 00:00:18",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 7c2849bec2f8 at 2025-04-13 00:00:18.243986",
+    "success": true
   }
 ]
