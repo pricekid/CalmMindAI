@@ -39,36 +39,8 @@
 {% endblock %}
 
 {% block content %}
-<!-- Badge earned modal -->
-{% if earned_badge %}
-<div class="modal fade" id="badgeEarnedModal" tabindex="-1" aria-labelledby="badgeEarnedModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-dark">
-            <div class="modal-header border-0">
-                <h5 class="modal-title" id="badgeEarnedModalLabel" style="color: var(--warm-peach);">Achievement Unlocked!</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <div class="badge-animation mb-4">
-                    <div class="badge-icon-large" style="width: 120px; height: 120px; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; background-color: {{ earned_badge.color }};">
-                        <i class="fas {{ earned_badge.icon }}" style="font-size: 48px; color: #fff;"></i>
-                    </div>
-                </div>
-                
-                <h3 style="color: var(--warm-peach);">{{ earned_badge.name }}</h3>
-                <p class="mt-3 mb-4">{{ earned_badge.description }}</p>
-                
-                <div class="neuroscience-fact mt-4 p-3" style="background: rgba(230, 185, 128, 0.1); border-radius: 10px; border-left: 4px solid var(--warm-peach);">
-                    <p class="mb-0" style="font-style: italic; color: rgba(255, 255, 255, 0.8);">{{ wellness_fact }}</p>
-                </div>
-            </div>
-            <div class="modal-footer border-0 justify-content-center">
-                <button type="button" class="btn" style="background-color: var(--warm-peach); color: #2d2d2d;" data-bs-dismiss="modal">Continue My Journey</button>
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
+<!-- Include badge earned modal if a badge was earned -->
+{% include 'components/badge_earned.html' %}
 <div class="container mt-4">
     <div class="row">
         <div class="col-lg-8 mx-auto">

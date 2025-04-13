@@ -226,5 +226,41 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host e842966e01da at 2025-04-13 21:31:30.154562",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-13 21:32:47",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 474). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 21:32:47",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-13 21:32:47.972118",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 21:32:47",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-13 21:32:47.972982",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 21:32:47",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 21:32:48",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 749",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 21:32:48",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host e842966e01da at 2025-04-13 21:32:48.492655",
+    "success": true
   }
 ]
