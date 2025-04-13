@@ -1,6 +1,6 @@
 {
   "total_users": 20,
-  "sent_count": 19,
+  "sent_count": 20,
   "skipped_count": 0,
   "failed_count": 0,
   "sent_to": [
@@ -22,8 +22,9 @@
     "rakayla03@gmail.com",
     "shellyannroach@gmail.com",
     "dawnoneal@outlook.com",
-    "dazasi09@gmail.com"
+    "dazasi09@gmail.com",
+    "teddy@kindspire.app"
   ],
   "failures": {},
-  "timestamp": "2025-04-13 00:00:01"
+  "timestamp": "2025-04-13 00:00:41"
 }

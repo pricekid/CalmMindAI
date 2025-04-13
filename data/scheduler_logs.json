@@ -1,461 +1,5 @@
 [
   {
-    "timestamp": "2025-04-08 19:38:28",
-    "type": "startup_check",
-    "message": "Found stale PID file for scheduler (PID 11498). Removing.",
-    "success": false
-  },
-  {
-    "timestamp": "2025-04-08 19:38:29",
-    "type": "process_start",
-    "message": "Scheduler started successfully with PID 11755",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:38:29",
-    "type": "scheduler_startup",
-    "message": "Started scheduler on host 4be930fdc488 at 2025-04-08 19:38:29.287076",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:38:29",
-    "type": "scheduler_startup",
-    "message": "Starting notification scheduler at 2025-04-08 19:38:29.737193",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:38:29",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-08 19:38:29.739941",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:38:29",
-    "type": "scheduler_start",
-    "message": "Scheduler started successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:43:13",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 11755",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:43:16",
-    "type": "startup_check",
-    "message": "Found stale PID file for scheduler (PID 11755). Removing.",
-    "success": false
-  },
-  {
-    "timestamp": "2025-04-08 19:43:17",
-    "type": "process_start",
-    "message": "Scheduler started successfully with PID 12156",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:43:17",
-    "type": "scheduler_startup",
-    "message": "Started scheduler on host 4be930fdc488 at 2025-04-08 19:43:17.589686",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:43:18",
-    "type": "scheduler_startup",
-    "message": "Starting notification scheduler at 2025-04-08 19:43:18.176717",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:43:18",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-08 19:43:18.180248",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:43:18",
-    "type": "scheduler_start",
-    "message": "Scheduler started successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:45:02",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 12156",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:45:07",
-    "type": "startup_check",
-    "message": "Found stale PID file for scheduler (PID 12156). Removing.",
-    "success": false
-  },
-  {
-    "timestamp": "2025-04-08 19:45:08",
-    "type": "process_start",
-    "message": "Scheduler started successfully with PID 12360",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:45:08",
-    "type": "scheduler_startup",
-    "message": "Started scheduler on host 4be930fdc488 at 2025-04-08 19:45:08.862254",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:45:09",
-    "type": "scheduler_startup",
-    "message": "Starting notification scheduler at 2025-04-08 19:45:09.328837",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:45:09",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-08 19:45:09.331942",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:45:09",
-    "type": "scheduler_start",
-    "message": "Scheduler started successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:46:57",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 12360",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:47:09",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 12360",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:48:20",
-    "type": "startup_check",
-    "message": "Found stale PID file for scheduler (PID 12360). Removing.",
-    "success": false
-  },
-  {
-    "timestamp": "2025-04-08 19:48:21",
-    "type": "process_start",
-    "message": "Scheduler started successfully with PID 12790",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:48:21",
-    "type": "scheduler_startup",
-    "message": "Started scheduler on host 4be930fdc488 at 2025-04-08 19:48:21.484854",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:48:24",
-    "type": "scheduler_startup",
-    "message": "Starting notification scheduler at 2025-04-08 19:48:24.083139",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:48:24",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-08 19:48:24.086330",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:48:24",
-    "type": "scheduler_start",
-    "message": "Scheduler started successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:53:20",
-    "type": "health_check",
-    "message": "Scheduler running with PID 12790 at 2025-04-08 19:53:20",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:54:59",
-    "type": "startup_check",
-    "message": "Found stale PID file for scheduler (PID 12790). Removing.",
-    "success": false
-  },
-  {
-    "timestamp": "2025-04-08 19:55:00",
-    "type": "process_start",
-    "message": "Scheduler started successfully with PID 13155",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:55:00",
-    "type": "scheduler_startup",
-    "message": "Started scheduler on host 4be930fdc488 at 2025-04-08 19:55:00.210159",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:55:00",
-    "type": "scheduler_startup",
-    "message": "Starting notification scheduler at 2025-04-08 19:55:00.700635",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:55:00",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-08 19:55:00.704283",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:55:00",
-    "type": "scheduler_start",
-    "message": "Scheduler started successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 19:59:59",
-    "type": "health_check",
-    "message": "Scheduler running with PID 13155 at 2025-04-08 19:59:59",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 20:00:48",
-    "type": "startup_check",
-    "message": "Found stale PID file for scheduler (PID 13155). Removing.",
-    "success": false
-  },
-  {
-    "timestamp": "2025-04-08 20:00:49",
-    "type": "process_start",
-    "message": "Scheduler started successfully with PID 13462",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 20:00:49",
-    "type": "scheduler_startup",
-    "message": "Started scheduler on host 4be930fdc488 at 2025-04-08 20:00:49.140597",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 20:00:49",
-    "type": "scheduler_startup",
-    "message": "Starting notification scheduler at 2025-04-08 20:00:49.860759",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 20:00:49",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-08 20:00:49.864882",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 20:00:49",
-    "type": "scheduler_start",
-    "message": "Scheduler started successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 20:05:48",
-    "type": "health_check",
-    "message": "Scheduler running with PID 13462 at 2025-04-08 20:05:48",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 20:08:11",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 13462",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 20:08:55",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 13462",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 20:09:00",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 13462",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 20:30:49",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-08 20:30:49.861342",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 20:30:49",
-    "type": "job_success",
-    "message": "Job scheduler_health_check executed successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 21:00:49",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-08 21:00:49.861254",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 21:00:49",
-    "type": "job_success",
-    "message": "Job scheduler_health_check executed successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 21:30:49",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-08 21:30:49.861277",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 21:30:49",
-    "type": "job_success",
-    "message": "Job scheduler_health_check executed successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 21:30:53",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 13462",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 21:30:55",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 13462",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 22:00:49",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-08 22:00:49.861291",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 22:00:49",
-    "type": "job_success",
-    "message": "Job scheduler_health_check executed successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 22:30:49",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-08 22:30:49.861253",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 22:30:49",
-    "type": "job_success",
-    "message": "Job scheduler_health_check executed successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 23:00:49",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-08 23:00:49.861305",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 23:00:49",
-    "type": "job_success",
-    "message": "Job scheduler_health_check executed successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 23:01:37",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 13462",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 23:18:12",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 13462",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 23:18:14",
-    "type": "startup_check",
-    "message": "Scheduler already running with PID 13462",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 23:19:59",
-    "type": "startup_check",
-    "message": "Found stale PID file for scheduler (PID 13462). Removing.",
-    "success": false
-  },
-  {
-    "timestamp": "2025-04-08 23:20:00",
-    "type": "process_start",
-    "message": "Scheduler started successfully with PID 160",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 23:20:00",
-    "type": "scheduler_startup",
-    "message": "Started scheduler on host e2c2e61ea861 at 2025-04-08 23:20:00.848054",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 23:20:01",
-    "type": "scheduler_startup",
-    "message": "Starting notification scheduler at 2025-04-08 23:20:01.429160",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 23:20:01",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-08 23:20:01.432176",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-08 23:20:01",
-    "type": "scheduler_start",
-    "message": "Scheduler started successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 10:30:45",
-    "type": "startup_check",
-    "message": "Found stale PID file for scheduler (PID 160). Removing.",
-    "success": false
-  },
-  {
-    "timestamp": "2025-04-09 10:30:46",
-    "type": "process_start",
-    "message": "Scheduler started successfully with PID 164",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 10:30:46",
-    "type": "scheduler_startup",
-    "message": "Started scheduler on host 7cab0e71ee43 at 2025-04-09 10:30:46.485227",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 10:30:46",
-    "type": "scheduler_startup",
-    "message": "Starting notification scheduler at 2025-04-09 10:30:46.879888",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 10:30:46",
-    "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-09 10:30:46.883097",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 10:30:46",
-    "type": "scheduler_start",
-    "message": "Scheduler started successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-09 10:35:45",
-    "type": "health_check",
-    "message": "Scheduler running with PID 164 at 2025-04-09 10:35:45",
-    "success": true
-  },
-  {
     "timestamp": "2025-04-09 10:38:40",
     "type": "startup_check",
     "message": "Scheduler already running with PID 164",
@@ -5998,5 +5542,461 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 7c2849bec2f8 at 2025-04-13 00:00:18.243986",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-13 00:05:17",
+    "type": "process_check",
+    "message": "Process 6558 from PID file doesn't exist. Removing stale file.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:05:17",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 00:05:17. Attempt 1 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:05:18",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 6732",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 00:05:18",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 7c2849bec2f8 at 2025-04-13 00:05:18.213401",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 00:10:18",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6732 at 2025-04-13 00:10:18",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 00:15:18",
+    "type": "process_check",
+    "message": "Process 6732 from PID file doesn't exist. Removing stale file.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:15:18",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 00:15:18. Attempt 1 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:15:19",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:15:19",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 7c2849bec2f8 at 2025-04-13 00:15:19.349273",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:20:19",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 00:20:19. Attempt 2 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:20:20",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 6792",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 00:20:20",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 7c2849bec2f8 at 2025-04-13 00:20:20.475218",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 00:25:20",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6792 at 2025-04-13 00:25:20",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 00:30:20",
+    "type": "process_check",
+    "message": "Process 6792 from PID file doesn't exist. Removing stale file.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:30:20",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 00:30:20. Attempt 1 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:30:21",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 6810",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 00:30:21",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 7c2849bec2f8 at 2025-04-13 00:30:21.678538",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 00:35:21",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6810 at 2025-04-13 00:35:21",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 00:40:21",
+    "type": "process_check",
+    "message": "Process 6810 from PID file doesn't exist. Removing stale file.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:40:21",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 00:40:21. Attempt 1 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:40:22",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:40:22",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 7c2849bec2f8 at 2025-04-13 00:40:22.808301",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:45:22",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 00:45:22. Attempt 2 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:45:23",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:45:23",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 7c2849bec2f8 at 2025-04-13 00:45:23.880580",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:50:23",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 00:50:23. Attempt 3 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:50:23",
+    "type": "health_check_critical",
+    "message": "Critical: 3 consecutive failures. Performing forceful restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:50:23",
+    "type": "process_stop",
+    "message": "No running scheduler found to stop",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 00:50:26",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:55:26",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 00:55:26. Attempt 4 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:55:26",
+    "type": "health_check_critical",
+    "message": "Critical: 4 consecutive failures. Performing forceful restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 00:55:27",
+    "type": "process_stop",
+    "message": "No running scheduler found to stop",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 00:55:30",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:00:30",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 01:00:30. Attempt 5 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:00:30",
+    "type": "health_check_critical",
+    "message": "Critical: 5 consecutive failures. Performing forceful restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:00:30",
+    "type": "process_stop",
+    "message": "No running scheduler found to stop",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 01:00:33",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 6881",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 01:05:33",
+    "type": "process_check",
+    "message": "Process 6881 from PID file doesn't exist. Removing stale file.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:05:33",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 01:05:33. Attempt 1 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:05:34",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:05:34",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 7c2849bec2f8 at 2025-04-13 01:05:34.208145",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:10:34",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 01:10:34. Attempt 2 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:10:35",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:10:35",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 7c2849bec2f8 at 2025-04-13 01:10:35.261596",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:15:35",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 01:15:35. Attempt 3 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:15:35",
+    "type": "health_check_critical",
+    "message": "Critical: 3 consecutive failures. Performing forceful restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:15:35",
+    "type": "process_stop",
+    "message": "No running scheduler found to stop",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 01:15:38",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:20:38",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 01:20:38. Attempt 4 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:20:38",
+    "type": "health_check_critical",
+    "message": "Critical: 4 consecutive failures. Performing forceful restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:20:38",
+    "type": "process_stop",
+    "message": "No running scheduler found to stop",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 01:20:41",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:25:41",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 01:25:41. Attempt 5 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:25:41",
+    "type": "health_check_critical",
+    "message": "Critical: 5 consecutive failures. Performing forceful restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:25:41",
+    "type": "process_stop",
+    "message": "No running scheduler found to stop",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 01:25:44",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:30:44",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 01:30:44. Attempt 6 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:30:44",
+    "type": "health_check_critical",
+    "message": "Critical: 6 consecutive failures. Performing forceful restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:30:44",
+    "type": "process_stop",
+    "message": "No running scheduler found to stop",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 01:30:47",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:35:47",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 01:35:47. Attempt 7 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:35:47",
+    "type": "health_check_critical",
+    "message": "Critical: 7 consecutive failures. Performing forceful restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:35:47",
+    "type": "process_stop",
+    "message": "No running scheduler found to stop",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 01:35:50",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:40:50",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 01:40:50. Attempt 8 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:40:50",
+    "type": "health_check_critical",
+    "message": "Critical: 8 consecutive failures. Performing forceful restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:40:50",
+    "type": "process_stop",
+    "message": "No running scheduler found to stop",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 01:40:53",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:45:53",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 01:45:53. Attempt 9 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:45:53",
+    "type": "health_check_critical",
+    "message": "Critical: 9 consecutive failures. Performing forceful restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:45:53",
+    "type": "process_stop",
+    "message": "No running scheduler found to stop",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 01:45:56",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:50:56",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-13 01:50:56. Attempt 10 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:50:56",
+    "type": "health_check_critical",
+    "message": "Critical: 10 consecutive failures. Performing forceful restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 01:50:56",
+    "type": "process_stop",
+    "message": "No running scheduler found to stop",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 01:50:59",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: Traceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 5, in <module>\n    from sms_notification_service import send_daily_sms_reminder\n  File \"/home/runner/workspace/sms_notification_service.py\", line 4, in <module>\n    from models import User\n  File \"/home/runner/workspace/models.py\", line 2, in <module>\n    from app import db\n  File \"/home/runner/workspace/app.py\", line 257, in <module>\n    from models import User\nImportError: cannot import name 'User' from partially initialized module 'models' (most likely due to a circular import) (/home/runner/workspace/models.py)\n",
+    "success": false
   }
 ]
