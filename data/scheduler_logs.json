@@ -112,5 +112,41 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 3592462c629c at 2025-04-13 19:54:20.093760",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-13 19:56:53",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 3040). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-13 19:56:53",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-13 19:56:53.874548",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 19:56:53",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-13 19:56:53.875395",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 19:56:53",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 19:56:54",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 3313",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 19:56:54",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 3592462c629c at 2025-04-13 19:56:54.371526",
+    "success": true
   }
 ]
