@@ -1138,5 +1138,71 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 2845465723be at 2025-04-14 18:12:04.482315",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-14 18:17:03",
+    "type": "health_check",
+    "message": "Scheduler running with PID 591 at 2025-04-14 18:17:03",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 18:22:03",
+    "type": "health_check",
+    "message": "Scheduler running with PID 591 at 2025-04-14 18:22:03",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 18:27:03",
+    "type": "health_check",
+    "message": "Scheduler running with PID 591 at 2025-04-14 18:27:03",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 18:35:31",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 591). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-14 18:35:31",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-14 18:35:31.985899",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 18:35:31",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-14 18:35:31.988115",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 18:35:31",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 18:35:32",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 269",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 18:35:32",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host e277d94bd5c2 at 2025-04-14 18:35:32.474600",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 18:36:22",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 269",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 18:36:33",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 269",
+    "success": true
   }
 ]
