@@ -1648,5 +1648,47 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host e277d94bd5c2 at 2025-04-14 18:54:03.530429",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-14 18:55:33",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 3056",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 18:56:03",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 3056). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-14 18:56:04",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-14 18:56:04.050444",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 18:56:04",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-14 18:56:04.054512",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 18:56:04",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 18:56:04",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 3368",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 18:56:04",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host e277d94bd5c2 at 2025-04-14 18:56:04.511868",
+    "success": true
   }
 ]

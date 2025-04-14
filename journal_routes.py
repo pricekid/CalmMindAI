@@ -565,12 +565,14 @@ def api_journal_coach(entry_id):
     
     # Get the GPT response from JSON file or generate it if missing
     coach_response = ""
+    structured_data = None
     
     # Try to get from saved journal entries first
     user_entries = get_journal_entries_for_user(current_user.id)
     for json_entry in user_entries:
         if json_entry.get('id') == entry_id:
             coach_response = json_entry.get('gpt_response', "")
+            structured_data = json_entry.get('structured_data')
             break
     
     # If not found, generate a new one
@@ -582,6 +584,7 @@ def api_journal_coach(entry_id):
                 user_id=current_user.id
             )
             coach_response = analysis_result.get("gpt_response")
+            structured_data = analysis_result.get("structured_data")
             
             # We'll save the full analysis in the background but don't need to wait for it
         except Exception as e:
@@ -595,6 +598,7 @@ def api_journal_coach(entry_id):
                 coach_response = "I appreciate you taking the time to journal today. Your entry has been saved, though I'm unable to provide specific feedback at the moment. The practice of putting your thoughts into words is valuable in itself.\n\nWarmly,\nCoach Mira"
             else:
                 coach_response = "Thank you for sharing your journal entry. Although I can't offer specific insights right now, the process of writing down your thoughts is an important step in your wellness journey.\n\nWarmly,\nCoach Mira"
+            structured_data = None
     
     # Format the coach response with paragraphs and sections
     if coach_response:
@@ -614,7 +618,11 @@ def api_journal_coach(entry_id):
     else:
         styled_coach_response = f'<div style="color: #000000; font-weight: normal; background-color: white;">{coach_response}</div>'
     
-    return jsonify({'success': True, 'response': styled_coach_response})
+    return jsonify({
+        'success': True, 
+        'response': styled_coach_response,
+        'structured_data': structured_data
+    })
 
 # API endpoint for analyzing a journal entry
 @journal_bp.route('/api/analyze-entry/<int:entry_id>', methods=['GET', 'POST'])
