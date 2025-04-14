@@ -640,5 +640,41 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host aa1df052097b at 2025-04-14 16:06:05.890202",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-14 16:08:33",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 1241). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-14 16:08:34",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-14 16:08:34.083073",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 16:08:34",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-14 16:08:34.084380",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 16:08:34",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 16:08:34",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 1614",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 16:08:34",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host aa1df052097b at 2025-04-14 16:08:34.531866",
+    "success": true
   }
 ]
