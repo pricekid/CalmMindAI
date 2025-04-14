@@ -21,10 +21,18 @@ def get_openai_api_key():
     # First try to get from environment variable
     api_key = os.environ.get("OPENAI_API_KEY")
     
-    # If not in environment, try to get from admin config
-    if not api_key:
+    # Log key source for debugging (sanitized)
+    if api_key:
+        logger.debug(f"Using OpenAI API key from environment variable (length: {len(api_key)})")
+    else:
+        # If not in environment, try to get from admin config
         config = get_config()
-        api_key = config.get("openai_api_key")
+        admin_key = config.get("openai_api_key")
+        if admin_key:
+            logger.debug(f"Using OpenAI API key from admin config (length: {len(admin_key)})")
+            api_key = admin_key
+        else:
+            logger.warning("No OpenAI API key found in environment or admin config")
     
     return api_key
 
@@ -460,18 +468,32 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                 }
             
         except Exception as api_error:
-            # Log the specific API error
+            # Log the specific API error with detailed error handling
             error_details = str(api_error)
+            logger.error(f"Full OpenAI API error details: {error_details}")
+            
             if "insufficient_quota" in error_details or "429" in error_details:
                 logger.error(f"OpenAI API quota exceeded: {error_details}")
                 error_type = "API_QUOTA_EXCEEDED"
-            elif "invalid_api_key" in error_details:
+            elif "invalid_api_key" in error_details or "key" in error_details.lower():
                 logger.error(f"Invalid OpenAI API key: {error_details}")
                 error_type = "INVALID_API_KEY"
+            elif "model" in error_details.lower():
+                logger.error(f"OpenAI model error: {error_details}")
+                error_type = "MODEL_ERROR"
+            elif "timed out" in error_details.lower() or "timeout" in error_details.lower():
+                logger.error(f"OpenAI API timeout: {error_details}")
+                error_type = "API_TIMEOUT"
+            elif "rate" in error_details.lower() and "limit" in error_details.lower():
+                logger.error(f"OpenAI rate limit exceeded: {error_details}")
+                error_type = "RATE_LIMIT_EXCEEDED"
             else:
                 logger.error(f"OpenAI API error: {error_details}")
                 error_type = "API_ERROR"
-                
+            
+            # Try to create a fallback response before raising the error
+            response_message = "Thank you for sharing your journal entry. I've read it but am experiencing some technical difficulties right now."
+            
             # Re-raise with more context
             raise ValueError(f"{error_type}: {error_details}")
             
@@ -479,8 +501,9 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         error_msg = str(e)
         logger.error(f"Error analyzing journal entry: {error_msg}")
         
-        # Check error types from the refined error handling
-        if "API_QUOTA_EXCEEDED" in error_msg:
+        # Check error types from the refined error handling with more specific messages
+        if "API_QUOTA_EXCEEDED" in error_msg or "RATE_LIMIT_EXCEEDED" in error_msg:
+            logger.warning("Rate limit or quota exceeded for OpenAI API")
             return {
                 "gpt_response": "Thank you for sharing your thoughts today. While I can't provide a personalized response right now due to technical limitations, your entry has been saved. Remember that the act of journaling itself is a powerful tool for self-reflection and growth.\n\nWarmly,\nCoach Mira",
                 "cbt_patterns": [{
@@ -490,6 +513,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                 }]
             }
         elif "INVALID_API_KEY" in error_msg:
+            logger.warning("Invalid API key for OpenAI API")
             return {
                 "gpt_response": "I appreciate you taking the time to journal today. Your entry has been saved, though I'm unable to provide specific feedback at the moment. The practice of putting your thoughts into words is valuable in itself.\n\nWarmly,\nCoach Mira",
                 "cbt_patterns": [{
@@ -498,7 +522,28 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                     "recommendation": "Your journal entry has been saved successfully. Please contact the administrator to resolve this issue."
                 }]
             }
+        elif "MODEL_ERROR" in error_msg:
+            logger.warning("Model error for OpenAI API")
+            return {
+                "gpt_response": "Thank you for sharing your thoughts in this journal entry. Currently, our AI analysis feature is experiencing technical difficulties with the language model. Your entry has been saved, and we're working to resolve this issue.\n\nWarmly,\nCoach Mira",
+                "cbt_patterns": [{
+                    "pattern": "Model Configuration Issue",
+                    "description": "The AI language model is currently unavailable.",
+                    "recommendation": "Your journal entry has been saved successfully. Please try again later while we resolve this issue."
+                }]
+            }
+        elif "API_TIMEOUT" in error_msg:
+            logger.warning("Timeout error for OpenAI API")
+            return {
+                "gpt_response": "Thank you for sharing your journal entry today. It seems our AI coach is taking a bit longer than usual to respond. Your entry has been saved, and you're welcome to try again in a few moments.\n\nWarmly,\nCoach Mira",
+                "cbt_patterns": [{
+                    "pattern": "Connection Timeout",
+                    "description": "The connection to our AI service timed out.",
+                    "recommendation": "Your journal entry has been saved successfully. Please try again in a few minutes when network conditions may improve."
+                }]
+            }
         else:
+            logger.warning(f"Unknown error for OpenAI API: {error_msg}")
             return {
                 "gpt_response": "Thank you for sharing your journal entry. Although I can't offer specific insights right now, the process of writing down your thoughts is an important step in your wellness journey. Your entry has been saved successfully.\n\nWarmly,\nCoach Mira",
                 "cbt_patterns": [{
