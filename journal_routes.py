@@ -13,8 +13,9 @@ from sqlalchemy import desc
 import logging
 import gamification
 
-# Set up logging
+# Set up logging with more details
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 # Create blueprint
 journal_bp = Blueprint('journal_blueprint', __name__, url_prefix='/journal')

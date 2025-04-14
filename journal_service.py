@@ -7,8 +7,9 @@ from admin_utils import get_config
 import os
 from typing import List, Dict, Any, Optional
 
-# Set up logging
+# Set up logging with more details
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 # Define data directory and journals file path
 DATA_DIR = "data"
@@ -265,14 +266,22 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
     safe_text = journal_text if journal_text else "No journal content provided"
     safe_anxiety = anxiety_level if anxiety_level is not None else 5  # Default to mid-level anxiety
     try:
-        # Get API key and model settings
+        # Get API key and model settings with detailed logging
         api_key = get_openai_api_key()
         model = get_openai_model()
+        
+        # Log the configuration details (sanitized)
+        if api_key:
+            logger.debug(f"API key found (length: {len(api_key)}, starts with: {api_key[:3]}...)")
+        else:
+            logger.debug("No API key found in environment or admin settings")
+            
+        logger.debug(f"Using model: {model}")
         
         # Check if API key is available
         if not api_key:
             logger.error("OpenAI API key is not set")
-            raise ValueError("OpenAI API key is missing. Please check your environment variables or admin settings.")
+            raise ValueError("INVALID_API_KEY: OpenAI API key is missing. Please check your environment variables or admin settings.")
         
         # Get count of user entries to determine if we should include pattern analysis
         entry_count = count_user_entries(user_id)
@@ -369,6 +378,9 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
             # Get a fresh client with the current API key
             client = get_openai_client()
             
+            # Log the API parameters for debugging
+            logger.debug(f"Making OpenAI API call with model: {model}, API key (sanitized): {'*****' + api_key[-4:] if api_key else 'None'}")
+            
             response = client.chat.completions.create(
                 model=model,
                 messages=[
@@ -376,8 +388,12 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                     {"role": "user", "content": prompt}
                 ],
                 response_format={"type": "json_object"},
-                temperature=0.7
+                temperature=0.7,
+                max_tokens=1500  # Ensure we have enough tokens for the response
             )
+            
+            # Log successful API call
+            logger.debug("OpenAI API call completed successfully")
             
             # Parse the response with improved error handling
             try:
@@ -385,8 +401,21 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                 content = response.choices[0].message.content
                 logger.debug(f"Raw OpenAI response content: {content}")
                 
-                # Parse the JSON
-                result = json.loads(content)
+                # Parse the JSON with extra validation
+                try:
+                    result = json.loads(content)
+                    logger.debug(f"Successfully parsed JSON response: {result}")
+                except Exception as json_parse_error:
+                    logger.error(f"Failed to parse JSON response: {str(json_parse_error)}")
+                    # Provide a default response format if parsing fails
+                    result = {
+                        "response": "Thank you for sharing your journal entry. I've read through your thoughts.",
+                        "patterns": [{
+                            "pattern": "Processing Limitation",
+                            "description": "We encountered a technical issue analyzing your entry.",
+                            "recommendation": "Your journal has been saved. The insights will be available soon."
+                        }]
+                    }
                 
                 # Format response to add recurring patterns analysis for users with 3+ entries
                 coach_response = result.get("response", "Thank you for sharing your journal entry.")
@@ -404,8 +433,13 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                 
                 # Ensure patterns is a valid list
                 cbt_patterns = result.get("patterns", [])
-                if not isinstance(cbt_patterns, list):
-                    cbt_patterns = []
+                if not isinstance(cbt_patterns, list) or len(cbt_patterns) == 0:
+                    # Provide default patterns if none are available
+                    cbt_patterns = [{
+                        "pattern": "Journal Reflection",
+                        "description": "Your journal entry has been saved.",
+                        "recommendation": "Continue journaling regularly to build self-awareness."
+                    }]
                 
                 # Return formatted results
                 return {
