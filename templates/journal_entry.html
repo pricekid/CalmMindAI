@@ -1053,35 +1053,44 @@
                                 
                                 // Thought patterns section
                                 if (structData.distortions && structData.distortions.length > 0) {
-                                    structuredHtml += `<div class="coach-patterns mb-4">
+                                    structuredHtml += `<div class="distortions mb-4">
                                         <h5 class="mt-4 mb-3">Thought Patterns</h5>
-                                        <ul class="coach-pattern-list">`;
-                                    structData.distortions.forEach(pattern => {
-                                        structuredHtml += `<li class="mb-2"><strong>${pattern.name}:</strong> ${pattern.description}</li>`;
+                                        <ul class="list-group">`;
+                                    structData.distortions.forEach(distortion => {
+                                        structuredHtml += `<li class="list-group-item">
+                                            <strong>${distortion.pattern}</strong>: ${distortion.description}
+                                        </li>`;
                                     });
                                     structuredHtml += `</ul></div>`;
                                 }
                                 
                                 // Strategies section
                                 if (structData.strategies && structData.strategies.length > 0) {
-                                    structuredHtml += `<div class="coach-strategies mb-4">
+                                    structuredHtml += `<div class="strategies mb-4">
                                         <h5 class="mt-4 mb-3">CBT Strategies</h5>
-                                        <ul class="coach-strategy-list">`;
+                                        <div class="strategy-cards">`;
                                     structData.strategies.forEach(strategy => {
-                                        structuredHtml += `<li class="mb-2"><strong>${strategy.name}:</strong> ${strategy.description}</li>`;
+                                        structuredHtml += `<div class="card mb-3">
+                                            <div class="card-body">
+                                                <h6 class="card-title text-primary">${strategy.title}</h6>
+                                                <p>${strategy.description}</p>
+                                                ${strategy.action_step ? `<div class="action-step mt-2">
+                                                    <strong>Try this:</strong> ${strategy.action_step}
+                                                </div>` : ''}
+                                            </div>
+                                        </div>`;
                                     });
-                                    structuredHtml += `</ul></div>`;
+                                    structuredHtml += `</div></div>`;
                                 }
                                 
-                                // Reflection prompts
-                                if (structData.reflection_prompts && structData.reflection_prompts.length > 0) {
-                                    structuredHtml += `<div class="coach-reflections mb-4">
-                                        <h5 class="mt-4 mb-3">Reflection Prompts</h5>
-                                        <ul class="coach-reflection-list">`;
-                                    structData.reflection_prompts.forEach(prompt => {
-                                        structuredHtml += `<li class="mb-2">${prompt}</li>`;
-                                    });
-                                    structuredHtml += `</ul></div>`;
+                                // Reflection prompt
+                                if (structData.reflection_prompt) {
+                                    structuredHtml += `<div class="reflection-prompt mb-4">
+                                        <h5 class="mt-4 mb-3">Reflection Prompt</h5>
+                                        <blockquote class="blockquote">
+                                            <p class="mb-0">${structData.reflection_prompt}</p>
+                                        </blockquote>
+                                    </div>`;
                                 }
                                 
                                 // Outro
@@ -1348,7 +1357,7 @@
                         if (intro) textToRead += intro.textContent + ' ';
                         
                         // Get thought patterns
-                        const patterns = structuredData.querySelector('.coach-patterns');
+                        const patterns = structuredData.querySelector('.distortions');
                         if (patterns) {
                             textToRead += 'Thought Patterns: ';
                             const patternItems = patterns.querySelectorAll('li');
@@ -1358,23 +1367,27 @@
                         }
                         
                         // Get strategies
-                        const strategies = structuredData.querySelector('.coach-strategies');
+                        const strategies = structuredData.querySelector('.strategies');
                         if (strategies) {
                             textToRead += 'CBT Strategies: ';
-                            const strategyItems = strategies.querySelectorAll('li');
+                            const strategyItems = strategies.querySelectorAll('.card');
                             strategyItems.forEach(item => {
-                                textToRead += item.textContent + '. ';
+                                const title = item.querySelector('.card-title');
+                                const description = item.querySelector('p');
+                                const actionStep = item.querySelector('.action-step');
+                                
+                                if (title) textToRead += title.textContent + ': ';
+                                if (description) textToRead += description.textContent + ' ';
+                                if (actionStep) textToRead += actionStep.textContent + '. ';
                             });
                         }
                         
-                        // Get reflection prompts
-                        const reflections = structuredData.querySelector('.coach-reflections');
-                        if (reflections) {
-                            textToRead += 'Reflection Prompts: ';
-                            const reflectionItems = reflections.querySelectorAll('li');
-                            reflectionItems.forEach(item => {
-                                textToRead += item.textContent + '. ';
-                            });
+                        // Get reflection prompt
+                        const reflectionPrompt = structuredData.querySelector('.reflection-prompt');
+                        if (reflectionPrompt) {
+                            textToRead += 'Reflection Prompt: ';
+                            const promptText = reflectionPrompt.querySelector('p');
+                            if (promptText) textToRead += promptText.textContent + '. ';
                         }
                         
                         // Get outro
@@ -1677,7 +1690,7 @@
             if (intro) textToRead += intro.textContent + ' ';
             
             // Get thought patterns
-            const patterns = structuredData.querySelector('.coach-patterns');
+            const patterns = structuredData.querySelector('.distortions');
             if (patterns) {
                 textToRead += 'Thought Patterns: ';
                 const patternItems = patterns.querySelectorAll('li');
@@ -1687,12 +1700,18 @@
             }
             
             // Get strategies
-            const strategies = structuredData.querySelector('.coach-strategies');
+            const strategies = structuredData.querySelector('.strategies');
             if (strategies) {
                 textToRead += 'CBT Strategies: ';
-                const strategyItems = strategies.querySelectorAll('li');
+                const strategyItems = strategies.querySelectorAll('.card');
                 strategyItems.forEach(item => {
-                    textToRead += item.textContent + '. ';
+                    const title = item.querySelector('.card-title');
+                    const description = item.querySelector('p');
+                    const actionStep = item.querySelector('.action-step');
+                    
+                    if (title) textToRead += title.textContent + ': ';
+                    if (description) textToRead += description.textContent + ' ';
+                    if (actionStep) textToRead += actionStep.textContent + '. ';
                 });
             }
             
