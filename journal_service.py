@@ -311,7 +311,25 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         
         {recurring_patterns_text if include_patterns else ''}
 
-        Your response should follow this therapeutic structure:
+        IMPORTANT: You must respond with valid JSON in the following format only:
+
+        {{
+            "response": "Your complete response text following the structure below",
+            "patterns": [
+                {{
+                    "pattern": "Name of CBT thought pattern 1",
+                    "description": "Brief explanation of the pattern",
+                    "recommendation": "Specific CBT technique or exercise to address this pattern"
+                }},
+                {{
+                    "pattern": "Name of CBT thought pattern 2",
+                    "description": "Brief explanation of the pattern",
+                    "recommendation": "Specific CBT technique or exercise to address this pattern"
+                }}
+            ]
+        }}
+
+        Your response (in the "response" field) should follow this therapeutic structure:
 
         1. **Emotional Validation**  
            - Begin by acknowledging the user's effort in opening up.  
@@ -340,25 +358,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
 
         Respond directly to the journal content in a way that builds trust, insight, and emotional safety.
         
-        FORMAT: Make sure to respond with a complete response AND a JSON object for database storage as follows:
-        
-        {{
-            "response": "Your complete response text following the structure above",
-            "patterns": [
-                {{
-                    "pattern": "Name of CBT thought pattern 1",
-                    "description": "Brief explanation of the pattern",
-                    "recommendation": "Specific CBT technique or exercise to address this pattern"
-                }},
-                {{
-                    "pattern": "Name of CBT thought pattern 2",
-                    "description": "Brief explanation of the pattern",
-                    "recommendation": "Specific CBT technique or exercise to address this pattern"
-                }}
-            ]
-        }}
-        
-        Here's an example of the style and structure I want for the response (adapt to the journal content):
+        Here's an example of the style and structure I want for the response field (adapt to the journal content):
         
         "I want to start by saying how common and valid your feelings are. Wanting to connect, yet fearing judgment, creates such an emotional tug-of-war — and your self-awareness in noticing that is truly a strength.
 
@@ -379,6 +379,8 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         "What part of me wants connection right now — and what could I do to honor that gently?"
 
         You're doing meaningful inner work by just noticing this. One small step at a time is still forward."
+        
+        REMEMBER: Return ONLY valid JSON as described above, with no additional text or formatting.
         """
         
         # Attempt to make the API call with error handling
@@ -389,13 +391,14 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
             # Log the API parameters for debugging
             logger.debug(f"Making OpenAI API call with model: {model}, API key (sanitized): {'*****' + api_key[-4:] if api_key else 'None'}")
             
+            # Make the API call with explicit instructions to return JSON
             response = client.chat.completions.create(
                 model=model,
                 messages=[
-                    {"role": "system", "content": "You are Mira, writing as a warm, personable CBT journaling coach who works with anxiety. Your style is conversational, authentic, and never clinical. You write like you're having a one-on-one conversation with a friend who needs support. Use contractions, simple language, and specific examples relevant to the person's situation. Your responses should feel like they were written especially for this person, addressing their unique circumstances with warmth and understanding."},
+                    {"role": "system", "content": "You are Mira, writing as a warm, personable CBT journaling coach who works with anxiety. Your style is conversational, authentic, and never clinical. You write like you're having a one-on-one conversation with a friend who needs support. Use contractions, simple language, and specific examples relevant to the person's situation. Your responses should feel like they were written especially for this person, addressing their unique circumstances with warmth and understanding. ALWAYS RETURN VALID JSON FORMAT."},
                     {"role": "user", "content": prompt}
                 ],
-                response_format={"type": "json_object"},
+                response_format={"type": "json_object"},  # Explicitly require JSON response
                 temperature=0.7,
                 max_tokens=1500  # Ensure we have enough tokens for the response
             )
@@ -405,25 +408,56 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
             
             # Parse the response with improved error handling
             try:
-                # Get the raw response content and debug log it
+                # Get the raw response content 
                 content = response.choices[0].message.content
-                logger.debug(f"Raw OpenAI response content: {content}")
+                logger.debug(f"Raw OpenAI response content: ")  # Don't log the full content as it might be too large
                 
-                # Parse the JSON with extra validation
+                # Parse the JSON with more robust error handling
                 try:
-                    result = json.loads(content)
-                    logger.debug(f"Successfully parsed JSON response: {result}")
+                    # Safety trim in case the response is too large
+                    if len(content) > 20000:
+                        logger.warning(f"Response content is very large ({len(content)} chars), trimming for parsing")
+                        content = content[:20000]
+                    
+                    # Sometimes the API returns content with non-JSON text before or after the JSON
+                    # Try to extract just the JSON part using regex
+                    import re
+                    json_match = re.search(r'(\{.*\})', content, re.DOTALL)
+                    
+                    if json_match:
+                        # Extract just the JSON part
+                        json_content = json_match.group(1)
+                        result = json.loads(json_content)
+                        logger.debug("Successfully parsed JSON response using regex extraction")
+                    else:
+                        # If regex fails, try the full content
+                        result = json.loads(content)
+                        logger.debug("Successfully parsed JSON response from full content")
                 except Exception as json_parse_error:
                     logger.error(f"Failed to parse JSON response: {str(json_parse_error)}")
-                    # Provide a default response format if parsing fails
-                    result = {
-                        "response": "Thank you for sharing your journal entry. I've read through your thoughts.",
-                        "patterns": [{
-                            "pattern": "Processing Limitation",
-                            "description": "We encountered a technical issue analyzing your entry.",
-                            "recommendation": "Your journal has been saved. The insights will be available soon."
-                        }]
-                    }
+                    
+                    # Look for patterns that suggest it's a valid response but not in JSON format
+                    if "warmly" in content.lower() or "coach mira" in content.lower():
+                        # It seems to be a valid text response but not in JSON format
+                        logger.info("Found valid text response but not in JSON format")
+                        result = {
+                            "response": content,
+                            "patterns": [{
+                                "pattern": "Journal Analysis",
+                                "description": "Your journal entry has been analyzed.",
+                                "recommendation": "Continue writing in your journal to develop insights into your thought patterns."
+                            }]
+                        }
+                    else:
+                        # Provide a default response format if parsing fails
+                        result = {
+                            "response": "Thank you for sharing your journal entry. I've read through your thoughts.",
+                            "patterns": [{
+                                "pattern": "Processing Limitation",
+                                "description": "We encountered a technical issue analyzing your entry.",
+                                "recommendation": "Your journal has been saved. The insights will be available soon."
+                            }]
+                        }
                 
                 # Format response to add recurring patterns analysis for users with 3+ entries
                 coach_response = result.get("response", "Thank you for sharing your journal entry.")

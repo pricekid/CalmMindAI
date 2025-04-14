@@ -3439,5 +3439,23 @@
         "recommendation": "Boundary Setting to define and communicate your emotional needs."
       }
     ]
+  },
+  {
+    "id": 154,
+    "user_id": 21,
+    "title": "Hello Today, Life Sucks",
+    "content": "I am a social worker and every blessed I do nothing but listen to a bunch of ungrateful people complain that life is hard but they don't want to do anything to move their lives forward. What am I doing wrong? Why can't I help them? Why can't get them to understand that life development is a journey that we take together? \r\n\r\nWhen I look back on my client list, I just shake my head and groan. I mean, I would love to cry but I have no more tears less. Perhaps I need to change my jobs 'cause I really can't take living and working at Ingrate Central anymore. But what can I do? What should I do? I don't have the passion for my work that I used to.\r\n\r\nWhen I first became a social worker it was because I wanted to help people. Now it seems that I am just wasting time because no one wants a hand-up just a handout. What should I do? What do I do now? I am soooooooooooooo tired of everything",
+    "anxiety_level": 10,
+    "created_at": "2025-04-14T15:54:31.658284",
+    "updated_at": "2025-04-14T16:12:25.783534",
+    "is_analyzed": true,
+    "gpt_response": "Thank you for sharing your journal entry. I've read through your thoughts.\n\nWarmly,\nCoach Mira",
+    "cbt_patterns": [
+      {
+        "pattern": "Processing Limitation",
+        "description": "We encountered a technical issue analyzing your entry.",
+        "recommendation": "Your journal has been saved. The insights will be available soon."
+      }
+    ]
   }
 ]
