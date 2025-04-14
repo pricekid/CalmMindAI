@@ -1353,7 +1353,7 @@
                     
                     if (structuredData) {
                         // Get intro
-                        const intro = structuredData.querySelector('.coach-intro');
+                        const intro = structuredData.querySelector('.intro');
                         if (intro) textToRead += intro.textContent + ' ';
                         
                         // Get thought patterns
@@ -1391,7 +1391,7 @@
                         }
                         
                         // Get outro
-                        const outro = structuredData.querySelector('.coach-outro');
+                        const outro = structuredData.querySelector('.outro');
                         if (outro) textToRead += outro.textContent + ' ';
                         
                         // Add signature if not present
@@ -1686,7 +1686,7 @@
             // For structured data, we want to combine all the text in a logical order
             
             // Get intro
-            const intro = structuredData.querySelector('.coach-intro');
+            const intro = structuredData.querySelector('.intro');
             if (intro) textToRead += intro.textContent + ' ';
             
             // Get thought patterns
@@ -1715,18 +1715,16 @@
                 });
             }
             
-            // Get reflection prompts
-            const reflections = structuredData.querySelector('.coach-reflections');
-            if (reflections) {
-                textToRead += 'Reflection Prompts: ';
-                const reflectionItems = reflections.querySelectorAll('li');
-                reflectionItems.forEach(item => {
-                    textToRead += item.textContent + '. ';
-                });
+            // Get reflection prompt
+            const reflection = structuredData.querySelector('.reflection-prompt');
+            if (reflection) {
+                textToRead += 'Reflection Prompt: ';
+                const promptText = reflection.querySelector('p');
+                if (promptText) textToRead += promptText.textContent + '. ';
             }
             
             // Get outro
-            const outro = structuredData.querySelector('.coach-outro');
+            const outro = structuredData.querySelector('.outro');
             if (outro) textToRead += outro.textContent + ' ';
             
             // Add signature if not present
