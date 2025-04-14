@@ -409,22 +409,53 @@ def achievements():
     """
     user_id = current_user.id
     
-    # Get user badge data
-    badge_data = gamification.get_user_badges(user_id)
-    
-    # Add streak status information
-    badge_data['streak_status'] = gamification.check_streak_status(user_id)
-    
-    # Custom pluralize function for templates
-    @app.template_filter('pluralize')
-    def pluralize(number, singular='', plural='s'):
-        return singular if number == 1 else plural
-    
-    return render_template(
-        'achievements.html',
-        title='Your Achievements',
-        badge_data=badge_data
-    )
+    try:
+        # Get user badge data
+        badge_data = gamification.get_user_badges(user_id)
+        
+        # Add streak status information
+        badge_data['streak_status'] = gamification.check_streak_status(user_id)
+        
+        # Log badge data to debug
+        app.logger.debug(f"Badge data for user {user_id}: {badge_data}")
+        
+        # Custom pluralize function for templates
+        @app.template_filter('pluralize')
+        def pluralize(number, singular='', plural='s'):
+            return singular if number == 1 else plural
+        
+        return render_template(
+            'achievements.html',
+            title='Your Achievements',
+            badge_data=badge_data
+        )
+    except Exception as e:
+        app.logger.error(f"Error in achievements route: {str(e)}")
+        flash(f"There was an error loading your achievements. Please try again later.", "warning")
+        return render_template('error.html', error_message="Could not load achievements data.")
+        
+# Debug route - only use during development
+@app.route('/debug-achievements/<int:user_id>')
+def debug_achievements(user_id):
+    """
+    Debug route to check what badge data is available for a user.
+    This is for development purposes only.
+    """
+    try:
+        # Get user badge data
+        badge_data = gamification.get_user_badges(user_id)
+        
+        # Add streak status information
+        badge_data['streak_status'] = gamification.check_streak_status(user_id)
+        
+        # Return data as JSON for debugging
+        return jsonify({
+            'badge_data': badge_data,
+            'badge_file_exists': os.path.exists(f'data/badges/user_{user_id}_badges.json'),
+            'badge_file_content': json.load(open(f'data/badges/user_{user_id}_badges.json', 'r')) if os.path.exists(f'data/badges/user_{user_id}_badges.json') else None
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
 # Data download routes
 @app.route('/download/journal-entries')
