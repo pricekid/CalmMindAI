@@ -460,7 +460,21 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                         }
                 
                 # Format response to add recurring patterns analysis for users with 3+ entries
-                coach_response = result.get("response", "Thank you for sharing your journal entry.")
+                # The API might return "response" or "content" keys depending on the model and format
+                # Check for both and fall back to a default if neither is found
+                coach_response = result.get("response", None)
+                if coach_response is None or coach_response == "":
+                    # Try alternate keys that might be returned by the API
+                    coach_response = result.get("content", None)
+                    if coach_response is None or coach_response == "":
+                        coach_response = result.get("message", None)
+                        if coach_response is None or coach_response == "":
+                            # Ultimate fallback
+                            coach_response = "Thank you for sharing your journal entry."
+                
+                # Log what we found to help debug
+                logger.debug(f"After key checking, coach_response is {len(coach_response) if coach_response else 0} chars")
+                
                 recurring_patterns = get_recurring_patterns(user_id)
                 
                 if entry_count >= 3 and recurring_patterns:
@@ -473,8 +487,13 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                 if "Coach Mira" not in coach_response:
                     coach_response += "\n\nWarmly,\nCoach Mira"
                 
-                # Ensure patterns is a valid list
-                cbt_patterns = result.get("patterns", [])
+                # Ensure patterns is a valid list - check for both "patterns", "cbt_patterns", and "thought_patterns" 
+                # since the API might use different property names
+                cbt_patterns = result.get("patterns", None)
+                if cbt_patterns is None or not isinstance(cbt_patterns, list) or len(cbt_patterns) == 0:
+                    cbt_patterns = result.get("cbt_patterns", None)
+                    if cbt_patterns is None or not isinstance(cbt_patterns, list) or len(cbt_patterns) == 0:
+                        cbt_patterns = result.get("thought_patterns", [])
                 if not isinstance(cbt_patterns, list) or len(cbt_patterns) == 0:
                     # Provide default patterns if none are available
                     cbt_patterns = [{

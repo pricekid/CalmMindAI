@@ -127,14 +127,22 @@ def new_journal_entry():
         
         # Analyze the entry using the improved GPT analysis
         try:
+            logger.debug(f"Starting GPT analysis for journal entry {entry.id}")
             analysis_result = analyze_journal_with_gpt(
                 journal_text=form.content.data, 
                 anxiety_level=form.anxiety_level.data,
                 user_id=current_user.id
             )
             
+            logger.debug(f"Got analysis result type: {type(analysis_result)}")
+            logger.debug(f"Analysis result keys: {list(analysis_result.keys()) if isinstance(analysis_result, dict) else 'Not a dictionary'}")
+            
             gpt_response = analysis_result.get("gpt_response")
             cbt_patterns = analysis_result.get("cbt_patterns", [])
+            
+            logger.debug(f"GPT response type: {type(gpt_response)}")
+            logger.debug(f"GPT response length: {len(gpt_response) if gpt_response else 0}")
+            logger.debug(f"GPT response preview: {gpt_response[:100] if gpt_response else 'None'}...")
             
             # Save the patterns to the database
             is_api_error = False
