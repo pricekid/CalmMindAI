@@ -225,7 +225,7 @@
                                                 <p>{{ strategy.description }}</p>
                                                 {% if strategy.action_step %}
                                                 <div class="action-step mt-2">
-                                                    <strong>Try this:</strong> {{ strategy.action_step }}
+                                                    <strong class="text-dark" style="background-color: #f0f0f0; padding: 2px 5px; border-radius: 3px; display: inline-block;">Try this:</strong> {{ strategy.action_step }}
                                                 </div>
                                                 {% endif %}
                                             </div>
@@ -1075,7 +1075,7 @@
                                                 <h6 class="card-title text-primary">${strategy.title}</h6>
                                                 <p>${strategy.description}</p>
                                                 ${strategy.action_step ? `<div class="action-step mt-2">
-                                                    <strong>Try this:</strong> ${strategy.action_step}
+                                                    <strong class="text-dark" style="background-color: #f0f0f0; padding: 2px 5px; border-radius: 3px; display: inline-block;">Try this:</strong> ${strategy.action_step}
                                                 </div>` : ''}
                                             </div>
                                         </div>`;
