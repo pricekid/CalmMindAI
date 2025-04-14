@@ -417,7 +417,9 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
             try:
                 # Get the raw response content 
                 content = response.choices[0].message.content
-                logger.debug(f"Raw OpenAI response content: {content[:200]}...")  # Log first 200 chars
+                logger.debug(f"Raw OpenAI response content: {content}")  # Log the full content for debugging
+                # Also log the exact format to see any issues
+                logger.debug(f"Response type: {type(content)}, length: {len(content)}")
                 
                 # Parse the JSON with more robust error handling
                 try:
@@ -434,17 +436,27 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                     if json_match:
                         # Extract just the JSON part
                         json_content = json_match.group(1)
-                        result = json.loads(json_content)
-                        logger.debug("Successfully parsed JSON response using regex extraction")
+                        try:
+                            result = json.loads(json_content)
+                            logger.debug("Successfully parsed JSON response using regex extraction")
+                        except json.JSONDecodeError:
+                            # If regex extraction fails, try a direct approach with the original content
+                            logger.warning("Regex extraction failed, trying direct parsing of full content")
+                            result = json.loads(content)
+                            logger.debug("Successfully parsed JSON response from full content")
                     else:
                         # If regex fails, try the full content
+                        logger.warning("No JSON-like structure found with regex, trying direct parsing")
                         result = json.loads(content)
                         logger.debug("Successfully parsed JSON response from full content")
+                        
+                    # Log the final result structure
+                    logger.debug(f"Parsed result keys: {list(result.keys())}")
                 except Exception as json_parse_error:
                     logger.error(f"Failed to parse JSON response: {str(json_parse_error)}")
                     
                     # Look for patterns that suggest it's a valid response but not in JSON format
-                    if "warmly" in content.lower() or "coach mira" in content.lower():
+                    if "warmly" in content.lower() or "coach mira" in content.lower() or "thank you for sharing" in content.lower():
                         # It seems to be a valid text response but not in JSON format
                         logger.info("Found valid text response but not in JSON format")
                         result = {
@@ -455,6 +467,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                                 "recommendation": "Continue writing in your journal to develop insights into your thought patterns."
                             }]
                         }
+                        logger.debug(f"Created manual response object with content: {content[:100]}...")
                     else:
                         # Provide a default response format if parsing fails
                         result = {
@@ -481,6 +494,11 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                 
                 # Log what we found to help debug
                 logger.debug(f"After key checking, coach_response is {len(coach_response) if coach_response else 0} chars")
+                
+                # If we still don't have a valid response, use the original content if it looks like text
+                if (coach_response is None or coach_response == "") and content and len(content) > 20:
+                    logger.warning("No valid response key found in JSON, using raw content as fallback")
+                    coach_response = content
                 
                 recurring_patterns = get_recurring_patterns(user_id)
                 
