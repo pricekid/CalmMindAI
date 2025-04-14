@@ -1918,5 +1918,11 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host e277d94bd5c2 at 2025-04-14 19:14:49.760618",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-14 19:15:09",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 5402",
+    "success": true
   }
 ]

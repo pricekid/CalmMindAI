@@ -9,6 +9,8 @@ from werkzeug.security import check_password_hash
 from sqlalchemy import desc
 import logging
 import csv
+import os
+import json
 from io import StringIO
 from datetime import datetime, timedelta
 import gamification  # Import the gamification module
