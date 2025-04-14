@@ -597,7 +597,32 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         RETURN ONLY THE JSON OBJECT, nothing else.
         
         {{
-            "response": "Your warm, compassionate message to the person journaling",
+            "intro": "Your warm, personalized greeting and initial validation",
+            "reflection": "Your thoughtful reflection on their specific situation",
+            "distortions": [
+                {{
+                    "pattern": "Name of CBT thought pattern 1",
+                    "description": "Brief explanation of the pattern as it relates to their situation"
+                }},
+                {{
+                    "pattern": "Name of CBT thought pattern 2",
+                    "description": "Brief explanation of the pattern as it relates to their situation"
+                }}
+            ],
+            "strategies": [
+                {{
+                    "title": "Strategy 1 Title",
+                    "description": "Detailed explanation of the strategy",
+                    "action_step": "Specific, concrete action they can take today"
+                }},
+                {{
+                    "title": "Strategy 2 Title",
+                    "description": "Detailed explanation of the strategy",
+                    "action_step": "Specific, concrete action they can take today"
+                }}
+            ],
+            "reflection_prompt": "A thoughtful question tailored to their situation",
+            "outro": "Your warm closing message",
             "patterns": [
                 {{
                     "pattern": "Name of CBT thought pattern 1",
@@ -690,7 +715,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
             response = client.chat.completions.create(
                 model=model,
                 messages=[
-                    {"role": "system", "content": "You are Mira, a deeply empathetic and personalized CBT journaling coach who creates thoughtful, specific responses tailored to each individual's unique situation. You create responses that feel like they were written by a trusted friend who truly understands the person's specific circumstances. You MUST respond ONLY in valid JSON format with a 'response' field for your message and a 'patterns' array for CBT patterns. No markdown, no text outside the JSON structure."},
+                    {"role": "system", "content": "You are Mira, a deeply empathetic and personalized CBT journaling coach who creates thoughtful, specific responses tailored to each individual's unique situation. You create responses that feel like they were written by a trusted friend who truly understands the person's specific circumstances. You MUST respond ONLY in valid JSON format with a structured response that includes 'intro', 'reflection', 'distortions', 'strategies', 'reflection_prompt', 'outro', and 'patterns' fields. No markdown, no text outside the JSON structure."},
                     {"role": "user", "content": prompt}
                 ],
                 response_format={"type": "json_object"},  # Explicitly require JSON response
@@ -767,18 +792,69 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                             }]
                         }
                 
-                # Format response to add recurring patterns analysis for users with 3+ entries
-                # The API might return "response" or "content" keys depending on the model and format
-                # Check for both and fall back to a default if neither is found
-                coach_response = result.get("response", None)
-                if coach_response is None or coach_response == "":
-                    # Try alternate keys that might be returned by the API
-                    coach_response = result.get("content", None)
+                # Handle the new structured response format
+                # Check if we have all the expected fields for the new format
+                has_structured_format = all(k in result for k in ['intro', 'reflection', 'distortions', 'strategies', 'reflection_prompt', 'outro'])
+                
+                if has_structured_format:
+                    logger.debug("Found structured response format with all expected fields")
+                    
+                    # Combine the structured parts into a cohesive response
+                    intro = result.get('intro', '')
+                    reflection = result.get('reflection', '')
+                    
+                    # Process distortions section
+                    distortions_list = result.get('distortions', [])
+                    distortions_text = "\n\nThought Patterns That May Be Surfacing:\n"
+                    for d in distortions_list:
+                        pattern = d.get('pattern', '')
+                        description = d.get('description', '')
+                        distortions_text += f"* {pattern}: {description}\n"
+                    
+                    # Process strategies section
+                    strategies_list = result.get('strategies', [])
+                    strategies_text = "\n\nCBT-Based Strategies:\n"
+                    for i, s in enumerate(strategies_list, 1):
+                        title = s.get('title', f"Strategy {i}")
+                        description = s.get('description', '')
+                        action = s.get('action_step', '')
+                        strategies_text += f"{i}. {title} {description} {action}\n"
+                    
+                    # Add reflection prompt
+                    reflection_prompt = result.get('reflection_prompt', '')
+                    if reflection_prompt:
+                        reflection_prompt = f"\n\nReflection Prompt: \"{reflection_prompt}\"\n"
+                    
+                    # Add outro
+                    outro = result.get('outro', '')
+                    
+                    # Combine all sections
+                    coach_response = f"{intro}\n\n{reflection}{distortions_text}{strategies_text}{reflection_prompt}\n\n{outro}"
+                    
+                    # Store the structured data in result for future UI improvements
+                    result['structured_response'] = {
+                        'intro': intro,
+                        'reflection': reflection,
+                        'distortions': distortions_list,
+                        'strategies': strategies_list,
+                        'reflection_prompt': reflection_prompt,
+                        'outro': outro
+                    }
+                else:
+                    # Fall back to the old format for backward compatibility
+                    logger.debug("Response doesn't have structured format, using legacy format")
+                    
+                    # The API might return "response" or "content" keys depending on the model and format
+                    # Check for both and fall back to a default if neither is found
+                    coach_response = result.get("response", None)
                     if coach_response is None or coach_response == "":
-                        coach_response = result.get("message", None)
+                        # Try alternate keys that might be returned by the API
+                        coach_response = result.get("content", None)
                         if coach_response is None or coach_response == "":
-                            # Ultimate fallback
-                            coach_response = "Thank you for sharing your journal entry."
+                            coach_response = result.get("message", None)
+                            if coach_response is None or coach_response == "":
+                                # Ultimate fallback
+                                coach_response = "Thank you for sharing your journal entry."
                 
                 # Log what we found to help debug
                 logger.debug(f"After key checking, coach_response is {len(coach_response) if coach_response else 0} chars")
@@ -788,6 +864,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                     logger.warning("No valid response key found in JSON, using raw content as fallback")
                     coach_response = content
                 
+                # Add recurring patterns if applicable
                 recurring_patterns = get_recurring_patterns(user_id)
                 
                 if entry_count >= 3 and recurring_patterns:
@@ -815,10 +892,14 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                         "recommendation": "Continue journaling regularly to build self-awareness."
                     }]
                 
-                # Return formatted results
+                # Add structured data if available
+                structured_data = result.get('structured_response', None)
+                
+                # Return formatted results with structured data for UI improvements
                 return {
                     "gpt_response": coach_response,
-                    "cbt_patterns": cbt_patterns
+                    "cbt_patterns": cbt_patterns,
+                    "structured_data": structured_data
                 }
                 
             except json.JSONDecodeError as json_err:
@@ -830,7 +911,8 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                         "pattern": "Journal Processing Error",
                         "description": "We couldn't fully analyze this entry due to a technical issue.",
                         "recommendation": "Your journal has been saved successfully. Try analyzing it again later."
-                    }]
+                    }],
+                    "structured_data": None
                 }
             
         except Exception as api_error:
@@ -876,7 +958,8 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                     "pattern": "API Quota Exceeded",
                     "description": "The AI analysis service is currently unavailable due to API usage limits.",
                     "recommendation": "Your journal entry has been saved successfully. The AI analysis feature will be available once API quota is renewed."
-                }]
+                }],
+                "structured_data": None
             }
         elif "INVALID_API_KEY" in error_msg:
             logger.warning("Invalid API key for OpenAI API")
@@ -886,7 +969,8 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                     "pattern": "API Configuration Issue",
                     "description": "The AI analysis service is currently unavailable due to a configuration issue.",
                     "recommendation": "Your journal entry has been saved successfully. Please contact the administrator to resolve this issue."
-                }]
+                }],
+                "structured_data": None
             }
         elif "MODEL_ERROR" in error_msg:
             logger.warning("Model error for OpenAI API")
@@ -896,7 +980,8 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                     "pattern": "Model Configuration Issue",
                     "description": "The AI language model is currently unavailable.",
                     "recommendation": "Your journal entry has been saved successfully. Please try again later while we resolve this issue."
-                }]
+                }],
+                "structured_data": None
             }
         elif "API_TIMEOUT" in error_msg:
             logger.warning("Timeout error for OpenAI API")
@@ -906,7 +991,8 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                     "pattern": "Connection Timeout",
                     "description": "The connection to our AI service timed out.",
                     "recommendation": "Your journal entry has been saved successfully. Please try again in a few minutes when network conditions may improve."
-                }]
+                }],
+                "structured_data": None
             }
         else:
             logger.warning(f"Unknown error for OpenAI API: {error_msg}")
