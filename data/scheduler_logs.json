@@ -334,5 +334,119 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host e842966e01da at 2025-04-13 21:35:09.912271",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-13 21:40:08",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1329 at 2025-04-13 21:40:08",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 21:45:08",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1329 at 2025-04-13 21:45:08",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 21:50:08",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1329 at 2025-04-13 21:50:08",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 21:55:08",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1329 at 2025-04-13 21:55:08",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 22:00:08",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1329 at 2025-04-13 22:00:08",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 22:05:08",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1329 at 2025-04-13 22:05:08",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 22:05:09",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-13 22:05:09.391044",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 22:05:09",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 22:10:08",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1329 at 2025-04-13 22:10:08",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 22:15:08",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1329 at 2025-04-13 22:15:08",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 22:20:08",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1329 at 2025-04-13 22:20:08",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 22:25:08",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1329 at 2025-04-13 22:25:08",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-13 22:30:08",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1329 at 2025-04-13 22:30:08",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 00:52:43",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 1329). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-14 00:52:43",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-14 00:52:43.785827",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 00:52:43",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-14 00:52:43.786769",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 00:52:43",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 00:52:44",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 208",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 00:52:44",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 31aa479205df at 2025-04-14 00:52:44.239022",
+    "success": true
   }
 ]
