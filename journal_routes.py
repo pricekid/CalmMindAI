@@ -134,11 +134,28 @@ def new_journal_entry():
                 user_id=current_user.id
             )
             
+            # Safety check to make sure analysis_result is a dictionary
+            if not isinstance(analysis_result, dict):
+                logger.error(f"Invalid analysis result type: {type(analysis_result)}")
+                analysis_result = {
+                    "gpt_response": "Thank you for sharing your journal entry. I've read through your thoughts.\n\nWarmly,\nCoach Mira",
+                    "cbt_patterns": [{
+                        "pattern": "Processing Issue",
+                        "description": "We encountered a technical issue analyzing your entry.",
+                        "recommendation": "Your journal has been saved successfully. The insights will be available soon."
+                    }]
+                }
+            
             logger.debug(f"Got analysis result type: {type(analysis_result)}")
             logger.debug(f"Analysis result keys: {list(analysis_result.keys()) if isinstance(analysis_result, dict) else 'Not a dictionary'}")
             
             gpt_response = analysis_result.get("gpt_response")
             cbt_patterns = analysis_result.get("cbt_patterns", [])
+            
+            # Safety check for gpt_response
+            if not gpt_response:
+                logger.warning("Missing GPT response in analysis result, providing fallback")
+                gpt_response = "Thank you for sharing your journal entry. I've read through your thoughts.\n\nWarmly,\nCoach Mira"
             
             logger.debug(f"GPT response type: {type(gpt_response)}")
             logger.debug(f"GPT response length: {len(gpt_response) if gpt_response else 0}")
@@ -225,37 +242,49 @@ def new_journal_entry():
             error_msg = str(e)
             logger.error(f"Error analyzing journal entry: {error_msg}")
             
-            # Update the entry to indicate analysis failed
-            entry.is_analyzed = False
-            db.session.commit()
-            
-            # Still save to JSON but with error info
-            save_journal_entry(
-                entry_id=entry.id,
-                user_id=current_user.id,
-                title=entry.title,
-                content=entry.content,
-                anxiety_level=entry.anxiety_level,
-                created_at=entry.created_at,
-                updated_at=entry.updated_at,
-                is_analyzed=False,
-                gpt_response="Error occurred during analysis.",
-                cbt_patterns=[{
-                    "pattern": "Error analyzing entry",
-                    "description": "We couldn't analyze your journal entry at this time.",
-                    "recommendation": "Please try again later or contact support if the problem persists."
-                }]
-            )
-            
-            # Show specific error messages based on error type
-            if "API_QUOTA_EXCEEDED" in error_msg:
-                flash('Your journal entry has been saved! AI analysis is currently unavailable due to API usage limits.', 'info')
-            elif "INVALID_API_KEY" in error_msg:
-                flash('Your journal entry has been saved! AI analysis is currently unavailable due to a configuration issue.', 'info')
-            else:
-                flash('Your journal entry has been saved, but analysis could not be completed. You can try analyzing it later.', 'warning')
+            try:
+                # Update the entry to indicate analysis failed
+                entry.is_analyzed = False
+                db.session.commit()
+                
+                # Still save to JSON but with error info
+                save_journal_entry(
+                    entry_id=entry.id,
+                    user_id=current_user.id,
+                    title=entry.title,
+                    content=entry.content,
+                    anxiety_level=entry.anxiety_level,
+                    created_at=entry.created_at,
+                    updated_at=entry.updated_at,
+                    is_analyzed=False,
+                    gpt_response="Error occurred during analysis.",
+                    cbt_patterns=[{
+                        "pattern": "Error analyzing entry",
+                        "description": "We couldn't analyze your journal entry at this time.",
+                        "recommendation": "Please try again later or contact support if the problem persists."
+                    }]
+                )
+                
+                # Show specific error messages based on error type
+                if "API_QUOTA_EXCEEDED" in error_msg:
+                    flash('Your journal entry has been saved! AI analysis is currently unavailable due to API usage limits.', 'info')
+                elif "INVALID_API_KEY" in error_msg:
+                    flash('Your journal entry has been saved! AI analysis is currently unavailable due to a configuration issue.', 'info')
+                else:
+                    flash('Your journal entry has been saved, but analysis could not be completed. You can try analyzing it later.', 'warning')
+            except Exception as inner_e:
+                # Catch any errors in error handling to ensure we still redirect
+                logger.error(f"Error during error handling: {str(inner_e)}")
+                flash('Your journal entry has been saved. There was an issue with the analysis process.', 'warning')
         
-        return redirect(url_for('journal_blueprint.view_journal_entry', entry_id=entry.id))
+        # Wrap the redirect in a try/except to guarantee we don't have a blank page
+        try:
+            return redirect(url_for('journal_blueprint.view_journal_entry', entry_id=entry.id))
+        except Exception as redirect_error:
+            logger.error(f"Critical error during redirect: {str(redirect_error)}")
+            # Use a hardcoded URL as absolute fallback to avoid blank page
+            flash('Your journal entry has been saved. Redirecting to journal list.', 'info')
+            return redirect(url_for('journal_blueprint.journal_list'))
     
     return render_template('journal_entry.html', title='New Journal Entry', 
                           form=form, legend='New Journal Entry')
@@ -481,7 +510,14 @@ def update_journal_entry(entry_id):
             else:
                 flash('Your journal entry has been updated, but analysis could not be completed. You can try analyzing it later.', 'warning')
         
-        return redirect(url_for('journal_blueprint.view_journal_entry', entry_id=entry.id))
+        # Wrap the redirect in a try/except to guarantee we don't have a blank page
+        try:
+            return redirect(url_for('journal_blueprint.view_journal_entry', entry_id=entry.id))
+        except Exception as redirect_error:
+            logger.error(f"Critical error during redirect after update: {str(redirect_error)}")
+            # Use a hardcoded URL as absolute fallback to avoid blank page
+            flash('Your journal entry has been updated. Redirecting to journal list.', 'info')
+            return redirect(url_for('journal_blueprint.journal_list'))
     
     # Pre-populate the form with existing data
     elif request.method == 'GET':
@@ -707,4 +743,10 @@ def delete_journal_entry(entry_id):
         logger.error(f"Error deleting journal entry {entry_id}: {str(e)}")
         flash('An error occurred while deleting your journal entry. Please try again.', 'danger')
     
-    return redirect(url_for('journal_blueprint.journal_list'))
+    # Use the same error-handling pattern here for consistency
+    try:
+        return redirect(url_for('journal_blueprint.journal_list'))
+    except Exception as redirect_error:
+        logger.error(f"Critical error during redirect after deletion: {str(redirect_error)}")
+        # Provide a direct HTML response as absolute fallback
+        return '<html><body><p>Your journal entry has been processed.</p><p><a href="/">Return to Home</a></p></body></html>'
