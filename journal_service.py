@@ -1002,5 +1002,6 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                     "pattern": "Error analyzing entry",
                     "description": "We couldn't analyze your journal entry at this time.",
                     "recommendation": "Please try again later or contact support if the problem persists."
-                }]
+                }],
+                "structured_data": None
             }
