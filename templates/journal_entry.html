@@ -187,7 +187,72 @@
                 <div class="card-body" style="background-color: white !important;">
                     <div id="analysis-content" style="background-color: white !important; color: #212529 !important; padding: 20px; border-radius: 8px; border: 1px solid #e9ecef; line-height: 1.6;">
                         <div class="coach-insights">
-                            {{ coach_response | safe }}
+                            {% if structured_data %}
+                                <!-- Display structured content -->
+                                {% if structured_data.intro %}
+                                <div class="intro mb-4">
+                                    <p>{{ structured_data.intro | safe }}</p>
+                                </div>
+                                {% endif %}
+                                
+                                {% if structured_data.reflection %}
+                                <div class="reflection mb-4">
+                                    <p>{{ structured_data.reflection | safe }}</p>
+                                </div>
+                                {% endif %}
+                                
+                                {% if structured_data.distortions %}
+                                <div class="distortions mb-4">
+                                    <h5 class="mt-4 mb-3">Thought Patterns</h5>
+                                    <ul class="list-group">
+                                    {% for distortion in structured_data.distortions %}
+                                        <li class="list-group-item">
+                                            <strong>{{ distortion.pattern }}</strong>: {{ distortion.description }}
+                                        </li>
+                                    {% endfor %}
+                                    </ul>
+                                </div>
+                                {% endif %}
+                                
+                                {% if structured_data.strategies %}
+                                <div class="strategies mb-4">
+                                    <h5 class="mt-4 mb-3">CBT Strategies</h5>
+                                    <div class="strategy-cards">
+                                    {% for strategy in structured_data.strategies %}
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <h6 class="card-title text-primary">{{ strategy.title }}</h6>
+                                                <p>{{ strategy.description }}</p>
+                                                {% if strategy.action_step %}
+                                                <div class="action-step mt-2">
+                                                    <strong>Try this:</strong> {{ strategy.action_step }}
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                                
+                                {% if structured_data.reflection_prompt %}
+                                <div class="reflection-prompt mb-4">
+                                    <h5 class="mt-4 mb-3">Reflection Prompt</h5>
+                                    <blockquote class="blockquote">
+                                        <p class="mb-0">{{ structured_data.reflection_prompt }}</p>
+                                    </blockquote>
+                                </div>
+                                {% endif %}
+                                
+                                {% if structured_data.outro %}
+                                <div class="outro mt-4">
+                                    <p>{{ structured_data.outro | safe }}</p>
+                                </div>
+                                {% endif %}
+                            {% else %}
+                                <!-- Fall back to unstructured content -->
+                                {{ coach_response | safe }}
+                            {% endif %}
                         </div>
                         <div class="text-center mt-3">
                             <button id="stop-reading" class="btn btn-outline-danger btn-sm" style="display: none;">
@@ -218,6 +283,34 @@
                             font-weight: 600;
                             border-bottom: 1px solid #e9ecef;
                             padding-bottom: 0.5rem;
+                        }
+                        /* Structured data styling */
+                        .intro, .outro {
+                            font-style: italic;
+                            color: #495057;
+                        }
+                        .distortions .list-group-item {
+                            border-left: 3px solid #dc3545;
+                        }
+                        .strategy-cards .card {
+                            border-left: 3px solid #28a745;
+                            transition: transform 0.2s ease;
+                        }
+                        .strategy-cards .card:hover {
+                            transform: translateY(-3px);
+                            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                        }
+                        .action-step {
+                            background-color: #f8f9fa;
+                            padding: 8px;
+                            border-radius: 4px;
+                            border-left: 3px solid #17a2b8;
+                        }
+                        .reflection-prompt blockquote {
+                            font-style: italic;
+                            background-color: #f8f9fa;
+                            border-left: 3px solid #6c757d;
+                            padding: 1rem;
                         }
                         /* Voice input styling */
                         .voice-input-container {

@@ -397,12 +397,20 @@ def view_journal_entry(entry_id):
     else:
         styled_coach_response = f'<div style="color: #000000;">{coach_response}</div>'
     
+    # Get structured data if available
+    structured_data = None
+    for json_entry in user_entries:
+        if json_entry.get('id') == entry_id:
+            structured_data = json_entry.get('structured_data')
+            break
+            
     return render_template('journal_entry.html', 
                           title=entry.title, 
                           entry=entry, 
                           form=form,
                           view_only=True, 
                           coach_response=styled_coach_response,
+                          structured_data=structured_data,
                           recurring_patterns=recurring_patterns,
                           show_call_button=show_call_button,
                           earned_badge=earned_badge,
