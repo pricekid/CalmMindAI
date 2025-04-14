@@ -143,7 +143,8 @@ def new_journal_entry():
                         "pattern": "Processing Issue",
                         "description": "We encountered a technical issue analyzing your entry.",
                         "recommendation": "Your journal has been saved successfully. The insights will be available soon."
-                    }]
+                    }],
+                    "structured_data": None
                 }
             
             logger.debug(f"Got analysis result type: {type(analysis_result)}")
@@ -151,6 +152,7 @@ def new_journal_entry():
             
             gpt_response = analysis_result.get("gpt_response")
             cbt_patterns = analysis_result.get("cbt_patterns", [])
+            structured_data = analysis_result.get("structured_data", None)
             
             # Safety check for gpt_response
             if not gpt_response:
@@ -160,6 +162,12 @@ def new_journal_entry():
             logger.debug(f"GPT response type: {type(gpt_response)}")
             logger.debug(f"GPT response length: {len(gpt_response) if gpt_response else 0}")
             logger.debug(f"GPT response preview: {gpt_response[:100] if gpt_response else 'None'}...")
+            
+            # Log structured data status if available
+            if structured_data:
+                logger.debug(f"Structured data available with keys: {list(structured_data.keys())}")
+            else:
+                logger.debug("No structured data available in response")
             
             # Save the patterns to the database
             is_api_error = False
@@ -262,7 +270,8 @@ def new_journal_entry():
                         "pattern": "Error analyzing entry",
                         "description": "We couldn't analyze your journal entry at this time.",
                         "recommendation": "Please try again later or contact support if the problem persists."
-                    }]
+                    }],
+                    structured_data=None
                 )
                 
                 # Show specific error messages based on error type
@@ -499,7 +508,8 @@ def update_journal_entry(entry_id):
                     "pattern": "Error analyzing entry",
                     "description": "We couldn't analyze your journal entry at this time.",
                     "recommendation": "Please try again later or contact support if the problem persists."
-                }]
+                }],
+                structured_data=None
             )
             
             # Show specific error messages based on error type
