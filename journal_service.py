@@ -311,10 +311,13 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         
         {recurring_patterns_text if include_patterns else ''}
 
-        IMPORTANT: You must respond with valid JSON in the following format only:
-
+        IMPORTANT: You must respond with ONLY valid JSON in the exact format below.
+        DO NOT add any text, commentary, or explanation outside the JSON structure.
+        DO NOT use markdown formatting like ```json or ``` markers.
+        RETURN ONLY THE JSON OBJECT, nothing else.
+        
         {{
-            "response": "Your complete response text following the structure below",
+            "response": "Your warm, compassionate message to the person journaling",
             "patterns": [
                 {{
                     "pattern": "Name of CBT thought pattern 1",
@@ -323,7 +326,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                 }},
                 {{
                     "pattern": "Name of CBT thought pattern 2",
-                    "description": "Brief explanation of the pattern",
+                    "description": "Brief explanation of the pattern", 
                     "recommendation": "Specific CBT technique or exercise to address this pattern"
                 }}
             ]
@@ -380,7 +383,11 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
 
         You're doing meaningful inner work by just noticing this. One small step at a time is still forward."
         
-        REMEMBER: Return ONLY valid JSON as described above, with no additional text or formatting.
+        CRITICAL: Return ONLY valid JSON as described above. 
+        NEVER include any text outside the JSON structure.
+        NEVER use markdown code blocks or backticks.
+        ONLY return a valid JSON object with the "response" and "patterns" fields.
+        EVERYTHING YOU RETURN MUST BE PARSABLE AS JSON.
         """
         
         # Attempt to make the API call with error handling
@@ -391,11 +398,11 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
             # Log the API parameters for debugging
             logger.debug(f"Making OpenAI API call with model: {model}, API key (sanitized): {'*****' + api_key[-4:] if api_key else 'None'}")
             
-            # Make the API call with explicit instructions to return JSON
+            # Make the API call with simple explicit instructions to return very basic JSON
             response = client.chat.completions.create(
                 model=model,
                 messages=[
-                    {"role": "system", "content": "You are Mira, writing as a warm, personable CBT journaling coach who works with anxiety. Your style is conversational, authentic, and never clinical. You write like you're having a one-on-one conversation with a friend who needs support. Use contractions, simple language, and specific examples relevant to the person's situation. Your responses should feel like they were written especially for this person, addressing their unique circumstances with warmth and understanding. ALWAYS RETURN VALID JSON FORMAT."},
+                    {"role": "system", "content": "You are Mira, writing as a warm, personable CBT journaling coach who works with anxiety. You MUST respond ONLY in valid JSON format with a 'response' field for your message and a 'patterns' array for CBT patterns. No markdown, no text outside the JSON structure."},
                     {"role": "user", "content": prompt}
                 ],
                 response_format={"type": "json_object"},  # Explicitly require JSON response
@@ -410,7 +417,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
             try:
                 # Get the raw response content 
                 content = response.choices[0].message.content
-                logger.debug(f"Raw OpenAI response content: ")  # Don't log the full content as it might be too large
+                logger.debug(f"Raw OpenAI response content: {content[:200]}...")  # Log first 200 chars
                 
                 # Parse the JSON with more robust error handling
                 try:
