@@ -404,6 +404,66 @@
                             border-left: 1px solid #dee2e6;
                             border-top: 1px solid #dee2e6;
                         }
+                        
+                        /* Structured insights styling */
+                        .structured-insights {
+                            font-family: 'Nunito', sans-serif;
+                            color: #333;
+                        }
+                        
+                        .coach-intro {
+                            font-size: 1.1rem;
+                            line-height: 1.6;
+                            color: #2c3e50;
+                        }
+                        
+                        .coach-patterns, .coach-strategies, .coach-reflections {
+                            background-color: #f8f9fa;
+                            border-radius: 8px;
+                            padding: 15px;
+                            margin-bottom: 20px;
+                            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                        }
+                        
+                        .coach-patterns h5, .coach-strategies h5, .coach-reflections h5 {
+                            color: #28a745;
+                            font-weight: 600;
+                            margin-bottom: 15px;
+                            border-bottom: 2px solid #e9ecef;
+                            padding-bottom: 8px;
+                        }
+                        
+                        .coach-patterns .coach-pattern-list li,
+                        .coach-strategies .coach-strategy-list li {
+                            margin-bottom: 12px;
+                            line-height: 1.5;
+                        }
+                        
+                        .coach-patterns .coach-pattern-list li strong,
+                        .coach-strategies .coach-strategy-list li strong {
+                            color: #495057;
+                            font-weight: 600;
+                        }
+                        
+                        .coach-reflections .coach-reflection-list li {
+                            font-style: italic;
+                            color: #495057;
+                            padding: 8px 0;
+                        }
+                        
+                        .coach-outro {
+                            font-size: 1.05rem;
+                            line-height: 1.6;
+                            color: #2c3e50;
+                            margin-top: 15px;
+                        }
+                        
+                        .coach-signature {
+                            font-style: italic;
+                            text-align: right;
+                            margin-top: 20px;
+                            color: #6c757d;
+                        }
                     </style>
                     
                     <!-- Placeholder for AI coaching button -->
@@ -980,13 +1040,71 @@
                             document.getElementById('coach-response').style.display = 'block';
                             const coachMessage = document.getElementById('coach-message');
                             
-                            // Apply the same CSS as the main response
-                            let responseText = data.response;
-                            // Add signature if it doesn't already exist
-                            if (!responseText.includes("Warmly,") && !responseText.includes("Coach Mira")) {
-                                responseText += "\n\nWarmly,\nCoach Mira";
+                            // Check if we have structured data
+                            if (data.structured_data) {
+                                // Render structured format
+                                let structuredHtml = '';
+                                const structData = data.structured_data;
+                                
+                                // Introduction section
+                                if (structData.intro) {
+                                    structuredHtml += `<div class="coach-intro mb-4">${structData.intro}</div>`;
+                                }
+                                
+                                // Thought patterns section
+                                if (structData.distortions && structData.distortions.length > 0) {
+                                    structuredHtml += `<div class="coach-patterns mb-4">
+                                        <h5 class="mt-4 mb-3">Thought Patterns</h5>
+                                        <ul class="coach-pattern-list">`;
+                                    structData.distortions.forEach(pattern => {
+                                        structuredHtml += `<li class="mb-2"><strong>${pattern.name}:</strong> ${pattern.description}</li>`;
+                                    });
+                                    structuredHtml += `</ul></div>`;
+                                }
+                                
+                                // Strategies section
+                                if (structData.strategies && structData.strategies.length > 0) {
+                                    structuredHtml += `<div class="coach-strategies mb-4">
+                                        <h5 class="mt-4 mb-3">CBT Strategies</h5>
+                                        <ul class="coach-strategy-list">`;
+                                    structData.strategies.forEach(strategy => {
+                                        structuredHtml += `<li class="mb-2"><strong>${strategy.name}:</strong> ${strategy.description}</li>`;
+                                    });
+                                    structuredHtml += `</ul></div>`;
+                                }
+                                
+                                // Reflection prompts
+                                if (structData.reflection_prompts && structData.reflection_prompts.length > 0) {
+                                    structuredHtml += `<div class="coach-reflections mb-4">
+                                        <h5 class="mt-4 mb-3">Reflection Prompts</h5>
+                                        <ul class="coach-reflection-list">`;
+                                    structData.reflection_prompts.forEach(prompt => {
+                                        structuredHtml += `<li class="mb-2">${prompt}</li>`;
+                                    });
+                                    structuredHtml += `</ul></div>`;
+                                }
+                                
+                                // Outro
+                                if (structData.outro) {
+                                    structuredHtml += `<div class="coach-outro mt-4">${structData.outro}</div>`;
+                                }
+                                
+                                // Add signature if not in outro
+                                if (!structuredHtml.includes("Warmly,") && !structuredHtml.includes("Coach Mira")) {
+                                    structuredHtml += `<div class="coach-signature mt-3">Warmly,<br>Coach Mira</div>`;
+                                }
+                                
+                                coachMessage.innerHTML = `<div class="coach-insights structured-insights">${structuredHtml}</div>`;
+                            } else {
+                                // Apply the same CSS as the main response for legacy format
+                                let responseText = data.response;
+                                // Add signature if it doesn't already exist
+                                if (!responseText.includes("Warmly,") && !responseText.includes("Coach Mira")) {
+                                    responseText += "\n\nWarmly,\nCoach Mira";
+                                }
+                                coachMessage.innerHTML = `<div class="coach-insights">${responseText}</div>`;
                             }
-                            coachMessage.innerHTML = `<div class="coach-insights">${responseText}</div>`;
+                            
                             coachMessage.style.color = 'black';
                             coachMessage.style.backgroundColor = 'white';
                             
@@ -1220,7 +1338,59 @@
                 const guidanceContent = document.getElementById('coach-message');
                 
                 if (guidanceContent) {
-                    speakText(guidanceContent.textContent);
+                    // For structured data, we want to combine all the text in a logical order
+                    let textToRead = '';
+                    const structuredData = guidanceContent.querySelector('.structured-insights');
+                    
+                    if (structuredData) {
+                        // Get intro
+                        const intro = structuredData.querySelector('.coach-intro');
+                        if (intro) textToRead += intro.textContent + ' ';
+                        
+                        // Get thought patterns
+                        const patterns = structuredData.querySelector('.coach-patterns');
+                        if (patterns) {
+                            textToRead += 'Thought Patterns: ';
+                            const patternItems = patterns.querySelectorAll('li');
+                            patternItems.forEach(item => {
+                                textToRead += item.textContent + '. ';
+                            });
+                        }
+                        
+                        // Get strategies
+                        const strategies = structuredData.querySelector('.coach-strategies');
+                        if (strategies) {
+                            textToRead += 'CBT Strategies: ';
+                            const strategyItems = strategies.querySelectorAll('li');
+                            strategyItems.forEach(item => {
+                                textToRead += item.textContent + '. ';
+                            });
+                        }
+                        
+                        // Get reflection prompts
+                        const reflections = structuredData.querySelector('.coach-reflections');
+                        if (reflections) {
+                            textToRead += 'Reflection Prompts: ';
+                            const reflectionItems = reflections.querySelectorAll('li');
+                            reflectionItems.forEach(item => {
+                                textToRead += item.textContent + '. ';
+                            });
+                        }
+                        
+                        // Get outro
+                        const outro = structuredData.querySelector('.coach-outro');
+                        if (outro) textToRead += outro.textContent + ' ';
+                        
+                        // Add signature if not present
+                        if (!textToRead.includes('Warmly') && !textToRead.includes('Coach Mira')) {
+                            textToRead += 'Warmly, Coach Mira';
+                        }
+                    } else {
+                        // Use the entire content for legacy responses
+                        textToRead = guidanceContent.textContent;
+                    }
+                    
+                    speakText(textToRead);
                     
                     // Update UI
                     readGuidanceButton.style.display = 'none';
@@ -1490,10 +1660,64 @@
     
     // Server-side TTS function for Guidance
     function playServerTTSGuidance() {
-        // Get the coach guidance text
-        const text = document.getElementById('coach-message').textContent.trim();
+        // Get the coach message element
+        const coachMessage = document.getElementById('coach-message');
         const button = document.getElementById('server-tts-guidance-button');
         const audio = document.getElementById('serverGuidanceAudio');
+        
+        // Extract text to read based on whether it's structured or not
+        let textToRead = '';
+        const structuredData = coachMessage.querySelector('.structured-insights');
+        
+        if (structuredData) {
+            // For structured data, we want to combine all the text in a logical order
+            
+            // Get intro
+            const intro = structuredData.querySelector('.coach-intro');
+            if (intro) textToRead += intro.textContent + ' ';
+            
+            // Get thought patterns
+            const patterns = structuredData.querySelector('.coach-patterns');
+            if (patterns) {
+                textToRead += 'Thought Patterns: ';
+                const patternItems = patterns.querySelectorAll('li');
+                patternItems.forEach(item => {
+                    textToRead += item.textContent + '. ';
+                });
+            }
+            
+            // Get strategies
+            const strategies = structuredData.querySelector('.coach-strategies');
+            if (strategies) {
+                textToRead += 'CBT Strategies: ';
+                const strategyItems = strategies.querySelectorAll('li');
+                strategyItems.forEach(item => {
+                    textToRead += item.textContent + '. ';
+                });
+            }
+            
+            // Get reflection prompts
+            const reflections = structuredData.querySelector('.coach-reflections');
+            if (reflections) {
+                textToRead += 'Reflection Prompts: ';
+                const reflectionItems = reflections.querySelectorAll('li');
+                reflectionItems.forEach(item => {
+                    textToRead += item.textContent + '. ';
+                });
+            }
+            
+            // Get outro
+            const outro = structuredData.querySelector('.coach-outro');
+            if (outro) textToRead += outro.textContent + ' ';
+            
+            // Add signature if not present
+            if (!textToRead.includes('Warmly') && !textToRead.includes('Coach Mira')) {
+                textToRead += 'Warmly, Coach Mira';
+            }
+        } else {
+            // Use the entire content for legacy responses
+            textToRead = coachMessage.textContent.trim();
+        }
         
         // Get the selected voice from our settings (now using OpenAI voices)
         const selectedVoice = getVoiceSetting('guidance');
@@ -1508,7 +1732,7 @@
         
         // Prepare request data
         const requestData = {
-            text: text,
+            text: textToRead,
             voice: selectedVoice
         };
         
