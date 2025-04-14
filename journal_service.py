@@ -1,10 +1,10 @@
 import os
 import json
 import logging
+import re
 from datetime import datetime
 from openai import OpenAI
 from admin_utils import get_config
-import os
 from typing import List, Dict, Any, Optional
 
 # Set up logging with more details
@@ -183,6 +183,221 @@ def count_user_entries(user_id: int) -> int:
     """
     return len(get_journal_entries_for_user(user_id))
 
+def detect_emotional_tone(text: str) -> Dict[str, Any]:
+    """
+    Detect the primary emotional tone of the journal entry.
+    Simple keyword-based approach for lightweight processing.
+    
+    Args:
+        text: The journal entry text
+        
+    Returns:
+        Dictionary with detected emotional tones and confidence levels
+    """
+    # Initialize emotion categories with common keywords
+    emotions = {
+        "anger": ["angry", "furious", "mad", "irritated", "outraged", "annoyed", "frustrated", "enraged"],
+        "sadness": ["sad", "depressed", "grief", "sorrow", "miserable", "heartbroken", "gloomy", "unhappy", "disappointed", "crying"],
+        "fear": ["scared", "afraid", "terrified", "anxious", "worried", "nervous", "panicked", "dread", "frightened"],
+        "hopelessness": ["hopeless", "helpless", "despair", "worthless", "pointless", "lost", "trapped", "giving up"],
+        "stress": ["stressed", "overwhelmed", "pressure", "burden", "exhausted", "burnout", "overloaded"],
+        "joy": ["happy", "excited", "joyful", "delighted", "pleased", "content", "thrilled", "glad", "grateful"],
+        "neutral": []  # Default state if no strong emotions detected
+    }
+    
+    # Convert text to lowercase for case-insensitive matching
+    text_lower = text.lower()
+    
+    # Count occurrences of emotion keywords
+    emotion_counts = {}
+    for emotion, keywords in emotions.items():
+        if emotion == "neutral":
+            continue  # Skip neutral category in counting
+        
+        count = 0
+        for keyword in keywords:
+            # Count whole word matches
+            count += sum(1 for match in re.finditer(r'\b' + keyword + r'\b', text_lower))
+        
+        if count > 0:
+            emotion_counts[emotion] = count
+    
+    # If no emotions detected, mark as neutral
+    if not emotion_counts:
+        emotion_counts["neutral"] = 1
+    
+    # Calculate confidence levels (simple normalization)
+    total_matches = sum(emotion_counts.values())
+    emotion_confidence = {emotion: count / total_matches for emotion, count in emotion_counts.items()}
+    
+    # Return detected emotions with confidence levels
+    return {
+        "primary_emotion": max(emotion_confidence, key=emotion_confidence.get),
+        "emotion_confidence": emotion_confidence
+    }
+
+def detect_crisis_indicators(text: str) -> Dict[str, Any]:
+    """
+    Detect potential crisis indicators in the journal entry.
+    
+    Args:
+        text: The journal entry text
+        
+    Returns:
+        Dictionary with detected crisis indicators and risk level
+    """
+    # Define crisis keywords by category
+    crisis_indicators = {
+        "self_harm": ["kill myself", "suicide", "end my life", "hurt myself", "self harm", "cut myself", 
+                     "don't want to live", "wanting to die", "better off dead"],
+        "violence": ["hurt someone", "kill them", "violent thoughts", "attack", "rage", "revenge", 
+                    "make them pay", "want to hurt"],
+        "extreme_distress": ["can't take it anymore", "falling apart", "breaking down", "crisis", 
+                            "emergency", "extreme", "unbearable", "can't cope", "at my limit"],
+        "substance_abuse": ["overdose", "drunk", "drinking too much", "high", "addicted", 
+                           "pills", "drugs", "substance", "relapse"]
+    }
+    
+    # Convert text to lowercase for case-insensitive matching
+    text_lower = text.lower()
+    
+    # Check for indicators
+    detected_indicators = {}
+    for category, phrases in crisis_indicators.items():
+        matches = []
+        for phrase in phrases:
+            if phrase in text_lower:
+                matches.append(phrase)
+        
+        if matches:
+            detected_indicators[category] = matches
+    
+    # Determine risk level
+    risk_level = "none"
+    if "self_harm" in detected_indicators:
+        risk_level = "high"
+    elif "violence" in detected_indicators:
+        risk_level = "high"
+    elif "extreme_distress" in detected_indicators or "substance_abuse" in detected_indicators:
+        risk_level = "medium"
+    elif detected_indicators:
+        risk_level = "low"
+    
+    return {
+        "detected_indicators": detected_indicators,
+        "risk_level": risk_level
+    }
+
+def extract_metadata(text: str) -> Dict[str, Any]:
+    """
+    Extract potential metadata from journal entry.
+    
+    Args:
+        text: The journal entry text
+        
+    Returns:
+        Dictionary with potential metadata
+    """
+    # Define patterns for common life situations
+    life_situations = {
+        "parenting": ["my child", "my kid", "my son", "my daughter", "children", "parenting", "mom", "dad", "school"],
+        "relationship": ["my partner", "my husband", "my wife", "my boyfriend", "my girlfriend", "dating", "marriage", "divorce"],
+        "work": ["job", "career", "workplace", "boss", "coworker", "promotion", "fired", "work-life balance", "burnout"],
+        "health": ["illness", "pain", "chronic", "doctor", "diagnosis", "treatment", "medication", "symptom", "recovery"],
+        "grief": ["loss", "died", "passed away", "funeral", "missing someone", "death", "grief", "mourning"]
+    }
+    
+    # Convert to lowercase for matching
+    text_lower = text.lower()
+    
+    # Detect life situations
+    detected_situations = {}
+    for situation, keywords in life_situations.items():
+        for keyword in keywords:
+            if keyword in text_lower:
+                detected_situations[situation] = detected_situations.get(situation, 0) + 1
+    
+    # Extract the top situations
+    top_situations = [k for k, v in sorted(detected_situations.items(), key=lambda item: item[1], reverse=True)]
+    
+    return {
+        "life_situations": top_situations[:3] if top_situations else [],
+        "word_count": len(text.split())
+    }
+
+def get_user_history_context(user_id: int) -> str:
+    """
+    Generate context about the user's history from previous entries.
+    
+    Args:
+        user_id: The user's ID
+        
+    Returns:
+        String with user history context
+    """
+    try:
+        entries = get_journal_entries_for_user(user_id)
+        
+        if not entries or len(entries) < 2:
+            return ""
+        
+        # Analyze emotional trends
+        anxiety_levels = []
+        emotional_tones = []
+        recurring_situations = {}
+        
+        # Process the last 5 entries (or fewer if not available)
+        for entry in entries[-5:]:
+            # Get anxiety levels
+            if "anxiety_level" in entry:
+                anxiety_levels.append(entry["anxiety_level"])
+            
+            # Get emotional tones
+            if "content" in entry:
+                tone = detect_emotional_tone(entry["content"])
+                emotional_tones.append(tone["primary_emotion"])
+                
+                # Extract situations
+                metadata = extract_metadata(entry["content"])
+                for situation in metadata.get("life_situations", []):
+                    recurring_situations[situation] = recurring_situations.get(situation, 0) + 1
+        
+        # Create context string
+        context = []
+        
+        # Add anxiety trend
+        if anxiety_levels:
+            avg_anxiety = sum(anxiety_levels) / len(anxiety_levels)
+            if avg_anxiety >= 7:
+                context.append("User has consistently reported high anxiety levels")
+            elif avg_anxiety <= 3:
+                context.append("User has maintained relatively low anxiety levels")
+            elif max(anxiety_levels) - min(anxiety_levels) >= 4:
+                context.append("User has experienced significant fluctuations in anxiety levels")
+        
+        # Add emotional tone trends
+        if emotional_tones:
+            # Get most common emotion
+            emotion_counts = {}
+            for emotion in emotional_tones:
+                emotion_counts[emotion] = emotion_counts.get(emotion, 0) + 1
+            
+            most_common = max(emotion_counts, key=emotion_counts.get)
+            if emotion_counts[most_common] >= 2:
+                context.append(f"User has frequently expressed {most_common}")
+        
+        # Add recurring life situations
+        if recurring_situations:
+            top_situation = max(recurring_situations, key=recurring_situations.get)
+            if recurring_situations[top_situation] >= 2:
+                context.append(f"User has been dealing with {top_situation}-related challenges")
+        
+        return ". ".join(context)
+        
+    except Exception as e:
+        logger.error(f"Error generating user history context: {str(e)}")
+        return ""
+
 def delete_journal_entry(entry_id: int, user_id: int) -> bool:
     """
     Delete a journal entry from the journals.json file.
@@ -260,7 +475,8 @@ def get_recurring_patterns(user_id: int, min_entries: int = 3) -> List[Dict[str,
 
 def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: Optional[int] = None, user_id: int = 0) -> Dict[str, Any]:
     """
-    Generate an improved AI analysis of a journal entry that's concise and focused.
+    Generate an improved AI analysis of a journal entry that's concise and focused,
+    with NLP preprocessing and structured metadata for more personalized responses.
     
     Args:
         journal_text: The journal entry text
@@ -291,6 +507,27 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
             logger.error("OpenAI API key is not set")
             raise ValueError("INVALID_API_KEY: OpenAI API key is missing. Please check your environment variables or admin settings.")
         
+        # Preprocess the journal entry with NLP analysis
+        # 1. Tag emotional tone
+        emotional_tone = detect_emotional_tone(safe_text)
+        primary_emotion = emotional_tone.get("primary_emotion", "neutral")
+        logger.debug(f"Detected primary emotion: {primary_emotion}")
+        
+        # 2. Detect crisis indicators
+        crisis_info = detect_crisis_indicators(safe_text)
+        risk_level = crisis_info.get("risk_level", "none")
+        logger.debug(f"Detected crisis risk level: {risk_level}")
+        
+        # 3. Extract metadata (life situations, etc.)
+        metadata = extract_metadata(safe_text)
+        life_situations = metadata.get("life_situations", [])
+        life_situations_text = ", ".join(life_situations) if life_situations else "general life"
+        logger.debug(f"Detected life situations: {life_situations_text}")
+        
+        # 4. Get user history context
+        user_history = get_user_history_context(user_id) if user_id else ""
+        logger.debug(f"User history context: {user_history}")
+        
         # Get count of user entries to determine if we should include pattern analysis
         entry_count = count_user_entries(user_id)
         include_patterns = entry_count >= 2  # We need at least 2 previous entries
@@ -304,13 +541,56 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                 for pattern in recurring_patterns:
                     recurring_patterns_text += f"- {pattern['pattern']} (appeared {pattern['count']} times)\n"
         
+        # Build the enhanced metadata section
+        metadata_section = f"""
+        ## JOURNAL METADATA:
+        - Anxiety Level: {safe_anxiety}/10
+        - Primary Emotion: {primary_emotion}
+        - Risk Level: {risk_level}
+        - Life Situations: {life_situations_text}
+        - Word Count: {metadata.get('word_count', 0)}
+        """
+        
+        # Add user history if available
+        if user_history:
+            metadata_section += f"""
+        ## USER HISTORY CONTEXT:
+        {user_history}
+        """
+        
+        # Add recurring patterns if available
+        if recurring_patterns_text:
+            metadata_section += f"""
+        ## RECURRING THOUGHT PATTERNS:
+        {recurring_patterns_text}
+        """
+        
+        # Add crisis alert if risk level is medium or high
+        crisis_instructions = ""
+        if risk_level in ["medium", "high"]:
+            crisis_instructions = f"""
+        ## CRISIS ALERT - {risk_level.upper()} RISK:
+        This entry contains potential {', '.join(crisis_info.get('detected_indicators', {}).keys())} indicators. 
+        Provide supportive, non-judgmental validation while gently encouraging safety planning and professional support.
+        """
+        
+        # Create the enhanced structured prompt
         prompt = f"""
-        You are Mira, a warm, compassionate CBT journaling coach inside an app called Calm Journey. A user has just shared the following journal entry with an anxiety level of {safe_anxiety}/10:
-
+        You are Mira, a warm, compassionate CBT journaling coach inside an app called Calm Journey. 
+        Your task is to respond to the following journal entry with empathy, insight, and personalized CBT strategies.
+        
+        ## JOURNAL ENTRY:
         "{safe_text}"
         
-        {recurring_patterns_text if include_patterns else ''}
-
+        {metadata_section}
+        {crisis_instructions}
+        
+        ## YOUR TASK:
+        1. Identify 2-3 cognitive distortions present in this entry
+        2. Offer 2-3 specific CBT strategies tailored to this person's situation
+        3. Provide one reflection prompt that encourages insight
+        4. Create a compassionate, personalized response that addresses their specific situation
+        
         IMPORTANT: You must respond with ONLY valid JSON in the exact format below.
         DO NOT add any text, commentary, or explanation outside the JSON structure.
         DO NOT use markdown formatting like ```json or ``` markers.
