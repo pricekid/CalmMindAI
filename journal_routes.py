@@ -202,7 +202,8 @@ def new_journal_entry():
                 updated_at=entry.updated_at,
                 is_analyzed=entry.is_analyzed,
                 gpt_response=gpt_response,
-                cbt_patterns=cbt_patterns
+                cbt_patterns=cbt_patterns,
+                structured_data=structured_data
             )
             
             # Show appropriate message based on error type
@@ -345,7 +346,8 @@ def view_journal_entry(entry_id):
                 updated_at=entry.updated_at,
                 is_analyzed=entry.is_analyzed,
                 gpt_response=coach_response,
-                cbt_patterns=cbt_patterns
+                cbt_patterns=cbt_patterns,
+                structured_data=analysis_result.get("structured_data", None)
             )
         except Exception as e:
             error_msg = str(e)
@@ -474,7 +476,8 @@ def update_journal_entry(entry_id):
                 updated_at=entry.updated_at,
                 is_analyzed=entry.is_analyzed,
                 gpt_response=gpt_response,
-                cbt_patterns=cbt_patterns
+                cbt_patterns=cbt_patterns,
+                structured_data=analysis_result.get("structured_data", None)
             )
             
             # Show appropriate message based on error type
@@ -663,7 +666,8 @@ def api_analyze_entry(entry_id):
             updated_at=entry.updated_at,
             is_analyzed=entry.is_analyzed,
             gpt_response=gpt_response,
-            cbt_patterns=cbt_patterns
+            cbt_patterns=cbt_patterns,
+            structured_data=analysis_result.get("structured_data", None)
         )
         
         # Return appropriate response based on error type

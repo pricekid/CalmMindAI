@@ -96,7 +96,8 @@ def save_journal_entry(
     updated_at: Optional[datetime] = None,
     is_analyzed: bool = False,
     gpt_response: Optional[str] = None,
-    cbt_patterns: Optional[List[Dict[str, str]]] = None
+    cbt_patterns: Optional[List[Dict[str, str]]] = None,
+    structured_data: Optional[Dict] = None
 ) -> None:
     """
     Save a journal entry to the journals.json file.
@@ -112,6 +113,7 @@ def save_journal_entry(
         is_analyzed: Whether the entry has been analyzed
         gpt_response: The GPT-generated response
         cbt_patterns: List of CBT patterns identified
+        structured_data: Structured data with distortions, strategies, and reflection prompts
     """
     logger.debug(f"Saving journal entry {entry_id} for user {user_id}")
     try:
@@ -142,7 +144,8 @@ def save_journal_entry(
                     'updated_at': updated_at_str,
                     'is_analyzed': is_analyzed,
                     'gpt_response': gpt_response,
-                    'cbt_patterns': clean_patterns
+                    'cbt_patterns': clean_patterns,
+                    'structured_data': structured_data
                 }
                 entry_found = True
                 break
@@ -160,7 +163,8 @@ def save_journal_entry(
                 'updated_at': updated_at_str,
                 'is_analyzed': is_analyzed,
                 'gpt_response': gpt_response,
-                'cbt_patterns': clean_patterns
+                'cbt_patterns': clean_patterns,
+                'structured_data': structured_data
             })
         
         with open(JOURNALS_FILE, 'w') as f:
