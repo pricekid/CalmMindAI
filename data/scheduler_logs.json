@@ -448,5 +448,77 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 31aa479205df at 2025-04-14 00:52:44.239022",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-14 16:00:41",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 208). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-14 16:00:42",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-14 16:00:42.167276",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 16:00:42",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-14 16:00:42.168191",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 16:00:42",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 16:00:42",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 269",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 16:00:42",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host aa1df052097b at 2025-04-14 16:00:42.607827",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 16:02:04",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 269). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-14 16:02:05",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-14 16:02:05.022158",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 16:02:05",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-14 16:02:05.024520",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 16:02:05",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 16:02:05",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 565",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-14 16:02:05",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host aa1df052097b at 2025-04-14 16:02:05.400043",
+    "success": true
   }
 ]
