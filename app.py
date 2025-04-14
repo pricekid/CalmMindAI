@@ -122,40 +122,75 @@ def handle_exception(e):
     if isinstance(e, JSONDecodeError) or "expected token" in err_str or "json" in err_str:
         app.logger.error(f"JSON parsing error: {str(e)}")
         
+        # For login routes, redirect to the basic login page
+        if '/login' in request.path or '/sign-in' in request.path or '/signin' in request.path:
+            app.logger.info(f"Redirecting login JSON error to basic login page. Path: {request.path}")
+            return redirect(url_for('basic_login.basic_login'))
+        
         # For dashboard route, just redirect back to dashboard without the analysis
-        if request.path == '/dashboard':
+        elif request.path == '/dashboard':
             # Show a flash message about the error
             flash("Your dashboard is ready, but we couldn't generate a personalized message at this time.", "info")
             # Redirect instead of trying to render the template directly
             return redirect(url_for('dashboard'))
+        
+        # For journal routes, provide a specific message related to journaling    
+        elif '/journal' in request.path:
+            emergency_html = """
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Calm Journey - Journal Processing</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <style>
+                    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #1a1a1a; color: #f8f9fa; }
+                    .container { max-width: 800px; margin: 40px auto; padding: 20px; background-color: #212529; border-radius: 8px; }
+                    h1 { color: #0d6efd; }
+                    .btn { display: inline-block; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-top: 20px; }
+                    .btn-primary { background-color: #0d6efd; color: white; }
+                    .btn-light { background-color: #f8f9fa; color: #212529; }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <h1>Journal Entry Saved</h1>
+                    <p>Your journal entry was saved successfully, but we're having trouble with the AI analysis right now.</p>
+                    <p>You can view your journal entries or try again later.</p>
+                    <p><a href="/journal" class="btn btn-primary">View Journal Entries</a> &nbsp; <a href="/dashboard" class="btn btn-light">Go to Dashboard</a></p>
+                </div>
+            </body>
+            </html>
+            """
+            return Response(emergency_html, 200, content_type='text/html')
             
         # For other routes with JSON parsing errors, use a simple response to avoid template issues
-        emergency_html = """
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Calm Journey - Processing Issue</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <style>
-                body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #1a1a1a; color: #f8f9fa; }
-                .container { max-width: 800px; margin: 40px auto; padding: 20px; background-color: #212529; border-radius: 8px; }
-                h1 { color: #dc3545; }
-                .btn { display: inline-block; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-top: 20px; }
-                .btn-primary { background-color: #0d6efd; color: white; }
-                .btn-light { background-color: #f8f9fa; color: #212529; }
-            </style>
-        </head>
-        <body>
-            <div class="container">
-                <h1>Processing Issue</h1>
-                <p>We had a minor issue processing your data, but your information was saved successfully.</p>
-                <p>This is likely a temporary issue. You can try refreshing the page or go back to the dashboard.</p>
-                <p><a href="/dashboard" class="btn btn-primary">Go to Dashboard</a> &nbsp; <a href="javascript:history.back()" class="btn btn-light">Go Back</a></p>
-            </div>
-        </body>
-        </html>
-        """
-        return Response(emergency_html, 200, content_type='text/html')
+        else:
+            emergency_html = """
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Calm Journey - Processing Issue</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <style>
+                    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #1a1a1a; color: #f8f9fa; }
+                    .container { max-width: 800px; margin: 40px auto; padding: 20px; background-color: #212529; border-radius: 8px; }
+                    h1 { color: #dc3545; }
+                    .btn { display: inline-block; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-top: 20px; }
+                    .btn-primary { background-color: #0d6efd; color: white; }
+                    .btn-light { background-color: #f8f9fa; color: #212529; }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <h1>Processing Issue</h1>
+                    <p>We had a minor issue processing your data, but your information was saved successfully.</p>
+                    <p>This is likely a temporary issue. You can try refreshing the page or go back to the dashboard.</p>
+                    <p><a href="/dashboard" class="btn btn-primary">Go to Dashboard</a> &nbsp; <a href="javascript:history.back()" class="btn btn-light">Go Back</a></p>
+                </div>
+            </body>
+            </html>
+            """
+            return Response(emergency_html, 200, content_type='text/html')
     
     # Check if it's a CSRF error
     if "csrf" in err_str:
