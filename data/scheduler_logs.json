@@ -2140,5 +2140,77 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 171",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:24:47",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 171",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:25:47",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-15 18:25:47.714825",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:25:47",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:26:40",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 171",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:27:05",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 171",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:27:41",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 171",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:27:51",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 171). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-15 18:27:52",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-15 18:27:52.094789",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:27:52",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-15 18:27:52.097630",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:27:52",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:27:52",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 751",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:27:52",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 8c203d723f3b at 2025-04-15 18:27:52.612180",
+    "success": true
   }
 ]

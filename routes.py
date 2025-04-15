@@ -164,6 +164,23 @@ def dashboard():
             # Log any other errors but don't crash 
             logging.error(f"General error generating coping statement: {str(e)}")
     
+    # Get user's achievements and streaks - NEW FEATURE
+    badge_data = None
+    try:
+        user_id = current_user.id
+        badge_data = gamification.get_user_badges(user_id)
+        badge_data['streak_status'] = gamification.check_streak_status(user_id)
+        
+        # Only show earned badges on dashboard (limit to 3 most recent)
+        if badge_data:
+            dashboard_badges = []
+            for badge_id in badge_data['earned_badges'][-3:]:  # Get the last 3 earned badges
+                if badge_id in badge_data['badge_details']:
+                    dashboard_badges.append(badge_data['badge_details'][badge_id])
+            badge_data['dashboard_badges'] = dashboard_badges
+    except Exception as e:
+        logging.error(f"Error loading achievements for dashboard: {str(e)}")
+    
     # Get form for mood logging
     mood_form = MoodLogForm()
     
@@ -174,7 +191,8 @@ def dashboard():
                           mood_scores=mood_scores,
                           coping_statement=coping_statement,
                           mood_form=mood_form,
-                          weekly_summary=weekly_summary)
+                          weekly_summary=weekly_summary,
+                          badge_data=badge_data)
 
 # Redirect to journal list
 @app.route('/journal')
