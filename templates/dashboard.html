@@ -199,13 +199,48 @@
 </div>
 
 <!-- Achievements Section - NEW! -->
-{% if badge_data and badge_data.current_streak > 0 %}
+{% if badge_data %}
 <div class="row mt-4">
     <div class="col-12">
         <div class="card bg-dark dashboard-widget">
             <h3><i class="fas fa-trophy me-2"></i> Your Progress</h3>
             
-            <div class="row g-4">
+            <!-- Duolingo-style XP Level Bar -->
+            {% if badge_data.xp_data %}
+            <div class="p-3">
+                <div class="row align-items-center mb-3">
+                    <div class="col-auto">
+                        <div class="level-badge rounded-circle text-center d-flex align-items-center justify-content-center" 
+                             style="background-color: {{ badge_data.xp_data.level_color }}; width: 60px; height: 60px; color: white; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                            {{ badge_data.xp_data.level }}
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <h5 class="mb-0">Level {{ badge_data.xp_data.level }}: {{ badge_data.xp_data.level_name }}</h5>
+                            <span class="badge bg-info">{{ badge_data.xp_data.total_xp }} XP</span>
+                        </div>
+                        <div class="progress" style="height: 15px;">
+                            <div class="progress-bar" role="progressbar" 
+                                 style="width: {{ badge_data.xp_data.progress_percent }}%; background-color: {{ badge_data.xp_data.level_color }};"
+                                 aria-valuenow="{{ badge_data.xp_data.progress_percent }}" aria-valuemin="0" aria-valuemax="100">
+                                {{ badge_data.xp_data.progress_percent }}%
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-1">
+                            <small class="text-muted">Current level</small>
+                            {% if badge_data.xp_data.next_level %}
+                            <small class="text-muted">{{ badge_data.xp_data.xp_needed }} XP to Level {{ badge_data.xp_data.next_level }}: {{ badge_data.xp_data.next_level_name }}</small>
+                            {% else %}
+                            <small class="text-muted">Max level reached!</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="row g-4 px-3 pb-3">
                 <!-- Streak Information -->
                 <div class="col-md-4">
                     <div class="streak-dashboard-container p-3 rounded-3" 
@@ -223,6 +258,15 @@
                                 <span class="badge bg-danger mt-2">Start again</span>
                             {% endif %}
                             
+                            <!-- Duolingo-style Motivation -->
+                            {% if badge_data.current_streak > 0 %}
+                            <div class="mt-2 small">
+                                <div class="streak-fact-box p-2 rounded" style="background: rgba(255,255,255,0.2);">
+                                    {{ badge_data.streak_fact }}
+                                </div>
+                            </div>
+                            {% endif %}
+                            
                             <div class="mt-3">
                                 <a href="{{ url_for('achievements') }}" class="btn btn-sm btn-light">
                                     View Achievements
@@ -234,7 +278,7 @@
                 
                 <!-- Earned Badges Preview -->
                 <div class="col-md-8">
-                    <div class="p-3">
+                    <div class="p-3 badge-container rounded-3" style="background: rgba(255,255,255,0.05); height: 100%;">
                         <h5 class="mb-3">{% if badge_data.dashboard_badges %}Your Badges{% else %}Badges to Earn{% endif %}</h5>
                         
                         <div class="row g-3">
@@ -249,6 +293,12 @@
                                             </div>
                                             <h6>{{ badge.name }}</h6>
                                             <small class="text-muted">{{ badge.description }}</small>
+                                            <!-- XP Reward Badge -->
+                                            {% if badge.xp_reward %}
+                                            <div class="mt-2">
+                                                <span class="badge bg-info">+{{ badge.xp_reward }} XP</span>
+                                            </div>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -266,11 +316,17 @@
                                 <div class="col-md-4">
                                     <div class="card h-100 text-center locked-achievement">
                                         <div class="card-body">
-                                            <div class="achievement-icon mb-2" style="background-color: {{ badge.color }};">
+                                            <div class="achievement-icon mb-2 locked" style="background-color: {{ badge.color }};">
                                                 <i class="fas {{ badge.icon }} fa-lg"></i>
                                             </div>
                                             <h6>{{ badge.name }}</h6>
                                             <small class="text-muted">{{ badge.hint }}</small>
+                                            <!-- XP Reward Badge -->
+                                            {% if badge.xp_reward %}
+                                            <div class="mt-2">
+                                                <span class="badge bg-secondary">+{{ badge.xp_reward }} XP</span>
+                                            </div>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
