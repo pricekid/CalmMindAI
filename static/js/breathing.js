@@ -95,10 +95,77 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Reset the circle
         circleElement.style.transform = 'scale(1)';
-        breathingText.textContent = 'Click Start to begin';
+        
+        // Check if exercise completed naturally (timer reached 0)
+        if (timeRemaining <= 0) {
+            // Award XP for completing the exercise
+            awardBreathingXP();
+            breathingText.textContent = 'Great job! You completed the exercise!';
+        } else {
+            breathingText.textContent = 'Click Start to begin';
+        }
+        
         currentPhase = 'inhale';
         timeRemaining = totalDuration;
         updateTimerDisplay();
+    }
+    
+    // Function to award XP for completing a breathing exercise
+    function awardBreathingXP() {
+        fetch('/breathing/complete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCsrfToken()
+            },
+            body: JSON.stringify({
+                duration: totalDuration
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Show XP notification
+                if (data.xp_gained) {
+                    showXpNotification(data);
+                }
+            }
+        })
+        .catch(error => console.error('Error awarding XP:', error));
+    }
+    
+    // Function to show XP notification after completing exercise
+    function showXpNotification(data) {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = 'xp-notification';
+        
+        let message = `<p><strong>+${data.xp_gained} XP!</strong> ${data.message}</p>`;
+        
+        // Add level up message if applicable
+        if (data.level_up) {
+            message += `<p>${data.level_message}</p>`;
+        }
+        
+        notification.innerHTML = message;
+        
+        // Add to document
+        document.body.appendChild(notification);
+        
+        // Remove after animation
+        setTimeout(() => {
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => document.body.removeChild(notification), 500);
+            }, 4000);
+        }, 10);
+    }
+    
+    // Helper function to get CSRF token from meta tag
+    function getCsrfToken() {
+        return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     }
     
     function changeBreathingPhase(phase) {

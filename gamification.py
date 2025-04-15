@@ -26,7 +26,7 @@ XP_REWARDS = {
     'streak_day': 5,          # Additional points per day of streak
     'streak_milestone': 20,   # Extra points for streak milestones (3, 7, 14, 30 days)
     'badge_earned': 25,       # Points for earning a badge
-    'breathing_exercise': 15, # Points for completing a breathing exercise
+    'breathing': 15,          # Points for completing a breathing exercise
     'analysis': 20,           # Points for analyzing an entry
     'daily_bonus': 5,         # Daily login bonus
 }

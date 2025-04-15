@@ -171,13 +171,24 @@ def dashboard():
         badge_data = gamification.get_user_badges(user_id)
         badge_data['streak_status'] = gamification.check_streak_status(user_id)
         
-        # Only show earned badges on dashboard (limit to 3 most recent)
+        # Show earned badges on dashboard (limit to 6 most recent for a nice 2x3 grid)
         if badge_data:
             dashboard_badges = []
-            for badge_id in badge_data['earned_badges'][-3:]:  # Get the last 3 earned badges
+            # Get the most recent badges (up to 6)
+            for badge_id in badge_data['earned_badges'][-6:]:
                 if badge_id in badge_data['badge_details']:
                     dashboard_badges.append(badge_data['badge_details'][badge_id])
             badge_data['dashboard_badges'] = dashboard_badges
+            
+            # Also add next badges to earn (for motivation)
+            next_badges = []
+            # Look through all badges and find up to 3 that aren't earned yet
+            count = 0
+            for badge_id, badge in badge_data['badge_details'].items():
+                if not badge['earned'] and count < 3:
+                    next_badges.append(badge)
+                    count += 1
+            badge_data['next_badges'] = next_badges
     except Exception as e:
         logging.error(f"Error loading achievements for dashboard: {str(e)}")
     
@@ -284,6 +295,50 @@ def delete_journal_entry(entry_id):
 @login_required
 def breathing():
     return render_template('breathing.html', title='Breathing Exercise')
+
+# Endpoint for awarding XP when breathing exercise is completed
+@app.route('/breathing/complete', methods=['POST'])
+@login_required
+def breathing_complete():
+    try:
+        # Award XP for completing breathing exercise
+        xp_data = gamification.award_xp(
+            user_id=current_user.id,
+            xp_amount=gamification.XP_REWARDS['breathing'],
+            reason="Completed breathing exercise"
+        )
+        
+        # Process breathing session badge
+        badge_result = gamification.process_breathing_session(current_user.id)
+        
+        # Flash notifications for badges
+        gamification.flash_badge_notifications(badge_result)
+        
+        # Prepare response data
+        response_data = {
+            'success': True,
+            'message': 'Great job completing your breathing exercise!'
+        }
+        
+        # Add XP info to response
+        if xp_data and xp_data.get('xp_gained'):
+            response_data['xp_gained'] = xp_data['xp_gained']
+            response_data['xp_message'] = f"You earned {xp_data['xp_gained']} XP!"
+            
+            # Add level up info if applicable
+            if xp_data.get('leveled_up'):
+                response_data['level_up'] = True
+                response_data['level'] = xp_data['level']
+                response_data['level_name'] = xp_data['level_name']
+                response_data['level_message'] = f"Level Up! You're now Level {xp_data['level']}: {xp_data['level_name']}"
+        
+        return jsonify(response_data)
+    except Exception as e:
+        app.logger.error(f"Error in breathing_complete route: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': 'Error recording breathing exercise completion.'
+        }), 500
 
 # User account management - Now moved to account_routes.py blueprint
 # This is commented out to avoid conflicts with the blueprint version

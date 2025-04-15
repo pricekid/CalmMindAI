@@ -1,0 +1,114 @@
+/* Duolingo-inspired Gamification Styles */
+
+/* XP Reward Badge */
+.xp-reward {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #5cb85c;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  font-weight: bold;
+}
+
+/* Level Badge */
+.level-badge {
+  transition: transform 0.3s ease;
+}
+
+.level-badge:hover {
+  transform: scale(1.1);
+}
+
+/* XP Notification */
+.xp-notification {
+  position: fixed;
+  bottom: -100px;
+  right: 20px;
+  background: linear-gradient(135deg, #5cb85c, #74d074);
+  color: white;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 1100;
+  min-width: 250px;
+  max-width: 350px;
+  transition: transform 0.5s ease;
+  font-weight: bold;
+  text-align: center;
+  opacity: 0;
+}
+
+.xp-notification.show {
+  transform: translateY(-120px);
+  opacity: 1;
+}
+
+.xp-notification p {
+  margin-bottom: 5px;
+}
+
+/* Badge Animations */
+@keyframes badgeEarned {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.badge-earned {
+  animation: badgeEarned 1s ease;
+}
+
+/* Achievement Cards */
+.achievement-card {
+  transition: transform 0.3s ease;
+}
+
+.achievement-card:hover {
+  transform: translateY(-5px);
+}
+
+.locked-achievement {
+  opacity: 0.7;
+  filter: grayscale(50%);
+}
+
+.locked-achievement:hover {
+  opacity: 0.8;
+  filter: grayscale(30%);
+}
+
+/* Achievement Icons */
+.achievement-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  color: white;
+  position: relative;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+.achievement-icon.locked {
+  opacity: 0.5;
+}
+
+/* Streak Container */
+.streak-dashboard-container {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+.streak-dashboard-container:hover {
+  transform: translateY(-5px);
+}
+
+.streak-fact-box {
+  font-style: italic;
+}

@@ -305,32 +305,27 @@
                                 {% endfor %}
                             {% else %}
                                 <!-- Show available badges to earn -->
-                                {% set unearned_badges = [] %}
-                                {% for badge_id, badge in badge_data.badge_details.items() %}
-                                    {% if not badge.earned and (unearned_badges|length < 3) %}
-                                        {% set _ = unearned_badges.append(badge) %}
-                                    {% endif %}
-                                {% endfor %}
-                                
-                                {% for badge in unearned_badges %}
-                                <div class="col-md-4">
-                                    <div class="card h-100 text-center locked-achievement">
-                                        <div class="card-body">
-                                            <div class="achievement-icon mb-2 locked" style="background-color: {{ badge.color }};">
-                                                <i class="fas {{ badge.icon }} fa-lg"></i>
+                                {% if badge_data.next_badges %}
+                                    {% for badge in badge_data.next_badges %}
+                                    <div class="col-md-4">
+                                        <div class="card h-100 text-center locked-achievement">
+                                            <div class="card-body">
+                                                <div class="achievement-icon mb-2" style="background-color: {{ badge.color }}; opacity: 0.5;">
+                                                    <i class="fas {{ badge.icon }} fa-lg"></i>
+                                                </div>
+                                                <h6>{{ badge.name }}</h6>
+                                                <small class="text-muted">{{ badge.hint }}</small>
+                                                <!-- XP Reward Badge -->
+                                                {% if badge.xp_reward %}
+                                                <div class="mt-2">
+                                                    <span class="badge bg-secondary">+{{ badge.xp_reward }} XP</span>
+                                                </div>
+                                                {% endif %}
                                             </div>
-                                            <h6>{{ badge.name }}</h6>
-                                            <small class="text-muted">{{ badge.hint }}</small>
-                                            <!-- XP Reward Badge -->
-                                            {% if badge.xp_reward %}
-                                            <div class="mt-2">
-                                                <span class="badge bg-secondary">+{{ badge.xp_reward }} XP</span>
-                                            </div>
-                                            {% endif %}
                                         </div>
                                     </div>
-                                </div>
-                                {% endfor %}
+                                    {% endfor %}
+                                {% endif %}
                             {% endif %}
                         </div>
                     </div>
