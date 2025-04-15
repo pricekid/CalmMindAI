@@ -129,7 +129,7 @@ def send_daily_reminder_direct():
     Send daily email reminders to users without direct User model dependency.
     This function works directly with the users.json data file.
     """
-    from notification_service import send_notification  # Import here to avoid circular import
+    from notification_service import send_daily_reminder  # Import here to avoid circular import
     
     # Stats tracking
     total_users = 0
@@ -186,30 +186,8 @@ def send_daily_reminder_direct():
         
         # Send a simple daily journaling reminder
         try:
-            # Construct email content
-            subject = "Your Daily Journal Reminder"
-            message = f"""
-            <html>
-            <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; line-height: 1.6;">
-                <div style="padding: 20px; background-color: #f7f2e9; border-radius: 10px; border-left: 4px solid #e6b980;">
-                    <h2 style="color: #5f4b32; margin-top: 0;">Hello {username},</h2>
-                    
-                    <p>This is your gentle reminder to take a moment for yourself today and journal in Calm Journey.</p>
-                    
-                    <p>Even a brief entry can help you process your thoughts and emotions.</p>
-                    
-                    <div style="text-align: center; margin: 25px 0;">
-                        <a href="https://calm-journey.replit.app/login" style="display: inline-block; background-color: #e6b980; color: #5f4b32; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Open Your Journal</a>
-                    </div>
-                    
-                    <p style="font-style: italic; color: #7d6b4c;">Wishing you a peaceful and mindful day,<br>The Calm Journey Team</p>
-                </div>
-            </body>
-            </html>
-            """
-            
-            # Send the email
-            result = send_notification(email, subject, message)
+            # Use the enhanced daily reminder function
+            result = send_daily_reminder(user)
             
             if isinstance(result, dict) and result.get('success'):
                 # Track successful notification
