@@ -74,7 +74,20 @@ def send_email(recipient, subject, html_body, text_body=None):
     mail_use_tls = mail_config['MAIL_USE_TLS']
     mail_username = mail_config['MAIL_USERNAME']
     mail_password = mail_config['MAIL_PASSWORD']
+    
+    # Default sender to username if not set
     mail_sender = mail_config['MAIL_DEFAULT_SENDER']
+    if not mail_sender and mail_username:
+        mail_sender = mail_username
+        mail_config['MAIL_DEFAULT_SENDER'] = mail_username
+        os.environ['MAIL_DEFAULT_SENDER'] = mail_username
+        logger.info(f"Set default mail sender to {mail_username}")
+        
+    # Ensure other mail settings are set as environment variables for future runs
+    if not os.environ.get('MAIL_SERVER'):
+        os.environ['MAIL_SERVER'] = mail_server
+    if not os.environ.get('MAIL_PORT'):
+        os.environ['MAIL_PORT'] = str(mail_port)
     
     # Debug log the mail configuration
     logger.debug(f"Mail configuration:")
