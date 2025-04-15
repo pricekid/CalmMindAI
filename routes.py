@@ -376,6 +376,29 @@ def log_mood():
         db.session.add(mood_log)
         db.session.commit()
         
+        # Award XP for logging mood (Duolingo-style reward)
+        xp_data = gamification.award_xp(
+            user_id=current_user.id,
+            xp_amount=gamification.XP_REWARDS['mood_log'],
+            reason="Logged your mood"
+        )
+        
+        # Process gamification for mood tracking badge
+        badge_result = gamification.process_mood_log(current_user.id)
+        
+        # Flash badge notifications if any
+        gamification.flash_badge_notifications(badge_result)
+        
+        # Flash XP notifications
+        if xp_data and xp_data.get('xp_gained'):
+            flash(f"🌟 You earned {xp_data['xp_gained']} XP for tracking your mood!", 'success')
+            
+            # Show level up message if user leveled up
+            if xp_data.get('leveled_up'):
+                level = xp_data['level']
+                level_name = xp_data['level_name']
+                flash(f"🎉 Level Up! You're now Level {level}: {level_name}", 'success')
+        
         flash('Your mood has been logged!', 'success')
     else:
         flash('There was an error logging your mood. Please try again.', 'danger')

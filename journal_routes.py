@@ -217,8 +217,33 @@ def new_journal_entry():
             # Process gamification elements
             badge_result = gamification.process_journal_entry(current_user.id)
             
+            # Award XP for creating a journal entry
+            xp_data = gamification.award_xp(
+                user_id=current_user.id,
+                xp_amount=gamification.XP_REWARDS['journal_entry'],
+                reason="Created a new journal entry"
+            )
+            
+            # Award additional XP if entry was analyzed
+            if entry.is_analyzed:
+                gamification.award_xp(
+                    user_id=current_user.id,
+                    xp_amount=gamification.XP_REWARDS['analysis'],
+                    reason="Received insights on journal entry"
+                )
+            
             # Flash notifications for earned badges
             gamification.flash_badge_notifications(badge_result)
+            
+            # Flash XP notifications
+            if xp_data and xp_data.get('xp_gained'):
+                flash(f"🌟 You earned {xp_data['xp_gained']} XP for journaling!", 'success')
+                
+                # Show level up message if user leveled up
+                if xp_data.get('leveled_up'):
+                    level = xp_data['level']
+                    level_name = xp_data['level_name']
+                    flash(f"🎉 Level Up! You're now Level {level}: {level_name}", 'success')
             
             # If user earned new badges, prepare to render the badge notification
             if badge_result.get("new_badges"):

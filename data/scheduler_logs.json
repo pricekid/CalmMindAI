@@ -2248,5 +2248,53 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 8c203d723f3b at 2025-04-15 18:31:43.279162",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:32:33",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 1047",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:32:56",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 1047",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:33:58",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 1047). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-15 18:33:58",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-15 18:33:58.890485",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:33:58",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-15 18:33:58.893511",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:33:58",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:33:59",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 1362",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:33:59",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 8c203d723f3b at 2025-04-15 18:33:59.369660",
+    "success": true
   }
 ]
