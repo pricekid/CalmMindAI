@@ -8,6 +8,7 @@ import json
 import datetime
 import time
 from notification_service import ensure_data_directory
+from notification_tracking import has_received_notification, track_notification, get_notification_stats
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -49,22 +50,8 @@ def send_daily_sms_reminder_direct():
     # Get current date
     current_date = datetime.datetime.now().strftime("%Y-%m-%d")
     
-    # Prepare tracking file to avoid duplicate notifications
-    ensure_data_directory()
-    tracking_file = 'data/sms_notifications_sent.json'
-    
-    # Load existing tracking data
-    tracking_data = {}
-    if os.path.exists(tracking_file):
-        try:
-            with open(tracking_file, 'r') as f:
-                tracking_data = json.load(f)
-        except (json.JSONDecodeError, FileNotFoundError):
-            tracking_data = {}
-    
-    # Make sure today's date exists in tracking
-    if current_date not in tracking_data:
-        tracking_data[current_date] = []
+    # We're now using the notification_tracking module to handle tracking
+    # No need to manually manage tracking files anymore
     
     # Send SMS to each eligible user
     for user in users:
@@ -83,7 +70,7 @@ def send_daily_sms_reminder_direct():
         
         # Skip users who have already received an SMS today
         user_id = user.get('id')
-        if user_id in tracking_data[current_date]:
+        if has_received_notification('sms', user_id):
             logger.info(f"Skipping user {user_id}: Already received SMS today")
             skipped_count += 1
             continue
@@ -97,8 +84,8 @@ def send_daily_sms_reminder_direct():
             result = send_sms_notification(phone_number, message)
             
             if result.get('success'):
-                # Track successful notification
-                tracking_data[current_date].append(user_id)
+                # Track successful notification using the new tracking system
+                track_notification('sms', user_id)
                 sent_count += 1
                 logger.info(f"SMS sent to user {user_id} at {phone_number}")
             else:
@@ -109,12 +96,8 @@ def send_daily_sms_reminder_direct():
         # Brief pause to avoid rate limiting
         time.sleep(1)
     
-    # Save updated tracking data
-    try:
-        with open(tracking_file, 'w') as f:
-            json.dump(tracking_data, f)
-    except Exception as e:
-        logger.error(f"Error saving SMS tracking data: {str(e)}")
+    # No need to manually save tracking data anymore
+    # The notification_tracking module handles this automatically
     
     # Return stats
     return {
@@ -143,21 +126,8 @@ def send_daily_reminder_direct():
     # Get current date
     current_date = datetime.datetime.now().strftime("%Y-%m-%d")
     
-    # Prepare tracking file to avoid duplicate notifications
-    tracking_file = 'data/email_notifications_sent.json'
-    
-    # Load existing tracking data
-    tracking_data = {}
-    if os.path.exists(tracking_file):
-        try:
-            with open(tracking_file, 'r') as f:
-                tracking_data = json.load(f)
-        except (json.JSONDecodeError, FileNotFoundError):
-            tracking_data = {}
-    
-    # Make sure today's date exists in tracking
-    if current_date not in tracking_data:
-        tracking_data[current_date] = []
+    # We're now using the notification_tracking module to handle tracking
+    # No need to manually manage tracking files anymore
     
     # Send email to each eligible user
     for user in users:
@@ -176,7 +146,7 @@ def send_daily_reminder_direct():
         
         # Skip users who have already received an email today
         user_id = user.get('id')
-        if user_id in tracking_data[current_date]:
+        if has_received_notification('email', user_id):
             logger.info(f"Skipping user {user_id}: Already received email today")
             skipped_count += 1
             continue
@@ -190,8 +160,8 @@ def send_daily_reminder_direct():
             result = send_daily_reminder(user)
             
             if isinstance(result, dict) and result.get('success'):
-                # Track successful notification
-                tracking_data[current_date].append(user_id)
+                # Track successful notification using the new tracking system
+                track_notification('email', user_id)
                 sent_count += 1
                 logger.info(f"Email sent to user {user_id} at {email}")
             else:
@@ -203,12 +173,8 @@ def send_daily_reminder_direct():
         # Brief pause to avoid rate limiting
         time.sleep(1)
     
-    # Save updated tracking data
-    try:
-        with open(tracking_file, 'w') as f:
-            json.dump(tracking_data, f)
-    except Exception as e:
-        logger.error(f"Error saving email tracking data: {str(e)}")
+    # No need to manually save tracking data anymore
+    # The notification_tracking module handles this automatically
     
     # Return stats
     return {
