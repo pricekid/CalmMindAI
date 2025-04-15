@@ -2692,5 +2692,17 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 8c203d723f3b at 2025-04-15 18:55:11.387655",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-15 19:00:10",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4174 at 2025-04-15 19:00:10",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 19:05:10",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4174 at 2025-04-15 19:05:10",
+    "success": true
   }
 ]
