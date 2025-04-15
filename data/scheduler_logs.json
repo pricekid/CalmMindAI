@@ -2608,5 +2608,89 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 8c203d723f3b at 2025-04-15 18:52:42.282426",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:53:28",
+    "type": "command_execution",
+    "message": "Executing command: restart",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:53:28",
+    "type": "scheduler_shutdown",
+    "message": "Shutting down scheduler due to signal SIGTERM",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:53:33",
+    "type": "process_stop",
+    "message": "Scheduler with PID 3772 stopped successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:53:33",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-15 18:53:33.657145",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:53:33",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-15 18:53:33.661260",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:53:33",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:53:34",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 3983",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:53:34",
+    "type": "command_result",
+    "message": "Command 'restart' completed with success",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:55:10",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 3983). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-15 18:55:10",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-15 18:55:10.985204",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:55:10",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-15 18:55:10.989215",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:55:11",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:55:11",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 4174",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:55:11",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 8c203d723f3b at 2025-04-15 18:55:11.387655",
+    "success": true
   }
 ]
