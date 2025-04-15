@@ -136,31 +136,29 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Function to show XP notification after completing exercise
     function showXpNotification(data) {
-        // Create notification element
-        const notification = document.createElement('div');
-        notification.className = 'xp-notification';
+        // Use the existing notification element
+        const notification = document.getElementById('xp-notification');
+        const xpMessage = document.getElementById('xp-message');
+        const levelUpMessage = document.getElementById('level-up-message');
         
-        let message = `<p><strong>+${data.xp_gained} XP!</strong> ${data.message}</p>`;
+        // Set the XP message
+        xpMessage.innerHTML = `<strong>+${data.xp_gained} XP!</strong> ${data.xp_message || 'Great job completing your breathing exercise!'}`;
         
         // Add level up message if applicable
         if (data.level_up) {
-            message += `<p>${data.level_message}</p>`;
+            levelUpMessage.innerHTML = data.level_message;
+            levelUpMessage.style.display = 'block';
+        } else {
+            levelUpMessage.style.display = 'none';
         }
         
-        notification.innerHTML = message;
+        // Show the notification with animation
+        notification.classList.add('show');
         
-        // Add to document
-        document.body.appendChild(notification);
-        
-        // Remove after animation
+        // Hide after a few seconds
         setTimeout(() => {
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => document.body.removeChild(notification), 500);
-            }, 4000);
-        }, 10);
+            notification.classList.remove('show');
+        }, 5000);
     }
     
     // Helper function to get CSRF token from meta tag

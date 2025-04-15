@@ -2338,5 +2338,41 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 8c203d723f3b at 2025-04-15 18:37:46.274015",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:39:57",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 1875). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-15 18:39:58",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-15 18:39:58.499144",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:39:58",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-15 18:39:58.502973",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:39:58",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:39:58",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 2138",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-15 18:39:58",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 8c203d723f3b at 2025-04-15 18:39:58.956729",
+    "success": true
   }
 ]
