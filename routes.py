@@ -402,6 +402,15 @@ def about():
     """
     return render_template('about.html', title='About Calm Journey')
 
+# Define template filters globally before routes
+@app.template_filter('pluralize')
+def pluralize(number, singular='', plural='s'):
+    """
+    Template filter to handle pluralization based on number.
+    Example use in template: {{ count }} item{{ count|pluralize }}
+    """
+    return singular if number == 1 else plural
+
 @app.route('/achievements')
 @login_required
 def achievements():
@@ -420,11 +429,6 @@ def achievements():
         
         # Log badge data to debug
         app.logger.debug(f"Badge data for user {user_id}: {badge_data}")
-        
-        # Custom pluralize function for templates
-        @app.template_filter('pluralize')
-        def pluralize(number, singular='', plural='s'):
-            return singular if number == 1 else plural
         
         return render_template(
             'achievements.html',
