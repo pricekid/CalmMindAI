@@ -35,8 +35,12 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 # Initialize SQLAlchemy
 db = SQLAlchemy(app)
 
-# Create BlockingScheduler with increased job defaults
+# Import pytz for timezone support
+import pytz
+
+# Create BlockingScheduler with increased job defaults and timezone set to UTC
 scheduler = BlockingScheduler(
+    timezone=pytz.UTC,  # Explicitly use UTC timezone for consistent scheduling
     job_defaults={
         'misfire_grace_time': 3600,  # 1 hour grace time for all jobs
         'coalesce': True,          # Combine multiple missed runs into one

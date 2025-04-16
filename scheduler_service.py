@@ -159,7 +159,8 @@ def send_daily_reminder_direct():
             # Use the enhanced daily reminder function
             result = send_daily_reminder(user)
             
-            if isinstance(result, dict) and result.get('success'):
+            # The result can be True, False, or a dict with 'success' key
+            if (isinstance(result, bool) and result) or (isinstance(result, dict) and result.get('success')):
                 # Track successful notification using the new tracking system
                 track_notification('email', user_id)
                 sent_count += 1

@@ -2842,5 +2842,47 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host d05d708bc929 at 2025-04-16 16:23:06.704072",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-16 16:25:45",
+    "type": "scheduler_shutdown",
+    "message": "Shutting down scheduler due to signal SIGTERM",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 16:26:41",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 671). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-16 16:26:41",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-16 16:26:41.750576",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 16:26:41",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-16 16:26:41.754822",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 16:26:41",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 16:26:42",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 1106",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 16:26:42",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host d05d708bc929 at 2025-04-16 16:26:42.128277",
+    "success": true
   }
 ]
