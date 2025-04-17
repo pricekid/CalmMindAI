@@ -28,6 +28,8 @@ XP_REWARDS = {
     'badge_earned': 25,       # Points for earning a badge
     'breathing': 15,          # Points for completing a breathing exercise
     'analysis': 20,           # Points for analyzing an entry
+    'onboarding_complete': 30, # Points for completing the onboarding process
+    'journal_entry_created': 15, # Points for creating first journal entry during onboarding
     'daily_bonus': 5,         # Daily login bonus
 }
 

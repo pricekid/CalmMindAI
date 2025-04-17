@@ -2,12 +2,13 @@
 Routes for the onboarding process for new users.
 """
 from flask import Blueprint, render_template, redirect, url_for, session, request, flash
-from flask_login import login_required, current_user
+from flask_login import current_user
+from app import login_required
 
 # Create Blueprint
 onboarding_bp = Blueprint('onboarding', __name__)
 
-@onboarding_bp.route('/onboarding/step-1', methods=['GET', 'POST'])
+@onboarding_bp.route('/step-1', methods=['GET', 'POST'])
 @login_required
 def step_1():
     """
@@ -27,7 +28,7 @@ def step_1():
     
     return render_template('onboarding_step_1.html')
 
-@onboarding_bp.route('/onboarding/step-2', methods=['GET', 'POST'])
+@onboarding_bp.route('/step-2', methods=['GET', 'POST'])
 @login_required
 def step_2():
     """
@@ -59,7 +60,7 @@ def step_2():
     
     return render_template('onboarding_step_2.html')
 
-@onboarding_bp.route('/onboarding/step-3', methods=['GET'])
+@onboarding_bp.route('/step-3', methods=['GET'])
 @login_required
 def step_3():
     """
@@ -156,10 +157,11 @@ def create_first_journal_entry(content, mood, feedback):
     
     # Also update gamification stats (if available)
     try:
-        from gamification import update_user_stats
-        update_user_stats(user_id, "journal_entry_created")
-    except ImportError:
-        # If gamification module not available, skip
+        from gamification import award_xp, XP_REWARDS
+        award_xp(user_id, XP_REWARDS['journal_entry_created'], "Created first journal entry during onboarding")
+    except (ImportError, KeyError) as e:
+        # If gamification module not available or key not found, skip
+        print(f"Error awarding gamification XP: {str(e)}")
         pass
 
 def mark_user_as_not_new():
@@ -199,6 +201,15 @@ def mark_user_as_not_new():
     session.pop('onboarding_mood', None)
     session.pop('onboarding_journal', None)
     session.pop('onboarding_cbt_feedback', None)
+    
+    # Award XP for completing the onboarding process
+    try:
+        from gamification import award_xp, XP_REWARDS
+        award_xp(user_id, XP_REWARDS['onboarding_complete'], "Completed onboarding process")
+    except (ImportError, KeyError) as e:
+        # If gamification module not available or key not found, skip
+        print(f"Error awarding gamification XP: {str(e)}")
+        pass
 
 def is_new_user(user_id):
     """
