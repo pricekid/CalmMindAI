@@ -4,6 +4,7 @@ Routes for the onboarding process for new users.
 from flask import Blueprint, render_template, redirect, url_for, session, request, flash
 from flask_login import current_user
 from app import login_required
+import random
 
 # Create Blueprint
 onboarding_bp = Blueprint('onboarding', __name__)
@@ -34,6 +35,15 @@ def step_2():
     """
     Second step of onboarding: Ask for first journal entry
     """
+    # List of 5 hardcoded CBT-style feedback messages
+    cbt_style_messages = [
+        "It's okay to feel overwhelmed. The first step is noticing the thought.",
+        "You're not alone in feeling this way. Let's explore what that thought is telling you.",
+        "Anxious thoughts can feel very real, but they're not always true.",
+        "This moment will pass. Let's focus on what's in your control.",
+        "Your thoughts might be distorted—would you like to reframe one together tomorrow?"
+    ]
+    
     # Make sure user completed step 1
     if 'onboarding_mood' not in session:
         return redirect(url_for('onboarding.step_1'))
@@ -51,6 +61,10 @@ def step_2():
         mood = session.get('onboarding_mood')
         cbt_feedback = generate_cbt_feedback(mood)
         session['onboarding_cbt_feedback'] = cbt_feedback
+        
+        # Randomly select one of the CBT-style messages and store it in session
+        last_feedback = random.choice(cbt_style_messages)
+        session['last_feedback'] = last_feedback
         
         # Create the first journal entry
         create_first_journal_entry(journal_content, mood, cbt_feedback)
@@ -73,10 +87,13 @@ def step_3():
     # Get the feedback from session
     cbt_feedback = session.get('onboarding_cbt_feedback')
     
+    # Get the last_feedback from session or use fallback
+    last_feedback = session.get('last_feedback', "You're off to a great start. Create a journal entry for a new reflection.")
+    
     # Mark user as no longer new
     mark_user_as_not_new()
     
-    return render_template('onboarding_step_3.html', feedback=cbt_feedback)
+    return render_template('onboarding_step_3.html', feedback=cbt_feedback, last_feedback=last_feedback)
 
 def generate_cbt_feedback(mood):
     """
@@ -197,10 +214,11 @@ def mark_user_as_not_new():
         except Exception as e:
             print(f"Error updating user: {str(e)}")
     
-    # Also clear onboarding data from session
+    # Clear onboarding data from session except last_feedback
     session.pop('onboarding_mood', None)
     session.pop('onboarding_journal', None)
     session.pop('onboarding_cbt_feedback', None)
+    # We keep 'last_feedback' in the session so it can be displayed on step 3
     
     # Award XP for completing the onboarding process
     try:

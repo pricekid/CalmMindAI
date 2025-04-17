@@ -4096,5 +4096,29 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 796fffb2860f at 2025-04-17 21:25:46.730599",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-17 21:28:36",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 1347",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 21:28:54",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 1347",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 21:29:06",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 1347",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 21:29:13",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 1347",
+    "success": true
   }
 ]
