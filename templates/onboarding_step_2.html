@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+
+{% block title %}Onboarding - Step 2{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-body p-5">
+          <h1 class="text-center mb-4">Step 2: Journal Entry</h1>
+          
+          <p class="text-center text-muted mb-5">
+            What's been on your mind lately? Take a moment to reflect and write your thoughts below.
+          </p>
+          
+          <form method="POST" action="{{ url_for('onboarding.step_2') }}">
+            <div class="form-group mb-4">
+              <label for="journal_content" class="form-label">Journal Entry:</label>
+              <textarea 
+                id="journal_content" 
+                name="journal_content" 
+                class="form-control" 
+                rows="10" 
+                placeholder="Write freely about what's been on your mind. This is a safe space for your thoughts and feelings."
+                required
+              ></textarea>
+              <div class="form-text text-muted mt-2">
+                <i class="fas fa-lock me-1"></i> Your journal entries are private and secure.
+              </div>
+            </div>
+            
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary btn-lg">Continue</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <div class="card mt-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Journaling Tips:</h5>
+          <ul class="mb-0">
+            <li>Be honest with yourself – this is your personal space</li>
+            <li>Don't worry about grammar or spelling</li>
+            <li>Try to be specific about your thoughts and feelings</li>
+            <li>Consider writing about both challenges and positive moments</li>
+            <li>Reflect on patterns you notice in your thinking</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add form validation
+    const form = document.querySelector('form');
+    const journalContent = document.getElementById('journal_content');
+    
+    form.addEventListener('submit', function(event) {
+      if (journalContent.value.trim().length < 10) {
+        event.preventDefault();
+        alert('Please write at least a few sentences in your journal entry.');
+        journalContent.focus();
+      }
+    });
+  });
+</script>
+{% endblock %}

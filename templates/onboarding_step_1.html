@@ -1,0 +1,120 @@
+{% extends "layout.html" %}
+
+{% block title %}Onboarding - Step 1{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-body p-5">
+          <h1 class="text-center mb-4">Step 1: How are you feeling today?</h1>
+          
+          <p class="text-center text-muted mb-5">
+            Your emotional state affects how you perceive the world. Let's start by checking in with your feelings.
+          </p>
+          
+          <form method="POST" action="{{ url_for('onboarding.step_1') }}">
+            <div class="mood-selector mb-5">
+              <div class="row text-center">
+                <div class="col">
+                  <label class="mood-option d-block p-3">
+                    <input type="radio" name="mood" value="very_anxious" class="d-none">
+                    <div class="emoji-container p-3">
+                      <span class="emoji-large">😟</span>
+                      <p class="mt-2">Very Anxious</p>
+                    </div>
+                  </label>
+                </div>
+                
+                <div class="col">
+                  <label class="mood-option d-block p-3">
+                    <input type="radio" name="mood" value="anxious" class="d-none">
+                    <div class="emoji-container p-3">
+                      <span class="emoji-large">😔</span>
+                      <p class="mt-2">Anxious</p>
+                    </div>
+                  </label>
+                </div>
+                
+                <div class="col">
+                  <label class="mood-option d-block p-3">
+                    <input type="radio" name="mood" value="neutral" class="d-none">
+                    <div class="emoji-container p-3">
+                      <span class="emoji-large">😐</span>
+                      <p class="mt-2">Neutral</p>
+                    </div>
+                  </label>
+                </div>
+                
+                <div class="col">
+                  <label class="mood-option d-block p-3">
+                    <input type="radio" name="mood" value="calm" class="d-none">
+                    <div class="emoji-container p-3">
+                      <span class="emoji-large">😌</span>
+                      <p class="mt-2">Calm</p>
+                    </div>
+                  </label>
+                </div>
+                
+                <div class="col">
+                  <label class="mood-option d-block p-3">
+                    <input type="radio" name="mood" value="great" class="d-none">
+                    <div class="emoji-container p-3">
+                      <span class="emoji-large">😄</span>
+                      <p class="mt-2">Great</p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary btn-lg">Continue</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .emoji-large {
+    font-size: 3rem;
+    display: block;
+  }
+  
+  .mood-option {
+    cursor: pointer;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .mood-option:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+  
+  input[type="radio"]:checked + .emoji-container {
+    background-color: rgba(0, 123, 255, 0.2);
+    border-radius: 0.5rem;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add click event to the mood options
+    document.querySelectorAll('.mood-option').forEach(function(option) {
+      option.addEventListener('click', function() {
+        // Find the radio button inside the clicked option
+        const radio = this.querySelector('input[type="radio"]');
+        
+        // Check the radio button
+        if (radio) {
+          radio.checked = true;
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}

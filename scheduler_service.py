@@ -8,7 +8,7 @@ import json
 import datetime
 import time
 from notification_service import ensure_data_directory
-from notification_tracking import has_received_notification, track_notification, get_notification_stats
+from notification_tracking import user_received_notification, record_notification_sent, get_notification_statistics
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -70,7 +70,7 @@ def send_daily_sms_reminder_direct():
         
         # Skip users who have already received an SMS today
         user_id = user.get('id')
-        if has_received_notification('sms', user_id):
+        if user_received_notification(user_id, 'sms'):
             logger.info(f"Skipping user {user_id}: Already received SMS today")
             skipped_count += 1
             continue
@@ -85,7 +85,7 @@ def send_daily_sms_reminder_direct():
             
             if result.get('success'):
                 # Track successful notification using the new tracking system
-                track_notification('sms', user_id)
+                record_notification_sent(user_id, 'sms', phone_number)
                 sent_count += 1
                 logger.info(f"SMS sent to user {user_id} at {phone_number}")
             else:
@@ -146,7 +146,7 @@ def send_daily_reminder_direct():
         
         # Skip users who have already received an email today
         user_id = user.get('id')
-        if has_received_notification('email', user_id):
+        if user_received_notification(user_id, 'email'):
             logger.info(f"Skipping user {user_id}: Already received email today")
             skipped_count += 1
             continue
@@ -162,7 +162,7 @@ def send_daily_reminder_direct():
             # The result can be True, False, or a dict with 'success' key
             if (isinstance(result, bool) and result) or (isinstance(result, dict) and result.get('success')):
                 # Track successful notification using the new tracking system
-                track_notification('email', user_id)
+                record_notification_sent(user_id, 'email', email)
                 sent_count += 1
                 logger.info(f"Email sent to user {user_id} at {email}")
             else:
