@@ -3970,5 +3970,53 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 796fffb2860f at 2025-04-17 21:22:33.984681",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-17 21:23:23",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 609",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 21:24:11",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 609",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 21:24:18",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 609). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-17 21:24:19",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-17 21:24:19.662852",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 21:24:19",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-17 21:24:19.671618",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 21:24:19",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 21:24:20",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 931",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 21:24:20",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 796fffb2860f at 2025-04-17 21:24:20.026119",
+    "success": true
   }
 ]

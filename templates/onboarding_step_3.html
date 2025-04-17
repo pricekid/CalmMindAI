@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+
+{% block title %}Onboarding - Step 3{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-body p-5 text-center">
+          <div class="mb-4">
+            <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+          </div>
+          
+          <h1 class="mb-4">You've completed your first journaling session!</h1>
+          
+          <p class="text-muted mb-5">
+            Congratulations on taking this important step toward improving your mental wellness.
+            Regular journaling can help you process emotions, identify patterns, and develop greater self-awareness.
+          </p>
+          
+          <div class="card bg-light mb-5">
+            <div class="card-body">
+              <h3 class="card-title mb-3">A note from your AI companion:</h3>
+              <p class="card-text">{{ feedback }}</p>
+            </div>
+          </div>
+          
+          <div class="d-grid gap-3">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg">
+              Go to Your Dashboard
+            </a>
+            <p class="small text-muted">
+              Your journey has just begun. We'll be here to support you every step of the way.
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card mt-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">What's Next?</h5>
+          <p>Here are some ways to make the most of Calm Journey:</p>
+          <ul class="mb-0">
+            <li>Try to journal at least once a day</li>
+            <li>Set a regular time for reflection</li>
+            <li>Review your past entries to identify patterns</li>
+            <li>Track how your mood changes over time</li>
+            <li>Explore the resources in your dashboard</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Confetti animation for celebration
+  document.addEventListener('DOMContentLoaded', function() {
+    // Simple confetti effect (optional - can be removed if not desired)
+    const confettiCount = 100;
+    const colors = ['#FF8C00', '#5F9EA0', '#9370DB', '#3CB371', '#FF6347'];
+    
+    function createConfetti() {
+      const confetti = document.createElement('div');
+      confetti.className = 'confetti';
+      
+      const size = Math.random() * 10 + 5;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      
+      confetti.style.width = `${size}px`;
+      confetti.style.height = `${size}px`;
+      confetti.style.backgroundColor = color;
+      confetti.style.left = `${Math.random() * 100}vw`;
+      confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+      confetti.style.opacity = Math.random();
+      
+      document.body.appendChild(confetti);
+      
+      setTimeout(() => {
+        confetti.remove();
+      }, 5000);
+    }
+    
+    for (let i = 0; i < confettiCount; i++) {
+      setTimeout(createConfetti, Math.random() * 1000);
+    }
+  });
+</script>
+
+<style>
+  .confetti {
+    position: fixed;
+    top: -10px;
+    z-index: 1000;
+    animation: fall linear forwards;
+  }
+  
+  @keyframes fall {
+    to {
+      transform: translateY(100vh) rotate(360deg);
+    }
+  }
+</style>
+{% endblock %}

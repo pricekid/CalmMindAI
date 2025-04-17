@@ -116,6 +116,13 @@ def dashboard():
     # Make sure we're not logged in as admin trying to access regular dashboard
     if hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
         return redirect(url_for('admin.dashboard'))
+    
+    # Check if the user is new and needs onboarding
+    from onboarding_routes import is_new_user
+    if is_new_user(current_user.id):
+        # New user, redirect to onboarding
+        flash('Welcome to Calm Journey! Let\'s get you started with a few quick steps.', 'info')
+        return redirect(url_for('onboarding.step_1'))
         
     # Get weekly mood summary
     weekly_summary = current_user.get_weekly_summary()

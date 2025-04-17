@@ -379,6 +379,10 @@ with app.app_context():
     from openai_tts_service import openai_tts_bp
     app.register_blueprint(openai_tts_bp)
     
+    # Register the onboarding blueprint
+    from onboarding_routes import onboarding_bp
+    app.register_blueprint(onboarding_bp, url_prefix='/onboarding')
+    
     # Explicitly exempt TTS routes from CSRF protection
     csrf.exempt(direct_tts_bp)
     csrf.exempt(simple_direct_tts_bp)
