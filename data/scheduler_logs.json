@@ -2938,5 +2938,617 @@
     "type": "email_notification_start",
     "message": "Starting daily email notifications",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-16 17:01:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 17:01:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 17:06:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 17:06:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 17:11:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 17:11:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 17:16:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 17:16:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 17:21:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 17:21:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 17:26:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 17:26:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 17:26:41",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-16 17:26:41.751054",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 17:26:41",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 17:31:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 17:31:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 17:36:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 17:36:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 17:41:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 17:41:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 17:46:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 17:46:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 17:51:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 17:51:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 17:56:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 17:56:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 17:56:41",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-16 17:56:41.750932",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 17:56:41",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 18:01:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 18:01:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 18:06:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 18:06:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 18:11:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 18:11:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 18:16:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 18:16:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 18:21:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 18:21:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 18:26:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 18:26:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 18:26:41",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-16 18:26:41.750913",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 18:26:41",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 18:31:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 18:31:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 18:36:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 18:36:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 18:41:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 18:41:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 18:46:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 18:46:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 18:51:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 18:51:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 18:56:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 18:56:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 18:56:41",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-16 18:56:41.750925",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 18:56:41",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 19:01:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 19:01:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 19:06:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 19:06:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 19:11:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 19:11:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 19:16:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 19:16:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 19:21:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 19:21:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 19:26:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 19:26:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 19:26:41",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-16 19:26:41.750933",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 19:26:41",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 19:31:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 19:31:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 19:36:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 19:36:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 19:41:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 19:41:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 19:46:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 19:46:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 19:51:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 19:51:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 19:56:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 19:56:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 19:56:41",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-16 19:56:41.750922",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 19:56:41",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 20:01:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 20:01:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 20:06:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 20:06:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 20:11:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 20:11:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 20:16:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 20:16:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 20:21:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 20:21:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 20:26:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 20:26:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 20:26:41",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-16 20:26:41.751012",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 20:26:41",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 20:31:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 20:31:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 20:36:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 20:36:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 20:41:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 20:41:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 20:46:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 20:46:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 20:51:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 20:51:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 20:56:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 20:56:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 20:56:41",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-16 20:56:41.750910",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 20:56:41",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 21:01:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 21:01:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-16 21:06:41",
+    "type": "health_check",
+    "message": "Scheduler running with PID 1106 at 2025-04-16 21:06:41",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 12:42:35",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 1106). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-17 12:42:36",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-17 12:42:36.433835",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 12:42:36",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-17 12:42:36.438876",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 12:42:36",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 12:42:36",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 210",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 12:42:36",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 700101bdd44f at 2025-04-17 12:42:36.864723",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 12:47:35",
+    "type": "health_check",
+    "message": "Scheduler running with PID 210 at 2025-04-17 12:47:35",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 12:52:35",
+    "type": "health_check",
+    "message": "Scheduler running with PID 210 at 2025-04-17 12:52:35",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 12:57:35",
+    "type": "health_check",
+    "message": "Scheduler running with PID 210 at 2025-04-17 12:57:35",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 13:02:35",
+    "type": "health_check",
+    "message": "Scheduler running with PID 210 at 2025-04-17 13:02:35",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 13:07:35",
+    "type": "health_check",
+    "message": "Scheduler running with PID 210 at 2025-04-17 13:07:35",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 13:12:35",
+    "type": "health_check",
+    "message": "Scheduler running with PID 210 at 2025-04-17 13:12:35",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 13:12:36",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-17 13:12:36.434251",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 13:12:36",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 13:17:35",
+    "type": "health_check",
+    "message": "Scheduler running with PID 210 at 2025-04-17 13:17:35",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 13:22:35",
+    "type": "health_check",
+    "message": "Scheduler running with PID 210 at 2025-04-17 13:22:35",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 13:27:35",
+    "type": "health_check",
+    "message": "Scheduler running with PID 210 at 2025-04-17 13:27:35",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 13:32:35",
+    "type": "health_check",
+    "message": "Scheduler running with PID 210 at 2025-04-17 13:32:35",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 13:37:35",
+    "type": "health_check",
+    "message": "Scheduler running with PID 210 at 2025-04-17 13:37:35",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 13:42:35",
+    "type": "health_check",
+    "message": "Scheduler running with PID 210 at 2025-04-17 13:42:35",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 13:42:36",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-17 13:42:36.434170",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 13:42:36",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 13:47:35",
+    "type": "health_check",
+    "message": "Scheduler running with PID 210 at 2025-04-17 13:47:35",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 13:52:35",
+    "type": "health_check",
+    "message": "Scheduler running with PID 210 at 2025-04-17 13:52:35",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 13:57:36",
+    "type": "health_check",
+    "message": "Scheduler running with PID 210 at 2025-04-17 13:57:36",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 14:02:36",
+    "type": "health_check",
+    "message": "Scheduler running with PID 210 at 2025-04-17 14:02:36",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 14:07:36",
+    "type": "health_check",
+    "message": "Scheduler running with PID 210 at 2025-04-17 14:07:36",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 14:12:36",
+    "type": "health_check",
+    "message": "Scheduler running with PID 210 at 2025-04-17 14:12:36",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 14:12:36",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-17 14:12:36.434131",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 14:12:36",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 14:15:44",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 210). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-17 14:15:45",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-17 14:15:45.884413",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 14:15:45",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-17 14:15:45.891719",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 14:15:45",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 14:15:46",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 502",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 14:15:46",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 700101bdd44f at 2025-04-17 14:15:46.029284",
+    "success": true
   }
 ]
