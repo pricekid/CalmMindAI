@@ -15,6 +15,7 @@
           </p>
           
           <form method="POST" action="{{ url_for('onboarding.step_2') }}">
+            {{ form.csrf_token }}
             <div class="form-group mb-4">
               <label for="journal_content" class="form-label">Journal Entry:</label>
               <textarea 

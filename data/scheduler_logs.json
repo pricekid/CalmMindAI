@@ -4156,5 +4156,29 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 796fffb2860f at 2025-04-17 21:33:03.054091",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-17 21:37:59",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2028",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 21:38:08",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2028",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 21:38:26",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2028",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 21:38:38",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2028",
+    "success": true
   }
 ]

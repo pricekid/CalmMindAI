@@ -4,6 +4,7 @@ Routes for the onboarding process for new users.
 from flask import Blueprint, render_template, redirect, url_for, session, request, flash
 from flask_login import current_user
 from app import login_required
+from flask_wtf import FlaskForm
 import random
 
 # Create Blueprint
@@ -15,11 +16,14 @@ def step_1():
     """
     First step of onboarding: Ask how the user is feeling today
     """
-    if request.method == 'POST':
+    # Create a simple form for CSRF protection
+    form = FlaskForm()
+    
+    if request.method == 'POST' and form.validate_on_submit():
         mood = request.form.get('mood')
         if not mood:
             flash('Please select a mood', 'error')
-            return render_template('onboarding_step_1.html')
+            return render_template('onboarding_step_1.html', form=form)
             
         # Store the mood in session
         session['onboarding_mood'] = mood
@@ -27,7 +31,7 @@ def step_1():
         # Redirect to step 2
         return redirect(url_for('onboarding.step_2'))
     
-    return render_template('onboarding_step_1.html')
+    return render_template('onboarding_step_1.html', form=form)
 
 @onboarding_bp.route('/step-2', methods=['GET', 'POST'])
 @login_required
@@ -35,6 +39,9 @@ def step_2():
     """
     Second step of onboarding: Ask for first journal entry
     """
+    # Create a simple form for CSRF protection
+    form = FlaskForm()
+    
     # List of 5 hardcoded CBT-style feedback messages
     cbt_style_messages = [
         "It's okay to feel overwhelmed. The first step is noticing the thought.",
@@ -48,11 +55,11 @@ def step_2():
     if 'onboarding_mood' not in session:
         return redirect(url_for('onboarding.step_1'))
     
-    if request.method == 'POST':
+    if request.method == 'POST' and form.validate_on_submit():
         journal_content = request.form.get('journal_content')
         if not journal_content or len(journal_content.strip()) < 10:
             flash('Please write at least a few sentences in your journal', 'error')
-            return render_template('onboarding_step_2.html')
+            return render_template('onboarding_step_2.html', form=form)
         
         # Store the journal content in session
         session['onboarding_journal'] = journal_content
@@ -72,7 +79,7 @@ def step_2():
         # Redirect to step 3
         return redirect(url_for('onboarding.step_3'))
     
-    return render_template('onboarding_step_2.html')
+    return render_template('onboarding_step_2.html', form=form)
 
 @onboarding_bp.route('/step-3', methods=['GET'])
 @login_required
@@ -80,6 +87,9 @@ def step_3():
     """
     Third step of onboarding: Show CBT feedback and complete onboarding
     """
+    # Create a simple form for CSRF protection (not needed for GET but for consistency)
+    form = FlaskForm()
+    
     # Make sure user completed step 2
     if 'onboarding_journal' not in session or 'onboarding_cbt_feedback' not in session:
         return redirect(url_for('onboarding.step_1'))
@@ -93,7 +103,7 @@ def step_3():
     # Mark user as no longer new
     mark_user_as_not_new()
     
-    return render_template('onboarding_step_3.html', feedback=cbt_feedback, last_feedback=last_feedback)
+    return render_template('onboarding_step_3.html', feedback=cbt_feedback, last_feedback=last_feedback, form=form)
 
 def generate_cbt_feedback(mood):
     """
