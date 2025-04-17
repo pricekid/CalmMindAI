@@ -48,45 +48,129 @@ scheduler = BlockingScheduler(
     }
 )
 
-# Wrapper functions to add better error handling and logging
-def safe_send_daily_reminder():
-    """Wrapper around send_daily_reminder_direct with error handling and logging"""
-    try:
-        logger.info(f"[{datetime.datetime.now()}] Starting daily email reminder job")
-        log_scheduler_activity("email_notification_start", "Starting daily email notifications")
+# Wrapper functions to add better error handling and logging with retries
+def safe_send_daily_reminder(max_retries=3, retry_delay=300):
+    """
+    Wrapper around send_daily_reminder_direct with error handling, logging, and retry logic.
+    
+    Args:
+        max_retries: Maximum number of retry attempts (default 3)
+        retry_delay: Delay between retries in seconds (default 300 = 5 minutes)
+    """
+    attempt = 1
+    last_error = None
+    
+    while attempt <= max_retries:
+        try:
+            logger.info(f"[{datetime.datetime.now()}] Starting daily email reminder job (attempt {attempt}/{max_retries})")
+            log_scheduler_activity("email_notification_start", f"Starting daily email notifications (attempt {attempt}/{max_retries})")
+            
+            # Use the direct service function that doesn't depend on models
+            result = send_daily_reminder_direct()
+            
+            # Check if any emails were sent successfully
+            if isinstance(result, dict) and result.get("sent_count", 0) > 0:
+                logger.info(f"[{datetime.datetime.now()}] Completed daily email reminder job. Result: {result}")
+                log_scheduler_activity("email_notification_complete", f"Completed daily email notifications: {result}")
+                return result
+            else:
+                logger.warning(f"[{datetime.datetime.now()}] Daily email job completed but no emails were sent. Result: {result}")
+                last_error = f"No emails sent: {result}"
+                
+                # If this is the last attempt, return the result anyway
+                if attempt >= max_retries:
+                    log_scheduler_activity("email_notification_warning", f"No emails sent after {max_retries} attempts: {result}")
+                    return result
+        except Exception as e:
+            error_details = traceback.format_exc()
+            last_error = str(e)
+            logger.error(f"[{datetime.datetime.now()}] Error in daily email reminder (attempt {attempt}/{max_retries}): {str(e)}\n{error_details}")
+            log_scheduler_activity("email_notification_error", f"Error in attempt {attempt}/{max_retries}: {str(e)}", success=False)
+            
+            # If this is the last attempt, raise the error
+            if attempt >= max_retries:
+                logger.error(f"[{datetime.datetime.now()}] All {max_retries} attempts failed for daily email reminder.")
+                log_scheduler_activity("email_notification_failure", f"All {max_retries} attempts failed: {str(e)}", success=False)
+                return False
         
-        # Use the direct service function that doesn't depend on models
-        result = send_daily_reminder_direct()
+        # Increment attempt counter and wait before retry
+        attempt += 1
         
-        logger.info(f"[{datetime.datetime.now()}] Completed daily email reminder job. Result: {result}")
-        log_scheduler_activity("email_notification_complete", f"Completed daily email notifications: {result}")
-        return result
-    except Exception as e:
-        error_details = traceback.format_exc()
-        logger.error(f"[{datetime.datetime.now()}] Error in daily email reminder: {str(e)}\n{error_details}")
-        log_scheduler_activity("email_notification_error", f"Error in daily email reminder: {str(e)}", success=False)
-        return False
+        if attempt <= max_retries:
+            logger.info(f"[{datetime.datetime.now()}] Retrying daily email reminder in {retry_delay} seconds...")
+            time.sleep(retry_delay)
+    
+    # Should not reach here, but just in case
+    logger.error(f"[{datetime.datetime.now()}] Failed to send daily email reminders after {max_retries} attempts. Last error: {last_error}")
+    log_scheduler_activity("email_notification_failure", f"Failed after {max_retries} attempts: {last_error}", success=False)
+    return False
 
-def safe_send_daily_sms_reminder():
-    """Wrapper around send_daily_sms_reminder_direct with error handling and logging"""
-    try:
-        logger.info(f"[{datetime.datetime.now()}] Starting daily SMS reminder job")
-        log_scheduler_activity("sms_notification_start", "Starting daily SMS notifications")
+def safe_send_daily_sms_reminder(max_retries=3, retry_delay=300):
+    """
+    Wrapper around send_daily_sms_reminder_direct with error handling, logging, and retry logic.
+    
+    Args:
+        max_retries: Maximum number of retry attempts (default 3)
+        retry_delay: Delay between retries in seconds (default 300 = 5 minutes)
+    """
+    attempt = 1
+    last_error = None
+    
+    while attempt <= max_retries:
+        try:
+            logger.info(f"[{datetime.datetime.now()}] Starting daily SMS reminder job (attempt {attempt}/{max_retries})")
+            log_scheduler_activity("sms_notification_start", f"Starting daily SMS notifications (attempt {attempt}/{max_retries})")
+            
+            # First ensure Twilio credentials are loaded
+            credentials_loaded = load_twilio_credentials()
+            if not credentials_loaded:
+                logger.error(f"[{datetime.datetime.now()}] Failed to load Twilio credentials on attempt {attempt}/{max_retries}")
+                last_error = "Failed to load Twilio credentials"
+                
+                # If this is the last attempt, return failure
+                if attempt >= max_retries:
+                    log_scheduler_activity("sms_notification_error", "Failed to load Twilio credentials after multiple attempts", success=False)
+                    return {"error": "Failed to load Twilio credentials", "sent_count": 0, "total_users": 0}
+            else:
+                # Use the direct service function that doesn't depend on models
+                result = send_daily_sms_reminder_direct()
+                
+                # Check if any SMS were sent successfully
+                if isinstance(result, dict) and result.get("sent_count", 0) > 0:
+                    logger.info(f"[{datetime.datetime.now()}] Completed daily SMS reminder job. Result: {result}")
+                    log_scheduler_activity("sms_notification_complete", f"Completed daily SMS notifications: {result}")
+                    return result
+                else:
+                    logger.warning(f"[{datetime.datetime.now()}] Daily SMS job completed but no messages were sent. Result: {result}")
+                    last_error = f"No SMS sent: {result}"
+                    
+                    # If this is the last attempt, return the result anyway
+                    if attempt >= max_retries:
+                        log_scheduler_activity("sms_notification_warning", f"No SMS sent after {max_retries} attempts: {result}")
+                        return result
+        except Exception as e:
+            error_details = traceback.format_exc()
+            last_error = str(e)
+            logger.error(f"[{datetime.datetime.now()}] Error in daily SMS reminder (attempt {attempt}/{max_retries}): {str(e)}\n{error_details}")
+            log_scheduler_activity("sms_notification_error", f"Error in attempt {attempt}/{max_retries}: {str(e)}", success=False)
+            
+            # If this is the last attempt, raise the error
+            if attempt >= max_retries:
+                logger.error(f"[{datetime.datetime.now()}] All {max_retries} attempts failed for daily SMS reminder.")
+                log_scheduler_activity("sms_notification_failure", f"All {max_retries} attempts failed: {str(e)}", success=False)
+                return False
         
-        # First ensure Twilio credentials are loaded
-        load_twilio_credentials()
+        # Increment attempt counter and wait before retry
+        attempt += 1
         
-        # Use the direct service function that doesn't depend on models
-        result = send_daily_sms_reminder_direct()
-        
-        logger.info(f"[{datetime.datetime.now()}] Completed daily SMS reminder job. Result: {result}")
-        log_scheduler_activity("sms_notification_complete", f"Completed daily SMS notifications: {result}")
-        return result
-    except Exception as e:
-        error_details = traceback.format_exc()
-        logger.error(f"[{datetime.datetime.now()}] Error in daily SMS reminder: {str(e)}\n{error_details}")
-        log_scheduler_activity("sms_notification_error", f"Error in daily SMS reminder: {str(e)}", success=False)
-        return False
+        if attempt <= max_retries:
+            logger.info(f"[{datetime.datetime.now()}] Retrying daily SMS reminder in {retry_delay} seconds...")
+            time.sleep(retry_delay)
+    
+    # Should not reach here, but just in case
+    logger.error(f"[{datetime.datetime.now()}] Failed to send daily SMS reminders after {max_retries} attempts. Last error: {last_error}")
+    log_scheduler_activity("sms_notification_failure", f"Failed after {max_retries} attempts: {last_error}", success=False)
+    return False
 
 # Function to load Twilio credentials before SMS job runs
 def load_twilio_credentials():

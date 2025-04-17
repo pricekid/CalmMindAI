@@ -3550,5 +3550,11 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 700101bdd44f at 2025-04-17 14:15:46.029284",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-17 14:20:44",
+    "type": "health_check",
+    "message": "Scheduler running with PID 502 at 2025-04-17 14:20:44",
+    "success": true
   }
 ]

@@ -1,271 +1,411 @@
 """
-Notification tracking system to ensure users don't receive duplicate notifications.
-This module maintains a record of sent notifications and provides functions to check and update this record.
+Enhanced notification tracking system.
+This module provides functions for tracking which notifications have been sent
+and when, with detailed logging and reporting.
 """
 import os
 import json
 import logging
-from datetime import datetime, timedelta
+import datetime
+from pathlib import Path
+from typing import Dict, List, Optional, Any, Union
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 def ensure_data_directory():
-    """Ensure the data directory exists"""
-    if not os.path.exists('data'):
-        os.makedirs('data')
+    """Ensure the data directories exist"""
+    Path("data").mkdir(exist_ok=True)
+    Path("data/notifications").mkdir(exist_ok=True)
+    Path("data/logs").mkdir(exist_ok=True)
+    Path("data/logs/notifications").mkdir(exist_ok=True)
 
-def get_tracking_file():
-    """Get the path to the notification tracking file"""
-    ensure_data_directory()
-    return 'data/email_notifications_sent.json'
-
-def load_tracking_data():
+def get_notification_tracking_file(notification_type: str, date: Optional[str] = None) -> str:
     """
-    Load notification tracking data from the tracking file.
-    
-    Returns:
-        dict: Tracking data with dates as keys and lists of user IDs as values
-    """
-    tracking_file = get_tracking_file()
-    
-    # Default structure for tracking data
-    tracking_data = {
-        'email': {},
-        'sms': {},
-        'weekly_summary': {}
-    }
-    
-    # Load existing tracking data if available
-    if os.path.exists(tracking_file):
-        try:
-            with open(tracking_file, 'r') as f:
-                data = json.load(f)
-                
-                # Convert old format to new format if needed
-                if isinstance(data, list):
-                    # Old format is a list of events, convert to new format
-                    for entry in data:
-                        if isinstance(entry, dict) and 'result' in entry:
-                            # Skip entries that don't have user tracking data
-                            if not isinstance(entry['result'], dict) or 'admin_test' in entry['result']:
-                                continue
-                                
-                            # Try to extract date from timestamp
-                            try:
-                                date_str = datetime.fromisoformat(entry['timestamp']).strftime('%Y-%m-%d')
-                                if 'mass_notification' in entry['result']:
-                                    mass_data = entry['result']['mass_notification']
-                                    if 'sent_users' in mass_data and isinstance(mass_data['sent_users'], list):
-                                        tracking_data['email'][date_str] = mass_data['sent_users']
-                            except (ValueError, KeyError):
-                                continue
-                else:
-                    # New format already, use it
-                    tracking_data = data
-        except (json.JSONDecodeError, FileNotFoundError) as e:
-            logger.error(f"Error loading tracking data: {str(e)}")
-    
-    # Ensure all sections exist
-    for section in ['email', 'sms', 'weekly_summary']:
-        if section not in tracking_data:
-            tracking_data[section] = {}
-    
-    # Get current date
-    current_date = datetime.now().strftime("%Y-%m-%d")
-    
-    # Ensure current date exists in all tracking sections
-    for section in tracking_data:
-        if current_date not in tracking_data[section]:
-            tracking_data[section][current_date] = []
-    
-    return tracking_data
-
-def save_tracking_data(tracking_data):
-    """
-    Save notification tracking data to the tracking file.
+    Get the path to the notification tracking file for a specific type and date.
     
     Args:
-        tracking_data: Dictionary with tracking information
-    
+        notification_type: Type of notification (email, sms, weekly_summary)
+        date: Date string in YYYY-MM-DD format, defaults to today
+        
     Returns:
-        bool: True if successful, False otherwise
+        Path to the tracking file
     """
-    tracking_file = get_tracking_file()
+    if date is None:
+        date = datetime.datetime.now().strftime("%Y-%m-%d")
+        
+    return f"data/notifications/{notification_type}_{date}.json"
+
+def load_notification_tracking(notification_type: str, date: Optional[str] = None) -> Dict[str, Any]:
+    """
+    Load notification tracking data for a specific type and date.
+    
+    Args:
+        notification_type: Type of notification (email, sms, weekly_summary)
+        date: Date string in YYYY-MM-DD format, defaults to today
+        
+    Returns:
+        Dictionary mapping user IDs to notification data
+    """
+    ensure_data_directory()
+    tracking_file = get_notification_tracking_file(notification_type, date)
+    
+    if os.path.exists(tracking_file):
+        try:
+            with open(tracking_file, "r") as f:
+                return json.load(f)
+        except json.JSONDecodeError:
+            logger.error(f"Invalid JSON in tracking file {tracking_file}")
+            return {}
+        except Exception as e:
+            logger.error(f"Error loading notification tracking from {tracking_file}: {str(e)}")
+            return {}
+    else:
+        return {}
+
+def save_notification_tracking(
+    notification_type: str, 
+    tracking_data: Dict[str, Any], 
+    date: Optional[str] = None
+) -> bool:
+    """
+    Save notification tracking data for a specific type and date.
+    
+    Args:
+        notification_type: Type of notification (email, sms, weekly_summary)
+        tracking_data: Dictionary mapping user IDs to notification data
+        date: Date string in YYYY-MM-DD format, defaults to today
+        
+    Returns:
+        True if successful, False otherwise
+    """
+    ensure_data_directory()
+    tracking_file = get_notification_tracking_file(notification_type, date)
     
     try:
-        with open(tracking_file, 'w') as f:
+        with open(tracking_file, "w") as f:
             json.dump(tracking_data, f, indent=2)
         return True
     except Exception as e:
-        logger.error(f"Error saving tracking data: {str(e)}")
+        logger.error(f"Error saving notification tracking to {tracking_file}: {str(e)}")
         return False
 
-def clean_old_tracking_data(tracking_data, days_to_keep=30):
+def record_notification_sent(
+    user_id: Union[str, int], 
+    notification_type: str, 
+    recipient: str, 
+    success: bool = True, 
+    details: Optional[Dict[str, Any]] = None,
+    date: Optional[str] = None
+) -> bool:
     """
-    Remove tracking data older than the specified number of days.
+    Record that a notification was sent to a user.
     
     Args:
-        tracking_data: Dictionary with tracking information
-        days_to_keep: Number of days of data to retain
-    
+        user_id: User ID
+        notification_type: Type of notification (email, sms, weekly_summary)
+        recipient: Recipient address (email or phone)
+        success: Whether the notification was successfully sent
+        details: Additional details about the notification
+        date: Date string in YYYY-MM-DD format, defaults to today
+        
     Returns:
-        dict: Cleaned tracking data
+        True if successful, False otherwise
     """
-    # Calculate cutoff date
-    cutoff_date = (datetime.now() - timedelta(days=days_to_keep)).strftime("%Y-%m-%d")
+    # Convert user_id to string for consistency
+    user_id = str(user_id)
     
-    # Clean up each section
-    for section in tracking_data:
-        section_data = tracking_data[section]
-        dates_to_remove = []
-        
-        for date_str in section_data:
-            if date_str < cutoff_date:
-                dates_to_remove.append(date_str)
-        
-        for date_str in dates_to_remove:
-            del section_data[date_str]
+    # Set default date to today
+    if date is None:
+        date = datetime.datetime.now().strftime("%Y-%m-%d")
     
-    return tracking_data
-
-def track_notification(notification_type, user_id):
-    """
-    Record that a notification has been sent to a user.
+    # Load existing tracking data
+    tracking_data = load_notification_tracking(notification_type, date)
     
-    Args:
-        notification_type: Type of notification ('email', 'sms', or 'weekly_summary')
-        user_id: ID of the user who received the notification
-    
-    Returns:
-        bool: True if successful, False otherwise
-    """
-    # Validate notification type
-    if notification_type not in ['email', 'sms', 'weekly_summary']:
-        logger.error(f"Invalid notification type: {notification_type}")
-        return False
-    
-    # Get current date
-    current_date = datetime.now().strftime("%Y-%m-%d")
-    
-    # Load tracking data
-    tracking_data = load_tracking_data()
-    
-    # Ensure current date exists
-    if current_date not in tracking_data[notification_type]:
-        tracking_data[notification_type][current_date] = []
-    
-    # Add user to tracking data if not already present
-    if user_id not in tracking_data[notification_type][current_date]:
-        tracking_data[notification_type][current_date].append(user_id)
-        
-        # Clean up old data
-        tracking_data = clean_old_tracking_data(tracking_data)
-        
-        # Save updated tracking data
-        return save_tracking_data(tracking_data)
-    
-    return True
-
-def has_received_notification(notification_type, user_id, days=0):
-    """
-    Check if a user has received a notification within the specified timeframe.
-    
-    Args:
-        notification_type: Type of notification ('email', 'sms', or 'weekly_summary')
-        user_id: ID of the user to check
-        days: Number of days to look back (0 for current day only)
-    
-    Returns:
-        bool: True if the user has received the notification, False otherwise
-    """
-    # Validate notification type
-    if notification_type not in ['email', 'sms', 'weekly_summary']:
-        logger.error(f"Invalid notification type: {notification_type}")
-        return False
-    
-    # Load tracking data
-    tracking_data = load_tracking_data()
-    
-    # Check all days in the specified range
-    for i in range(days + 1):
-        check_date = (datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d")
-        
-        if check_date in tracking_data[notification_type]:
-            if user_id in tracking_data[notification_type][check_date]:
-                return True
-    
-    return False
-
-def get_notified_users(notification_type, days=0):
-    """
-    Get a list of user IDs who have received notifications within the specified timeframe.
-    
-    Args:
-        notification_type: Type of notification ('email', 'sms', or 'weekly_summary')
-        days: Number of days to look back (0 for current day only)
-    
-    Returns:
-        list: List of user IDs who have received notifications
-    """
-    # Validate notification type
-    if notification_type not in ['email', 'sms', 'weekly_summary']:
-        logger.error(f"Invalid notification type: {notification_type}")
-        return []
-    
-    # Load tracking data
-    tracking_data = load_tracking_data()
-    
-    # Collect user IDs from all days in the specified range
-    user_ids = set()
-    
-    for i in range(days + 1):
-        check_date = (datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d")
-        
-        if check_date in tracking_data[notification_type]:
-            user_ids.update(tracking_data[notification_type][check_date])
-    
-    return list(user_ids)
-
-def get_notification_stats():
-    """
-    Get statistics about sent notifications.
-    
-    Returns:
-        dict: Statistics about notifications
-    """
-    # Load tracking data
-    tracking_data = load_tracking_data()
-    
-    # Initialize stats
-    stats = {
-        'email': {
-            'today': 0,
-            'week': 0,
-            'month': 0
-        },
-        'sms': {
-            'today': 0,
-            'week': 0,
-            'month': 0
-        },
-        'weekly_summary': {
-            'today': 0,
-            'week': 0,
-            'month': 0
-        }
+    # Create entry for this notification
+    timestamp = datetime.datetime.now().isoformat()
+    entry = {
+        "timestamp": timestamp,
+        "recipient": recipient,
+        "success": success
     }
     
-    # Calculate stats for each notification type
-    for notification_type in tracking_data:
-        # Get unique user counts for different periods
-        today_users = get_notified_users(notification_type, days=0)
-        week_users = get_notified_users(notification_type, days=7)
-        month_users = get_notified_users(notification_type, days=30)
+    # Add additional details if provided
+    if details:
+        entry.update(details)
+    
+    # Add to tracking data
+    tracking_data[user_id] = entry
+    
+    # Save updated tracking data
+    if save_notification_tracking(notification_type, tracking_data, date):
+        # Also log this notification in the detailed log
+        log_notification_activity(user_id, notification_type, recipient, success, details)
+        return True
+    else:
+        return False
+
+def user_received_notification(
+    user_id: Union[str, int], 
+    notification_type: str, 
+    date: Optional[str] = None
+) -> bool:
+    """
+    Check if a user has received a notification of a specific type on a specific date.
+    
+    Args:
+        user_id: User ID
+        notification_type: Type of notification (email, sms, weekly_summary)
+        date: Date string in YYYY-MM-DD format, defaults to today
         
-        stats[notification_type]['today'] = len(today_users)
-        stats[notification_type]['week'] = len(week_users)
-        stats[notification_type]['month'] = len(month_users)
+    Returns:
+        True if the user received the notification, False otherwise
+    """
+    # Convert user_id to string for consistency
+    user_id = str(user_id)
+    
+    # Load tracking data
+    tracking_data = load_notification_tracking(notification_type, date)
+    
+    # Check if user is in tracking data and notification was successful
+    if user_id in tracking_data and tracking_data[user_id].get("success", False):
+        return True
+    else:
+        return False
+
+def get_notification_status(
+    user_id: Union[str, int], 
+    notification_type: str, 
+    date: Optional[str] = None
+) -> Optional[Dict[str, Any]]:
+    """
+    Get the status of a notification for a specific user.
+    
+    Args:
+        user_id: User ID
+        notification_type: Type of notification (email, sms, weekly_summary)
+        date: Date string in YYYY-MM-DD format, defaults to today
+        
+    Returns:
+        Notification status dictionary or None if not found
+    """
+    # Convert user_id to string for consistency
+    user_id = str(user_id)
+    
+    # Load tracking data
+    tracking_data = load_notification_tracking(notification_type, date)
+    
+    # Return user's status if found
+    if user_id in tracking_data:
+        return tracking_data[user_id]
+    else:
+        return None
+
+def count_notifications_sent(notification_type: str, date: Optional[str] = None) -> int:
+    """
+    Count how many notifications of a specific type were successfully sent on a specific date.
+    
+    Args:
+        notification_type: Type of notification (email, sms, weekly_summary)
+        date: Date string in YYYY-MM-DD format, defaults to today
+        
+    Returns:
+        Count of successful notifications
+    """
+    # Load tracking data
+    tracking_data = load_notification_tracking(notification_type, date)
+    
+    # Count successful notifications
+    return sum(1 for entry in tracking_data.values() if entry.get("success", False))
+
+def log_notification_activity(
+    user_id: Union[str, int], 
+    notification_type: str, 
+    recipient: str, 
+    success: bool, 
+    details: Optional[Dict[str, Any]] = None
+) -> bool:
+    """
+    Log notification activity to a detailed log file.
+    
+    Args:
+        user_id: User ID
+        notification_type: Type of notification (email, sms, weekly_summary)
+        recipient: Recipient address (email or phone)
+        success: Whether the notification was successfully sent
+        details: Additional details about the notification
+        
+    Returns:
+        True if successful, False otherwise
+    """
+    ensure_data_directory()
+    
+    # Generate log file name with timestamp
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
+    log_file = f"data/logs/notifications/activity_{timestamp}.json"
+    
+    # Create log entry
+    entry = {
+        "timestamp": datetime.datetime.now().isoformat(),
+        "user_id": str(user_id),
+        "notification_type": notification_type,
+        "recipient": recipient,
+        "success": success
+    }
+    
+    # Add additional details if provided
+    if details:
+        entry["details"] = details
+    
+    # Load existing log
+    log_entries = []
+    if os.path.exists(log_file):
+        try:
+            with open(log_file, "r") as f:
+                log_entries = json.load(f)
+        except Exception as e:
+            logger.error(f"Error loading notification log: {str(e)}")
+            # Continue with empty log if there was an error
+    
+    # Append new entry
+    log_entries.append(entry)
+    
+    # Save updated log
+    try:
+        with open(log_file, "w") as f:
+            json.dump(log_entries, f, indent=2)
+        return True
+    except Exception as e:
+        logger.error(f"Error saving notification log: {str(e)}")
+        return False
+
+def get_notification_statistics(
+    notification_type: Optional[str] = None, 
+    start_date: Optional[str] = None, 
+    end_date: Optional[str] = None
+) -> Dict[str, Any]:
+    """
+    Get statistics about notifications sent over a date range.
+    
+    Args:
+        notification_type: Type of notification (email, sms, weekly_summary), or None for all types
+        start_date: Start date string in YYYY-MM-DD format, defaults to 7 days ago
+        end_date: End date string in YYYY-MM-DD format, defaults to today
+        
+    Returns:
+        Dictionary containing notification statistics
+    """
+    # Set default dates
+    if end_date is None:
+        end_date_obj = datetime.datetime.now()
+        end_date = end_date_obj.strftime("%Y-%m-%d")
+    else:
+        end_date_obj = datetime.datetime.strptime(end_date, "%Y-%m-%d")
+    
+    if start_date is None:
+        start_date_obj = end_date_obj - datetime.timedelta(days=7)
+        start_date = start_date_obj.strftime("%Y-%m-%d")
+    else:
+        start_date_obj = datetime.datetime.strptime(start_date, "%Y-%m-%d")
+    
+    # Initialize statistics
+    stats = {
+        "start_date": start_date,
+        "end_date": end_date,
+        "total_sent": 0,
+        "total_failed": 0,
+        "by_date": {},
+        "by_type": {}
+    }
+    
+    # Generate list of dates in range
+    current_date_obj = start_date_obj
+    while current_date_obj <= end_date_obj:
+        current_date = current_date_obj.strftime("%Y-%m-%d")
+        stats["by_date"][current_date] = {"sent": 0, "failed": 0}
+        
+        # Check notifications for this date
+        notification_types = ["email", "sms", "weekly_summary"]
+        if notification_type:
+            notification_types = [notification_type]
+        
+        for ntype in notification_types:
+            if ntype not in stats["by_type"]:
+                stats["by_type"][ntype] = {"sent": 0, "failed": 0}
+            
+            tracking_data = load_notification_tracking(ntype, current_date)
+            sent = sum(1 for entry in tracking_data.values() if entry.get("success", False))
+            failed = len(tracking_data) - sent
+            
+            # Update statistics
+            stats["by_date"][current_date]["sent"] += sent
+            stats["by_date"][current_date]["failed"] += failed
+            stats["by_type"][ntype]["sent"] += sent
+            stats["by_type"][ntype]["failed"] += failed
+            stats["total_sent"] += sent
+            stats["total_failed"] += failed
+        
+        # Move to next date
+        current_date_obj += datetime.timedelta(days=1)
     
     return stats
+
+def clear_tracking_data(notification_type: str, date: Optional[str] = None) -> bool:
+    """
+    Clear tracking data for a specific notification type and date.
+    This is useful for testing or resetting notifications.
+    
+    Args:
+        notification_type: Type of notification (email, sms, weekly_summary)
+        date: Date string in YYYY-MM-DD format, defaults to today
+        
+    Returns:
+        True if successful, False otherwise
+    """
+    tracking_file = get_notification_tracking_file(notification_type, date)
+    
+    if os.path.exists(tracking_file):
+        try:
+            # Backup the file before removing
+            backup_file = f"{tracking_file}.bak"
+            with open(tracking_file, "r") as src:
+                with open(backup_file, "w") as dst:
+                    dst.write(src.read())
+            
+            # Remove the file
+            os.remove(tracking_file)
+            logger.info(f"Cleared tracking data for {notification_type} on {date or 'today'}")
+            return True
+        except Exception as e:
+            logger.error(f"Error clearing tracking data: {str(e)}")
+            return False
+    else:
+        # File doesn't exist, nothing to clear
+        return True
+
+def get_users_without_notification(notification_type: str, users: List[Dict[str, Any]], date: Optional[str] = None) -> List[Dict[str, Any]]:
+    """
+    Get a list of users who haven't received a notification of a specific type on a specific date.
+    
+    Args:
+        notification_type: Type of notification (email, sms, weekly_summary)
+        users: List of user dictionaries
+        date: Date string in YYYY-MM-DD format, defaults to today
+        
+    Returns:
+        List of users who haven't received the notification
+    """
+    tracking_data = load_notification_tracking(notification_type, date)
+    
+    # Filter users who haven't received notification
+    users_without_notification = []
+    for user in users:
+        user_id = str(user.get("id", ""))
+        if not user_id:
+            continue
+            
+        if user_id not in tracking_data or not tracking_data[user_id].get("success", False):
+            users_without_notification.append(user)
+    
+    return users_without_notification
