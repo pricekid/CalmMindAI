@@ -4180,5 +4180,71 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 2028",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-17 21:43:38",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2028 at 2025-04-17 21:43:38",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 21:48:38",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2028 at 2025-04-17 21:48:38",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 21:53:38",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2028 at 2025-04-17 21:53:38",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-17 21:58:38",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2028 at 2025-04-17 21:58:38",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 02:26:57",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 2028). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-18 02:26:57",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-18 02:26:57.910858",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 02:26:57",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-18 02:26:57.915552",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 02:26:57",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 02:26:58",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 313",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 02:26:58",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host a394fdb61e15 at 2025-04-18 02:26:58.178261",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 02:31:57",
+    "type": "health_check",
+    "message": "Scheduler running with PID 313 at 2025-04-18 02:31:57",
+    "success": true
   }
 ]
