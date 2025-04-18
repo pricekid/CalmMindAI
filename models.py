@@ -1,7 +1,14 @@
 from datetime import datetime, timedelta
+import secrets
+import string
 from app import db
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+
+def generate_referral_code(length=8):
+    """Generate a random referral code of specified length"""
+    alphabet = string.ascii_uppercase + string.digits
+    return ''.join(secrets.choice(alphabet) for _ in range(length))
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,6 +25,11 @@ class User(UserMixin, db.Model):
     phone_number = db.Column(db.String(20), nullable=True)
     sms_notifications_enabled = db.Column(db.Boolean, default=False)
     
+    # Referral system
+    referral_code = db.Column(db.String(8), unique=True, nullable=True)
+    referred_by = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    referred_users = db.relationship('User', backref=db.backref('referrer', remote_side=[id]), lazy='dynamic')
+    
     # Relationships
     journal_entries = db.relationship('JournalEntry', backref='author', lazy='dynamic')
     mood_logs = db.relationship('MoodLog', backref='user', lazy='dynamic')
@@ -27,6 +39,25 @@ class User(UserMixin, db.Model):
         
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+    
+    def get_or_create_referral_code(self):
+        """Generate a referral code if one doesn't exist"""
+        if not self.referral_code:
+            # Try to generate a unique code (avoid collisions)
+            for _ in range(5):  # Try up to 5 times
+                new_code = generate_referral_code()
+                if not User.query.filter_by(referral_code=new_code).first():
+                    self.referral_code = new_code
+                    break
+            # If we still don't have a code after 5 attempts, use ID-based fallback
+            if not self.referral_code:
+                self.referral_code = f"U{self.id}{generate_referral_code(4)}"
+        return self.referral_code
+    
+    def get_referral_url(self):
+        """Get the full referral URL for this user"""
+        code = self.get_or_create_referral_code()
+        return f"https://calm-mind-ai-naturalarts.replit.app/register?ref={code}"
     
     def get_weekly_summary(self):
         """Get mood summary for the past week"""
