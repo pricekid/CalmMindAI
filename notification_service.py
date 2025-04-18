@@ -334,6 +334,13 @@ def send_daily_reminder(user):
         <p><a href="https://calm-mind-ai-naturalarts.replit.app/journal/new">Click here to create a new journal entry</a></p>
         <hr>
         <p><em>The Calm Journey Team</em></p>
+        <p style="font-size: 0.9em; color: #444;">
+            P.S. Know someone who could use a moment of calm?<br>
+            If you have a friend or loved one who might benefit from a gentle daily check-in, feel free to forward this email or share Calm Journey with them:<br>
+            <a href="https://calm-mind-ai-naturalarts.replit.app">https://calm-mind-ai-naturalarts.replit.app</a><br>
+            Helping one another breathe easier—one day at a time.
+        </p>
+        <hr>
         <p style="font-size: 0.8em; color: #666;">
             You received this email because you enabled notifications in your Calm Journey account.
             If you'd like to unsubscribe, please update your notification preferences in your account settings.
@@ -352,6 +359,11 @@ We'd love to hear how you're doing today. Consider spending just 5 minutes journ
 Visit https://calm-mind-ai-naturalarts.replit.app/journal/new to create a new journal entry.
 
 The Calm Journey Team
+
+P.S. Know someone who could use a moment of calm?
+If you have a friend or loved one who might benefit from a gentle daily check-in, feel free to forward this email or share Calm Journey with them:
+https://calm-mind-ai-naturalarts.replit.app
+Helping one another breathe easier—one day at a time.
 
 --
 You received this email because you enabled notifications in your Calm Journey account.
@@ -561,7 +573,7 @@ def send_daily_sms_reminder_direct():
         
         try:
             # Compose message
-            message_body = f"Hello {username}! This is your daily reminder from Calm Journey. Take a moment to check in with yourself today. Visit https://calm-mind-ai-naturalarts.replit.app/journal/new to journal."
+            message_body = f"Hello {username}! This is your daily reminder from Calm Journey. Take a moment to check in with yourself today. Visit https://calm-mind-ai-naturalarts.replit.app/journal/new to journal. P.S. Know someone who could use a moment of calm? Share Calm Journey with them—helping one another breathe easier, one day at a time."
             
             # Send SMS
             logger.info(f"Sending SMS to {phone}")
@@ -654,6 +666,13 @@ def send_weekly_summary(user, stats):
         <p><a href="https://calm-mind-ai-naturalarts.replit.app/journal">View Your Journal History</a></p>
         <hr>
         <p><em>The Calm Journey Team</em></p>
+        <p style="font-size: 0.9em; color: #444;">
+            P.S. Know someone who could use a moment of calm?<br>
+            If you have a friend or loved one who might benefit from a gentle daily check-in, feel free to forward this email or share Calm Journey with them:<br>
+            <a href="https://calm-mind-ai-naturalarts.replit.app">https://calm-mind-ai-naturalarts.replit.app</a><br>
+            Helping one another breathe easier—one day at a time.
+        </p>
+        <hr>
         <p style="font-size: 0.8em; color: #666;">
             You received this email because you enabled notifications in your Calm Journey account.
             If you'd like to unsubscribe, please update your notification preferences in your account settings.
@@ -676,6 +695,11 @@ Thank you for continuing your wellness journey with us. Remember, every step you
 Visit https://calm-mind-ai-naturalarts.replit.app/journal to view your journal history.
 
 The Calm Journey Team
+
+P.S. Know someone who could use a moment of calm?
+If you have a friend or loved one who might benefit from a gentle daily check-in, feel free to forward this email or share Calm Journey with them:
+https://calm-mind-ai-naturalarts.replit.app
+Helping one another breathe easier—one day at a time.
 
 --
 You received this email because you enabled notifications in your Calm Journey account.
