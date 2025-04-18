@@ -4888,5 +4888,11 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 493",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-18 22:29:18",
+    "type": "health_check",
+    "message": "Scheduler running with PID 493 at 2025-04-18 22:29:18",
+    "success": true
   }
 ]
