@@ -1,15 +1,14 @@
 """
-Test script to send an email with the updated referral message.
-This will use the send_daily_reminder function to send a real test email.
+Test script to verify the enhanced email templates with the updated referral message.
 """
 import os
 import sys
-import logging
 import json
+import logging
 from datetime import datetime
 
-# Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# Set up logging
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def ensure_data_directory():
@@ -26,85 +25,170 @@ def load_users():
     try:
         with open('data/users.json', 'r') as f:
             return json.load(f)
+    except json.JSONDecodeError:
+        logger.error("Error decoding users.json file")
+        return []
     except Exception as e:
         logger.error(f"Error loading users: {str(e)}")
         return []
 
-def get_test_user():
+def test_daily_email_with_referral():
     """
-    Get a user to test with, either by ID or email.
-    Returns None if user not found.
+    Test the daily email with the enhanced referral message.
+    This sends an email to the specified test recipient.
     """
-    test_email = input("Enter the email address to send the test to: ")
+    # Import notification service
+    from notification_service import send_daily_reminder
     
-    users = load_users()
-    for user in users:
-        if user.get('email') == test_email:
-            return user
+    # Create a test user
+    test_email = os.environ.get('TEST_EMAIL')
     
-    # If user not found, create a temporary user with the provided email
-    print(f"No user found with email {test_email}. Creating a temporary test user.")
-    username = test_email.split('@')[0]  # Use part before @ as username
-    return {
-        'id': 'test_user',
-        'username': username,
+    if not test_email:
+        logger.error("TEST_EMAIL environment variable not set.")
+        test_email = input("Enter test email address: ")
+    
+    test_user = {
+        'id': 'test-user-id',
+        'username': 'Test User',
         'email': test_email,
         'notifications_enabled': True
     }
+    
+    # Send test email
+    logger.info(f"Sending test daily email with referral message to {test_email}")
+    result = send_daily_reminder(test_user)
+    
+    if result:
+        logger.info("✅ Test email sent successfully!")
+        return True
+    else:
+        logger.error("❌ Failed to send test email.")
+        return False
 
-def ensure_mail_config():
-    """Ensure mail configuration is set for testing."""
-    # Check for SendGrid API key
-    if not os.environ.get('SENDGRID_API_KEY'):
-        logger.error("SENDGRID_API_KEY environment variable not found")
+def test_weekly_summary_with_referral():
+    """
+    Test the weekly summary email with the enhanced referral message.
+    This sends an email to the specified test recipient.
+    """
+    # Import notification service
+    from notification_service import send_weekly_summary
+    
+    # Create a test user
+    test_email = os.environ.get('TEST_EMAIL')
+    
+    if not test_email:
+        logger.error("TEST_EMAIL environment variable not set.")
+        test_email = input("Enter test email address: ")
+    
+    test_user = {
+        'id': 'test-user-id',
+        'username': 'Test User',
+        'email': test_email,
+        'notifications_enabled': True
+    }
+    
+    # Create test stats
+    test_stats = {
+        'entries': 5,
+        'avg_anxiety': 4.2,
+        'common_pattern': 'All-or-Nothing Thinking',
+        'date_range': f"{datetime.now().strftime('%B %d')} - {datetime.now().strftime('%B %d, %Y')}"
+    }
+    
+    # Send test email
+    logger.info(f"Sending test weekly summary with referral message to {test_email}")
+    result = send_weekly_summary(test_user, test_stats)
+    
+    if result:
+        logger.info("✅ Test weekly summary sent successfully!")
+        return True
+    else:
+        logger.error("❌ Failed to send test weekly summary.")
         return False
-    
-    # Set up mail server config if needed
-    if not os.environ.get('MAIL_SERVER'):
-        os.environ['MAIL_SERVER'] = 'smtp.gmail.com'
-    if not os.environ.get('MAIL_PORT'):
-        os.environ['MAIL_PORT'] = '587'
-    
-    return True
 
-def send_test_email():
+def test_sms_with_referral():
     """
-    Send a test email using the daily_reminder function
-    to verify the referral message is correctly included.
+    Test the SMS message with the enhanced referral message.
+    This sends an SMS to the specified test phone number if Twilio is configured.
     """
-    # First make sure mail configuration is set
-    if not ensure_mail_config():
-        logger.error("Mail configuration is not set properly")
+    # Check Twilio configuration
+    account_sid = os.environ.get('TWILIO_ACCOUNT_SID')
+    auth_token = os.environ.get('TWILIO_AUTH_TOKEN')
+    from_number = os.environ.get('TWILIO_PHONE_NUMBER')
+    
+    if not all([account_sid, auth_token, from_number]):
+        logger.error("Twilio not configured. Skipping SMS test.")
         return False
     
-    # Get a test user
-    user = get_test_user()
-    if not user:
-        logger.error("Could not get a test user")
-        return False
+    # Get test phone number
+    test_phone = os.environ.get('TEST_PHONE')
     
-    # Import the send_daily_reminder function
+    if not test_phone:
+        logger.error("TEST_PHONE environment variable not set.")
+        test_phone = input("Enter test phone number with country code (e.g. +1234567890): ")
+    
+    # Create and send test SMS
     try:
-        from notification_service import send_daily_reminder
+        from twilio.rest import Client
         
-        # Send the test email
-        logger.info(f"Sending test email to {user['email']}...")
-        result = send_daily_reminder(user)
+        # Initialize Twilio client
+        client = Client(account_sid, auth_token)
         
-        if result:
-            logger.info(f"Test email sent successfully to {user['email']}")
+        # Compose message
+        message_body = "Hello Test User! This is your daily reminder from Calm Journey. Take a moment to check in with yourself today. Visit https://calm-mind-ai-naturalarts.replit.app/journal/new to journal. P.S. Know someone who could use a moment of calm? If you have a friend or loved one who might benefit from a gentle daily check-in, share Calm Journey with them: https://calm-mind-ai-naturalarts.replit.app. Helping one another breathe easier—one day at a time."
+        
+        # Send SMS
+        logger.info(f"Sending test SMS to {test_phone}")
+        message = client.messages.create(
+            body=message_body,
+            from_=from_number,
+            to=test_phone
+        )
+        
+        # Check if message was sent successfully
+        if message.sid:
+            logger.info(f"✅ Test SMS sent successfully! (SID: {message.sid})")
             return True
         else:
-            logger.error(f"Failed to send test email to {user['email']}")
+            logger.error("❌ Failed to send test SMS.")
             return False
+            
+    except ImportError:
+        logger.error("Twilio library not installed. Skipping SMS test.")
+        return False
     except Exception as e:
-        logger.error(f"Error sending test email: {str(e)}")
+        logger.error(f"Error sending test SMS: {str(e)}")
         return False
 
+def main():
+    """Test both daily and weekly emails with the enhanced referral message."""
+    # Print warning
+    print("\n" + "="*80)
+    print("WARNING: This script will send actual emails/SMS messages to test the referral message.")
+    print("Make sure you have the correct email/SMS credentials set up.")
+    print("="*80 + "\n")
+    
+    choice = input("Choose test type: \n1. Daily Email \n2. Weekly Summary Email \n3. SMS\n4. All\nChoice: ")
+    
+    try:
+        choice = int(choice.strip())
+    except ValueError:
+        logger.error("Invalid choice. Please enter a number.")
+        return
+    
+    results = {}
+    
+    if choice == 1 or choice == 4:
+        results['daily_email'] = test_daily_email_with_referral()
+    if choice == 2 or choice == 4:
+        results['weekly_summary'] = test_weekly_summary_with_referral()
+    if choice == 3 or choice == 4:
+        results['sms'] = test_sms_with_referral()
+    
+    # Print summary
+    print("\nTest Results Summary:")
+    for test_name, success in results.items():
+        print(f"{test_name}: {'✅ Success' if success else '❌ Failed'}")
+
 if __name__ == "__main__":
-    print("Sending test email with referral message...")
-    success = send_test_email()
-    if success:
-        print("Test email sent successfully! Check your inbox to see the referral message.")
-    else:
-        print("Failed to send test email. Check the logs for more information.")
+    main()

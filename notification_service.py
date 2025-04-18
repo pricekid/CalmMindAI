@@ -334,8 +334,8 @@ def send_daily_reminder(user):
         <p><a href="https://calm-mind-ai-naturalarts.replit.app/journal/new">Click here to create a new journal entry</a></p>
         <hr>
         <p><em>The Calm Journey Team</em></p>
-        <p style="font-size: 0.9em; color: #444;">
-            P.S. Know someone who could use a moment of calm?<br>
+        <p style="font-size: 0.9em; color: #444; padding: 15px; background-color: #f9f9f9; border-left: 4px solid #5f9ea0; border-radius: 3px; margin-top: 15px;">
+            <strong>P.S. Know someone who could use a moment of calm?</strong><br>
             If you have a friend or loved one who might benefit from a gentle daily check-in, feel free to forward this email or share Calm Journey with them:<br>
             <a href="https://calm-mind-ai-naturalarts.replit.app">https://calm-mind-ai-naturalarts.replit.app</a><br>
             Helping one another breathe easier—one day at a time.
@@ -573,7 +573,7 @@ def send_daily_sms_reminder_direct():
         
         try:
             # Compose message
-            message_body = f"Hello {username}! This is your daily reminder from Calm Journey. Take a moment to check in with yourself today. Visit https://calm-mind-ai-naturalarts.replit.app/journal/new to journal. P.S. Know someone who could use a moment of calm? Share Calm Journey with them—helping one another breathe easier, one day at a time."
+            message_body = f"Hello {username}! This is your daily reminder from Calm Journey. Take a moment to check in with yourself today. Visit https://calm-mind-ai-naturalarts.replit.app/journal/new to journal. P.S. Know someone who could use a moment of calm? If you have a friend or loved one who might benefit from a gentle daily check-in, share Calm Journey with them: https://calm-mind-ai-naturalarts.replit.app. Helping one another breathe easier—one day at a time."
             
             # Send SMS
             logger.info(f"Sending SMS to {phone}")
@@ -666,8 +666,8 @@ def send_weekly_summary(user, stats):
         <p><a href="https://calm-mind-ai-naturalarts.replit.app/journal">View Your Journal History</a></p>
         <hr>
         <p><em>The Calm Journey Team</em></p>
-        <p style="font-size: 0.9em; color: #444;">
-            P.S. Know someone who could use a moment of calm?<br>
+        <p style="font-size: 0.9em; color: #444; padding: 15px; background-color: #f9f9f9; border-left: 4px solid #5f9ea0; border-radius: 3px; margin-top: 15px;">
+            <strong>P.S. Know someone who could use a moment of calm?</strong><br>
             If you have a friend or loved one who might benefit from a gentle daily check-in, feel free to forward this email or share Calm Journey with them:<br>
             <a href="https://calm-mind-ai-naturalarts.replit.app">https://calm-mind-ai-naturalarts.replit.app</a><br>
             Helping one another breathe easier—one day at a time.
