@@ -2,10 +2,10 @@
   {
     "id": 1,
     "user_id": 1,
-    "content": "FEELING A BIT ANXIOUS ABOUT WORK TOMORROW ",
-    "mood": "neutral",
-    "feedback": "Being neutral is actually a great starting point. From here, you can notice your thought patterns without strong emotions clouding your judgment. This awareness is a powerful tool in CBT.",
-    "created_at": "2025-04-18T02:28:37.416365",
-    "updated_at": "2025-04-18T02:28:37.416375"
+    "content": "thinking about the crisis in barbados with crime and how it will affcet our quality of life",
+    "mood": "anxious",
+    "feedback": "Anxiety often comes from overestimating threats and underestimating our ability to cope. Consider what might really happen and remind yourself of past challenges you've overcome.",
+    "created_at": "2025-04-18T16:24:23.543270",
+    "updated_at": "2025-04-18T16:24:23.543277"
   }
 ]
