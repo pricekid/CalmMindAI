@@ -87,6 +87,20 @@ class User(UserMixin, db.Model):
             'lowest_mood': min(log.mood_score for log in weekly_moods)
         }
     
+    @classmethod
+    def generate_referral_code(cls, length=8):
+        """Generate a unique referral code for a user"""
+        # Try up to 5 times to generate a unique code
+        for _ in range(5):
+            code = generate_referral_code(length)
+            if not cls.query.filter_by(referral_code=code).first():
+                return code
+                
+        # Fallback to timestamp-based code if all attempts failed
+        import time
+        timestamp = int(time.time())
+        return f"U{timestamp}"[-8:]
+        
     def __repr__(self):
         return f'<User {self.username}>'
 
