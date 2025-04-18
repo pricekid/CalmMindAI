@@ -306,56 +306,6 @@ The Calm Journey Team"""
     result = send_email(email, subject, html_body, text_body)
     return result.get('success', False)
 
-def get_user_referral_url(user):
-    """
-    Get a referral URL for a user from the user dictionary.
-    If no referral code exists, generates one.
-    
-    Args:
-        user: Dictionary containing user information
-        
-    Returns:
-        str: The referral URL
-    """
-    user_id = user.get('id')
-    referral_code = user.get('referral_code')
-    
-    # If no referral code, generate one
-    if not referral_code and user_id:
-        import string
-        import secrets
-        
-        def generate_referral_code(length=8):
-            """Generate a random referral code of specified length"""
-            alphabet = string.ascii_uppercase + string.digits
-            return ''.join(secrets.choice(alphabet) for _ in range(length))
-        
-        # Generate a new code
-        referral_code = generate_referral_code()
-        
-        # Update the user in our data file
-        try:
-            users = load_users()
-            for u in users:
-                if u.get('id') == user_id:
-                    u['referral_code'] = referral_code
-                    break
-                    
-            # Save the updated users
-            ensure_data_directory()
-            with open('data/users.json', 'w') as f:
-                json.dump(users, f, indent=2)
-                
-            logger.info(f"Generated and saved referral code {referral_code} for user {user_id}")
-        except Exception as e:
-            logger.error(f"Error saving referral code: {str(e)}")
-    
-    # Use the code we have or default to user ID
-    if not referral_code and user_id:
-        referral_code = f"U{user_id}"
-        
-    return f"https://calm-mind-ai-naturalarts.replit.app/register?ref={referral_code}"
-
 def send_daily_reminder(user):
     """
     Send a daily reminder to a user.
@@ -373,9 +323,6 @@ def send_daily_reminder(user):
         logger.error(f"Cannot send reminder: No email for user {username}")
         return False
     
-    # Get the user's referral URL
-    referral_url = get_user_referral_url(user)
-    
     subject = "Calm Journey - Daily Wellness Reminder"
     html_body = f"""
     <html>
@@ -385,11 +332,6 @@ def send_daily_reminder(user):
         <p>This is your daily reminder to take a moment for yourself and check in with your mental well-being.</p>
         <p>We'd love to hear how you're doing today. Consider spending just 5 minutes journaling about your thoughts and feelings.</p>
         <p><a href="https://calm-mind-ai-naturalarts.replit.app/journal/new">Click here to create a new journal entry</a></p>
-        <hr>
-        <p><strong>P.S.</strong> Know someone who could use a moment of calm?</p>
-        <p>If you have a friend or loved one who might benefit from a gentle daily check-in, feel free to forward this email or share Calm Journey with them:</p>
-        <p><a href="{referral_url}">{referral_url}</a></p>
-        <p style="font-style: italic; font-size: 0.9em;">Helping one another breathe easier—one day at a time.</p>
         <hr>
         <p><em>The Calm Journey Team</em></p>
         <p style="font-size: 0.8em; color: #666;">
@@ -408,11 +350,6 @@ This is your daily reminder to take a moment for yourself and check in with your
 We'd love to hear how you're doing today. Consider spending just 5 minutes journaling about your thoughts and feelings.
 
 Visit https://calm-mind-ai-naturalarts.replit.app/journal/new to create a new journal entry.
-
---------------------------
-Know someone who could benefit from Calm Journey? Share your personal referral link below:
-{referral_url}
---------------------------
 
 The Calm Journey Team
 
