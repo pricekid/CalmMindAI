@@ -409,3 +409,63 @@ def get_users_without_notification(notification_type: str, users: List[Dict[str,
             users_without_notification.append(user)
     
     return users_without_notification
+
+def get_notification_stats() -> Dict[str, Dict[str, List[Dict[str, Any]]]]:
+    """
+    Get comprehensive notification stats for all types and dates.
+    
+    Returns:
+        Dictionary organized by notification type and then date, containing all notification records
+        Example: {
+            "email": {
+                "2025-04-18": [
+                    {"user_id": "1", "timestamp": "2025-04-18T08:00:01", "success": true},
+                    {"user_id": "2", "timestamp": "2025-04-18T08:00:02", "success": true}
+                ]
+            }
+        }
+    """
+    ensure_data_directory()
+    stats = {
+        "email": {},
+        "sms": {},
+        "weekly_summary": {}
+    }
+    
+    # Scan the notifications directory for tracking files
+    notifications_dir = Path("data/notifications")
+    if not notifications_dir.exists():
+        return stats
+        
+    for file_path in notifications_dir.glob("*.json"):
+        # Extract type and date from filename (type_YYYY-MM-DD.json)
+        filename = file_path.name
+        parts = filename.split("_", 1)
+        if len(parts) != 2 or not parts[1].endswith(".json"):
+            continue
+            
+        notification_type = parts[0]
+        date = parts[1].replace(".json", "")
+        
+        # Skip if not a recognized notification type
+        if notification_type not in stats:
+            continue
+        
+        # Load tracking data
+        try:
+            with open(file_path, "r") as f:
+                data = json.load(f)
+                
+            # Convert to list format for easier processing
+            processed_data = []
+            for user_id, details in data.items():
+                entry = {"user_id": user_id}
+                entry.update(details)
+                processed_data.append(entry)
+                
+            # Store in stats dictionary
+            stats[notification_type][date] = processed_data
+        except Exception as e:
+            logger.error(f"Error loading notification stats from {file_path}: {str(e)}")
+    
+    return stats

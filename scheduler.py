@@ -15,12 +15,25 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from scheduler_logs import log_scheduler_activity, ensure_data_directory
 
-# Configure detailed logging
+# Configure detailed logging with timestamp, process ID, and thread info
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    format='%(asctime)s - [PID:%(process)d] - %(name)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
 )
 logger = logging.getLogger(__name__)
+
+# Set a higher log level just for this module
+logger.setLevel(logging.DEBUG)
+
+# Also log to a file for easier debugging
+try:
+    file_handler = logging.FileHandler('data/scheduler_debug.log')
+    file_handler.setFormatter(logging.Formatter('%(asctime)s - [PID:%(process)d] - %(name)s - %(levelname)s - %(message)s'))
+    logger.addHandler(file_handler)
+    logger.debug("Added file handler for more detailed logging")
+except Exception as e:
+    print(f"Warning: Could not set up file logging: {e}")
 
 # Create a Flask app context for database access
 app = Flask(__name__)
@@ -279,17 +292,32 @@ def scheduler_started_listener(event):
 scheduler.add_listener(job_listener, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
 scheduler.add_listener(scheduler_started_listener, EVENT_SCHEDULER_STARTED)
 
-# Schedule jobs
-# Email notifications at 6:00 AM
-scheduler.add_job(
-    safe_send_daily_reminder, 
-    'cron', 
-    hour='6', 
-    minute=0,
-    id='daily_email_reminder',
-    replace_existing=True,
-    name='Daily Email Reminder'
-)
+# Schedule jobs with detailed logging
+logger.info("Setting up daily email reminder job for 6:00 AM UTC...")
+log_scheduler_activity("job_setup", "Setting up daily email reminder job for 6:00 AM UTC")
+
+try:
+    # Email notifications at 6:00 AM
+    email_job = scheduler.add_job(
+        safe_send_daily_reminder, 
+        'cron', 
+        hour='6', 
+        minute=0,
+        id='daily_email_reminder',
+        replace_existing=True,
+        name='Daily Email Reminder'
+    )
+    
+    if email_job and hasattr(email_job, 'next_run_time'):
+        next_run = email_job.next_run_time.strftime("%Y-%m-%d %H:%M:%S UTC")
+        logger.info(f"Daily email job scheduled successfully. Next run: {next_run}")
+        log_scheduler_activity("job_scheduled", f"Daily email job scheduled successfully. Next run: {next_run}", success=True)
+    else:
+        logger.error("Failed to properly schedule daily email job. Job object is incomplete.")
+        log_scheduler_activity("job_schedule_error", "Failed to properly schedule daily email job", success=False)
+except Exception as e:
+    logger.error(f"Error scheduling daily email job: {str(e)}")
+    log_scheduler_activity("job_schedule_error", f"Error scheduling daily email job: {str(e)}", success=False)
 
 # SMS notifications at 6:00 AM
 scheduler.add_job(
@@ -312,6 +340,23 @@ scheduler.add_job(
     replace_existing=True,
     name='Load Twilio Credentials'
 )
+
+# Add backup email job at 6:10 AM in case the 6:00 AM job fails
+try:
+    scheduler.add_job(
+        safe_send_daily_reminder,
+        'cron', 
+        hour='6', 
+        minute=10,
+        id='backup_email_reminder',
+        replace_existing=True,
+        name='Backup Email Reminder'
+    )
+    logger.info("Backup email job scheduled for 6:10 AM UTC")
+    log_scheduler_activity("job_scheduled", "Backup email job scheduled for 6:10 AM UTC", success=True)
+except Exception as e:
+    logger.error(f"Error scheduling backup email job: {str(e)}")
+    log_scheduler_activity("job_schedule_error", f"Error scheduling backup email job: {str(e)}", success=False)
 
 # Health check every 30 minutes
 scheduler.add_job(
@@ -351,6 +396,31 @@ if __name__ == '__main__':
         
         # Run a health check immediately
         scheduler_health_check()
+        
+        # Check if we missed today's notification (if it's after 6 AM but before 11 PM)
+        current_hour = datetime.datetime.now(pytz.UTC).hour
+        if 6 <= current_hour < 23:
+            from notification_tracking import get_notification_stats
+            today = datetime.datetime.now(pytz.UTC).strftime("%Y-%m-%d")
+            
+            # Get today's notification stats
+            try:
+                stats = get_notification_stats()
+                today_stats = stats.get("email", {}).get(today, [])
+                
+                if not today_stats:
+                    logger.warning(f"No email notifications sent today ({today}) and it's after 6 AM UTC. Running immediate notification job...")
+                    log_scheduler_activity("missed_notification", f"No notifications sent today ({today}). Running immediate job.", success=True)
+                    
+                    try:
+                        # Run the notification job immediately
+                        safe_send_daily_reminder()
+                    except Exception as e:
+                        logger.error(f"Error running immediate notification job: {str(e)}")
+                else:
+                    logger.info(f"Today's notifications have already been sent to {len(today_stats)} users.")
+            except Exception as e:
+                logger.error(f"Error checking notification stats: {str(e)}")
         
         # Start the scheduler
         scheduler.start()
