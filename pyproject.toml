@@ -26,4 +26,5 @@ dependencies = [
     "gtts>=2.5.4",
     "azure-cognitiveservices-speech>=1.43.0",
     "pytz>=2025.2",
+    "trafilatura>=2.0.0",
 ]
