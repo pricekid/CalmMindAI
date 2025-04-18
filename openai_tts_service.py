@@ -60,19 +60,28 @@ def get_openai_api_key():
     
     # If not in environment, try to get from admin config
     if not api_key:
-        config = get_config()
-        api_key = config.get('api_key')
-        
+        try:
+            config = get_config()
+            api_key = config.get('api_key')
+        except Exception as e:
+            logger.error(f"Error retrieving config: {str(e)}")
+            
+    logger.debug(f"OpenAI API key found: {bool(api_key)}")
     return api_key
 
 def get_openai_client():
     """Get an instance of the OpenAI client with the API key"""
     api_key = get_openai_api_key()
     if not api_key:
-        logger.error("No OpenAI API key found")
+        logger.error("No OpenAI API key found in environment variables or admin config")
         return None
-        
-    return OpenAI(api_key=api_key)
+    
+    try:
+        client = OpenAI(api_key=api_key)
+        return client
+    except Exception as e:
+        logger.error(f"Error creating OpenAI client: {str(e)}")
+        return None
 
 @openai_tts_bp.route('/api/openai-tts', methods=['POST'])
 def openai_tts():
@@ -118,30 +127,60 @@ def openai_tts():
         # Get OpenAI client
         client = get_openai_client()
         if not client:
-            return jsonify({"error": "OpenAI API key not configured"}), 500
+            logger.error("Failed to initialize OpenAI client - API key may be missing or invalid")
+            return jsonify({
+                "error": "OpenAI API key not configured properly. Please contact the administrator.",
+                "details": "The system could not authenticate with OpenAI."
+            }), 500
+        
+        # Check if API key is valid by making a small test request
+        api_key = get_openai_api_key()
+        if api_key:
+            logger.info(f"API key found, first 4 chars: {api_key[:4]}***")
+        else:
+            logger.error("API key is None")
+            return jsonify({"error": "OpenAI API key is missing"}), 500
             
         # Generate speech using OpenAI API
         logger.info(f"Generating OpenAI TTS for text of length {len(text)} with voice {voice}")
         
-        response = client.audio.speech.create(
-            model="tts-1",
-            voice=voice,
-            input=text
-        )
-        
-        # Save the audio to a file
-        response.stream_to_file(filepath)
-        
-        # Return the audio URL
-        return jsonify({
-            "audio_url": f"/static/audio/{filename}",
-            "voice": voice,
-            "description": OPENAI_VOICES[voice]['description']
-        })
+        try:
+            # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
+            # do not change this unless explicitly requested by the user
+            response = client.audio.speech.create(
+                model="tts-1",
+                voice=voice,
+                input=text
+            )
+            
+            # Save the audio to a file
+            response.stream_to_file(filepath)
+            
+            # Return the audio URL
+            return jsonify({
+                "audio_url": f"/static/audio/{filename}",
+                "voice": voice,
+                "description": OPENAI_VOICES[voice]['description']
+            })
+            
+        except Exception as api_error:
+            logger.error(f"OpenAI API error: {str(api_error)}")
+            error_message = str(api_error)
+            
+            # Check for common error patterns
+            if "auth" in error_message.lower() or "key" in error_message.lower() or "api key" in error_message.lower():
+                return jsonify({"error": "Authentication error with OpenAI. Please check your API key."}), 500
+            elif "rate limit" in error_message.lower():
+                return jsonify({"error": "OpenAI rate limit exceeded. Please try again later."}), 429
+            else:
+                return jsonify({"error": f"OpenAI API error: {error_message}"}), 500
         
     except Exception as e:
         logger.error(f"Error in OpenAI TTS: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+        return jsonify({
+            "error": "An unexpected error occurred", 
+            "details": str(e)
+        }), 500
 
 @openai_tts_bp.route('/api/openai-voices', methods=['GET'])
 def get_openai_voices():

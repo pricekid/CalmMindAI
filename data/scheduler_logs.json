@@ -5140,5 +5140,71 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 880c1c89fc99 at 2025-04-18 23:17:55.016452",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-18 23:18:40",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 3268",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 23:19:04",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 3268",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 23:20:26",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 3268). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-18 23:20:27",
+    "type": "job_setup",
+    "message": "Setting up daily email reminder job for 6:00 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 23:20:27",
+    "type": "job_schedule_error",
+    "message": "Failed to properly schedule daily email job",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-18 23:20:27",
+    "type": "job_scheduled",
+    "message": "Backup email job scheduled for 6:10 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 23:20:27",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-18 23:20:27.074175",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 23:20:27",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-18 23:20:27.108178",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 23:20:27",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 23:20:27",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 3586",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 23:20:27",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 880c1c89fc99 at 2025-04-18 23:20:27.569506",
+    "success": true
   }
 ]
