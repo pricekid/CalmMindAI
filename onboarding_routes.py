@@ -91,19 +91,33 @@ def step_3():
     form = FlaskForm()
     
     # Make sure user completed step 2
-    if 'onboarding_journal' not in session or 'onboarding_cbt_feedback' not in session:
+    if 'onboarding_journal' not in session:
         return redirect(url_for('onboarding.step_1'))
     
-    # Get the feedback from session
-    cbt_feedback = session.get('onboarding_cbt_feedback')
+    # Get the feedback from session or use fallback
+    cbt_feedback = session.get('onboarding_cbt_feedback', "Thank you for sharing your thoughts. Regular journaling can help you gain insights into your emotions and thought patterns. I'll be here to support your mental wellness journey.")
     
     # Get the last_feedback from session or use fallback
     last_feedback = session.get('last_feedback', "You're off to a great start. Create a journal entry for a new reflection.")
     
+    # Log the feedback values for debugging
+    print(f"CBT Feedback: {cbt_feedback}")
+    print(f"Last Feedback: {last_feedback}")
+    
     # Mark user as no longer new
     mark_user_as_not_new()
     
-    return render_template('onboarding_step_3.html', feedback=cbt_feedback, last_feedback=last_feedback, form=form)
+    try:
+        return render_template('onboarding_step_3.html', feedback=cbt_feedback, last_feedback=last_feedback, form=form)
+    except Exception as e:
+        # Log the error and provide fallback
+        print(f"Error rendering onboarding_step_3.html: {str(e)}")
+        
+        # If there's an error, provide default feedback values and try again
+        default_feedback = "Thank you for sharing your thoughts. Regular journaling can help you gain insights into your emotions and thought patterns. I'll be here to support your mental wellness journey."
+        default_last_feedback = "You're off to a great start. Create a journal entry for a new reflection."
+        
+        return render_template('onboarding_step_3.html', feedback=default_feedback, last_feedback=default_last_feedback, form=form)
 
 def generate_cbt_feedback(mood):
     """
@@ -147,6 +161,10 @@ def create_first_journal_entry(content, mood, feedback):
     
     # Get user ID
     user_id = current_user.id
+    
+    # Ensure feedback is not None
+    if feedback is None:
+        feedback = "Remember that your thoughts influence your emotions, and both can be examined and shifted. This journal is a great way to track patterns and develop greater self-awareness."
     
     # Create journal entry
     journal_entry = {
