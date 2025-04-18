@@ -4666,5 +4666,23 @@
     "type": "health_check",
     "message": "Scheduler running with PID 843 at 2025-04-18 16:23:47",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-18 16:27:55",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 843",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 16:28:20",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 843",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 16:28:44",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 843",
+    "success": true
   }
 ]

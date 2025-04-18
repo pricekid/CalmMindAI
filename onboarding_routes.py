@@ -42,15 +42,6 @@ def step_2():
     # Create a simple form for CSRF protection
     form = FlaskForm()
     
-    # List of 5 hardcoded CBT-style feedback messages
-    cbt_style_messages = [
-        "It's okay to feel overwhelmed. The first step is noticing the thought.",
-        "You're not alone in feeling this way. Let's explore what that thought is telling you.",
-        "Anxious thoughts can feel very real, but they're not always true.",
-        "This moment will pass. Let's focus on what's in your control.",
-        "Your thoughts might be distorted—would you like to reframe one together tomorrow?"
-    ]
-    
     # Make sure user completed step 1
     if 'onboarding_mood' not in session:
         return redirect(url_for('onboarding.step_1'))
@@ -64,14 +55,39 @@ def step_2():
         # Store the journal content in session
         session['onboarding_journal'] = journal_content
         
-        # Generate a simple CBT feedback message
+        # Get the user's mood
         mood = session.get('onboarding_mood')
-        cbt_feedback = generate_cbt_feedback(mood)
-        session['onboarding_cbt_feedback'] = cbt_feedback
         
-        # Randomly select one of the CBT-style messages and store it in session
-        last_feedback = random.choice(cbt_style_messages)
-        session['last_feedback'] = last_feedback
+        # Import the OpenAI service functions
+        try:
+            from openai_service import generate_onboarding_feedback, generate_insightful_message
+            
+            # Generate personalized CBT feedback using OpenAI
+            cbt_feedback = generate_onboarding_feedback(journal_content, mood)
+            session['onboarding_cbt_feedback'] = cbt_feedback
+            
+            # Generate an insightful message using OpenAI
+            last_feedback = generate_insightful_message(mood)
+            session['last_feedback'] = last_feedback
+            
+        except ImportError as e:
+            # If OpenAI service is unavailable, fall back to the static messages
+            print(f"Error importing OpenAI service: {str(e)}")
+            
+            # Use the static feedback generation function
+            cbt_feedback = generate_cbt_feedback(mood)
+            session['onboarding_cbt_feedback'] = cbt_feedback
+            
+            # Fallback to one of the hardcoded CBT-style messages
+            cbt_style_messages = [
+                "It's okay to feel overwhelmed. The first step is noticing the thought.",
+                "You're not alone in feeling this way. Let's explore what that thought is telling you.",
+                "Anxious thoughts can feel very real, but they're not always true.",
+                "This moment will pass. Let's focus on what's in your control.",
+                "Your thoughts might be distorted—would you like to reframe one together tomorrow?"
+            ]
+            last_feedback = random.choice(cbt_style_messages)
+            session['last_feedback'] = last_feedback
         
         # Create the first journal entry
         create_first_journal_entry(journal_content, mood, cbt_feedback)

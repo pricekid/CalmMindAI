@@ -330,6 +330,208 @@ def tone_check(response):
     
     return response
 
+def generate_insightful_message(mood):
+    """
+    Generate an insightful, personalized message based on the user's mood during onboarding.
+    This provides the "last_feedback" message shown in the alert box.
+    
+    Args:
+        mood: The user's reported mood (very_anxious, anxious, neutral, calm, great)
+        
+    Returns:
+        String containing an insightful message about thought patterns
+    
+    # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
+    do not change this unless explicitly requested by the user
+    """
+    # First, provide a fallback message in case we need it
+    fallback_messages = [
+        "It's okay to feel overwhelmed. The first step is noticing the thought.",
+        "You're not alone in feeling this way. Let's explore what that thought is telling you.",
+        "Anxious thoughts can feel very real, but they're not always true.",
+        "This moment will pass. Let's focus on what's in your control.",
+        "Your thoughts might be distorted—would you like to reframe one together tomorrow?"
+    ]
+    import random
+    fallback_message = random.choice(fallback_messages)
+    
+    try:
+        # Get API key and model settings
+        api_key = get_openai_api_key()
+        model = get_openai_model()
+        
+        # Check if API key is available
+        if not api_key:
+            logger.error("OpenAI API key is not set")
+            return fallback_message
+        
+        # Translate mood to a more descriptive form
+        mood_descriptions = {
+            'very_anxious': "feeling very anxious",
+            'anxious': "feeling anxious",
+            'neutral': "feeling neutral",
+            'calm': "feeling calm",
+            'great': "feeling great"
+        }
+        mood_description = mood_descriptions.get(mood, "with their current mood")
+        
+        prompt = f"""
+        Create a single insightful sentence for someone who is {mood_description} and starting a mental wellness journaling practice.
+        
+        The sentence should:
+        1. Be brief (1 sentence only)
+        2. Acknowledge their current emotional state
+        3. Contain a gentle CBT insight about thoughts vs. reality
+        4. Be encouraging and warm
+        
+        Examples:
+        - "It's okay to feel overwhelmed. The first step is noticing the thought."
+        - "Anxious thoughts can feel very real, but they're not always true."
+        - "This moment will pass. Let's focus on what's in your control."
+        
+        Return only the sentence, no quotation marks or additional text.
+        """
+        
+        # Attempt to make the API call with error handling
+        try:
+            # Get a fresh client with the current API key
+            client = get_openai_client()
+            
+            response = client.chat.completions.create(
+                model=model,
+                messages=[
+                    {"role": "system", "content": "You create brief, insightful CBT messages for people beginning their mental wellness journey."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.7,
+                max_tokens=100
+            )
+            
+            # Get the response content with error handling
+            try:
+                if not response.choices or not hasattr(response.choices[0], 'message'):
+                    logger.error("Unexpected response format from OpenAI API")
+                    return fallback_message
+                
+                message = response.choices[0].message.content
+                if not message:
+                    logger.error("Empty response content from OpenAI API")
+                    return fallback_message
+                
+                # Strip and return
+                return message.strip()
+                
+            except Exception as parse_error:
+                logger.error(f"Error parsing OpenAI response: {parse_error}")
+                return fallback_message
+            
+        except Exception as api_error:
+            logger.error(f"OpenAI API error: {str(api_error)}")
+            return fallback_message
+            
+    except Exception as e:
+        logger.error(f"Error generating insightful message: {str(e)}")
+        return fallback_message
+
+def generate_onboarding_feedback(journal_content, mood):
+    """
+    Generate personalized CBT feedback for first-time users during onboarding.
+    This function is specifically designed for the onboarding process and
+    returns thoughtful, supportive CBT-style feedback for new users.
+    
+    Args:
+        journal_content: The user's first journal entry
+        mood: The user's reported mood (very_anxious, anxious, neutral, calm, great)
+        
+    Returns:
+        String containing personalized CBT feedback
+    
+    # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
+    do not change this unless explicitly requested by the user
+    """
+    # First, provide a fallback feedback in case we need it
+    fallback_feedback = "Thank you for sharing your thoughts. The practice of journaling is a powerful tool for self-reflection and emotional awareness. As you continue this journey, you'll likely notice patterns in your thinking and develop insights that can help you navigate challenging emotions."
+    
+    # Safety check for empty content
+    if not journal_content or journal_content.strip() == "":
+        logger.warning("Empty journal content provided to generate_onboarding_feedback")
+        return fallback_feedback
+    
+    try:
+        # Get API key and model settings
+        api_key = get_openai_api_key()
+        model = get_openai_model()
+        
+        # Check if API key is available
+        if not api_key:
+            logger.error("OpenAI API key is not set")
+            return fallback_feedback
+        
+        # Translate mood to a more descriptive form
+        mood_descriptions = {
+            'very_anxious': "feeling very anxious",
+            'anxious': "feeling anxious",
+            'neutral': "feeling neutral",
+            'calm': "feeling calm",
+            'great': "feeling great"
+        }
+        mood_description = mood_descriptions.get(mood, "with the mood they described")
+        
+        prompt = f"""
+        A person has just started using a mental wellness journaling app and shared their first journal entry. They indicated they are {mood_description}. Here's what they wrote:
+        
+        "{journal_content}"
+        
+        As a warm, supportive CBT therapist, provide personalized feedback that:
+        1. Acknowledges their effort in beginning the journaling practice
+        2. Offers 1-2 gentle insights about thought patterns that might be present
+        3. Suggests 1-2 specific CBT techniques relevant to their entry
+        4. Encourages continued reflection and journaling
+        
+        Keep your response to around 4-6 sentences total. Use warm, supportive language appropriate for someone beginning their mental wellness journey.
+        """
+        
+        # Attempt to make the API call with error handling
+        try:
+            # Get a fresh client with the current API key
+            client = get_openai_client()
+            
+            response = client.chat.completions.create(
+                model=model,
+                messages=[
+                    {"role": "system", "content": "You are a warm, supportive CBT therapist specializing in beginner-friendly mental wellness guidance."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.7,
+                max_tokens=300
+            )
+            
+            # Get the response content with error handling
+            try:
+                if not response.choices or not hasattr(response.choices[0], 'message'):
+                    logger.error("Unexpected response format from OpenAI API")
+                    return fallback_feedback
+                
+                feedback = response.choices[0].message.content
+                if not feedback:
+                    logger.error("Empty response content from OpenAI API")
+                    return fallback_feedback
+                
+                # Strip and return
+                return feedback.strip()
+                
+            except Exception as parse_error:
+                logger.error(f"Error parsing OpenAI response: {parse_error}")
+                return fallback_feedback
+            
+        except Exception as api_error:
+            logger.error(f"OpenAI API error: {str(api_error)}")
+            return fallback_feedback
+            
+    except Exception as e:
+        logger.error(f"Error generating onboarding feedback: {str(e)}")
+        return fallback_feedback
+
 def generate_coping_statement(anxiety_context):
     """
     Generate a personalized coping statement based on the user's anxiety context.
