@@ -270,10 +270,17 @@
                     voice: selectedVoice
                 })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errorData => {
+                        throw new Error(errorData.message || errorData.error || 'Server error');
+                    });
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.error) {
-                    throw new Error(data.error);
+                    throw new Error(data.message || data.error);
                 }
                 
                 // Set audio source and play
@@ -284,7 +291,26 @@
             })
             .catch(error => {
                 console.error('Error generating speech:', error);
-                alert('Error generating speech: ' + error.message);
+                
+                // Create more user-friendly error dialog
+                const errorContainer = document.createElement('div');
+                errorContainer.className = 'alert alert-danger mt-3';
+                errorContainer.innerHTML = `
+                    <h5>Error generating speech:</h5>
+                    <p>${error.message}</p>
+                    <hr>
+                    <p class="mb-0">If this error persists, please contact support.</p>
+                `;
+                
+                // Insert error message after the generate button
+                generateBtn.parentNode.insertBefore(errorContainer, loadingIndicator.nextSibling);
+                
+                // Remove error message after 10 seconds
+                setTimeout(() => {
+                    if (errorContainer.parentNode) {
+                        errorContainer.parentNode.removeChild(errorContainer);
+                    }
+                }, 10000);
             })
             .finally(() => {
                 // Hide loading indicator

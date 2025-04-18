@@ -136,10 +136,20 @@ def openai_tts():
         # Check if API key is valid by making a small test request
         api_key = get_openai_api_key()
         if api_key:
+            # Check if API key format looks valid (basic validation)
+            if len(api_key) < 20 or not api_key.startswith('sk-'):
+                logger.error(f"API key format appears invalid: {api_key[:4]}***")
+                return jsonify({
+                    "error": "OpenAI API key format appears invalid",
+                    "message": "The API key doesn't match the expected format. Please check your settings."
+                }), 500
             logger.info(f"API key found, first 4 chars: {api_key[:4]}***")
         else:
             logger.error("API key is None")
-            return jsonify({"error": "OpenAI API key is missing"}), 500
+            return jsonify({
+                "error": "OpenAI API key is missing",
+                "message": "The OpenAI API key is not configured. Please contact an administrator."
+            }), 500
             
         # Generate speech using OpenAI API
         logger.info(f"Generating OpenAI TTS for text of length {len(text)} with voice {voice}")
@@ -167,13 +177,31 @@ def openai_tts():
             logger.error(f"OpenAI API error: {str(api_error)}")
             error_message = str(api_error)
             
-            # Check for common error patterns
+            # Check for common error patterns and provide user-friendly messages
             if "auth" in error_message.lower() or "key" in error_message.lower() or "api key" in error_message.lower():
-                return jsonify({"error": "Authentication error with OpenAI. Please check your API key."}), 500
+                logger.error(f"Authentication error with OpenAI: {error_message}")
+                return jsonify({
+                    "error": "Authentication error with OpenAI",
+                    "message": "The system couldn't authenticate with OpenAI. Please contact an administrator to verify the API key."
+                }), 500
             elif "rate limit" in error_message.lower():
-                return jsonify({"error": "OpenAI rate limit exceeded. Please try again later."}), 429
+                logger.error(f"Rate limit exceeded: {error_message}")
+                return jsonify({
+                    "error": "OpenAI rate limit exceeded",
+                    "message": "We've hit the usage limit for our voice service. Please try again in a few minutes."
+                }), 429
+            elif "insufficient_quota" in error_message.lower():
+                logger.error(f"Quota exceeded: {error_message}")
+                return jsonify({
+                    "error": "OpenAI quota exceeded",
+                    "message": "The voice service quota has been exceeded. Please contact an administrator."
+                }), 402
             else:
-                return jsonify({"error": f"OpenAI API error: {error_message}"}), 500
+                logger.error(f"Unknown OpenAI API error: {error_message}")
+                return jsonify({
+                    "error": "Voice generation failed",
+                    "message": "An error occurred when generating speech. Please try again with a shorter text or contact support if the issue persists."
+                }), 500
         
     except Exception as e:
         logger.error(f"Error in OpenAI TTS: {str(e)}")
