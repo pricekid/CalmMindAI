@@ -1798,6 +1798,27 @@
             voice: selectedVoice
         };
         
+        // Display error message with more detail
+        function displayErrorMessage(message) {
+            // Create error container if it doesn't exist
+            let errorContainer = document.getElementById('tts-guidance-error-message');
+            if (!errorContainer) {
+                errorContainer = document.createElement('div');
+                errorContainer.id = 'tts-guidance-error-message';
+                errorContainer.className = 'alert alert-danger mt-2';
+                errorContainer.style.fontSize = '0.9rem';
+                audio.parentNode.insertBefore(errorContainer, audio.nextSibling);
+            }
+            
+            errorContainer.innerHTML = `<i class="bi bi-exclamation-triangle"></i> ${message}`;
+            errorContainer.style.display = 'block';
+            
+            // Auto-hide after 10 seconds
+            setTimeout(() => {
+                errorContainer.style.display = 'none';
+            }, 10000);
+        }
+        
         // Request TTS using the OpenAI TTS endpoint
         fetch('/api/openai-tts', {
             method: 'POST',
@@ -1808,12 +1829,26 @@
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok: ' + response.statusText);
+                return response.json().then(data => {
+                    // Get specific error message from the server if available
+                    const errorMessage = data.error || 'Unknown server error';
+                    throw new Error(errorMessage);
+                }).catch(e => {
+                    // If can't parse JSON from error response
+                    throw new Error(`Server error (${response.status}): ${response.statusText}`);
+                });
             }
             return response.json();
         })
         .then(data => {
             console.log("OpenAI TTS guidance response:", data);
+            
+            // Hide any previous error message
+            const errorContainer = document.getElementById('tts-guidance-error-message');
+            if (errorContainer) {
+                errorContainer.style.display = 'none';
+            }
+            
             // Set the audio source to the URL returned by the server
             audio.src = data.audio_url;
             audio.style.display = 'block';
@@ -1831,8 +1866,18 @@
             button.disabled = false;
             button.innerHTML = '<i class="bi bi-cloud"></i> Listen to Mira\'s Guidance';
             
-            // Show error message
-            alert('Sorry, there was a problem generating the audio. Please try again.');
+            // Show specific error message based on the error
+            let errorMessage = 'Sorry, there was a problem generating the audio.';
+            
+            if (error.message.includes('API key')) {
+                errorMessage = 'Voice service configuration issue. Please try again later or contact support.';
+            } else if (error.message.includes('rate limit')) {
+                errorMessage = 'Voice service is temporarily unavailable due to high demand. Please try again in a few minutes.';
+            } else if (error.message.includes('Network')) {
+                errorMessage = 'Network connection issue. Please check your internet connection and try again.';
+            }
+            
+            displayErrorMessage(errorMessage);
         });
     }
     
