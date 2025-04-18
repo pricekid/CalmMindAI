@@ -361,6 +361,265 @@ If you'd like to unsubscribe, please update your notification preferences in you
     result = send_email(email, subject, html_body, text_body)
     return result.get('success', False)
 
+def send_daily_reminder_direct():
+    """
+    Send daily reminders to all users using direct SMTP rather than Flask-Mail.
+    This function doesn't rely on Flask models or app context.
+    
+    Returns:
+        dict: Statistics about the notification sending process
+    """
+    # Load users from file
+    users = load_users()
+    
+    # Track statistics
+    stats = {
+        "total_users": len(users),
+        "eligible_users": 0,
+        "sent_count": 0,
+        "error_count": 0,
+        "details": []
+    }
+    
+    # Today's date for tracking - use UTC for consistency
+    today = datetime.now(pytz.UTC).strftime("%Y-%m-%d")
+    logger.info(f"Starting daily notifications for UTC date: {today}")
+    
+    # Get users with notifications enabled
+    eligible_users = []
+    for user in users:
+        # Skip users without email
+        if not user.get("email"):
+            continue
+            
+        # Skip users with notifications disabled
+        if not user.get("notifications_enabled", True):
+            continue
+            
+        eligible_users.append(user)
+    
+    stats["eligible_users"] = len(eligible_users)
+    logger.info(f"Found {stats['eligible_users']} users eligible for notifications out of {stats['total_users']} total users")
+    
+    # Import notification tracking here to avoid circular imports
+    from notification_tracking import record_notification_sent, user_received_notification, get_notification_stats
+    
+    # Check if any notifications were already sent today
+    notification_stats = get_notification_stats()
+    today_emails = notification_stats.get("email", {}).get(today, [])
+    if today_emails:
+        logger.info(f"Found {len(today_emails)} notification records already sent today ({today})")
+    else:
+        logger.info(f"No notification records found for today ({today})")
+    
+    # Send emails to eligible users who haven't received notification yet today
+    for user in eligible_users:
+        user_id = user.get("id")
+        email = user.get("email")
+        
+        # Skip if user already received notification today
+        if user_received_notification(user_id, "email", today):
+            logger.info(f"User {user_id} ({email}) already received a notification today")
+            continue
+        
+        try:
+            # Send the daily reminder
+            logger.info(f"Sending daily reminder to user {user_id} ({email})")
+            
+            # Send the email
+            result = send_daily_reminder(user)
+            
+            if result.get("success", False):
+                logger.info(f"Successfully sent daily reminder to {email}")
+                stats["sent_count"] += 1
+                
+                # Record successful notification
+                record_notification_sent(
+                    user_id=user_id,
+                    notification_type="email",
+                    recipient=email,
+                    success=True,
+                    date=today
+                )
+            else:
+                logger.error(f"Failed to send daily reminder to {email}: {result.get('error', 'Unknown error')}")
+                stats["error_count"] += 1
+                stats["details"].append({
+                    "user_id": user_id,
+                    "email": email,
+                    "error": result.get("error", "Unknown error")
+                })
+                
+                # Record failed notification
+                record_notification_sent(
+                    user_id=user_id,
+                    notification_type="email",
+                    recipient=email,
+                    success=False,
+                    details={"error": result.get("error", "Unknown error")},
+                    date=today
+                )
+        except Exception as e:
+            logger.error(f"Error sending daily reminder to {email}: {str(e)}", exc_info=True)
+            stats["error_count"] += 1
+            stats["details"].append({
+                "user_id": user_id,
+                "email": email,
+                "error": str(e)
+            })
+            
+            # Record failed notification
+            try:
+                record_notification_sent(
+                    user_id=user_id,
+                    notification_type="email",
+                    recipient=email,
+                    success=False,
+                    details={"error": str(e)},
+                    date=today
+                )
+            except Exception as tracking_error:
+                logger.error(f"Error recording notification tracking: {str(tracking_error)}")
+    
+    logger.info(f"Daily reminders sent. Stats: {stats}")
+    return stats
+
+def send_daily_sms_reminder_direct():
+    """
+    Send daily SMS reminders to all users with SMS notifications enabled.
+    This function doesn't rely on Flask models or app context.
+    
+    Returns:
+        dict: Statistics about the notification sending process
+    """
+    # This requires Twilio setup, which will be handled by the scheduler's load_twilio_credentials function
+    logger.info("Starting daily SMS notifications")
+    
+    # Import here to avoid circular imports
+    try:
+        from twilio.rest import Client
+        from notification_tracking import record_notification_sent, user_received_notification
+    except ImportError as e:
+        logger.error(f"Failed to import required modules for SMS: {str(e)}")
+        return {"error": f"Required modules not available: {str(e)}", "sent_count": 0, "total_users": 0}
+    
+    # Check Twilio configuration
+    account_sid = os.environ.get('TWILIO_ACCOUNT_SID')
+    auth_token = os.environ.get('TWILIO_AUTH_TOKEN')
+    from_number = os.environ.get('TWILIO_PHONE_NUMBER')
+    
+    if not all([account_sid, auth_token, from_number]):
+        logger.error("Twilio configuration incomplete. Cannot send SMS notifications.")
+        return {"error": "Twilio configuration incomplete", "sent_count": 0, "total_users": 0}
+    
+    # Load users from file
+    users = load_users()
+    today = datetime.now(pytz.UTC).strftime("%Y-%m-%d")
+    
+    # Initialize Twilio client
+    try:
+        client = Client(account_sid, auth_token)
+    except Exception as e:
+        logger.error(f"Failed to initialize Twilio client: {str(e)}")
+        return {"error": f"Twilio client initialization failed: {str(e)}", "sent_count": 0, "total_users": len(users)}
+    
+    # Track statistics
+    stats = {
+        "total_users": len(users),
+        "eligible_users": 0,
+        "sent_count": 0,
+        "error_count": 0,
+        "details": []
+    }
+    
+    # Get users with SMS notifications enabled
+    eligible_users = []
+    for user in users:
+        # Skip users without phone number
+        if not user.get("phone"):
+            continue
+            
+        # Skip users with SMS notifications disabled
+        if not user.get("sms_notifications_enabled", False):
+            continue
+            
+        eligible_users.append(user)
+    
+    stats["eligible_users"] = len(eligible_users)
+    logger.info(f"Found {stats['eligible_users']} users eligible for SMS notifications")
+    
+    # Send SMS to eligible users who haven't received notification yet today
+    for user in eligible_users:
+        user_id = user.get("id")
+        phone = user.get("phone")
+        username = user.get("username", "there")
+        
+        # Skip if user already received SMS notification today
+        if user_received_notification(user_id, "sms", today):
+            logger.info(f"User {user_id} ({phone}) already received an SMS today")
+            continue
+        
+        try:
+            # Compose message
+            message_body = f"Hello {username}! This is your daily reminder from Calm Journey. Take a moment to check in with yourself today. Visit https://calm-mind-ai-naturalarts.replit.app/journal/new to journal."
+            
+            # Send SMS
+            logger.info(f"Sending SMS to {phone}")
+            message = client.messages.create(
+                body=message_body,
+                from_=from_number,
+                to=phone
+            )
+            
+            # Check if message was sent successfully
+            if message.sid:
+                logger.info(f"Successfully sent SMS to {phone} (SID: {message.sid})")
+                stats["sent_count"] += 1
+                
+                # Record successful notification
+                record_notification_sent(
+                    user_id=user_id,
+                    notification_type="sms",
+                    recipient=phone,
+                    success=True,
+                    details={"sid": message.sid},
+                    date=today
+                )
+            else:
+                logger.error(f"Failed to send SMS to {phone}: No SID returned")
+                stats["error_count"] += 1
+                
+                # Record failed notification
+                record_notification_sent(
+                    user_id=user_id,
+                    notification_type="sms",
+                    recipient=phone,
+                    success=False,
+                    details={"error": "No SID returned"},
+                    date=today
+                )
+        except Exception as e:
+            logger.error(f"Error sending SMS to {phone}: {str(e)}")
+            stats["error_count"] += 1
+            stats["details"].append({
+                "user_id": user_id,
+                "phone": phone,
+                "error": str(e)
+            })
+            
+            # Record failed notification
+            record_notification_sent(
+                user_id=user_id,
+                notification_type="sms",
+                recipient=phone,
+                success=False,
+                details={"error": str(e)},
+                date=today
+            )
+    
+    logger.info(f"Daily SMS notifications sent. Stats: {stats}")
+    return stats
+
 def send_weekly_summary(user, stats):
     """
     Send a weekly summary to a user.

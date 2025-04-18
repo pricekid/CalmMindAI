@@ -26,5 +26,40 @@
     "notification_type": "email",
     "recipient": "josiahjosey6@gmail.com",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-18T13:39:20.910367",
+    "user_id": "8",
+    "notification_type": "email",
+    "recipient": "naturalarts2@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18T13:39:23.203652",
+    "user_id": "4",
+    "notification_type": "email",
+    "recipient": "nscott392@yahoo.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18T13:39:25.268977",
+    "user_id": "7",
+    "notification_type": "email",
+    "recipient": "tonia.chapman246@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18T13:39:28.136093",
+    "user_id": "9",
+    "notification_type": "email",
+    "recipient": "naturalarts@hotmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18T13:39:31.109309",
+    "user_id": "10",
+    "notification_type": "email",
+    "recipient": "mrschap24@icloud.com",
+    "success": true
   }
 ]
