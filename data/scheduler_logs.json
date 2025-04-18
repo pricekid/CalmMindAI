@@ -4300,5 +4300,101 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host a394fdb61e15 at 2025-04-18 02:47:24.277057",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-18 02:52:23",
+    "type": "health_check",
+    "message": "Scheduler running with PID 902 at 2025-04-18 02:52:23",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 02:57:23",
+    "type": "health_check",
+    "message": "Scheduler running with PID 902 at 2025-04-18 02:57:23",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 03:02:23",
+    "type": "health_check",
+    "message": "Scheduler running with PID 902 at 2025-04-18 03:02:23",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 03:07:23",
+    "type": "health_check",
+    "message": "Scheduler running with PID 902 at 2025-04-18 03:07:23",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 13:32:23",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 902). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-18 13:32:24",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-18 13:32:24.075862",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 13:32:24",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-18 13:32:24.081259",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 13:32:24",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 13:32:24",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 374",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 13:32:24",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host d2d6c3616ad2 at 2025-04-18 13:32:24.545425",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 13:32:36",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 374). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-18 13:32:37",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-18 13:32:37.284455",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 13:32:37",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-18 13:32:37.294221",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 13:32:37",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 13:32:37",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 506",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18 13:32:37",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host d2d6c3616ad2 at 2025-04-18 13:32:37.847073",
+    "success": true
   }
 ]

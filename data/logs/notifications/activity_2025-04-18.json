@@ -1,0 +1,30 @@
+[
+  {
+    "timestamp": "2025-04-18T13:31:26.757329",
+    "user_id": "2",
+    "notification_type": "email",
+    "recipient": "naturalarts@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18T13:31:31.298963",
+    "user_id": "3",
+    "notification_type": "email",
+    "recipient": "jacqueline12006@yahoo.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18T13:31:42.036416",
+    "user_id": "5",
+    "notification_type": "email",
+    "recipient": "ken.maycock@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-18T13:31:45.825993",
+    "user_id": "6",
+    "notification_type": "email",
+    "recipient": "josiahjosey6@gmail.com",
+    "success": true
+  }
+]
