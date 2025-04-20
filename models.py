@@ -67,7 +67,10 @@ class JournalEntry(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     is_analyzed = db.Column(db.Boolean, default=False)
     anxiety_level = db.Column(db.Integer, nullable=True)  # 1-10 scale
-    user_reflection = db.Column(db.Text, nullable=True)   # User's reflection to Mira's prompt
+    # Using deferred=True will make this column not be loaded by default
+    # Only when specifically accessed will SQLAlchemy try to load it
+    from sqlalchemy.orm import deferred
+    user_reflection = deferred(db.Column(db.Text, nullable=True))   # User's reflection to Mira's prompt
     
     # Foreign key
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

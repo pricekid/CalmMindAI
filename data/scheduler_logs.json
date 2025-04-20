@@ -1096,5 +1096,221 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host c5a45fadf7cb at 2025-04-20 18:24:43.175166",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-20 18:29:14",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 18:29:14",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 18:29:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 18:29:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 18:34:14",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 18:34:14",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 18:34:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 18:34:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 18:39:14",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 18:39:14",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 18:39:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 18:39:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 18:44:14",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 18:44:14",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 18:44:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 18:44:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 18:49:14",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 18:49:14",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 18:49:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 18:49:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 18:54:14",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 18:54:14",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 18:54:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 18:54:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 18:54:42",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-20 18:54:42.683548",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 18:54:42",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 18:59:14",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 18:59:14",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 18:59:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 18:59:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:04:14",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 19:04:14",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:04:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 19:04:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:09:14",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 19:09:14",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:09:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 19:09:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:14:14",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 19:14:14",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:14:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 19:14:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:19:14",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 19:19:14",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:19:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 19:19:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:24:14",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 19:24:14",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:24:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 19:24:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:24:42",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-20 19:24:42.683381",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:24:42",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:29:14",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 19:29:14",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:29:42",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 19:29:42",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:30:19",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 6031",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:30:39",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 6031",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:30:39",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 6031",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:30:47",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 6031",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:30:47",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 6031",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:30:51",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 6031",
+    "success": true
   }
 ]

@@ -134,9 +134,19 @@ def dashboard():
     # Get weekly mood summary
     weekly_summary = current_user.get_weekly_summary()
         
-    # Get recent journal entries
-    recent_entries = JournalEntry.query.filter_by(user_id=current_user.id)\
-        .order_by(desc(JournalEntry.created_at)).limit(5).all()
+    # Get recent journal entries - explicitly select columns to avoid user_reflection
+    recent_entries = db.session.query(
+        JournalEntry.id,
+        JournalEntry.title,
+        JournalEntry.content,
+        JournalEntry.created_at,
+        JournalEntry.updated_at,
+        JournalEntry.is_analyzed,
+        JournalEntry.anxiety_level,
+        JournalEntry.user_id
+    ).filter(JournalEntry.user_id == current_user.id)\
+     .order_by(desc(JournalEntry.created_at))\
+     .limit(5).all()
     
     # Get mood data for chart (last 7 days)
     seven_days_ago = datetime.utcnow() - timedelta(days=7)
@@ -149,9 +159,18 @@ def dashboard():
     mood_dates = [log.created_at.strftime('%Y-%m-%d') for log in mood_logs]
     mood_scores = [log.mood_score for log in mood_logs]
     
-    # Get latest journal entry for coping statement
-    latest_entry = JournalEntry.query.filter_by(user_id=current_user.id)\
-        .order_by(desc(JournalEntry.created_at)).first()
+    # Get latest journal entry for coping statement - explicit column selection to avoid user_reflection
+    latest_entry = db.session.query(
+        JournalEntry.id,
+        JournalEntry.title,
+        JournalEntry.content,
+        JournalEntry.created_at,
+        JournalEntry.is_analyzed,
+        JournalEntry.anxiety_level,
+        JournalEntry.user_id
+    ).filter(JournalEntry.user_id == current_user.id)\
+     .order_by(desc(JournalEntry.created_at))\
+     .first()
     
     # Default coping statement that doesn't require API
     coping_statement = "Mira suggests: Take a moment to breathe deeply. Remember that your thoughts don't define you, and this moment will pass."
