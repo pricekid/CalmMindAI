@@ -1312,5 +1312,107 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 6031",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:35:47",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 19:35:47",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:35:51",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6031 at 2025-04-20 19:35:51",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:35:57",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 6031",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:35:58",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 6031",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:36:32",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 6031",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:36:32",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 6031",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:36:39",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 6031",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:36:39",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 6031",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:36:59",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 6031). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-20 19:37:00",
+    "type": "job_setup",
+    "message": "Setting up daily email reminder job for 6:00 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:37:00",
+    "type": "job_schedule_error",
+    "message": "Failed to properly schedule daily email job",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-20 19:37:00",
+    "type": "job_scheduled",
+    "message": "Backup email job scheduled for 6:10 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:37:00",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-20 19:37:00.570027",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:37:00",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-20 19:37:00.585829",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:37:00",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:37:00",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 6797",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:37:00",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host c5a45fadf7cb at 2025-04-20 19:37:00.936757",
+    "success": true
   }
 ]

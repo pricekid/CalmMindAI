@@ -97,14 +97,36 @@ def save_reflection():
 @login_required
 def journal_list():
     page = request.args.get('page', 1, type=int)
-    entries = JournalEntry.query.filter_by(user_id=current_user.id)\
-        .order_by(desc(JournalEntry.created_at))\
-        .paginate(page=page, per_page=10)
+    
+    # Explicitly select columns to avoid user_reflection column
+    entries_query = db.session.query(
+        JournalEntry.id,
+        JournalEntry.title,
+        JournalEntry.content,
+        JournalEntry.created_at,
+        JournalEntry.updated_at,
+        JournalEntry.is_analyzed,
+        JournalEntry.anxiety_level,
+        JournalEntry.user_id
+    ).filter(JournalEntry.user_id == current_user.id)\
+     .order_by(desc(JournalEntry.created_at))
+    
+    entries = entries_query.paginate(page=page, per_page=10)
     
     # Get all entries for visualization (limiting to last 30 for performance)
-    all_entries = JournalEntry.query.filter_by(user_id=current_user.id)\
-        .order_by(desc(JournalEntry.created_at))\
-        .limit(30).all()
+    # Explicitly select columns to avoid user_reflection column
+    all_entries = db.session.query(
+        JournalEntry.id,
+        JournalEntry.title,
+        JournalEntry.content,
+        JournalEntry.created_at,
+        JournalEntry.updated_at,
+        JournalEntry.is_analyzed,
+        JournalEntry.anxiety_level,
+        JournalEntry.user_id
+    ).filter(JournalEntry.user_id == current_user.id)\
+     .order_by(desc(JournalEntry.created_at))\
+     .limit(30).all()
     
     # Format the entry data for visualization
     journal_data = [{
@@ -164,12 +186,18 @@ def journal_list():
 def new_journal_entry():
     form = JournalEntryForm()
     if form.validate_on_submit():
-        # Check for recently created similar entries to prevent duplicates
+        # Check for recently created similar entries to prevent duplicates - with explicit columns
         five_minutes_ago = datetime.utcnow() - timedelta(minutes=5)
-        recent_entries = JournalEntry.query.filter_by(
-            user_id=current_user.id,
-            title=form.title.data
-        ).filter(JournalEntry.created_at >= five_minutes_ago).all()
+        recent_entries = db.session.query(
+            JournalEntry.id,
+            JournalEntry.title,
+            JournalEntry.created_at,
+            JournalEntry.user_id
+        ).filter(
+            JournalEntry.user_id == current_user.id,
+            JournalEntry.title == form.title.data,
+            JournalEntry.created_at >= five_minutes_ago
+        ).all()
         
         # If a similar entry was recently created, redirect to that entry
         if recent_entries:
