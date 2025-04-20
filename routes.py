@@ -14,11 +14,21 @@ import json
 from io import StringIO
 from datetime import datetime, timedelta
 import gamification  # Import the gamification module
+from utils.activity_tracker import get_community_message  # Import journal activity tracker
 
 # Home page
 @app.route('/')
 def index():
-    return render_template('index.html', title='Welcome to Calm Journey')
+    # Get community journal activity message
+    try:
+        community_message = get_community_message()
+    except Exception as e:
+        logging.error(f"Error getting community message: {str(e)}")
+        community_message = "Join our growing community of mindful journalers."
+
+    return render_template('index.html', 
+                          title='Welcome to Calm Journey',
+                          community_message=community_message)
 
 # User registration
 @app.route('/register', methods=['GET', 'POST'])
