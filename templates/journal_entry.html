@@ -995,8 +995,13 @@
                 if (modalInstance) {
                     modalInstance.hide();
                 } else {
-                    console.warn("Modal instance not found, closing with jQuery fallback");
-                    $(modal).modal('hide');
+                    console.warn("Modal instance not found, trying direct DOM manipulation");
+                    // Direct DOM manipulation instead of jQuery
+                    modal.classList.remove('show');
+                    modal.style.display = 'none';
+                    document.body.classList.remove('modal-open');
+                    const backdrop = document.querySelector('.modal-backdrop');
+                    if (backdrop) backdrop.remove();
                 }
             } catch (e) {
                 console.error("Error closing modal:", e);
