@@ -316,5 +316,77 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 9227",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-20 20:04:44",
+    "type": "health_check",
+    "message": "Scheduler running with PID 9227 at 2025-04-20 20:04:32",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 20:05:31",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 9227",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 20:07:47",
+    "type": "health_check",
+    "message": "Scheduler running with PID 9227 at 2025-04-20 20:07:47",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 20:09:00",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 9227). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-20 20:09:01",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 9780",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 20:09:01",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host c5a45fadf7cb at 2025-04-20 20:09:01.609922",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 20:09:04",
+    "type": "job_setup",
+    "message": "Setting up daily email reminder job for 6:00 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 20:09:04",
+    "type": "job_schedule_error",
+    "message": "Failed to properly schedule daily email job",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-20 20:09:04",
+    "type": "job_scheduled",
+    "message": "Backup email job scheduled for 6:10 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 20:09:04",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-20 20:09:04.154601",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 20:09:04",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-20 20:09:04.156303",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 20:09:04",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
   }
 ]
