@@ -328,7 +328,7 @@
                             </button>
                             
                             <div class="d-inline-flex align-items-center">
-                                <button id="server-tts-button" class="btn btn-primary btn-sm" onclick="playServerTTS()">
+                                <button id="server-tts-button" class="btn btn-primary btn-sm">
                                     <i class="bi bi-cloud"></i> Listen to Mira's Response
                                 </button>
                                 <button type="button" class="btn btn-outline-secondary btn-sm ms-1" id="analysis-voice-settings-btn">
@@ -554,7 +554,7 @@
                             </button>
                             
                             <div class="d-inline-flex align-items-center">
-                                <button id="server-tts-guidance-button" class="btn btn-primary btn-sm" onclick="playServerTTSGuidance()">
+                                <button id="server-tts-guidance-button" class="btn btn-primary btn-sm">
                                     <i class="bi bi-cloud"></i> Listen to Mira's Guidance
                                 </button>
                                 <button type="button" class="btn btn-outline-secondary btn-sm ms-1" id="guidance-voice-settings-btn">
@@ -1106,6 +1106,32 @@
                 } catch (e) {
                     console.error("Error opening voice settings modal for guidance:", e);
                     alert("We couldn't open the voice settings. Please try refreshing the page.");
+                }
+            });
+        }
+        
+        // Set up the TTS buttons with error handling
+        const serverTtsButton = document.getElementById('server-tts-button');
+        const serverTtsGuidanceButton = document.getElementById('server-tts-guidance-button');
+        
+        if (serverTtsButton) {
+            serverTtsButton.addEventListener('click', function() {
+                try {
+                    playServerTTS();
+                } catch (e) {
+                    console.error("Error playing text-to-speech for analysis:", e);
+                    alert("We couldn't play the audio. Please try again or refresh the page.");
+                }
+            });
+        }
+        
+        if (serverTtsGuidanceButton) {
+            serverTtsGuidanceButton.addEventListener('click', function() {
+                try {
+                    playServerTTSGuidance();
+                } catch (e) {
+                    console.error("Error playing text-to-speech for guidance:", e);
+                    alert("We couldn't play the audio. Please try again or refresh the page.");
                 }
             });
         }
