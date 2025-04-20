@@ -331,9 +331,9 @@
                                 <button id="server-tts-button" class="btn btn-primary btn-sm">
                                     <i class="bi bi-cloud"></i> Listen to Mira's Response
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary voice-settings-btn btn-sm ms-1" id="analysis-voice-settings-btn" 
+                                <button type="button" class="btn voice-settings-btn btn-sm ms-1" id="analysis-voice-settings-btn" 
                                         title="Voice Settings" data-bs-toggle="tooltip" data-bs-placement="top">
-                                    <i class="bi bi-gear" style="font-size: 1.2rem;"></i>
+                                    <i class="bi bi-gear"></i>
                                 </button>
                             </div>
                             <audio id="serverAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
@@ -345,13 +345,15 @@
                         .voice-settings-btn {
                             transition: all 0.2s ease;
                             position: relative;
-                            width: 36px;
-                            height: 31px;
-                            padding: 0;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            border-radius: 4px;
+                            width: 36px !important;
+                            height: 31px !important;
+                            padding: 0 !important;
+                            display: flex !important;
+                            align-items: center !important;
+                            justify-content: center !important;
+                            border-radius: 4px !important;
+                            background-color: #f8f9fa !important;
+                            border: 1px solid #ced4da !important;
                         }
                         
                         .voice-settings-btn:hover {
@@ -360,7 +362,8 @@
                         }
                         
                         .voice-settings-btn i {
-                            font-size: 1.25rem;
+                            font-size: 1.25rem !important;
+                            color: #6c757d !important;
                         }
                         
                         .voice-cards {
@@ -656,9 +659,9 @@
                                 <button id="server-tts-guidance-button" class="btn btn-primary btn-sm">
                                     <i class="bi bi-cloud"></i> Listen to Mira's Guidance
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary voice-settings-btn btn-sm ms-1" id="guidance-voice-settings-btn" 
+                                <button type="button" class="btn voice-settings-btn btn-sm ms-1" id="guidance-voice-settings-btn" 
                                         title="Voice Settings" data-bs-toggle="tooltip" data-bs-placement="top">
-                                    <i class="bi bi-gear" style="font-size: 1.2rem;"></i>
+                                    <i class="bi bi-gear"></i>
                                 </button>
                             </div>
                             <audio id="serverGuidanceAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
