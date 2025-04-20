@@ -46,8 +46,17 @@ def save_reflection():
         return jsonify({"error": "Missing required fields"}), 400
     
     try:
-        # Get the journal entry
-        entry = JournalEntry.query.get_or_404(entry_id)
+        # Get the journal entry - using explicit column selection to avoid user_reflection column
+        entry = db.session.query(
+            JournalEntry.id,
+            JournalEntry.title,
+            JournalEntry.content,
+            JournalEntry.created_at,
+            JournalEntry.updated_at,
+            JournalEntry.is_analyzed,
+            JournalEntry.anxiety_level,
+            JournalEntry.user_id
+        ).filter(JournalEntry.id == entry_id).first_or_404()
         
         # Ensure the entry belongs to the current user
         if entry.user_id != current_user.id:
