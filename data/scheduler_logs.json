@@ -136,5 +136,23 @@
     "type": "scheduler_start",
     "message": "Scheduler started successfully",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-20 20:27:46",
+    "type": "health_check",
+    "message": "Scheduler running with PID 10624 at 2025-04-20 20:27:37",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 20:29:43",
+    "type": "health_check",
+    "message": "Scheduler running with PID 10624 at 2025-04-20 20:29:43",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 20:30:22",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 10624",
+    "success": true
   }
 ]
