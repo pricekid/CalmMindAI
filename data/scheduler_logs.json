@@ -1000,5 +1000,23 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host c5a45fadf7cb at 2025-04-20 18:14:55.203905",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-20 18:16:21",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 5402",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 18:16:21",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 5402",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 18:16:23",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 5402",
+    "success": true
   }
 ]
