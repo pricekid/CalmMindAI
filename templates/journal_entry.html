@@ -331,7 +331,7 @@
                                 <button id="server-tts-button" class="btn btn-primary btn-sm" onclick="playServerTTS()">
                                     <i class="bi bi-cloud"></i> Listen to Mira's Response
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary btn-sm ms-1" onclick="openVoiceSettingsModal('analysis')">
+                                <button type="button" class="btn btn-outline-secondary btn-sm ms-1" id="analysis-voice-settings-btn">
                                     <i class="bi bi-gear"></i>
                                 </button>
                             </div>
@@ -557,7 +557,7 @@
                                 <button id="server-tts-guidance-button" class="btn btn-primary btn-sm" onclick="playServerTTSGuidance()">
                                     <i class="bi bi-cloud"></i> Listen to Mira's Guidance
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary btn-sm ms-1" onclick="openVoiceSettingsModal('guidance')">
+                                <button type="button" class="btn btn-outline-secondary btn-sm ms-1" id="guidance-voice-settings-btn">
                                     <i class="bi bi-gear"></i>
                                 </button>
                             </div>
@@ -1082,6 +1082,33 @@
     document.addEventListener('DOMContentLoaded', function() {
         // Set up language selection for TTS
         setupTTSLanguageSelectors();
+        
+        // Set up the voice settings buttons
+        const analysisSettingsBtn = document.getElementById('analysis-voice-settings-btn');
+        const guidanceSettingsBtn = document.getElementById('guidance-voice-settings-btn');
+        
+        // Add event listeners with error handling
+        if (analysisSettingsBtn) {
+            analysisSettingsBtn.addEventListener('click', function() {
+                try {
+                    openVoiceSettingsModal('analysis');
+                } catch (e) {
+                    console.error("Error opening voice settings modal for analysis:", e);
+                    alert("We couldn't open the voice settings. Please try refreshing the page.");
+                }
+            });
+        }
+        
+        if (guidanceSettingsBtn) {
+            guidanceSettingsBtn.addEventListener('click', function() {
+                try {
+                    openVoiceSettingsModal('guidance');
+                } catch (e) {
+                    console.error("Error opening voice settings modal for guidance:", e);
+                    alert("We couldn't open the voice settings. Please try refreshing the page.");
+                }
+            });
+        }
         
         // Set the initial anxiety level (only if we're in edit mode)
         const anxietySlider = document.getElementById('anxiety-slider');

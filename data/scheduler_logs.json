@@ -166,5 +166,11 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host c5a45fadf7cb at 2025-04-20 19:46:24.036113",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:48:22",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 8206",
+    "success": true
   }
 ]
