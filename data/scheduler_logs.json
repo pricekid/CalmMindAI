@@ -226,5 +226,23 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host c5a45fadf7cb at 2025-04-20 19:49:27.772675",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:53:22",
+    "type": "health_check",
+    "message": "Scheduler running with PID 8656 at 2025-04-20 19:53:22",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:54:26",
+    "type": "health_check",
+    "message": "Scheduler running with PID 8656 at 2025-04-20 19:54:26",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 19:55:14",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 8656",
+    "success": true
   }
 ]

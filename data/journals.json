@@ -3587,5 +3587,30 @@
       "reflection_prompt": "\n\nReflection Prompt: \"What small changes or actions have you noticed recently that could indicate progress, even if they seem minor?\"\n",
       "outro": "Remember, you're doing everything you can to support your daughter through this difficult time. You're not alone in this, and it's okay to seek support for yourself as well. Please take care of yourself, and reach out if you need additional help. Warmly, Coach Mira"
     }
+  },
+  {
+    "id": 164,
+    "user_id": 1,
+    "title": "Wher eis teh time going",
+    "content": "have so much to do. Apps to work on, people that need my time and attention, i have things i want to do for myself. I seem to have so little time",
+    "anxiety_level": 4,
+    "created_at": "2025-04-20T16:18:50.988394",
+    "updated_at": "2025-04-20T16:18:59.403398",
+    "is_analyzed": true,
+    "gpt_response": "It sounds like you're juggling a lot right now, and it's understandable to feel overwhelmed with so many demands on your time. It's important to recognize and honor all that you're managing. Sometimes, when everything feels urgent, it can be difficult to see the bigger picture and prioritize what's truly important.\n\nTake a moment. What's one expectation you've been holding that feels heavy \u2014 and might not be fully yours to carry?\n\nRemember, you're doing your best with the time you have. It's okay to set boundaries and prioritize your needs alongside others'. You're not alone in feeling this way, and taking small steps can make a big difference.\n\nThought Patterns That May Be Surfacing:\n* All-or-Nothing Thinking: You may be viewing your tasks as all equally urgent, which can make everything feel overwhelming and critical.\n* Catastrophizing: There's a tendency to feel like there's never enough time, which can amplify anxiety about getting everything done.\n\n\nCBT-Based Strategies:\n1. Prioritization Exercise Create a list of your tasks and categorize them into 'urgent,' 'important,' and 'can wait.' This helps clarify what needs immediate attention. Spend 10 minutes listing your tasks and categorizing them today.\n2. Time Blocking Allocate specific time slots for different activities to ensure you're dedicating focused time to each area without overwhelming yourself. Choose one day this week to try time blocking, even for just a couple of hours.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "This pattern involves seeing things in black-and-white terms, such as thinking you must do everything perfectly or not at all.",
+        "recommendation": "Practice cognitive restructuring by challenging this pattern with evidence of past successes and partial completions that were beneficial."
+      },
+      {
+        "pattern": "Catastrophizing",
+        "description": "Imagining the worst-case scenario about not having enough time, which can lead to increased stress.",
+        "recommendation": "Use grounding techniques to focus on the present moment and what can realistically be accomplished today."
+      }
+    ],
+    "structured_data": null,
+    "user_reflection": null
   }
 ]
