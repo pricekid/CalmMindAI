@@ -70,9 +70,12 @@ def send_daily_sms_reminder():
     
     tip = JOURNALING_TIPS[datetime.now().day % len(JOURNALING_TIPS)]
     
+    # Standardized referral text for SMS
+    referral_text = "Know someone who needs support? Share Calm Journey: https://calm-mind-ai-naturalarts.replit.app"
+    
     for user in users:
         try:
-            message = f"Calm Journey: Take a moment to reflect and journal today. Tip: {tip}"
+            message = f"Calm Journey: Take a moment to reflect and journal today. Tip: {tip}\n\n{referral_text}"
             success = send_sms_notification(user.phone_number, message)
             
             if success:
@@ -89,7 +92,10 @@ def send_immediate_sms_to_all_users():
         sms_notifications_enabled=True
     ).filter(User.phone_number.isnot(None)).all()
     
-    message = "Calm Journey: Take a moment for yourself right now. How are you feeling? Log into your journal and express yourself."
+    # Standardized referral text for SMS
+    referral_text = "Know someone who needs support? Share Calm Journey: https://calm-mind-ai-naturalarts.replit.app"
+    
+    message = f"Calm Journey: Take a moment for yourself right now. How are you feeling? Log into your journal and express yourself.\n\n{referral_text}"
     
     success_count = 0
     failure_count = 0
