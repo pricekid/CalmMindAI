@@ -36,12 +36,35 @@ def register():
     # Redirect to the simplified registration page that doesn't have JSON parsing issues
     return redirect(url_for('simple_register.simple_register'))
 
-# User login - Redirect to the login_routes blueprint implementation
+# User login - Use the original implementation for backward compatibility
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # Redirect to the login route in the login_routes blueprint
-    # This avoids conflicts between multiple login routes
-    return redirect(url_for('login_routes.login'))
+    # Check if user is already logged in
+    if current_user.is_authenticated:
+        # If logged in as admin, redirect to admin dashboard
+        if hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
+            return redirect(url_for('admin.dashboard'))
+        # Otherwise, go to the regular dashboard
+        return redirect(url_for('dashboard'))
+    
+    form = LoginForm()
+    if form.validate_on_submit():
+        # Convert email to lowercase for case-insensitive matching
+        email = form.email.data.lower() if form.email.data else None
+        user = User.query.filter_by(email=email).first()
+        
+        if user and user.check_password(form.password.data):
+            login_user(user, remember=form.remember.data)
+            next_page = request.args.get('next')
+            # Don't redirect to admin pages from regular login
+            if next_page and next_page.startswith('/admin'):
+                flash('You need admin privileges to access that page.', 'warning')
+                return redirect(url_for('dashboard'))
+            return redirect(next_page if next_page and not next_page.startswith('/admin') else url_for('dashboard'))
+        else:
+            flash('Login unsuccessful. Please check your email and password.', 'danger')
+    
+    return render_template('login.html', title='Login', form=form)
 
 # Token-based login route for email links
 @app.route('/login/token/<token>')
