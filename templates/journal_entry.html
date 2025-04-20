@@ -989,13 +989,67 @@
             // Save to localStorage
             localStorage.setItem(`${type}_voice`, selectedVoice);
             
-            // Close the modal
-            bootstrap.Modal.getInstance(modal).hide();
+            // Close the modal safely
+            try {
+                const modalInstance = bootstrap.Modal.getInstance(modal);
+                if (modalInstance) {
+                    modalInstance.hide();
+                } else {
+                    console.warn("Modal instance not found, closing with jQuery fallback");
+                    $(modal).modal('hide');
+                }
+            } catch (e) {
+                console.error("Error closing modal:", e);
+                // Fallback - try to remove modal classes directly
+                modal.classList.remove('show');
+                modal.style.display = 'none';
+                document.body.classList.remove('modal-open');
+                const backdrop = document.querySelector('.modal-backdrop');
+                if (backdrop) backdrop.remove();
+            }
         });
         
-        // Show the modal
-        const bsModal = new bootstrap.Modal(modal);
-        bsModal.show();
+        // Show the modal with error handling
+        try {
+            // Check if bootstrap is available
+            if (typeof bootstrap === 'undefined') {
+                console.error("Bootstrap is not defined - falling back to basic display");
+                modal.style.display = 'block';
+                modal.classList.add('show');
+                document.body.classList.add('modal-open');
+                
+                // Create backdrop if it doesn't exist
+                let backdrop = document.querySelector('.modal-backdrop');
+                if (!backdrop) {
+                    backdrop = document.createElement('div');
+                    backdrop.className = 'modal-backdrop fade show';
+                    document.body.appendChild(backdrop);
+                }
+                return;
+            }
+            
+            // Normal bootstrap modal initialization
+            const bsModal = new bootstrap.Modal(modal);
+            bsModal.show();
+        } catch (e) {
+            console.error("Error showing voice settings modal:", e);
+            // Fallback to basic display
+            modal.style.display = 'block';
+            modal.classList.add('show');
+            document.body.classList.add('modal-open');
+            
+            // Add event listeners to close buttons as a fallback
+            const closeButtons = modal.querySelectorAll('[data-bs-dismiss="modal"]');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    modal.style.display = 'none';
+                    modal.classList.remove('show');
+                    document.body.classList.remove('modal-open');
+                    const backdrop = document.querySelector('.modal-backdrop');
+                    if (backdrop) backdrop.remove();
+                });
+            });
+        }
     }
     
     // Function to get the current voice setting for a type
