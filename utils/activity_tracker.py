@@ -199,7 +199,7 @@ def get_recent_insights_count():
         week_ago = datetime.now() - timedelta(days=7)
         recent_count = db.session.query(func.count(JournalEntry.id)).filter(
             JournalEntry.created_at >= week_ago,
-            JournalEntry.ai_analysis.isnot(None)  # Has an analysis
+            JournalEntry.is_analyzed == True  # Has an analysis
         ).scalar() or 0
         
         # Load activity data for the display offset

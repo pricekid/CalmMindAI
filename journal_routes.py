@@ -12,6 +12,7 @@ from datetime import datetime, timedelta
 from sqlalchemy import desc
 import logging
 import gamification
+from utils.activity_tracker import track_journal_entry
 
 # Set up logging with more details
 logger = logging.getLogger(__name__)
@@ -213,6 +214,13 @@ def new_journal_entry():
                 flash('Your journal entry has been saved! AI analysis is currently unavailable due to a configuration issue.', 'info')
             else:
                 flash('Your journal entry has been created with AI analysis!', 'success')
+            
+            # Track the journal entry for community stats (privacy-friendly)
+            try:
+                track_journal_entry()
+                logger.debug("Tracked journal entry for community statistics")
+            except Exception as track_error:
+                logger.error(f"Error tracking journal entry: {str(track_error)}")
                 
             # Process gamification elements
             badge_result = gamification.process_journal_entry(current_user.id)

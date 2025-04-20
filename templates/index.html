@@ -9,6 +9,12 @@
         <p class="lead">Calm Journey is an AI-powered journaling tool that helps you manage anxiety using proven Cognitive Behavioral Therapy techniques.</p>
         <p class="mb-4">Write about your thoughts and feelings, and our AI assistant will analyze your entries to identify anxiety patterns and provide personalized CBT-based solutions.</p>
         
+        {% if community_message %}
+        <div class="alert alert-info mb-4">
+            <i class="fas fa-users me-2"></i> {{ community_message }}
+        </div>
+        {% endif %}
+        
         {% if not current_user.is_authenticated %}
         <div class="mt-4">
             <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-2">Sign Up</a>

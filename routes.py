@@ -212,6 +212,13 @@ def dashboard():
     # Get form for mood logging
     mood_form = MoodLogForm()
     
+    # Get community journal activity message
+    try:
+        community_message = get_community_message()
+    except Exception as e:
+        logging.error(f"Error getting community message for dashboard: {str(e)}")
+        community_message = "Join our growing community of mindful journalers."
+
     return render_template('dashboard.html', 
                           title='Dashboard',
                           recent_entries=recent_entries,
@@ -220,7 +227,8 @@ def dashboard():
                           coping_statement=coping_statement,
                           mood_form=mood_form,
                           weekly_summary=weekly_summary,
-                          badge_data=badge_data)
+                          badge_data=badge_data,
+                          community_message=community_message)
 
 # Redirect to journal list
 @app.route('/journal')
