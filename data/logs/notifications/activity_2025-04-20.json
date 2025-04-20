@@ -19,5 +19,19 @@
     "notification_type": "email",
     "recipient": "ken.maycock@gmail.com",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-20T16:07:38.826509",
+    "user_id": "6",
+    "notification_type": "email",
+    "recipient": "josiahjosey6@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20T16:07:42.320846",
+    "user_id": "8",
+    "notification_type": "email",
+    "recipient": "naturalarts2@gmail.com",
+    "success": true
   }
 ]
