@@ -1834,6 +1834,17 @@
             }, 10000);
         }
         
+        // Set a timeout to prevent indefinite loading
+        const timeoutId = setTimeout(() => {
+            // If it's been more than 15 seconds, abort and reset
+            if (button.disabled && button.innerHTML.includes('Generating')) {
+                console.log('TTS request timed out after 15 seconds');
+                button.disabled = false;
+                button.innerHTML = '<i class="bi bi-cloud"></i> Listen to Mira\'s Response';
+                displayErrorMessage('Voice generation timed out. Please try again or select a different voice.');
+            }
+        }, 15000);
+        
         // Request TTS using the OpenAI TTS endpoint
         fetch('/api/openai-tts', {
             method: 'POST',
@@ -1843,6 +1854,9 @@
             body: JSON.stringify(requestData)
         })
         .then(response => {
+            // Clear the timeout since we got a response
+            clearTimeout(timeoutId);
+            
             if (!response.ok) {
                 return response.json().then(data => {
                     // Get specific error message from the server if available
@@ -1876,6 +1890,9 @@
             audio.play();
         })
         .catch(error => {
+            // Clear the timeout since we got a response (error)
+            clearTimeout(timeoutId);
+            
             console.error('Error generating speech:', error);
             // Reset button state
             button.disabled = false;
@@ -1890,6 +1907,8 @@
                 errorMessage = 'Voice service is temporarily unavailable due to high demand. Please try again in a few minutes.';
             } else if (error.message.includes('Network')) {
                 errorMessage = 'Network connection issue. Please check your internet connection and try again.';
+            } else if (error.message.includes('timed out')) {
+                errorMessage = 'Voice generation timed out. Please try again or select a different voice.';
             }
             
             displayErrorMessage(errorMessage);
@@ -1999,6 +2018,17 @@
             }, 10000);
         }
         
+        // Set a timeout to prevent indefinite loading
+        const timeoutId = setTimeout(() => {
+            // If it's been more than 15 seconds, abort and reset
+            if (button.disabled && button.innerHTML.includes('Generating')) {
+                console.log('TTS guidance request timed out after 15 seconds');
+                button.disabled = false;
+                button.innerHTML = '<i class="bi bi-cloud"></i> Listen to Mira\'s Guidance';
+                displayErrorMessage('Voice generation timed out. Please try again or select a different voice.');
+            }
+        }, 15000);
+        
         // Request TTS using the OpenAI TTS endpoint
         fetch('/api/openai-tts', {
             method: 'POST',
@@ -2008,6 +2038,9 @@
             body: JSON.stringify(requestData)
         })
         .then(response => {
+            // Clear the timeout since we got a response
+            clearTimeout(timeoutId);
+            
             if (!response.ok) {
                 return response.json().then(data => {
                     // Get specific error message from the server if available
@@ -2041,6 +2074,9 @@
             audio.play();
         })
         .catch(error => {
+            // Clear the timeout since we got a response (error)
+            clearTimeout(timeoutId);
+            
             console.error('Error generating speech:', error);
             // Reset button state
             button.disabled = false;
@@ -2055,6 +2091,8 @@
                 errorMessage = 'Voice service is temporarily unavailable due to high demand. Please try again in a few minutes.';
             } else if (error.message.includes('Network')) {
                 errorMessage = 'Network connection issue. Please check your internet connection and try again.';
+            } else if (error.message.includes('timed out')) {
+                errorMessage = 'Voice generation timed out. Please try again or select a different voice.';
             }
             
             displayErrorMessage(errorMessage);
