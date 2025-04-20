@@ -101,9 +101,17 @@ def reset_weekly_stats_if_needed(data):
         return True
     return False
 
-def track_journal_entry():
+def track_journal_entry(user_id=None, activity_type=None, entry_id=None):
     """
     Track a new journal entry and update stats.
+    
+    Args:
+        user_id: Optional user ID for more detailed tracking
+        activity_type: Optional type of activity (e.g., "journal_created", "reflection_added")
+        entry_id: Optional journal entry ID
+        
+    Returns:
+        bool: Whether stats were reset
     """
     with activity_lock:
         data = load_activity_data()

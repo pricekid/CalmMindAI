@@ -580,5 +580,143 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 3163",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:05:17",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 3163",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:05:17",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 3163",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:05:25",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 3163",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:05:25",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 3163",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:06:05",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 3163",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:06:05",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 3163",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:06:12",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 3163",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:06:13",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 3163",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:06:48",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 3163",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:06:49",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 3163",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:06:59",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 3163",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:06:59",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 3163",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:07:08",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 3163",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:07:08",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 3163",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:07:21",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 3163). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-20 17:07:22",
+    "type": "job_setup",
+    "message": "Setting up daily email reminder job for 6:00 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:07:22",
+    "type": "job_schedule_error",
+    "message": "Failed to properly schedule daily email job",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-20 17:07:22",
+    "type": "job_scheduled",
+    "message": "Backup email job scheduled for 6:10 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:07:22",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-20 17:07:22.476996",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:07:22",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-20 17:07:22.479521",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:07:22",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:07:22",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 3929",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:07:22",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host c5a45fadf7cb at 2025-04-20 17:07:22.975649",
+    "success": true
   }
 ]

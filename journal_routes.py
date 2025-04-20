@@ -21,6 +21,77 @@ logger.setLevel(logging.DEBUG)
 # Create blueprint
 journal_bp = Blueprint('journal_blueprint', __name__, url_prefix='/journal')
 
+# API endpoint to save user reflections
+@journal_bp.route('/save-reflection', methods=['POST'])
+@login_required
+def save_reflection():
+    """
+    Save a user's reflection to their journal entry.
+    
+    Expects JSON with:
+    {
+        "entry_id": int,
+        "reflection_text": str
+    }
+    """
+    # Get data from request
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+    
+    entry_id = data.get('entry_id')
+    reflection_text = data.get('reflection_text')
+    
+    if not entry_id or not reflection_text:
+        return jsonify({"error": "Missing required fields"}), 400
+    
+    try:
+        # Get the journal entry
+        entry = JournalEntry.query.get_or_404(entry_id)
+        
+        # Ensure the entry belongs to the current user
+        if entry.user_id != current_user.id:
+            return jsonify({"error": "Unauthorized access"}), 403
+        
+        # Save the reflection to the database
+        entry.user_reflection = reflection_text
+        entry.updated_at = datetime.utcnow()
+        db.session.commit()
+        
+        # Also save to the JSON file if using that for structured data
+        from journal_service import get_journal_entries_for_user, save_journal_entry
+        entries = get_journal_entries_for_user(current_user.id)
+        for json_entry in entries:
+            if json_entry.get('id') == entry_id:
+                # Update the existing entry with the reflection
+                save_journal_entry(
+                    entry_id=entry.id,
+                    user_id=current_user.id,
+                    title=entry.title,
+                    content=entry.content, 
+                    anxiety_level=entry.anxiety_level,
+                    created_at=entry.created_at,
+                    updated_at=entry.updated_at,
+                    is_analyzed=entry.is_analyzed,
+                    gpt_response=json_entry.get('gpt_response'),
+                    cbt_patterns=json_entry.get('cbt_patterns'),
+                    structured_data=json_entry.get('structured_data'),
+                    user_reflection=reflection_text
+                )
+                break
+        
+        # Track the reflection activity
+        track_journal_entry(user_id=current_user.id, activity_type="reflection_added", entry_id=entry_id)
+        
+        return jsonify({
+            "success": True,
+            "message": "Reflection saved successfully"
+        })
+        
+    except Exception as e:
+        logger.error(f"Error saving reflection: {str(e)}")
+        return jsonify({"error": f"Server error: {str(e)}"}), 500
+
 # Journal entry list
 @journal_bp.route('/')
 @login_required
@@ -217,7 +288,7 @@ def new_journal_entry():
             
             # Track the journal entry for community stats (privacy-friendly)
             try:
-                track_journal_entry()
+                track_journal_entry(user_id=current_user.id, activity_type="journal_created", entry_id=entry.id)
                 logger.debug("Tracked journal entry for community statistics")
             except Exception as track_error:
                 logger.error(f"Error tracking journal entry: {str(track_error)}")

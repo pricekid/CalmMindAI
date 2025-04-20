@@ -115,6 +115,7 @@ def save_journal_entry(
         gpt_response: The GPT-generated response
         cbt_patterns: List of CBT patterns identified
         structured_data: Structured data with distortions, strategies, and reflection prompts
+        user_reflection: The user's reflection response to Mira's prompt
     """
     logger.debug(f"Saving journal entry {entry_id} for user {user_id}")
     try:
@@ -166,7 +167,8 @@ def save_journal_entry(
                 'is_analyzed': is_analyzed,
                 'gpt_response': gpt_response,
                 'cbt_patterns': clean_patterns,
-                'structured_data': structured_data
+                'structured_data': structured_data,
+                'user_reflection': user_reflection
             })
         
         with open(JOURNALS_FILE, 'w') as f:
