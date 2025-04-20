@@ -592,8 +592,15 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         ## YOUR TASK:
         1. Identify 2-3 cognitive distortions present in this entry
         2. Offer 2-3 specific CBT strategies tailored to this person's situation
-        3. Provide one reflection prompt that encourages insight
-        4. Create a compassionate, personalized response that addresses their specific situation
+        3. Create a reflective, engaging prompt that encourages deeper insight
+        4. Follow up with a supportive, grounding message that reinforces the insight
+        5. Create a compassionate, personalized overall response that addresses their specific situation
+        
+        ## RESPONSE STRUCTURE: 
+        You MUST create a response in three distinct parts:
+        1. INSIGHT TEXT: Initial empathy + gentle reframe (acknowledge emotion, highlight a theme, begin cognitive exploration)
+        2. REFLECTION PROMPT: A single, focused question for user engagement (start with "Take a moment. ")
+        3. FOLLOW-UP TEXT: Support and mini reframe (provide closure, validation or behavioral anchor)
         
         IMPORTANT: You must respond with ONLY valid JSON in the exact format below.
         DO NOT add any text, commentary, or explanation outside the JSON structure.
@@ -601,8 +608,9 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         RETURN ONLY THE JSON OBJECT, nothing else.
         
         {{
-            "intro": "Your warm, personalized greeting and initial validation",
-            "reflection": "Your thoughtful reflection on their specific situation",
+            "insight_text": "Your warm, empathetic initial response that acknowledges emotion and introduces a gentle reframe",
+            "reflection_prompt": "Take a moment. What's one expectation you've been holding that feels heavy — and might not be fully yours to carry?",
+            "followup_text": "Your supportive follow-up that provides closure and a validating next step",
             "distortions": [
                 {{
                     "pattern": "Name of CBT thought pattern 1",
@@ -719,7 +727,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
             response = client.chat.completions.create(
                 model=model,
                 messages=[
-                    {"role": "system", "content": "You are Mira, a deeply empathetic and personalized CBT journaling coach who creates thoughtful, specific responses tailored to each individual's unique situation. You create responses that feel like they were written by a trusted friend who truly understands the person's specific circumstances. You MUST respond ONLY in valid JSON format with a structured response that includes 'intro', 'reflection', 'distortions', 'strategies', 'reflection_prompt', 'outro', and 'patterns' fields. No markdown, no text outside the JSON structure."},
+                    {"role": "system", "content": "You are Mira, a deeply empathetic and personalized CBT journaling coach who creates thoughtful, specific responses tailored to each individual's unique situation. You create responses that feel like they were written by a trusted friend who truly understands the person's specific circumstances. You MUST respond ONLY in valid JSON format with a structured response that includes 'insight_text', 'reflection_prompt', 'followup_text', 'distortions', 'strategies', and 'patterns' fields. No markdown, no text outside the JSON structure."},
                     {"role": "user", "content": prompt}
                 ],
                 response_format={"type": "json_object"},  # Explicitly require JSON response
@@ -797,11 +805,54 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                         }
                 
                 # Handle the new structured response format
-                # Check if we have all the expected fields for the new format
+                # Check if we have the reflective pause format fields
+                has_reflective_pause_format = all(k in result for k in ['insight_text', 'reflection_prompt', 'followup_text'])
+                
+                # Check if we have all the expected fields for the previous format
                 has_structured_format = all(k in result for k in ['intro', 'reflection', 'distortions', 'strategies', 'reflection_prompt', 'outro'])
                 
-                if has_structured_format:
-                    logger.debug("Found structured response format with all expected fields")
+                if has_reflective_pause_format:
+                    logger.debug("Found reflective pause format with all expected fields")
+                    
+                    # Get the three parts of the reflective pause format
+                    insight_text = result.get('insight_text', '')
+                    reflection_prompt = result.get('reflection_prompt', '')
+                    followup_text = result.get('followup_text', '')
+                    
+                    # Process distortions section
+                    distortions_list = result.get('distortions', [])
+                    distortions_text = "\n\nThought Patterns That May Be Surfacing:\n"
+                    for d in distortions_list:
+                        pattern = d.get('pattern', '')
+                        description = d.get('description', '')
+                        distortions_text += f"* {pattern}: {description}\n"
+                    
+                    # Process strategies section
+                    strategies_list = result.get('strategies', [])
+                    strategies_text = "\n\nCBT-Based Strategies:\n"
+                    for i, s in enumerate(strategies_list, 1):
+                        title = s.get('title', f"Strategy {i}")
+                        description = s.get('description', '')
+                        action = s.get('action_step', '')
+                        strategies_text += f"{i}. {title} {description} {action}\n"
+                    
+                    # Combine all sections for the legacy response format
+                    coach_response = f"{insight_text}\n\n{reflection_prompt}\n\n{followup_text}{distortions_text}{strategies_text}"
+                    
+                    # Add a sign-off if not already present
+                    if "Coach Mira" not in coach_response:
+                        coach_response += "\n\nWarmly,\nCoach Mira"
+                    
+                    # Store the structured data
+                    result['structured_data'] = {
+                        'insight_text': insight_text,
+                        'reflection_prompt': reflection_prompt,
+                        'followup_text': followup_text,
+                        'distortions': distortions_list,
+                        'strategies': strategies_list
+                    }
+                elif has_structured_format:
+                    logger.debug("Found legacy structured format with all expected fields")
                     
                     # Combine the structured parts into a cohesive response
                     intro = result.get('intro', '')
@@ -835,14 +886,13 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                     # Combine all sections
                     coach_response = f"{intro}\n\n{reflection}{distortions_text}{strategies_text}{reflection_prompt}\n\n{outro}"
                     
-                    # Store the structured data in result for future UI improvements
-                    result['structured_response'] = {
-                        'intro': intro,
-                        'reflection': reflection,
+                    # Convert to the new reflective pause format for consistency
+                    result['structured_data'] = {
+                        'insight_text': f"{intro}\n\n{reflection}",
+                        'reflection_prompt': reflection_prompt.replace('\n\nReflection Prompt: "', '').replace('"\n', ''),
+                        'followup_text': outro,
                         'distortions': distortions_list,
-                        'strategies': strategies_list,
-                        'reflection_prompt': reflection_prompt,
-                        'outro': outro
+                        'strategies': strategies_list
                     }
                 else:
                     # Fall back to the old format for backward compatibility

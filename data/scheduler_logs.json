@@ -448,5 +448,95 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 2103",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:59:53",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2103",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:59:53",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2103",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:00:05",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2103",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:00:06",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2103",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:00:32",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2103",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:00:32",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2103",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:02:51",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 2103). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-20 17:02:51",
+    "type": "job_setup",
+    "message": "Setting up daily email reminder job for 6:00 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:02:51",
+    "type": "job_schedule_error",
+    "message": "Failed to properly schedule daily email job",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-20 17:02:51",
+    "type": "job_scheduled",
+    "message": "Backup email job scheduled for 6:10 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:02:52",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-20 17:02:52.031965",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:02:52",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-20 17:02:52.055048",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:02:52",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:02:52",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 3163",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 17:02:52",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host c5a45fadf7cb at 2025-04-20 17:02:52.401004",
+    "success": true
   }
 ]

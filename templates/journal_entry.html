@@ -188,7 +188,74 @@
                     <div id="analysis-content" style="background-color: white !important; color: #212529 !important; padding: 20px; border-radius: 8px; border: 1px solid #e9ecef; line-height: 1.6;">
                         <div class="coach-insights">
                             {% if structured_data %}
-                                <!-- Display structured content -->
+                                <!-- Display structured content with reflective pause -->
+                                {% if structured_data.insight_text %}
+                                <div class="insight-text mb-4">
+                                    <p>{{ structured_data.insight_text | safe }}</p>
+                                </div>
+                                {% endif %}
+                                
+                                {% if structured_data.reflection_prompt %}
+                                <div class="reflection-pause mb-4" id="reflection-pause">
+                                    <div class="reflection-prompt p-3 my-4 bg-light rounded border-start border-4 border-primary">
+                                        <p class="mb-2"><strong>👉 {{ structured_data.reflection_prompt }}</strong></p>
+                                        
+                                        <!-- Reflection input box -->
+                                        <div class="reflection-input mt-3">
+                                            <textarea id="user-reflection" class="form-control mb-2" rows="3" 
+                                                placeholder="Write your reflection here..."></textarea>
+                                            <div class="d-flex justify-content-between">
+                                                <small class="text-muted">Your reflection will be saved to your journal</small>
+                                                <button id="continue-reflection" class="btn btn-primary btn-sm">Continue</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- This section will be hidden until user completes reflection -->
+                                <div class="followup-content d-none" id="followup-content">
+                                    {% if structured_data.followup_text %}
+                                    <div class="followup-text mb-4">
+                                        <p>{{ structured_data.followup_text | safe }}</p>
+                                    </div>
+                                    {% endif %}
+                                    
+                                    {% if structured_data.distortions %}
+                                    <div class="distortions mb-4">
+                                        <h5 class="mt-4 mb-3">Thought Patterns</h5>
+                                        <ul class="list-group">
+                                        {% for distortion in structured_data.distortions %}
+                                            <li class="list-group-item">
+                                                <strong>{{ distortion.pattern }}</strong>: {{ distortion.description }}
+                                            </li>
+                                        {% endfor %}
+                                        </ul>
+                                    </div>
+                                    {% endif %}
+                                    
+                                    {% if structured_data.strategies %}
+                                    <div class="strategies mb-4">
+                                        <h5 class="mt-4 mb-3">CBT Strategies</h5>
+                                        <div class="strategy-cards">
+                                        {% for strategy in structured_data.strategies %}
+                                            <div class="card mb-3">
+                                                <div class="card-body">
+                                                    <h6 class="card-title text-primary">{{ strategy.title }}</h6>
+                                                    <p>{{ strategy.description }}</p>
+                                                    {% if strategy.action_step %}
+                                                    <div class="action-step mt-2">
+                                                        <strong class="text-dark" style="background-color: #f0f0f0; padding: 2px 5px; border-radius: 3px; display: inline-block;">Try this:</strong> {{ strategy.action_step }}
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% else %}
+                                <!-- Fall back to the old structured format -->
                                 {% if structured_data.intro %}
                                 <div class="intro mb-4">
                                     <p>{{ structured_data.intro | safe }}</p>
@@ -248,6 +315,7 @@
                                 <div class="outro mt-4">
                                     <p>{{ structured_data.outro | safe }}</p>
                                 </div>
+                                {% endif %}
                                 {% endif %}
                             {% else %}
                                 <!-- Fall back to unstructured content -->
