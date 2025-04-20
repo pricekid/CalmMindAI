@@ -1955,6 +1955,91 @@
         var badgeModal = new bootstrap.Modal(document.getElementById('badgeEarnedModal'));
         badgeModal.show();
         {% endif %}
+        
+        // Setup Reflection Pause functionality
+        setupReflectionPause();
     });
+    
+    // Reflection Pause Functionality
+    function setupReflectionPause() {
+        // Get elements
+        const reflectionPause = document.getElementById('reflection-pause');
+        const followupContent = document.getElementById('followup-content');
+        const continueButton = document.getElementById('continue-reflection');
+        const userReflectionInput = document.getElementById('user-reflection');
+        
+        // Exit if elements don't exist (not a reflective pause entry)
+        if (!reflectionPause || !followupContent || !continueButton || !userReflectionInput) {
+            console.log('Reflection pause elements not found, skipping setup');
+            return;
+        }
+        
+        console.log('Setting up reflection pause functionality');
+        
+        // Add click listener for continue button
+        continueButton.addEventListener('click', function() {
+            // Get user's reflection
+            const userReflection = userReflectionInput.value.trim();
+            const entryId = '{{ entry.id }}';
+            
+            // Save the reflection
+            saveUserReflection(userReflection, entryId);
+            
+            // Show the followup content with a fade in animation
+            followupContent.classList.remove('d-none');
+            followupContent.style.opacity = '0';
+            followupContent.style.transition = 'opacity 0.5s ease';
+            
+            // Use a timeout to ensure the transition is visible
+            setTimeout(() => {
+                followupContent.style.opacity = '1';
+            }, 50);
+        });
+        
+        // Also reveal content if user presses Enter in the textarea (but allow Shift+Enter for new line)
+        userReflectionInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault(); // Prevent adding a newline
+                continueButton.click(); // Trigger the continue button
+            }
+        });
+    }
+    
+    // Function to save user's reflection to the journal entry
+    function saveUserReflection(reflection, entryId) {
+        // Skip if reflection is empty or entry ID is not valid
+        if (!reflection || !entryId) {
+            console.log('Empty reflection or missing entry ID, not saving');
+            return;
+        }
+        
+        console.log('Saving reflection for entry', entryId);
+        
+        // Make API request
+        fetch('/journal/save-reflection', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                entry_id: entryId,
+                reflection_text: reflection
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Reflection saved successfully:', data);
+        })
+        .catch(error => {
+            console.error('Error saving reflection:', error);
+            // Continue showing the content even if saving failed
+        });
+    }
 </script>
 {% endblock %}

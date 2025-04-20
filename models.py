@@ -67,6 +67,7 @@ class JournalEntry(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     is_analyzed = db.Column(db.Boolean, default=False)
     anxiety_level = db.Column(db.Integer, nullable=True)  # 1-10 scale
+    user_reflection = db.Column(db.Text, nullable=True)   # User's reflection to Mira's prompt
     
     # Foreign key
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

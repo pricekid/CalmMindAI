@@ -97,7 +97,8 @@ def save_journal_entry(
     is_analyzed: bool = False,
     gpt_response: Optional[str] = None,
     cbt_patterns: Optional[List[Dict[str, str]]] = None,
-    structured_data: Optional[Dict] = None
+    structured_data: Optional[Dict] = None,
+    user_reflection: Optional[str] = None
 ) -> None:
     """
     Save a journal entry to the journals.json file.
@@ -145,7 +146,8 @@ def save_journal_entry(
                     'is_analyzed': is_analyzed,
                     'gpt_response': gpt_response,
                     'cbt_patterns': clean_patterns,
-                    'structured_data': structured_data
+                    'structured_data': structured_data,
+                    'user_reflection': user_reflection
                 }
                 entry_found = True
                 break
