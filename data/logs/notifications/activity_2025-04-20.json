@@ -1,0 +1,23 @@
+[
+  {
+    "timestamp": "2025-04-20T15:50:42.931590",
+    "user_id": "2",
+    "notification_type": "email",
+    "recipient": "naturalarts@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20T15:50:46.408323",
+    "user_id": "3",
+    "notification_type": "email",
+    "recipient": "jacqueline12006@yahoo.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20T15:50:49.744469",
+    "user_id": "5",
+    "notification_type": "email",
+    "recipient": "ken.maycock@gmail.com",
+    "success": true
+  }
+]

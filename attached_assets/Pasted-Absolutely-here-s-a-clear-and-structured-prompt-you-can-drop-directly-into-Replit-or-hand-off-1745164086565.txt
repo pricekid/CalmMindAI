@@ -1,0 +1,106 @@
+Absolutely — here’s a **clear and structured prompt** you can drop directly into Replit (or hand off to a dev) to get this feature live:
+
+---
+
+### ✅ Replit Prompt: Add Real-Time and Daily User Activity Tracking in Calm Journey
+
+---
+
+**Goal:**  
+Display a message on the signup/login page like:
+
+> “You’re not alone — 7 people have checked in during the past hour.”  
+or  
+> “10 users have journaled today.”
+
+---
+
+**Tech Stack:**  
+- Flask (Python backend)  
+- Redis (used for tracking user activity)
+
+---
+
+**Tasks:**
+
+#### 🔹 1. Set Up Redis if Not Already Running
+Make sure Redis is running and accessible from Flask. If you're on Replit, you may need to use `replit-redis` or install Redis locally.
+
+---
+
+#### 🔹 2. Add `activity_tracker.py` Utility
+
+Create a file `utils/activity_tracker.py`:
+
+```python
+import time
+import redis
+
+r = redis.Redis(host='localhost', port=6379, decode_responses=True)
+
+ACTIVITY_KEY = "user_activity"
+
+def track_user_activity(user_id):
+    timestamp = int(time.time())
+    r.zadd(ACTIVITY_KEY, {user_id: timestamp})
+
+def get_active_user_count(window_minutes=60):
+    now = int(time.time())
+    min_score = now - (window_minutes * 60)
+    return r.zcount(ACTIVITY_KEY, min_score, now)
+
+def get_daily_user_count():
+    return r.get("daily_journal_count") or 0
+
+def increment_daily_count():
+    r.incr("daily_journal_count")
+```
+
+---
+
+#### 🔹 3. Update Routes
+
+In your `app.py` or `routes.py`, add:
+
+```python
+from utils.activity_tracker import (
+    track_user_activity,
+    increment_daily_count,
+    get_active_user_count,
+    get_daily_user_count
+)
+
+@app.route('/journal', methods=['POST'])
+def journal_entry():
+    user_id = get_current_user_id()
+    track_user_activity(user_id)
+    increment_daily_count()
+    # Save journal entry logic
+    return jsonify({"message": "Journal saved."})
+
+@app.route('/stats', methods=['GET'])
+def stats():
+    return jsonify({
+        "active_last_hour": get_active_user_count(60),
+        "journaled_today": get_daily_user_count()
+    })
+```
+
+---
+
+#### 🔹 4. Frontend: Fetch `/stats`
+
+On your signup/login or welcome screen, call `/stats` and show something like:
+
+- If `active_last_hour >= 1`:  
+  > “{{active_last_hour}} people are managing anxiety with Calm Journey right now.”
+
+- Else if `journaled_today >= 1`:  
+  > “{{journaled_today}} people have journaled today.”
+
+- Else (fallback):  
+  > “Every day, people use Calm Journey to manage anxiety. You’re in the right place.”
+
+---
+
+Let me know if you want the exact React or HTML for that frontend message block too — I can provide it in a clean Tailwind layout.

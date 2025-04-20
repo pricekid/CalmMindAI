@@ -1,0 +1,142 @@
+[
+  {
+    "timestamp": "2025-04-19T12:59:02.726856",
+    "user_id": "2",
+    "notification_type": "email",
+    "recipient": "naturalarts@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-19T12:59:05.266783",
+    "user_id": "3",
+    "notification_type": "email",
+    "recipient": "jacqueline12006@yahoo.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-19T12:59:08.762075",
+    "user_id": "5",
+    "notification_type": "email",
+    "recipient": "ken.maycock@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-19T12:59:12.120773",
+    "user_id": "6",
+    "notification_type": "email",
+    "recipient": "josiahjosey6@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-19T12:59:14.733817",
+    "user_id": "8",
+    "notification_type": "email",
+    "recipient": "naturalarts2@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-19T12:59:17.913512",
+    "user_id": "4",
+    "notification_type": "email",
+    "recipient": "nscott392@yahoo.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-19T12:59:21.215954",
+    "user_id": "7",
+    "notification_type": "email",
+    "recipient": "tonia.chapman246@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-19T12:59:23.870004",
+    "user_id": "9",
+    "notification_type": "email",
+    "recipient": "naturalarts@hotmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-19T12:59:27.128590",
+    "user_id": "10",
+    "notification_type": "email",
+    "recipient": "mrschap24@icloud.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-19T12:59:30.352756",
+    "user_id": "11",
+    "notification_type": "email",
+    "recipient": "graham.claudia2019@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-19T12:59:33.609815",
+    "user_id": "12",
+    "notification_type": "email",
+    "recipient": "amber0288@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-19T12:59:36.898847",
+    "user_id": "13",
+    "notification_type": "email",
+    "recipient": "kilaboo0518@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-19T12:59:40.236542",
+    "user_id": "14",
+    "notification_type": "email",
+    "recipient": "dre_me@hotmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-19T12:59:43.538381",
+    "user_id": "15",
+    "notification_type": "email",
+    "recipient": "jeharka@hotmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-19T12:59:46.778120",
+    "user_id": "1",
+    "notification_type": "email",
+    "recipient": "teddy.leon@alumni.uwi.edu",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-19T12:59:50.367684",
+    "user_id": "16",
+    "notification_type": "email",
+    "recipient": "rakayla03@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-19T12:59:53.900924",
+    "user_id": "17",
+    "notification_type": "email",
+    "recipient": "shellyannroach@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-19T12:59:57.364965",
+    "user_id": "18",
+    "notification_type": "email",
+    "recipient": "dawnoneal@outlook.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-19T13:00:00.649694",
+    "user_id": "19",
+    "notification_type": "email",
+    "recipient": "dazasi09@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-19T13:00:04.201856",
+    "user_id": "20",
+    "notification_type": "email",
+    "recipient": "teddy@kindspire.app",
+    "success": true
+  }
+]
