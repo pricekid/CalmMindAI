@@ -214,5 +214,113 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host c5a45fadf7cb at 2025-04-20 16:07:42.792034",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:09:01",
+    "type": "command_execution",
+    "message": "Executing command: start",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:09:01",
+    "type": "command_result",
+    "message": "Command 'start' completed with success",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:09:17",
+    "type": "command_execution",
+    "message": "Executing command: start",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:09:17",
+    "type": "job_schedule_error",
+    "message": "Error scheduling daily email job: name 'scheduler' is not defined",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-20 16:09:18",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: 2025-04-20 16:09:17,945 - __main__ - ERROR - Error scheduling daily email job: name 'scheduler' is not defined\n2025-04-20 16:09:17,946 - scheduler_logs - INFO - Logged scheduler activity: job_schedule_error - Error scheduling daily email job: name 'scheduler' is not defined (success: False)\nTraceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 56, in <module>\n    scheduler.add_job(\n    ^^^^^^^^^\nNameError: name 'scheduler' is not defined\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-20 16:09:18",
+    "type": "command_result",
+    "message": "Command 'start' completed with failure",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-20 16:09:51",
+    "type": "health_check",
+    "message": "Scheduler not running at 2025-04-20 16:09:51. Attempt 1 to restart.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-20 16:09:51",
+    "type": "job_schedule_error",
+    "message": "Error scheduling daily email job: name 'scheduler' is not defined",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-20 16:09:52",
+    "type": "process_start_error",
+    "message": "Failed to start scheduler. Error: 2025-04-20 16:09:51,876 - __main__ - ERROR - Error scheduling daily email job: name 'scheduler' is not defined\n2025-04-20 16:09:51,877 - scheduler_logs - INFO - Logged scheduler activity: job_schedule_error - Error scheduling daily email job: name 'scheduler' is not defined (success: False)\nTraceback (most recent call last):\n  File \"/home/runner/workspace/scheduler.py\", line 56, in <module>\n    scheduler.add_job(\n    ^^^^^^^^^\nNameError: name 'scheduler' is not defined\n",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-20 16:09:52",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host c5a45fadf7cb at 2025-04-20 16:09:52.411906",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-20 16:10:43",
+    "type": "job_setup",
+    "message": "Setting up daily email reminder job for 6:00 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:10:43",
+    "type": "job_schedule_error",
+    "message": "Failed to properly schedule daily email job",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-20 16:10:43",
+    "type": "job_scheduled",
+    "message": "Backup email job scheduled for 6:10 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:10:43",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-20 16:10:43.723799",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:10:43",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-20 16:10:43.739225",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:10:43",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:10:44",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 2103",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:10:44",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host c5a45fadf7cb at 2025-04-20 16:10:44.050072",
+    "success": true
   }
 ]
