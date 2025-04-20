@@ -322,5 +322,131 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host c5a45fadf7cb at 2025-04-20 16:10:44.050072",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:14:52",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2103 at 2025-04-20 16:14:52",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:15:43",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2103 at 2025-04-20 16:15:43",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:19:52",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2103 at 2025-04-20 16:19:52",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:20:43",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2103 at 2025-04-20 16:20:43",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:24:52",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2103 at 2025-04-20 16:24:52",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:25:43",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2103 at 2025-04-20 16:25:43",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:29:52",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2103 at 2025-04-20 16:29:52",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:30:43",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2103 at 2025-04-20 16:30:43",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:34:52",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2103 at 2025-04-20 16:34:52",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:35:43",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2103 at 2025-04-20 16:35:43",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:39:52",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2103 at 2025-04-20 16:39:52",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:40:43",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2103 at 2025-04-20 16:40:43",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:40:43",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-20 16:40:43.724172",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:40:43",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:44:52",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2103 at 2025-04-20 16:44:52",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:45:43",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2103 at 2025-04-20 16:45:43",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:49:52",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2103 at 2025-04-20 16:49:52",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:50:43",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2103 at 2025-04-20 16:50:43",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:54:52",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2103 at 2025-04-20 16:54:52",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:55:43",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2103 at 2025-04-20 16:55:43",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-20 16:59:17",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2103",
+    "success": true
   }
 ]
