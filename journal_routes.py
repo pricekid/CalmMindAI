@@ -572,7 +572,7 @@ def view_journal_entry(entry_id):
 @journal_bp.route('/<int:entry_id>/update', methods=['GET', 'POST'])
 @login_required
 def update_journal_entry(entry_id):
-    # Use explicit column selection to avoid user_reflection column
+    # Include user_reflection column now that it exists
     entry = db.session.query(
         JournalEntry.id,
         JournalEntry.title,
@@ -581,7 +581,8 @@ def update_journal_entry(entry_id):
         JournalEntry.updated_at,
         JournalEntry.is_analyzed,
         JournalEntry.anxiety_level,
-        JournalEntry.user_id
+        JournalEntry.user_id,
+        JournalEntry.user_reflection
     ).filter(JournalEntry.id == entry_id).first_or_404()
     
     # Ensure the entry belongs to the current user
@@ -719,7 +720,7 @@ def update_journal_entry(entry_id):
 @journal_bp.route('/api_journal_coach/<int:entry_id>', methods=['GET', 'POST'])  # Legacy support
 @login_required
 def api_journal_coach(entry_id):
-    # Use explicit column selection to avoid user_reflection column
+    # Include user_reflection column now that it exists
     entry = db.session.query(
         JournalEntry.id,
         JournalEntry.title,
@@ -728,7 +729,8 @@ def api_journal_coach(entry_id):
         JournalEntry.updated_at,
         JournalEntry.is_analyzed,
         JournalEntry.anxiety_level,
-        JournalEntry.user_id
+        JournalEntry.user_id,
+        JournalEntry.user_reflection
     ).filter(JournalEntry.id == entry_id).first_or_404()
     
     # Ensure the entry belongs to the current user
@@ -801,7 +803,7 @@ def api_journal_coach(entry_id):
 @journal_bp.route('/api_analyze_entry/<int:entry_id>', methods=['GET', 'POST'])  # Legacy support
 @login_required
 def api_analyze_entry(entry_id):
-    # Use explicit column selection to avoid user_reflection column
+    # Include user_reflection column now that it exists
     entry = db.session.query(
         JournalEntry.id,
         JournalEntry.title,
@@ -810,7 +812,8 @@ def api_analyze_entry(entry_id):
         JournalEntry.updated_at,
         JournalEntry.is_analyzed,
         JournalEntry.anxiety_level,
-        JournalEntry.user_id
+        JournalEntry.user_id,
+        JournalEntry.user_reflection
     ).filter(JournalEntry.id == entry_id).first_or_404()
     
     # Ensure the entry belongs to the current user
@@ -926,7 +929,7 @@ def api_analyze_entry(entry_id):
 @journal_bp.route('/<int:entry_id>/delete_entry', methods=['GET', 'POST'])
 @login_required
 def delete_journal_entry(entry_id):
-    # Use explicit column selection to avoid user_reflection column
+    # Include user_reflection column now that it exists
     entry = db.session.query(
         JournalEntry.id,
         JournalEntry.title,
@@ -935,7 +938,8 @@ def delete_journal_entry(entry_id):
         JournalEntry.updated_at,
         JournalEntry.is_analyzed,
         JournalEntry.anxiety_level,
-        JournalEntry.user_id
+        JournalEntry.user_id,
+        JournalEntry.user_reflection
     ).filter(JournalEntry.id == entry_id).first_or_404()
     
     # Ensure the entry belongs to the current user

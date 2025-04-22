@@ -772,5 +772,29 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 58d94adf56b1 at 2025-04-22 15:48:12.945506",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-22 15:48:48",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 1388",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-22 15:48:59",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 1388",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-22 15:49:11",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 1388",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-22 15:49:52",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 1388",
+    "success": true
   }
 ]
