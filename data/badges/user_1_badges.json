@@ -4,7 +4,7 @@
   "current_streak": 1,
   "longest_streak": 1,
   "last_entry_date": "2025-04-22",
-  "total_xp": 170,
+  "total_xp": 200,
   "xp_history": [
     {
       "amount": 15,
@@ -50,6 +50,16 @@
       "amount": 20,
       "reason": "Received insights on journal entry",
       "date": "2025-04-22 15:40:12"
+    },
+    {
+      "amount": 10,
+      "reason": "Created a new journal entry",
+      "date": "2025-04-22 15:51:17"
+    },
+    {
+      "amount": 20,
+      "reason": "Received insights on journal entry",
+      "date": "2025-04-22 15:51:17"
     }
   ]
 }

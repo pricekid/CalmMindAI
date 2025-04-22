@@ -46,7 +46,7 @@ def save_reflection():
         return jsonify({"error": "Missing required fields"}), 400
     
     try:
-        # Get the journal entry - using explicit column selection to avoid user_reflection column
+        # Include user_reflection column now that it exists
         entry = db.session.query(
             JournalEntry.id,
             JournalEntry.title,
@@ -55,7 +55,8 @@ def save_reflection():
             JournalEntry.updated_at,
             JournalEntry.is_analyzed,
             JournalEntry.anxiety_level,
-            JournalEntry.user_id
+            JournalEntry.user_id,
+            JournalEntry.user_reflection
         ).filter(JournalEntry.id == entry_id).first_or_404()
         
         # Ensure the entry belongs to the current user
@@ -107,7 +108,7 @@ def save_reflection():
 def journal_list():
     page = request.args.get('page', 1, type=int)
     
-    # Explicitly select columns to avoid user_reflection column
+    # Include user_reflection column now that it exists
     entries_query = db.session.query(
         JournalEntry.id,
         JournalEntry.title,
@@ -116,14 +117,15 @@ def journal_list():
         JournalEntry.updated_at,
         JournalEntry.is_analyzed,
         JournalEntry.anxiety_level,
-        JournalEntry.user_id
+        JournalEntry.user_id,
+        JournalEntry.user_reflection
     ).filter(JournalEntry.user_id == current_user.id)\
      .order_by(desc(JournalEntry.created_at))
     
     entries = entries_query.paginate(page=page, per_page=10)
     
     # Get all entries for visualization (limiting to last 30 for performance)
-    # Explicitly select columns to avoid user_reflection column
+    # Include user_reflection column now that it exists
     all_entries = db.session.query(
         JournalEntry.id,
         JournalEntry.title,
@@ -132,7 +134,8 @@ def journal_list():
         JournalEntry.updated_at,
         JournalEntry.is_analyzed,
         JournalEntry.anxiety_level,
-        JournalEntry.user_id
+        JournalEntry.user_id,
+        JournalEntry.user_reflection
     ).filter(JournalEntry.user_id == current_user.id)\
      .order_by(desc(JournalEntry.created_at))\
      .limit(30).all()
@@ -195,13 +198,14 @@ def journal_list():
 def new_journal_entry():
     form = JournalEntryForm()
     if form.validate_on_submit():
-        # Check for recently created similar entries to prevent duplicates - with explicit columns
+        # Check for recently created similar entries to prevent duplicates - include user_reflection
         five_minutes_ago = datetime.utcnow() - timedelta(minutes=5)
         recent_entries = db.session.query(
             JournalEntry.id,
             JournalEntry.title,
             JournalEntry.created_at,
-            JournalEntry.user_id
+            JournalEntry.user_id,
+            JournalEntry.user_reflection
         ).filter(
             JournalEntry.user_id == current_user.id,
             JournalEntry.title == form.title.data,
