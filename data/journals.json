@@ -3612,5 +3612,30 @@
     ],
     "structured_data": null,
     "user_reflection": null
+  },
+  {
+    "id": 165,
+    "user_id": 1,
+    "title": "April 22nd 2025",
+    "content": "I know i should be further ahead in life, but cant seem to figure out whats stopping me . well I do know whats stopping me: lack of discipline, poor financial management, lack of attention to details - but i cant figure out an effective way to address them",
+    "anxiety_level": 6,
+    "created_at": "2025-04-22T15:40:00.317120",
+    "updated_at": "2025-04-22T15:40:11.816656",
+    "is_analyzed": true,
+    "gpt_response": "Hello, it's clear that you're feeling a bit stuck and perhaps a bit hard on yourself. It's important to recognize that acknowledging these challenges is a significant step in itself. It shows your willingness to grow and improve, which is a strength. Let's explore these feelings together and see how we can gently reframe them.\n\nTake a moment. What's one expectation you've been holding that feels heavy \u2014 and might not be fully yours to carry?\n\nRemember, progress isn't always linear. By identifying and addressing these areas, you're already on the path to change. Be patient and kind with yourself as you navigate this journey.\n\nThought Patterns That May Be Surfacing:\n* All-or-Nothing Thinking: You might be viewing your progress in terms of absolute success or failure, which can overlook the small, meaningful steps you're taking.\n* Catastrophizing: Assuming the worst about your ability to tackle these issues can make them seem more daunting than they are.\n\n\nCBT-Based Strategies:\n1. Set Small, Achievable Goals Breaking down your larger goals into smaller, manageable steps can help you build momentum and confidence. Today, identify one small action you can take towards improving discipline, like setting a timer for 10 minutes to focus on a task.\n2. Mindful Financial Review Take a compassionate look at your finances without judgment to understand your patterns and where changes can be made. Spend 15 minutes reviewing your last month's spending to identify any patterns or surprises.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "Viewing situations in black and white terms without recognizing the spectrum of possibilities.",
+        "recommendation": "Practice recognizing shades of gray in your progress and celebrate small successes."
+      },
+      {
+        "pattern": "Catastrophizing",
+        "description": "Imagining the worst-case scenario and feeling overwhelmed by potential negative outcomes.",
+        "recommendation": "Challenge catastrophic thoughts by asking yourself how likely they are and what evidence supports them."
+      }
+    ],
+    "structured_data": null,
+    "user_reflection": null
   }
 ]
