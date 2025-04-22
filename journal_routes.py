@@ -444,7 +444,7 @@ def new_journal_entry():
 @journal_bp.route('/<int:entry_id>')
 @login_required
 def view_journal_entry(entry_id):
-    # Use explicit column selection to avoid user_reflection column
+    # Include user_reflection column now that it exists
     entry = db.session.query(
         JournalEntry.id,
         JournalEntry.title,
@@ -453,7 +453,8 @@ def view_journal_entry(entry_id):
         JournalEntry.updated_at,
         JournalEntry.is_analyzed,
         JournalEntry.anxiety_level,
-        JournalEntry.user_id
+        JournalEntry.user_id,
+        JournalEntry.user_reflection
     ).filter(JournalEntry.id == entry_id).first_or_404()
     
     # Ensure the entry belongs to the current user
