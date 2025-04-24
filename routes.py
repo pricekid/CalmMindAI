@@ -437,7 +437,8 @@ def account():
             
             db.session.commit()
             flash('Your account has been updated!', 'success')
-            return redirect(url_for('account'))
+            # Use direct path instead of url_for
+            return redirect('/account')
         
         except Exception as e:
             # Rollback changes and restore original values
