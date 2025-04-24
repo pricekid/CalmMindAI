@@ -73,9 +73,11 @@ login_manager.login_message_category = "info"
 def unauthorized():
     # Only redirect to admin login if the path is an admin path
     if request.path.startswith('/admin'):
-        return redirect(url_for('admin.login'))
+        # Use direct path instead of url_for
+        return redirect('/admin/login')
     # For all other paths, use the basic login
-    return redirect(url_for('basic_login.basic_login'))
+    # Use direct path instead of url_for
+    return redirect('/login')
 
 # Add global error handler
 @app.errorhandler(Exception)
@@ -125,14 +127,16 @@ def handle_exception(e):
         # For login routes, redirect to the basic login page
         if '/login' in request.path or '/sign-in' in request.path or '/signin' in request.path:
             app.logger.info(f"Redirecting login JSON error to basic login page. Path: {request.path}")
-            return redirect(url_for('basic_login.basic_login'))
+            # Use direct path instead of url_for
+            return redirect('/login')
         
         # For dashboard route, just redirect back to dashboard without the analysis
         elif request.path == '/dashboard':
             # Show a flash message about the error
             flash("Your dashboard is ready, but we couldn't generate a personalized message at this time.", "info")
             # Redirect instead of trying to render the template directly
-            return redirect(url_for('dashboard'))
+            # Use direct path instead of url_for
+            return redirect('/dashboard')
         
         # For journal routes, provide a specific message related to journaling    
         elif '/journal' in request.path:
@@ -218,13 +222,7 @@ def handle_exception(e):
         if 'entry_id' in request.view_args:
             # Try to use the entry_id from the URL if available
             entry_id = request.view_args.get('entry_id')
-            try:
-                return redirect(url_for('journal_blueprint.journal_list')), 302
-            except:
-                pass
-        try:
-            return redirect(url_for('journal_blueprint.journal_list')), 302
-        except:
+            # Use direct path instead of url_for
             return redirect('/journal'), 302
     else:
         error_title = "Something went wrong"
