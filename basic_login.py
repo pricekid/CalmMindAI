@@ -58,5 +58,14 @@ def basic_login():
             logger.error(f"Login error: {str(e)}")
             flash('An error occurred during login. Please try again.', 'danger')
     
+    # Generate a CSRF token directly through Flask's built-in functions
+    csrf_token = None
+    try:
+        from flask_wtf.csrf import generate_csrf
+        csrf_token = generate_csrf()
+        logger.debug("Generated CSRF token for login page")
+    except Exception as csrf_error:
+        logger.error(f"Could not generate CSRF token: {str(csrf_error)}")
+    
     # Render login form for GET requests or unsuccessful POST
-    return render_template('basic_login.html')
+    return render_template('basic_login.html', csrf_token=csrf_token)

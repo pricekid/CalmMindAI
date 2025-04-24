@@ -347,6 +347,10 @@ with app.app_context():
     from basic_login import basic_login_bp
     app.register_blueprint(basic_login_bp)
     
+    # Register the simple direct login route for emergency access
+    from simple_login import simple_login_bp
+    app.register_blueprint(simple_login_bp)
+    
     # Register the simple registration blueprint with minimal dependencies
     from simple_register import simple_register_bp
     app.register_blueprint(simple_register_bp)
