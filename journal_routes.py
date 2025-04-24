@@ -47,8 +47,9 @@ def save_reflection():
         return jsonify({"error": "Missing required fields"}), 400
     
     try:
-        # Get the full entry object instead of selecting columns
-        entry = JournalEntry.query.get_or_404(entry_id)
+        # Use undefer() to explicitly load the deferred user_reflection column
+        from sqlalchemy.orm import undefer
+        entry = JournalEntry.query.options(undefer(JournalEntry.user_reflection)).get_or_404(entry_id)
         
         # Ensure the entry belongs to the current user
         if entry.user_id != current_user.id:
