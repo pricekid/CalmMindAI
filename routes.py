@@ -35,7 +35,8 @@ def index():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     # Redirect to the simplified registration page that doesn't have JSON parsing issues
-    return redirect(url_for('simple_register.simple_register'))
+    # Use direct path instead of url_for
+    return redirect('/simple-register')
 
 # User login - Use the original implementation for backward compatibility
 @app.route('/login', methods=['GET', 'POST'])
@@ -44,7 +45,8 @@ def login():
     if current_user.is_authenticated:
         # If logged in as admin, redirect to admin dashboard
         if hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
-            return redirect(url_for('admin.dashboard'))
+            # Use direct path instead of url_for
+            return redirect('/admin/dashboard')
         # Otherwise, go to the regular dashboard using direct path
         return redirect('/dashboard')
     
@@ -120,7 +122,8 @@ def login_with_token(token):
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    # Use direct path instead of url_for
+    return redirect('/')
 
 # Dashboard
 @app.route('/dashboard')

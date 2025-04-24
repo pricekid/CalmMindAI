@@ -677,12 +677,14 @@ def update_journal_entry(entry_id):
         
         # Wrap the redirect in a try/except to guarantee we don't have a blank page
         try:
-            return redirect(url_for('journal_blueprint.view_journal_entry', entry_id=entry.id))
+            # Use direct path instead of url_for
+            return redirect(f'/journal/{entry.id}')
         except Exception as redirect_error:
             logger.error(f"Critical error during redirect after update: {str(redirect_error)}")
             # Use a hardcoded URL as absolute fallback to avoid blank page
             flash('Your journal entry has been updated. Redirecting to journal list.', 'info')
-            return redirect(url_for('journal_blueprint.journal_list'))
+            # Use direct path instead of url_for
+            return redirect('/journal')
     
     # Pre-populate the form with existing data
     elif request.method == 'GET':
@@ -922,7 +924,8 @@ def delete_journal_entry(entry_id):
     
     # Use the same error-handling pattern here for consistency
     try:
-        return redirect(url_for('journal_blueprint.journal_list'))
+        # Use direct path instead of url_for
+        return redirect('/journal')
     except Exception as redirect_error:
         logger.error(f"Critical error during redirect after deletion: {str(redirect_error)}")
         # Provide a direct HTML response as absolute fallback
