@@ -13,12 +13,9 @@ logger = logging.getLogger(__name__)
 # Import admin_routes but don't register the blueprint again since it's imported in app.py
 import admin_routes
 
-# Import our emergency login blueprint and register it
-from emergency_direct_login import emergency_bp
-app.register_blueprint(emergency_bp)
-
-# Exclude emergency login route from CSRF protection
-csrf.exempt(emergency_bp)
+# We'll skip registering the emergency blueprint here
+# because we're already registering it in app.py
+# This prevents the "blueprint already registered" error
 
 if __name__ == "__main__":
     # The scheduler is already started by the startup module
