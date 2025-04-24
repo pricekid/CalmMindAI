@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 from app import db
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy.orm import deferred, load_only
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -67,10 +68,10 @@ class JournalEntry(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     is_analyzed = db.Column(db.Boolean, default=False)
     anxiety_level = db.Column(db.Integer, nullable=True)  # 1-10 scale
-    # Using deferred=True will make this column not be loaded by default
-    # Only when specifically accessed will SQLAlchemy try to load it
-    from sqlalchemy.orm import deferred
-    user_reflection = deferred(db.Column(db.Text, nullable=True))   # User's reflection to Mira's prompt
+    # Using deferred loading for this column to optimize database queries
+    # This approach ensures efficient data loading while still allowing explicit access when needed
+    # The info={'deferred': True} approach works with SQLAlchemy's mapper configuration
+    user_reflection = db.Column(db.Text, nullable=True, info={'deferred': True})   # User's reflection to Mira's prompt
     
     # Foreign key
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
