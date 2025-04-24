@@ -21,8 +21,8 @@ def basic_login():
         # If logged in as admin, redirect to admin dashboard
         if hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
             return redirect(url_for('admin.dashboard'))
-        # Otherwise, go to the regular dashboard
-        return redirect(url_for('dashboard'))
+        # Otherwise, go to the regular dashboard using direct path
+        return redirect('/dashboard')
     
     # Process form submission
     if request.method == 'POST':
@@ -48,9 +48,9 @@ def basic_login():
                 # Redirect based on next parameter
                 if next_page and next_page.startswith('/admin'):
                     flash('You need admin privileges to access that page.', 'warning')
-                    return redirect(url_for('dashboard'))
+                    return redirect('/dashboard')
                 
-                return redirect(next_page or url_for('dashboard'))
+                return redirect(next_page or '/dashboard')
             else:
                 flash('Login unsuccessful. Please check your email and password.', 'danger')
         except Exception as e:
