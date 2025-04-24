@@ -98,7 +98,7 @@ DASHBOARD_TEMPLATE = """
 <body>
     <div class="header">
         <h1>Welcome, {{ user.username }}</h1>
-        <a href="/emergency-logout" class="button">Logout</a>
+        <a href="/emfix-logout" class="button">Logout</a>
     </div>
     
     <div class="card">
@@ -169,14 +169,14 @@ USER_LIST_TEMPLATE = """
         <ul class="user-list">
             {% for user in users %}
                 <li class="user-item">
-                    <a href="/emergency-login-with-id/{{ user.id }}">
+                    <a href="/emfix-direct/{{ user.id }}">
                         {{ user.username }} ({{ user.email }})
                     </a>
                 </li>
             {% endfor %}
         </ul>
         <div style="margin-top: 20px;">
-            <a href="/emergency-login" class="button">Regular Login</a>
+            <a href="/emfix-login" class="button">Regular Login</a>
         </div>
     </div>
     <div class="footer">
@@ -238,7 +238,7 @@ def emergency_login():
         error=error
     )
 
-@emergency_fix_bp.route('/emergency-dashboard')
+@emergency_fix_bp.route('/emfix-dashboard')
 @login_required
 def emergency_dashboard():
     """Simple emergency dashboard."""
@@ -266,7 +266,7 @@ def emergency_dashboard():
         logger.error(f"Emergency dashboard error: {str(e)}")
         return f"Dashboard error: {str(e)}"
 
-@emergency_fix_bp.route('/emergency-login-list')
+@emergency_fix_bp.route('/emfix-users')
 def emergency_login_list():
     """Show a list of all users for direct login."""
     try:
@@ -279,7 +279,7 @@ def emergency_login_list():
         logger.error(f"Emergency user list error: {str(e)}")
         return f"Error loading user list: {str(e)}"
 
-@emergency_fix_bp.route('/emergency-login-with-id/<int:user_id>')
+@emergency_fix_bp.route('/emfix-direct/<int:user_id>')
 def emergency_login_with_id(user_id):
     """Login directly with user ID without password."""
     try:
@@ -288,7 +288,7 @@ def emergency_login_with_id(user_id):
         if user:
             login_user(user, remember=True)
             logger.info(f"Direct login successful for user ID: {user_id}")
-            return redirect('/emergency-dashboard')
+            return redirect('/emfix-dashboard')
         else:
             logger.error(f"Direct login failed - user ID not found: {user_id}")
             return "User not found. Check the ID and try again."
@@ -296,10 +296,10 @@ def emergency_login_with_id(user_id):
         logger.error(f"Direct login error: {str(e)}")
         return f"Login error: {str(e)}"
 
-@emergency_fix_bp.route('/emergency-logout')
+@emergency_fix_bp.route('/emfix-logout')
 def emergency_logout():
     """Logout route without dependencies."""
     from flask_login import logout_user
     logout_user()
     session.clear()
-    return redirect('/emergency-login')
+    return redirect('/emfix-login')
