@@ -2404,5 +2404,17 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 133",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-24 16:32:16",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 133",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-24 16:32:27",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 133",
+    "success": true
   }
 ]
