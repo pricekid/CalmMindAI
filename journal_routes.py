@@ -10,6 +10,7 @@ from journal_service import (
 )
 from datetime import datetime, timedelta
 from sqlalchemy import desc
+from sqlalchemy.orm import load_only, defer
 import logging
 import gamification
 from utils.activity_tracker import track_journal_entry
@@ -98,37 +99,39 @@ def save_reflection():
 def journal_list():
     page = request.args.get('page', 1, type=int)
     
-    # Include user_reflection column now that it exists
-    entries_query = db.session.query(
-        JournalEntry.id,
-        JournalEntry.title,
-        JournalEntry.content,
-        JournalEntry.created_at,
-        JournalEntry.updated_at,
-        JournalEntry.is_analyzed,
-        JournalEntry.anxiety_level,
-        JournalEntry.user_id,
-        JournalEntry.user_reflection
-    ).filter(JournalEntry.user_id == current_user.id)\
-     .order_by(desc(JournalEntry.created_at))
+    # Use load_only to specify only the columns we need, avoiding the deferred user_reflection column
+    entries_query = JournalEntry.query\
+        .options(load_only(
+            JournalEntry.id,
+            JournalEntry.title,
+            JournalEntry.content,
+            JournalEntry.created_at,
+            JournalEntry.updated_at,
+            JournalEntry.is_analyzed,
+            JournalEntry.anxiety_level,
+            JournalEntry.user_id
+        ))\
+        .filter(JournalEntry.user_id == current_user.id)\
+        .order_by(desc(JournalEntry.created_at))
     
     entries = entries_query.paginate(page=page, per_page=10)
     
     # Get all entries for visualization (limiting to last 30 for performance)
-    # Include user_reflection column now that it exists
-    all_entries = db.session.query(
-        JournalEntry.id,
-        JournalEntry.title,
-        JournalEntry.content,
-        JournalEntry.created_at,
-        JournalEntry.updated_at,
-        JournalEntry.is_analyzed,
-        JournalEntry.anxiety_level,
-        JournalEntry.user_id,
-        JournalEntry.user_reflection
-    ).filter(JournalEntry.user_id == current_user.id)\
-     .order_by(desc(JournalEntry.created_at))\
-     .limit(30).all()
+    # Use load_only to specify only the columns we need, avoiding the deferred user_reflection column
+    all_entries = JournalEntry.query\
+        .options(load_only(
+            JournalEntry.id,
+            JournalEntry.title,
+            JournalEntry.content,
+            JournalEntry.created_at,
+            JournalEntry.updated_at,
+            JournalEntry.is_analyzed,
+            JournalEntry.anxiety_level,
+            JournalEntry.user_id
+        ))\
+        .filter(JournalEntry.user_id == current_user.id)\
+        .order_by(desc(JournalEntry.created_at))\
+        .limit(30).all()
     
     # Format the entry data for visualization
     journal_data = [{
@@ -188,19 +191,20 @@ def journal_list():
 def new_journal_entry():
     form = JournalEntryForm()
     if form.validate_on_submit():
-        # Check for recently created similar entries to prevent duplicates - include user_reflection
+        # Check for recently created similar entries to prevent duplicates - use load_only for specific columns
         five_minutes_ago = datetime.utcnow() - timedelta(minutes=5)
-        recent_entries = db.session.query(
-            JournalEntry.id,
-            JournalEntry.title,
-            JournalEntry.created_at,
-            JournalEntry.user_id,
-            JournalEntry.user_reflection
-        ).filter(
-            JournalEntry.user_id == current_user.id,
-            JournalEntry.title == form.title.data,
-            JournalEntry.created_at >= five_minutes_ago
-        ).all()
+        recent_entries = JournalEntry.query\
+            .options(load_only(
+                JournalEntry.id,
+                JournalEntry.title,
+                JournalEntry.created_at,
+                JournalEntry.user_id
+            ))\
+            .filter(
+                JournalEntry.user_id == current_user.id,
+                JournalEntry.title == form.title.data,
+                JournalEntry.created_at >= five_minutes_ago
+            ).all()
         
         # If a similar entry was recently created, redirect to that entry
         if recent_entries:
