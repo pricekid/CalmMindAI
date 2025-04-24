@@ -199,36 +199,47 @@ def emergency_login():
     
     # Handle login form submission
     if request.method == 'POST':
-        email = request.form.get('email', '').strip().lower()
-        password = request.form.get('password', '')
-        remember = 'remember' in request.form
+        # Simple CSRF check without depending on flask-wtf
+        form_csrf_token = request.form.get('csrf_token', '')
+        session_csrf_token = session.get('csrf_token', '')
         
-        if not email or not password:
-            error = "Email and password are required."
+        # Verify the tokens match
+        if not session_csrf_token or form_csrf_token != session_csrf_token:
+            error = "Security token mismatch. Please try again."
+            logger.warning("CSRF token mismatch in emergency login form")
         else:
-            # Find user and validate password
-            user = User.query.filter_by(email=email).first()
+            email = request.form.get('email', '').strip().lower()
+            password = request.form.get('password', '')
+            remember = 'remember' in request.form
             
-            if user and user.check_password(password):
-                # Login successful
-                login_user(user, remember=remember)
-                logger.info(f"Emergency login successful for user: {email}")
-                
-                # Redirect to next parameter or dashboard
-                next_page = request.args.get('next')
-                if next_page:
-                    return redirect(next_page)
-                else:
-                    return redirect('/emfix-dashboard')
+            if not email or not password:
+                error = "Email and password are required."
             else:
-                error = "Invalid email or password."
-                logger.warning(f"Emergency login failed for email: {email}")
+                # Find user and validate password
+                user = User.query.filter_by(email=email).first()
+                
+                if user and user.check_password(password):
+                    # Login successful
+                    login_user(user, remember=remember)
+                    logger.info(f"Emergency login successful for user: {email}")
+                    
+                    # Redirect to next parameter or dashboard
+                    next_page = request.args.get('next')
+                    if next_page:
+                        return redirect(next_page)
+                    else:
+                        return redirect('/emfix-dashboard')
+                else:
+                    error = "Invalid email or password."
+                    logger.warning(f"Emergency login failed for email: {email}")
     
-    # Generate a CSRF token
+    # Use a session-based csrf token approach to avoid the dependency on flask-wtf
     csrf_token = ""
     try:
-        from flask_wtf.csrf import generate_csrf
-        csrf_token = generate_csrf()
+        import secrets
+        if 'csrf_token' not in session:
+            session['csrf_token'] = secrets.token_hex(16)
+        csrf_token = session['csrf_token']
     except Exception as e:
         logger.error(f"CSRF generation error: {str(e)}")
     
