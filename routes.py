@@ -107,7 +107,8 @@ def login_with_token(token):
     login_user(user, remember=True)
     flash('You have been logged in successfully via email link!', 'success')
     
-    # Redirect to the dashboard using direct path
+    # Redirect to the dashboard using direct path - replace url_for calls with direct paths
+    # to avoid 'str' object is not callable errors with the dashboard route
     return redirect('/dashboard')
 
 # User logout

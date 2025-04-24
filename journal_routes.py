@@ -46,18 +46,8 @@ def save_reflection():
         return jsonify({"error": "Missing required fields"}), 400
     
     try:
-        # Include user_reflection column now that it exists
-        entry = db.session.query(
-            JournalEntry.id,
-            JournalEntry.title,
-            JournalEntry.content,
-            JournalEntry.created_at,
-            JournalEntry.updated_at,
-            JournalEntry.is_analyzed,
-            JournalEntry.anxiety_level,
-            JournalEntry.user_id,
-            JournalEntry.user_reflection
-        ).filter(JournalEntry.id == entry_id).first_or_404()
+        # Get the full entry object instead of selecting columns
+        entry = JournalEntry.query.get_or_404(entry_id)
         
         # Ensure the entry belongs to the current user
         if entry.user_id != current_user.id:
@@ -448,18 +438,8 @@ def new_journal_entry():
 @journal_bp.route('/<int:entry_id>')
 @login_required
 def view_journal_entry(entry_id):
-    # Include user_reflection column now that it exists
-    entry = db.session.query(
-        JournalEntry.id,
-        JournalEntry.title,
-        JournalEntry.content,
-        JournalEntry.created_at,
-        JournalEntry.updated_at,
-        JournalEntry.is_analyzed,
-        JournalEntry.anxiety_level,
-        JournalEntry.user_id,
-        JournalEntry.user_reflection
-    ).filter(JournalEntry.id == entry_id).first_or_404()
+    # Get the full entry object without selecting specific columns
+    entry = JournalEntry.query.get_or_404(entry_id)
     
     # Ensure the entry belongs to the current user
     if entry.user_id != current_user.id:
@@ -576,18 +556,8 @@ def view_journal_entry(entry_id):
 @journal_bp.route('/<int:entry_id>/update', methods=['GET', 'POST'])
 @login_required
 def update_journal_entry(entry_id):
-    # Include user_reflection column now that it exists
-    entry = db.session.query(
-        JournalEntry.id,
-        JournalEntry.title,
-        JournalEntry.content,
-        JournalEntry.created_at,
-        JournalEntry.updated_at,
-        JournalEntry.is_analyzed,
-        JournalEntry.anxiety_level,
-        JournalEntry.user_id,
-        JournalEntry.user_reflection
-    ).filter(JournalEntry.id == entry_id).first_or_404()
+    # Get the full entry object without selecting specific columns
+    entry = JournalEntry.query.get_or_404(entry_id)
     
     # Ensure the entry belongs to the current user
     if entry.user_id != current_user.id:
@@ -724,18 +694,8 @@ def update_journal_entry(entry_id):
 @journal_bp.route('/api_journal_coach/<int:entry_id>', methods=['GET', 'POST'])  # Legacy support
 @login_required
 def api_journal_coach(entry_id):
-    # Include user_reflection column now that it exists
-    entry = db.session.query(
-        JournalEntry.id,
-        JournalEntry.title,
-        JournalEntry.content,
-        JournalEntry.created_at,
-        JournalEntry.updated_at,
-        JournalEntry.is_analyzed,
-        JournalEntry.anxiety_level,
-        JournalEntry.user_id,
-        JournalEntry.user_reflection
-    ).filter(JournalEntry.id == entry_id).first_or_404()
+    # Get the full entry object without selecting specific columns
+    entry = JournalEntry.query.get_or_404(entry_id)
     
     # Ensure the entry belongs to the current user
     if entry.user_id != current_user.id:
