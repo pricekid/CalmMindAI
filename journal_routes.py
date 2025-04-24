@@ -35,54 +35,83 @@ def save_reflection():
         "reflection_text": str
     }
     """
-    # Get data from request
-    data = request.get_json()
-    if not data:
-        return jsonify({"error": "No data provided"}), 400
-    
-    entry_id = data.get('entry_id')
-    reflection_text = data.get('reflection_text')
-    
-    if not entry_id or not reflection_text:
-        return jsonify({"error": "Missing required fields"}), 400
-    
     try:
+        # Get data from request - use try/except for more robust error handling
+        try:
+            data = request.get_json()
+            logger.debug(f"Received reflection data: {data}")
+        except Exception as json_error:
+            logger.error(f"JSON parsing error: {str(json_error)}")
+            return jsonify({"error": "Invalid JSON format"}), 400
+            
+        if not data:
+            return jsonify({"error": "No data provided"}), 400
+        
+        # Use safer type conversions with explicit error handling
+        try:
+            entry_id = int(data.get('entry_id'))
+        except (TypeError, ValueError):
+            logger.error(f"Invalid entry_id format: {data.get('entry_id')}")
+            return jsonify({"error": "Invalid entry ID format"}), 400
+            
+        reflection_text = data.get('reflection_text')
+        
+        if not entry_id or not reflection_text:
+            return jsonify({"error": "Missing required fields"}), 400
+        
         # Use undefer() to explicitly load the deferred user_reflection column
-        entry = JournalEntry.query.options(undefer(JournalEntry.user_reflection)).get_or_404(entry_id)
+        entry = JournalEntry.query.options(undefer(JournalEntry.user_reflection)).get(entry_id)
+        
+        if not entry:
+            logger.error(f"Entry not found: {entry_id}")
+            return jsonify({"error": "Entry not found"}), 404
         
         # Ensure the entry belongs to the current user
         if entry.user_id != current_user.id:
+            logger.warning(f"Unauthorized access attempt for entry {entry_id} by user {current_user.id}")
             return jsonify({"error": "Unauthorized access"}), 403
         
         # Save the reflection to the database
         entry.user_reflection = reflection_text
         entry.updated_at = datetime.utcnow()
         db.session.commit()
+        logger.info(f"Saved reflection for entry {entry_id}")
         
         # Also save to the JSON file if using that for structured data
-        from journal_service import get_journal_entries_for_user, save_journal_entry
-        entries = get_journal_entries_for_user(current_user.id)
-        for json_entry in entries:
-            if json_entry.get('id') == entry_id:
-                # Update the existing entry with the reflection
-                save_journal_entry(
-                    entry_id=entry.id,
-                    user_id=current_user.id,
-                    title=entry.title,
-                    content=entry.content, 
-                    anxiety_level=entry.anxiety_level,
-                    created_at=entry.created_at,
-                    updated_at=entry.updated_at,
-                    is_analyzed=entry.is_analyzed,
-                    gpt_response=json_entry.get('gpt_response'),
-                    cbt_patterns=json_entry.get('cbt_patterns'),
-                    structured_data=json_entry.get('structured_data'),
-                    user_reflection=reflection_text
-                )
-                break
+        try:
+            from journal_service import get_journal_entries_for_user, save_journal_entry
+            entries = get_journal_entries_for_user(current_user.id)
+            
+            for json_entry in entries:
+                if json_entry.get('id') == entry_id:
+                    # Update the existing entry with the reflection
+                    save_journal_entry(
+                        entry_id=entry.id,
+                        user_id=current_user.id,
+                        title=entry.title,
+                        content=entry.content, 
+                        anxiety_level=entry.anxiety_level,
+                        created_at=entry.created_at,
+                        updated_at=entry.updated_at,
+                        is_analyzed=entry.is_analyzed,
+                        gpt_response=json_entry.get('gpt_response'),
+                        cbt_patterns=json_entry.get('cbt_patterns'),
+                        structured_data=json_entry.get('structured_data'),
+                        user_reflection=reflection_text
+                    )
+                    logger.debug(f"Updated JSON data for entry {entry_id}")
+                    break
+        except Exception as json_error:
+            # Log but don't fail if JSON update fails
+            logger.error(f"Error updating JSON data: {str(json_error)}")
         
         # Track the reflection activity
-        track_journal_entry(user_id=current_user.id, activity_type="reflection_added", entry_id=entry_id)
+        try:
+            track_journal_entry(user_id=current_user.id, activity_type="reflection_added", entry_id=entry_id)
+            logger.debug(f"Tracked reflection activity for entry {entry_id}")
+        except Exception as tracking_error:
+            # Log but don't fail if tracking fails
+            logger.error(f"Error tracking reflection activity: {str(tracking_error)}")
         
         return jsonify({
             "success": True,

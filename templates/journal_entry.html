@@ -2313,21 +2313,38 @@
         
         console.log('Saving reflection for entry', entryId);
         
+        // Get CSRF token - fallback to empty string if not available
+        const csrfToken = '{{ csrf_token() }}' || '';
+        
+        // Check if entry ID is valid
+        if (isNaN(parseInt(entryId))) {
+            console.error('Invalid entry ID format:', entryId);
+            return;
+        }
+        
+        const payload = {
+            entry_id: parseInt(entryId),
+            reflection_text: reflection
+        };
+        
+        console.log('Sending reflection data:', payload);
+        
         // Make API request
         fetch('/journal/save-reflection', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token() }}'
+                'X-CSRFToken': csrfToken
             },
-            body: JSON.stringify({
-                entry_id: entryId,
-                reflection_text: reflection
-            })
+            body: JSON.stringify(payload)
         })
         .then(response => {
+            console.log('Response status:', response.status);
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                return response.text().then(text => {
+                    console.error('Error response:', text);
+                    throw new Error('Network response was not ok: ' + response.status);
+                });
             }
             return response.json();
         })
@@ -2337,6 +2354,16 @@
         .catch(error => {
             console.error('Error saving reflection:', error);
             // Continue showing the content even if saving failed
+            
+            // Attempt to save locally if API fails
+            try {
+                // Store in localStorage as a fallback
+                const fallbackKey = `reflection_${entryId}`;
+                localStorage.setItem(fallbackKey, reflection);
+                console.log('Saved reflection to localStorage as fallback');
+            } catch (storageError) {
+                console.error('Could not save to localStorage:', storageError);
+            }
         });
     }
 </script>
