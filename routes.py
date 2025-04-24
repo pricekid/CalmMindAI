@@ -134,7 +134,7 @@ def dashboard():
     # Get weekly mood summary
     weekly_summary = current_user.get_weekly_summary()
         
-    # Get recent journal entries - explicitly select columns to avoid user_reflection
+    # Get recent journal entries - include user_reflection column
     recent_entries = db.session.query(
         JournalEntry.id,
         JournalEntry.title,
@@ -143,7 +143,8 @@ def dashboard():
         JournalEntry.updated_at,
         JournalEntry.is_analyzed,
         JournalEntry.anxiety_level,
-        JournalEntry.user_id
+        JournalEntry.user_id,
+        JournalEntry.user_reflection
     ).filter(JournalEntry.user_id == current_user.id)\
      .order_by(desc(JournalEntry.created_at))\
      .limit(5).all()
@@ -159,7 +160,7 @@ def dashboard():
     mood_dates = [log.created_at.strftime('%Y-%m-%d') for log in mood_logs]
     mood_scores = [log.mood_score for log in mood_logs]
     
-    # Get latest journal entry for coping statement - explicit column selection to avoid user_reflection
+    # Get latest journal entry for coping statement - include user_reflection column
     latest_entry = db.session.query(
         JournalEntry.id,
         JournalEntry.title,
@@ -167,7 +168,8 @@ def dashboard():
         JournalEntry.created_at,
         JournalEntry.is_analyzed,
         JournalEntry.anxiety_level,
-        JournalEntry.user_id
+        JournalEntry.user_id,
+        JournalEntry.user_reflection
     ).filter(JournalEntry.user_id == current_user.id)\
      .order_by(desc(JournalEntry.created_at))\
      .first()
