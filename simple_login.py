@@ -25,8 +25,8 @@ def simple_login(user_id):
         if user:
             login_user(user, remember=True)
             logger.info(f"Simple login successful for user ID: {user_id}")
-            # Use hardcoded redirect instead of url_for to avoid function call issues
-            return redirect('/dashboard')
+            # Use hardcoded redirect to the emergency simple dashboard
+            return redirect('/simple-dashboard')
         else:
             logger.error(f"Simple login failed - user ID not found: {user_id}")
             return "User not found. Check the ID and try again."

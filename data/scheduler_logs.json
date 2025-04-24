@@ -2284,5 +2284,23 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 5ba26e200d35 at 2025-04-24 15:32:28.679588",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-24 15:34:20",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 1689",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-24 15:34:20",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 1689",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-24 15:34:24",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 1689",
+    "success": true
   }
 ]

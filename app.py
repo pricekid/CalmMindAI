@@ -351,6 +351,14 @@ with app.app_context():
     from simple_login import simple_login_bp
     app.register_blueprint(simple_login_bp)
     
+    # Register the test reflection page for direct data verification
+    from test_journal_reflection import test_reflection_bp
+    app.register_blueprint(test_reflection_bp)
+    
+    # Register the simple dashboard for emergency access
+    from simple_dashboard import simple_dashboard_bp
+    app.register_blueprint(simple_dashboard_bp)
+    
     # Register the simple registration blueprint with minimal dependencies
     from simple_register import simple_register_bp
     app.register_blueprint(simple_register_bp)
