@@ -359,6 +359,14 @@ with app.app_context():
     from simple_dashboard import simple_dashboard_bp
     app.register_blueprint(simple_dashboard_bp)
     
+    # Register the completely standalone login system
+    from special_login import special_login_bp
+    app.register_blueprint(special_login_bp)
+    
+    # Register the standalone reflection test page
+    from standalone_reflection_test import reflection_test_bp
+    app.register_blueprint(reflection_test_bp)
+    
     # Register the simple registration blueprint with minimal dependencies
     from simple_register import simple_register_bp
     app.register_blueprint(simple_register_bp)

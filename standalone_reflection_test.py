@@ -1,398 +1,343 @@
 """
-Completely standalone script to test journal entry reflections.
-This script connects directly to the database and performs operations
-without any dependencies on Flask or other complex parts of the system.
+Standalone test page for directly testing the reflective pause feature.
+This page allows viewing and testing a single journal entry's reflection without any other dependencies.
 """
 import os
-import psycopg2
-import psycopg2.extras
+import logging
+from flask import Blueprint, request, redirect, render_template_string, session, jsonify, flash
+from sqlalchemy import create_engine, text
+import json
 from datetime import datetime
-from flask import Flask, request, render_template_string
 
-# Create a minimal Flask application
-app = Flask(__name__)
-app.secret_key = "standalone_test_key"
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-# Database connection
-def get_db_connection():
-    """Get a database connection using psycopg2."""
-    try:
-        connection_string = os.environ.get('DATABASE_URL')
-        conn = psycopg2.connect(connection_string)
-        conn.autocommit = True
-        return conn
-    except Exception as e:
-        print(f"Database connection error: {str(e)}")
-        return None
+# Create blueprint
+reflection_test_bp = Blueprint('reflection_test', __name__)
 
-# HTML template
-TEMPLATE = """
+# HTML template for testing the reflection feature
+REFLECTION_TEMPLATE = """
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Standalone Reflection Test</title>
+    <title>Test Reflection Feature</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body { font-family: Arial, sans-serif; background: #121212; color: #e0e0e0; max-width: 800px; margin: 0 auto; padding: 20px; }
         .card { background: #1e1e1e; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
         h1, h2, h3 { color: #bb86fc; }
-        .content { white-space: pre-line; }
-        .meta { color: #78909c; font-size: 0.9em; margin-bottom: 15px; }
-        .reflection { background: #263238; border-left: 4px solid #bb86fc; padding: 15px; margin: 20px 0; }
-        .reflection-form { margin-top: 20px; }
-        textarea { 
-            width: 100%; 
-            padding: 10px; 
-            background: #2d2d30; 
-            color: #e0e0e0; 
-            border: 1px solid #444; 
-            border-radius: 4px;
-            min-height: 100px;
+        a { color: #03dac6; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .button { 
+            display: inline-block; 
+            background: #bb86fc; 
+            color: #121212; 
+            padding: 10px 15px; 
+            border-radius: 4px; 
+            font-weight: bold;
+            text-decoration: none;
+            margin: 5px;
         }
-        .button {
-            display: inline-block;
-            background: #bb86fc;
+        .button:hover { background: #a370e3; text-decoration: none; }
+        .journal-entry { 
+            border-left: 4px solid #03dac6; 
+            padding-left: 15px; 
+            margin-bottom: 15px;
+        }
+        .date { color: #78909c; font-size: 0.9em; }
+        .textarea {
+            width: 100%;
+            background: #2d2d2d;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 10px;
+            font-family: inherit;
+            min-height: 120px;
+            margin: 10px 0;
+        }
+        .reflection-box {
+            background: #333;
+            border-left: 4px solid #bb86fc;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .error { color: #cf6679; font-weight: bold; }
+        .success { color: #03dac6; font-weight: bold; }
+        .insight-box {
+            background: #272727;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #03dac6;
+        }
+        form { margin: 20px 0; }
+        input[type="submit"] {
+            background: #03dac6;
             color: #121212;
-            padding: 10px 15px;
-            margin-top: 10px;
             border: none;
+            padding: 10px 20px;
             border-radius: 4px;
             font-weight: bold;
             cursor: pointer;
         }
-        .button:hover { background: #a370e3; }
-        .error { color: #cf6679; font-weight: bold; }
-        .success { color: #03dac6; font-weight: bold; }
-        .nav { margin-bottom: 20px; }
-        .nav a { 
-            color: #03dac6; 
-            text-decoration: none;
-            margin-right: 15px;
+        input[type="submit"]:hover {
+            background: #00b5a0;
         }
-        .nav a:hover { text-decoration: underline; }
-        table { width: 100%; border-collapse: collapse; }
-        table th, table td { padding: 8px; text-align: left; border-bottom: 1px solid #333; }
-        table th { color: #bb86fc; }
     </style>
 </head>
 <body>
-    <h1>Standalone Reflection Test</h1>
+    <h1>Test Reflection Feature</h1>
+    <p>
+        <a href="/special-dashboard" class="button">Return to Dashboard</a>
+        <a href="/special-logout" class="button">Logout</a>
+    </p>
     
-    <div class="nav">
-        <a href="/standalone">Home</a>
-        <a href="/standalone/users">Users</a>
-        <a href="/standalone/entries">All Entries</a>
-    </div>
-    
-    {% if message %}
+    {% if error %}
     <div class="card">
-        <p class="{% if success %}success{% else %}error{% endif %}">{{ message }}</p>
-    </div>
-    {% endif %}
-    
-    {% if section == 'home' %}
-    <div class="card">
-        <h2>Test Environment</h2>
-        <p>This is a standalone test environment for journal entry reflections.</p>
-        <p>Use the links above to navigate and test reflection functionality directly.</p>
-    </div>
-    
-    <div class="card">
-        <h2>Database Connection</h2>
-        <p>Status: <span class="{% if db_connected %}success{% else %}error{% endif %}">
-            {{ 'Connected' if db_connected else 'Not connected' }}
-        </span></p>
-        {% if db_error %}
-        <p class="error">{{ db_error }}</p>
-        {% endif %}
+        <h2 class="error">Error</h2>
+        <p>{{ error }}</p>
     </div>
     {% endif %}
     
-    {% if section == 'users' %}
+    {% if success %}
     <div class="card">
-        <h2>Users</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Email</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for user in users %}
-                <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.email }}</td>
-                    <td><a href="/standalone/entries?user_id={{ user.id }}">View Entries</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <h2 class="success">Success</h2>
+        <p>{{ success }}</p>
     </div>
     {% endif %}
     
-    {% if section == 'entries' %}
+    {% if entry %}
     <div class="card">
-        <h2>Journal Entries{% if user %} for {{ user.email }}{% endif %}</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Created</th>
-                    <th>Has Reflection</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for entry in entries %}
-                <tr>
-                    <td>{{ entry.id }}</td>
-                    <td>{{ entry.title }}</td>
-                    <td>{{ entry.created_at }}</td>
-                    <td>
-                        {% if entry.has_reflection %}
-                        <span class="success">Yes</span>
-                        {% else %}
-                        <span class="error">No</span>
-                        {% endif %}
-                    </td>
-                    <td><a href="/standalone/entry/{{ entry.id }}">View</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    {% endif %}
-    
-    {% if section == 'entry' and entry %}
-    <div class="card">
-        <h2>{{ entry.title }}</h2>
-        <div class="meta">
-            Created: {{ entry.created_at }}<br>
-            User: {{ user.email if user else 'Unknown' }} (ID: {{ entry.user_id }})
+        <h2>Journal Entry</h2>
+        <h3>{{ entry.title }}</h3>
+        <div class="date">{{ entry.created_at }}</div>
+        <div class="journal-entry">
+            <p>{{ entry.content }}</p>
         </div>
         
-        <h3>Content</h3>
-        <div class="content">{{ entry.content }}</div>
+        {% if entry.analysis_html %}
+        <div class="insight-box">
+            <h3>Mira's Insight</h3>
+            <div>{{ entry.analysis_html|safe }}</div>
+        </div>
+        {% endif %}
         
         {% if entry.user_reflection %}
-        <h3>User Reflection</h3>
-        <div class="reflection">{{ entry.user_reflection }}</div>
+        <div class="reflection-box">
+            <h3>Your Reflection</h3>
+            <p>{{ entry.user_reflection }}</p>
+        </div>
+        {% endif %}
+        
+        {% if not entry.user_reflection %}
+        <form method="POST" action="/save-reflection/{{ entry.id }}">
+            <h3>Add Your Reflection</h3>
+            <p>Take a moment to reflect on Mira's insight. What resonates with you?</p>
+            <textarea name="reflection" class="textarea" placeholder="Share your thoughts..."></textarea>
+            <input type="submit" value="Save Reflection">
+        </form>
         {% else %}
-        <h3>Add Reflection</h3>
-        <form class="reflection-form" method="POST" action="/standalone/save-reflection/{{ entry.id }}">
-            <textarea name="reflection" placeholder="Enter your reflection here..." required></textarea>
-            <button type="submit" class="button">Save Reflection</button>
+        <form method="POST" action="/save-reflection/{{ entry.id }}">
+            <h3>Update Your Reflection</h3>
+            <textarea name="reflection" class="textarea">{{ entry.user_reflection }}</textarea>
+            <input type="submit" value="Update Reflection">
         </form>
         {% endif %}
     </div>
+    {% else %}
+    <div class="card">
+        <h2>No Entry Found</h2>
+        <p>The journal entry was not found or there was an error loading it.</p>
+    </div>
     {% endif %}
+    
+    <div class="card">
+        <h2>Direct Database Query</h2>
+        <p>Database schema report:</p>
+        <pre>{{ db_schema|default('No schema info available') }}</pre>
+    </div>
 </body>
 </html>
 """
 
-@app.route('/standalone')
-def home():
-    """Home page for standalone testing."""
-    # Test database connection
-    conn = get_db_connection()
-    db_connected = conn is not None
-    db_error = None
-    
-    if conn:
-        conn.close()
-    else:
-        db_error = "Could not connect to database. Check DATABASE_URL environment variable."
-    
-    return render_template_string(
-        TEMPLATE,
-        section='home',
-        db_connected=db_connected,
-        db_error=db_error,
-        message=request.args.get('message'),
-        success=request.args.get('success') == 'true'
-    )
+# Helper functions
+def get_db_connection():
+    """Create a direct database connection."""
+    try:
+        connection_string = os.environ.get('DATABASE_URL')
+        engine = create_engine(connection_string)
+        return engine.connect()
+    except Exception as e:
+        logger.error(f"Error connecting to database: {str(e)}")
+        return None
 
-@app.route('/standalone/users')
-def list_users():
-    """List all users."""
-    conn = get_db_connection()
-    users = []
-    message = None
-    success = False
-    
-    if conn:
-        try:
-            with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
-                cur.execute("SELECT id, email FROM \"user\" ORDER BY id")
-                users = [dict(row) for row in cur.fetchall()]
-        except Exception as e:
-            message = f"Error loading users: {str(e)}"
-        finally:
-            conn.close()
-    else:
-        message = "Database connection failed"
-    
-    return render_template_string(
-        TEMPLATE,
-        section='users',
-        users=users,
-        message=message,
-        success=success
-    )
+def html_from_newlines(text):
+    """Convert newlines to HTML breaks."""
+    if not text:
+        return ""
+    return text.replace('\n', '<br>')
 
-@app.route('/standalone/entries')
-def list_entries():
-    """List journal entries, optionally filtered by user."""
-    user_id = request.args.get('user_id')
-    conn = get_db_connection()
-    entries = []
-    user = None
-    message = None
-    success = False
-    
-    if conn:
-        try:
-            with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
-                # Get user if user_id provided
-                if user_id:
-                    cur.execute("SELECT id, email FROM \"user\" WHERE id = %s", (user_id,))
-                    user = dict(cur.fetchone()) if cur.rowcount > 0 else None
-                
-                # Query for entries
-                if user_id:
-                    query = """
-                        SELECT 
-                            id, title, created_at, user_id, 
-                            CASE WHEN user_reflection IS NOT NULL THEN true ELSE false END as has_reflection
-                        FROM journal_entry 
-                        WHERE user_id = %s
-                        ORDER BY created_at DESC
-                    """
-                    cur.execute(query, (user_id,))
-                else:
-                    query = """
-                        SELECT 
-                            id, title, created_at, user_id,
-                            CASE WHEN user_reflection IS NOT NULL THEN true ELSE false END as has_reflection
-                        FROM journal_entry 
-                        ORDER BY created_at DESC
-                        LIMIT 100
-                    """
-                    cur.execute(query)
-                
-                entries = [dict(row) for row in cur.fetchall()]
-        except Exception as e:
-            message = f"Error loading entries: {str(e)}"
-        finally:
-            conn.close()
-    else:
-        message = "Database connection failed"
-    
-    return render_template_string(
-        TEMPLATE,
-        section='entries',
-        entries=entries,
-        user=user,
-        message=message,
-        success=success
-    )
-
-@app.route('/standalone/entry/<int:entry_id>')
-def view_entry(entry_id):
-    """View a specific journal entry."""
-    conn = get_db_connection()
+# Routes
+@reflection_test_bp.route('/test-reflection')
+def test_reflection():
+    """Display a test page for the reflection feature."""
+    entry_id = request.args.get('entry_id')
+    error = None
+    success = None
     entry = None
-    user = None
-    message = None
-    success = False
+    db_schema = None
     
-    if conn:
-        try:
-            with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
-                cur.execute("""
-                    SELECT id, title, content, created_at, user_id, user_reflection
-                    FROM journal_entry
-                    WHERE id = %s
-                """, (entry_id,))
-                
-                if cur.rowcount > 0:
-                    entry = dict(cur.fetchone())
-                    
-                    # Get user info
-                    cur.execute("SELECT id, email FROM \"user\" WHERE id = %s", (entry['user_id'],))
-                    if cur.rowcount > 0:
-                        user = dict(cur.fetchone())
-                else:
-                    message = f"Entry with ID {entry_id} not found"
-        except Exception as e:
-            message = f"Error loading entry: {str(e)}"
-        finally:
-            conn.close()
-    else:
-        message = "Database connection failed"
+    # Check if user is logged in (via any method)
+    user_id = session.get('user_id')
+    if not user_id:
+        error = "Not logged in. Please login first."
+        return render_template_string(
+            REFLECTION_TEMPLATE,
+            error=error
+        )
+    
+    # Connect to database
+    conn = get_db_connection()
+    if not conn:
+        error = "Could not connect to database."
+        return render_template_string(
+            REFLECTION_TEMPLATE,
+            error=error
+        )
+    
+    try:
+        # Check if journal_entry table has user_reflection column
+        schema_result = conn.execute(text("""
+            SELECT column_name, data_type 
+            FROM information_schema.columns 
+            WHERE table_name = 'journal_entry'
+            ORDER BY ordinal_position
+        """))
+        
+        columns = []
+        has_user_reflection = False
+        for row in schema_result:
+            columns.append(f"{row[0]} ({row[1]})")
+            if row[0] == 'user_reflection':
+                has_user_reflection = True
+        
+        db_schema = "Journal Entry Table Columns:\n" + "\n".join(columns)
+        
+        if not has_user_reflection:
+            db_schema += "\n\nWARNING: user_reflection column missing!"
+        else:
+            db_schema += "\n\nColumn user_reflection exists! ✓"
+        
+        # Get specific entry or latest entry
+        query = """
+            SELECT id, title, content, created_at, 
+                   analysis_text, analysis_html, user_reflection
+            FROM journal_entry 
+            WHERE user_id = :user_id
+        """
+        
+        params = {"user_id": user_id}
+        
+        if entry_id:
+            query += " AND id = :entry_id"
+            params["entry_id"] = entry_id
+        
+        query += " ORDER BY created_at DESC LIMIT 1"
+        
+        result = conn.execute(text(query), params)
+        
+        for row in result:
+            entry = {
+                "id": row[0],
+                "title": row[1],
+                "content": html_from_newlines(row[2]),
+                "created_at": row[3],
+                "analysis_text": row[4],
+                "analysis_html": row[5],
+                "user_reflection": row[6]
+            }
+            break
+            
+        if not entry:
+            error = f"No journal entry found for user {user_id}"
+    except Exception as e:
+        logger.error(f"Error in test_reflection: {str(e)}")
+        error = f"Database error: {str(e)}"
+    finally:
+        conn.close()
     
     return render_template_string(
-        TEMPLATE,
-        section='entry',
+        REFLECTION_TEMPLATE,
         entry=entry,
-        user=user,
-        message=message,
-        success=success
+        error=error,
+        success=success,
+        db_schema=db_schema
     )
 
-@app.route('/standalone/save-reflection/<int:entry_id>', methods=['POST'])
+@reflection_test_bp.route('/save-reflection/<int:entry_id>', methods=['POST'])
 def save_reflection(entry_id):
-    """Save a reflection for a journal entry."""
-    conn = get_db_connection()
-    reflection = request.form.get('reflection')
-    message = None
-    success = False
+    """Save a reflection for an entry."""
+    reflection = request.form.get('reflection', '').strip()
+    error = None
+    success = None
+    
+    # Check if user is logged in
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect('/test-reflection?error=Not+logged+in')
     
     if not reflection:
-        message = "No reflection provided"
-        return render_template_string(
-            TEMPLATE,
-            section='entry',
-            entry=None,
-            user=None,
-            message=message,
-            success=success
-        )
+        return redirect(f'/test-reflection?entry_id={entry_id}&error=Reflection+cannot+be+empty')
     
-    if conn:
-        try:
-            with conn.cursor() as cur:
-                # First check if entry exists
-                cur.execute("SELECT id FROM journal_entry WHERE id = %s", (entry_id,))
-                if cur.rowcount == 0:
-                    message = f"Entry with ID {entry_id} not found"
-                else:
-                    # Update the entry with the reflection
-                    cur.execute(
-                        "UPDATE journal_entry SET user_reflection = %s WHERE id = %s",
-                        (reflection, entry_id)
-                    )
-                    message = "Reflection saved successfully"
-                    success = True
-        except Exception as e:
-            message = f"Error saving reflection: {str(e)}"
-        finally:
-            conn.close()
-            
-        return f"<script>window.location.href = '/standalone/entry/{entry_id}?message={message}&success={'true' if success else 'false'}';</script>"
+    # Connect to database
+    conn = get_db_connection()
+    if not conn:
+        return redirect(f'/test-reflection?entry_id={entry_id}&error=Could+not+connect+to+database')
+    
+    try:
+        # First verify the entry belongs to this user
+        check_query = """
+            SELECT id FROM journal_entry 
+            WHERE id = :entry_id AND user_id = :user_id
+        """
+        check_result = conn.execute(text(check_query), {
+            "entry_id": entry_id,
+            "user_id": user_id
+        })
+        
+        valid_entry = False
+        for row in check_result:
+            valid_entry = True
+            break
+        
+        if not valid_entry:
+            return redirect(f'/test-reflection?error=Entry+not+found+or+access+denied')
+        
+        # Update the reflection
+        update_query = """
+            UPDATE journal_entry 
+            SET user_reflection = :reflection,
+                updated_at = NOW()
+            WHERE id = :entry_id AND user_id = :user_id
+        """
+        
+        conn.execute(text(update_query), {
+            "reflection": reflection,
+            "entry_id": entry_id,
+            "user_id": user_id
+        })
+        
+        success = "Reflection saved successfully!"
+        
+    except Exception as e:
+        logger.error(f"Error saving reflection: {str(e)}")
+        error = f"Error saving reflection: {str(e)}"
+    finally:
+        conn.close()
+    
+    if error:
+        return redirect(f'/test-reflection?entry_id={entry_id}&error={error}')
     else:
-        message = "Database connection failed"
-        return render_template_string(
-            TEMPLATE,
-            section='entry',
-            entry=None,
-            user=None,
-            message=message,
-            success=success
-        )
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+        return redirect(f'/test-reflection?entry_id={entry_id}&success={success}')
