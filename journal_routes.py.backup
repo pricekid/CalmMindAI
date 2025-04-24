@@ -443,6 +443,7 @@ def new_journal_entry():
 @login_required
 def view_journal_entry(entry_id):
     # Use undefer() to explicitly load the deferred user_reflection column when needed
+    from sqlalchemy.orm import undefer
     entry = JournalEntry.query.options(undefer(JournalEntry.user_reflection)).get_or_404(entry_id)
     
     # Ensure the entry belongs to the current user
@@ -561,6 +562,7 @@ def view_journal_entry(entry_id):
 @login_required
 def update_journal_entry(entry_id):
     # Use undefer() to explicitly load the deferred user_reflection column when needed
+    from sqlalchemy.orm import undefer
     entry = JournalEntry.query.options(undefer(JournalEntry.user_reflection)).get_or_404(entry_id)
     
     # Ensure the entry belongs to the current user
@@ -699,6 +701,7 @@ def update_journal_entry(entry_id):
 @login_required
 def api_journal_coach(entry_id):
     # Use undefer() to explicitly load the deferred user_reflection column when needed
+    from sqlalchemy.orm import undefer
     entry = JournalEntry.query.options(undefer(JournalEntry.user_reflection)).get_or_404(entry_id)
     
     # Ensure the entry belongs to the current user
@@ -772,6 +775,7 @@ def api_journal_coach(entry_id):
 @login_required
 def api_analyze_entry(entry_id):
     # Use undefer() to explicitly load the deferred user_reflection column when needed
+    from sqlalchemy.orm import undefer
     entry = JournalEntry.query.options(undefer(JournalEntry.user_reflection)).get_or_404(entry_id)
     
     # Ensure the entry belongs to the current user
@@ -888,6 +892,7 @@ def api_analyze_entry(entry_id):
 @login_required
 def delete_journal_entry(entry_id):
     # Use undefer() to explicitly load the deferred user_reflection column when needed
+    from sqlalchemy.orm import undefer
     entry = JournalEntry.query.options(undefer(JournalEntry.user_reflection)).get_or_404(entry_id)
     
     # Ensure the entry belongs to the current user
