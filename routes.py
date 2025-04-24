@@ -84,7 +84,8 @@ def login_with_token(token):
     # Check if required parameters are present
     if not email or not expires:
         flash('Invalid login link. Missing parameters.', 'danger')
-        return redirect(url_for('login'))
+        # Use direct path instead of url_for
+        return redirect('/login')
     
     # Check if the link has expired
     try:
@@ -93,16 +94,19 @@ def login_with_token(token):
         
         if current_time > expiry_time:
             flash('Login link has expired. Please request a new one.', 'danger')
-            return redirect(url_for('login'))
+            # Use direct path instead of url_for
+            return redirect('/login')
     except ValueError:
         flash('Invalid login link. Malformed expiry time.', 'danger')
-        return redirect(url_for('login'))
+        # Use direct path instead of url_for
+        return redirect('/login')
     
     # Find the user by email
     user = User.query.filter_by(email=email.lower()).first()
     if not user:
         flash('No account found with that email address.', 'danger')
-        return redirect(url_for('login'))
+        # Use direct path instead of url_for
+        return redirect('/login')
     
     # Successfully validate the token, log in the user
     login_user(user, remember=True)
@@ -257,7 +261,8 @@ def dashboard():
 @login_required
 def journal():
     # Redirect to the journal blueprint route
-    return redirect(url_for('journal_blueprint.journal_list'))
+    # Use direct path instead of url_for
+    return redirect('/journal/list')
     
     # Get all entries for visualization (limiting to last 30 for performance)
     all_entries = JournalEntry.query.filter_by(user_id=current_user.id)\
@@ -505,7 +510,8 @@ def log_mood():
     else:
         flash('There was an error logging your mood. Please try again.', 'danger')
     
-    return redirect(url_for('dashboard'))
+    # Use direct path instead of url_for
+    return redirect('/dashboard')
 
 # Direct API endpoint for getting coaching feedback
 @app.route('/api/journal_coach/<int:entry_id>', methods=['GET', 'POST'])
