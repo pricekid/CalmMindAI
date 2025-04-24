@@ -371,6 +371,10 @@ with app.app_context():
     from simple_register import simple_register_bp
     app.register_blueprint(simple_register_bp)
     
+    # Register the emergency fix blueprint with non-shadowing route names
+    from emergency_fix import emergency_fix_bp
+    app.register_blueprint(emergency_fix_bp)
+    
     # Register the simple text-to-speech blueprint (keep browser-based TTS)
     from simple_tts import tts_simple_bp
     app.register_blueprint(tts_simple_bp)
