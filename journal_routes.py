@@ -210,7 +210,8 @@ def new_journal_entry():
         if recent_entries:
             logger.info(f"Prevented duplicate entry: {form.title.data}")
             flash('A similar journal entry was just created. Redirecting to the existing entry.', 'info')
-            return redirect(url_for('journal_blueprint.view_journal_entry', entry_id=recent_entries[0].id))
+            # Use direct path instead of url_for
+            return redirect(f'/journal/{recent_entries[0].id}')
         
         # First, save the journal entry so it's not lost if analysis fails
         logger.debug("Saving journal entry to database")
@@ -428,12 +429,14 @@ def new_journal_entry():
         
         # Wrap the redirect in a try/except to guarantee we don't have a blank page
         try:
-            return redirect(url_for('journal_blueprint.view_journal_entry', entry_id=entry.id))
+            # Use direct path instead of url_for
+            return redirect(f'/journal/{entry.id}')
         except Exception as redirect_error:
             logger.error(f"Critical error during redirect: {str(redirect_error)}")
             # Use a hardcoded URL as absolute fallback to avoid blank page
             flash('Your journal entry has been saved. Redirecting to journal list.', 'info')
-            return redirect(url_for('journal_blueprint.journal_list'))
+            # Use direct path instead of url_for
+            return redirect('/journal')
     
     return render_template('journal_entry.html', title='New Journal Entry', 
                           form=form, legend='New Journal Entry')
