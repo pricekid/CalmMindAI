@@ -20,7 +20,8 @@ def simple_register():
     
     # Redirect if already logged in
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))
+        # Use direct path instead of url_for to avoid 'str' is not callable error
+        return redirect('/dashboard')
     
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -34,7 +35,8 @@ def simple_register():
             db.session.commit()
             
             flash('Your account has been created! You can now log in.', 'success')
-            return redirect(url_for('login'))  # Use main login route
+            # Use direct path instead of url_for
+            return redirect('/login')  # Use main login route
         except Exception as e:
             logger.error(f"Error during registration: {str(e)}")
             db.session.rollback()
