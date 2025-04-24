@@ -38,7 +38,7 @@ def register():
     # Use direct path instead of url_for
     return redirect('/simple-register')
 
-# User login - Use the original implementation for backward compatibility
+# User login - redirect to basic login to avoid JSON issues
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # Check if user is already logged in
@@ -50,24 +50,82 @@ def login():
         # Otherwise, go to the regular dashboard using direct path
         return redirect('/dashboard')
     
-    form = LoginForm()
-    if form.validate_on_submit():
-        # Convert email to lowercase for case-insensitive matching
-        email = form.email.data.lower() if form.email.data else None
-        user = User.query.filter_by(email=email).first()
+    try:
+        # Try to generate a CSRF token for the login form
+        from flask_wtf.csrf import generate_csrf
+        csrf_token = generate_csrf()
         
-        if user and user.check_password(form.password.data):
-            login_user(user, remember=form.remember.data)
-            next_page = request.args.get('next')
-            # Don't redirect to admin pages from regular login
-            if next_page and next_page.startswith('/admin'):
-                flash('You need admin privileges to access that page.', 'warning')
-                return redirect('/dashboard')
-            return redirect(next_page if next_page and not next_page.startswith('/admin') else '/dashboard')
-        else:
-            flash('Login unsuccessful. Please check your email and password.', 'danger')
-    
-    return render_template('login.html', title='Login', form=form)
+        # For GET requests, render the login form directly without using the FlaskForm
+        if request.method == 'GET':
+            # Create an emergency login form that doesn't depend on complex JSON parsing
+            emergency_html = f"""
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Login to Calm Journey</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+                <link rel="stylesheet" href="/static/css/styles.css">
+                <style>
+                    body {{ background-color: #1a1a1a; color: #f8f9fa; }}
+                    .card {{ background-color: #212529; border: none; }}
+                    .card-header {{ background-color: #0d6efd; color: white; }}
+                    .form-control {{ background-color: #343a40; color: #f8f9fa; border-color: #495057; }}
+                    .form-control:focus {{ background-color: #343a40; color: #f8f9fa; }}
+                    .btn-primary {{ background-color: #0d6efd; }}
+                </style>
+            </head>
+            <body>
+                <div class="container mt-5">
+                    <div class="row">
+                        <div class="col-md-6 mx-auto">
+                            <div class="card shadow">
+                                <div class="card-header">
+                                    <h3 class="mb-0">Login to Calm Journey</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form method="POST" action="/basic-login">
+                                        <input type="hidden" name="csrf_token" value="{csrf_token}">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email Address</label>
+                                            <input type="email" class="form-control" id="email" name="email" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="password" class="form-label">Password</label>
+                                            <input type="password" class="form-control" id="password" name="password" required>
+                                        </div>
+                                        <div class="mb-3 form-check">
+                                            <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                                            <label class="form-check-label" for="remember">Remember me</label>
+                                        </div>
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary">Login</button>
+                                        </div>
+                                    </form>
+                                    <div class="mt-3 text-center">
+                                        <p>Don't have an account? <a href="/register">Sign up</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </body>
+            </html>
+            """
+            from flask import Response
+            return Response(emergency_html, 200, content_type='text/html')
+        
+        # For POST requests, redirect to basic_login which has better error handling
+        # Use direct path instead of url_for
+        return redirect('/basic-login')
+        
+    except Exception as e:
+        app.logger.error(f"Error in login route: {str(e)}")
+        
+        # Fallback to basic_login in case of any errors
+        # Use direct path instead of url_for
+        return redirect('/basic-login')
 
 # Token-based login route for email links
 @app.route('/login/token/<token>')
