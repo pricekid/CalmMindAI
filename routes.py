@@ -7,7 +7,7 @@ from forms import RegistrationForm, LoginForm, JournalEntryForm, MoodLogForm, Ac
 from openai_service import analyze_journal_entry, generate_coping_statement
 from werkzeug.security import check_password_hash
 from sqlalchemy import desc
-from sqlalchemy.orm import load_only, defer
+from sqlalchemy.orm import load_only, defer, undefer
 import logging
 import csv
 import os
@@ -611,7 +611,8 @@ def debug_achievements(user_id):
 @login_required
 def download_journal_entries():
     """Download all journal entries for the current user as CSV"""
-    # Use load_only to avoid loading user_reflection by default (improved query performance)
+    # Use load_only to avoid loading user_reflection by default, but then explicitly undefer it
+    # This approach optimizes query performance while ensuring we get the reflection data
     entries = JournalEntry.query\
         .options(load_only(
             JournalEntry.id,
@@ -623,6 +624,7 @@ def download_journal_entries():
             JournalEntry.anxiety_level,
             JournalEntry.user_id
         ))\
+        .options(undefer(JournalEntry.user_reflection))\
         .filter_by(user_id=current_user.id)\
         .order_by(JournalEntry.created_at.desc())\
         .all()
@@ -703,7 +705,8 @@ def download_all_data():
         'sms_notifications_enabled': current_user.sms_notifications_enabled
     }
     
-    # Get journal entries - use load_only to avoid loading user_reflection by default
+    # Get journal entries - use load_only combined with undefer for user_reflection
+    # This optimizes query performance while ensuring we get all needed data
     entries = JournalEntry.query\
         .options(load_only(
             JournalEntry.id,
@@ -715,6 +718,7 @@ def download_all_data():
             JournalEntry.anxiety_level,
             JournalEntry.user_id
         ))\
+        .options(undefer(JournalEntry.user_reflection))\
         .filter_by(user_id=current_user.id)\
         .order_by(JournalEntry.created_at.desc())\
         .all()
@@ -737,7 +741,8 @@ def download_all_data():
             'created_at': entry.created_at.strftime('%Y-%m-%d %H:%M:%S'),
             'updated_at': entry.updated_at.strftime('%Y-%m-%d %H:%M:%S'),
             'is_analyzed': entry.is_analyzed,
-            'recommendations': recommendations
+            'recommendations': recommendations,
+            'user_reflection': entry.user_reflection
         })
     
     # Get mood logs
