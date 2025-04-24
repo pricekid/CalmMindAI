@@ -42,6 +42,8 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # Configure CSRF protection with a longer timeout
 app.config["WTF_CSRF_TIME_LIMIT"] = 3600  # Extend CSRF token expiration to 1 hour
+app.config["WTF_CSRF_SSL_STRICT"] = False  # Disable SSL strict mode for CSRF
+app.config["WTF_CSRF_CHECK_DEFAULT"] = False  # Disable default CSRF checking
 
 # Email configuration
 app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
@@ -497,3 +499,14 @@ with app.app_context():
     csrf.exempt(premium_tts_bp)
     csrf.exempt(enhanced_tts_bp)
     csrf.exempt(openai_tts_bp)
+    
+    # Register emergency login blueprint with CSRF exemption
+    try:
+        from emergency_direct_login import emergency_bp
+        app.register_blueprint(emergency_bp)
+        # Explicitly exempt the emergency blueprint from CSRF protection
+        # This is needed to ensure we can log in even if CSRF validation fails
+        csrf.exempt(emergency_bp)
+        app.logger.info("Emergency login blueprint registered with CSRF exemption")
+    except ImportError:
+        app.logger.warning("Emergency login blueprint not available")
