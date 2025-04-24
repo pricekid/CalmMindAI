@@ -2128,5 +2128,11 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 5ba26e200d35 at 2025-04-24 15:24:19.082098",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-24 15:24:25",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 835",
+    "success": true
   }
 ]
