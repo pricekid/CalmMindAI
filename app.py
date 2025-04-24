@@ -128,8 +128,72 @@ def handle_exception(e):
         # For login routes, redirect to the basic login page
         if '/login' in request.path or '/sign-in' in request.path or '/signin' in request.path:
             app.logger.info(f"Redirecting login JSON error to basic login page. Path: {request.path}")
-            # Use direct path instead of url_for
-            return redirect('/login')
+            
+            # Render the basic login template directly to avoid additional redirects
+            try:
+                # Generate a CSRF token for the login form to avoid CSRF errors
+                csrf_token = csrf._get_csrf_token()
+                
+                # Create an emergency login form that doesn't depend on the normal routes
+                emergency_html = f"""
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Login - Calm Journey</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+                    <link rel="stylesheet" href="/static/css/styles.css">
+                    <style>
+                        body {{ background-color: #1a1a1a; color: #f8f9fa; }}
+                        .card {{ background-color: #212529; border: none; }}
+                        .card-header {{ background-color: #0d6efd; color: white; }}
+                        .form-control {{ background-color: #343a40; color: #f8f9fa; border-color: #495057; }}
+                        .form-control:focus {{ background-color: #343a40; color: #f8f9fa; }}
+                        .btn-primary {{ background-color: #0d6efd; }}
+                    </style>
+                </head>
+                <body>
+                    <div class="container mt-5">
+                        <div class="row">
+                            <div class="col-md-6 mx-auto">
+                                <div class="card shadow">
+                                    <div class="card-header">
+                                        <h3 class="mb-0">Login to Calm Journey</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form method="POST" action="/basic-login">
+                                            <input type="hidden" name="csrf_token" value="{csrf_token}">
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Email Address</label>
+                                                <input type="email" class="form-control" id="email" name="email" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="password" class="form-label">Password</label>
+                                                <input type="password" class="form-control" id="password" name="password" required>
+                                            </div>
+                                            <div class="mb-3 form-check">
+                                                <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                                                <label class="form-check-label" for="remember">Remember me</label>
+                                            </div>
+                                            <div class="d-grid">
+                                                <button type="submit" class="btn btn-primary">Login</button>
+                                            </div>
+                                        </form>
+                                        <div class="mt-3 text-center">
+                                            <p>Don't have an account? <a href="/register">Sign up</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </body>
+                </html>
+                """
+                return Response(emergency_html, 200, content_type='text/html')
+            except Exception as login_error:
+                app.logger.error(f"Failed to render emergency login: {str(login_error)}")
+                return redirect('/basic-login')
         
         # For dashboard route, just redirect back to dashboard without the analysis
         elif request.path == '/dashboard':
@@ -138,6 +202,25 @@ def handle_exception(e):
             # Redirect instead of trying to render the template directly
             # Use direct path instead of url_for
             return redirect('/dashboard')
+            
+        # For journal-related JSON errors, which might be from the reflection feature
+        elif '/journal' in request.path:
+            app.logger.info(f"Journal-related JSON error: {request.path}")
+            
+            # If it's specifically from the save-reflection endpoint
+            if '/journal/save-reflection' in request.path:
+                # Return a JSON response with error details
+                from flask import jsonify
+                return jsonify({
+                    "error": "Could not process your reflection due to a technical issue",
+                    "success": False,
+                    "message": "Your reflection was not saved. Please try again."
+                }), 400
+                
+            # For other journal routes, just redirect to the journal list
+            else:
+                flash("We encountered an issue processing your request, but your journal entries are safe.", "info")
+                return redirect('/journal')
         
         # For journal routes, provide a specific message related to journaling    
         elif '/journal' in request.path:
