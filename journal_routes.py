@@ -767,18 +767,8 @@ def api_journal_coach(entry_id):
 @journal_bp.route('/api_analyze_entry/<int:entry_id>', methods=['GET', 'POST'])  # Legacy support
 @login_required
 def api_analyze_entry(entry_id):
-    # Include user_reflection column now that it exists
-    entry = db.session.query(
-        JournalEntry.id,
-        JournalEntry.title,
-        JournalEntry.content,
-        JournalEntry.created_at,
-        JournalEntry.updated_at,
-        JournalEntry.is_analyzed,
-        JournalEntry.anxiety_level,
-        JournalEntry.user_id,
-        JournalEntry.user_reflection
-    ).filter(JournalEntry.id == entry_id).first_or_404()
+    # Get the full entry object without selecting specific columns
+    entry = JournalEntry.query.get_or_404(entry_id)
     
     # Ensure the entry belongs to the current user
     if entry.user_id != current_user.id:
@@ -893,18 +883,8 @@ def api_analyze_entry(entry_id):
 @journal_bp.route('/<int:entry_id>/delete_entry', methods=['GET', 'POST'])
 @login_required
 def delete_journal_entry(entry_id):
-    # Include user_reflection column now that it exists
-    entry = db.session.query(
-        JournalEntry.id,
-        JournalEntry.title,
-        JournalEntry.content,
-        JournalEntry.created_at,
-        JournalEntry.updated_at,
-        JournalEntry.is_analyzed,
-        JournalEntry.anxiety_level,
-        JournalEntry.user_id,
-        JournalEntry.user_reflection
-    ).filter(JournalEntry.id == entry_id).first_or_404()
+    # Get the full entry object without selecting specific columns
+    entry = JournalEntry.query.get_or_404(entry_id)
     
     # Ensure the entry belongs to the current user
     if entry.user_id != current_user.id:
