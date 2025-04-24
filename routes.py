@@ -611,7 +611,21 @@ def debug_achievements(user_id):
 @login_required
 def download_journal_entries():
     """Download all journal entries for the current user as CSV"""
-    entries = JournalEntry.query.filter_by(user_id=current_user.id).order_by(JournalEntry.created_at.desc()).all()
+    # Use load_only to avoid loading user_reflection by default (improved query performance)
+    entries = JournalEntry.query\
+        .options(load_only(
+            JournalEntry.id,
+            JournalEntry.title,
+            JournalEntry.content,
+            JournalEntry.created_at,
+            JournalEntry.updated_at,
+            JournalEntry.is_analyzed,
+            JournalEntry.anxiety_level,
+            JournalEntry.user_id
+        ))\
+        .filter_by(user_id=current_user.id)\
+        .order_by(JournalEntry.created_at.desc())\
+        .all()
     
     # Create CSV file in memory
     output = StringIO()
@@ -689,8 +703,21 @@ def download_all_data():
         'sms_notifications_enabled': current_user.sms_notifications_enabled
     }
     
-    # Get journal entries
-    entries = JournalEntry.query.filter_by(user_id=current_user.id).order_by(JournalEntry.created_at.desc()).all()
+    # Get journal entries - use load_only to avoid loading user_reflection by default
+    entries = JournalEntry.query\
+        .options(load_only(
+            JournalEntry.id,
+            JournalEntry.title,
+            JournalEntry.content,
+            JournalEntry.created_at,
+            JournalEntry.updated_at,
+            JournalEntry.is_analyzed,
+            JournalEntry.anxiety_level,
+            JournalEntry.user_id
+        ))\
+        .filter_by(user_id=current_user.id)\
+        .order_by(JournalEntry.created_at.desc())\
+        .all()
     journal_entries = []
     
     for entry in entries:
