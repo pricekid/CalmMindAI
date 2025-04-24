@@ -65,7 +65,8 @@ mail.init_app(app)
 # Configure login manager for regular users
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = "basic_login.basic_login"  # Updated to use our extremely simple login route
+# Use direct path instead of route name
+login_manager.login_view = "/login"  # Direct path to avoid url_for issues
 login_manager.login_message_category = "info"
 
 # Custom unauthorized handler for login_manager
@@ -276,12 +277,14 @@ def login_required(f):
         # Check if current route is for regular users but user is an admin
         if not request.path.startswith('/admin') and hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
             flash('You are logged in as an admin. Regular user pages are not accessible.', 'warning')
-            return redirect(url_for('admin.dashboard'))
+            # Use direct path instead of url_for
+            return redirect('/admin/dashboard')
             
         # Check if current route is for admins but user is not an admin
         if request.path.startswith('/admin') and (not hasattr(current_user, 'get_id') or not current_user.get_id().startswith('admin_')):
             flash('You need admin privileges to access this page.', 'warning')
-            return redirect(url_for('dashboard'))
+            # Use direct path instead of url_for
+            return redirect('/dashboard')
             
         return f(*args, **kwargs)
     return decorated_view
