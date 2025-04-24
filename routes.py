@@ -44,8 +44,8 @@ def login():
         # If logged in as admin, redirect to admin dashboard
         if hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
             return redirect(url_for('admin.dashboard'))
-        # Otherwise, go to the regular dashboard
-        return redirect(url_for('dashboard'))
+        # Otherwise, go to the regular dashboard using direct path
+        return redirect('/dashboard')
     
     form = LoginForm()
     if form.validate_on_submit():
@@ -59,8 +59,8 @@ def login():
             # Don't redirect to admin pages from regular login
             if next_page and next_page.startswith('/admin'):
                 flash('You need admin privileges to access that page.', 'warning')
-                return redirect(url_for('dashboard'))
-            return redirect(next_page if next_page and not next_page.startswith('/admin') else url_for('dashboard'))
+                return redirect('/dashboard')
+            return redirect(next_page if next_page and not next_page.startswith('/admin') else '/dashboard')
         else:
             flash('Login unsuccessful. Please check your email and password.', 'danger')
     
@@ -107,8 +107,8 @@ def login_with_token(token):
     login_user(user, remember=True)
     flash('You have been logged in successfully via email link!', 'success')
     
-    # Redirect to the dashboard
-    return redirect(url_for('dashboard'))
+    # Redirect to the dashboard using direct path
+    return redirect('/dashboard')
 
 # User logout
 @app.route('/logout')
