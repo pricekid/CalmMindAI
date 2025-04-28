@@ -307,26 +307,65 @@ def generate_journaling_coach_response(entry):
 
 def tone_check(response):
     """
-    A simple function to ensure the coach's response maintains a warm, supportive tone
-    and always includes the Coach Mira signature.
+    A more sophisticated function to ensure the coach's response maintains a warm, supportive, and
+    conversational tone while always including the Coach Mira signature.
     """
-    # List of warm, encouraging phrases to potentially add if tone seems clinical
+    # List of warm, conversational openers to add if tone seems clinical or impersonal
     warm_openers = [
         "Mira here! I really appreciate you sharing this with me. ",
         "This is Mira. Thank you for opening up about this. ",
-        "Mira's thoughts: I'm so glad you're taking time to reflect on this. "
+        "Mira's thoughts: I'm so glad you're taking time to reflect on this. ",
+        "Hi there! Mira here. I'm really glad you shared this with me. ",
+        "Hello from Mira! I value the trust you've placed in me by sharing this. ",
+        "Hey, it's Mira. I want you to know I really hear what you're saying. "
+    ]
+    
+    # Conversational phrases to potentially inject if content feels too clinical
+    conversational_elements = [
+        " (I've been there too) ",
+        " (and that's completely understandable) ",
+        " (which is so important) ",
+        " (and I'm here with you) ",
+        " (I see you) ",
+        " (and that takes real courage) "
     ]
     
     # If the response seems too clinical or lacks warmth, add a warm opener
-    if not any(phrase in response.lower() for phrase in ["thank you", "appreciate", "glad", "wonderful"]):
+    if not any(phrase in response.lower() for phrase in ["thank you", "appreciate", "glad", "wonderful", "mira here", "this is mira"]):
         import random
         response = random.choice(warm_openers) + response
     
+    # Make the response more conversational by potentially adding parenthetical phrases
+    # but only if the response is long enough and doesn't already seem conversational
+    if len(response) > 200 and response.count("(") < 2 and response.count("I ") < 5:
+        import random
+        
+        # Split into sentences
+        sentences = response.split('.')
+        if len(sentences) > 4:  # If we have enough sentences to work with
+            # Choose 1-2 random spots to insert conversational elements
+            insert_positions = random.sample(range(1, min(len(sentences)-1, 8)), min(2, len(sentences)//3))
+            
+            for pos in sorted(insert_positions, reverse=True):
+                sentences[pos] = sentences[pos] + random.choice(conversational_elements)
+            
+            response = '.'.join(sentences)
+    
+    # Choose from different signature styles
+    signatures = [
+        "Warmly,\nCoach Mira",
+        "I'm here for you,\nMira",
+        "Cheering you on,\nMira",
+        "With you on this journey,\nCoach Mira",
+        "Believing in you,\nMira"
+    ]
+    
     # Add signature if it doesn't already exist
-    if not "Warmly,\nCoach Mira" in response:
+    if not any(sig in response for sig in signatures):
+        import random
         if not response.endswith("\n\n"):
             response += "\n\n"
-        response += "Warmly,\nCoach Mira"
+        response += random.choice(signatures)
     
     return response
 
