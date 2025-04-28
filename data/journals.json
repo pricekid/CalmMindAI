@@ -3762,5 +3762,30 @@
     ],
     "structured_data": null,
     "user_reflection": null
+  },
+  {
+    "id": 173,
+    "user_id": 1,
+    "title": "relationship issues 4 TEST",
+    "content": "my partner went away for 10 day. for teh first 2 days she messaged briefly, the finallly she called on the 3rd day. i missed her call but wheni called back she was at home with family and was talking to me, but most of the time i spent listening to her talking to others. her mum then called and she told me she woudl call me back, but she didnt. following day she messaged good mornng and said she was out and about at work. nothing since. how shoudl i feel",
+    "anxiety_level": 6,
+    "created_at": "2025-04-28T19:47:10.886893",
+    "updated_at": "2025-04-28T19:47:20.601845",
+    "is_analyzed": true,
+    "gpt_response": "It sounds like you're feeling a bit left out and unsure about how to interpret your partner's recent communication style while she's away. It's normal to feel a bit disconnected when physical distance combines with less frequent communication. Your feelings are valid, especially when you're used to a different rhythm in your relationship.\n\nTake a moment. Can you identify what specific reassurance or action from your partner would help you feel more connected right now?\n\nRemember, communication styles can shift with changing environments. It might be helpful to express your needs gently when you next have a conversation. This could open a pathway to more mutual understanding.\n\nThought Patterns That May Be Surfacing:\n* Mind Reading: You might be assuming your partner is intentionally not communicating, without having full context of her situation.\n* All-or-Nothing Thinking: You may be interpreting the lack of communication as an indication of a problem in the relationship, rather than a temporary change.\n\n\nCBT-Based Strategies:\n1. Communicate Needs Clearly Express what you need in a way that's clear but gentle. Share how her communication style impacts you, focusing on your feelings rather than placing blame. Next time you talk, use 'I feel' statements to express your emotions and needs. For example, 'I feel a bit disconnected when we don't talk as much, and I would love to hear your voice more often.'\n2. Reframe the Situation Shift your perspective to consider alternate explanations for her behavior, such as a busy schedule or needing family time. Write down three possible reasons for her behavior that are not negative or personal. Reflect on how these reasons might change your emotional response.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Mind Reading",
+        "description": "Assuming you know what your partner is thinking or feeling about the relationship based on limited interactions.",
+        "recommendation": "Practice open communication to clarify intentions and feelings, avoiding assumptions."
+      },
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "Viewing the situation as entirely negative due to lack of communication, rather than seeing it as a temporary phase.",
+        "recommendation": "Try to identify gray areas where things might not be as extreme as they seem. Reflect on past situations where things have improved."
+      }
+    ],
+    "structured_data": null,
+    "user_reflection": null
   }
 ]
