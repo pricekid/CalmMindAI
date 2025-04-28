@@ -3274,5 +3274,77 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 14846f004978 at 2025-04-28 16:16:14.455975",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-28 16:21:13",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2514 at 2025-04-28 16:21:13",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 16:21:42",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2514",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 16:21:46",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 2514). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-28 16:21:47",
+    "type": "job_setup",
+    "message": "Setting up daily email reminder job for 6:00 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 16:21:47",
+    "type": "job_schedule_error",
+    "message": "Failed to properly schedule daily email job",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-28 16:21:47",
+    "type": "job_scheduled",
+    "message": "Backup email job scheduled for 6:10 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 16:21:47",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-28 16:21:47.328307",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 16:21:47",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-28 16:21:47.339876",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 16:21:47",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 16:21:47",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 2705",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 16:21:47",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 14846f004978 at 2025-04-28 16:21:47.744039",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 16:21:49",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2705",
+    "success": true
   }
 ]
