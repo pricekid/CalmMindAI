@@ -333,9 +333,6 @@ def journal():
     return render_template('journal.html', 
                           title='Journal', 
                           entries=entries)
-        'id': entry.id,
-        'title': entry.title,
-        'anxiety_level': entry.anxiety_level,
         'created_at': entry.created_at.isoformat(),
         'content': entry.content[:100],  # Only send snippet for privacy/performance
         'is_analyzed': entry.is_analyzed
