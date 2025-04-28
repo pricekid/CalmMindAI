@@ -256,5 +256,11 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 14846f004978 at 2025-04-28 19:25:27.641801",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:30:26",
+    "type": "health_check",
+    "message": "Scheduler running with PID 14877 at 2025-04-28 19:30:26",
+    "success": true
   }
 ]
