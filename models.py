@@ -68,10 +68,14 @@ class JournalEntry(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     is_analyzed = db.Column(db.Boolean, default=False)
     anxiety_level = db.Column(db.Integer, nullable=True)  # 1-10 scale
-    # Using deferred loading for this column to optimize database queries
-    # This approach ensures efficient data loading while still allowing explicit access when needed
-    # The info={'deferred': True} approach works with SQLAlchemy's mapper configuration
-    user_reflection = db.Column(db.Text, nullable=True, info={'deferred': True})   # User's reflection to Mira's prompt
+    
+    # Conversation fields
+    initial_insight = db.Column(db.Text, nullable=True)  # Mira's first analysis
+    user_reflection = db.Column(db.Text, nullable=True, info={'deferred': True})  # User's first reflection
+    followup_insight = db.Column(db.Text, nullable=True)  # Mira's second insight
+    second_reflection = db.Column(db.Text, nullable=True, info={'deferred': True})  # User's second reflection
+    closing_message = db.Column(db.Text, nullable=True)  # Mira's closing statement
+    conversation_complete = db.Column(db.Boolean, default=False)  # Track if conversation is done
     
     # Foreign key
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
