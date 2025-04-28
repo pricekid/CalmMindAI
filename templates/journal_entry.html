@@ -311,6 +311,11 @@
                                         {% for distortion in structured_data.distortions %}
                                             <li class="list-group-item">
                                                 <strong>{{ distortion.pattern }}</strong>: {{ distortion.description }}
+                                                {% if distortion.emotional_need %}
+                                                <div class="emotional-need mt-2">
+                                                    <small class="text-muted">Related to your need for: <span class="badge bg-secondary">{{ distortion.emotional_need }}</span></small>
+                                                </div>
+                                                {% endif %}
                                             </li>
                                         {% endfor %}
                                         </ul>
@@ -331,6 +336,70 @@
                                                         <strong class="text-dark" style="background-color: #f0f0f0; padding: 2px 5px; border-radius: 3px; display: inline-block;">Try this:</strong> {{ strategy.action_step }}
                                                     </div>
                                                     {% endif %}
+                                                    {% if strategy.emotional_need_addressed %}
+                                                    <div class="emotional-need mt-2">
+                                                        <small class="text-muted">Addresses your need for: <span class="badge bg-info text-dark">{{ strategy.emotional_need_addressed }}</span></small>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    
+                                    {% if structured_data.relationship_exploration %}
+                                    <div class="relationship-exploration mb-4">
+                                        <h5 class="mt-4 mb-3">Relationship Context Questions</h5>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <ul class="list-group list-group-flush">
+                                                {% for question in structured_data.relationship_exploration %}
+                                                    <li class="list-group-item d-flex align-items-start">
+                                                        <span class="me-2">🔍</span>
+                                                        <div>
+                                                            <strong>{{ question.question }}</strong>
+                                                            {% if question.purpose %}
+                                                            <p class="text-muted small mb-0 mt-1">{{ question.purpose }}</p>
+                                                            {% endif %}
+                                                        </div>
+                                                    </li>
+                                                {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    
+                                    {% if structured_data.actionable_templates %}
+                                    <div class="actionable-templates mb-4">
+                                        <h5 class="mt-4 mb-3">Communication Templates</h5>
+                                        <div class="accordion" id="templatesAccordion">
+                                        {% for template in structured_data.actionable_templates %}
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="template-heading-{{ loop.index }}">
+                                                    <button class="accordion-button collapsed" type="button" 
+                                                            data-bs-toggle="collapse" 
+                                                            data-bs-target="#template-collapse-{{ loop.index }}" 
+                                                            aria-expanded="false" 
+                                                            aria-controls="template-collapse-{{ loop.index }}">
+                                                        For {{ template.situation }}
+                                                    </button>
+                                                </h2>
+                                                <div id="template-collapse-{{ loop.index }}" 
+                                                    class="accordion-collapse collapse" 
+                                                    aria-labelledby="template-heading-{{ loop.index }}" 
+                                                    data-bs-parent="#templatesAccordion">
+                                                    <div class="accordion-body">
+                                                        <div class="template-content p-3 bg-light rounded">
+                                                            <p class="mb-2"><em>"{{ template.template }}"</em></p>
+                                                        </div>
+                                                        {% if template.follow_up_guidance %}
+                                                        <div class="guidance mt-2">
+                                                            <p class="small mb-0"><strong>Then:</strong> {{ template.follow_up_guidance }}</p>
+                                                        </div>
+                                                        {% endif %}
+                                                    </div>
                                                 </div>
                                             </div>
                                         {% endfor %}
