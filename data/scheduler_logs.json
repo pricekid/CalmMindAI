@@ -274,5 +274,59 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 14846f004978 at 2025-04-28 18:28:04.809479",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-28 18:30:37",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 11035). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-28 18:30:37",
+    "type": "job_setup",
+    "message": "Setting up daily email reminder job for 6:00 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 18:30:37",
+    "type": "job_schedule_error",
+    "message": "Failed to properly schedule daily email job",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-28 18:30:37",
+    "type": "job_scheduled",
+    "message": "Backup email job scheduled for 6:10 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 18:30:37",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-28 18:30:37.671678",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 18:30:37",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-28 18:30:37.672883",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 18:30:37",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 18:30:38",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 11353",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 18:30:38",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 14846f004978 at 2025-04-28 18:30:38.098198",
+    "success": true
   }
 ]
