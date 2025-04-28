@@ -484,6 +484,14 @@ with app.app_context():
         app.logger.info("Test reflection routes registered successfully")
     except ImportError:
         app.logger.warning("Test reflection module not available")
+        
+    # Register the enhanced Mira test blueprint
+    try:
+        import test_enhanced_mira
+        app.register_blueprint(test_enhanced_mira.app, url_prefix='/enhanced-mira')
+        app.logger.info("Enhanced Mira test routes registered successfully")
+    except (ImportError, AttributeError) as e:
+        app.logger.warning(f"Enhanced Mira test module not available: {str(e)}")
     
     # Register the simple dashboard for emergency access
     try:

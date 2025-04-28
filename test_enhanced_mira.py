@@ -1,21 +1,22 @@
 import logging
 import json
-from flask import Flask, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify
 from journal_service import analyze_journal_with_gpt
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-app = Flask(__name__)
+# Create a blueprint instead of a Flask app
+app = Blueprint('test_enhanced_mira', __name__)
 
 # Sample journal entry for testing
 SAMPLE_JOURNAL_ENTRY = """
 my partner went away for 10 day. for teh first 2 days she messaged briefly, the finallly she called on the 3rd day. i missed her call but wheni called back she was at home with family and was talking to me, but most of the time i spent listening to her talking to others. her mum then called and she told me she woudl call me back, but she didnt. following day she messaged good mornng and said she was out and about at work. nothing since. how shoudl i feel
 """
 
-# Testing route
-@app.route('/test-enhanced-mira', methods=['GET'])
+# Testing route - with / at the root of the blueprint
+@app.route('/', methods=['GET'])
 def test_enhanced_mira():
     """
     Test the enhanced Mira responses with emotional intelligence improvements.
@@ -51,5 +52,5 @@ def test_analysis():
         logger.error(f"Error in test analysis: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+# This file is now used as a blueprint, so we don't need the run code
+# Blueprint is registered in app.py with the url_prefix '/enhanced-mira'
