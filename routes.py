@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request, jsonify, abort, make_response
 from flask_login import login_user, current_user, logout_user
-from app import app, db
+from app import app, db, login_required
 from models import User, JournalEntry, CBTRecommendation, MoodLog
 from forms import RegistrationForm, LoginForm, JournalEntryForm, MoodLogForm, AccountUpdateForm
 from openai_service import analyze_journal_entry, generate_coping_statement
