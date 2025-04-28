@@ -245,19 +245,39 @@ def dashboard():
                           badge_data=badge_data,
                           community_message=community_message)
 
-# Redirect to journal list
+# Simplified journal route to avoid the redirection loop
 @app.route('/journal')
 @login_required
 def journal():
-    # Get all entries with efficient loading
-    entries = JournalEntry.query\
-        .filter_by(user_id=current_user.id)\
-        .order_by(JournalEntry.created_at.desc())\
-        .limit(30).all()
-
-    return render_template('journal.html', 
-                          title='Journal', 
-                          entries=entries)
+    try:
+        app.logger.info("Using simplified journal route to avoid redirection loop")
+        
+        # Simple query for entries without JSON manipulation
+        # Use load_only to specify only the columns we need, avoiding the deferred user_reflection column
+        entries_query = JournalEntry.query\
+            .options(load_only(
+                JournalEntry.id,
+                JournalEntry.title,
+                JournalEntry.content,
+                JournalEntry.created_at,
+                JournalEntry.updated_at,
+                JournalEntry.is_analyzed,
+                JournalEntry.anxiety_level,
+                JournalEntry.user_id
+            ))\
+            .filter(JournalEntry.user_id == current_user.id)\
+            .order_by(desc(JournalEntry.created_at))
+        
+        entries = entries_query.paginate(page=1, per_page=10)
+        
+        return render_template('journal.html', 
+                             title='Journal', 
+                             entries=entries)
+                             
+    except Exception as e:
+        app.logger.error(f"Error in simplified journal route: {str(e)}")
+        flash("There was an issue loading your journal entries. Please try again later.", "warning")
+        return redirect('/dashboard')
 
 # Direct new journal entry page (no redirect)
 @app.route('/journal/new', methods=['GET', 'POST'])
