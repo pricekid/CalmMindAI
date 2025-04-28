@@ -15,9 +15,10 @@
                         <i class="fas fa-user" style="font-size: 2.5rem; color: #2d2d2d;"></i>
                     </div>
                 </div>
-                
-                <form method="POST" action="">
+
+                <form method="POST" >
                     {{ form.hidden_tag() }}
+                    {{ form.csrf_token }}
                     <div class="mb-3">
                         {{ form.email.label(class="form-label", style="color: var(--warm-peach);") }}
                         {% if form.email.errors %}
@@ -31,7 +32,7 @@
                             {{ form.email(class="form-control", style="border-color: var(--warm-peach); background-color: rgba(33, 37, 41, 0.8);") }}
                         {% endif %}
                     </div>
-                    
+
                     <div class="mb-3">
                         {{ form.password.label(class="form-label", style="color: var(--warm-peach);") }}
                         {% if form.password.errors %}
@@ -45,16 +46,16 @@
                             {{ form.password(class="form-control", style="border-color: var(--warm-peach); background-color: rgba(33, 37, 41, 0.8);") }}
                         {% endif %}
                     </div>
-                    
+
                     <div class="mb-3 form-check">
                         {{ form.remember(class="form-check-input", style="background-color: var(--warm-peach); border-color: var(--warm-peach);") }}
                         {{ form.remember.label(class="form-check-label") }}
                     </div>
-                    
+
                     <div class="d-grid mb-3">
                         {{ form.submit(class="btn btn-warm btn-lg" id="login-button", id="login-button", style="font-weight: 600; box-shadow: 0 4px 8px rgba(209, 166, 115, 0.3);") }}
                     </div>
-                    
+
                     <div class="text-center">
                         <small>
                             <a href="#" style="color: var(--warm-peach); text-decoration: none;">Forgot Password?</a>
@@ -66,7 +67,7 @@
                 <p class="mb-0">Don't have an account? <a href="{{ url_for('register') }}" style="color: var(--warm-peach); font-weight: 500; text-decoration: none;">Register here</a></p>
             </div>
         </div>
-        
+
         <div class="text-center mt-4">
             <p>
                 <small class="text-muted" style="color: var(--warm-peach) !important; opacity: 0.8;">
@@ -84,7 +85,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.querySelector('form');
         const loginButton = document.getElementById('login-button');
-        
+
         if (form && loginButton) {
             form.addEventListener('submit', function(e) {
                 if (form.checkValidity()) {

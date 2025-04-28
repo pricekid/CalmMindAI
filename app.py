@@ -40,10 +40,11 @@ app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
 }
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-# Configure CSRF protection with a longer timeout
-app.config["WTF_CSRF_TIME_LIMIT"] = 3600  # Extend CSRF token expiration to 1 hour
-app.config["WTF_CSRF_SSL_STRICT"] = False  # Disable SSL strict mode for CSRF
-app.config["WTF_CSRF_CHECK_DEFAULT"] = False  # Disable default CSRF checking
+# Configure CSRF protection
+app.config["WTF_CSRF_TIME_LIMIT"] = 3600  # 1 hour token expiration
+app.config["WTF_CSRF_SSL_STRICT"] = False  # Allow CSRF token on HTTP
+app.config["WTF_CSRF_CHECK_DEFAULT"] = True  # Enable CSRF checking by default
+app.config["WTF_CSRF_ENABLED"] = True  # Ensure CSRF is enabled
 
 # Email configuration
 app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
@@ -493,12 +494,16 @@ with app.app_context():
     from onboarding_routes import onboarding_bp
     app.register_blueprint(onboarding_bp, url_prefix='/onboarding')
     
-    # Explicitly exempt TTS routes from CSRF protection
+    # Explicitly exempt specific routes from CSRF protection
     csrf.exempt(direct_tts_bp)
     csrf.exempt(simple_direct_tts_bp)
     csrf.exempt(premium_tts_bp)
     csrf.exempt(enhanced_tts_bp)
     csrf.exempt(openai_tts_bp)
+    
+    # Exempt API endpoints that need to bypass CSRF
+    csrf.exempt(app.view_functions['api_journal_coach'])
+    csrf.exempt(app.view_functions['api_analyze_entry'])
     
     # Register emergency login blueprint with CSRF exemption
     try:

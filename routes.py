@@ -41,19 +41,22 @@ def register():
 # User login - redirect to basic login to avoid JSON issues
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # Check if user is already logged in
     if current_user.is_authenticated:
-        # If logged in as admin, redirect to admin dashboard
         if hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
-            # Use direct path instead of url_for
             return redirect('/admin/dashboard')
-        # Otherwise, go to the regular dashboard using direct path
         return redirect('/dashboard')
     
-    try:
-        # Try to generate a CSRF token for the login form
-        from flask_wtf.csrf import generate_csrf
-        csrf_token = generate_csrf()
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data.lower()).first()
+        if user and user.check_password(form.password.data):
+            login_user(user, remember=form.remember.data)
+            next_page = request.args.get('next')
+            if next_page and next_page.startswith('/admin'):
+                flash('You need admin privileges to access that page.', 'warning')
+                return redirect('/dashboard')
+            return redirect(next_page if next_page else '/dashboard')
+        flash('Invalid email or password.', 'danger')
         
         # For GET requests, render the login form directly without using the FlaskForm
         if request.method == 'GET':
