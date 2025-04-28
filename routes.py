@@ -812,7 +812,7 @@ def download_all_data():
             'created_at': entry.created_at.strftime('%Y-%m-%d %H:%M:%S'),
             'updated_at': entry.updated_at.strftime('%Y-%m-%d %H:%M:%S'),
             'is_analyzed': entry.is_analyzed,
-            ''recommendations': recommendations,
+            'recommendations': recommendations,
             'user_reflection': entry.user_reflection
         })
 
