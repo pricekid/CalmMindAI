@@ -20,26 +20,9 @@ class CSRFDebugMiddleware:
         path = environ.get('PATH_INFO', '')
         method = environ.get('REQUEST_METHOD', '')
         
-        # Only debug for POST requests
+        # Only log CSRF debug information, don't try to access the request context
         if method == 'POST':
-            with self.app.request_context(environ):
-                self.logger.debug(f"CSRF Debug - Route: {path}")
-                
-                # Log session details
-                session_id = session.get('_id')
-                session_token = session.get('_csrf_token')
-                
-                self.logger.debug(f"Session ID: {session_id}")
-                self.logger.debug(f"Session token exists: {session_token is not None}")
-                if session_token:
-                    self.logger.debug(f"Session token length: {len(session_token)}")
-                
-                # Log form submission details
-                if request.form:
-                    form_token = request.form.get('csrf_token')
-                    self.logger.debug(f"Form token exists: {form_token is not None}")
-                    if form_token:
-                        self.logger.debug(f"Form token length: {len(form_token)}")
-                        self.logger.debug(f"Tokens match: {form_token == session_token}")
+            self.logger.debug(f"CSRF Debug - Path: {path}, Method: {method}")
         
+        # Pass through to the actual application
         return self.app(environ, start_response)
