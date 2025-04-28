@@ -2475,6 +2475,12 @@
         }
         
         function saveInitialReflection() {
+            // Add defensive checks for null or undefined elements
+            if (!reflectionTextArea) {
+                console.error('Reflection text area not found');
+                return;
+            }
+            
             const reflectionText = reflectionTextArea.value.trim();
             if (!reflectionText) {
                 alert('Please enter your reflection before continuing.');
@@ -2552,6 +2558,12 @@
         }
         
         function saveSecondReflection() {
+            // Add defensive checks for null or undefined elements
+            if (!secondReflectionTextArea) {
+                console.error('Second reflection text area not found');
+                return;
+            }
+            
             const reflectionText = secondReflectionTextArea.value.trim();
             if (!reflectionText) {
                 alert('Please enter your response before continuing.');
