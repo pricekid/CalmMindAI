@@ -333,8 +333,6 @@ def journal():
     return render_template('journal.html', 
                           title='Journal', 
                           entries=entries)
-        .order_by(desc(JournalEntry.created_at))\
-        .limit(30).all()
 
     # Format the entry data for visualization
     journal_data = [{
