@@ -23,6 +23,85 @@ logger.setLevel(logging.DEBUG)
 journal_bp = Blueprint('journal_blueprint', __name__, url_prefix='/journal')
 
 # API endpoint to save user reflections
+@journal_bp.route('/save-initial-reflection', methods=['POST'])
+@login_required
+def save_initial_reflection():
+    """Save user's first reflection response"""
+    try:
+        data = request.get_json()
+        entry_id = int(data.get('entry_id'))
+        reflection_text = data.get('reflection_text')
+        
+        if not entry_id or not reflection_text:
+            return jsonify({"error": "Missing required fields"}), 400
+            
+        entry = JournalEntry.query.get_or_404(entry_id)
+        
+        if entry.user_id != current_user.id:
+            return jsonify({"error": "Unauthorized access"}), 403
+            
+        entry.user_reflection = reflection_text
+        entry.updated_at = datetime.utcnow()
+        
+        # Generate Mira's followup insight
+        analysis_result = analyze_journal_with_gpt(
+            journal_text=f"{entry.content}\n\nUser Reflection: {reflection_text}",
+            anxiety_level=entry.anxiety_level,
+            user_id=current_user.id
+        )
+        
+        entry.followup_insight = analysis_result.get("gpt_response")
+        db.session.commit()
+        
+        return jsonify({
+            "success": True,
+            "followup_insight": entry.followup_insight
+        })
+        
+    except Exception as e:
+        logger.error(f"Error saving reflection: {str(e)}")
+        return jsonify({"error": "Server error"}), 500
+
+@journal_bp.route('/save-second-reflection', methods=['POST'])
+@login_required
+def save_second_reflection():
+    """Save user's second reflection response"""
+    try:
+        data = request.get_json()
+        entry_id = int(data.get('entry_id'))
+        reflection_text = data.get('reflection_text')
+        
+        if not entry_id or not reflection_text:
+            return jsonify({"error": "Missing required fields"}), 400
+            
+        entry = JournalEntry.query.get_or_404(entry_id)
+        
+        if entry.user_id != current_user.id:
+            return jsonify({"error": "Unauthorized access"}), 403
+            
+        entry.second_reflection = reflection_text
+        entry.updated_at = datetime.utcnow()
+        
+        # Generate Mira's closing message
+        analysis_result = analyze_journal_with_gpt(
+            journal_text=f"{entry.content}\n\nFirst Reflection: {entry.user_reflection}\nSecond Reflection: {reflection_text}",
+            anxiety_level=entry.anxiety_level,
+            user_id=current_user.id
+        )
+        
+        entry.closing_message = analysis_result.get("gpt_response")
+        entry.conversation_complete = True
+        db.session.commit()
+        
+        return jsonify({
+            "success": True,
+            "closing_message": entry.closing_message
+        })
+        
+    except Exception as e:
+        logger.error(f"Error saving second reflection: {str(e)}")
+        return jsonify({"error": "Server error"}), 500
+
 @journal_bp.route('/save-reflection', methods=['POST'])
 @login_required
 def save_reflection():
