@@ -52,5 +52,6 @@ def test_analysis():
         logger.error(f"Error in test analysis: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
-# This file is now used as a blueprint, so we don't need the run code
-# Blueprint is registered in app.py with the url_prefix '/enhanced-mira'
+# For stand-alone testing if needed
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)

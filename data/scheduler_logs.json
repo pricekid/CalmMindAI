@@ -40,5 +40,41 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 16698",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-28 21:32:07",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-28 21:32:07.450950",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 21:32:07",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 21:33:25",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-28 21:33:25.318753",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 21:33:25",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 21:33:25",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-28 21:33:25.325844",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 21:33:25",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
   }
 ]
