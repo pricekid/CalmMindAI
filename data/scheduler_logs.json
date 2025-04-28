@@ -3418,5 +3418,41 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 2994",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-28 16:48:01",
+    "type": "health_check",
+    "message": "Scheduler running with PID 2994 at 2025-04-28 16:48:01",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 16:52:46",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2994",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 16:52:56",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2994",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 16:53:03",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2994",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 16:53:42",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2994",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 16:53:55",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 2994",
+    "success": true
   }
 ]

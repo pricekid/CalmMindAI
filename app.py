@@ -20,7 +20,14 @@ mail = Mail()
 
 # Create the app
 app = Flask(__name__)
-app.secret_key = os.environ.get("SESSION_SECRET")
+
+# Ensure a strong secret key for sessions
+if os.environ.get("SESSION_SECRET"):
+    app.secret_key = os.environ.get("SESSION_SECRET")
+else:
+    import secrets
+    app.logger.warning("No SESSION_SECRET found, generating a temporary one")
+    app.secret_key = secrets.token_hex(32)  # Generate a secure key if none exists
 
 # Add custom Jinja2 filters
 @app.template_filter('nl2br')
@@ -40,11 +47,20 @@ app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
 }
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-# Configure CSRF protection
-app.config["WTF_CSRF_TIME_LIMIT"] = 3600  # 1 hour token expiration
+# Configure CSRF protection with consistent settings
+app.config["WTF_CSRF_TIME_LIMIT"] = 7200  # 2 hour token expiration (extended)
 app.config["WTF_CSRF_SSL_STRICT"] = False  # Allow CSRF token on HTTP
-app.config["WTF_CSRF_CHECK_DEFAULT"] = True  # Enable CSRF checking by default
-app.config["WTF_CSRF_ENABLED"] = True  # Ensure CSRF is enabled
+app.config["WTF_CSRF_ENABLED"] = True  # Keep CSRF globally enabled
+app.config["WTF_CSRF_METHODS"] = ['POST', 'PUT', 'PATCH', 'DELETE']  # Only protect data-changing methods
+app.config["WTF_CSRF_CHECK_DEFAULT"] = True  # Apply CSRF checking by default
+app.config["WTF_CSRF_FIELD_NAME"] = "csrf_token"  # Consistent field name
+
+# Configure session cookies with secure settings
+from datetime import timedelta
+app.config['SESSION_COOKIE_SECURE'] = False  # Set to True in production with HTTPS
+app.config['SESSION_COOKIE_HTTPONLY'] = True  # Prevent JavaScript access to session cookie
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Compatible with most browsers
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)  # Extended session lifetime
 
 # Email configuration
 app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
@@ -64,6 +80,10 @@ app.config['BASE_URL'] = os.environ.get('BASE_URL', '')
 db.init_app(app)
 csrf.init_app(app)
 mail.init_app(app)
+
+# Apply CSRF debug middleware to log token validation details
+from csrf_debug import CSRFDebugMiddleware
+app.wsgi_app = CSRFDebugMiddleware(app.wsgi_app)
 
 # Configure login manager for regular users
 login_manager = LoginManager()
@@ -285,8 +305,15 @@ def handle_exception(e):
     
     # Check if it's a CSRF error
     if "csrf" in err_str:
+        app.logger.warning(f"CSRF validation error: {str(e)}")
         error_title = "Session Expired"
         error_message = "Your session has expired. Please refresh the page and try again."
+        
+        # For login routes, redirect to the stable login
+        if 'login' in request.path.lower() or request.path == '/':
+            flash('Your session has expired. Please try logging in again.', 'warning')
+            return redirect('/stable-login')
+            
         try:
             return render_template('error.html', 
                                   error_title=error_title,
@@ -294,7 +321,7 @@ def handle_exception(e):
                                   show_csrf_error=True), 400
         except Exception as template_error:
             app.logger.error(f"Error rendering template: {str(template_error)}")
-            return Response(f"Session expired. Please <a href='/'>return to homepage</a> and try again.", 400, content_type='text/html')
+            return Response(f"Session expired. Please <a href='/stable-login'>login again</a>.", 400, content_type='text/html')
     
     # Check if it's an OpenAI API error related to quota
     is_api_error = False
