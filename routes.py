@@ -333,9 +333,6 @@ def journal():
     return render_template('journal.html', 
                           title='Journal', 
                           entries=entries)
-
-    # Format the entry data for visualization
-    journal_data = [{
         'id': entry.id,
         'title': entry.title,
         'anxiety_level': entry.anxiety_level,
