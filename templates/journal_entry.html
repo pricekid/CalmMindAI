@@ -2628,9 +2628,22 @@
             });
         }
         
-        // Helper function to get CSRF token from meta tag
+        // Helper function to get CSRF token from meta tag or hidden input
         function getCsrfToken() {
-            return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            const metaToken = document.querySelector('meta[name="csrf-token"]');
+            if (metaToken) {
+                return metaToken.getAttribute('content');
+            }
+            
+            // If meta tag not found, try to get from hidden input (which is added by {{ form.hidden_tag() }})
+            const csrfInput = document.querySelector('input[name="csrf_token"]');
+            if (csrfInput) {
+                return csrfInput.value;
+            }
+            
+            // If neither is found, return an empty string and log an error
+            console.error('CSRF token not found in meta tag or hidden input');
+            return '';
         }
     }
 
