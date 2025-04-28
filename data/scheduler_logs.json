@@ -1,120 +1,96 @@
 [
   {
-    "timestamp": "2025-04-28 21:51:11",
-    "type": "scheduler_start",
-    "message": "Scheduler started successfully",
+    "timestamp": "2025-04-28 23:21:11",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
     "success": true
   },
   {
-    "timestamp": "2025-04-28 21:51:11",
-    "type": "job_setup",
-    "message": "Setting up daily email reminder job for 6:00 AM UTC",
+    "timestamp": "2025-04-28 23:21:11",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
     "success": true
   },
   {
-    "timestamp": "2025-04-28 21:51:11",
-    "type": "job_schedule_error",
-    "message": "Failed to properly schedule daily email job",
-    "success": false
-  },
-  {
-    "timestamp": "2025-04-28 21:51:11",
-    "type": "job_scheduled",
-    "message": "Backup email job scheduled for 6:10 AM UTC",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-28 21:51:11",
-    "type": "scheduler_startup",
-    "message": "Starting notification scheduler at 2025-04-28 21:51:11.616746",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-28 21:51:11",
+    "timestamp": "2025-04-28 23:21:11",
     "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-28 21:51:11.617330",
+    "message": "Scheduler health check at 2025-04-28 23:21:11.617120",
     "success": true
   },
   {
-    "timestamp": "2025-04-28 21:51:11",
-    "type": "job_setup",
-    "message": "Setting up daily email reminder job for 6:00 AM UTC",
+    "timestamp": "2025-04-28 23:21:11",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
     "success": true
   },
   {
-    "timestamp": "2025-04-28 21:51:11",
-    "type": "scheduler_start",
-    "message": "Scheduler started successfully",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-28 21:51:11",
-    "type": "job_schedule_error",
-    "message": "Failed to properly schedule daily email job",
-    "success": false
-  },
-  {
-    "timestamp": "2025-04-28 21:51:11",
-    "type": "job_scheduled",
-    "message": "Backup email job scheduled for 6:10 AM UTC",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-28 21:51:11",
-    "type": "scheduler_startup",
-    "message": "Starting notification scheduler at 2025-04-28 21:51:11.629375",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-28 21:51:11",
+    "timestamp": "2025-04-28 23:21:11",
     "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-28 21:51:11.631485",
+    "message": "Scheduler health check at 2025-04-28 23:21:11.629734",
     "success": true
   },
   {
-    "timestamp": "2025-04-28 21:51:11",
-    "type": "scheduler_start",
-    "message": "Scheduler started successfully",
+    "timestamp": "2025-04-28 23:21:11",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
     "success": true
   },
   {
-    "timestamp": "2025-04-28 21:51:11",
-    "type": "job_setup",
-    "message": "Setting up daily email reminder job for 6:00 AM UTC",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-28 21:51:11",
-    "type": "job_schedule_error",
-    "message": "Failed to properly schedule daily email job",
-    "success": false
-  },
-  {
-    "timestamp": "2025-04-28 21:51:11",
-    "type": "job_scheduled",
-    "message": "Backup email job scheduled for 6:10 AM UTC",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-28 21:51:11",
-    "type": "scheduler_startup",
-    "message": "Starting notification scheduler at 2025-04-28 21:51:11.716415",
-    "success": true
-  },
-  {
-    "timestamp": "2025-04-28 21:51:11",
+    "timestamp": "2025-04-28 23:21:11",
     "type": "scheduler_health",
-    "message": "Scheduler health check at 2025-04-28 21:51:11.725010",
+    "message": "Scheduler health check at 2025-04-28 23:21:11.717037",
     "success": true
   },
   {
-    "timestamp": "2025-04-28 21:51:11",
-    "type": "scheduler_start",
-    "message": "Scheduler started successfully",
+    "timestamp": "2025-04-28 23:21:11",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
     "success": true
   },
   {
-    "timestamp": "2025-04-28 21:51:13",
+    "timestamp": "2025-04-28 23:21:13",
+    "type": "health_check",
+    "message": "Scheduler running with PID 238 at 2025-04-28 23:21:13",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 23:26:10",
+    "type": "health_check",
+    "message": "Scheduler running with PID 238 at 2025-04-28 23:26:10",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 23:26:10",
+    "type": "health_check",
+    "message": "Scheduler running with PID 238 at 2025-04-28 23:26:10",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 23:26:13",
+    "type": "health_check",
+    "message": "Scheduler running with PID 238 at 2025-04-28 23:26:13",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 23:31:10",
+    "type": "health_check",
+    "message": "Scheduler running with PID 238 at 2025-04-28 23:31:10",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 23:31:10",
+    "type": "health_check",
+    "message": "Scheduler running with PID 238 at 2025-04-28 23:31:10",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 23:31:13",
+    "type": "health_check",
+    "message": "Scheduler running with PID 238 at 2025-04-28 23:31:13",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 23:31:23",
     "type": "startup_check",
     "message": "Scheduler already running with PID 238",
     "success": true
