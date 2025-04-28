@@ -582,10 +582,10 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         Provide supportive, non-judgmental validation while gently encouraging safety planning and professional support.
         """
         
-        # Create the enhanced structured prompt
+        # Create the enhanced structured prompt with greater emotional intelligence
         prompt = f"""
         You are Mira, a warm, compassionate CBT journaling coach inside an app called Calm Journey. 
-        Your task is to respond to the following journal entry with empathy, insight, and personalized CBT strategies.
+        Your task is to respond to the following journal entry with deep emotional intelligence, therapeutic insight, and highly personalized CBT strategies.
         
         ## JOURNAL ENTRY:
         "{safe_text}"
@@ -594,17 +594,31 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         {crisis_instructions}
         
         ## YOUR TASK:
-        1. Identify 2-3 cognitive distortions present in this entry
-        2. Offer 2-3 specific CBT strategies tailored to this person's situation
-        3. Create a reflective, engaging prompt that encourages deeper insight
-        4. Follow up with a supportive, grounding message that reinforces the insight
-        5. Create a compassionate, personalized overall response that addresses their specific situation
+        1. Validate specific emotions by naming them precisely (e.g., "neglected," "anxious," "unimportant") rather than using general statements
+        2. Identify cognitive distortions with depth, connecting them to underlying emotional needs (need for safety, validation, connection)
+        3. Explore relationship context by including thoughtful questions about patterns and expectations
+        4. Offer practical, actionable steps including specific scripts or templates the user can directly apply
+        5. Encourage meaningful self-reflection that identifies core emotional needs
+        6. Balance compassionate support with gentle challenges to unhelpful thought patterns
+        
+        ## ENHANCED THERAPEUTIC TECHNIQUES:
+        1. Provide a scripted "I-statement" template they can use in a conversation (e.g., "I feel ___ when ___ because ___. What I need is ___.")
+        2. Include a focused reality-check exercise that challenges negative assumptions (list evidence for/against)
+        3. Offer a specific emotion-regulation technique appropriate to their situation
+        4. Create a mini reflection guide (e.g., "When I feel [emotion], I will [healthy action] instead of [unhealthy reaction]")
+        5. Connect current feelings to deeper emotional needs to increase self-awareness
         
         ## RESPONSE STRUCTURE: 
         You MUST create a response in three distinct parts:
-        1. INSIGHT TEXT: Initial empathy + gentle reframe (acknowledge emotion, highlight a theme, begin cognitive exploration)
-        2. REFLECTION PROMPT: A single, focused question for user engagement (start with "Take a moment. ")
-        3. FOLLOW-UP TEXT: Support and mini reframe (provide closure, validation or behavioral anchor)
+        1. INSIGHT TEXT: Initial empathy with precise emotion labeling + gentle reframe (acknowledge specific emotions, highlight patterns, begin cognitive exploration)
+        2. REFLECTION PROMPT: A single, focused question that explores relationship context or emotional needs (start with "Take a moment. ")
+        3. FOLLOW-UP TEXT: Support and mini reframe with practical action steps (provide scripted language, validation and concrete behavioral guidance)
+        
+        ## TONE REQUIREMENTS:
+        - Warm, empathetic, and professional yet conversational
+        - Avoid vague reassurances; be specific and personalized
+        - Balance validation with gentle challenge
+        - Always offer a clear, actionable path forward
         
         IMPORTANT: You must respond with ONLY valid JSON in the exact format below.
         DO NOT add any text, commentary, or explanation outside the JSON structure.
@@ -612,43 +626,75 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         RETURN ONLY THE JSON OBJECT, nothing else.
         
         {{
-            "insight_text": "Your warm, empathetic initial response that acknowledges emotion and introduces a gentle reframe",
-            "reflection_prompt": "Take a moment. What's one expectation you've been holding that feels heavy — and might not be fully yours to carry?",
-            "followup_text": "Your supportive follow-up that provides closure and a validating next step",
+            "insight_text": "Your empathetic initial response that specifically names emotions like 'neglected', 'anxious', 'unimportant' and introduces a connection to emotional needs and relationship patterns",
+            "reflection_prompt": "Take a moment. What's one expectation you've been holding about this relationship that feels heavy — and might point to an important emotional need?",
+            "followup_text": "Your supportive follow-up that provides a specific script, template, or practical exercise the user can implement immediately",
             "distortions": [
                 {{
                     "pattern": "Name of CBT thought pattern 1",
-                    "description": "Brief explanation of the pattern as it relates to their situation"
+                    "description": "In-depth explanation connecting this pattern to specific emotional needs (e.g., safety, validation, connection)",
+                    "emotional_need": "The core emotional need driving this thought pattern"
                 }},
                 {{
                     "pattern": "Name of CBT thought pattern 2",
-                    "description": "Brief explanation of the pattern as it relates to their situation"
+                    "description": "In-depth explanation connecting this pattern to specific emotional needs",
+                    "emotional_need": "The core emotional need driving this thought pattern"
                 }}
             ],
             "strategies": [
                 {{
-                    "title": "Strategy 1 Title",
-                    "description": "Detailed explanation of the strategy",
-                    "action_step": "Specific, concrete action they can take today"
+                    "title": "Communication Script Template",
+                    "description": "Detailed explanation of when to use this script in the relationship context",
+                    "action_step": "I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request].",
+                    "emotional_need_addressed": "The specific emotional need this strategy helps fulfill"
                 }},
                 {{
-                    "title": "Strategy 2 Title",
-                    "description": "Detailed explanation of the strategy",
-                    "action_step": "Specific, concrete action they can take today"
+                    "title": "Reality-Check Exercise",
+                    "description": "Detailed explanation of how assumptions are affecting the situation",
+                    "action_step": "List evidence for and against your fear that [specific fear related to the relationship]",
+                    "emotional_need_addressed": "The specific emotional need this strategy helps fulfill"
+                }},
+                {{
+                    "title": "Emotion Regulation Technique",
+                    "description": "Explanation of how to manage the intense emotions in this situation",
+                    "action_step": "When you feel [specific emotion], try this specific grounding technique: [detailed steps]",
+                    "emotional_need_addressed": "The specific emotional need this strategy helps fulfill"
                 }}
             ],
-            "reflection_prompt": "A thoughtful question tailored to their situation",
-            "outro": "Your warm closing message",
+            "relationship_exploration": [
+                {{
+                    "question": "Has this communication pattern happened before in this relationship?",
+                    "purpose": "Exploring recurring patterns to identify relationship dynamics"
+                }},
+                {{
+                    "question": "What expectations were set before your partner left?",
+                    "purpose": "Examining unspoken assumptions that may contribute to distress"
+                }}
+            ],
+            "actionable_templates": [
+                {{
+                    "situation": "When reaching out to express your needs",
+                    "template": "A ready-to-use message template they can adapt for their specific situation",
+                    "follow_up_guidance": "Specific advice on what to do after using this template"
+                }},
+                {{
+                    "situation": "When managing anxiety while waiting for a response",
+                    "template": "When I feel [specific emotion], I will [healthy coping action] instead of [unhealthy reaction]",
+                    "follow_up_guidance": "How to respond to different possible outcomes"
+                }}
+            ],
             "patterns": [
                 {{
                     "pattern": "Name of CBT thought pattern 1",
-                    "description": "Brief explanation of the pattern",
-                    "recommendation": "Specific CBT technique or exercise to address this pattern"
+                    "description": "In-depth explanation of how this pattern affects relationships",
+                    "recommendation": "Specific CBT technique tailored for relationship contexts",
+                    "core_need": "The emotional need this pattern is trying to meet"
                 }},
                 {{
                     "pattern": "Name of CBT thought pattern 2",
-                    "description": "Brief explanation of the pattern", 
-                    "recommendation": "Specific CBT technique or exercise to address this pattern"
+                    "description": "In-depth explanation of how this pattern affects relationships", 
+                    "recommendation": "Specific CBT technique tailored for relationship contexts",
+                    "core_need": "The emotional need this pattern is trying to meet"
                 }}
             ]
         }}
@@ -731,7 +777,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
             response = client.chat.completions.create(
                 model=model,
                 messages=[
-                    {"role": "system", "content": "You are Mira, a deeply empathetic and personalized CBT journaling coach who creates thoughtful, specific responses tailored to each individual's unique situation. You create responses that feel like they were written by a trusted friend who truly understands the person's specific circumstances. You MUST respond ONLY in valid JSON format with a structured response that includes 'insight_text', 'reflection_prompt', 'followup_text', 'distortions', 'strategies', and 'patterns' fields. No markdown, no text outside the JSON structure."},
+                    {"role": "system", "content": "You are Mira, a CBT-trained therapist with exceptional emotional intelligence. Your responses demonstrate deep empathy by naming specific emotions (like 'neglected', 'anxious', 'unimportant') rather than using general phrases. You connect thought patterns to underlying emotional needs, offer practical tools like scripted 'I-statements', realistic reality-check exercises, and emotion regulation techniques tailored to the exact situation. Your reflections explore relationship contexts and patterns, helping users identify their core emotional needs while balancing validation with gentle challenge. Every response includes specific action steps and templates users can immediately apply. You MUST respond ONLY in valid JSON format with a structured response that includes 'insight_text', 'reflection_prompt', 'followup_text', 'distortions', 'strategies', and 'patterns' fields. No markdown, no text outside the JSON structure."},
                     {"role": "user", "content": prompt}
                 ],
                 response_format={"type": "json_object"},  # Explicitly require JSON response
@@ -809,14 +855,96 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                         }
                 
                 # Handle the new structured response format
-                # Check if we have the reflective pause format fields
+                # Check if we have the enhanced reflective pause format fields
+                has_enhanced_format = all(k in result for k in ['insight_text', 'reflection_prompt', 'followup_text']) and any(k in result for k in ['relationship_exploration', 'actionable_templates'])
+                
+                # Check if we have the reflective pause format fields (older version)
                 has_reflective_pause_format = all(k in result for k in ['insight_text', 'reflection_prompt', 'followup_text'])
                 
                 # Check if we have all the expected fields for the previous format
                 has_structured_format = all(k in result for k in ['intro', 'reflection', 'distortions', 'strategies', 'reflection_prompt', 'outro'])
                 
-                if has_reflective_pause_format:
-                    logger.debug("Found reflective pause format with all expected fields")
+                if has_enhanced_format:
+                    logger.debug("Found enhanced format with relationship exploration and actionable templates")
+                    
+                    # Get the three parts of the reflective pause format
+                    insight_text = result.get('insight_text', '')
+                    reflection_prompt = result.get('reflection_prompt', '')
+                    followup_text = result.get('followup_text', '')
+                    
+                    # Process distortions section with emotional needs
+                    distortions_list = result.get('distortions', [])
+                    distortions_text = "\n\nThought Patterns That May Be Surfacing:\n"
+                    for d in distortions_list:
+                        pattern = d.get('pattern', '')
+                        description = d.get('description', '')
+                        emotional_need = d.get('emotional_need', '')
+                        
+                        # Add emotional need if provided
+                        if emotional_need:
+                            distortions_text += f"* {pattern}: {description} This may relate to your need for {emotional_need}.\n"
+                        else:
+                            distortions_text += f"* {pattern}: {description}\n"
+                    
+                    # Process strategies section with emotional needs addressed
+                    strategies_list = result.get('strategies', [])
+                    strategies_text = "\n\nCBT-Based Strategies:\n"
+                    for i, s in enumerate(strategies_list, 1):
+                        title = s.get('title', f"Strategy {i}")
+                        description = s.get('description', '')
+                        action = s.get('action_step', '')
+                        emotional_need = s.get('emotional_need_addressed', '')
+                        
+                        # Format with emotional need if provided
+                        if emotional_need:
+                            strategies_text += f"{i}. {title} {description} {action} This helps address your need for {emotional_need}.\n"
+                        else:
+                            strategies_text += f"{i}. {title} {description} {action}\n"
+                    
+                    # Process relationship exploration if available
+                    relationship_exploration = result.get('relationship_exploration', [])
+                    relationship_text = ""
+                    if relationship_exploration:
+                        relationship_text = "\n\nRelationship Context Questions to Consider:\n"
+                        for i, q in enumerate(relationship_exploration, 1):
+                            question = q.get('question', '')
+                            purpose = q.get('purpose', '')
+                            relationship_text += f"• {question} ({purpose})\n"
+                    
+                    # Process actionable templates if available
+                    templates = result.get('actionable_templates', [])
+                    templates_text = ""
+                    if templates:
+                        templates_text = "\n\nReady-to-Use Templates:\n"
+                        for i, t in enumerate(templates, 1):
+                            situation = t.get('situation', '')
+                            template = t.get('template', '')
+                            guidance = t.get('follow_up_guidance', '')
+                            
+                            templates_text += f"• For {situation}:\n  \"{template}\"\n"
+                            if guidance:
+                                templates_text += f"  Then: {guidance}\n"
+                    
+                    # Combine all sections for the enhanced response format
+                    coach_response = f"{insight_text}\n\n{reflection_prompt}\n\n{followup_text}{distortions_text}{strategies_text}{relationship_text}{templates_text}"
+                    
+                    # Add a sign-off if not already present
+                    if "Coach Mira" not in coach_response:
+                        coach_response += "\n\nWarmly,\nCoach Mira"
+                    
+                    # Store the structured data with all new fields
+                    result['structured_data'] = {
+                        'insight_text': insight_text,
+                        'reflection_prompt': reflection_prompt,
+                        'followup_text': followup_text,
+                        'distortions': distortions_list,
+                        'strategies': strategies_list,
+                        'relationship_exploration': relationship_exploration,
+                        'actionable_templates': templates
+                    }
+                
+                elif has_reflective_pause_format:
+                    logger.debug("Found basic reflective pause format with all expected fields")
                     
                     # Get the three parts of the reflective pause format
                     insight_text = result.get('insight_text', '')
