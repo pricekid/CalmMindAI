@@ -118,5 +118,143 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 14846f004978 at 2025-04-28 19:09:09.211559",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:14:08",
+    "type": "health_check",
+    "message": "Scheduler running with PID 13842 at 2025-04-28 19:14:08",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:19:08",
+    "type": "health_check",
+    "message": "Scheduler running with PID 13842 at 2025-04-28 19:19:08",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:23:17",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 13842). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-28 19:23:17",
+    "type": "job_setup",
+    "message": "Setting up daily email reminder job for 6:00 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:23:17",
+    "type": "job_schedule_error",
+    "message": "Failed to properly schedule daily email job",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-28 19:23:17",
+    "type": "job_scheduled",
+    "message": "Backup email job scheduled for 6:10 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:23:17",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-28 19:23:17.584359",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:23:17",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-28 19:23:17.585217",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:23:17",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:23:18",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 14570",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:23:18",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 14846f004978 at 2025-04-28 19:23:18.057999",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:24:10",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 14570",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:24:46",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 14570",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:25:18",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 14570",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:25:26",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 14570). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-28 19:25:27",
+    "type": "job_setup",
+    "message": "Setting up daily email reminder job for 6:00 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:25:27",
+    "type": "job_schedule_error",
+    "message": "Failed to properly schedule daily email job",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-28 19:25:27",
+    "type": "job_scheduled",
+    "message": "Backup email job scheduled for 6:10 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:25:27",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-28 19:25:27.206579",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:25:27",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-28 19:25:27.207491",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:25:27",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:25:27",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 14877",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 19:25:27",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 14846f004978 at 2025-04-28 19:25:27.641801",
+    "success": true
   }
 ]

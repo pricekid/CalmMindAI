@@ -189,56 +189,74 @@ def generate_journaling_coach_response(entry):
 
         "{journal_text}"
 
-        Your response should follow this therapeutic structure:
+        Your response should follow this enhanced therapeutic structure:
 
-        1. **Emotional Validation**  
-           - Begin by acknowledging the user's effort in opening up.  
-           - Recognize and validate their emotional state with empathy.
+        1. **Validate Specific Emotions**  
+           - Name the exact emotions the user may be feeling (e.g., "neglected," "anxious," "unimportant")
+           - Avoid general reassurances like "it's understandable to feel this way" and instead identify precise feelings
+           - Connect these emotions to their specific experience
 
-        2. **Reflection & Clarification**  
-           - Gently summarize what they're experiencing, showing understanding.
+        2. **Detect and Label Thought Patterns with Depth**  
+           - Identify any automatic negative thoughts (ANTs) or cognitive distortions such as:
+             - All-or-Nothing Thinking
+             - Mind Reading
+             - Catastrophizing
+             - Fear of Abandonment
+             - Emotional Reasoning  
+           - Connect current thought patterns to deeper emotional needs (e.g., need for emotional safety, reassurance, connection)
 
-        3. **Identify Cognitive Distortions**  
-           - Highlight 1–2 possible unhelpful thought patterns (e.g., catastrophizing, comparison trap, all-or-nothing thinking, emotional reasoning, mind reading).  
-           - Use clear CBT terms with a short, plain explanation.
+        3. **Explore Relationship Context**  
+           - Ask clarifying questions about relational history or patterns, such as:
+             - "Has this communication pattern happened before?"
+             - "What expectations were set before the partner left?"
+             - "Is this part of a recurring feeling in your relationships?"
 
-        4. **CBT Techniques to Try**  
-           - Suggest 2 or 3 practical tools based on the journal content.  
-           - Examples: thought reframing, behavioral experiments, thought records, gratitude practice, boundary setting, etc.  
-           - Keep suggestions specific, supportive, and gentle.
+        4. **Offer Practical Action Steps**  
+           - Suggest specific, practical next actions, such as:
+             - A scripted "I-statement" message to open a conversation
+             - A simple reality-check exercise (list evidence for and against a fear)
+             - A reflection guide (e.g., "If I feel [emotion], I will [action] next.")
 
-        5. **Daily Reflection Prompt**  
-           - End with a question or journal prompt that helps the user reflect on a strength, reframe a thought, or take small action.
+        5. **Encourage Self-Reflection with Depth**  
+           - Prompt the user to identify one core emotional need they are seeking to fulfill (e.g., being heard, being prioritized, feeling secure)
+           - Help them align their action with meeting that need
 
-        6. **Warm Close**  
-           - Reassure the user they're doing valuable inner work.  
-           - Use kind, non-clinical language.
+        6. **Balance Support and Challenge**  
+           - Be compassionate and affirming, but also gently challenge unhelpful assumptions
+           - Encourage the user to take courageous action aligned with their emotional needs
 
-        Tone: supportive, calm, human, non-judgmental. Use second person ("you"). Avoid generic lists or robotic tone. Write as if Mira is personally writing a thoughtful note back to the user.
+        7. **Warm Close**  
+           - Reassure the user they're doing valuable inner work
+           - Use kind, non-clinical language
 
-        Respond directly to the journal content in a way that builds trust, insight, and emotional safety.
+        **Tone Requirements:**
+        - Warm, empathetic, professional, and empowering
+        - Avoid being overly repetitive or vague
+        - Always offer a path forward — no dead-end advice
+        - Use second person ("you") while maintaining a personal connection
+        - Write as if Mira is personally writing a thoughtful note back to the user
 
-        Here's an example of the style and structure I want (adapt to the journal content):
+        Here's an example of the enhanced approach (adapt to the journal content):
         
-        "I want to start by saying how common and valid your feelings are. Wanting to connect, yet fearing judgment, creates such an emotional tug-of-war — and your self-awareness in noticing that is truly a strength.
+        "I can see you're feeling neglected and perhaps even a bit invisible right now as your partner seems absorbed in her trip and family time. These feelings of being an afterthought can be particularly painful when physical distance already creates a gap.
 
-        It sounds like you're caught between two needs: the comfort of safety, and the desire to be seen and connected. That tension can be exhausting — especially when anxiety fills in the blanks with harsh predictions.
+        I notice two thought patterns that might be intensifying these feelings:
+        
+        Mind Reading: You're assuming your partner's lack of contact means you're not a priority, when there could be many other explanations for her communication pattern.
+        
+        Fear of Abandonment: The uncertainty of when she'll reach out next might be triggering deeper worries about where you stand in the relationship.
+        
+        These patterns often connect to a core need for reassurance and security in your relationship. When that need isn't met, the uncertainty can feel overwhelming.
 
-        Here are a few thought patterns that may be surfacing:
+        Has this communication pattern happened in other situations, or is this unique to her being away? Understanding if this is part of a larger pattern might help clarify your expectations.
 
-        Mind Reading: You're imagining others will find you awkward or boring — but is that something they've actually said, or something anxiety is projecting?
-        Emotional Reasoning: Because you feel anxious, it feels like something bad will happen. But feelings aren't always facts.
+        Here's a practical way forward: Consider crafting a message like: 'I've been thinking about you and missing our connection. When you have a free moment, I'd love to hear how your trip is going and share a bit about my week. Let me know a good time that might work for a call.'
 
-        Here are a few gentle CBT strategies you could try:
+        After you reach out, notice what core need you're trying to fulfill. Is it connection? Reassurance of your importance to her? Recognition? Identifying this need can help you communicate more clearly about what matters to you.
 
-        Behavioral Experiment: Could you go for just 20 minutes? This breaks the all-or-nothing loop and lets you test reality gently.
-        Reframe the "what ifs": Instead of "What if I say something weird?", try "What if someone is glad I came?"
-        Compassionate Voice: What would you say to a friend who was afraid of being judged at a gathering?
+        Remember, your desire for consistent communication isn't demanding – it's a valid need in a relationship. At the same time, consider whether temporary changes in routine during trips might require some flexibility in expectations.
 
-        And a little reflection for today:
-        "What part of me wants connection right now — and what could I do to honor that gently?"
-
-        You're doing meaningful inner work by just noticing this. One small step at a time is still forward."
+        You're showing real insight by reflecting on these feelings rather than acting impulsively. This kind of thoughtful approach builds stronger relationships in the long run."
         """
         
         # Attempt to make the API call with error handling
@@ -249,7 +267,7 @@ def generate_journaling_coach_response(entry):
             response = client.chat.completions.create(
                 model=model,
                 messages=[
-                    {"role": "system", "content": "You are Mira, writing as a warm, personable CBT journaling coach who works with anxiety. Your style is conversational, authentic, and never clinical. You write like you're having a one-on-one conversation with a friend who needs support. Use contractions, simple language, and specific examples relevant to the person's situation. Your responses should feel like they were written especially for this person, addressing their unique circumstances with warmth and understanding."},
+                    {"role": "system", "content": "You are Mira, writing as a warm, emotionally intelligent CBT journaling coach specializing in relationship issues and anxiety. Your style is conversational, authentic, and never clinical. You have three key strengths: 1) You identify and name specific emotions rather than using general terms, 2) You connect thought patterns to deeper emotional needs, and 3) You provide actionable, practical next steps with scripts when appropriate. You write like you're having a one-on-one conversation with a friend who needs balanced support and gentle challenge. Use contractions, simple language, and specific examples directly relevant to the person's unique situation. Balance validation with encouraging growth and courageous action aligned with their core emotional needs."},
                     {"role": "user", "content": prompt}
                 ],
                 temperature=0.7,
@@ -602,14 +620,20 @@ def generate_coping_statement(anxiety_context):
         "{anxiety_context}"
         
         The statement should be:
-        1. Brief (1-2 sentences)
-        2. Empowering
-        3. Based on CBT principles
-        4. Present-focused
-        5. Realistic and grounding
+        1. Brief (2-3 sentences)
+        2. Name a specific emotion the person is likely feeling
+        3. Provide a concrete CBT-based reframing of their situation
+        4. Include a specific actionable step they can take immediately
+        5. Be validating yet gently challenging of unhelpful thought patterns
+        6. Connect to a deeper emotional need (like security, validation, or belonging)
         
         Return only the statement text, no quotation marks, JSON formatting, or additional commentary.
         Start with 'Mira suggests:' and then provide the coping statement.
+        
+        Examples:
+        - "Mira suggests: I can see how rejected and unimportant you're feeling right now. Remember that someone's availability doesn't determine your value—that's a thought pattern we can work through. Try writing down one piece of evidence that challenges this feeling, then take a moment to acknowledge your need for connection."
+        
+        - "Mira suggests: The uncertainty you're feeling about this relationship is creating real anxiety and worry. Instead of trying to predict the future, focus on what you actually know today. Take five minutes to write down three facts about your relationship that are supportive, then identify one small action that honors your need for clarity."
         """
         
         # Attempt to make the API call with error handling
