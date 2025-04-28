@@ -26,81 +26,215 @@ journal_bp = Blueprint('journal_blueprint', __name__, url_prefix='/journal')
 @journal_bp.route('/save-initial-reflection', methods=['POST'])
 @login_required
 def save_initial_reflection():
-    """Save user's first reflection response"""
+    """Save user's first reflection response with enhanced error handling"""
     try:
-        data = request.get_json()
-        entry_id = int(data.get('entry_id'))
+        # Debug logging
+        logger.debug("Starting save_initial_reflection handler")
+        
+        # Get JSON request data with error handling
+        try:
+            data = request.get_json()
+            if data is None:
+                logger.error("No JSON data in request")
+                return jsonify({"error": "Invalid request format - no JSON data"}), 400
+        except Exception as json_err:
+            logger.error(f"Error parsing JSON request: {str(json_err)}")
+            return jsonify({"error": "Invalid JSON format"}), 400
+            
+        # Validate required fields with detailed error messages
+        entry_id = data.get('entry_id')
         reflection_text = data.get('reflection_text')
         
-        if not entry_id or not reflection_text:
-            return jsonify({"error": "Missing required fields"}), 400
+        if entry_id is None:
+            logger.error("Missing entry_id in request")
+            return jsonify({"error": "Missing entry_id field"}), 400
             
-        entry = JournalEntry.query.get_or_404(entry_id)
+        if reflection_text is None:
+            logger.error("Missing reflection_text in request")
+            return jsonify({"error": "Missing reflection_text field"}), 400
         
+        # Validate and convert entry_id
+        try:
+            entry_id = int(entry_id)
+        except (ValueError, TypeError):
+            logger.error(f"Invalid entry_id format: {entry_id}")
+            return jsonify({"error": "Invalid entry ID format"}), 400
+            
+        # Check for empty reflection
+        if not reflection_text.strip():
+            logger.warning("Empty reflection text submitted")
+            return jsonify({"error": "Reflection text cannot be empty"}), 400
+            
+        # Fetch journal entry with error handling
+        try:
+            entry = JournalEntry.query.get(entry_id)
+            if entry is None:
+                logger.error(f"Journal entry not found: ID {entry_id}")
+                return jsonify({"error": "Journal entry not found"}), 404
+        except Exception as db_err:
+            logger.error(f"Database error fetching entry {entry_id}: {str(db_err)}")
+            return jsonify({"error": "Database error"}), 500
+        
+        # Check authorization
         if entry.user_id != current_user.id:
+            logger.warning(f"Unauthorized access to entry {entry_id} by user {current_user.id}")
             return jsonify({"error": "Unauthorized access"}), 403
             
-        entry.user_reflection = reflection_text
-        entry.updated_at = datetime.utcnow()
+        # Save the reflection
+        try:
+            entry.user_reflection = reflection_text
+            entry.updated_at = datetime.utcnow()
+            
+            # Log successful update
+            logger.debug(f"Successfully updated entry {entry_id} with user reflection")
+        except Exception as update_err:
+            logger.error(f"Error updating entry with reflection: {str(update_err)}")
+            return jsonify({"error": "Error saving reflection"}), 500
         
         # Generate Mira's followup insight
-        analysis_result = analyze_journal_with_gpt(
-            journal_text=f"{entry.content}\n\nUser Reflection: {reflection_text}",
-            anxiety_level=entry.anxiety_level,
-            user_id=current_user.id
-        )
-        
-        entry.followup_insight = analysis_result.get("gpt_response")
-        db.session.commit()
-        
+        try:
+            logger.debug(f"Generating followup insight for entry {entry_id}")
+            analysis_result = analyze_journal_with_gpt(
+                journal_text=f"{entry.content}\n\nUser Reflection: {reflection_text}",
+                anxiety_level=entry.anxiety_level,
+                user_id=current_user.id
+            )
+            
+            # Check if we got a valid response
+            if not analysis_result or "gpt_response" not in analysis_result:
+                logger.error("Invalid or empty analysis result from GPT")
+                entry.followup_insight = "I appreciate your reflection. I'm having trouble generating a response right now, but your thoughts are valuable and have been saved."
+            else:
+                entry.followup_insight = analysis_result.get("gpt_response")
+                
+            # Commit changes
+            db.session.commit()
+            logger.debug(f"Successfully committed changes for entry {entry_id}")
+            
+        except Exception as gpt_err:
+            # Handle GPT analysis errors gracefully
+            logger.error(f"Error generating followup insight: {str(gpt_err)}")
+            # Save the reflection even if GPT analysis fails
+            entry.followup_insight = "Thank you for sharing your reflection. I'm processing your thoughts, but having some trouble generating a response right now. Your reflection has been saved."
+            db.session.commit()
+            
+        # Return success response
         return jsonify({
             "success": True,
             "followup_insight": entry.followup_insight
         })
         
     except Exception as e:
-        logger.error(f"Error saving reflection: {str(e)}")
-        return jsonify({"error": "Server error"}), 500
+        # Catch-all error handler for unhandled exceptions
+        logger.error(f"Unhandled error in save_initial_reflection: {str(e)}")
+        return jsonify({"error": "Server error occurred while saving your reflection"}), 500
 
 @journal_bp.route('/save-second-reflection', methods=['POST'])
 @login_required
 def save_second_reflection():
-    """Save user's second reflection response"""
+    """Save user's second reflection response with enhanced error handling"""
     try:
-        data = request.get_json()
-        entry_id = int(data.get('entry_id'))
+        # Debug logging
+        logger.debug("Starting save_second_reflection handler")
+        
+        # Get JSON request data with error handling
+        try:
+            data = request.get_json()
+            if data is None:
+                logger.error("No JSON data in request")
+                return jsonify({"error": "Invalid request format - no JSON data"}), 400
+        except Exception as json_err:
+            logger.error(f"Error parsing JSON request: {str(json_err)}")
+            return jsonify({"error": "Invalid JSON format"}), 400
+            
+        # Validate required fields with detailed error messages
+        entry_id = data.get('entry_id')
         reflection_text = data.get('reflection_text')
         
-        if not entry_id or not reflection_text:
-            return jsonify({"error": "Missing required fields"}), 400
+        if entry_id is None:
+            logger.error("Missing entry_id in request")
+            return jsonify({"error": "Missing entry_id field"}), 400
             
-        entry = JournalEntry.query.get_or_404(entry_id)
+        if reflection_text is None:
+            logger.error("Missing reflection_text in request")
+            return jsonify({"error": "Missing reflection_text field"}), 400
         
+        # Validate and convert entry_id
+        try:
+            entry_id = int(entry_id)
+        except (ValueError, TypeError):
+            logger.error(f"Invalid entry_id format: {entry_id}")
+            return jsonify({"error": "Invalid entry ID format"}), 400
+            
+        # Check for empty reflection
+        if not reflection_text.strip():
+            logger.warning("Empty reflection text submitted")
+            return jsonify({"error": "Reflection text cannot be empty"}), 400
+            
+        # Fetch journal entry with error handling
+        try:
+            entry = JournalEntry.query.get(entry_id)
+            if entry is None:
+                logger.error(f"Journal entry not found: ID {entry_id}")
+                return jsonify({"error": "Journal entry not found"}), 404
+        except Exception as db_err:
+            logger.error(f"Database error fetching entry {entry_id}: {str(db_err)}")
+            return jsonify({"error": "Database error"}), 500
+        
+        # Check authorization
         if entry.user_id != current_user.id:
+            logger.warning(f"Unauthorized access to entry {entry_id} by user {current_user.id}")
             return jsonify({"error": "Unauthorized access"}), 403
             
-        entry.second_reflection = reflection_text
-        entry.updated_at = datetime.utcnow()
+        # Save the reflection
+        try:
+            entry.second_reflection = reflection_text
+            entry.updated_at = datetime.utcnow()
+            entry.conversation_complete = True
+            
+            # Log successful update
+            logger.debug(f"Successfully updated entry {entry_id} with second reflection")
+        except Exception as update_err:
+            logger.error(f"Error updating entry with second reflection: {str(update_err)}")
+            return jsonify({"error": "Error saving reflection"}), 500
         
         # Generate Mira's closing message
-        analysis_result = analyze_journal_with_gpt(
-            journal_text=f"{entry.content}\n\nFirst Reflection: {entry.user_reflection}\nSecond Reflection: {reflection_text}",
-            anxiety_level=entry.anxiety_level,
-            user_id=current_user.id
-        )
-        
-        entry.closing_message = analysis_result.get("gpt_response")
-        entry.conversation_complete = True
-        db.session.commit()
-        
+        try:
+            logger.debug(f"Generating closing message for entry {entry_id}")
+            analysis_result = analyze_journal_with_gpt(
+                journal_text=f"{entry.content}\n\nFirst Reflection: {entry.user_reflection}\nSecond Reflection: {reflection_text}",
+                anxiety_level=entry.anxiety_level,
+                user_id=current_user.id
+            )
+            
+            # Check if we got a valid response
+            if not analysis_result or "gpt_response" not in analysis_result:
+                logger.error("Invalid or empty analysis result from GPT")
+                entry.closing_message = "Thank you for sharing your reflections. I appreciate your thoughtful responses. Your insights show a willingness to explore your feelings, which is an important part of emotional growth.\n\nWarmly,\nCoach Mira"
+            else:
+                entry.closing_message = analysis_result.get("gpt_response")
+                
+            # Commit changes
+            db.session.commit()
+            logger.debug(f"Successfully committed changes for entry {entry_id}")
+            
+        except Exception as gpt_err:
+            # Handle GPT analysis errors gracefully
+            logger.error(f"Error generating closing message: {str(gpt_err)}")
+            # Save the reflection even if GPT analysis fails
+            entry.closing_message = "Thank you for sharing your reflections throughout this conversation. Even though I'm having some technical difficulties generating a personalized response, your willingness to reflect and explore your thoughts shows great self-awareness. Your reflections have been saved.\n\nWarmly,\nCoach Mira"
+            db.session.commit()
+            
+        # Return success response
         return jsonify({
             "success": True,
             "closing_message": entry.closing_message
         })
         
     except Exception as e:
-        logger.error(f"Error saving second reflection: {str(e)}")
-        return jsonify({"error": "Server error"}), 500
+        # Catch-all error handler for unhandled exceptions
+        logger.error(f"Unhandled error in save_second_reflection: {str(e)}")
+        return jsonify({"error": "Server error occurred while saving your reflection"}), 500
 
 @journal_bp.route('/save-reflection', methods=['POST'])
 @login_required
