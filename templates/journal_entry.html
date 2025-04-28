@@ -2641,7 +2641,18 @@
                 return csrfInput.value;
             }
             
-            // If neither is found, return an empty string and log an error
+            // If neither is found, try to get from the form directly
+            const form = document.querySelector('form');
+            if (form) {
+                const hiddenInputs = form.querySelectorAll('input[type="hidden"]');
+                for (let input of hiddenInputs) {
+                    if (input.name === 'csrf_token') {
+                        return input.value;
+                    }
+                }
+            }
+            
+            // If still not found, return an empty string and log an error
             console.error('CSRF token not found in meta tag or hidden input');
             return '';
         }

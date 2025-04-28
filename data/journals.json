@@ -3712,5 +3712,30 @@
     ],
     "structured_data": null,
     "user_reflection": null
+  },
+  {
+    "id": 171,
+    "user_id": 1,
+    "title": "Relationship issues 2",
+    "content": "my partner went away for 10 day. for teh first 2 days she messaged briefly, the finallly she called on the 3rd day. i missed her call but wheni called back she was at home with family and was talking to me, but most of the time i spent listening to her talking to others. her mum then called and she told me she woudl call me back, but she didnt. following day she messaged good mornng and said she was out and about at work. nothing since. how shoudl i feel",
+    "anxiety_level": 5,
+    "created_at": "2025-04-28T18:41:29.573609",
+    "updated_at": "2025-04-28T18:41:38.539067",
+    "is_analyzed": true,
+    "gpt_response": "It's understandable to feel a bit puzzled and perhaps even a little neglected when communication doesn't go as expected, especially when you're missing someone. It seems like there's a longing for connection and reassurance during her absence.\n\nTake a moment. How might you express your need for more regular communication in a way that feels comfortable to both you and your partner?\n\nRemember, it's okay to want to feel connected and to seek clarity on how both of you can maintain that connection while apart.\n\nThought Patterns That May Be Surfacing:\n* Mind Reading: You might be assuming what your partner's lack of communication means about her feelings for you or her priorities, without direct evidence.\n* All-or-Nothing Thinking: You might be interpreting her not calling back as a sign of not caring, rather than considering other possible reasons for her silence.\n\n\nCBT-Based Strategies:\n1. Clarify Expectations Discuss with your partner what kind of communication you both expect when apart. This can help avoid misunderstandings and align expectations. Schedule a time to talk with your partner about how often you'd like to communicate when one of you is away.\n2. Mindfulness Practice Focus on the present moment to help reduce anxiety about the unknowns. This can help in grounding your emotions and reducing overthinking. Spend 5 minutes each morning focusing on your breathing, noticing any thoughts that arise without judgment.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Catastrophizing\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Mind Reading",
+        "description": "Assuming you know what someone else is thinking or feeling without evidence.",
+        "recommendation": "Challenge this by asking for clarity directly from the person involved."
+      },
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "Seeing things in black-and-white terms, without recognizing the nuances in between.",
+        "recommendation": "Practice finding the middle ground by considering a range of possible explanations for a situation."
+      }
+    ],
+    "structured_data": null,
+    "user_reflection": null
   }
 ]
