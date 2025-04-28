@@ -130,5 +130,83 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 14846f004978 at 2025-04-28 17:16:31.498603",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-28 17:21:30",
+    "type": "health_check",
+    "message": "Scheduler running with PID 7960 at 2025-04-28 17:21:30",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 17:26:30",
+    "type": "health_check",
+    "message": "Scheduler running with PID 7960 at 2025-04-28 17:26:30",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 17:31:30",
+    "type": "health_check",
+    "message": "Scheduler running with PID 7960 at 2025-04-28 17:31:30",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 17:36:30",
+    "type": "health_check",
+    "message": "Scheduler running with PID 7960 at 2025-04-28 17:36:30",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 17:41:30",
+    "type": "health_check",
+    "message": "Scheduler running with PID 7960 at 2025-04-28 17:41:30",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 17:44:14",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 7960). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-28 17:44:15",
+    "type": "job_setup",
+    "message": "Setting up daily email reminder job for 6:00 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 17:44:15",
+    "type": "job_schedule_error",
+    "message": "Failed to properly schedule daily email job",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-28 17:44:15",
+    "type": "job_scheduled",
+    "message": "Backup email job scheduled for 6:10 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 17:44:15",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 14846f004978 at 2025-04-28 17:44:15.477618",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 17:44:15",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-28 17:44:15.479602",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 17:44:15",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-28 17:44:15.506937",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 17:44:15",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
   }
 ]
