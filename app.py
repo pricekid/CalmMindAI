@@ -517,6 +517,14 @@ with app.app_context():
     from openai_tts_service import openai_tts_bp
     app.register_blueprint(openai_tts_bp)
     
+    # Register the stable login blueprint with improved CSRF handling
+    try:
+        from stable_login import stable_login_bp
+        app.register_blueprint(stable_login_bp)
+        app.logger.info("Stable login blueprint registered with enhanced CSRF handling")
+    except ImportError:
+        app.logger.warning("Stable login blueprint not available")
+    
     # Register the onboarding blueprint
     from onboarding_routes import onboarding_bp
     app.register_blueprint(onboarding_bp, url_prefix='/onboarding')
