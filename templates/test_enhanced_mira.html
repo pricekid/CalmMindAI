@@ -1,374 +1,227 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Enhanced Mira</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .response-container {
-            white-space: pre-line;
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            border-left: 5px solid #6c757d;
-        }
-        .loading-spinner {
-            display: none;
-            text-align: center;
-            margin: 20px 0;
-        }
-        #journal-text {
-            min-height: 150px;
-        }
-        .section-title {
-            font-weight: bold;
-            margin-top: 15px;
-            margin-bottom: 5px;
-            color: #495057;
-        }
-        .json-viewer {
-            background-color: #f8f9fa;
-            padding: 10px;
-            border-radius: 5px;
-            font-family: monospace;
-            white-space: pre-wrap;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        .emotion-tag {
-            display: inline-block;
-            padding: 2px 8px;
-            margin: 2px;
-            border-radius: 12px;
-            background-color: #e2f3f5;
-            color: #0c6170;
-            font-size: 0.85rem;
-        }
-        .need-tag {
-            display: inline-block;
-            padding: 2px 8px;
-            margin: 2px;
-            border-radius: 12px;
-            background-color: #fde2e4;
-            color: #a04040;
-            font-size: 0.85rem;
-        }
-        .pattern-card {
-            border-left: 3px solid #6c757d;
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: #f8f9fa;
-        }
-        .strategy-card {
-            border-left: 3px solid #28a745;
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: #f8f9fa;
-        }
-        .template-card {
-            border-left: 3px solid #007bff;
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: #f8f9fa;
-        }
-    </style>
-</head>
-<body>
-    <div class="container mt-5 mb-5">
-        <h1 class="mb-4">Test Enhanced Mira Therapeutic Responses</h1>
-        
-        <div class="card mb-4">
-            <div class="card-header">
-                <h5>Journal Entry</h5>
-            </div>
-            <div class="card-body">
-                <textarea id="journal-text" class="form-control mb-3">{{ journal_entry }}</textarea>
-                
-                <div class="row g-3 align-items-center mb-3">
-                    <div class="col-auto">
-                        <label for="anxiety-level" class="col-form-label">Anxiety Level (1-10):</label>
-                    </div>
-                    <div class="col-auto">
-                        <input type="number" id="anxiety-level" class="form-control" min="1" max="10" value="6">
-                    </div>
-                </div>
-                
-                <button id="analyze-btn" class="btn btn-primary">Analyze with Enhanced Mira</button>
-            </div>
-        </div>
-        
-        <div class="loading-spinner" id="loading">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-            <p class="mt-2">Processing your journal entry with enhanced emotional intelligence...</p>
-        </div>
-        
-        <div id="response-wrapper" style="display: none;">
+{% extends "base.html" %}
+
+{% block title %}Enhanced Mira Test{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1>Enhanced Mira Response Test</h1>
+            <p class="lead">This page tests the enhanced emotional intelligence features of Mira's responses.</p>
+            
             <div class="card mb-4">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5>Mira's Enhanced Response</h5>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="toggle-raw-json">
-                        <label class="form-check-label" for="toggle-raw-json">Show Raw JSON</label>
-                    </div>
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Journal Entry</h5>
                 </div>
                 <div class="card-body">
-                    <div id="formatted-response">
-                        <div id="insight-section">
-                            <div class="section-title">Initial Insight:</div>
-                            <div id="insight-text" class="response-container"></div>
+                    <div class="form-group">
+                        <label for="journal-text">Your journal entry:</label>
+                        <textarea id="journal-text" class="form-control" rows="6">{{ journal_entry }}</textarea>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="anxiety-level">Anxiety Level (1-10):</label>
+                        <input type="range" class="form-range" id="anxiety-level" min="1" max="10" value="6">
+                        <div class="d-flex justify-content-between">
+                            <small>Low (1)</small>
+                            <small>Medium (5)</small>
+                            <small>High (10)</small>
                         </div>
-                        
-                        <div id="reflection-section">
-                            <div class="section-title">Reflection Prompt:</div>
-                            <div id="reflection-prompt" class="response-container"></div>
+                    </div>
+                    <button id="analyze-button" class="btn btn-primary mt-3">Analyze with Enhanced Mira</button>
+                </div>
+            </div>
+            
+            <div id="results-container" class="card mb-4 d-none">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Mira's Response</h5>
+                </div>
+                <div class="card-body">
+                    <div id="loading" class="text-center">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
                         </div>
+                        <p class="mt-2">Mira is analyzing your journal entry...</p>
+                    </div>
+                    
+                    <div id="results" class="d-none">
+                        <!-- Response sections will be filled dynamically -->
+                        <h4>Reflection Summary</h4>
+                        <p id="reflection-summary" class="mb-4"></p>
                         
-                        <div id="followup-section">
-                            <div class="section-title">Follow-up Support:</div>
-                            <div id="followup-text" class="response-container"></div>
-                        </div>
+                        <h4>Emotional Recognition</h4>
+                        <div id="emotional-recognition" class="mb-4"></div>
                         
-                        <div id="distortions-section">
-                            <div class="section-title">Thought Patterns Identified:</div>
-                            <div id="distortions-container"></div>
-                        </div>
+                        <h4>Thought Pattern Analysis</h4>
+                        <div id="thought-patterns" class="mb-4"></div>
                         
-                        <div id="strategies-section">
-                            <div class="section-title">CBT-Based Strategies:</div>
-                            <div id="strategies-container"></div>
-                        </div>
+                        <h4>Coping Strategies</h4>
+                        <div id="coping-strategies" class="mb-4"></div>
                         
-                        <div id="relationship-section">
-                            <div class="section-title">Relationship Exploration:</div>
-                            <div id="relationship-container"></div>
-                        </div>
+                        <h4>Reflective Questions</h4>
+                        <div id="reflective-questions" class="mb-4"></div>
                         
-                        <div id="templates-section">
-                            <div class="section-title">Actionable Templates:</div>
-                            <div id="templates-container"></div>
+                        <h4>Personalized Message</h4>
+                        <p id="personalized-message" class="mb-4"></p>
+                        
+                        <div class="mt-4">
+                            <button id="view-raw-json" class="btn btn-outline-secondary btn-sm">View Raw JSON Response</button>
+                            <div id="raw-json-container" class="mt-3 d-none">
+                                <pre id="raw-json" class="bg-light p-3 rounded"></pre>
+                            </div>
                         </div>
                     </div>
                     
-                    <div id="raw-json-viewer" class="json-viewer mt-3" style="display: none;"></div>
+                    <div id="error-message" class="alert alert-danger d-none">
+                        <h5>Error</h5>
+                        <p id="error-text"></p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const analyzeButton = document.getElementById('analyze-button');
+    const journalText = document.getElementById('journal-text');
+    const anxietyLevel = document.getElementById('anxiety-level');
+    const resultsContainer = document.getElementById('results-container');
+    const loading = document.getElementById('loading');
+    const results = document.getElementById('results');
+    const errorMessage = document.getElementById('error-message');
+    const errorText = document.getElementById('error-text');
+    const rawJsonButton = document.getElementById('view-raw-json');
+    const rawJsonContainer = document.getElementById('raw-json-container');
+    const rawJson = document.getElementById('raw-json');
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const analyzeBtn = document.getElementById('analyze-btn');
-            const journalText = document.getElementById('journal-text');
-            const anxietyLevel = document.getElementById('anxiety-level');
-            const loading = document.getElementById('loading');
-            const responseWrapper = document.getElementById('response-wrapper');
-            const rawJsonViewer = document.getElementById('raw-json-viewer');
-            const toggleRawJson = document.getElementById('toggle-raw-json');
-            const formattedResponse = document.getElementById('formatted-response');
-            
-            // Elements for formatted response
-            const insightText = document.getElementById('insight-text');
-            const reflectionPrompt = document.getElementById('reflection-prompt');
-            const followupText = document.getElementById('followup-text');
-            const distortionsContainer = document.getElementById('distortions-container');
-            const strategiesContainer = document.getElementById('strategies-container');
-            const relationshipContainer = document.getElementById('relationship-container');
-            const templatesContainer = document.getElementById('templates-container');
-            
-            const relationshipSection = document.getElementById('relationship-section');
-            const templatesSection = document.getElementById('templates-section');
-            
-            toggleRawJson.addEventListener('change', function() {
-                if (this.checked) {
-                    rawJsonViewer.style.display = 'block';
-                    formattedResponse.style.display = 'none';
-                } else {
-                    rawJsonViewer.style.display = 'none';
-                    formattedResponse.style.display = 'block';
-                }
+    // Elements for displaying results
+    const reflectionSummary = document.getElementById('reflection-summary');
+    const emotionalRecognition = document.getElementById('emotional-recognition');
+    const thoughtPatterns = document.getElementById('thought-patterns');
+    const copingStrategies = document.getElementById('coping-strategies');
+    const reflectiveQuestions = document.getElementById('reflective-questions');
+    const personalizedMessage = document.getElementById('personalized-message');
+    
+    analyzeButton.addEventListener('click', async function() {
+        // Clear previous results
+        rawJsonContainer.classList.add('d-none');
+        resultsContainer.classList.remove('d-none');
+        loading.classList.remove('d-none');
+        results.classList.add('d-none');
+        errorMessage.classList.add('d-none');
+        
+        try {
+            const response = await fetch('/enhanced-mira/api/test-analysis', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    journal_text: journalText.value,
+                    anxiety_level: parseInt(anxietyLevel.value)
+                })
             });
             
-            analyzeBtn.addEventListener('click', function() {
-                const journal = journalText.value.trim();
-                const anxiety = parseInt(anxietyLevel.value);
-                
-                if (!journal) {
-                    alert('Please enter a journal entry');
-                    return;
-                }
-                
-                if (isNaN(anxiety) || anxiety < 1 || anxiety > 10) {
-                    alert('Please enter a valid anxiety level between 1 and 10');
-                    return;
-                }
-                
-                // Show loading spinner
-                loading.style.display = 'block';
-                responseWrapper.style.display = 'none';
-                analyzeBtn.disabled = true;
-                
-                fetch('/api/test-analysis', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        journal_text: journal,
-                        anxiety_level: anxiety
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Hide loading spinner
-                    loading.style.display = 'none';
-                    responseWrapper.style.display = 'block';
-                    analyzeBtn.disabled = false;
-                    
-                    // Display raw JSON
-                    rawJsonViewer.textContent = JSON.stringify(data, null, 2);
-                    
-                    // Extract relevant fields from response
-                    let structuredData = data.structured_data || {};
-                    
-                    // Set main text sections
-                    insightText.textContent = structuredData.insight_text || "";
-                    reflectionPrompt.textContent = structuredData.reflection_prompt || "";
-                    followupText.textContent = structuredData.followup_text || "";
-                    
-                    // Clear containers
-                    distortionsContainer.innerHTML = '';
-                    strategiesContainer.innerHTML = '';
-                    relationshipContainer.innerHTML = '';
-                    templatesContainer.innerHTML = '';
-                    
-                    // Check if we have the enhanced fields
-                    const hasEnhancedFormat = structuredData.relationship_exploration || structuredData.actionable_templates;
-                    
-                    // Add distortions with emotional needs if available
-                    const distortions = structuredData.distortions || [];
-                    distortions.forEach(distortion => {
-                        const patternCard = document.createElement('div');
-                        patternCard.className = 'pattern-card';
-                        
-                        const patternTitle = document.createElement('h6');
-                        patternTitle.textContent = distortion.pattern;
-                        
-                        const patternDesc = document.createElement('p');
-                        patternDesc.textContent = distortion.description;
-                        
-                        patternCard.appendChild(patternTitle);
-                        patternCard.appendChild(patternDesc);
-                        
-                        // Add emotional need tag if available
-                        if (distortion.emotional_need) {
-                            const needTag = document.createElement('div');
-                            needTag.className = 'need-tag';
-                            needTag.textContent = `Need: ${distortion.emotional_need}`;
-                            patternCard.appendChild(needTag);
-                        }
-                        
-                        distortionsContainer.appendChild(patternCard);
-                    });
-                    
-                    // Add strategies with emotional needs addressed if available
-                    const strategies = structuredData.strategies || [];
-                    strategies.forEach((strategy, index) => {
-                        const strategyCard = document.createElement('div');
-                        strategyCard.className = 'strategy-card';
-                        
-                        const strategyTitle = document.createElement('h6');
-                        strategyTitle.textContent = `${index + 1}. ${strategy.title}`;
-                        
-                        const strategyDesc = document.createElement('p');
-                        strategyDesc.textContent = strategy.description;
-                        
-                        const actionStep = document.createElement('p');
-                        actionStep.innerHTML = `<strong>Action:</strong> ${strategy.action_step}`;
-                        
-                        strategyCard.appendChild(strategyTitle);
-                        strategyCard.appendChild(strategyDesc);
-                        strategyCard.appendChild(actionStep);
-                        
-                        // Add emotional need addressed if available
-                        if (strategy.emotional_need_addressed) {
-                            const needTag = document.createElement('div');
-                            needTag.className = 'need-tag';
-                            needTag.textContent = `Addresses need for: ${strategy.emotional_need_addressed}`;
-                            strategyCard.appendChild(needTag);
-                        }
-                        
-                        strategiesContainer.appendChild(strategyCard);
-                    });
-                    
-                    // Handle relationship exploration if available
-                    if (hasEnhancedFormat && structuredData.relationship_exploration) {
-                        relationshipSection.style.display = 'block';
-                        
-                        const relationshipQuestions = structuredData.relationship_exploration || [];
-                        relationshipQuestions.forEach(question => {
-                            const questionEl = document.createElement('div');
-                            questionEl.className = 'mb-2';
-                            
-                            const questionText = document.createElement('p');
-                            questionText.innerHTML = `<strong>Q:</strong> ${question.question}`;
-                            
-                            const purposeText = document.createElement('p');
-                            purposeText.innerHTML = `<em>Purpose:</em> ${question.purpose}`;
-                            purposeText.className = 'text-muted';
-                            
-                            questionEl.appendChild(questionText);
-                            questionEl.appendChild(purposeText);
-                            
-                            relationshipContainer.appendChild(questionEl);
-                        });
-                    } else {
-                        relationshipSection.style.display = 'none';
-                    }
-                    
-                    // Handle actionable templates if available
-                    if (hasEnhancedFormat && structuredData.actionable_templates) {
-                        templatesSection.style.display = 'block';
-                        
-                        const templates = structuredData.actionable_templates || [];
-                        templates.forEach(template => {
-                            const templateCard = document.createElement('div');
-                            templateCard.className = 'template-card';
-                            
-                            const situationTitle = document.createElement('h6');
-                            situationTitle.textContent = template.situation;
-                            
-                            const templateText = document.createElement('div');
-                            templateText.className = 'p-2 mb-2 bg-light border rounded';
-                            templateText.textContent = template.template;
-                            
-                            templateCard.appendChild(situationTitle);
-                            templateCard.appendChild(templateText);
-                            
-                            if (template.follow_up_guidance) {
-                                const guidanceText = document.createElement('p');
-                                guidanceText.innerHTML = `<strong>Follow-up:</strong> ${template.follow_up_guidance}`;
-                                templateCard.appendChild(guidanceText);
-                            }
-                            
-                            templatesContainer.appendChild(templateCard);
-                        });
-                    } else {
-                        templatesSection.style.display = 'none';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while analyzing the journal entry. Please try again.');
-                    loading.style.display = 'none';
-                    analyzeBtn.disabled = false;
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            // Store raw JSON for debugging
+            rawJson.textContent = JSON.stringify(data, null, 2);
+            
+            // Process and display results
+            reflectionSummary.textContent = data.analysis_summary || "No summary available";
+            
+            // Display emotional recognition
+            if (data.emotions && data.emotions.length > 0) {
+                let emotionsHTML = '<ul class="list-group">';
+                data.emotions.forEach(emotion => {
+                    emotionsHTML += `
+                        <li class="list-group-item">
+                            <strong>${emotion.name || 'Unlabeled emotion'}</strong> 
+                            (Intensity: ${emotion.intensity || 'unknown'})
+                            <p>${emotion.validation || 'No validation provided'}</p>
+                        </li>`;
                 });
-            });
-        });
-    </script>
-</body>
-</html>
+                emotionsHTML += '</ul>';
+                emotionalRecognition.innerHTML = emotionsHTML;
+            } else {
+                emotionalRecognition.innerHTML = "<p>No emotional analysis available</p>";
+            }
+            
+            // Display thought patterns
+            if (data.thought_patterns && data.thought_patterns.length > 0) {
+                let patternsHTML = '<ul class="list-group">';
+                data.thought_patterns.forEach(pattern => {
+                    patternsHTML += `
+                        <li class="list-group-item">
+                            <strong>${pattern.name || 'Unlabeled pattern'}</strong>
+                            <p>${pattern.description || 'No description available'}</p>
+                            <p><em>Connected to emotional need: ${pattern.emotional_need || 'Not specified'}</em></p>
+                        </li>`;
+                });
+                patternsHTML += '</ul>';
+                thoughtPatterns.innerHTML = patternsHTML;
+            } else {
+                thoughtPatterns.innerHTML = "<p>No thought pattern analysis available</p>";
+            }
+            
+            // Display coping strategies
+            if (data.coping_strategies && data.coping_strategies.length > 0) {
+                let strategiesHTML = '<ul class="list-group">';
+                data.coping_strategies.forEach(strategy => {
+                    strategiesHTML += `
+                        <li class="list-group-item">
+                            <strong>${strategy.name || 'Unlabeled strategy'}</strong>
+                            <p>${strategy.description || 'No description available'}</p>
+                            <p class="text-muted">Why this works: ${strategy.rationale || 'Not explained'}</p>
+                        </li>`;
+                });
+                strategiesHTML += '</ul>';
+                copingStrategies.innerHTML = strategiesHTML;
+            } else {
+                copingStrategies.innerHTML = "<p>No coping strategies available</p>";
+            }
+            
+            // Display reflective questions
+            if (data.reflective_questions && data.reflective_questions.length > 0) {
+                let questionsHTML = '<ol class="list-group list-group-numbered">';
+                data.reflective_questions.forEach(question => {
+                    questionsHTML += `
+                        <li class="list-group-item">
+                            ${question}
+                        </li>`;
+                });
+                questionsHTML += '</ol>';
+                reflectiveQuestions.innerHTML = questionsHTML;
+            } else {
+                reflectiveQuestions.innerHTML = "<p>No reflective questions available</p>";
+            }
+            
+            // Display personalized message
+            personalizedMessage.textContent = data.personalized_message || "No personalized message available";
+            
+            // Hide loading, show results
+            loading.classList.add('d-none');
+            results.classList.remove('d-none');
+            
+        } catch (error) {
+            console.error('Error:', error);
+            loading.classList.add('d-none');
+            errorMessage.classList.remove('d-none');
+            errorText.textContent = `An error occurred: ${error.message}`;
+        }
+    });
+    
+    // Toggle raw JSON display
+    rawJsonButton.addEventListener('click', function() {
+        rawJsonContainer.classList.toggle('d-none');
+    });
+});
+</script>
+{% endblock %}

@@ -1,6 +1,6 @@
 import os
 import logging
-from flask import Flask, url_for, redirect, request, flash
+from flask import Flask, url_for, redirect, request, flash, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
 from flask_login import LoginManager, current_user, login_required as original_login_required
@@ -485,11 +485,43 @@ with app.app_context():
     except ImportError:
         app.logger.warning("Test reflection module not available")
         
-    # Register the enhanced Mira test blueprint
+    # Register the test_enhanced_mira routes directly - skip blueprint for now as we're having issues
     try:
         import test_enhanced_mira
-        app.register_blueprint(test_enhanced_mira.app, url_prefix='/enhanced-mira')
-        app.logger.info("Enhanced Mira test routes registered successfully")
+        # Create a route that redirects to our test page
+        @app.route('/enhanced-mira')
+        def enhanced_mira_redirect():
+            """Redirect to the enhanced Mira test page"""
+            return render_template('test_enhanced_mira.html', 
+                                  journal_entry=test_enhanced_mira.SAMPLE_JOURNAL_ENTRY)
+        
+        # Create the API endpoint directly in the main app
+        @app.route('/enhanced-mira/api/test-analysis', methods=['POST'])
+        def enhanced_mira_test_analysis():
+            """Direct endpoint for testing enhanced Mira analysis"""
+            from flask import request, jsonify
+            
+            try:
+                # Get the data from the request
+                data = request.get_json()
+                journal_text = data.get('journal_text', test_enhanced_mira.SAMPLE_JOURNAL_ENTRY)
+                anxiety_level = data.get('anxiety_level', 6)
+                
+                # Call the analysis function directly 
+                result = test_enhanced_mira.analyze_journal_with_gpt(
+                    journal_text=journal_text,
+                    anxiety_level=anxiety_level,
+                    user_id=0  # Use 0 for testing
+                )
+                
+                # Return the result
+                return jsonify(result)
+                
+            except Exception as e:
+                app.logger.error(f"Error in enhanced Mira test analysis: {str(e)}")
+                return jsonify({"error": str(e)}), 500
+            
+        app.logger.info("Enhanced Mira test routes registered directly")
     except (ImportError, AttributeError) as e:
         app.logger.warning(f"Enhanced Mira test module not available: {str(e)}")
     
