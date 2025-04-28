@@ -333,10 +333,6 @@ def journal():
     return render_template('journal.html', 
                           title='Journal', 
                           entries=entries)
-        'created_at': entry.created_at.isoformat(),
-        'content': entry.content[:100],  # Only send snippet for privacy/performance
-        'is_analyzed': entry.is_analyzed
-    } for entry in all_entries]
 
     # Calculate trend and statistics
     anxiety_avg = None
