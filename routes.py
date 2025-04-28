@@ -1,6 +1,5 @@
 from flask import render_template, url_for, flash, redirect, request, jsonify, abort, make_response
 from flask_login import login_user, current_user, logout_user
-from app import login_required
 from app import app, db
 from models import User, JournalEntry, CBTRecommendation, MoodLog
 from forms import RegistrationForm, LoginForm, JournalEntryForm, MoodLogForm, AccountUpdateForm
@@ -809,8 +808,7 @@ def download_all_data():
             'title': entry.title,
             'content': entry.content,
             'anxiety_level': entry.anxiety_level,
-            'created_at': entry.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-            'updated_at': entry.updated_at.strftime('%Y-%m-%d %H:%M:%S'),
+            'created_at': entry.created_at.strftime('%Y-%m-%d %H:%M:%S'),            'updated_at': entry.updated_at.strftime('%Y-%m-%d %H:%M:%S'),
             'is_analyzed': entry.is_analyzed,
             'recommendations': recommendations,
             'user_reflection': entry.user_reflection
@@ -842,3 +840,31 @@ def download_all_data():
     response.headers["Content-type"] = "application/json"
 
     return response
+
+def login_required(f):
+    from functools import wraps
+    from flask_login import current_user
+    from flask import flash, redirect, request
+
+    @wraps(f)
+    def decorated_view(*args, **kwargs):
+        # Import needed modules inside the decorator to avoid circular imports
+        from models import User
+        from admin_models import Admin
+
+        if not current_user.is_authenticated:
+            flash('You must be logged in to access this page.', 'warning')
+            return redirect('/login')
+
+        # Check if current route is for regular users but user is an admin
+        if not request.path.startswith('/admin') and hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
+            flash('You are logged in as an admin. Regular user pages are not accessible.', 'warning')
+            return redirect('/admin/dashboard')
+
+        # Check if current route is for admins but user is not an admin
+        if request.path.startswith('/admin') and (not hasattr(current_user, 'get_id') or not current_user.get_id().startswith('admin_')):
+            flash('You need admin privileges to access this page.', 'warning')
+            return redirect('/dashboard')
+
+        return f(*args, **kwargs)
+    return decorated_view
