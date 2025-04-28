@@ -2823,6 +2823,50 @@
     // Initialize conversation journaling when page loads
     document.addEventListener('DOMContentLoaded', function() {
         setupConversationalJournaling();
+        
+        // Handle the reflective pause continue button
+        const continueButton = document.getElementById('continue-reflection');
+        const reflectionPause = document.getElementById('reflection-pause');
+        const followupContent = document.getElementById('followup-content');
+        const userReflection = document.getElementById('user-reflection');
+        
+        if (continueButton && reflectionPause && followupContent) {
+            continueButton.addEventListener('click', function() {
+                // Validate that the user has entered a reflection
+                if (!userReflection || userReflection.value.trim() === '') {
+                    alert('Please enter your reflection before continuing.');
+                    return;
+                }
+                
+                // Hide the reflection pause and show the followup content
+                reflectionPause.classList.add('d-none');
+                followupContent.classList.remove('d-none');
+                
+                // Scroll to the followup content
+                followupContent.scrollIntoView({ behavior: 'smooth' });
+                
+                // Save the reflection to the journal if needed
+                // Note: This could be expanded to an AJAX call to save the reflection
+                console.log('User reflection:', userReflection.value);
+                
+                // Flash a success message
+                const successAlert = document.createElement('div');
+                successAlert.className = 'alert alert-success alert-dismissible fade show mt-4';
+                successAlert.innerHTML = `
+                    <strong>Reflection saved!</strong> Your insights have been recorded.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                followupContent.parentNode.insertBefore(successAlert, followupContent);
+                
+                // Auto-dismiss the alert after 5 seconds
+                setTimeout(() => {
+                    successAlert.classList.remove('show');
+                    setTimeout(() => {
+                        successAlert.remove();
+                    }, 150);
+                }, 5000);
+            });
+        }
     });
 </script>
 {% endblock %}
