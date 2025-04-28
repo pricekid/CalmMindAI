@@ -324,17 +324,15 @@ def dashboard():
 @app.route('/journal')
 @login_required
 def journal():
-    # Get all entries for visualization (limiting to last 30 for performance)
-    all_entries = JournalEntry.query.filter_by(user_id=current_user.id)\
-        .order_by(desc(JournalEntry.created_at))\
+    # Get all entries with efficient loading
+    entries = JournalEntry.query\
+        .filter_by(user_id=current_user.id)\
+        .order_by(JournalEntry.created_at.desc())\
         .limit(30).all()
 
     return render_template('journal.html', 
                           title='Journal', 
-                          entries=all_entries)
-
-    # Get all entries for visualization (limiting to last 30 for performance)
-    all_entries = JournalEntry.query.filter_by(user_id=current_user.id)\
+                          entries=entries)
         .order_by(desc(JournalEntry.created_at))\
         .limit(30).all()
 
