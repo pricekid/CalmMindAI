@@ -202,5 +202,77 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 14846f004978 at 2025-04-28 18:26:17.198029",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-28 18:27:06",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 10600",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 18:27:32",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 10600",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 18:27:50",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 10600",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 18:28:03",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 10600). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-28 18:28:04",
+    "type": "job_setup",
+    "message": "Setting up daily email reminder job for 6:00 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 18:28:04",
+    "type": "job_schedule_error",
+    "message": "Failed to properly schedule daily email job",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-28 18:28:04",
+    "type": "job_scheduled",
+    "message": "Backup email job scheduled for 6:10 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 18:28:04",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-28 18:28:04.375847",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 18:28:04",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-28 18:28:04.376636",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 18:28:04",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 18:28:04",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 11035",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 18:28:04",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 14846f004978 at 2025-04-28 18:28:04.809479",
+    "success": true
   }
 ]

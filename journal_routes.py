@@ -405,6 +405,25 @@ def new_journal_entry():
                 db.session.add(recommendation)
             
             entry.is_analyzed = True
+            
+            # Set the conversational fields using structured data if available
+            if structured_data and isinstance(structured_data, dict):
+                logger.debug("Setting conversational fields from structured data")
+                if 'insight_text' in structured_data:
+                    entry.initial_insight = structured_data.get('insight_text')
+                    logger.debug(f"Set initial_insight: {entry.initial_insight[:50]}...")
+                if 'reflection_prompt' in structured_data:
+                    # Include the reflection prompt at the end of the initial insight
+                    if entry.initial_insight:
+                        entry.initial_insight += f"\n\n{structured_data.get('reflection_prompt')}"
+                    else:
+                        entry.initial_insight = structured_data.get('reflection_prompt')
+                    logger.debug(f"Added reflection prompt to initial_insight")
+            else:
+                # Fallback - set the initial_insight to the gpt_response
+                logger.debug("No structured data available, using gpt_response for initial_insight")
+                entry.initial_insight = gpt_response
+            
             db.session.commit()
             
             # Save the complete journal entry to JSON file
@@ -554,7 +573,10 @@ def new_journal_entry():
 @login_required
 def view_journal_entry(entry_id):
     # Use undefer() to explicitly load the deferred user_reflection column when needed
-    entry = JournalEntry.query.options(undefer(JournalEntry.user_reflection)).get_or_404(entry_id)
+    entry = JournalEntry.query.options(
+        undefer(JournalEntry.user_reflection),
+        undefer(JournalEntry.second_reflection)
+    ).get_or_404(entry_id)
     
     # Ensure the entry belongs to the current user
     if entry.user_id != current_user.id:
@@ -565,15 +587,47 @@ def view_journal_entry(entry_id):
     earned_badge = session.pop('earned_badge', None)
     wellness_fact = session.pop('wellness_fact', None)
     
-    # Get the GPT response from JSON file or generate it if missing
+    # Initialize variables
     coach_response = ""
-    
-    # Try to get from saved journal entries first
     user_entries = get_journal_entries_for_user(current_user.id)
-    for json_entry in user_entries:
-        if json_entry.get('id') == entry_id:
-            coach_response = json_entry.get('gpt_response', "")
-            break
+    
+    # Check conversation state - if initial insight is missing but we have an analyzed entry,
+    # populate it from the GPT response
+    if entry.is_analyzed and not entry.initial_insight:
+        logger.debug(f"Entry {entry_id} is analyzed but missing initial_insight, fetching from JSON")
+        
+        # Try to get from saved journal entries first
+        for json_entry in user_entries:
+            if json_entry.get('id') == entry_id:
+                coach_response = json_entry.get('gpt_response', "")
+                structured_data = json_entry.get('structured_data', None)
+                
+                # If we have structured data, use it to populate the conversation fields
+                if structured_data and isinstance(structured_data, dict):
+                    logger.debug("Found structured data in JSON, using to populate conversation fields")
+                    if 'insight_text' in structured_data:
+                        entry.initial_insight = structured_data.get('insight_text')
+                    if 'reflection_prompt' in structured_data:
+                        # Include the reflection prompt at the end of the initial insight
+                        if entry.initial_insight:
+                            entry.initial_insight += f"\n\n{structured_data.get('reflection_prompt')}"
+                        else:
+                            entry.initial_insight = structured_data.get('reflection_prompt')
+                    db.session.commit()
+                    logger.debug(f"Updated entry {entry_id} with conversation fields from JSON")
+                else:
+                    # Fallback - set the initial_insight to the coach_response
+                    entry.initial_insight = coach_response
+                    db.session.commit()
+                    logger.debug(f"Updated entry {entry_id} with coach_response as initial_insight")
+                
+                break
+    else:
+        # Get coach_response from JSON if available
+        for json_entry in user_entries:
+            if json_entry.get('id') == entry_id:
+                coach_response = json_entry.get('gpt_response', "")
+                break
     
     # If not found, generate a new one
     if not coach_response:
