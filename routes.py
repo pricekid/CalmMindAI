@@ -324,9 +324,14 @@ def dashboard():
 @app.route('/journal')
 @login_required
 def journal():
-    # Redirect to the journal blueprint route
-    # Use direct path instead of url_for
-    return redirect('/journal/list')
+    # Get all entries for visualization (limiting to last 30 for performance)
+    all_entries = JournalEntry.query.filter_by(user_id=current_user.id)\
+        .order_by(desc(JournalEntry.created_at))\
+        .limit(30).all()
+
+    return render_template('journal.html', 
+                          title='Journal', 
+                          entries=all_entries)
 
     # Get all entries for visualization (limiting to last 30 for performance)
     all_entries = JournalEntry.query.filter_by(user_id=current_user.id)\
