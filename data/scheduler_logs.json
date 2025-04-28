@@ -472,5 +472,17 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 14846f004978 at 2025-04-28 18:46:41.764462",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-28 18:51:40",
+    "type": "health_check",
+    "message": "Scheduler running with PID 12364 at 2025-04-28 18:51:40",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-28 18:56:40",
+    "type": "health_check",
+    "message": "Scheduler running with PID 12364 at 2025-04-28 18:56:40",
+    "success": true
   }
 ]

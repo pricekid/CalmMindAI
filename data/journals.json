@@ -3737,5 +3737,30 @@
     ],
     "structured_data": null,
     "user_reflection": null
+  },
+  {
+    "id": 172,
+    "user_id": 1,
+    "title": "Relationship  Issues 3",
+    "content": "my partner went away for 10 day. for teh first 2 days she messaged briefly, the finallly she called on the 3rd day. i missed her call but wheni called back she was at home with family and was talking to me, but most of the time i spent listening to her talking to others. her mum then called and she told me she woudl call me back, but she didnt. following day she messaged good mornng and said she was out and about at work. nothing since. how shoudl i feel",
+    "anxiety_level": 6,
+    "created_at": "2025-04-28T18:56:24.391638",
+    "updated_at": "2025-04-28T18:56:34.338363",
+    "is_analyzed": true,
+    "gpt_response": "It's understandable that you're feeling uncertain about how to feel after the recent interactions with your partner. It seems like you're craving more connection and communication, which is completely natural when someone important to you is away. It's easy to feel a bit left out when their focus seems elsewhere, especially if you've been accustomed to more frequent contact.\n\nTake a moment. What's one expectation you've been holding that feels heavy \u2014 and might not be fully yours to carry?\n\nRemember that your feelings of wanting more connection are valid. It might be helpful to express your needs with gentle honesty. You're allowed to ask for the connection you need.\n\nThought Patterns That May Be Surfacing:\n* All-or-Nothing Thinking: You might be viewing the situation as either all good or all bad, feeling disconnected due to a few missed calls despite earlier messages.\n* Mind Reading: Assuming your partner's lack of contact reflects a lack of interest or care, without having direct confirmation of their thoughts or feelings.\n\n\nCBT-Based Strategies:\n1. Open Communication Engage in a calm conversation with your partner about how you feel when communication is sparse. Expressing your feelings can open up a dialogue and lead to mutual understanding. Plan a time to talk or write a message sharing your feelings and what you need to feel more connected.\n2. Reframe Thoughts Challenge the thought that the lack of communication means something negative. Consider other reasons for her busyness, such as family obligations. Write down the evidence for and against the thought that she's not interested, and find a more balanced perspective.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "Viewing situations in black-and-white terms without recognizing the nuances.",
+        "recommendation": "Practice finding the middle ground by listing exceptions to the rule."
+      },
+      {
+        "pattern": "Mind Reading",
+        "description": "Assuming you know what someone else is thinking.",
+        "recommendation": "Ask clarifying questions instead of assuming, to gain more accurate insights into their thoughts."
+      }
+    ],
+    "structured_data": null,
+    "user_reflection": null
   }
 ]

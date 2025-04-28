@@ -1399,7 +1399,24 @@
         const analyzeButton = document.getElementById('analyze-entry');
         if (analyzeButton) {
             analyzeButton.addEventListener('click', function() {
-                const journalId = this.getAttribute('data-journal-id');
+                // Safely get the journal ID with fallback
+                let journalId;
+                try {
+                    journalId = this.getAttribute('data-journal-id');
+                    // Verify we have a valid ID
+                    if (!journalId || journalId === 'None' || journalId === '') {
+                        // Try to get from URL as fallback
+                        const urlParts = window.location.pathname.split('/');
+                        journalId = urlParts[urlParts.length - 1];
+                    }
+                } catch (err) {
+                    console.error('Error getting journal ID:', err);
+                    // Fallback to URL
+                    const urlParts = window.location.pathname.split('/');
+                    journalId = urlParts[urlParts.length - 1];
+                }
+                
+                console.log('Using journal ID for analysis:', journalId);
                 
                 // Show spinner in button
                 this.innerHTML = '<div class="d-flex align-items-center justify-content-center"><span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Analyzing...</div>';
@@ -1433,7 +1450,24 @@
         const coachButton = document.getElementById('ask-coach');
         if (coachButton) {
             coachButton.addEventListener('click', function() {
-                const journalId = this.getAttribute('data-journal-id');
+                // Safely get the journal ID with fallback
+                let journalId;
+                try {
+                    journalId = this.getAttribute('data-journal-id');
+                    // Verify we have a valid ID
+                    if (!journalId || journalId === 'None' || journalId === '') {
+                        // Try to get from URL as fallback
+                        const urlParts = window.location.pathname.split('/');
+                        journalId = urlParts[urlParts.length - 1];
+                    }
+                } catch (err) {
+                    console.error('Error getting journal ID for coach:', err);
+                    // Fallback to URL
+                    const urlParts = window.location.pathname.split('/');
+                    journalId = urlParts[urlParts.length - 1];
+                }
+                
+                console.log('Using journal ID for coach:', journalId);
                 
                 // Show spinner in button
                 this.innerHTML = '<div class="d-flex align-items-center justify-content-center"><span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Asking Mira...</div>';
@@ -1563,7 +1597,24 @@
         const refreshButton = document.getElementById('refresh-analysis');
         if (refreshButton) {
             refreshButton.addEventListener('click', function() {
-                const journalId = this.getAttribute('data-journal-id');
+                // Safely get the journal ID with fallback
+                let journalId;
+                try {
+                    journalId = this.getAttribute('data-journal-id');
+                    // Verify we have a valid ID
+                    if (!journalId || journalId === 'None' || journalId === '') {
+                        // Try to get from URL as fallback
+                        const urlParts = window.location.pathname.split('/');
+                        journalId = urlParts[urlParts.length - 1];
+                    }
+                } catch (err) {
+                    console.error('Error getting journal ID for refresh:', err);
+                    // Fallback to URL
+                    const urlParts = window.location.pathname.split('/');
+                    journalId = urlParts[urlParts.length - 1];
+                }
+                
+                console.log('Using journal ID for refresh:', journalId);
                 
                 // Show spinner in button
                 this.innerHTML = '<div class="d-flex align-items-center justify-content-center"><span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Refreshing...</div>';
