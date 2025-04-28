@@ -37,23 +37,54 @@ def register():
     # Use direct path instead of url_for
     return redirect('/simple-register')
 
-# User login - redirect to stable login with enhanced CSRF handling
+# Direct stable login implementation in routes.py
 @app.route('/login', methods=['GET', 'POST'])
+@app.route('/stable-login', methods=['GET', 'POST'])
 def login():
     """
-    Main login route - redirects to the stable login implementation
-    which has enhanced CSRF token handling
+    Secure login route with direct CSRF token handling
     """
-    # Save the next parameter if present
-    next_page = request.args.get('next')
-    redirect_url = '/stable-login'
-    if next_page:
-        redirect_url += f'?next={next_page}'
-        
-    # Log the redirection to help with debugging
-    app.logger.info(f"Redirecting main login to stable login implementation: {redirect_url}")
+    if current_user.is_authenticated:
+        return redirect('/dashboard')
     
-    return redirect(redirect_url)
+    from csrf_utils import get_csrf_token
+    
+    error = None
+    if request.method == 'POST':
+        app.logger.info("Processing login form submission")
+        
+        email = request.form.get('email', '').lower()
+        password = request.form.get('password', '')
+        remember = request.form.get('remember') == 'on'
+        
+        # Validate inputs
+        if not email or not password:
+            error = 'Email and password are required'
+        else:
+            user = User.query.filter_by(email=email).first()
+            if user and user.check_password(password):
+                # Set permanent session before login
+                session.permanent = True
+                login_user(user, remember=remember)
+                app.logger.info(f"User {user.id} logged in successfully")
+                
+                next_page = request.args.get('next')
+                if next_page and next_page.startswith('/'):
+                    return redirect(next_page)
+                return redirect('/dashboard')
+            else:
+                error = 'Invalid email or password'
+                app.logger.warning(f"Failed login attempt for email: {email}")
+    
+    # Always get a fresh token for GET requests
+    csrf_token = get_csrf_token()
+    
+    # Set session to permanent with extended lifetime
+    session.permanent = True
+    
+    return render_template('stable_login.html', 
+                          csrf_token=csrf_token, 
+                          error=error)
 
 # Token-based login route for email links
 @app.route('/login/token/<token>')
@@ -245,37 +276,25 @@ def dashboard():
                           badge_data=badge_data,
                           community_message=community_message)
 
-# Simplified journal route to avoid the redirection loop
+# Emergency journal route that bypasses the blueprint to avoid redirection issues
 @app.route('/journal')
 @login_required
 def journal():
     try:
-        app.logger.info("Using simplified journal route to avoid redirection loop")
+        app.logger.info("Using emergency journal route")
         
-        # Simple query for entries without JSON manipulation
-        # Use load_only to specify only the columns we need, avoiding the deferred user_reflection column
-        entries_query = JournalEntry.query\
-            .options(load_only(
-                JournalEntry.id,
-                JournalEntry.title,
-                JournalEntry.content,
-                JournalEntry.created_at,
-                JournalEntry.updated_at,
-                JournalEntry.is_analyzed,
-                JournalEntry.anxiety_level,
-                JournalEntry.user_id
-            ))\
+        # Very simplified query with minimal dependencies
+        entries = db.session.query(JournalEntry)\
             .filter(JournalEntry.user_id == current_user.id)\
-            .order_by(desc(JournalEntry.created_at))
+            .order_by(JournalEntry.created_at.desc())\
+            .limit(20).all()
         
-        entries = entries_query.paginate(page=1, per_page=10)
-        
-        return render_template('journal.html', 
-                             title='Journal', 
+        return render_template('journal_simple.html', 
+                             title='Your Journal', 
                              entries=entries)
                              
     except Exception as e:
-        app.logger.error(f"Error in simplified journal route: {str(e)}")
+        app.logger.error(f"Error in emergency journal route: {str(e)}")
         flash("There was an issue loading your journal entries. Please try again later.", "warning")
         return redirect('/dashboard')
 
