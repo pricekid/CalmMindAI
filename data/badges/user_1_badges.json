@@ -3,8 +3,8 @@
   "earned_dates": {},
   "current_streak": 1,
   "longest_streak": 1,
-  "last_entry_date": "2025-04-22",
-  "total_xp": 205,
+  "last_entry_date": "2025-04-28",
+  "total_xp": 235,
   "xp_history": [
     {
       "amount": 15,
@@ -65,6 +65,16 @@
       "amount": 5,
       "reason": "Logged your mood",
       "date": "2025-04-28 16:20:31"
+    },
+    {
+      "amount": 10,
+      "reason": "Created a new journal entry",
+      "date": "2025-04-28 17:06:46"
+    },
+    {
+      "amount": 20,
+      "reason": "Received insights on journal entry",
+      "date": "2025-04-28 17:06:46"
     }
   ]
 }

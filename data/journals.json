@@ -3662,5 +3662,30 @@
     ],
     "structured_data": null,
     "user_reflection": null
+  },
+  {
+    "id": 169,
+    "user_id": 1,
+    "title": "I am so tired all the time",
+    "content": "I feel stretched with everything i have going on. everyone demanding my attention and time",
+    "anxiety_level": 6,
+    "created_at": "2025-04-28T17:06:38.614155",
+    "updated_at": "2025-04-28T17:06:46.721862",
+    "is_analyzed": true,
+    "gpt_response": "It sounds like you're feeling quite overwhelmed with the demands placed on you right now. It's understandable to feel stretched when everyone seems to need something from you at once. Let's explore how these demands might be impacting your sense of control and well-being.\n\nTake a moment. What's one expectation you've been holding that feels heavy \u2014 and might not be fully yours to carry?\n\nIt's okay to acknowledge that you have limits and that it's important to take care of yourself, too. Consider what boundaries might help you regain a sense of balance.\n\nThought Patterns That May Be Surfacing:\n* All-or-Nothing Thinking: You might be seeing your situation as entirely overwhelming, without recognizing any manageable parts or potential solutions.\n* Catastrophizing: There's a tendency to predict that all these demands will lead to an unmanageable situation, increasing your stress.\n\n\nCBT-Based Strategies:\n1. Set Clear Boundaries Identifying where you can say no or delegate tasks can help manage the overwhelming demands. Choose one area today where you can gently assert a boundary, such as declining an extra task or asking for help.\n2. Prioritize Self-Care Taking small steps to prioritize your own needs can help you feel more balanced. Schedule a short, relaxing activity for yourself within the next day, like a walk or reading time.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Catastrophizing\n",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "Seeing things in black-and-white terms can leave you feeling trapped.",
+        "recommendation": "Challenge this by identifying one thing you can accomplish or change."
+      },
+      {
+        "pattern": "Catastrophizing",
+        "description": "This involves assuming the worst will happen, which can be paralyzing.",
+        "recommendation": "Try listing three realistic outcomes for the demands you're facing."
+      }
+    ],
+    "structured_data": null,
+    "user_reflection": null
   }
 ]
