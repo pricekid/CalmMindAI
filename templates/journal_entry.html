@@ -177,6 +177,90 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-lg-8 mx-auto">
+            <!-- Initial Analysis Card -->
+            <div class="card shadow mb-4" id="initial-insight-card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Initial Insight</h3>
+                </div>
+                <div class="card-body">
+                    <div class="initial-insight">
+                        {{ entry.initial_insight | safe if entry.initial_insight else "No initial insight available" }}
+                    </div>
+                    {% if not entry.user_reflection %}
+                    <div class="reflection-input mt-4">
+                        <h4>Your Reflection</h4>
+                        <textarea id="reflection-text" class="form-control" rows="4" 
+                                placeholder="Take a moment to reflect on these insights. What resonates with you?"></textarea>
+                        <button id="submit-reflection" class="btn btn-primary mt-2">
+                            Share Your Reflection
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- User's Reflection Card -->
+            {% if entry.user_reflection %}
+            <div class="card shadow mb-4" id="reflection-card">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0">Your Reflection</h3>
+                </div>
+                <div class="card-body">
+                    <div class="user-reflection">
+                        {{ entry.user_reflection | safe }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Follow-up Insight Card -->
+            <div class="card shadow mb-4" id="followup-card">
+                <div class="card-header bg-info text-white">
+                    <h3 class="mb-0">Follow-up Insight</h3>
+                </div>
+                <div class="card-body">
+                    <div class="followup-insight">
+                        {{ entry.followup_insight | safe if entry.followup_insight else "Awaiting follow-up insight..." }}
+                    </div>
+                    {% if not entry.second_reflection %}
+                    <div class="second-reflection-input mt-4">
+                        <h4>Your Response</h4>
+                        <textarea id="second-reflection-text" class="form-control" rows="4" 
+                                placeholder="How do these additional insights land with you?"></textarea>
+                        <button id="submit-second-reflection" class="btn btn-primary mt-2">
+                            Share Your Response
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Final Response Card -->
+            {% if entry.second_reflection %}
+            <div class="card shadow mb-4" id="second-reflection-card">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0">Your Final Response</h3>
+                </div>
+                <div class="card-body">
+                    <div class="second-reflection">
+                        {{ entry.second_reflection | safe }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Closing Message Card -->
+            <div class="card shadow" id="closing-card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Closing Thoughts</h3>
+                </div>
+                <div class="card-body">
+                    <div class="closing-message">
+                        {{ entry.closing_message | safe if entry.closing_message else "Awaiting closing message..." }}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
             <div class="card shadow" id="analysis-card">
                 <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #007bff; color: white;">
                     <h3 class="mb-0">Mira's Insights</h3>
