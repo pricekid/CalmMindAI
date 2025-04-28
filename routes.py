@@ -651,7 +651,7 @@ def achievements():
         )
     except Exception as e:
         app.logger.error(f"Error in achievements route: {str(e)}")
-        flash(f"There was an error loading your achievements. Please try again later.", "warning")
+        flash("There was an error loading your achievements. Please try again later.", "warning")
         return render_template('error.html', error_message="Could not load achievements data.")
         
 # Debug route - only use during development
