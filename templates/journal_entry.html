@@ -2526,23 +2526,37 @@
         }
         
         function saveInitialReflection() {
-            // Add defensive checks for null or undefined elements
-            if (!reflectionTextArea) {
-                console.error('Reflection text area not found');
+            let reflectionText, entryId;
+            
+            try {
+                // Add defensive checks for null or undefined elements
+                if (!reflectionTextArea) {
+                    console.error('Reflection text area not found');
+                    return;
+                }
+                
+                reflectionText = reflectionTextArea.value.trim();
+                if (!reflectionText) {
+                    alert('Please enter your reflection before continuing.');
+                    return;
+                }
+                
+                // Get the entry ID from the URL
+                const urlParts = window.location.pathname.split('/');
+                entryId = urlParts[urlParts.length - 1];
+                
+                if (!entryId || isNaN(parseInt(entryId))) {
+                    console.error('Invalid entry ID format:', entryId);
+                    alert('There was an error identifying this journal entry. Please try again or refresh the page.');
+                    return;
+                }
+                
+                console.log('Saving initial reflection for entry:', entryId);
+            } catch (err) {
+                console.error('Error preparing to save initial reflection:', err);
+                alert('There was a problem preparing to save your reflection. Please try again or refresh the page.');
                 return;
             }
-            
-            const reflectionText = reflectionTextArea.value.trim();
-            if (!reflectionText) {
-                alert('Please enter your reflection before continuing.');
-                return;
-            }
-            
-            // Get the entry ID from the URL
-            const urlParts = window.location.pathname.split('/');
-            const entryId = urlParts[urlParts.length - 1];
-            
-            console.log('Saving initial reflection for entry:', entryId);
             
             // Send the reflection to the server
             fetch('/journal/save-initial-reflection', {
@@ -2609,23 +2623,39 @@
         }
         
         function saveSecondReflection() {
-            // Add defensive checks for null or undefined elements
-            if (!secondReflectionTextArea) {
-                console.error('Second reflection text area not found');
+            let reflectionText, entryId;
+            
+            try {
+                // Add defensive checks for null or undefined elements
+                if (!secondReflectionTextArea) {
+                    console.error('Second reflection text area not found');
+                    return;
+                }
+                
+                reflectionText = secondReflectionTextArea.value.trim();
+                if (!reflectionText) {
+                    alert('Please enter your response before continuing.');
+                    return;
+                }
+                
+                // Get the entry ID from the URL
+                const urlParts = window.location.pathname.split('/');
+                entryId = urlParts[urlParts.length - 1];
+                
+                if (!entryId || isNaN(parseInt(entryId))) {
+                    console.error('Invalid entry ID format:', entryId);
+                    alert('There was an error identifying this journal entry. Please try again or refresh the page.');
+                    return;
+                }
+                
+                console.log('Saving second reflection for entry:', entryId);
+                
+                // Continue with the fetch request below
+            } catch (err) {
+                console.error('Error preparing to save second reflection:', err);
+                alert('There was a problem preparing to save your reflection. Please try again or refresh the page.');
                 return;
             }
-            
-            const reflectionText = secondReflectionTextArea.value.trim();
-            if (!reflectionText) {
-                alert('Please enter your response before continuing.');
-                return;
-            }
-            
-            // Get the entry ID from the URL
-            const urlParts = window.location.pathname.split('/');
-            const entryId = urlParts[urlParts.length - 1];
-            
-            console.log('Saving second reflection for entry:', entryId);
             
             // Send the reflection to the server
             fetch('/journal/save-second-reflection', {
