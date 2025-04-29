@@ -414,8 +414,9 @@ def load_user(user_id):
         return Admin.get(admin_id)
     # Regular user
     try:
-        with db.session.begin():  # Start a new transaction
-            return db.session.get(User, int(user_id))
+        # Don't use transaction for simple user loading to avoid conflicts
+        # with existing transactions in the request
+        return db.session.get(User, int(user_id))
     except ValueError:
         return None
     except Exception as e:
