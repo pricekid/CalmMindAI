@@ -1858,5 +1858,41 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 286",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-29 16:07:27",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-29 16:07:27.469613",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-29 16:07:27",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-29 16:08:46",
+    "type": "health_check",
+    "message": "Scheduler running with PID 286 at 2025-04-29 16:08:46",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-29 16:13:46",
+    "type": "health_check",
+    "message": "Scheduler running with PID 286 at 2025-04-29 16:13:46",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-29 16:18:46",
+    "type": "health_check",
+    "message": "Scheduler running with PID 286 at 2025-04-29 16:18:46",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-29 16:19:33",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 286",
+    "success": true
   }
 ]
