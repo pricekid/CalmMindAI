@@ -328,5 +328,17 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 322",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-29 00:16:43",
+    "type": "health_check",
+    "message": "Scheduler running with PID 322 at 2025-04-29 00:16:43",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-29 00:18:29",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 322",
+    "success": true
   }
 ]

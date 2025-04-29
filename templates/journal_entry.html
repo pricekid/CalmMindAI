@@ -35,6 +35,53 @@
         opacity: 1;
     }
 }
+
+/* Styling for initial insight sections */
+.validation-section {
+    border-left: 4px solid #6c757d;
+    padding-left: 15px;
+    margin-bottom: 20px;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.thought-patterns-section {
+    border-left: 4px solid #dc3545;
+    padding-left: 15px;
+    margin-bottom: 20px;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.strategies-section {
+    border-left: 4px solid #28a745;
+    padding-left: 15px;
+    margin-bottom: 20px;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.reflection-section {
+    border-left: 4px solid #17a2b8;
+    padding-left: 15px;
+    margin-bottom: 20px;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.closing-section {
+    font-style: italic;
+    margin-top: 20px;
+    color: #6c757d;
+}
+
+.paragraph {
+    margin-bottom: 15px;
+}
 </style>
 {% endblock %}
 
@@ -184,7 +231,46 @@
                 </div>
                 <div class="card-body">
                     <div class="initial-insight">
-                        {{ entry.initial_insight | safe if entry.initial_insight else "No initial insight available" }}
+                        {% if entry.initial_insight %}
+                            {% if '<div class=' not in entry.initial_insight %}
+                                <!-- Format unstructured content for better readability -->
+                                {% set paragraphs = entry.initial_insight.split('\n\n') %}
+                                
+                                <!-- First paragraph is usually validation -->
+                                {% if paragraphs|length > 0 %}
+                                    <div class="validation-section mb-4">{{ paragraphs[0] | safe }}</div>
+                                {% endif %}
+                                
+                                <!-- Process remaining paragraphs -->
+                                {% for paragraph in paragraphs[1:] %}
+                                    {% if 'pattern' in paragraph.lower() or 'distortion' in paragraph.lower() %}
+                                        <div class="thought-patterns-section mb-4">
+                                            <h5 class="mb-3">Thought Patterns</h5>
+                                            {{ paragraph | safe }}
+                                        </div>
+                                    {% elif 'strateg' in paragraph.lower() or 'technique' in paragraph.lower() or 'exercise' in paragraph.lower() %}
+                                        <div class="strategies-section mb-4">
+                                            <h5 class="mb-3">Suggested Strategies</h5>
+                                            {{ paragraph | safe }}
+                                        </div>
+                                    {% elif 'reflect' in paragraph.lower() or 'consider' in paragraph.lower() or 'ask yourself' in paragraph.lower() %}
+                                        <div class="reflection-section mb-4">
+                                            <h5 class="mb-3">Reflection Prompts</h5>
+                                            {{ paragraph | safe }}
+                                        </div>
+                                    {% elif loop.last and 'warmly' in paragraph.lower() %}
+                                        <div class="closing-section mt-4">{{ paragraph | safe }}</div>
+                                    {% else %}
+                                        <div class="paragraph mb-3">{{ paragraph | safe }}</div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <!-- Content already has HTML formatting -->
+                                {{ entry.initial_insight | safe }}
+                            {% endif %}
+                        {% else %}
+                            No initial insight available
+                        {% endif %}
                     </div>
                     {% if not entry.user_reflection %}
                     <div class="reflection-input mt-4">
