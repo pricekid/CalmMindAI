@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}Offline - Calm Journey{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Calm Journey Logo" class="mb-4" style="max-width: 200px;">
+        <h1 class="mb-4">You're Offline</h1>
+        <p class="lead mb-4">It seems you're currently offline. Some features may not be available until you reconnect.</p>
+        
+        <div class="card bg-dark border-primary my-4">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-lightbulb text-primary me-2"></i>While You're Offline</h5>
+                <p class="card-text">You can still:</p>
+                <ul class="text-start list-group list-group-flush bg-transparent">
+                    <li class="list-group-item bg-transparent"><i class="fas fa-check text-success me-2"></i>View previously loaded journal entries</li>
+                    <li class="list-group-item bg-transparent"><i class="fas fa-check text-success me-2"></i>Access your dashboard if you've visited it before</li>
+                    <li class="list-group-item bg-transparent"><i class="fas fa-times text-danger me-2"></i>You won't be able to submit new entries or reflections</li>
+                </ul>
+            </div>
+        </div>
+        
+        <button class="btn btn-primary mt-3" onclick="window.location.href='/'">
+            <i class="fas fa-home me-2"></i>Try Going Home
+        </button>
+        
+        <div class="mt-5">
+            <p><i class="fas fa-info-circle text-info me-2"></i>Your Calm Journey app will automatically reconnect when your internet connection is restored.</p>
+        </div>
+    </div>
+    
+    <div class="card border-secondary mt-5">
+        <div class="card-body">
+            <h5 class="card-title"><i class="fas fa-quote-left text-secondary me-2"></i>Mindfulness Thought</h5>
+            <p class="card-text">"In the midst of disconnection, we have an opportunity to connect more deeply with ourselves. Take this moment to breathe and reflect."</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
