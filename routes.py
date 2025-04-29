@@ -399,6 +399,15 @@ def offline():
     """
     return render_template('offline.html', title='You\'re Offline')
 
+# Installation instructions for PWA
+@app.route('/install')
+def install_app():
+    """
+    Installation instructions page for the Progressive Web App.
+    This provides browser-specific guidance on how to install the app.
+    """
+    return render_template('install.html', title='Install Calm Journey')
+
 # User account management - Now moved to account_routes.py blueprint
 # This is commented out to avoid conflicts with the blueprint version
 """
