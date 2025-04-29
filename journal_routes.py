@@ -37,20 +37,31 @@ def convert_markdown_to_html(text):
     if not text:
         return ""
     
-    # Convert markdown headers (##) to styled headers
+    # First, standardize newlines to avoid inconsistencies
+    text = text.replace('\r\n', '\n')
+    
+    # Process sections in order to avoid formatting conflicts
+    
+    # 1. Convert markdown headers (##) to styled headers
+    # Store them temporarily with a special marker to avoid processing them with other rules
     text = re.sub(r'##\s+(.*?)$', r'<h4 class="mt-4 mb-3">\1</h4>', text, flags=re.MULTILINE)
     
-    # Convert bold text (**text**) to <strong>
+    # 2. Convert bold text (**text**) to <strong>
     text = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', text)
     
-    # Convert bullet points
+    # 3. Convert bullet points
     text = re.sub(r'^\s*•\s+(.*?)$', r'<li>\1</li>', text, flags=re.MULTILINE)
     
-    # Wrap lists in <ul> tags
+    # 4. Wrap lists in <ul> tags
     text = re.sub(r'(<li>.*?</li>\n)+', r'<ul class="mb-3">\n\g<0></ul>', text, flags=re.DOTALL)
     
-    # Convert newlines to breaks for better spacing
-    text = text.replace('\n\n', '<br><br>')
+    # 5. Handle paragraph breaks but avoid extra breaks after headers and before lists
+    # Replace double newlines with paragraph breaks, but not if preceded by header or followed by list
+    text = re.sub(r'(?<!</h4>)\n\n(?!<ul)', '<br><br>', text)
+    
+    # 6. Remove any remaining excessive newlines around HTML elements
+    text = re.sub(r'\n+(<h4|<ul|<li|</ul>)', r'\1', text)
+    text = re.sub(r'(</h4>|</ul>|</li>)\n+', r'\1', text)
     
     return text
 
