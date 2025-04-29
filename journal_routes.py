@@ -554,9 +554,40 @@ def new_journal_entry():
                         entry.initial_insight = structured_data.get('reflection_prompt')
                     logger.debug(f"Added reflection prompt to initial_insight")
             else:
-                # Fallback - set the initial_insight to the gpt_response
-                logger.debug("No structured data available, using gpt_response for initial_insight")
-                entry.initial_insight = gpt_response
+                # Fallback - set the initial_insight to the gpt_response with formatting
+                logger.debug("No structured data available, using gpt_response for initial_insight with improved formatting")
+                
+                # Format the insight for better readability
+                if gpt_response:
+                    # Split into paragraphs
+                    paragraphs = gpt_response.split('\n\n')
+                    formatted_paragraphs = []
+                    
+                    # Format each paragraph with proper HTML
+                    for i, paragraph in enumerate(paragraphs):
+                        if i == 0:
+                            # First paragraph is usually the introduction/validation
+                            formatted_paragraphs.append(f"<div class='validation-section mb-4'>{paragraph}</div>")
+                        elif "pattern" in paragraph.lower() or "distortion" in paragraph.lower():
+                            # Thought patterns section
+                            formatted_paragraphs.append(f"<div class='thought-patterns-section mb-4'><h5 class='mb-3'>Thought Patterns</h5>{paragraph}</div>")
+                        elif "strateg" in paragraph.lower() or "technique" in paragraph.lower() or "exercise" in paragraph.lower():
+                            # Strategies section
+                            formatted_paragraphs.append(f"<div class='strategies-section mb-4'><h5 class='mb-3'>Suggested Strategies</h5>{paragraph}</div>")
+                        elif "reflect" in paragraph.lower() or "consider" in paragraph.lower() or "ask yourself" in paragraph.lower():
+                            # Reflection section
+                            formatted_paragraphs.append(f"<div class='reflection-section mb-4'><h5 class='mb-3'>Reflection Prompts</h5>{paragraph}</div>")
+                        elif i == len(paragraphs) - 1 and "warmly" in paragraph.lower():
+                            # Closing section
+                            formatted_paragraphs.append(f"<div class='closing-section mt-4'>{paragraph}</div>")
+                        else:
+                            # Other paragraphs
+                            formatted_paragraphs.append(f"<div class='paragraph mb-3'>{paragraph}</div>")
+                    
+                    # Combine the formatted paragraphs
+                    entry.initial_insight = "".join(formatted_paragraphs)
+                else:
+                    entry.initial_insight = gpt_response
             
             db.session.commit()
             
@@ -750,10 +781,43 @@ def view_journal_entry(entry_id):
                     db.session.commit()
                     logger.debug(f"Updated entry {entry_id} with conversation fields from JSON")
                 else:
-                    # Fallback - set the initial_insight to the coach_response
-                    entry.initial_insight = coach_response
+                    # Fallback - set the initial_insight to the coach_response with formatting
+                    logger.debug(f"No structured data available, formatting coach_response for initial_insight")
+                    
+                    # Format the insight for better readability
+                    if coach_response:
+                        # Split into paragraphs
+                        paragraphs = coach_response.split('\n\n')
+                        formatted_paragraphs = []
+                        
+                        # Format each paragraph with proper HTML
+                        for i, paragraph in enumerate(paragraphs):
+                            if i == 0:
+                                # First paragraph is usually the introduction/validation
+                                formatted_paragraphs.append(f"<div class='validation-section mb-4'>{paragraph}</div>")
+                            elif "pattern" in paragraph.lower() or "distortion" in paragraph.lower():
+                                # Thought patterns section
+                                formatted_paragraphs.append(f"<div class='thought-patterns-section mb-4'><h5 class='mb-3'>Thought Patterns</h5>{paragraph}</div>")
+                            elif "strateg" in paragraph.lower() or "technique" in paragraph.lower() or "exercise" in paragraph.lower():
+                                # Strategies section
+                                formatted_paragraphs.append(f"<div class='strategies-section mb-4'><h5 class='mb-3'>Suggested Strategies</h5>{paragraph}</div>")
+                            elif "reflect" in paragraph.lower() or "consider" in paragraph.lower() or "ask yourself" in paragraph.lower():
+                                # Reflection section
+                                formatted_paragraphs.append(f"<div class='reflection-section mb-4'><h5 class='mb-3'>Reflection Prompts</h5>{paragraph}</div>")
+                            elif i == len(paragraphs) - 1 and "warmly" in paragraph.lower():
+                                # Closing section
+                                formatted_paragraphs.append(f"<div class='closing-section mt-4'>{paragraph}</div>")
+                            else:
+                                # Other paragraphs
+                                formatted_paragraphs.append(f"<div class='paragraph mb-3'>{paragraph}</div>")
+                        
+                        # Combine the formatted paragraphs
+                        entry.initial_insight = "".join(formatted_paragraphs)
+                    else:
+                        entry.initial_insight = coach_response
+                    
                     db.session.commit()
-                    logger.debug(f"Updated entry {entry_id} with coach_response as initial_insight")
+                    logger.debug(f"Updated entry {entry_id} with formatted coach_response as initial_insight")
                 
                 break
     else:

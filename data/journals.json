@@ -3868,5 +3868,32 @@
     ],
     "structured_data": null,
     "user_reflection": null
+  },
+  {
+    "id": 177,
+    "user_id": 1,
+    "title": "test test test",
+    "content": "my partner went away for 10 day. for teh first 2 days she messaged briefly, the finallly she called on the 3rd day. i missed her call but wheni called back she was at home with family and was talking to me, but most of the time i spent listening to her talking to others. her mum then called and she told me she woudl call me back, but she didnt. following day she messaged good mornng and said she was out and about at work. nothing since. how shoudl i feel> I also spoke to her son. she didnt call him either\r\n",
+    "anxiety_level": 6,
+    "created_at": "2025-04-29T00:12:54.015661",
+    "updated_at": "2025-04-29T00:13:09.000440",
+    "is_analyzed": true,
+    "gpt_response": "It sounds like you're feeling overlooked and perhaps a bit unimportant due to your partner's lack of communication while she's away. This situation might be stirring up feelings of neglect, especially since you were left waiting after she promised to call back. This suggests a need for connection and reassurance in your relationship. Your partner's attention to others while on the phone may have contributed to feelings of being sidelined, which can be quite frustrating.\n\nTake a moment. What's one expectation you've been holding about this relationship that feels heavy \u2014 and might point to an important emotional need?\n\nTo help you communicate your feelings and needs clearly, consider using this script: 'I feel neglected when I don't hear back from you after a promised call because it makes me feel unimportant. What I need is regular updates and a more dedicated time to connect, so I feel reassured.' Additionally, try a reality-check exercise by listing evidence for and against the fear that your partner's lack of communication means she doesn't care about you. This can help ground your thoughts in reality.\n\nThought Patterns That May Be Surfacing:\n* All-or-Nothing Thinking: This pattern might be causing you to see your partner's communication as either all good or all bad, without acknowledging the nuances of her situation, like being with family. This may relate to your need for Connection.\n* Mind Reading: You might be assuming your partner's lack of communication means she's not thinking about you, which can fuel feelings of neglect. This may relate to your need for Reassurance.\n\n\nCBT-Based Strategies:\n1. Communication Script Template Use this script when you next have a chance to talk to your partner about how her communication affects you. I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request]. This helps address your need for Connection and reassurance.\n2. Reality-Check Exercise Challenge the assumption that her lack of communication signifies a lack of care. List evidence for and against your fear that her lack of communication means she doesn't care about you. This helps address your need for Reassurance.\n3. Emotion Regulation Technique Manage feelings of neglect by grounding yourself when these emotions arise. When you feel neglected, try this grounding technique: name five things you can see, four you can touch, three you can hear, two you can smell, and one you can taste. This helps address your need for Emotional grounding.\n\n\nRelationship Context Questions to Consider:\n\u2022 Has this communication pattern happened before in this relationship? (Exploring recurring patterns to identify relationship dynamics)\n\u2022 What expectations were set before your partner left? (Examining unspoken assumptions that may contribute to distress)\n\n\nReady-to-Use Templates:\n\u2022 For When reaching out to express your needs:\n  \"I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request].\"\n  Then: After using this template, observe her response and discuss how you both can improve communication.\n\u2022 For When managing anxiety while waiting for a response:\n  \"When I feel anxious, I will practice deep breathing instead of repeatedly checking my phone.\"\n  Then: Reflect on how this approach affects your anxiety and adjust as needed.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "Viewing your relationship communication as entirely one way or another can lead to misunderstandings.",
+        "recommendation": "Practice recognizing grey areas in communication patterns to reduce stress.",
+        "core_need": "Connection"
+      },
+      {
+        "pattern": "Mind Reading",
+        "description": "Assuming what your partner feels or thinks without evidence can create unnecessary tension.",
+        "recommendation": "Communicate openly about your needs and check in with your partner about hers.",
+        "core_need": "Reassurance"
+      }
+    ],
+    "structured_data": null,
+    "user_reflection": null
   }
 ]
