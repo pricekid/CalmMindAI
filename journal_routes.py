@@ -42,7 +42,7 @@ def convert_markdown_to_html(text):
     text = text.replace('\r\n', '\n')
     
     # Detect if the text has markdown formatting
-    has_markdown = "##" in text or "**" in text or "•" in text
+    has_markdown = "##" in text or "**" in text or "•" in text or "- " in text
     
     # Process sections in order to avoid formatting conflicts
     
@@ -64,6 +64,12 @@ def convert_markdown_to_html(text):
         text = text.replace("Here are a few thought patterns", "<h4 class='mt-4 mb-3'>Thought Patterns</h4>")
         text = text.replace("Here are a few gentle CBT strategies", "<h4 class='mt-4 mb-3'>CBT Strategies</h4>")
         text = text.replace("And a little reflection for today:", "<h4 class='mt-4 mb-3'>Reflection Prompt</h4>")
+    else:
+        # For text that has markdown formatting, check for patterns that indicate section headers that should be formatted
+        text = re.sub(r'Thought Patterns[:]*\s*$', r'<h4 class="mt-4 mb-3">Thought Patterns</h4>', text, flags=re.MULTILINE)
+        text = re.sub(r'CBT Strategies[:]*\s*$', r'<h4 class="mt-4 mb-3">CBT Strategies</h4>', text, flags=re.MULTILINE)
+        text = re.sub(r'Suggested Strategies[:]*\s*$', r'<h4 class="mt-4 mb-3">Suggested Strategies</h4>', text, flags=re.MULTILINE)
+        text = re.sub(r'Reflection Prompt[:]*\s*$', r'<h4 class="mt-4 mb-3">Reflection Prompt</h4>', text, flags=re.MULTILINE)
     
     # 5. Handle paragraph breaks but avoid extra breaks after headers and before lists
     # Replace double newlines with paragraph breaks, but not if preceded by header or followed by list
@@ -72,6 +78,10 @@ def convert_markdown_to_html(text):
     # 6. Remove any remaining excessive newlines around HTML elements
     text = re.sub(r'\n+(<h4|<ul|<li|</ul>)', r'\1', text)
     text = re.sub(r'(</h4>|</ul>|</li>)\n+', r'\1', text)
+    
+    # 7. Clean up any remaining raw markdown symbols that weren't properly converted
+    text = re.sub(r'(?<!\w)#(?!\w)', '', text)  # Remove standalone # characters
+    text = re.sub(r'(?<!\w)\*(?!\w)', '', text)  # Remove standalone * characters
     
     return text
 

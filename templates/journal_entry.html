@@ -620,7 +620,7 @@
                                 
                                 {% if structured_data.distortions %}
                                 <div class="distortions mb-4">
-                                    <h5 class="mt-4 mb-3">Thought Patterns</h5>
+                                    <h5 class="mt-4 mb-3" id="thought-patterns-header">Thought Patterns</h5>
                                     <ul class="list-group">
                                     {% for distortion in structured_data.distortions %}
                                         <li class="list-group-item">
@@ -633,7 +633,7 @@
                                 
                                 {% if structured_data.strategies %}
                                 <div class="strategies mb-4">
-                                    <h5 class="mt-4 mb-3">CBT Strategies</h5>
+                                    <h5 class="mt-4 mb-3" id="cbt-strategies-header">CBT Strategies</h5>
                                     <div class="strategy-cards">
                                     {% for strategy in structured_data.strategies %}
                                         <div class="card mb-3">
@@ -654,7 +654,7 @@
                                 
                                 {% if structured_data.reflection_prompt %}
                                 <div class="reflection-prompt mb-4">
-                                    <h5 class="mt-4 mb-3">Reflection Prompt</h5>
+                                    <h5 class="mt-4 mb-3" id="reflection-prompt-header">Reflection Prompt</h5>
                                     <blockquote class="blockquote">
                                         <p class="mb-0">{{ structured_data.reflection_prompt }}</p>
                                     </blockquote>
