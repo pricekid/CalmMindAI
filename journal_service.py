@@ -950,7 +950,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                     
                     # Process distortions section with emotional needs
                     distortions_list = result.get('distortions', [])
-                    distortions_text = "\n\nThought Patterns That May Be Surfacing:\n"
+                    distortions_text = "\n\n## Thought Patterns\n"
                     for d in distortions_list:
                         pattern = d.get('pattern', '')
                         description = d.get('description', '')
@@ -958,13 +958,13 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                         
                         # Add emotional need if provided
                         if emotional_need:
-                            distortions_text += f"* {pattern}: {description} This may relate to your need for {emotional_need}.\n"
+                            distortions_text += f"\n**{pattern}**\n{description} This may relate to your need for {emotional_need}.\n"
                         else:
-                            distortions_text += f"* {pattern}: {description}\n"
+                            distortions_text += f"\n**{pattern}**\n{description}\n"
                     
                     # Process strategies section with emotional needs addressed
                     strategies_list = result.get('strategies', [])
-                    strategies_text = "\n\nCBT-Based Strategies:\n"
+                    strategies_text = "\n\n## Suggested Strategies\n"
                     for i, s in enumerate(strategies_list, 1):
                         title = s.get('title', f"Strategy {i}")
                         description = s.get('description', '')
@@ -973,33 +973,33 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                         
                         # Format with emotional need if provided
                         if emotional_need:
-                            strategies_text += f"{i}. {title} {description} {action} This helps address your need for {emotional_need}.\n"
+                            strategies_text += f"\n**{i}. {title}**\n{description} {action} This helps address your need for {emotional_need}.\n"
                         else:
-                            strategies_text += f"{i}. {title} {description} {action}\n"
+                            strategies_text += f"\n**{i}. {title}**\n{description} {action}\n"
                     
                     # Process relationship exploration if available
                     relationship_exploration = result.get('relationship_exploration', [])
                     relationship_text = ""
                     if relationship_exploration:
-                        relationship_text = "\n\nRelationship Context Questions to Consider:\n"
+                        relationship_text = "\n\n## Relationship Context Questions\n"
                         for i, q in enumerate(relationship_exploration, 1):
                             question = q.get('question', '')
                             purpose = q.get('purpose', '')
-                            relationship_text += f"• {question} ({purpose})\n"
+                            relationship_text += f"• **{question}**\n  ({purpose})\n\n"
                     
                     # Process actionable templates if available
                     templates = result.get('actionable_templates', [])
                     templates_text = ""
                     if templates:
-                        templates_text = "\n\nReady-to-Use Templates:\n"
+                        templates_text = "\n\n## Ready-to-Use Templates\n"
                         for i, t in enumerate(templates, 1):
                             situation = t.get('situation', '')
                             template = t.get('template', '')
                             guidance = t.get('follow_up_guidance', '')
                             
-                            templates_text += f"• For {situation}:\n  \"{template}\"\n"
+                            templates_text += f"\n**For {situation}:**\n\"{template}\"\n"
                             if guidance:
-                                templates_text += f"  Then: {guidance}\n"
+                                templates_text += f"Then: {guidance}\n"
                     
                     # Combine all sections for the enhanced response format
                     coach_response = f"{insight_text}\n\n{reflection_prompt}\n\n{followup_text}{distortions_text}{strategies_text}{relationship_text}{templates_text}"
@@ -1029,20 +1029,20 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                     
                     # Process distortions section
                     distortions_list = result.get('distortions', [])
-                    distortions_text = "\n\nThought Patterns That May Be Surfacing:\n"
+                    distortions_text = "\n\n## Thought Patterns\n"
                     for d in distortions_list:
                         pattern = d.get('pattern', '')
                         description = d.get('description', '')
-                        distortions_text += f"* {pattern}: {description}\n"
+                        distortions_text += f"\n**{pattern}**\n{description}\n"
                     
                     # Process strategies section
                     strategies_list = result.get('strategies', [])
-                    strategies_text = "\n\nCBT-Based Strategies:\n"
+                    strategies_text = "\n\n## Suggested Strategies\n"
                     for i, s in enumerate(strategies_list, 1):
                         title = s.get('title', f"Strategy {i}")
                         description = s.get('description', '')
                         action = s.get('action_step', '')
-                        strategies_text += f"{i}. {title} {description} {action}\n"
+                        strategies_text += f"\n**{i}. {title}**\n{description} {action}\n"
                     
                     # Combine all sections for the legacy response format
                     coach_response = f"{insight_text}\n\n{reflection_prompt}\n\n{followup_text}{distortions_text}{strategies_text}"
@@ -1068,25 +1068,25 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                     
                     # Process distortions section
                     distortions_list = result.get('distortions', [])
-                    distortions_text = "\n\nThought Patterns That May Be Surfacing:\n"
+                    distortions_text = "\n\n## Thought Patterns\n"
                     for d in distortions_list:
                         pattern = d.get('pattern', '')
                         description = d.get('description', '')
-                        distortions_text += f"* {pattern}: {description}\n"
+                        distortions_text += f"\n**{pattern}**\n{description}\n"
                     
                     # Process strategies section
                     strategies_list = result.get('strategies', [])
-                    strategies_text = "\n\nCBT-Based Strategies:\n"
+                    strategies_text = "\n\n## Suggested Strategies\n"
                     for i, s in enumerate(strategies_list, 1):
                         title = s.get('title', f"Strategy {i}")
                         description = s.get('description', '')
                         action = s.get('action_step', '')
-                        strategies_text += f"{i}. {title} {description} {action}\n"
+                        strategies_text += f"\n**{i}. {title}**\n{description} {action}\n"
                     
                     # Add reflection prompt
                     reflection_prompt = result.get('reflection_prompt', '')
                     if reflection_prompt:
-                        reflection_prompt = f"\n\nReflection Prompt: \"{reflection_prompt}\"\n"
+                        reflection_prompt = f"\n\n## Reflection Prompt\n\"{reflection_prompt}\"\n"
                     
                     # Add outro
                     outro = result.get('outro', '')
@@ -1097,7 +1097,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                     # Convert to the new reflective pause format for consistency
                     result['structured_data'] = {
                         'insight_text': f"{intro}\n\n{reflection}",
-                        'reflection_prompt': reflection_prompt.replace('\n\nReflection Prompt: "', '').replace('"\n', ''),
+                        'reflection_prompt': reflection_prompt.replace('\n\n## Reflection Prompt\n"', '').replace('"\n', ''),
                         'followup_text': outro,
                         'distortions': distortions_list,
                         'strategies': strategies_list
