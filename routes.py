@@ -470,46 +470,66 @@ def account():
 @app.route('/log_mood', methods=['POST'])
 @login_required
 def log_mood():
-    form = MoodLogForm()
+    try:
+        form = MoodLogForm()
 
-    if form.validate_on_submit():
-        mood_log = MoodLog(
-            mood_score=form.mood_score.data,
-            notes=form.notes.data,
-            user_id=current_user.id
-        )
+        if form.validate_on_submit():
+            # Create mood log entry
+            mood_log = MoodLog(
+                mood_score=form.mood_score.data,
+                notes=form.notes.data,
+                user_id=current_user.id
+            )
 
-        db.session.add(mood_log)
-        db.session.commit()
+            # Save to database
+            db.session.add(mood_log)
+            db.session.commit()
 
-        # Award XP for logging mood (Duolingo-style reward)
-        xp_data = gamification.award_xp(
-            user_id=current_user.id,
-            xp_amount=gamification.XP_REWARDS['mood_log'],
-            reason="Logged your mood"
-        )
+            # Award XP for logging mood (Duolingo-style reward)
+            xp_data = gamification.award_xp(
+                user_id=current_user.id,
+                xp_amount=gamification.XP_REWARDS['mood_log'],
+                reason="Logged your mood"
+            )
 
-        # Process gamification for mood tracking badge
-        badge_result = gamification.process_mood_log(current_user.id)
+            # Process gamification for mood tracking badge
+            badge_result = gamification.process_mood_log(current_user.id)
 
-        # Flash badge notifications if any
-        gamification.flash_badge_notifications(badge_result)
+            # Flash badge notifications if any
+            gamification.flash_badge_notifications(badge_result)
 
-        # Flash XP notifications
-        if xp_data and xp_data.get('xp_gained'):
-            flash(f"🌟 You earned {xp_data['xp_gained']} XP for tracking your mood!", 'success')
+            # Flash XP notifications
+            if xp_data and xp_data.get('xp_gained'):
+                flash(f"🌟 You earned {xp_data['xp_gained']} XP for tracking your mood!", 'success')
+                
+                # Show level up message if user leveled up
+                if xp_data.get('leveled_up'):
+                    level = xp_data['level']
+                    level_name = xp_data['level_name']
+                    flash(f"🎉 Level Up! You're now Level {level}: {level_name}", 'success')
+            
+            flash('Your mood has been logged!', 'success')
+        else:
+            # Handle form validation errors
+            csrf_error = False
+            for field, errors in form.errors.items():
+                for error in errors:
+                    if "CSRF" in error:
+                        csrf_error = True
+                        flash("Your session has expired. Please refresh the page and try again.", "warning")
+                        app.logger.warning(f"CSRF validation failed in mood logging: {error}")
+                    else:
+                        flash(f"Error in form field '{field}': {error}", "danger")
+            
+            if not csrf_error:
+                flash('There was an error logging your mood. Please try again.', 'danger')
+    except Exception as e:
+        # Log the specific error
+        app.logger.error(f"Error in mood logging: {str(e)}")
+        flash("There was an error logging your mood. Please try again.", "danger")
+        db.session.rollback()
 
-            # Show level up message if user leveled up
-            if xp_data.get('leveled_up'):
-                level = xp_data['level']
-                level_name = xp_data['level_name']
-                flash(f"🎉 Level Up! You're now Level {level}: {level_name}", 'success')
-
-        flash('Your mood has been logged!', 'success')
-    else:
-        flash('There was an error logging your mood. Please try again.', 'danger')
-
-    # Use direct path instead of url_for
+    # Use direct path instead of url_for to prevent nested URL generation
     return redirect('/dashboard')
 
 # Direct API endpoint for getting coaching feedback
