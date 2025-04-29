@@ -914,18 +914,23 @@ def view_journal_entry(entry_id):
     logger.debug(f"coach_response length: {len(coach_response) if coach_response else 0}")
     logger.debug(f"coach_response: {coach_response[:100]}...")
     
-    # Format the coach response with paragraphs and sections
+    # Format the coach response with markdown conversion
     if coach_response:
-        # Replace newlines with <br> tags for proper paragraph breaks
-        formatted_response = coach_response.replace("\n\n", "</p><p>").replace("\n", "<br>")
+        # Convert any markdown formatting to proper HTML
+        formatted_response = convert_markdown_to_html(coach_response)
         
-        # Format section headers with more emphasis
-        formatted_response = formatted_response.replace("Here are a few thought patterns", "<h5 class='mt-4 mb-3'>Thought Patterns</h5>")
-        formatted_response = formatted_response.replace("Here are a few gentle CBT strategies", "<h5 class='mt-4 mb-3'>CBT Strategies</h5>")
-        formatted_response = formatted_response.replace("And a little reflection for today:", "<h5 class='mt-4 mb-3'>Reflection Prompt</h5>")
+        # Also apply additional formatting for older responses that might not use markdown
+        if "##" not in coach_response and "**" not in coach_response:
+            # Replace newlines with <br> tags for proper paragraph breaks
+            formatted_response = formatted_response.replace("\n\n", "</p><p>").replace("\n", "<br>")
+            
+            # Format section headers with more emphasis for legacy content
+            formatted_response = formatted_response.replace("Here are a few thought patterns", "<h5 class='mt-4 mb-3'>Thought Patterns</h5>")
+            formatted_response = formatted_response.replace("Here are a few gentle CBT strategies", "<h5 class='mt-4 mb-3'>CBT Strategies</h5>")
+            formatted_response = formatted_response.replace("And a little reflection for today:", "<h5 class='mt-4 mb-3'>Reflection Prompt</h5>")
         
         # Add paragraph tags around the whole response if they're not already there
-        if not formatted_response.startswith("<p>"):
+        if not formatted_response.startswith("<p>") and not formatted_response.startswith("<h4") and not formatted_response.startswith("<div"):
             formatted_response = f"<p>{formatted_response}</p>"
             
         styled_coach_response = f'<div style="color: #000000;">{formatted_response}</div>'
@@ -1139,18 +1144,23 @@ def api_journal_coach(entry_id):
                 coach_response = "Thank you for sharing your journal entry. Although I can't offer specific insights right now, the process of writing down your thoughts is an important step in your wellness journey.\n\nWarmly,\nCoach Mira"
             structured_data = None
     
-    # Format the coach response with paragraphs and sections
+    # Format the coach response with markdown conversion
     if coach_response:
-        # Replace newlines with <br> tags for proper paragraph breaks
-        formatted_response = coach_response.replace("\n\n", "</p><p>").replace("\n", "<br>")
+        # Convert any markdown formatting to proper HTML
+        formatted_response = convert_markdown_to_html(coach_response)
         
-        # Format section headers with more emphasis
-        formatted_response = formatted_response.replace("Here are a few thought patterns", "<h5 class='mt-4 mb-3'>Thought Patterns</h5>")
-        formatted_response = formatted_response.replace("Here are a few gentle CBT strategies", "<h5 class='mt-4 mb-3'>CBT Strategies</h5>")
-        formatted_response = formatted_response.replace("And a little reflection for today:", "<h5 class='mt-4 mb-3'>Reflection Prompt</h5>")
+        # Also apply additional formatting for older responses that might not use markdown
+        if "##" not in coach_response and "**" not in coach_response:
+            # Replace newlines with <br> tags for proper paragraph breaks
+            formatted_response = formatted_response.replace("\n\n", "</p><p>").replace("\n", "<br>")
+            
+            # Format section headers with more emphasis for legacy content
+            formatted_response = formatted_response.replace("Here are a few thought patterns", "<h5 class='mt-4 mb-3'>Thought Patterns</h5>")
+            formatted_response = formatted_response.replace("Here are a few gentle CBT strategies", "<h5 class='mt-4 mb-3'>CBT Strategies</h5>")
+            formatted_response = formatted_response.replace("And a little reflection for today:", "<h5 class='mt-4 mb-3'>Reflection Prompt</h5>")
         
         # Add paragraph tags around the whole response if they're not already there
-        if not formatted_response.startswith("<p>"):
+        if not formatted_response.startswith("<p>") and not formatted_response.startswith("<h4") and not formatted_response.startswith("<div"):
             formatted_response = f"<p>{formatted_response}</p>"
             
         styled_coach_response = f'<div style="color: #000000; font-weight: normal; background-color: white;">{formatted_response}</div>'
