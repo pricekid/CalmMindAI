@@ -27,6 +27,7 @@ journal_bp = Blueprint('journal_blueprint', __name__, url_prefix='/journal')
 def convert_markdown_to_html(text):
     """
     Convert markdown formatting to HTML for better display.
+    Also handles legacy formatting for older entries.
     
     Args:
         text: Text containing markdown formatting
@@ -40,10 +41,12 @@ def convert_markdown_to_html(text):
     # First, standardize newlines to avoid inconsistencies
     text = text.replace('\r\n', '\n')
     
+    # Detect if the text has markdown formatting
+    has_markdown = "##" in text or "**" in text or "•" in text
+    
     # Process sections in order to avoid formatting conflicts
     
     # 1. Convert markdown headers (##) to styled headers
-    # Store them temporarily with a special marker to avoid processing them with other rules
     text = re.sub(r'##\s+(.*?)$', r'<h4 class="mt-4 mb-3">\1</h4>', text, flags=re.MULTILINE)
     
     # 2. Convert bold text (**text**) to <strong>
@@ -54,6 +57,13 @@ def convert_markdown_to_html(text):
     
     # 4. Wrap lists in <ul> tags
     text = re.sub(r'(<li>.*?</li>\n)+', r'<ul class="mb-3">\n\g<0></ul>', text, flags=re.DOTALL)
+    
+    # If the text doesn't have markdown but has common section headers, format them
+    if not has_markdown:
+        # Format legacy section headers for entries that don't use markdown
+        text = text.replace("Here are a few thought patterns", "<h4 class='mt-4 mb-3'>Thought Patterns</h4>")
+        text = text.replace("Here are a few gentle CBT strategies", "<h4 class='mt-4 mb-3'>CBT Strategies</h4>")
+        text = text.replace("And a little reflection for today:", "<h4 class='mt-4 mb-3'>Reflection Prompt</h4>")
     
     # 5. Handle paragraph breaks but avoid extra breaks after headers and before lists
     # Replace double newlines with paragraph breaks, but not if preceded by header or followed by list
