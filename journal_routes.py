@@ -42,20 +42,29 @@ def convert_markdown_to_html(text):
     text = text.replace('\r\n', '\n')
     
     # Detect if the text has markdown formatting
-    has_markdown = "##" in text or "**" in text or "•" in text or "- " in text
+    has_markdown = "##" in text or "**" in text or "•" in text or "- " in text or "#" in text or "*" in text
+    
+    # 1. Pre-process: Clean up any markdown symbols that might cause issues
+    # Remove any standalone # at the beginning of lines that aren't proper headings
+    text = re.sub(r'^#(?!\s)', '', text, flags=re.MULTILINE)
     
     # Process sections in order to avoid formatting conflicts
     
-    # 1. Convert markdown headers (##) to styled headers
+    # 2. Convert markdown headers (##) to styled headers
     text = re.sub(r'##\s+(.*?)$', r'<h4 class="mt-4 mb-3">\1</h4>', text, flags=re.MULTILINE)
+    # Also convert single # headers
+    text = re.sub(r'^#\s+(.*?)$', r'<h4 class="mt-4 mb-3">\1</h4>', text, flags=re.MULTILINE)
     
-    # 2. Convert bold text (**text**) to <strong>
+    # 3. Convert bold text (**text**) to <strong>
     text = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', text)
     
-    # 3. Convert bullet points (both • and - bullets)
+    # 4. Convert italic text (*text*) to <em>
+    text = re.sub(r'(?<!\*)\*([^\*]+)\*(?!\*)', r'<em>\1</em>', text)
+    
+    # 5. Convert bullet points (both • and - bullets)
     text = re.sub(r'^\s*[•\-]\s+(.*?)$', r'<li>\1</li>', text, flags=re.MULTILINE)
     
-    # 4. Wrap lists in <ul> tags, making sure all <li> elements are wrapped
+    # 6. Wrap lists in <ul> tags, making sure all <li> elements are wrapped
     text = re.sub(r'((<li>.*?</li>\n?)+)', r'<ul class="mb-3">\n\g<0></ul>', text, flags=re.DOTALL)
     
     # If the text doesn't have markdown but has common section headers, format them
@@ -71,17 +80,27 @@ def convert_markdown_to_html(text):
         text = re.sub(r'Suggested Strategies[:]*\s*$', r'<h4 class="mt-4 mb-3">Suggested Strategies</h4>', text, flags=re.MULTILINE)
         text = re.sub(r'Reflection Prompt[:]*\s*$', r'<h4 class="mt-4 mb-3">Reflection Prompt</h4>', text, flags=re.MULTILINE)
     
-    # 5. Handle paragraph breaks but avoid extra breaks after headers and before lists
+    # 7. Handle paragraph breaks but avoid extra breaks after headers and before lists
     # Replace double newlines with paragraph breaks, but not if preceded by header or followed by list
     text = re.sub(r'(?<!</h4>)\n\n(?!<ul)', '<br><br>', text)
     
-    # 6. Remove any remaining excessive newlines around HTML elements
+    # 8. Remove any remaining excessive newlines around HTML elements
     text = re.sub(r'\n+(<h4|<ul|<li|</ul>)', r'\1', text)
     text = re.sub(r'(</h4>|</ul>|</li>)\n+', r'\1', text)
     
-    # 7. Clean up any remaining raw markdown symbols that weren't properly converted
-    text = re.sub(r'(?<!\w)#(?!\w)', '', text)  # Remove standalone # characters
-    text = re.sub(r'(?<!\w)\*(?!\w)', '', text)  # Remove standalone * characters
+    # 9. Thorough clean up of any remaining raw markdown symbols that weren't properly converted
+    
+    # Remove all remaining # characters
+    text = re.sub(r'#', '', text)
+    
+    # Remove all remaining * characters
+    text = re.sub(r'\*', '', text)
+    
+    # Remove any raw dashes at the beginning of lines that might be malformed bullet points
+    text = re.sub(r'^\s*-\s', '', text, flags=re.MULTILINE)
+    
+    # Clean up any double spaces that might have been created during cleaning
+    text = re.sub(r'\s{2,}', ' ', text)
     
     return text
 
@@ -950,7 +969,14 @@ def view_journal_entry(entry_id):
         # Convert any markdown formatting to proper HTML
         formatted_response = convert_markdown_to_html(coach_response)
         
-        # Our enhanced converter now handles both markdown and legacy formats
+        # Double-check for any leftover markdown symbols
+        formatted_response = formatted_response.replace('#', '')
+        formatted_response = formatted_response.replace('*', '')
+        formatted_response = formatted_response.replace('- ', '')
+        formatted_response = re.sub(r'^\s*-\s*', '', formatted_response, flags=re.MULTILINE)
+        
+        # Clean up any double spaces that might have been created during cleaning
+        formatted_response = re.sub(r'\s{2,}', ' ', formatted_response)
         
         # Add paragraph tags around the whole response if they're not already there
         if not formatted_response.startswith("<p>") and not formatted_response.startswith("<h4") and not formatted_response.startswith("<div"):
@@ -1171,6 +1197,15 @@ def api_journal_coach(entry_id):
     if coach_response:
         # Convert any markdown formatting to proper HTML
         formatted_response = convert_markdown_to_html(coach_response)
+        
+        # Double-check for any leftover markdown symbols
+        formatted_response = formatted_response.replace('#', '')
+        formatted_response = formatted_response.replace('*', '')
+        formatted_response = formatted_response.replace('- ', '')
+        formatted_response = re.sub(r'^\s*-\s*', '', formatted_response, flags=re.MULTILINE)
+        
+        # Clean up any double spaces that might have been created during cleaning
+        formatted_response = re.sub(r'\s{2,}', ' ', formatted_response)
         
         # Our enhanced converter now handles both markdown and legacy formats
         if "##" not in coach_response and "**" not in coach_response:
