@@ -649,6 +649,20 @@ with app.app_context():
         pass
         
     try:
+        if 'journal_blueprint.save_initial_reflection' in app.view_functions:
+            csrf.exempt(app.view_functions['journal_blueprint.save_initial_reflection'])
+            app.logger.info("CSRF exemption applied to save_initial_reflection")
+    except:
+        pass
+        
+    try:
+        if 'journal_blueprint.save_second_reflection' in app.view_functions:
+            csrf.exempt(app.view_functions['journal_blueprint.save_second_reflection'])
+            app.logger.info("CSRF exemption applied to save_second_reflection")
+    except:
+        pass
+        
+    try:
         if 'api_analyze_entry' in app.view_functions:
             csrf.exempt(app.view_functions['api_analyze_entry'])
             app.logger.info("CSRF exemption applied to api_analyze_entry")

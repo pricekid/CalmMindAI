@@ -82,10 +82,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Attempt to send the reflection to the server
+            console.log("Saving initial reflection for entry:", entryId);
+            
             fetch('/journal/save-initial-reflection', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content || ''
                 },
                 body: JSON.stringify({
                     entry_id: entryId,
@@ -226,10 +229,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Attempt to send the reflection to the server
+            console.log("Saving second reflection for entry:", entryId);
+            
             fetch('/journal/save-second-reflection', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content || ''
                 },
                 body: JSON.stringify({
                     entry_id: entryId,

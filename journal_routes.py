@@ -16,6 +16,7 @@ import gamification
 from utils.activity_tracker import track_journal_entry
 import markdown
 import re
+from csrf_utils import get_csrf_token, validate_csrf_token
 
 # Set up logging with more details
 logger = logging.getLogger(__name__)
