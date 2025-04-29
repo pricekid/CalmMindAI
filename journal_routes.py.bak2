@@ -941,6 +941,14 @@ def view_journal_entry(entry_id):
         formatted_response = convert_markdown_to_html(coach_response)
         
         # Our enhanced converter now handles both markdown and legacy formats
+        if "##" not in coach_response and "**" not in coach_response:
+            # Replace newlines with <br> tags for proper paragraph breaks
+            formatted_response = formatted_response.replace("\n\n", "</p><p>").replace("\n", "<br>")
+            
+            # Format section headers with more emphasis for legacy content
+            formatted_response = formatted_response.replace("Here are a few thought patterns", "<h5 class='mt-4 mb-3'>Thought Patterns</h5>")
+            formatted_response = formatted_response.replace("Here are a few gentle CBT strategies", "<h5 class='mt-4 mb-3'>CBT Strategies</h5>")
+            formatted_response = formatted_response.replace("And a little reflection for today:", "<h5 class='mt-4 mb-3'>Reflection Prompt</h5>")
         
         # Add paragraph tags around the whole response if they're not already there
         if not formatted_response.startswith("<p>") and not formatted_response.startswith("<h4") and not formatted_response.startswith("<div"):
