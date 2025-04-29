@@ -1942,5 +1942,17 @@
     "type": "startup_check",
     "message": "Scheduler already running with PID 286",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-29 16:38:13",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 286",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-29 16:39:26",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 286",
+    "success": true
   }
 ]
