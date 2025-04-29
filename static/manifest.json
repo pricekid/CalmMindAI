@@ -1,0 +1,16 @@
+
+{
+  "name": "Calm Journey",
+  "short_name": "CalmJourney",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4a6da7",
+  "icons": [
+    {
+      "src": "/static/images/logo.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
+}
