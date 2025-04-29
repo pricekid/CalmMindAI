@@ -15,6 +15,37 @@ logger.setLevel(logging.DEBUG)
 DATA_DIR = "data"
 JOURNALS_FILE = os.path.join(DATA_DIR, "journals.json")
 
+# Define helper function for journal content summarization
+def summarize_journal_content(content: str, max_length: int = 100) -> str:
+    """
+    Create a short summary of journal content.
+    
+    Args:
+        content: The journal content to summarize
+        max_length: Maximum length of summary
+        
+    Returns:
+        Summarized content
+    """
+    if not content:
+        return ""
+    
+    # Simple truncation with ellipsis for now
+    if len(content) <= max_length:
+        return content
+    
+    # Try to find a sentence break near the desired length
+    # This gives a more natural summary
+    end_pos = min(max_length, len(content))
+    sentence_ends = ['.', '!', '?']
+    
+    for i in range(end_pos - 1, max(0, end_pos - 30), -1):
+        if content[i] in sentence_ends:
+            return content[:i+1] + "..."
+    
+    # No good sentence break found, just truncate
+    return content[:max_length] + "..."
+
 # Initialize OpenAI client with a function to get the API key
 def get_openai_api_key():
     """Get the OpenAI API key from environment or admin config"""
@@ -332,36 +363,6 @@ def extract_metadata(text: str) -> Dict[str, Any]:
         "life_situations": top_situations[:3] if top_situations else [],
         "word_count": len(text.split())
     }
-
-def summarize_journal_content(content: str, max_length: int = 100) -> str:
-    """
-    Create a short summary of journal content.
-    
-    Args:
-        content: The journal content to summarize
-        max_length: Maximum length of summary
-        
-    Returns:
-        Summarized content
-    """
-    if not content:
-        return ""
-    
-    # Simple truncation with ellipsis for now
-    if len(content) <= max_length:
-        return content
-    
-    # Try to find a sentence break near the desired length
-    # This gives a more natural summary
-    end_pos = min(max_length, len(content))
-    sentence_ends = ['.', '!', '?']
-    
-    for i in range(end_pos - 1, max(0, end_pos - 30), -1):
-        if content[i] in sentence_ends:
-            return content[:i+1] + "..."
-    
-    # No good sentence break found, just truncate
-    return content[:max_length] + "..."
 
 def get_user_history_context(user_id: int) -> str:
     """
