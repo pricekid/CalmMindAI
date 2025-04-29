@@ -333,9 +333,40 @@ def extract_metadata(text: str) -> Dict[str, Any]:
         "word_count": len(text.split())
     }
 
+def summarize_journal_content(content: str, max_length: int = 100) -> str:
+    """
+    Create a short summary of journal content.
+    
+    Args:
+        content: The journal content to summarize
+        max_length: Maximum length of summary
+        
+    Returns:
+        Summarized content
+    """
+    if not content:
+        return ""
+    
+    # Simple truncation with ellipsis for now
+    if len(content) <= max_length:
+        return content
+    
+    # Try to find a sentence break near the desired length
+    # This gives a more natural summary
+    end_pos = min(max_length, len(content))
+    sentence_ends = ['.', '!', '?']
+    
+    for i in range(end_pos - 1, max(0, end_pos - 30), -1):
+        if content[i] in sentence_ends:
+            return content[:i+1] + "..."
+    
+    # No good sentence break found, just truncate
+    return content[:max_length] + "..."
+
 def get_user_history_context(user_id: int) -> str:
     """
-    Generate context about the user's history from previous entries.
+    Generate detailed context about the user's history from previous entries.
+    Includes recent journal summaries, emotional trends, and identified patterns.
     
     Args:
         user_id: The user's ID
@@ -353,9 +384,33 @@ def get_user_history_context(user_id: int) -> str:
         anxiety_levels = []
         emotional_tones = []
         recurring_situations = {}
+        recent_entries_data = []
         
-        # Process the last 5 entries (or fewer if not available)
-        for entry in entries[-5:]:
+        # Process the last 5 entries (excluding the most recent one)
+        # We skip the most recent entry because it's likely the current one
+        recent_entries = entries[1:6] if len(entries) > 1 else []
+        
+        for entry in recent_entries:
+            # Get detailed data for each entry
+            entry_data = {
+                "date": entry.get("created_at", ""),
+                "title": entry.get("title", "Untitled Entry"),
+                "summary": summarize_journal_content(entry.get("content", "")),
+                "anxiety": entry.get("anxiety_level", 5),
+                "patterns": []
+            }
+            
+            # Get patterns if available
+            patterns = entry.get('cbt_patterns', [])
+            if patterns:
+                for pattern in patterns:
+                    pattern_name = pattern.get('pattern')
+                    if pattern_name and pattern_name not in ["Error analyzing entry", "API Quota Exceeded", "API Configuration Issue"]:
+                        entry_data["patterns"].append(pattern_name)
+            
+            # Add to list of recent entries
+            recent_entries_data.append(entry_data)
+            
             # Get anxiety levels
             if "anxiety_level" in entry:
                 anxiety_levels.append(entry["anxiety_level"])
@@ -370,7 +425,7 @@ def get_user_history_context(user_id: int) -> str:
                 for situation in metadata.get("life_situations", []):
                     recurring_situations[situation] = recurring_situations.get(situation, 0) + 1
         
-        # Create context string
+        # Create context string with historical trends
         context = []
         
         # Add anxiety trend
@@ -400,7 +455,21 @@ def get_user_history_context(user_id: int) -> str:
             if recurring_situations[top_situation] >= 2:
                 context.append(f"User has been dealing with {top_situation}-related challenges")
         
-        return ". ".join(context)
+        trends_context = ". ".join(context) if context else "No clear trends in recent journals."
+        
+        # Now build a detailed history section with recent journal summaries
+        history_section = "RECENT JOURNAL HISTORY:\n"
+        history_section += f"Trends: {trends_context}\n\n"
+        
+        # Add summaries of recent entries
+        if recent_entries_data:
+            history_section += "Recent entries (from newest to oldest):\n"
+            for idx, entry in enumerate(recent_entries_data):
+                patterns_text = ", ".join(entry["patterns"]) if entry["patterns"] else "No patterns identified"
+                history_section += f"{idx+1}. {entry['title']} (Anxiety: {entry['anxiety']}/10, Patterns: {patterns_text})\n"
+                history_section += f"   Summary: {entry['summary']}\n\n"
+        
+        return history_section
         
     except Exception as e:
         logger.error(f"Error generating user history context: {str(e)}")
@@ -582,16 +651,20 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         Provide supportive, non-judgmental validation while gently encouraging safety planning and professional support.
         """
         
-        # Create the enhanced structured prompt with greater emotional intelligence
+        # Create the enhanced structured prompt with greater emotional intelligence and historical awareness
         prompt = f"""
         You are Mira, a warm, compassionate CBT journaling coach inside an app called Calm Journey. 
         Your task is to respond to the following journal entry with deep emotional intelligence, therapeutic insight, and highly personalized CBT strategies.
+        You should reference patterns and themes from previous entries when appropriate to show continuity and insight into the user's journey.
         
         ## JOURNAL ENTRY:
         "{safe_text}"
         
         {metadata_section}
         {crisis_instructions}
+        
+        ## USER HISTORY CONTEXT:
+        {user_history}
         
         ## YOUR TASK:
         1. Validate specific emotions by naming them precisely (e.g., "neglected," "anxious," "unimportant") rather than using general statements
@@ -600,6 +673,8 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         4. Offer practical, actionable steps including specific scripts or templates the user can directly apply
         5. Encourage meaningful self-reflection that identifies core emotional needs
         6. Balance compassionate support with gentle challenges to unhelpful thought patterns
+        7. When appropriate, connect current issues to patterns or themes observed in previous journals (reference specific entries if relevant)
+        8. Acknowledge progress or changes in thinking compared to previous entries when applicable
         
         ## ENHANCED THERAPEUTIC TECHNIQUES:
         1. Provide a scripted "I-statement" template they can use in a conversation (e.g., "I feel ___ when ___ because ___. What I need is ___.")
