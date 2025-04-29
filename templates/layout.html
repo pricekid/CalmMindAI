@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Calm Journey{% endblock %}</title>
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.svg') }}" type="image/svg+xml">
+    
+    <!-- PWA Support -->
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <meta name="theme-color" content="#4d5bf9">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Calm Journey">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/icon-192x192.png') }}">
+    
     <!-- Bootstrap 5 CSS -->
     <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
     <!-- Font Awesome Icons -->
@@ -150,6 +159,22 @@
     <!-- Emoji Selector JS -->
     <script src="{{ url_for('static', filename='js/emoji-selector.js') }}"></script>
     <script src="{{ url_for('static', filename='js/reflection-handler.js') }}"></script>
+    <!-- PWA Registration -->
+    <script src="{{ url_for('static', filename='js/pwa.js') }}"></script>
     {% block scripts %}{% endblock %}
+    
+    <!-- PWA Installation Notification - Will appear only if PWA is not installed -->
+    <div id="pwa-install-banner" style="display:none;" class="position-fixed bottom-0 start-0 end-0 p-3 bg-dark text-white">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div>
+                <i class="fas fa-mobile-alt me-2"></i>
+                <span>Install Calm Journey on your device for better experience</span>
+            </div>
+            <div>
+                <button id="pwa-install-btn" class="btn btn-sm btn-primary me-2">Install</button>
+                <button id="pwa-dismiss-btn" class="btn btn-sm btn-outline-light">Not Now</button>
+            </div>
+        </div>
+    </div>
   </body>
 </html>

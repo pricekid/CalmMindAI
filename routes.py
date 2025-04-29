@@ -389,6 +389,15 @@ def breathing_complete():
             'success': False,
             'message': 'Error recording breathing exercise completion.'
         }), 500
+        
+# Offline route for PWA fallback
+@app.route('/offline')
+def offline():
+    """
+    Offline fallback page for the Progressive Web App.
+    This is used when the user is offline and requests a page that isn't cached.
+    """
+    return render_template('offline.html', title='You\'re Offline')
 
 # User account management - Now moved to account_routes.py blueprint
 # This is commented out to avoid conflicts with the blueprint version
