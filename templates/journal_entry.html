@@ -278,12 +278,16 @@
                                 {% for paragraph in paragraphs[1:] %}
                                     {% if 'pattern' in paragraph.lower() or 'distortion' in paragraph.lower() %}
                                         <div class="thought-patterns-section mb-4">
+                                            {% if not coach_response or "Thought Patterns" not in coach_response %}
                                             <h5 class="mb-3">Thought Patterns</h5>
+                                            {% endif %}
                                             {{ paragraph | safe }}
                                         </div>
                                     {% elif 'strateg' in paragraph.lower() or 'technique' in paragraph.lower() or 'exercise' in paragraph.lower() %}
                                         <div class="strategies-section mb-4">
+                                            {% if not coach_response or "Suggested Strategies" not in coach_response %}
                                             <h5 class="mb-3">Suggested Strategies</h5>
+                                            {% endif %}
                                             {{ paragraph | safe }}
                                         </div>
                                     {% elif 'reflect' in paragraph.lower() or 'consider' in paragraph.lower() or 'ask yourself' in paragraph.lower() %}
@@ -352,12 +356,16 @@
                                 {% for paragraph in paragraphs[1:] %}
                                     {% if 'pattern' in paragraph.lower() or 'distortion' in paragraph.lower() %}
                                         <div class="thought-patterns-section mb-4">
+                                            {% if not coach_response or "Thought Patterns" not in coach_response %}
                                             <h5 class="mb-3">Thought Patterns</h5>
+                                            {% endif %}
                                             {{ paragraph | safe }}
                                         </div>
                                     {% elif 'strateg' in paragraph.lower() or 'technique' in paragraph.lower() or 'exercise' in paragraph.lower() %}
                                         <div class="strategies-section mb-4">
+                                            {% if not coach_response or "Suggested Strategies" not in coach_response %}
                                             <h5 class="mb-3">Suggested Strategies</h5>
+                                            {% endif %}
                                             {{ paragraph | safe }}
                                         </div>
                                     {% elif 'reflect' in paragraph.lower() or 'consider' in paragraph.lower() or 'ask yourself' in paragraph.lower() %}
@@ -427,12 +435,16 @@
                                 {% for paragraph in paragraphs[1:] %}
                                     {% if 'pattern' in paragraph.lower() or 'distortion' in paragraph.lower() %}
                                         <div class="thought-patterns-section mb-4">
+                                            {% if not coach_response or "Thought Patterns" not in coach_response %}
                                             <h5 class="mb-3">Thought Patterns</h5>
+                                            {% endif %}
                                             {{ paragraph | safe }}
                                         </div>
                                     {% elif 'strateg' in paragraph.lower() or 'technique' in paragraph.lower() or 'exercise' in paragraph.lower() %}
                                         <div class="strategies-section mb-4">
+                                            {% if not coach_response or "Suggested Strategies" not in coach_response %}
                                             <h5 class="mb-3">Suggested Strategies</h5>
+                                            {% endif %}
                                             {{ paragraph | safe }}
                                         </div>
                                     {% elif 'reflect' in paragraph.lower() or 'consider' in paragraph.lower() or 'ask yourself' in paragraph.lower() %}
