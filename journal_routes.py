@@ -940,7 +940,7 @@ def view_journal_entry(entry_id):
         # Convert any markdown formatting to proper HTML
         formatted_response = convert_markdown_to_html(coach_response)
         
-        # Also apply additional formatting for older responses that might not use markdown
+        # Our enhanced converter now handles both markdown and legacy formats
         if "##" not in coach_response and "**" not in coach_response:
             # Replace newlines with <br> tags for proper paragraph breaks
             formatted_response = formatted_response.replace("\n\n", "</p><p>").replace("\n", "<br>")
@@ -1170,7 +1170,7 @@ def api_journal_coach(entry_id):
         # Convert any markdown formatting to proper HTML
         formatted_response = convert_markdown_to_html(coach_response)
         
-        # Also apply additional formatting for older responses that might not use markdown
+        # Our enhanced converter now handles both markdown and legacy formats
         if "##" not in coach_response and "**" not in coach_response:
             # Replace newlines with <br> tags for proper paragraph breaks
             formatted_response = formatted_response.replace("\n\n", "</p><p>").replace("\n", "<br>")
