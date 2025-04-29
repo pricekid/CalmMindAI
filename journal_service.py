@@ -858,8 +858,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                 ],
                 response_format={"type": "json_object"},  # Explicitly require JSON response
                 temperature=0.7,
-                max_tokens=1500,  # Ensure we have enough tokens for the response
-                timeout=60  # Extended timeout to 60 seconds
+                max_tokens=1500  # Ensure we have enough tokens for the response
             )
             
             # Log successful API call
