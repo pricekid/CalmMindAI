@@ -834,6 +834,34 @@ def view_journal_entry(entry_id):
     earned_badge = session.pop('earned_badge', None)
     wellness_fact = session.pop('wellness_fact', None)
     
+    # Clean markdown symbols from various insights if they exist
+    fields_to_clean = {
+        'initial_insight': entry.initial_insight,
+        'followup_insight': entry.followup_insight,
+        'closing_message': entry.closing_message
+    }
+    
+    changes_made = False
+    for field_name, field_value in fields_to_clean.items():
+        if field_value:
+            logger.debug(f"Cleaning markdown symbols from {field_name} for entry {entry_id}")
+            # Remove markdown symbols completely
+            cleaned_value = re.sub(r'(^|\s)#+\s', ' ', field_value)  # Remove heading hashtags
+            cleaned_value = re.sub(r'\*\*', '', cleaned_value)  # Remove bold markers
+            cleaned_value = re.sub(r'\*', '', cleaned_value)  # Remove italic markers
+            cleaned_value = re.sub(r'^\s*[•\-]\s+', '', cleaned_value, flags=re.MULTILINE)  # Remove bullet points
+            cleaned_value = re.sub(r'\s{2,}', ' ', cleaned_value)  # Clean multiple spaces
+            
+            # Only update if cleaning made changes
+            if cleaned_value != field_value:
+                setattr(entry, field_name, cleaned_value)
+                changes_made = True
+                logger.debug(f"Markdown symbols cleaned from {field_name}")
+    
+    if changes_made:
+        db.session.commit()
+        logger.debug(f"Saved cleaned markdown fields to database")
+    
     # Initialize variables
     coach_response = ""
     user_entries = get_journal_entries_for_user(current_user.id)
