@@ -620,7 +620,10 @@
                                 
                                 {% if structured_data.distortions %}
                                 <div class="distortions mb-4">
+                                    <!-- Don't show duplicate "Thought Patterns" header if it appears in markdown -->
+                                    {% if not coach_response or "Thought Patterns" not in coach_response %}
                                     <h5 class="mt-4 mb-3">Thought Patterns</h5>
+                                    {% endif %}
                                     <ul class="list-group">
                                     {% for distortion in structured_data.distortions %}
                                         <li class="list-group-item">
@@ -633,7 +636,10 @@
                                 
                                 {% if structured_data.strategies %}
                                 <div class="strategies mb-4">
+                                    <!-- Don't show duplicate "Strategies" header if it appears in markdown -->
+                                    {% if not coach_response or "Suggested Strategies" not in coach_response %}
                                     <h5 class="mt-4 mb-3">CBT Strategies</h5>
+                                    {% endif %}
                                     <div class="strategy-cards">
                                     {% for strategy in structured_data.strategies %}
                                         <div class="card mb-3">
