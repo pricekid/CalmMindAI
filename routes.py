@@ -35,7 +35,13 @@ def index():
 def register():
     # Redirect to the simplified registration page that doesn't have JSON parsing issues
     # Use direct path instead of url_for
-    return redirect('/simple-register')
+    return redirect('/register-simple')
+
+# Fallback route for any hardcoded links to /simple-register
+@app.route('/simple-register', methods=['GET', 'POST'])
+def simple_register_fallback():
+    # Redirect to the correct path for the simple registration page
+    return redirect('/register-simple')
 
 # Direct stable login implementation in routes.py
 @app.route('/login', methods=['GET', 'POST'])
