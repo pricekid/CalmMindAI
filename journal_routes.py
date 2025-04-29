@@ -14,6 +14,8 @@ from sqlalchemy.orm import load_only, defer, undefer
 import logging
 import gamification
 from utils.activity_tracker import track_journal_entry
+import markdown
+import re
 
 # Set up logging with more details
 logger = logging.getLogger(__name__)
@@ -21,6 +23,36 @@ logger.setLevel(logging.DEBUG)
 
 # Create blueprint
 journal_bp = Blueprint('journal_blueprint', __name__, url_prefix='/journal')
+
+def convert_markdown_to_html(text):
+    """
+    Convert markdown formatting to HTML for better display.
+    
+    Args:
+        text: Text containing markdown formatting
+        
+    Returns:
+        Text with markdown converted to HTML
+    """
+    if not text:
+        return ""
+    
+    # Convert markdown headers (##) to styled headers
+    text = re.sub(r'##\s+(.*?)$', r'<h4 class="mt-4 mb-3">\1</h4>', text, flags=re.MULTILINE)
+    
+    # Convert bold text (**text**) to <strong>
+    text = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', text)
+    
+    # Convert bullet points
+    text = re.sub(r'^\s*•\s+(.*?)$', r'<li>\1</li>', text, flags=re.MULTILINE)
+    
+    # Wrap lists in <ul> tags
+    text = re.sub(r'(<li>.*?</li>\n)+', r'<ul class="mb-3">\n\g<0></ul>', text, flags=re.DOTALL)
+    
+    # Convert newlines to breaks for better spacing
+    text = text.replace('\n\n', '<br><br>')
+    
+    return text
 
 # API endpoint to save user reflections
 @journal_bp.route('/save-initial-reflection', methods=['POST'])
