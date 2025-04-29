@@ -214,8 +214,12 @@ def dashboard():
     # Only try to get a personalized one if we have a journal entry
     if latest_entry:
         try:
-            # Use a simplified version of the journal content for the coping statement
-            context = latest_entry.title or "anxiety management"
+            # Use the full journal content for the coping statement if available
+            # Fall back to title if no content, and default to "anxiety management" if neither exists
+            if latest_entry.content and len(latest_entry.content.strip()) > 10:
+                context = latest_entry.content
+            else:
+                context = latest_entry.title or "anxiety management"
 
             try:
                 # Generate coping statement with improved error handling

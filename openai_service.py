@@ -591,7 +591,7 @@ def generate_onboarding_feedback(journal_content, mood):
 
 def generate_coping_statement(anxiety_context):
     """
-    Generate a personalized coping statement based on the user's anxiety context.
+    Generate a personalized coping statement based on the user's journal content.
     
     # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
     do not change this unless explicitly requested by the user
@@ -601,7 +601,7 @@ def generate_coping_statement(anxiety_context):
     
     # Safety check for empty context
     if not anxiety_context or anxiety_context.strip() == "":
-        logger.warning("Empty anxiety context provided to generate_coping_statement")
+        logger.warning("Empty journal content provided to generate_coping_statement")
         return fallback_statement
     
     try:
@@ -614,14 +614,41 @@ def generate_coping_statement(anxiety_context):
             logger.error("OpenAI API key is not set")
             return fallback_statement
         
-        prompt = f"""
-        Create a short, personalized coping statement for someone experiencing anxiety about:
+        # Handle long journal content by creating a focused prompt
+        # Truncate very long content to avoid token limits
+        content_to_use = anxiety_context
+        if len(anxiety_context) > 1000:
+            logger.info("Journal content exceeds 1000 chars, using model to analyze key themes")
+            try:
+                client = get_openai_client()
+                
+                # First, get the key themes from the journal
+                summary_response = client.chat.completions.create(
+                    model=model,
+                    messages=[
+                        {"role": "system", "content": "You are an assistant that identifies key emotions and concerns from journal entries."},
+                        {"role": "user", "content": f"Extract the main emotional concerns and anxieties from this journal entry (be brief): \n\n{anxiety_context}"}
+                    ],
+                    temperature=0.3,
+                    max_tokens=100
+                )
+                
+                if summary_response.choices and hasattr(summary_response.choices[0], 'message'):
+                    content_to_use = summary_response.choices[0].message.content.strip()
+                    logger.debug(f"Extracted journal themes: {content_to_use}")
+            except Exception as summary_error:
+                logger.error(f"Error summarizing journal content: {str(summary_error)}")
+                # Keep first 1000 chars if summary fails
+                content_to_use = anxiety_context[:1000] + "..."
         
-        "{anxiety_context}"
+        prompt = f"""
+        Create a short, personalized coping statement for someone who wrote this journal entry:
+        
+        "{content_to_use}"
         
         The statement should be:
         1. Brief (2-3 sentences)
-        2. Name a specific emotion the person is likely feeling
+        2. Name a specific emotion the person is likely feeling based on their journal content
         3. Provide a concrete CBT-based reframing of their situation
         4. Include a specific actionable step they can take immediately
         5. Be validating yet gently challenging of unhelpful thought patterns
