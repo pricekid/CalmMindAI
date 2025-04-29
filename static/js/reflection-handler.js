@@ -114,10 +114,52 @@ document.addEventListener('DOMContentLoaded', function() {
                         insertAfter.parentNode.insertBefore(successMessage, insertAfter.nextSibling);
                     }
                     
-                    // Reload after a brief delay so the user sees the success message
+                    // Show success message but don't immediately reload
+                    // This gives more time for the server to process the reflection
+                    submitReflection.innerHTML = '<i class="fas fa-check-circle"></i> Saved Successfully';
+                    
+                    // Update the page elements to show the saved reflection without reload
+                    const reflectionContainer = document.getElementById('reflection-container');
+                    if (reflectionContainer) {
+                        reflectionContainer.innerHTML = `<div class="alert alert-success">
+                            <h5><i class="fas fa-check-circle"></i> Your reflection has been saved!</h5>
+                            <p>${reflectionText}</p>
+                            <hr>
+                            <p class="mb-0">Mira is working on her response...</p>
+                        </div>`;
+                    }
+                    
+                    // Check after 5 seconds if the follow-up insight is ready
                     setTimeout(() => {
-                        window.location.reload();
-                    }, 1000);
+                        fetch(`/journal/check-followup/${entryId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.ready) {
+                                // Only reload if the insight is ready
+                                window.location.reload();
+                            } else {
+                                // Show a message saying it's still processing
+                                const processingMsg = document.createElement('div');
+                                processingMsg.className = 'alert alert-info mt-3';
+                                processingMsg.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Mira is still working on her response. This page will refresh automatically when it's ready.`;
+                                
+                                if (reflectionContainer) {
+                                    reflectionContainer.appendChild(processingMsg);
+                                }
+                                
+                                // Check again in 5 more seconds
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 5000);
+                            }
+                        })
+                        .catch(err => {
+                            // If there's an error checking, just reload after a delay
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 2000);
+                        });
+                    }, 5000);
                 } else {
                     // Server returned an error
                     console.error('Server error:', data.error);
@@ -267,10 +309,52 @@ document.addEventListener('DOMContentLoaded', function() {
                         insertAfter.parentNode.insertBefore(successMessage, insertAfter.nextSibling);
                     }
                     
-                    // Reload after a brief delay so the user sees the success message
+                    // Show success message but don't immediately reload
+                    // This gives more time for the server to process the reflection
+                    submitSecondReflection.innerHTML = '<i class="fas fa-check-circle"></i> Saved Successfully';
+                    
+                    // Update the page elements to show the saved reflection without reload
+                    const reflectionContainer = document.getElementById('second-reflection-container');
+                    if (reflectionContainer) {
+                        reflectionContainer.innerHTML = `<div class="alert alert-success">
+                            <h5><i class="fas fa-check-circle"></i> Your final reflection has been saved!</h5>
+                            <p>${reflectionText}</p>
+                            <hr>
+                            <p class="mb-0">Mira is preparing her closing thoughts...</p>
+                        </div>`;
+                    }
+                    
+                    // Check after 5 seconds if the closing message is ready
                     setTimeout(() => {
-                        window.location.reload();
-                    }, 1500);
+                        fetch(`/journal/check-closing/${entryId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.ready) {
+                                // Only reload if the insight is ready
+                                window.location.reload();
+                            } else {
+                                // Show a message saying it's still processing
+                                const processingMsg = document.createElement('div');
+                                processingMsg.className = 'alert alert-info mt-3';
+                                processingMsg.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Mira is still working on her closing message. This page will refresh automatically when it's ready.`;
+                                
+                                if (reflectionContainer) {
+                                    reflectionContainer.appendChild(processingMsg);
+                                }
+                                
+                                // Check again in 5 more seconds
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 5000);
+                            }
+                        })
+                        .catch(err => {
+                            // If there's an error checking, just reload after a delay
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 2000);
+                        });
+                    }, 5000);
                 } else {
                     // Server returned an error
                     console.error('Server error:', data.error);

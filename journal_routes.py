@@ -105,6 +105,36 @@ def convert_markdown_to_html(text):
     
     return text
 
+# API endpoint to check if a followup insight is ready
+@journal_bp.route('/check-followup/<int:entry_id>', methods=['GET'])
+@login_required
+def check_followup_insight(entry_id):
+    """Check if a followup insight is ready for a journal entry"""
+    try:
+        # Fetch the journal entry
+        entry = JournalEntry.query.get(entry_id)
+        
+        # Check if the entry exists and belongs to the current user
+        if not entry:
+            logger.error(f"Journal entry not found: ID {entry_id}")
+            return jsonify({"error": "Journal entry not found", "ready": False}), 404
+            
+        if entry.user_id != current_user.id:
+            logger.warning(f"Unauthorized access to entry {entry_id} by user {current_user.id}")
+            return jsonify({"error": "Unauthorized access", "ready": False}), 403
+            
+        # Check if the followup insight exists and is not empty
+        followup_ready = entry.followup_insight and len(entry.followup_insight.strip()) > 0
+        
+        return jsonify({
+            "ready": followup_ready,
+            "entry_id": entry_id
+        })
+        
+    except Exception as e:
+        logger.error(f"Error checking followup insight: {str(e)}")
+        return jsonify({"error": "Server error", "ready": False}), 500
+
 # API endpoint to save user reflections
 @journal_bp.route('/save-initial-reflection', methods=['POST'])
 @login_required
@@ -211,6 +241,36 @@ def save_initial_reflection():
         # Catch-all error handler for unhandled exceptions
         logger.error(f"Unhandled error in save_initial_reflection: {str(e)}")
         return jsonify({"error": "Server error occurred while saving your reflection"}), 500
+
+# API endpoint to check if a closing message is ready
+@journal_bp.route('/check-closing/<int:entry_id>', methods=['GET'])
+@login_required
+def check_closing_message(entry_id):
+    """Check if a closing message is ready for a journal entry"""
+    try:
+        # Fetch the journal entry
+        entry = JournalEntry.query.get(entry_id)
+        
+        # Check if the entry exists and belongs to the current user
+        if not entry:
+            logger.error(f"Journal entry not found: ID {entry_id}")
+            return jsonify({"error": "Journal entry not found", "ready": False}), 404
+            
+        if entry.user_id != current_user.id:
+            logger.warning(f"Unauthorized access to entry {entry_id} by user {current_user.id}")
+            return jsonify({"error": "Unauthorized access", "ready": False}), 403
+            
+        # Check if the closing message exists and is not empty
+        closing_ready = entry.closing_message and len(entry.closing_message.strip()) > 0
+        
+        return jsonify({
+            "ready": closing_ready,
+            "entry_id": entry_id
+        })
+        
+    except Exception as e:
+        logger.error(f"Error checking closing message: {str(e)}")
+        return jsonify({"error": "Server error", "ready": False}), 500
 
 @journal_bp.route('/save-second-reflection', methods=['POST'])
 @login_required

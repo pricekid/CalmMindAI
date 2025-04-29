@@ -663,6 +663,20 @@ with app.app_context():
         pass
         
     try:
+        if 'journal_blueprint.check_followup_insight' in app.view_functions:
+            csrf.exempt(app.view_functions['journal_blueprint.check_followup_insight'])
+            app.logger.info("CSRF exemption applied to check_followup_insight")
+    except:
+        pass
+        
+    try:
+        if 'journal_blueprint.check_closing_message' in app.view_functions:
+            csrf.exempt(app.view_functions['journal_blueprint.check_closing_message'])
+            app.logger.info("CSRF exemption applied to check_closing_message")
+    except:
+        pass
+        
+    try:
         if 'api_analyze_entry' in app.view_functions:
             csrf.exempt(app.view_functions['api_analyze_entry'])
             app.logger.info("CSRF exemption applied to api_analyze_entry")
