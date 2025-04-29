@@ -266,8 +266,11 @@
                     <div class="initial-insight">
                         {% if entry.initial_insight %}
                             {% if '<div class=' not in entry.initial_insight %}
+                                <!-- First clean markdown symbols that might have remained -->
+                                {% set cleaned_insight = entry.initial_insight.replace('#', '').replace('*', '').replace('- ', '').replace('##', '') %}
+                                
                                 <!-- Format unstructured content for better readability -->
-                                {% set paragraphs = entry.initial_insight.split('\n\n') %}
+                                {% set paragraphs = cleaned_insight.split('\n\n') %}
                                 
                                 <!-- First paragraph is usually validation -->
                                 {% if paragraphs|length > 0 %}
@@ -276,25 +279,31 @@
                                 
                                 <!-- Process remaining paragraphs -->
                                 {% for paragraph in paragraphs[1:] %}
-                                    {% if 'pattern' in paragraph.lower() or 'distortion' in paragraph.lower() %}
+                                    <!-- Remove any leading dash/bullet characters -->
+                                    {% set clean_paragraph = paragraph.strip() %}
+                                    {% if clean_paragraph.startswith('-') %}
+                                        {% set clean_paragraph = clean_paragraph[1:].strip() %}
+                                    {% endif %}
+                                    
+                                    {% if 'pattern' in clean_paragraph.lower() or 'distortion' in clean_paragraph.lower() %}
                                         <div class="thought-patterns-section mb-4">
                                             <h5 class="mb-3">Thought Patterns</h5>
-                                            {{ paragraph | safe }}
+                                            {{ clean_paragraph | safe }}
                                         </div>
-                                    {% elif 'strateg' in paragraph.lower() or 'technique' in paragraph.lower() or 'exercise' in paragraph.lower() %}
+                                    {% elif 'strateg' in clean_paragraph.lower() or 'technique' in clean_paragraph.lower() or 'exercise' in clean_paragraph.lower() %}
                                         <div class="strategies-section mb-4">
                                             <h5 class="mb-3">Suggested Strategies</h5>
-                                            {{ paragraph | safe }}
+                                            {{ clean_paragraph | safe }}
                                         </div>
-                                    {% elif 'reflect' in paragraph.lower() or 'consider' in paragraph.lower() or 'ask yourself' in paragraph.lower() %}
+                                    {% elif 'reflect' in clean_paragraph.lower() or 'consider' in clean_paragraph.lower() or 'ask yourself' in clean_paragraph.lower() %}
                                         <div class="reflection-section mb-4">
                                             <h5 class="mb-3">Reflection Prompts</h5>
-                                            {{ paragraph | safe }}
+                                            {{ clean_paragraph | safe }}
                                         </div>
-                                    {% elif loop.last and 'warmly' in paragraph.lower() %}
-                                        <div class="closing-section mt-4">{{ paragraph | safe }}</div>
+                                    {% elif loop.last and 'warmly' in clean_paragraph.lower() %}
+                                        <div class="closing-section mt-4">{{ clean_paragraph | safe }}</div>
                                     {% else %}
-                                        <div class="paragraph mb-3">{{ paragraph | safe }}</div>
+                                        <div class="paragraph mb-3">{{ clean_paragraph | safe }}</div>
                                     {% endif %}
                                 {% endfor %}
                             {% else %}
@@ -340,8 +349,11 @@
                     <div class="followup-insight">
                         {% if entry.followup_insight %}
                             {% if '<div class=' not in entry.followup_insight %}
+                                <!-- First clean markdown symbols that might have remained -->
+                                {% set cleaned_insight = entry.followup_insight.replace('#', '').replace('*', '').replace('- ', '').replace('##', '') %}
+                                
                                 <!-- Format unstructured content for better readability -->
-                                {% set paragraphs = entry.followup_insight.split('\n\n') %}
+                                {% set paragraphs = cleaned_insight.split('\n\n') %}
                                 
                                 <!-- First paragraph is usually validation -->
                                 {% if paragraphs|length > 0 %}
@@ -350,25 +362,31 @@
                                 
                                 <!-- Process remaining paragraphs -->
                                 {% for paragraph in paragraphs[1:] %}
-                                    {% if 'pattern' in paragraph.lower() or 'distortion' in paragraph.lower() %}
+                                    <!-- Remove any leading dash/bullet characters -->
+                                    {% set clean_paragraph = paragraph.strip() %}
+                                    {% if clean_paragraph.startswith('-') %}
+                                        {% set clean_paragraph = clean_paragraph[1:].strip() %}
+                                    {% endif %}
+                                    
+                                    {% if 'pattern' in clean_paragraph.lower() or 'distortion' in clean_paragraph.lower() %}
                                         <div class="thought-patterns-section mb-4">
                                             <h5 class="mb-3">Thought Patterns</h5>
-                                            {{ paragraph | safe }}
+                                            {{ clean_paragraph | safe }}
                                         </div>
-                                    {% elif 'strateg' in paragraph.lower() or 'technique' in paragraph.lower() or 'exercise' in paragraph.lower() %}
+                                    {% elif 'strateg' in clean_paragraph.lower() or 'technique' in clean_paragraph.lower() or 'exercise' in clean_paragraph.lower() %}
                                         <div class="strategies-section mb-4">
                                             <h5 class="mb-3">Suggested Strategies</h5>
-                                            {{ paragraph | safe }}
+                                            {{ clean_paragraph | safe }}
                                         </div>
-                                    {% elif 'reflect' in paragraph.lower() or 'consider' in paragraph.lower() or 'ask yourself' in paragraph.lower() %}
+                                    {% elif 'reflect' in clean_paragraph.lower() or 'consider' in clean_paragraph.lower() or 'ask yourself' in clean_paragraph.lower() %}
                                         <div class="reflection-section mb-4">
                                             <h5 class="mb-3">Reflection Prompts</h5>
-                                            {{ paragraph | safe }}
+                                            {{ clean_paragraph | safe }}
                                         </div>
-                                    {% elif loop.last and 'warmly' in paragraph.lower() %}
-                                        <div class="closing-section mt-4">{{ paragraph | safe }}</div>
+                                    {% elif loop.last and 'warmly' in clean_paragraph.lower() %}
+                                        <div class="closing-section mt-4">{{ clean_paragraph | safe }}</div>
                                     {% else %}
-                                        <div class="paragraph mb-3">{{ paragraph | safe }}</div>
+                                        <div class="paragraph mb-3">{{ clean_paragraph | safe }}</div>
                                     {% endif %}
                                 {% endfor %}
                             {% else %}
@@ -415,8 +433,11 @@
                     <div class="closing-message">
                         {% if entry.closing_message %}
                             {% if '<div class=' not in entry.closing_message %}
+                                <!-- First clean markdown symbols that might have remained -->
+                                {% set cleaned_insight = entry.closing_message.replace('#', '').replace('*', '').replace('- ', '').replace('##', '') %}
+                                
                                 <!-- Format unstructured content for better readability -->
-                                {% set paragraphs = entry.closing_message.split('\n\n') %}
+                                {% set paragraphs = cleaned_insight.split('\n\n') %}
                                 
                                 <!-- First paragraph is usually validation -->
                                 {% if paragraphs|length > 0 %}
@@ -425,25 +446,31 @@
                                 
                                 <!-- Process remaining paragraphs -->
                                 {% for paragraph in paragraphs[1:] %}
-                                    {% if 'pattern' in paragraph.lower() or 'distortion' in paragraph.lower() %}
+                                    <!-- Remove any leading dash/bullet characters -->
+                                    {% set clean_paragraph = paragraph.strip() %}
+                                    {% if clean_paragraph.startswith('-') %}
+                                        {% set clean_paragraph = clean_paragraph[1:].strip() %}
+                                    {% endif %}
+                                    
+                                    {% if 'pattern' in clean_paragraph.lower() or 'distortion' in clean_paragraph.lower() %}
                                         <div class="thought-patterns-section mb-4">
                                             <h5 class="mb-3">Thought Patterns</h5>
-                                            {{ paragraph | safe }}
+                                            {{ clean_paragraph | safe }}
                                         </div>
-                                    {% elif 'strateg' in paragraph.lower() or 'technique' in paragraph.lower() or 'exercise' in paragraph.lower() %}
+                                    {% elif 'strateg' in clean_paragraph.lower() or 'technique' in clean_paragraph.lower() or 'exercise' in clean_paragraph.lower() %}
                                         <div class="strategies-section mb-4">
                                             <h5 class="mb-3">Suggested Strategies</h5>
-                                            {{ paragraph | safe }}
+                                            {{ clean_paragraph | safe }}
                                         </div>
-                                    {% elif 'reflect' in paragraph.lower() or 'consider' in paragraph.lower() or 'ask yourself' in paragraph.lower() %}
+                                    {% elif 'reflect' in clean_paragraph.lower() or 'consider' in clean_paragraph.lower() or 'ask yourself' in clean_paragraph.lower() %}
                                         <div class="reflection-section mb-4">
                                             <h5 class="mb-3">Reflection Prompts</h5>
-                                            {{ paragraph | safe }}
+                                            {{ clean_paragraph | safe }}
                                         </div>
-                                    {% elif loop.last and 'warmly' in paragraph.lower() %}
-                                        <div class="closing-section mt-4">{{ paragraph | safe }}</div>
+                                    {% elif loop.last and 'warmly' in clean_paragraph.lower() %}
+                                        <div class="closing-section mt-4">{{ clean_paragraph | safe }}</div>
                                     {% else %}
-                                        <div class="paragraph mb-3">{{ paragraph | safe }}</div>
+                                        <div class="paragraph mb-3">{{ clean_paragraph | safe }}</div>
                                     {% endif %}
                                 {% endfor %}
                             {% else %}
