@@ -63,26 +63,44 @@ def update_existing_journal_entries():
         updated_count = 0
         
         for entry in entries:
-            if not entry.is_analyzed or not entry.analysis:
+            if not entry.is_analyzed or not entry.initial_insight:
                 continue
                 
-            # Check if the entry contains raw markdown
-            if "**" in entry.analysis or "##" in entry.analysis:
-                print(f"Processing entry {entry.id}...")
+            # Check if the entry contains raw markdown in any field
+            fields_to_check = [
+                ('initial_insight', entry.initial_insight),
+                ('followup_insight', entry.followup_insight),
+                ('closing_message', entry.closing_message)
+            ]
+            
+            updated = False
+            
+            for field_name, field_content in fields_to_check:
+                if field_content and ("**" in field_content or "##" in field_content):
+                    print(f"Processing entry {entry.id}, field {field_name}...")
+                    
+                    # Treat this as a markdown entry and convert any symbols
+                    # Store the original content in case we need to revert
+                    original_content = field_content
+                    
+                    # Apply markdown conversion
+                    try:
+                        formatted_content = convert_markdown_to_html(field_content)
+                        setattr(entry, field_name, formatted_content)
+                        updated = True
+                        
+                        print(f"Successfully updated entry {entry.id}, field {field_name}")
+                    except Exception as e:
+                        print(f"Error updating entry {entry.id}, field {field_name}: {str(e)}")
+                        # Revert to original content if there was an error
+                        setattr(entry, field_name, original_content)
+            
+            if updated:
+                db.session.commit()
+                updated_count += 1
                 
-                # Treat this as a markdown entry and convert any symbols
-                # Store the original content in case we need to revert
-                original_content = entry.analysis
-                
-                # Apply markdown conversion
+                # Also update the entry in the JSON file
                 try:
-                    entry.analysis = convert_markdown_to_html(entry.analysis)
-                    db.session.commit()
-                    updated_count += 1
-                    
-                    print(f"Successfully updated entry {entry.id}")
-                    
-                    # Also update the entry in the JSON file
                     save_journal_entry(
                         entry_id=entry.id,
                         user_id=entry.user_id,
@@ -92,13 +110,10 @@ def update_existing_journal_entries():
                         created_at=entry.created_at,
                         updated_at=entry.updated_at,
                         is_analyzed=entry.is_analyzed,
-                        gpt_response=entry.analysis
+                        gpt_response=entry.initial_insight
                     )
                 except Exception as e:
-                    print(f"Error updating entry {entry.id}: {str(e)}")
-                    # Revert to original content if there was an error
-                    entry.analysis = original_content
-                    db.session.commit()
+                    print(f"Error updating entry in JSON file: {str(e)}")
                     
         print(f"Updated {updated_count} journal entries with markdown formatting")
         
