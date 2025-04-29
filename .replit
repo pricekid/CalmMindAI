@@ -2,13 +2,13 @@ modules = ["python-3.11"]
 
 [nix]
 channel = "stable-24_05"
+packages = ["xvfb-run"]
 
 [deployment]
 deploymentTarget = "autoscale"
 run = ["gunicorn", "--bind", "0.0.0.0:5000", "main:app"]
 
 [workflows]
-runButton = "Start Flask App"
 
 [[workflows.workflow]]
 name = "Project"
@@ -60,6 +60,15 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "python main.py --port 5000"
+
+[[workflows.workflow]]
+name = "Start WebView"
+author = 38405744
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python main.py --webview"
 
 [[ports]]
 localPort = 5000
