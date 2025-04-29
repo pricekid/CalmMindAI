@@ -44,6 +44,7 @@
     background-color: #f8f9fa;
     padding: 15px;
     border-radius: 5px;
+    color: #212529;
 }
 
 .thought-patterns-section {
@@ -53,6 +54,7 @@
     background-color: #f8f9fa;
     padding: 15px;
     border-radius: 5px;
+    color: #212529;
 }
 
 .strategies-section {
@@ -62,6 +64,7 @@
     background-color: #f8f9fa;
     padding: 15px;
     border-radius: 5px;
+    color: #212529;
 }
 
 .reflection-section {
@@ -71,6 +74,7 @@
     background-color: #f8f9fa;
     padding: 15px;
     border-radius: 5px;
+    color: #212529;
 }
 
 .closing-section {
@@ -81,6 +85,35 @@
 
 .paragraph {
     margin-bottom: 15px;
+    color: #212529;
+}
+
+/* Ensure all text in the insights has proper contrast */
+.initial-insight, .followup-insight, .closing-message {
+    color: #212529;
+}
+
+.initial-insight h5, .followup-insight h5, .closing-message h5 {
+    color: #212529;
+    font-weight: 600;
+}
+
+/* Fix any background/text contrast issues in insight cards */
+#initial-insight-card, #followup-card, #reflection-card, #second-reflection-card, #closing-card {
+    background-color: #ffffff;
+}
+
+#initial-insight-card .card-body, #followup-card .card-body, 
+#reflection-card .card-body, #second-reflection-card .card-body, 
+#closing-card .card-body {
+    background-color: #ffffff;
+    color: #212529;
+}
+
+/* Fix any thought pattern display issue from the screenshot */
+.thought-patterns-section, .validation-section, .strategies-section, .reflection-section {
+    color: #212529 !important;
+    background-color: #f8f9fa !important;
 }
 </style>
 {% endblock %}
@@ -305,7 +338,46 @@
                 </div>
                 <div class="card-body">
                     <div class="followup-insight">
-                        {{ entry.followup_insight | safe if entry.followup_insight else "Awaiting follow-up insight..." }}
+                        {% if entry.followup_insight %}
+                            {% if '<div class=' not in entry.followup_insight %}
+                                <!-- Format unstructured content for better readability -->
+                                {% set paragraphs = entry.followup_insight.split('\n\n') %}
+                                
+                                <!-- First paragraph is usually validation -->
+                                {% if paragraphs|length > 0 %}
+                                    <div class="validation-section mb-4">{{ paragraphs[0] | safe }}</div>
+                                {% endif %}
+                                
+                                <!-- Process remaining paragraphs -->
+                                {% for paragraph in paragraphs[1:] %}
+                                    {% if 'pattern' in paragraph.lower() or 'distortion' in paragraph.lower() %}
+                                        <div class="thought-patterns-section mb-4">
+                                            <h5 class="mb-3">Thought Patterns</h5>
+                                            {{ paragraph | safe }}
+                                        </div>
+                                    {% elif 'strateg' in paragraph.lower() or 'technique' in paragraph.lower() or 'exercise' in paragraph.lower() %}
+                                        <div class="strategies-section mb-4">
+                                            <h5 class="mb-3">Suggested Strategies</h5>
+                                            {{ paragraph | safe }}
+                                        </div>
+                                    {% elif 'reflect' in paragraph.lower() or 'consider' in paragraph.lower() or 'ask yourself' in paragraph.lower() %}
+                                        <div class="reflection-section mb-4">
+                                            <h5 class="mb-3">Reflection Prompts</h5>
+                                            {{ paragraph | safe }}
+                                        </div>
+                                    {% elif loop.last and 'warmly' in paragraph.lower() %}
+                                        <div class="closing-section mt-4">{{ paragraph | safe }}</div>
+                                    {% else %}
+                                        <div class="paragraph mb-3">{{ paragraph | safe }}</div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <!-- Content already has HTML formatting -->
+                                {{ entry.followup_insight | safe }}
+                            {% endif %}
+                        {% else %}
+                            Awaiting follow-up insight...
+                        {% endif %}
                     </div>
                     {% if not entry.second_reflection %}
                     <div class="second-reflection-input mt-4">
@@ -341,7 +413,46 @@
                 </div>
                 <div class="card-body">
                     <div class="closing-message">
-                        {{ entry.closing_message | safe if entry.closing_message else "Awaiting closing message..." }}
+                        {% if entry.closing_message %}
+                            {% if '<div class=' not in entry.closing_message %}
+                                <!-- Format unstructured content for better readability -->
+                                {% set paragraphs = entry.closing_message.split('\n\n') %}
+                                
+                                <!-- First paragraph is usually validation -->
+                                {% if paragraphs|length > 0 %}
+                                    <div class="validation-section mb-4">{{ paragraphs[0] | safe }}</div>
+                                {% endif %}
+                                
+                                <!-- Process remaining paragraphs -->
+                                {% for paragraph in paragraphs[1:] %}
+                                    {% if 'pattern' in paragraph.lower() or 'distortion' in paragraph.lower() %}
+                                        <div class="thought-patterns-section mb-4">
+                                            <h5 class="mb-3">Thought Patterns</h5>
+                                            {{ paragraph | safe }}
+                                        </div>
+                                    {% elif 'strateg' in paragraph.lower() or 'technique' in paragraph.lower() or 'exercise' in paragraph.lower() %}
+                                        <div class="strategies-section mb-4">
+                                            <h5 class="mb-3">Suggested Strategies</h5>
+                                            {{ paragraph | safe }}
+                                        </div>
+                                    {% elif 'reflect' in paragraph.lower() or 'consider' in paragraph.lower() or 'ask yourself' in paragraph.lower() %}
+                                        <div class="reflection-section mb-4">
+                                            <h5 class="mb-3">Reflection Prompts</h5>
+                                            {{ paragraph | safe }}
+                                        </div>
+                                    {% elif loop.last and 'warmly' in paragraph.lower() %}
+                                        <div class="closing-section mt-4">{{ paragraph | safe }}</div>
+                                    {% else %}
+                                        <div class="paragraph mb-3">{{ paragraph | safe }}</div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <!-- Content already has HTML formatting -->
+                                {{ entry.closing_message | safe }}
+                            {% endif %}
+                        {% else %}
+                            Awaiting closing message...
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -356,7 +467,7 @@
                 </div>
                 <div class="card-body" style="background-color: white !important;">
                     <div id="analysis-content" style="background-color: white !important; color: #212529 !important; padding: 20px; border-radius: 8px; border: 1px solid #e9ecef; line-height: 1.6;">
-                        <div class="coach-insights">
+                        <div class="coach-insights" style="color: #212529;">
                             {% if structured_data %}
                                 <!-- Display structured content with reflective pause -->
                                 {% if structured_data.insight_text %}
