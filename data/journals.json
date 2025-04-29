@@ -3841,5 +3841,32 @@
     ],
     "structured_data": null,
     "user_reflection": null
+  },
+  {
+    "id": 176,
+    "user_id": 1,
+    "title": "test test",
+    "content": "my partner went away for 10 day. for teh first 2 days she messaged briefly, the finallly she called on the 3rd day. i missed her call but wheni called back she was at home with family and was talking to me, but most of the time i spent listening to her talking to others. her mum then called and she told me she woudl call me back, but she didnt. following day she messaged good mornng and said she was out and about at work. nothing since. how shoudl i feel> I also spoke to her son. she didnt call him either",
+    "anxiety_level": 6,
+    "created_at": "2025-04-29T00:07:59.429234",
+    "updated_at": "2025-04-29T00:08:13.202012",
+    "is_analyzed": true,
+    "gpt_response": "From what you've shared, it seems you might be feeling neglected and unimportant in the relationship right now. The lack of communication and feeling sidelined during your partner's call could understandably make you anxious. This situation might be tapping into a deeper need for connection and reassurance, especially when your efforts to reconnect weren't reciprocated immediately.\n\nTake a moment. What's one expectation you've been holding about this relationship that feels heavy \u2014 and might point to an important emotional need?\n\nTo express your feelings constructively, try using this script: 'I feel neglected when our communication is limited because it makes me anxious about our connection. What I need is more regular check-ins to feel reassured.' Additionally, consider a reality-check exercise: list evidence for and against the fear that you are not a priority. This can help balance your perspective. When feelings of anxiety rise, try grounding yourself with deep breathing exercises, counting slowly to 10 with each breath to manage intense emotions.\n\nThought Patterns That May Be Surfacing:\n* Mind Reading: Assuming your partner's lack of communication means she doesn't care about you or the relationship. This may relate to your need for The core emotional need here is connection and reassurance..\n* All-or-Nothing Thinking: Thinking that her not calling back means she doesn't care at all about you. This may relate to your need for The need for validation and feeling valued in the relationship..\n\n\nCBT-Based Strategies:\n1. Communication Script Template Use this script when you next have a chance to express your feelings to your partner. I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request]. This helps address your need for The specific emotional need this strategy helps fulfill is the need for connection and understanding..\n2. Reality-Check Exercise Use this exercise to challenge the assumption that your partner's actions mean you're not important to her. List evidence for and against your fear that [specific fear related to the relationship] This helps address your need for The specific emotional need this strategy helps fulfill is reassurance..\n3. Emotion Regulation Technique Use deep breathing to manage anxiety when waiting for a response or feeling disconnected. When you feel [specific emotion], try this specific grounding technique: take slow, deep breaths, counting to 10 with each inhale and exhale. This helps address your need for The need for emotional stability and self-soothing..\n\n\nRelationship Context Questions to Consider:\n\u2022 Has this communication pattern happened before in this relationship? (Exploring recurring patterns to identify relationship dynamics)\n\u2022 What expectations were set before your partner left? (Examining unspoken assumptions that may contribute to distress)\n\n\nReady-to-Use Templates:\n\u2022 For When reaching out to express your needs:\n  \"A ready-to-use message template they can adapt for their specific situation\"\n  Then: After using this template, be open to a conversation and actively listen to your partner's perspective.\n\u2022 For When managing anxiety while waiting for a response:\n  \"When I feel [specific emotion], I will [healthy coping action] instead of [unhealthy reaction]\"\n  Then: If your partner doesn't respond as expected, remind yourself of other ways to feel connected, like reaching out to a friend or engaging in a hobby.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Mind Reading",
+        "description": "Believing you can infer your partner's thoughts or feelings based on her actions or inactions.",
+        "recommendation": "Use evidence-based thinking to challenge assumptions.",
+        "core_need": "The need for open communication and reassurance."
+      },
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "Viewing situations in black-and-white terms, such as interpreting a lack of immediate contact as a total lack of care.",
+        "recommendation": "Introduce shades of gray by considering other possible explanations for her behavior.",
+        "core_need": "The need for nuanced understanding and assurance."
+      }
+    ],
+    "structured_data": null,
+    "user_reflection": null
   }
 ]

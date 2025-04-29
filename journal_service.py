@@ -1050,6 +1050,38 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                     logger.warning("No valid response key found in JSON, using raw content as fallback")
                     coach_response = content
                 
+                # Format unstructured response to make it less jumbled
+                if not result.get('structured_data') and not has_enhanced_format and not has_reflective_pause_format and not has_structured_format:
+                    logger.debug("Formatting unstructured response to improve readability")
+                    
+                    # Split into paragraphs
+                    paragraphs = coach_response.split('\n\n')
+                    formatted_paragraphs = []
+                    
+                    # Format each paragraph with proper HTML
+                    for i, paragraph in enumerate(paragraphs):
+                        if i == 0:
+                            # First paragraph is usually the introduction/validation
+                            formatted_paragraphs.append(f"<div class='validation-section mb-4'>{paragraph}</div>")
+                        elif "pattern" in paragraph.lower() or "distortion" in paragraph.lower():
+                            # Thought patterns section
+                            formatted_paragraphs.append(f"<div class='thought-patterns-section mb-4'><h5 class='mb-3'>Thought Patterns</h5>{paragraph}</div>")
+                        elif "strateg" in paragraph.lower() or "technique" in paragraph.lower() or "exercise" in paragraph.lower():
+                            # Strategies section
+                            formatted_paragraphs.append(f"<div class='strategies-section mb-4'><h5 class='mb-3'>Suggested Strategies</h5>{paragraph}</div>")
+                        elif "reflect" in paragraph.lower() or "consider" in paragraph.lower() or "ask yourself" in paragraph.lower():
+                            # Reflection section
+                            formatted_paragraphs.append(f"<div class='reflection-section mb-4'><h5 class='mb-3'>Reflection Prompts</h5>{paragraph}</div>")
+                        elif i == len(paragraphs) - 1 and "warmly" in paragraph.lower():
+                            # Closing section
+                            formatted_paragraphs.append(f"<div class='closing-section mt-4'>{paragraph}</div>")
+                        else:
+                            # Other paragraphs
+                            formatted_paragraphs.append(f"<div class='paragraph mb-3'>{paragraph}</div>")
+                    
+                    # Combine the formatted paragraphs
+                    coach_response = "".join(formatted_paragraphs)
+                
                 # Add recurring patterns if applicable
                 recurring_patterns = get_recurring_patterns(user_id)
                 
