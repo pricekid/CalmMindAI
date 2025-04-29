@@ -10,6 +10,7 @@
     --logo-primary: #1a3a8f;
     --logo-secondary: #3264c8;
     --warm-peach: #E6B980; /* New warm peach accent color */
+    --navbar-height: 60px;
 }
 
 /* Logo styling */
@@ -28,6 +29,8 @@ body {
     background-color: var(--bs-dark);
     color: var(--bs-light);
     font-family: 'Poppins', 'Segoe UI', Roboto, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
 }
 
 /* General styling */
@@ -248,19 +251,52 @@ footer a:hover {
     .dashboard-widget {
         margin-bottom: 20px;
     }
-    
+
     #breathing-circle {
         width: 150px;
         height: 150px;
     }
-    
+
     footer {
         text-align: center !important;
     }
-    
+
     footer .text-md-start,
     footer .text-md-end {
         text-align: center !important;
+    }
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .btn {
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+        font-size: 16px;
+        padding: 0.75rem;
+    }
+
+    .card {
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+    }
+    .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        height: var(--navbar-height);
+    }
+
+    main.container {
+        padding-top: calc(var(--navbar-height) + 1rem);
+        padding-bottom: 2rem;
     }
 }
 
@@ -312,11 +348,20 @@ footer a:hover {
     .journal-entry-row {
         flex-wrap: nowrap;
     }
-    
+
     .journal-entry-badges {
         margin-top: 0;
         margin-left: auto;
         padding-left: 15px;
         flex-shrink: 0;
     }
+}
+
+/* Add iOS safe area support */
+@supports(padding: max(0px)) {
+  body {
+    padding-left: min(0vmin, env(safe-area-inset-left));
+    padding-right: min(0vmin, env(safe-area-inset-right));
+    padding-bottom: min(0vmin, env(safe-area-inset-bottom));
+  }
 }
