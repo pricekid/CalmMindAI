@@ -1,0 +1,16 @@
+[
+  {
+    "timestamp": "2025-04-30T06:00:01.643918",
+    "user_id": "2",
+    "notification_type": "email",
+    "recipient": "naturalarts@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30T06:00:02.321645",
+    "user_id": "2",
+    "notification_type": "email",
+    "recipient": "naturalarts@gmail.com",
+    "success": true
+  }
+]
