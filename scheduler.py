@@ -29,7 +29,20 @@ if not os.environ.get("TWILIO_ACCOUNT_SID") or not os.environ.get("TWILIO_AUTH_T
 
 # Create the scheduler with UTC timezone and prevent duplicate jobs
 scheduler = BackgroundScheduler(timezone=pytz.UTC)
-scheduler.add_jobstore('memory', coalesce=True)
+scheduler.add_jobstore('memory', coalesce=True, max_instances=1)
+
+# Create lock file to prevent duplicate runs
+def create_notification_lock():
+    lock_file = "data/notifications_blocked"
+    with open(lock_file, "w") as f:
+        f.write(str(datetime.now(pytz.UTC)))
+    return True
+
+def remove_notification_lock():
+    try:
+        os.remove("data/notifications_blocked")
+    except:
+        pass
 
 # Set up job logging
 def job_listener(event):
