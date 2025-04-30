@@ -2908,5 +2908,185 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 51506dae5ab8 at 2025-04-30 00:00:21.921194",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:02:47",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-30 00:02:47.204761",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:02:47",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:02:47",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-30 00:02:47.267182",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:02:47",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:05:20",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4029 at 2025-04-30 00:05:20",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:10:20",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4029 at 2025-04-30 00:10:20",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:15:20",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4029 at 2025-04-30 00:15:20",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:20:20",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4029 at 2025-04-30 00:20:20",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:25:20",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4029 at 2025-04-30 00:25:20",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:30:20",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4029 at 2025-04-30 00:30:20",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:30:21",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-30 00:30:21.471265",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:30:21",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:32:47",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-30 00:32:47.204481",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:32:47",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:32:47",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-30 00:32:47.267105",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:32:47",
+    "type": "job_success",
+    "message": "Job scheduler_health_check executed successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:35:20",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4029 at 2025-04-30 00:35:20",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:40:21",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4029 at 2025-04-30 00:40:20",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:45:21",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4029 at 2025-04-30 00:45:21",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:50:21",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4029 at 2025-04-30 00:50:21",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:55:21",
+    "type": "health_check",
+    "message": "Scheduler running with PID 4029 at 2025-04-30 00:55:21",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:56:23",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 4029). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-30 00:56:23",
+    "type": "job_setup",
+    "message": "Setting up daily email reminder job for 6:00 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:56:23",
+    "type": "job_schedule_error",
+    "message": "Failed to properly schedule daily email job",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-30 00:56:23",
+    "type": "job_scheduled",
+    "message": "Backup email job scheduled for 6:10 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:56:23",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-30 00:56:23.780344",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:56:23",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-30 00:56:23.785704",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:56:23",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:56:24",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 4544",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 00:56:24",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 51506dae5ab8 at 2025-04-30 00:56:24.128302",
+    "success": true
   }
 ]
