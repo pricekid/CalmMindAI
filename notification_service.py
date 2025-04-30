@@ -21,7 +21,8 @@ logger = logging.getLogger(__name__)
 # Function to check if notifications are blocked
 def check_notifications_blocked():
     '''Check if notifications are blocked by the existence of a block file'''
-    return True  # Always block notifications
+    block_file = os.path.join('data', 'notifications_blocked')
+    return os.path.exists(block_file)
 def ensure_data_directory():
     """Ensure the data directory exists"""
 

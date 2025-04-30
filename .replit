@@ -41,7 +41,7 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "python3 scheduler.py"
+args = "python scheduler.py"
 
 [[workflows.workflow]]
 name = "Start Dev Server"

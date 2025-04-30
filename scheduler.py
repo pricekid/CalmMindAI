@@ -27,8 +27,9 @@ if not os.environ.get("TWILIO_ACCOUNT_SID") or not os.environ.get("TWILIO_AUTH_T
     logger.warning("Twilio credentials not found in environment - SMS notifications disabled")
     print("SMS notifications disabled - no API keys")
 
-# Create the scheduler
+# Create the scheduler with UTC timezone and prevent duplicate jobs
 scheduler = BackgroundScheduler(timezone=pytz.UTC)
+scheduler.add_jobstore('memory', coalesce=True)
 
 # Set up job logging
 def job_listener(event):
