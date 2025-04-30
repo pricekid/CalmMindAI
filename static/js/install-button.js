@@ -32,74 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Store deferredPrompt for use later
-let deferredPrompt;
+// We'll use the global deferredPrompt declared in pwa.js
+// No need to add another beforeinstallprompt listener here since it's already in pwa.js
 
-// Listen for beforeinstallprompt event
-window.addEventListener('beforeinstallprompt', (e) => {
-    // Prevent the mini-infobar from appearing on mobile
-    e.preventDefault();
-    // Store the event so it can be triggered later
-    deferredPrompt = e;
-    
-    // Update the install button visibility
-    const installButton = document.getElementById('manual-install-btn');
-    if (installButton) {
-        installButton.style.display = 'block';
-    }
-});
-
-// Trigger the install prompt
-function triggerInstall() {
-    if (!deferredPrompt) {
-        // If deferredPrompt isn't available, provide instructions
-        showInstallInstructions();
-        return;
-    }
-    
-    // Show the install prompt
-    deferredPrompt.prompt();
-    
-    // Wait for the user to respond to the prompt
-    deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the install prompt');
-            
-            // Show success message
-            const successMessage = document.createElement('div');
-            successMessage.className = 'alert alert-success alert-dismissible fade show position-fixed bottom-0 end-0 m-3';
-            successMessage.style.zIndex = '1050';
-            successMessage.innerHTML = `
-                <strong><i class="fas fa-check-circle me-2"></i>Successfully installed!</strong>
-                <p class="mb-0">Calm Journey has been added to your device.</p>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            `;
-            document.body.appendChild(successMessage);
-            
-            // Automatically dismiss after 5 seconds
-            setTimeout(() => {
-                try {
-                    const alert = new bootstrap.Alert(successMessage);
-                    alert.close();
-                } catch (e) {
-                    successMessage.remove();
-                }
-            }, 5000);
-            
-        } else {
-            console.log('User dismissed the install prompt');
-        }
-        
-        // Clear the deferredPrompt variable
-        deferredPrompt = null;
-        
-        // Hide install button after user response
-        const installButton = document.getElementById('manual-install-btn');
-        if (installButton) {
-            installButton.style.display = 'none';
-        }
-    });
-}
+// The triggerInstall function is now defined in pwa.js as window.triggerInstall
+// We just provide the manual instructions functionality that's used by the global function
 
 // Show manual install instructions if automatic install isn't available
 function showInstallInstructions() {

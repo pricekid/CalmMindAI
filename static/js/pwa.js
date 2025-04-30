@@ -118,9 +118,20 @@ function isAppInstalled() {
     return false;
 }
 
-// Install the PWA
-function installPWA() {
-    if (!deferredPrompt) return;
+// Install the PWA - exposed globally so it can be called from other scripts
+window.triggerInstall = function() {
+    if (!deferredPrompt) {
+        // If deferredPrompt isn't available and we're on the install page,
+        // show the manual instructions modal from install-button.js
+        if (typeof showInstallInstructions === 'function') {
+            showInstallInstructions();
+            return;
+        }
+        
+        // Otherwise redirect to install page
+        window.location.href = '/install';
+        return;
+    }
     
     // Show the install prompt
     deferredPrompt.prompt();
@@ -130,6 +141,29 @@ function installPWA() {
         if (choiceResult.outcome === 'accepted') {
             console.log('User accepted the install prompt');
             localStorage.setItem('pwaInstalled', 'true');
+            
+            // Show success message if we're not on the install page
+            if (window.location.pathname !== '/install') {
+                const successMessage = document.createElement('div');
+                successMessage.className = 'alert alert-success alert-dismissible fade show position-fixed bottom-0 end-0 m-3';
+                successMessage.style.zIndex = '1050';
+                successMessage.innerHTML = `
+                    <strong><i class="fas fa-check-circle me-2"></i>Successfully installed!</strong>
+                    <p class="mb-0">Calm Journey has been added to your device.</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                document.body.appendChild(successMessage);
+                
+                // Automatically dismiss after 5 seconds
+                setTimeout(() => {
+                    try {
+                        const alert = new bootstrap.Alert(successMessage);
+                        alert.close();
+                    } catch (e) {
+                        successMessage.remove();
+                    }
+                }, 5000);
+            }
         } else {
             console.log('User dismissed the install prompt');
         }
@@ -138,6 +172,11 @@ function installPWA() {
         deferredPrompt = null;
         dismissInstallPromotion();
     });
+}
+
+// Alias for backward compatibility
+function installPWA() {
+    window.triggerInstall();
 }
 
 // Dismiss the install promotion

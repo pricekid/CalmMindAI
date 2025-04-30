@@ -247,8 +247,8 @@
         const installButton = document.getElementById('install-now-btn');
         if (installButton) {
             installButton.addEventListener('click', () => {
-                if (typeof triggerInstall === 'function') {
-                    triggerInstall();
+                if (typeof window.triggerInstall === 'function') {
+                    window.triggerInstall();
                 } else {
                     // Fallback if the function isn't available
                     alert('Installation not available. Please follow the manual instructions for your browser.');
