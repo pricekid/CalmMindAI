@@ -11,7 +11,13 @@ logger = logging.getLogger(__name__)
 
 # CRITICAL: Override environment variables at the module level
 # This is the first thing that happens on startup
-os.environ["SENDGRID_API_KEY"] = "PERMANENTLY-DISABLED"
+# Completely remove the SendGrid key to prevent any email sending
+if "SENDGRID_API_KEY" in os.environ:
+    del os.environ["SENDGRID_API_KEY"]
+    logger.info("SENDGRID_API_KEY COMPLETELY REMOVED from environment")
+    print("SENDGRID_API_KEY COMPLETELY REMOVED from environment")
+
+# Disable other notification keys
 os.environ["TWILIO_ACCOUNT_SID"] = "PERMANENTLY-DISABLED"
 os.environ["TWILIO_AUTH_TOKEN"] = "PERMANENTLY-DISABLED"
 
