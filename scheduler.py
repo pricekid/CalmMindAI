@@ -33,10 +33,16 @@ scheduler.add_jobstore('memory', coalesce=True, max_instances=1)
 
 # Create lock file to prevent duplicate runs
 def create_notification_lock():
-    lock_file = "data/notifications_blocked"
-    with open(lock_file, "w") as f:
-        f.write(str(datetime.now(pytz.UTC)))
-    return True
+    """Create a lock file to block notifications"""
+    try:
+        lock_file = "data/notifications_blocked"
+        with open(lock_file, "w") as f:
+            f.write(str(datetime.now(pytz.UTC)))
+        logger.info("Created notification block file")
+        return True
+    except Exception as e:
+        logger.error(f"Error creating notification block: {e}")
+        return False
 
 def remove_notification_lock():
     try:

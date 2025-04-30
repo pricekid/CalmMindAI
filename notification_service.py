@@ -34,9 +34,10 @@ def ensure_data_directory():
 def load_users():
     """Load users from the data/users.json file"""
 
-    # NOTIFICATIONS DISABLED
-    logger.info(f"Notification blocked: {load_users}")
-    return {"success": False, "error": "Notifications are permanently disabled"}
+    # Check if notifications are blocked
+    if check_notifications_blocked():
+        logger.info("Notifications are currently blocked")
+        return {"success": False, "error": "Notifications are currently blocked"}
     ensure_data_directory()
     if not os.path.exists('data/users.json'):
         return []
