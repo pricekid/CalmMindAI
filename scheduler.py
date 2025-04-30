@@ -35,9 +35,27 @@ scheduler.add_jobstore('memory', coalesce=True, max_instances=1)
 # Add time window restriction
 def is_allowed_notification_time():
     current_time = datetime.now(caribbean_tz)
-    allowed_start = current_time.replace(hour=5, minute=45)
-    allowed_end = current_time.replace(hour=6, minute=15)
-    return allowed_start <= current_time <= allowed_end
+    
+    # Create absolute timestamps for today's window
+    today = current_time.date()
+    allowed_start = caribbean_tz.localize(datetime.combine(today, datetime.min.time().replace(hour=5, minute=45)))
+    allowed_end = caribbean_tz.localize(datetime.combine(today, datetime.min.time().replace(hour=6, minute=15)))
+    
+    is_allowed = allowed_start <= current_time <= allowed_end
+    
+    if not is_allowed:
+        logger.warning(f"Job blocked - current time {current_time} is outside allowed window")
+        logger.warning(f"Window: {allowed_start} to {allowed_end}")
+        
+        # Create block file
+        try:
+            with open("data/notifications_blocked", 'w') as f:
+                f.write(str(datetime.now(pytz.UTC)))
+            logger.info("Created notification block file")
+        except Exception as e:
+            logger.error(f"Error creating block file: {e}")
+            
+    return is_allowed
 
 # Modify job listener to check time window
 def job_listener(event):

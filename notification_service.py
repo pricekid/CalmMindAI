@@ -30,11 +30,25 @@ def check_notifications_blocked():
     # Check time - only allow between 5:45am and 6:15am Caribbean time
     caribbean_tz = pytz.timezone('America/Port_of_Spain')
     current_time = datetime.now(caribbean_tz)
-    allowed_start = current_time.replace(hour=5, minute=45)
-    allowed_end = current_time.replace(hour=6, minute=15)
     
+    # Create absolute timestamps for today's window
+    today = current_time.date()
+    allowed_start = caribbean_tz.localize(datetime.combine(today, datetime.min.time().replace(hour=5, minute=45)))
+    allowed_end = caribbean_tz.localize(datetime.combine(today, datetime.min.time().replace(hour=6, minute=15)))
+    
+    # Force block outside window
     if not (allowed_start <= current_time <= allowed_end):
-        logger.info(f"Notifications blocked - current time {current_time} is outside allowed window (5:45am-6:15am Caribbean)")
+        logger.warning(f"Notifications blocked - current time {current_time} is outside allowed window")
+        logger.warning(f"Window: {allowed_start} to {allowed_end}")
+        
+        # Create block file
+        try:
+            with open(block_file, 'w') as f:
+                f.write(str(datetime.now(pytz.UTC)))
+            logger.info("Created notification block file")
+        except Exception as e:
+            logger.error(f"Error creating block file: {e}")
+            
         return True
         
     return False
