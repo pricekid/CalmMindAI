@@ -4,15 +4,21 @@ This will be imported by notification_service.py to prevent emails from being se
 """
 import os
 import logging
+from pathlib import Path
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("notification_blocker")
 
 def check_notifications_blocked():
     """Check if notifications are blocked by a block file"""
-    block_file = "data/notifications_blocked"
-    if os.path.exists(block_file):
-        logger.warning(f"Notifications are blocked by {block_file}")
-        return True
-    return False
+    # Ensure the block file exists
+    Path("data").mkdir(exist_ok=True)
+    with open("data/notifications_blocked", "w") as f:
+        f.write("Notifications permanently blocked")
+    
+    # Log the block
+    logger.warning("Notifications are permanently blocked")
+    
+    # Always return True to indicate notifications are blocked
+    return True
