@@ -26,9 +26,8 @@ def check_notifications_blocked():
 def ensure_data_directory():
     """Ensure the data directory exists"""
 
-    # NOTIFICATIONS DISABLED
-    logger.info(f"Notification blocked: {ensure_data_directory}")
-    return {"success": False, "error": "Notifications are permanently disabled"}
+    if not os.path.exists('data'):
+        os.makedirs('data')
     if not os.path.exists('data'):
         os.makedirs('data')
 
