@@ -28,8 +28,28 @@ if not os.environ.get("TWILIO_ACCOUNT_SID") or not os.environ.get("TWILIO_AUTH_T
     print("SMS notifications disabled - no API keys")
 
 # Create the scheduler with Caribbean timezone (UTC-4) and prevent duplicate jobs
-scheduler = BackgroundScheduler(timezone=pytz.timezone('America/Port_of_Spain'))
+caribbean_tz = pytz.timezone('America/Port_of_Spain')
+scheduler = BackgroundScheduler(timezone=caribbean_tz)
 scheduler.add_jobstore('memory', coalesce=True, max_instances=1)
+
+# Add time window restriction
+def is_allowed_notification_time():
+    current_time = datetime.now(caribbean_tz)
+    allowed_start = current_time.replace(hour=5, minute=45)
+    allowed_end = current_time.replace(hour=6, minute=15)
+    return allowed_start <= current_time <= allowed_end
+
+# Modify job listener to check time window
+def job_listener(event):
+    """Log information about job execution/errors"""
+    if not is_allowed_notification_time():
+        logger.warning("Job attempted outside allowed time window (5:45am-6:15am Caribbean)")
+        return
+        
+    if event.code == EVENT_JOB_EXECUTED:
+        logger.info(f"Job executed successfully: {event.job_id}")
+    elif event.code == EVENT_JOB_ERROR:
+        logger.error(f"Job error: {event.job_id}, {event.exception}")
 
 # Create lock file to prevent duplicate runs
 def create_notification_lock():

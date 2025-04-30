@@ -21,8 +21,23 @@ logger = logging.getLogger(__name__)
 # Function to check if notifications are blocked
 def check_notifications_blocked():
     '''Check if notifications are blocked by the existence of a block file'''
+    # Check block file
     block_file = os.path.join('data', 'notifications_blocked')
-    return os.path.exists(block_file)
+    if os.path.exists(block_file):
+        logger.info("Notifications blocked by block file")
+        return True
+        
+    # Check time - only allow between 5:45am and 6:15am Caribbean time
+    caribbean_tz = pytz.timezone('America/Port_of_Spain')
+    current_time = datetime.now(caribbean_tz)
+    allowed_start = current_time.replace(hour=5, minute=45)
+    allowed_end = current_time.replace(hour=6, minute=15)
+    
+    if not (allowed_start <= current_time <= allowed_end):
+        logger.info(f"Notifications blocked - current time {current_time} is outside allowed window (5:45am-6:15am Caribbean)")
+        return True
+        
+    return False
 def ensure_data_directory():
     """Ensure the data directory exists"""
 
