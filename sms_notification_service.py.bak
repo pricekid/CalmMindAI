@@ -1,5 +1,6 @@
 import os
 import logging
+import check_notifications_blocked
 from datetime import datetime
 from models import User
 from app import db
@@ -31,6 +32,11 @@ JOURNALING_TIPS = [
 ]
 
 def send_sms_notification(to_phone_number, message):
+    # Check if notifications are blocked
+    if check_notifications_blocked.check_notifications_blocked():
+        logger.info(f"SMS to {to_number} blocked by notification block")
+        return {"success": False, "error": "Notifications are blocked"}
+
     """Send an SMS notification using Twilio."""
     # Get the latest Twilio credentials from environment variables
     twilio_sid = os.environ.get("TWILIO_ACCOUNT_SID")

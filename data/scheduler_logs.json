@@ -796,5 +796,29 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 51506dae5ab8 at 2025-04-30 10:26:25.547638",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-30 10:31:24",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6837 at 2025-04-30 10:31:24",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 10:36:24",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6837 at 2025-04-30 10:36:24",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 10:41:24",
+    "type": "health_check",
+    "message": "Scheduler running with PID 6837 at 2025-04-30 10:41:24",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 10:42:34",
+    "type": "scheduler_disabled",
+    "message": "Scheduler deliberately disabled on host 51506dae5ab8 at 2025-04-30 10:42:34.542706 to prevent unwanted notifications",
+    "success": true
   }
 ]

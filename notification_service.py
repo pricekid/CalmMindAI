@@ -17,13 +17,26 @@ from datetime import datetime
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
+
+# Function to check if notifications are blocked
+def check_notifications_blocked():
+    '''Check if notifications are blocked by the existence of a block file'''
+    return True  # Always block notifications
 def ensure_data_directory():
     """Ensure the data directory exists"""
+
+    # NOTIFICATIONS DISABLED
+    logger.info(f"Notification blocked: {ensure_data_directory}")
+    return {"success": False, "error": "Notifications are permanently disabled"}
     if not os.path.exists('data'):
         os.makedirs('data')
 
 def load_users():
     """Load users from the data/users.json file"""
+
+    # NOTIFICATIONS DISABLED
+    logger.info(f"Notification blocked: {load_users}")
+    return {"success": False, "error": "Notifications are permanently disabled"}
     ensure_data_directory()
     if not os.path.exists('data/users.json'):
         return []
@@ -40,6 +53,10 @@ def load_users():
 
 def get_mail_config():
     """
+
+    # NOTIFICATIONS DISABLED
+    logger.info(f"Notification blocked: {get_mail_config}")
+    return {"success": False, "error": "Notifications are permanently disabled"}
     Get email configuration directly from environment variables rather than app config.
     
     This is a workaround for when Flask's app.config doesn't properly pick up the environment variables.
@@ -56,6 +73,10 @@ def get_mail_config():
     return mail_config
 
 def send_email(recipient, subject, html_body, text_body=None):
+
+    # NOTIFICATIONS DISABLED
+    logger.info(f"Notification blocked: {send_email}")
+    return {"success": False, "error": "Notifications are permanently disabled"}
     # Check if notifications are blocked
     if check_notifications_blocked.check_notifications_blocked():
         logger.info(f"Email to {recipient} blocked by notification block")
@@ -175,6 +196,10 @@ def send_email(recipient, subject, html_body, text_body=None):
 
 def send_test_email(recipient_email):
     """
+
+    # NOTIFICATIONS DISABLED
+    logger.info(f"Notification blocked: {send_test_email}")
+    return {"success": False, "error": "Notifications are permanently disabled"}
     Send a test email to verify the email configuration.
     
     Args:
@@ -202,6 +227,10 @@ def send_test_email(recipient_email):
 
 def send_login_link(email, link, custom_message=None):
     """
+
+    # NOTIFICATIONS DISABLED
+    logger.info(f"Notification blocked: {send_login_link}")
+    return {"success": False, "error": "Notifications are permanently disabled"}
     Send a login link to a user.
     
     Args:
@@ -314,6 +343,10 @@ The Calm Journey Team"""
 
 def send_daily_reminder(user):
     """
+
+    # NOTIFICATIONS DISABLED
+    logger.info(f"Notification blocked: {send_daily_reminder}")
+    return {"success": False, "error": "Notifications are permanently disabled"}
     Send a daily reminder to a user.
     
     Args:
@@ -381,6 +414,10 @@ If you'd like to unsubscribe, please update your notification preferences in you
 
 def send_daily_reminder_direct():
     """
+
+    # NOTIFICATIONS DISABLED
+    logger.info(f"Notification blocked: {send_daily_reminder_direct}")
+    return {"success": False, "error": "Notifications are permanently disabled"}
     Send daily reminders to all users using direct SMTP rather than Flask-Mail.
     This function doesn't rely on Flask models or app context.
     
@@ -504,6 +541,10 @@ def send_daily_reminder_direct():
 
 def send_daily_sms_reminder_direct():
     """
+
+    # NOTIFICATIONS DISABLED
+    logger.info(f"Notification blocked: {send_daily_sms_reminder_direct}")
+    return {"success": False, "error": "Notifications are permanently disabled"}
     Send daily SMS reminders to all users with SMS notifications enabled.
     This function doesn't rely on Flask models or app context.
     
@@ -640,6 +681,10 @@ def send_daily_sms_reminder_direct():
 
 def send_weekly_summary(user, stats):
     """
+
+    # NOTIFICATIONS DISABLED
+    logger.info(f"Notification blocked: {send_weekly_summary}")
+    return {"success": False, "error": "Notifications are permanently disabled"}
     Send a weekly summary to a user.
     
     Args:
@@ -717,6 +762,10 @@ If you'd like to unsubscribe, please update your notification preferences in you
 
 def send_immediate_notification_to_all_users():
     """
+
+    # NOTIFICATIONS DISABLED
+    logger.info(f"Notification blocked: {send_immediate_notification_to_all_users}")
+    return {"success": False, "error": "Notifications are permanently disabled"}
     Send an immediate notification to all users with notifications enabled.
     
     Returns:

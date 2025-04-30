@@ -13,10 +13,6 @@ logger = logging.getLogger(__name__)
 
 def send_sms_notification(to_number, message, user_id=None):
     """
-
-    # SMS NOTIFICATIONS DISABLED
-    logger.info(f"SMS notification blocked: {send_sms_notification}")
-    return {"success": False, "error": "SMS notifications are permanently disabled"}
     SMS DISABLED - This function will not send any SMS messages.
     """
     logger.info(f"SMS sending BLOCKED to {to_number}")

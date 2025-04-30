@@ -1,0 +1,80 @@
+from start_scheduler import find_scheduler_process, stop_scheduler
+import logging
+import os
+import time
+import datetime
+import threading
+from scheduler_logs import log_scheduler_activity
+import socket
+from pathlib import Path
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Create a permanent notification block
+def create_permanent_notification_block():
+    """Create a permanent block file that prevents notifications from being sent"""
+    try:
+        Path("data").mkdir(exist_ok=True)
+        block_file = "data/notifications_blocked"
+        with open(block_file, "w") as f:
+            f.write(f"Notifications permanently blocked at {datetime.datetime.now()}")
+        logger.info(f"Created permanent notification block file: {block_file}")
+    except Exception as e:
+        logger.error(f"Error creating notification block: {e}")
+
+# Block notifications at startup
+create_permanent_notification_block()
+
+def ensure_scheduler_not_running():
+    """Make sure the scheduler is NOT running, stop it if it is."""
+    # Check if PID file exists
+    if os.path.exists("scheduler.pid"):
+        pid = None
+        try:
+            with open("scheduler.pid", "r") as f:
+                pid = int(f.read().strip())
+            
+            # Try to stop the process
+            try:
+                os.kill(pid, 9)  # SIGKILL
+                logger.info(f"Stopped scheduler with PID {pid}")
+                log_scheduler_activity("startup_check", f"Stopped scheduler with PID {pid}")
+            except OSError:
+                # Process not running, just remove the PID file
+                logger.info(f"No scheduler running with PID {pid}. Removing PID file.")
+            
+            # Remove the PID file
+            os.remove("scheduler.pid")
+            
+        except Exception as e:
+            logger.error(f"Error stopping scheduler: {str(e)}")
+            # Try to remove the PID file if it exists
+            try:
+                os.remove("scheduler.pid")
+            except:
+                pass
+    
+    # Check for any other scheduler processes
+    pid = find_scheduler_process()
+    if pid:
+        logger.info(f"Found scheduler process with PID {pid}. Stopping it.")
+        try:
+            os.kill(pid, 9)  # SIGKILL
+            logger.info(f"Stopped scheduler with PID {pid}")
+        except Exception as e:
+            logger.error(f"Error stopping scheduler: {str(e)}")
+
+# Stop any running scheduler processes at startup
+logger.info("Ensuring no schedulers are running...")
+ensure_scheduler_not_running()
+logger.info("Scheduler has been disabled to prevent unwanted notifications.")
+
+# Log that scheduler is disabled
+hostname = socket.gethostname()
+log_scheduler_activity(
+    "scheduler_disabled", 
+    f"Scheduler deliberately disabled on host {hostname} at {datetime.datetime.now()} to prevent unwanted notifications",
+    success=True
+)
