@@ -748,5 +748,53 @@
     "type": "scheduler_startup",
     "message": "Started scheduler on host 51506dae5ab8 at 2025-04-30 10:23:28.522704",
     "success": true
+  },
+  {
+    "timestamp": "2025-04-30 10:26:25",
+    "type": "job_setup",
+    "message": "Setting up daily email reminder job for 6:00 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 10:26:25",
+    "type": "job_schedule_error",
+    "message": "Failed to properly schedule daily email job",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-30 10:26:25",
+    "type": "job_scheduled",
+    "message": "Backup email job scheduled for 6:10 AM UTC",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 10:26:25",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-30 10:26:25.115503",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 10:26:25",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-30 10:26:25.128049",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 10:26:25",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 10:26:25",
+    "type": "process_start",
+    "message": "Scheduler started successfully with PID 6837",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-30 10:26:25",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 51506dae5ab8 at 2025-04-30 10:26:25.547638",
+    "success": true
   }
 ]

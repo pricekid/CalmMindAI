@@ -6,7 +6,6 @@ to solve environment variable access issues.
 import os
 import smtplib
 import logging
-import check_notifications_blocked
 import json
 import pytz
 from email.mime.text import MIMEText
@@ -56,11 +55,6 @@ def get_mail_config():
     return mail_config
 
 def send_email(recipient, subject, html_body, text_body=None):
-    # Check if notifications are blocked
-    if check_notifications_blocked.check_notifications_blocked():
-        logger.info(f"Email to {recipient} blocked by notification block")
-        return {"success": False, "error": "Notifications are blocked"}
-
     """
     Send an email bypassing Flask-Mail and working directly with SMTP.
     
