@@ -4,23 +4,8 @@
   "current_streak": 1,
   "longest_streak": 2,
   "last_entry_date": "2025-05-01",
-  "total_xp": 750,
+  "total_xp": 810,
   "xp_history": [
-    {
-      "amount": 15,
-      "reason": "Created first journal entry during onboarding",
-      "date": "2025-04-18 02:28:37"
-    },
-    {
-      "amount": 30,
-      "reason": "Completed onboarding process",
-      "date": "2025-04-18 02:28:37"
-    },
-    {
-      "amount": 15,
-      "reason": "Created first journal entry during onboarding",
-      "date": "2025-04-18 16:24:23"
-    },
     {
       "amount": 30,
       "reason": "Completed onboarding process",
@@ -250,6 +235,26 @@
       "amount": 20,
       "reason": "Received insights on journal entry",
       "date": "2025-05-01 11:13:18"
+    },
+    {
+      "amount": 10,
+      "reason": "Created a new journal entry",
+      "date": "2025-05-01 11:32:05"
+    },
+    {
+      "amount": 20,
+      "reason": "Received insights on journal entry",
+      "date": "2025-05-01 11:32:05"
+    },
+    {
+      "amount": 10,
+      "reason": "Created a new journal entry",
+      "date": "2025-05-01 11:33:52"
+    },
+    {
+      "amount": 20,
+      "reason": "Received insights on journal entry",
+      "date": "2025-05-01 11:33:52"
     }
   ]
 }

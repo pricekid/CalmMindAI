@@ -4146,5 +4146,45 @@
     ],
     "structured_data": null,
     "user_reflection": null
+  },
+  {
+    "id": 190,
+    "user_id": 1,
+    "title": "testing todat",
+    "content": "today is a beautfiul day",
+    "anxiety_level": 1,
+    "created_at": "2025-05-01T11:32:03.432050",
+    "updated_at": "2025-05-01T11:32:05.462737",
+    "is_analyzed": true,
+    "gpt_response": "It's wonderful to hear you're noticing and appreciating the beauty of today!\n\nWhat part of the day did you find most beautiful?\n\nI hope the beauty you see today continues to bring you joy and peace.\n\n## Thought Patterns\n\n\n## Suggested Strategies\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- Disqualifying the Positive\n- Filtering\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Journal Reflection",
+        "description": "Your journal entry has been saved.",
+        "recommendation": "Continue journaling regularly to build self-awareness."
+      }
+    ],
+    "structured_data": null,
+    "user_reflection": null
+  },
+  {
+    "id": 191,
+    "user_id": 1,
+    "title": "testing Today again",
+    "content": "today will be a beautfiul day",
+    "anxiety_level": 2,
+    "created_at": "2025-05-01T11:33:50.460735",
+    "updated_at": "2025-05-01T11:33:52.114271",
+    "is_analyzed": true,
+    "gpt_response": "Thank you for sharing your thoughts. It's wonderful to hear you're anticipating a beautiful day!\n\nWhat are you most looking forward to today?\n\nMay your day unfold in delightful ways and bring you the joy you're hoping for!\n\n## Thought Patterns\n\n\n## Suggested Strategies\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- Disqualifying the Positive\n- Filtering\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Journal Reflection",
+        "description": "Your journal entry has been saved.",
+        "recommendation": "Continue journaling regularly to build self-awareness."
+      }
+    ],
+    "structured_data": null,
+    "user_reflection": null
   }
 ]
