@@ -228,6 +228,7 @@ def save_journal_entry(
 def count_user_entries(user_id: int) -> int:
     """
     Count how many journal entries a user has submitted.
+    Uses the database to count entries directly instead of loading all entries from JSON.
 
     Args:
         user_id: The ID of the user
@@ -235,7 +236,19 @@ def count_user_entries(user_id: int) -> int:
     Returns:
         The number of entries
     """
-    return len(get_journal_entries_for_user(user_id))
+    try:
+        # Import models here to avoid circular imports
+        from models import JournalEntry
+        
+        # Count entries directly in the database
+        entry_count = JournalEntry.query.filter(JournalEntry.user_id == user_id).count()
+        logger.debug(f"Found {entry_count} entries for user {user_id} in database")
+        return entry_count
+    except Exception as e:
+        # Log the error and fall back to JSON method
+        logger.error(f"Error counting user entries from database: {str(e)}")
+        logger.warning("Falling back to JSON-based entry counting")
+        return len(get_journal_entries_for_user(user_id))
 
 def detect_emotional_tone(text: str) -> Dict[str, Any]:
     """
