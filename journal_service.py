@@ -726,24 +726,21 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
 
             Journal entry: "{safe_text}"
 
-            This is a moment for celebration and affirmation. Return a simple JSON response with exactly:
-            - 'insight_text': One warm, specific comment that reflects their positive experience and its value
-            - 'reflection_prompt': A gentle question that helps carry this positive energy forward
-            - 'followup_text': A brief closing thought that supports savoring this moment
+            This is a moment for celebration. Return a simple JSON response with exactly:
+            - 'insight_text': A single warm reflection acknowledging their positive experience
+            - 'reflection_prompt': One gentle question to explore this good feeling
+            - 'followup_text': A brief encouraging close that supports savoring this moment
 
-            Example for "Today is a fantastic day. Everything is going as planned!":
-            {{
-                "insight_text": "It's so good to see everything going as planned — moments like this reflect your efforts and create space for ease and joy.",
-                "reflection_prompt": "What's one part of today you want to carry into tomorrow?",
-                "followup_text": "Let yourself fully receive the goodness of this moment. You deserve it."
-            }}
-
-            Keep your response encouraging and warm, focusing on their specific experience.
-            
-            Journal entry: "{safe_text}"
+            Example response:
+            {
                 "insight_text": "It's so good to hear that today feels wonderful — noticing and naming joy is a powerful act.",
-                "reflection_prompt": "What made today feel wonderful for you?", 
+                "reflection_prompt": "What made today feel wonderful for you?",
                 "followup_text": "May this positive energy carry you gently into whatever comes next."
+            }
+
+            Keep your response brief, warm and focused on celebrating their experience.
+            Do NOT include CBT analysis or suggestions for improvement.
+            Focus purely on acknowledging and extending their positive moment.
             }}
 
             Keep your response warm and celebratory, focusing only on these elements.
