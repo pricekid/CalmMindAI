@@ -623,6 +623,14 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
     """
     Generate an improved AI analysis of a journal entry that's concise and focused,
     with NLP preprocessing and structured metadata for more personalized responses.
+    
+    Returns a dictionary with the following structure:
+    {
+        "gpt_response": String with Mira's full response,
+        "cbt_patterns": List of thought patterns identified,
+        "structured_data": Dictionary with structured data for UI display including the insight_text, 
+                          reflection_prompt, thought_patterns, strategies, etc.
+    }
 
     Args:
         journal_text: The journal entry text
