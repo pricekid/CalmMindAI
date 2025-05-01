@@ -1,14 +1,10 @@
 """
 Notification service - All notifications permanently disabled
 """
-import os
 import logging
-import json
-import pytz
-from datetime import datetime
 
 # Set up logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
@@ -83,124 +79,21 @@ def send_daily_reminder(*args, **kwargs):
     logger.info("Daily reminder notifications are permanently disabled")
     return {"success": False, "error": "Notifications are permanently disabled"}
 
-def send_weekly_summary(user, stats):
-    """
-    Send a weekly summary to a user.
+def send_weekly_summary(*args, **kwargs):
+    """Weekly summary emails are disabled"""
+    logger.info("Weekly summary notifications are permanently disabled")
+    return {"success": False, "error": "Notifications are permanently disabled"}
 
-    Args:
-        user: Dictionary containing user information
-        stats: Dictionary containing weekly stats
-
-    Returns:
-        bool: True if successful, False otherwise
-    """
-    email = user.get('email')
-    username = user.get('username', 'there')
-
-    if not email:
-        logger.error(f"Cannot send summary: No email for user {username}")
-        return False
-
-    subject = "Calm Journey - Your Weekly Wellness Summary"
-    html_body = f"""
-    <html>
-    <body>
-        <h2>Calm Journey - Your Weekly Wellness Summary</h2>
-        <p>Hello {username}!</p>
-        <p>Here's a summary of your wellness journey for the past week:</p>
-        <ul>
-            <li><strong>Journal Entries:</strong> {stats.get('entries', 0)}</li>
-            <li><strong>Average Anxiety Level:</strong> {stats.get('avg_anxiety', 'N/A')}</li>
-            <li><strong>Most Common Pattern:</strong> {stats.get('common_pattern', 'None identified')}</li>
-        </ul>
-        <p>Thank you for continuing your wellness journey with us. Remember, every step you take toward self-awareness is a step toward better mental health.</p>
-        <p><a href="https://calm-mind-ai-naturalarts.replit.app/journal">View Your Journal History</a></p>
-        <hr>
-        <p><em>The Calm Journey Team</em></p>
-        <p style="font-size: 0.9em; color: #444; padding: 15px; background-color: #f9f9f9; border-left: 4px solid #5f9ea0; border-radius: 3px; margin-top: 15px;">
-            <strong>P.S. Know someone who could use a moment of calm?</strong><br>
-            If you have a friend or loved one who might benefit from a gentle daily check-in, feel free to forward this email or share Calm Journey with them:<br>
-            <a href="https://calm-mind-ai-naturalarts.replit.app">https://calm-mind-ai-naturalarts.replit.app</a><br>
-            Helping one another breathe easier—one day at a time.
-        </p>
-        <hr>
-        <p style="font-size: 0.8em; color: #666;">
-            You received this email because you enabled notifications in your Calm Journey account.
-            If you'd like to unsubscribe, please update your notification preferences in your account settings.
-        </p>
-    </body>
-    </html>
-    """
-    text_body = f"""Calm Journey - Your Weekly Wellness Summary
-
-Hello {username}!
-
-Here's a summary of your wellness journey for the past week:
-
-- Journal Entries: {stats.get('entries', 0)}
-- Average Anxiety Level: {stats.get('avg_anxiety', 'N/A')}
-- Most Common Pattern: {stats.get('common_pattern', 'None identified')}
-
-Thank you for continuing your wellness journey with us. Remember, every step you take toward self-awareness is a step toward better mental health.
-
-Visit https://calm-mind-ai-naturalarts.replit.app/journal to view your journal history.
-
-The Calm Journey Team
-
-P.S. Know someone who could use a moment of calm?
-If you have a friend or loved one who might benefit from a gentle daily check-in, feel free to forward this email or share Calm Journey with them:
-https://calm-mind-ai-naturalarts.replit.app
-Helping one another breathe easier—one day at a time.
-
---
-You received this email because you enabled notifications in your Calm Journey account.
-If you'd like to unsubscribe, please update your notification preferences in your account settings.
-"""
-
-    result = send_email(email, subject, html_body, text_body)
-    return result.get('success', False)
-
-def send_immediate_notification_to_all_users():
-    """
-    Send an immediate notification to all users with notifications enabled.
-
-    Returns:
-        dict: Statistics about the notification sending process
-    """
-    users = load_users()
-    sent_count = 0
-    failed_count = 0
-    skipped_count = 0
-
-    for user in users:
-        # Skip users who have disabled notifications
-        if not user.get('notifications_enabled', False):
-            skipped_count += 1
-            continue
-
-        # Get the user's email
-        email = user.get('email')
-        if not email:
-            skipped_count += 1
-            continue
-
-        # Send a notification
-        if send_daily_reminder(user):
-            sent_count += 1
-        else:
-            failed_count += 1
-
-    stats = {
-        'total_users': len(users),
-        'sent_count': sent_count,
-        'failed_count': failed_count,
-        'skipped_count': skipped_count,
-        'timestamp': datetime.now().isoformat()
-    }
-
-    return stats
+def send_immediate_notification_to_all_users(*args, **kwargs):
+    """Immediate notifications are disabled"""
+    logger.info("Immediate notifications are permanently disabled")
+    return {"success": False, "error": "Notifications are permanently disabled"}
 
 def send_daily_sms_reminder_direct(*args, **kwargs):
     """Direct daily reminders are disabled"""
     logger.info("Direct daily SMS reminders are permanently disabled")
     return {"success": False, "error": "Notifications are permanently disabled"}
+
+import os
+import json
+from datetime import datetime
