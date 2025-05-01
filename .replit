@@ -8,7 +8,7 @@ deploymentTarget = "autoscale"
 run = ["gunicorn", "--bind", "0.0.0.0:5000", "main:app"]
 
 [workflows]
-runButton = "Start Dev Server"
+runButton = "Run"
 
 [[workflows.workflow]]
 name = "Project"
@@ -45,6 +45,15 @@ args = "python scheduler.py"
 
 [[workflows.workflow]]
 name = "Start Dev Server"
+author = 38405744
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python main.py"
+
+[[workflows.workflow]]
+name = "Run"
 author = 38405744
 mode = "sequential"
 
