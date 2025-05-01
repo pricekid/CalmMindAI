@@ -19,30 +19,30 @@ JOURNALS_FILE = os.path.join(DATA_DIR, "journals.json")
 def summarize_journal_content(content: str, max_length: int = 100) -> str:
     """
     Create a short summary of journal content.
-    
+
     Args:
         content: The journal content to summarize
         max_length: Maximum length of summary
-        
+
     Returns:
         Summarized content
     """
     if not content:
         return ""
-    
+
     # Simple truncation with ellipsis for now
     if len(content) <= max_length:
         return content
-    
+
     # Try to find a sentence break near the desired length
     # This gives a more natural summary
     end_pos = min(max_length, len(content))
     sentence_ends = ['.', '!', '?']
-    
+
     for i in range(end_pos - 1, max(0, end_pos - 30), -1):
         if content[i] in sentence_ends:
             return content[:i+1] + "..."
-    
+
     # No good sentence break found, just truncate
     return content[:max_length] + "..."
 
@@ -51,7 +51,7 @@ def get_openai_api_key():
     """Get the OpenAI API key from environment or admin config"""
     # First try to get from environment variable
     api_key = os.environ.get("OPENAI_API_KEY")
-    
+
     # Log key source for debugging (sanitized)
     if api_key:
         logger.debug(f"Using OpenAI API key from environment variable (length: {len(api_key)})")
@@ -64,7 +64,7 @@ def get_openai_api_key():
             api_key = admin_key
         else:
             logger.warning("No OpenAI API key found in environment or admin config")
-    
+
     return api_key
 
 def get_openai_model():
@@ -99,22 +99,22 @@ def ensure_journals_file():
 def get_journal_entries_for_user(user_id: int) -> List[Dict[str, Any]]:
     """
     Get all journal entries for a specific user.
-    
+
     Args:
         user_id: The ID of the user
-        
+
     Returns:
         A list of journal entries
     """
     ensure_journals_file()
     with open(JOURNALS_FILE, 'r') as f:
         entries = json.load(f)
-    
+
     # Filter entries for this user
     user_entries = [entry for entry in entries if entry.get('user_id') == user_id]
     # Sort by created_at in descending order
     user_entries.sort(key=lambda entry: entry.get('created_at', ''), reverse=True)
-    
+
     return user_entries
 
 def save_journal_entry(
@@ -133,7 +133,7 @@ def save_journal_entry(
 ) -> None:
     """
     Save a journal entry to the journals.json file.
-    
+
     Args:
         entry_id: The ID of the journal entry
         user_id: The ID of the user
@@ -151,17 +151,17 @@ def save_journal_entry(
     logger.debug(f"Saving journal entry {entry_id} for user {user_id}")
     try:
         ensure_journals_file()
-        
+
         with open(JOURNALS_FILE, 'r') as f:
             entries = json.load(f)
-        
+
         # Convert datetime objects to ISO format strings
         created_at_str = created_at.isoformat() if isinstance(created_at, datetime) else created_at
         updated_at_str = updated_at.isoformat() if isinstance(updated_at, datetime) else updated_at
-        
+
         # Clean up cbt_patterns to ensure it's a valid list
         clean_patterns = cbt_patterns if cbt_patterns else []
-        
+
         # Check if we're updating an existing entry
         entry_found = False
         for i, entry in enumerate(entries):
@@ -183,7 +183,7 @@ def save_journal_entry(
                 }
                 entry_found = True
                 break
-        
+
         if not entry_found:
             # Entry not found, add a new one
             logger.debug(f"Adding new journal entry {entry_id}")
@@ -201,10 +201,10 @@ def save_journal_entry(
                 'structured_data': structured_data,
                 'user_reflection': user_reflection
             })
-        
+
         with open(JOURNALS_FILE, 'w') as f:
             json.dump(entries, f, indent=2)
-            
+
         logger.debug(f"Successfully saved journal entry {entry_id}")
     except Exception as e:
         logger.error(f"Error saving journal entry to JSON file: {str(e)}")
@@ -213,10 +213,10 @@ def save_journal_entry(
 def count_user_entries(user_id: int) -> int:
     """
     Count how many journal entries a user has submitted.
-    
+
     Args:
         user_id: The ID of the user
-        
+
     Returns:
         The number of entries
     """
@@ -226,10 +226,10 @@ def detect_emotional_tone(text: str) -> Dict[str, Any]:
     """
     Detect the primary emotional tone of the journal entry.
     Simple keyword-based approach for lightweight processing.
-    
+
     Args:
         text: The journal entry text
-        
+
     Returns:
         Dictionary with detected emotional tones and confidence levels
     """
@@ -243,32 +243,32 @@ def detect_emotional_tone(text: str) -> Dict[str, Any]:
         "joy": ["happy", "excited", "joyful", "delighted", "pleased", "content", "thrilled", "glad", "grateful"],
         "neutral": []  # Default state if no strong emotions detected
     }
-    
+
     # Convert text to lowercase for case-insensitive matching
     text_lower = text.lower()
-    
+
     # Count occurrences of emotion keywords
     emotion_counts = {}
     for emotion, keywords in emotions.items():
         if emotion == "neutral":
             continue  # Skip neutral category in counting
-        
+
         count = 0
         for keyword in keywords:
             # Count whole word matches
             count += sum(1 for match in re.finditer(r'\b' + keyword + r'\b', text_lower))
-        
+
         if count > 0:
             emotion_counts[emotion] = count
-    
+
     # If no emotions detected, mark as neutral
     if not emotion_counts:
         emotion_counts["neutral"] = 1
-    
+
     # Calculate confidence levels (simple normalization)
     total_matches = sum(emotion_counts.values())
     emotion_confidence = {emotion: count / total_matches for emotion, count in emotion_counts.items()}
-    
+
     # Return detected emotions with confidence levels
     return {
         "primary_emotion": max(emotion_confidence, key=emotion_confidence.get),
@@ -278,10 +278,10 @@ def detect_emotional_tone(text: str) -> Dict[str, Any]:
 def detect_crisis_indicators(text: str) -> Dict[str, Any]:
     """
     Detect potential crisis indicators in the journal entry.
-    
+
     Args:
         text: The journal entry text
-        
+
     Returns:
         Dictionary with detected crisis indicators and risk level
     """
@@ -296,10 +296,10 @@ def detect_crisis_indicators(text: str) -> Dict[str, Any]:
         "substance_abuse": ["overdose", "drunk", "drinking too much", "high", "addicted", 
                            "pills", "drugs", "substance", "relapse"]
     }
-    
+
     # Convert text to lowercase for case-insensitive matching
     text_lower = text.lower()
-    
+
     # Check for indicators
     detected_indicators = {}
     for category, phrases in crisis_indicators.items():
@@ -307,10 +307,10 @@ def detect_crisis_indicators(text: str) -> Dict[str, Any]:
         for phrase in phrases:
             if phrase in text_lower:
                 matches.append(phrase)
-        
+
         if matches:
             detected_indicators[category] = matches
-    
+
     # Determine risk level
     risk_level = "none"
     if "self_harm" in detected_indicators:
@@ -321,7 +321,7 @@ def detect_crisis_indicators(text: str) -> Dict[str, Any]:
         risk_level = "medium"
     elif detected_indicators:
         risk_level = "low"
-    
+
     return {
         "detected_indicators": detected_indicators,
         "risk_level": risk_level
@@ -330,10 +330,10 @@ def detect_crisis_indicators(text: str) -> Dict[str, Any]:
 def extract_metadata(text: str) -> Dict[str, Any]:
     """
     Extract potential metadata from journal entry.
-    
+
     Args:
         text: The journal entry text
-        
+
     Returns:
         Dictionary with potential metadata
     """
@@ -345,20 +345,20 @@ def extract_metadata(text: str) -> Dict[str, Any]:
         "health": ["illness", "pain", "chronic", "doctor", "diagnosis", "treatment", "medication", "symptom", "recovery"],
         "grief": ["loss", "died", "passed away", "funeral", "missing someone", "death", "grief", "mourning"]
     }
-    
+
     # Convert to lowercase for matching
     text_lower = text.lower()
-    
+
     # Detect life situations
     detected_situations = {}
     for situation, keywords in life_situations.items():
         for keyword in keywords:
             if keyword in text_lower:
                 detected_situations[situation] = detected_situations.get(situation, 0) + 1
-    
+
     # Extract the top situations
     top_situations = [k for k, v in sorted(detected_situations.items(), key=lambda item: item[1], reverse=True)]
-    
+
     return {
         "life_situations": top_situations[:3] if top_situations else [],
         "word_count": len(text.split())
@@ -368,29 +368,29 @@ def get_user_history_context(user_id: int) -> str:
     """
     Generate detailed context about the user's history from previous entries.
     Includes recent journal summaries, emotional trends, and identified patterns.
-    
+
     Args:
         user_id: The user's ID
-        
+
     Returns:
         String with user history context
     """
     try:
         entries = get_journal_entries_for_user(user_id)
-        
+
         if not entries or len(entries) < 2:
             return ""
-        
+
         # Analyze emotional trends
         anxiety_levels = []
         emotional_tones = []
         recurring_situations = {}
         recent_entries_data = []
-        
+
         # Process the last 5 entries (excluding the most recent one)
         # We skip the most recent entry because it's likely the current one
         recent_entries = entries[1:6] if len(entries) > 1 else []
-        
+
         for entry in recent_entries:
             # Get detailed data for each entry
             entry_data = {
@@ -400,7 +400,7 @@ def get_user_history_context(user_id: int) -> str:
                 "anxiety": entry.get("anxiety_level", 5),
                 "patterns": []
             }
-            
+
             # Get patterns if available
             patterns = entry.get('cbt_patterns', [])
             if patterns:
@@ -408,27 +408,27 @@ def get_user_history_context(user_id: int) -> str:
                     pattern_name = pattern.get('pattern')
                     if pattern_name and pattern_name not in ["Error analyzing entry", "API Quota Exceeded", "API Configuration Issue"]:
                         entry_data["patterns"].append(pattern_name)
-            
+
             # Add to list of recent entries
             recent_entries_data.append(entry_data)
-            
+
             # Get anxiety levels
             if "anxiety_level" in entry:
                 anxiety_levels.append(entry["anxiety_level"])
-            
+
             # Get emotional tones
             if "content" in entry:
                 tone = detect_emotional_tone(entry["content"])
                 emotional_tones.append(tone["primary_emotion"])
-                
+
                 # Extract situations
                 metadata = extract_metadata(entry["content"])
                 for situation in metadata.get("life_situations", []):
                     recurring_situations[situation] = recurring_situations.get(situation, 0) + 1
-        
+
         # Create context string with historical trends
         context = []
-        
+
         # Add anxiety trend
         if anxiety_levels:
             avg_anxiety = sum(anxiety_levels) / len(anxiety_levels)
@@ -438,30 +438,30 @@ def get_user_history_context(user_id: int) -> str:
                 context.append("User has maintained relatively low anxiety levels")
             elif max(anxiety_levels) - min(anxiety_levels) >= 4:
                 context.append("User has experienced significant fluctuations in anxiety levels")
-        
+
         # Add emotional tone trends
         if emotional_tones:
             # Get most common emotion
             emotion_counts = {}
             for emotion in emotional_tones:
                 emotion_counts[emotion] = emotion_counts.get(emotion, 0) + 1
-            
+
             most_common = max(emotion_counts, key=emotion_counts.get)
             if emotion_counts[most_common] >= 2:
                 context.append(f"User has frequently expressed {most_common}")
-        
+
         # Add recurring life situations
         if recurring_situations:
             top_situation = max(recurring_situations, key=recurring_situations.get)
             if recurring_situations[top_situation] >= 2:
                 context.append(f"User has been dealing with {top_situation}-related challenges")
-        
+
         trends_context = ". ".join(context) if context else "No clear trends in recent journals."
-        
+
         # Now build a detailed history section with recent journal summaries
         history_section = "RECENT JOURNAL HISTORY:\n"
         history_section += f"Trends: {trends_context}\n\n"
-        
+
         # Add summaries of recent entries
         if recent_entries_data:
             history_section += "Recent entries (from newest to oldest):\n"
@@ -469,9 +469,9 @@ def get_user_history_context(user_id: int) -> str:
                 patterns_text = ", ".join(entry["patterns"]) if entry["patterns"] else "No patterns identified"
                 history_section += f"{idx+1}. {entry['title']} (Anxiety: {entry['anxiety']}/10, Patterns: {patterns_text})\n"
                 history_section += f"   Summary: {entry['summary']}\n\n"
-        
+
         return history_section
-        
+
     except Exception as e:
         logger.error(f"Error generating user history context: {str(e)}")
         return ""
@@ -479,25 +479,25 @@ def get_user_history_context(user_id: int) -> str:
 def delete_journal_entry(entry_id: int, user_id: int) -> bool:
     """
     Delete a journal entry from the journals.json file.
-    
+
     Args:
         entry_id: The ID of the journal entry to delete
         user_id: The ID of the user who owns the entry
-        
+
     Returns:
         True if entry was found and deleted, False otherwise
     """
     logger.debug(f"Deleting journal entry {entry_id} for user {user_id} from JSON file")
     try:
         ensure_journals_file()
-        
+
         with open(JOURNALS_FILE, 'r') as f:
             entries = json.load(f)
-        
+
         # Filter out the entry to be deleted
         original_length = len(entries)
         entries = [entry for entry in entries if not (entry.get('id') == entry_id and entry.get('user_id') == user_id)]
-        
+
         # Check if an entry was removed
         if len(entries) < original_length:
             logger.debug(f"Journal entry {entry_id} found and removed from JSON file")
@@ -507,7 +507,7 @@ def delete_journal_entry(entry_id: int, user_id: int) -> bool:
         else:
             logger.debug(f"Journal entry {entry_id} not found in JSON file")
             return False
-            
+
     except Exception as e:
         logger.error(f"Error deleting journal entry from JSON file: {str(e)}")
         return False
@@ -516,20 +516,20 @@ def get_recurring_patterns(user_id: int, min_entries: int = 3) -> List[Dict[str,
     """
     Identify recurring thought patterns from a user's journal entries.
     Only returns patterns if the user has at least min_entries entries.
-    
+
     Args:
         user_id: The ID of the user
         min_entries: Minimum number of entries required
-    
+
     Returns:
         A list of dictionaries with pattern and count
     """
     entries = get_journal_entries_for_user(user_id)
-    
+
     # Only analyze if user has enough entries
     if len(entries) < min_entries:
         return []
-    
+
     # Extract all patterns from all entries
     all_patterns = []
     for entry in entries:
@@ -539,16 +539,16 @@ def get_recurring_patterns(user_id: int, min_entries: int = 3) -> List[Dict[str,
                 pattern_name = pattern.get('pattern')
                 if pattern_name and pattern_name not in ["Error analyzing entry", "API Quota Exceeded", "API Configuration Issue"]:
                     all_patterns.append(pattern_name)
-    
+
     # Count occurrences of each pattern
     pattern_counts = {}
     for pattern in all_patterns:
         pattern_counts[pattern] = pattern_counts.get(pattern, 0) + 1
-    
+
     # Sort patterns by count (descending) and return top patterns
     sorted_patterns = [{"pattern": p, "count": c} for p, c in pattern_counts.items()]
     sorted_patterns.sort(key=lambda x: x["count"], reverse=True)
-    
+
     return sorted_patterns[:3]  # Return top 3 patterns
 
 def classify_journal_sentiment(text: str, anxiety_level: Optional[int] = None) -> str:
@@ -561,32 +561,32 @@ def classify_journal_sentiment(text: str, anxiety_level: Optional[int] = None) -
         return "Distress"
     elif anxiety_level and anxiety_level >= 5:
         return "Concern"
-        
+
     # Analyze text content
     distress_indicators = [
         "anxious", "worried", "scared", "depressed", "hopeless",
         "overwhelmed", "stressed", "panic", "afraid", "terrified",
         "lonely", "miserable", "hate", "angry", "frustrated"
     ]
-    
+
     concern_indicators = [
         "upset", "sad", "confused", "unsure", "bothered",
         "tired", "annoyed", "difficult", "hard", "struggle"
     ]
-    
+
     positive_indicators = [
         "happy", "grateful", "thankful", "excited", "proud",
         "peaceful", "calm", "good", "wonderful", "blessed",
         "love", "enjoy", "appreciate", "hopeful", "pleased"
     ]
-    
+
     text_lower = text.lower()
-    
+
     # Count indicators
     distress_count = sum(1 for word in distress_indicators if word in text_lower)
     concern_count = sum(1 for word in concern_indicators if word in text_lower)
     positive_count = sum(1 for word in positive_indicators if word in text_lower)
-    
+
     # Classify based on strongest signal
     if distress_count > 0 and distress_count >= positive_count:
         return "Distress"
@@ -601,12 +601,12 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
     """
     Generate an improved AI analysis of a journal entry that's concise and focused,
     with NLP preprocessing and structured metadata for more personalized responses.
-    
+
     Args:
         journal_text: The journal entry text
         anxiety_level: Anxiety level (1-10)
         user_id: User ID for pattern analysis
-        
+
     Returns:
         Dictionary with response and identified patterns
     """
@@ -620,51 +620,51 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         }
     safe_text = journal_text.strip()
     safe_anxiety = anxiety_level if anxiety_level is not None else 5  # Default to mid-level anxiety
-    
+
     logger.debug(f"Analyzing journal text (first 100 chars): {safe_text[:100]}...")
     try:
         # Get API key and model settings with detailed logging
         api_key = get_openai_api_key()
         model = get_openai_model()
-        
+
         # Log the configuration details (sanitized)
         if api_key:
             logger.debug(f"API key found (length: {len(api_key)}, starts with: {api_key[:3]}...)")
         else:
             logger.debug("No API key found in environment or admin settings")
-            
+
         logger.debug(f"Using model: {model}")
-        
+
         # Check if API key is available
         if not api_key:
             logger.error("OpenAI API key is not set")
             raise ValueError("INVALID_API_KEY: OpenAI API key is missing. Please check your environment variables or admin settings.")
-        
+
         # Preprocess the journal entry with NLP analysis
         # 1. Tag emotional tone
         emotional_tone = detect_emotional_tone(safe_text)
         primary_emotion = emotional_tone.get("primary_emotion", "neutral")
         logger.debug(f"Detected primary emotion: {primary_emotion}")
-        
+
         # 2. Detect crisis indicators
         crisis_info = detect_crisis_indicators(safe_text)
         risk_level = crisis_info.get("risk_level", "none")
         logger.debug(f"Detected crisis risk level: {risk_level}")
-        
+
         # 3. Extract metadata (life situations, etc.)
         metadata = extract_metadata(safe_text)
         life_situations = metadata.get("life_situations", [])
         life_situations_text = ", ".join(life_situations) if life_situations else "general life"
         logger.debug(f"Detected life situations: {life_situations_text}")
-        
+
         # 4. Get user history context
         user_history = get_user_history_context(user_id) if user_id else ""
         logger.debug(f"User history context: {user_history}")
-        
+
         # Get count of user entries to determine if we should include pattern analysis
         entry_count = count_user_entries(user_id)
         include_patterns = entry_count >= 2  # We need at least 2 previous entries
-        
+
         # Get recurring patterns if needed
         recurring_patterns_text = ""
         if include_patterns:
@@ -673,7 +673,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                 recurring_patterns_text = "Based on previous journal entries, these thought patterns appear frequently:\n"
                 for pattern in recurring_patterns:
                     recurring_patterns_text += f"- {pattern['pattern']} (appeared {pattern['count']} times)\n"
-        
+
         # Build the enhanced metadata section
         metadata_section = f"""
         ## JOURNAL METADATA:
@@ -683,21 +683,21 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         - Life Situations: {life_situations_text}
         - Word Count: {metadata.get('word_count', 0)}
         """
-        
+
         # Add user history if available
         if user_history:
             metadata_section += f"""
         ## USER HISTORY CONTEXT:
         {user_history}
         """
-        
+
         # Add recurring patterns if available
         if recurring_patterns_text:
             metadata_section += f"""
         ## RECURRING THOUGHT PATTERNS:
         {recurring_patterns_text}
         """
-        
+
         # Add crisis alert if risk level is medium or high
         crisis_instructions = ""
         if risk_level in ["medium", "high"]:
@@ -706,45 +706,50 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         This entry contains potential {', '.join(crisis_info.get('detected_indicators', {}).keys())} indicators. 
         Provide supportive, non-judgmental validation while gently encouraging safety planning and professional support.
         """
-        
+
         # Create the enhanced structured prompt with greater emotional intelligence and historical awareness
         # Classify journal sentiment
         sentiment = classify_journal_sentiment(safe_text, safe_anxiety)
         logger.debug(f"Journal sentiment classified as: {sentiment}")
-        
+
         # Choose prompt based on sentiment
         if sentiment in ["Positive", "Neutral"]:
             prompt = f"""
             You are Mira, a warm, supportive journaling coach inside Calm Journey. Someone has shared a {sentiment.lower()} journal entry.
             Keep your response light and encouraging. Do not analyze for problems or suggest therapy unless explicitly mentioned.
-            
+
             Journal entry: "{safe_text}"
-            
+
             Your response should:
             1. Acknowledge their sharing and mirror their positive/neutral tone
             2. Reinforce any positive observations or insights they've made
-            3. Offer a simple reflection prompt only if it naturally extends their thoughts
+            3. Offer a simple reflection prompt that naturally extends their thoughts
             4. Keep the response brief and upbeat
-            5. Do not suggest CBT techniques or emotional work unless they've asked
-            
-            Return only valid JSON with 'insight_text', 'reflection_prompt' (optional), and 'followup_text'.
-            Avoid analyzing for patterns or problems when none are expressed.
+            5. Include at least one thought pattern that recognizes their positive mindset
+            6. Suggest one simple strategy to build on this positive moment
+
+            Return valid JSON with these fields:
+            - 'insight_text': Initial warm response
+            - 'reflection_prompt': A gentle question to explore their positive experience
+            - 'followup_text': Encouraging close
+            - 'thought_patterns': At least one pattern recognizing positive thinking
+            - 'strategies': One simple suggestion to enhance the moment
             """
         else:
             prompt = f"""
             You are Mira, a warm, compassionate CBT journaling coach inside an app called Calm Journey. 
         Your task is to respond to the following journal entry with deep emotional intelligence, therapeutic insight, and highly personalized CBT strategies.
         You should reference patterns and themes from previous entries when appropriate to show continuity and insight into the user's journey.
-        
+
         ## JOURNAL ENTRY:
         "{safe_text}"
-        
+
         {metadata_section}
         {crisis_instructions}
-        
+
         ## USER HISTORY CONTEXT:
         {user_history}
-        
+
         ## YOUR TASK:
         1. Validate specific emotions by naming them precisely (e.g., "neglected," "anxious," "unimportant") rather than using general statements
         2. Identify cognitive distortions with depth, connecting them to underlying emotional needs (need for safety, validation, connection)
@@ -754,31 +759,31 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         6. Balance compassionate support with gentle challenges to unhelpful thought patterns
         7. When appropriate, connect current issues to patterns or themes observed in previous journals (reference specific entries if relevant)
         8. Acknowledge progress or changes in thinking compared to previous entries when applicable
-        
+
         ## ENHANCED THERAPEUTIC TECHNIQUES:
         1. Provide a scripted "I-statement" template they can use in a conversation (e.g., "I feel ___ when ___ because ___. What I need is ___.")
         2. Include a focused reality-check exercise that challenges negative assumptions (list evidence for/against)
         3. Offer a specific emotion-regulation technique appropriate to their situation
         4. Create a mini reflection guide (e.g., "When I feel [emotion], I will [healthy action] instead of [unhealthy reaction]")
         5. Connect current feelings to deeper emotional needs to increase self-awareness
-        
+
         ## RESPONSE STRUCTURE: 
         You MUST create a response in three distinct parts:
         1. INSIGHT TEXT: Initial empathy with precise emotion labeling + gentle reframe (acknowledge specific emotions, highlight patterns, begin cognitive exploration)
         2. REFLECTION PROMPT: A single, focused question that explores relationship context or emotional needs (start with "Take a moment. ")
         3. FOLLOW-UP TEXT: Support and mini reframe with practical action steps (provide scripted language, validation and concrete behavioral guidance)
-        
+
         ## TONE REQUIREMENTS:
         - Warm, empathetic, and professional yet conversational
         - Avoid vague reassurances; be specific and personalized
         - Balance validation with gentle challenge
         - Always offer a clear, actionable path forward
-        
+
         IMPORTANT: You must respond with ONLY valid JSON in the exact format below.
         DO NOT add any text, commentary, or explanation outside the JSON structure.
         DO NOT use markdown formatting like ```json or ``` markers.
         RETURN ONLY THE JSON OBJECT, nothing else.
-        
+
         {{
             "insight_text": "Your empathetic initial response that specifically names emotions like 'neglected', 'anxious', 'unimportant' and introduces a connection to emotional needs and relationship patterns",
             "reflection_prompt": "Take a moment. What's one expectation you've been holding about this relationship that feels heavy — and might point to an important emotional need?",
@@ -889,7 +894,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         Tone: Write as if you are a trusted friend who deeply understands their specific situation. Be warm, personal, empathetic, and thoughtful. Avoid clinical language or generic advice. Your response should feel like it was written specifically for them, not a template.
 
         Here's an example of the personalized, empathetic style I want (this is just an example - your actual response should be tailored to the journal content):
-        
+
         "Hi Josiah, I can feel how much you're carrying right now—and how painful, exhausting, and frightening it must be to love your daughter so deeply while also feeling so powerless and overwhelmed. You're doing so much: working, parenting, managing co-parenting conflict, and trying to help your daughter through a very serious and risky phase. You're not failing—you're in crisis, and your concern shows just how deeply you care.
 
         Thought Patterns That May Be Surfacing:
@@ -906,27 +911,27 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         Reflection Prompt: "What part of this crisis is mine to carry—and what can I start letting go of, even if just a little?"
 
         You're not alone. You're not a bad parent. You're exhausted because you care deeply—and care is never wasted.
-        
+
         Warmly,
         Coach Mira"
-        
+
         Notice how the example response directly addresses the person's specific situation with personalized insights and recommendations. Your response should be similarly tailored to the exact content of their journal entry.
-        
+
         CRITICAL: Return ONLY valid JSON as described above. 
         NEVER include any text outside the JSON structure.
         NEVER use markdown code blocks or backticks.
         ONLY return a valid JSON object with the "response" and "patterns" fields.
         EVERYTHING YOU RETURN MUST BE PARSABLE AS JSON.
         """
-        
+
         # Attempt to make the API call with error handling
         try:
             # Get a fresh client with the current API key
             client = get_openai_client()
-            
+
             # Log the API parameters for debugging
             logger.debug(f"Making OpenAI API call with model: {model}, API key (sanitized): {'*****' + api_key[-4:] if api_key else 'None'}")
-            
+
             # Make the API call with simple explicit instructions to return very basic JSON
             response = client.chat.completions.create(
                 model=model,
@@ -938,10 +943,10 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                 temperature=0.7,
                 max_tokens=1500  # Ensure we have enough tokens for the response
             )
-            
+
             # Log successful API call
             logger.debug("OpenAI API call completed successfully")
-            
+
             # Parse the response with improved error handling
             try:
                 # Get the raw response content 
@@ -949,17 +954,17 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                 logger.debug(f"Raw OpenAI response content: {content}")  # Log the full content for debugging
                 # Also log the exact format to see any issues
                 logger.debug(f"Response type: {type(content)}, length: {len(content)}")
-                
+
                 # Parse the JSON with more robust error handling
                 try:
                     # Safety trim in case the response is too large
                     if len(content) > 20000:
                         logger.warning(f"Response content is very large ({len(content)} chars), trimming for parsing")
                         content = content[:20000]
-                        
+
                     # Parse the initial JSON
                     result = json.loads(content)
-                    
+
                     # Clean the result by removing empty fields
                     cleaned_result = {}
                     for key, value in result.items():
@@ -967,22 +972,22 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                         if value and (isinstance(value, str) and value.strip() or 
                                     isinstance(value, (list, dict)) and value):
                             cleaned_result[key] = value
-                            
+
                     # Only include thought_patterns if distortions are present
                     if 'distortions' not in cleaned_result or not cleaned_result['distortions']:
                         cleaned_result.pop('thought_patterns', None)
-                        
+
                     # Only include strategies if there's emotional struggle
                     if sentiment not in ["Concern", "Distress"]:
                         cleaned_result.pop('strategies', None)
-                    
+
                     result = cleaned_result
-                    
+
                     # Sometimes the API returns content with non-JSON text before or after the JSON
                     # Try to extract just the JSON part using regex
                     import re
                     json_match = re.search(r'(\{.*\})', content, re.DOTALL)
-                    
+
                     if json_match:
                         # Extract just the JSON part
                         json_content = json_match.group(1)
@@ -999,12 +1004,12 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                         logger.warning("No JSON-like structure found with regex, trying direct parsing")
                         result = json.loads(content)
                         logger.debug("Successfully parsed JSON response from full content")
-                        
+
                     # Log the final result structure
                     logger.debug(f"Parsed result keys: {list(result.keys())}")
                 except Exception as json_parse_error:
                     logger.error(f"Failed to parse JSON response: {str(json_parse_error)}")
-                    
+
                     # Look for patterns that suggest it's a valid response but not in JSON format
                     if "warmly" in content.lower() or "coach mira" in content.lower() or "thank you for sharing" in content.lower():
                         # It seems to be a valid text response but not in JSON format
@@ -1028,25 +1033,25 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                                 "recommendation": "Your journal has been saved. The insights will be available soon."
                             }]
                         }
-                
+
                 # Handle the new structured response format
                 # Check if we have the enhanced reflective pause format fields
                 has_enhanced_format = all(k in result for k in ['insight_text', 'reflection_prompt', 'followup_text']) and any(k in result for k in ['relationship_exploration', 'actionable_templates'])
-                
+
                 # Check if we have the reflective pause format fields (older version)
                 has_reflective_pause_format = all(k in result for k in ['insight_text', 'reflection_prompt', 'followup_text'])
-                
+
                 # Check if we have all the expected fields for the previous format
                 has_structured_format = all(k in result for k in ['intro', 'reflection', 'distortions', 'strategies', 'reflection_prompt', 'outro'])
-                
+
                 if has_enhanced_format:
                     logger.debug("Found enhanced format with relationship exploration and actionable templates")
-                    
+
                     # Get the three parts of the reflective pause format
                     insight_text = result.get('insight_text', '')
                     reflection_prompt = result.get('reflection_prompt', '')
                     followup_text = result.get('followup_text', '')
-                    
+
                     # Process distortions section with emotional needs
                     distortions_list = result.get('distortions', [])
                     distortions_text = "\n\n## Thought Patterns\n"
@@ -1054,13 +1059,13 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                         pattern = d.get('pattern', '')
                         description = d.get('description', '')
                         emotional_need = d.get('emotional_need', '')
-                        
+
                         # Add emotional need if provided
                         if emotional_need:
                             distortions_text += f"\n**{pattern}**\n{description} This may relate to your need for {emotional_need}.\n"
                         else:
                             distortions_text += f"\n**{pattern}**\n{description}\n"
-                    
+
                     # Process strategies section with emotional needs addressed
                     strategies_list = result.get('strategies', [])
                     strategies_text = "\n\n## Suggested Strategies\n"
@@ -1069,13 +1074,13 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                         description = s.get('description', '')
                         action = s.get('action_step', '')
                         emotional_need = s.get('emotional_need_addressed', '')
-                        
+
                         # Format with emotional need if provided
                         if emotional_need:
                             strategies_text += f"\n**{i}. {title}**\n{description} {action} This helps address your need for {emotional_need}.\n"
                         else:
                             strategies_text += f"\n**{i}. {title}**\n{description} {action}\n"
-                    
+
                     # Process relationship exploration if available
                     relationship_exploration = result.get('relationship_exploration', [])
                     relationship_text = ""
@@ -1085,7 +1090,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                             question = q.get('question', '')
                             purpose = q.get('purpose', '')
                             relationship_text += f"• **{question}**\n  ({purpose})\n\n"
-                    
+
                     # Process actionable templates if available
                     templates = result.get('actionable_templates', [])
                     templates_text = ""
@@ -1095,18 +1100,18 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                             situation = t.get('situation', '')
                             template = t.get('template', '')
                             guidance = t.get('follow_up_guidance', '')
-                            
+
                             templates_text += f"\n**For {situation}:**\n\"{template}\"\n"
                             if guidance:
                                 templates_text += f"Then: {guidance}\n"
-                    
+
                     # Combine all sections for the enhanced response format
                     coach_response = f"{insight_text}\n\n{reflection_prompt}\n\n{followup_text}{distortions_text}{strategies_text}{relationship_text}{templates_text}"
-                    
+
                     # Add a sign-off if not already present
                     if "Coach Mira" not in coach_response:
                         coach_response += "\n\nWarmly,\nCoach Mira"
-                    
+
                     # Store the structured data with all new fields
                     result['structured_data'] = {
                         'insight_text': insight_text,
@@ -1117,15 +1122,15 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                         'relationship_exploration': relationship_exploration,
                         'actionable_templates': templates
                     }
-                
+
                 elif has_reflective_pause_format:
                     logger.debug("Found basic reflective pause format with all expected fields")
-                    
+
                     # Get the three parts of the reflective pause format
                     insight_text = result.get('insight_text', '')
                     reflection_prompt = result.get('reflection_prompt', '')
                     followup_text = result.get('followup_text', '')
-                    
+
                     # Process distortions section
                     distortions_list = result.get('distortions', [])
                     distortions_text = "\n\n## Thought Patterns\n"
@@ -1133,7 +1138,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                         pattern = d.get('pattern', '')
                         description = d.get('description', '')
                         distortions_text += f"\n**{pattern}**\n{description}\n"
-                    
+
                     # Process strategies section
                     strategies_list = result.get('strategies', [])
                     strategies_text = "\n\n## Suggested Strategies\n"
@@ -1142,14 +1147,14 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                         description = s.get('description', '')
                         action = s.get('action_step', '')
                         strategies_text += f"\n**{i}. {title}**\n{description} {action}\n"
-                    
+
                     # Combine all sections for the legacy response format
                     coach_response = f"{insight_text}\n\n{reflection_prompt}\n\n{followup_text}{distortions_text}{strategies_text}"
-                    
+
                     # Add a sign-off if not already present
                     if "Coach Mira" not in coach_response:
                         coach_response += "\n\nWarmly,\nCoach Mira"
-                    
+
                     # Store the structured data
                     result['structured_data'] = {
                         'insight_text': insight_text,
@@ -1160,11 +1165,11 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                     }
                 elif has_structured_format:
                     logger.debug("Found legacy structured format with all expected fields")
-                    
+
                     # Combine the structured parts into a cohesive response
                     intro = result.get('intro', '')
                     reflection = result.get('reflection', '')
-                    
+
                     # Process distortions section
                     distortions_list = result.get('distortions', [])
                     distortions_text = "\n\n## Thought Patterns\n"
@@ -1172,7 +1177,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                         pattern = d.get('pattern', '')
                         description = d.get('description', '')
                         distortions_text += f"\n**{pattern}**\n{description}\n"
-                    
+
                     # Process strategies section
                     strategies_list = result.get('strategies', [])
                     strategies_text = "\n\n## Suggested Strategies\n"
@@ -1181,18 +1186,18 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                         description = s.get('description', '')
                         action = s.get('action_step', '')
                         strategies_text += f"\n**{i}. {title}**\n{description} {action}\n"
-                    
+
                     # Add reflection prompt
                     reflection_prompt = result.get('reflection_prompt', '')
                     if reflection_prompt:
                         reflection_prompt = f"\n\n## Reflection Prompt\n\"{reflection_prompt}\"\n"
-                    
+
                     # Add outro
                     outro = result.get('outro', '')
-                    
+
                     # Combine all sections
                     coach_response = f"{intro}\n\n{reflection}{distortions_text}{strategies_text}{reflection_prompt}\n\n{outro}"
-                    
+
                     # Convert to the new reflective pause format for consistency
                     result['structured_data'] = {
                         'insight_text': f"{intro}\n\n{reflection}",
@@ -1204,7 +1209,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                 else:
                     # Fall back to the old format for backward compatibility
                     logger.debug("Response doesn't have structured format, using legacy format")
-                    
+
                     # The API might return "response" or "content" keys depending on the model and format
                     # Check for both and fall back to a default if neither is found
                     coach_response = result.get("response", None)
@@ -1216,23 +1221,23 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                             if coach_response is None or coach_response == "":
                                 # Ultimate fallback
                                 coach_response = "Thank you for sharing your journal entry."
-                
+
                 # Log what we found to help debug
                 logger.debug(f"After key checking, coach_response is {len(coach_response) if coach_response else 0} chars")
-                
+
                 # If we still don't have a valid response, use the original content if it looks like text
                 if (coach_response is None or coach_response == "") and content and len(content) > 20:
                     logger.warning("No valid response key found in JSON, using raw content as fallback")
                     coach_response = content
-                
-                # Format unstructured response to make it less jumbled
+
+                # Format unstructured response to improve readability
                 if not result.get('structured_data') and not has_enhanced_format and not has_reflective_pause_format and not has_structured_format:
                     logger.debug("Formatting unstructured response to improve readability")
-                    
+
                     # Split into paragraphs
                     paragraphs = coach_response.split('\n\n')
                     formatted_paragraphs = []
-                    
+
                     # Format each paragraph with proper HTML
                     for i, paragraph in enumerate(paragraphs):
                         if i == 0:
@@ -1253,23 +1258,23 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                         else:
                             # Other paragraphs
                             formatted_paragraphs.append(f"<div class='paragraph mb-3'>{paragraph}</div>")
-                    
+
                     # Combine the formatted paragraphs
                     coach_response = "".join(formatted_paragraphs)
-                
+
                 # Add recurring patterns if applicable
                 recurring_patterns = get_recurring_patterns(user_id)
-                
+
                 if entry_count >= 3 and recurring_patterns:
                     pattern_insight = "\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n"
                     for pattern in recurring_patterns[:2]:  # Limit to top 2
                         pattern_insight += f"- {pattern['pattern']}\n"
                     coach_response += pattern_insight
-                
+
                 # Add a sign-off by Coach Mira if not already present
                 if "Coach Mira" not in coach_response:
                     coach_response += "\n\nWarmly,\nCoach Mira"
-                
+
                 # Ensure patterns is a valid list - check for both "patterns", "cbt_patterns", and "thought_patterns" 
                 # since the API might use different property names
                 cbt_patterns = result.get("patterns", None)
@@ -1284,17 +1289,17 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                         "description": "Your journal entry has been saved.",
                         "recommendation": "Continue journaling regularly to build self-awareness."
                     }]
-                
+
                 # Add structured data if available
                 structured_data = result.get('structured_response', None)
-                
+
                 # Return formatted results with structured data for UI improvements
                 return {
                     "gpt_response": coach_response,
                     "cbt_patterns": cbt_patterns,
                     "structured_data": structured_data
                 }
-                
+
             except json.JSONDecodeError as json_err:
                 logger.error(f"JSON parsing error: {json_err}")
                 # Provide a fallback response when JSON parsing fails
@@ -1307,12 +1312,12 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                     }],
                     "structured_data": None
                 }
-            
+
         except Exception as api_error:
             # Log the specific API error with detailed error handling
             error_details = str(api_error)
             logger.error(f"Full OpenAI API error details: {error_details}")
-            
+
             if "insufficient_quota" in error_details or "429" in error_details:
                 logger.error(f"OpenAI API quota exceeded: {error_details}")
                 error_type = "API_QUOTA_EXCEEDED"
@@ -1331,17 +1336,17 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
             else:
                 logger.error(f"OpenAI API error: {error_details}")
                 error_type = "API_ERROR"
-            
+
             # Try to create a fallback response before raising the error
             response_message = "Thank you for sharing your journal entry. I've read it but am experiencing some technical difficulties right now."
-            
+
             # Re-raise with more context
             raise ValueError(f"{error_type}: {error_details}")
-            
+
     except Exception as e:
         error_msg = str(e)
         logger.error(f"Error analyzing journal entry: {error_msg}")
-        
+
         # Check error types from the refined error handling with more specific messages
         if "API_QUOTA_EXCEEDED" in error_msg or "RATE_LIMIT_EXCEEDED" in error_msg:
             logger.warning("Rate limit or quota exceeded for OpenAI API")
