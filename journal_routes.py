@@ -167,6 +167,133 @@ def check_followup_insight(entry_id):
         logger.error(f"Error checking followup insight: {str(e)}")
         return jsonify({"error": "Server error", "ready": False}), 500
 
+@journal_bp.route('/<int:entry_id>/save-conversation-reflection', methods=['POST'])
+@login_required
+def save_conversation_reflection(entry_id):
+    """
+    API endpoint to save a user reflection to a journal entry in the conversation UI.
+    This handles the reflection response to Mira's prompt.
+    
+    Expects JSON with:
+    {
+        "reflection": str
+    }
+    
+    Returns: JSON with:
+    {
+        "success": bool,
+        "message": str,
+        "followup_message": str (optional)
+    }
+    """
+    try:
+        # Get and validate data
+        data = request.get_json()
+        if not data:
+            logger.warning(f"No JSON data received for reflection on entry {entry_id}")
+            return jsonify({
+                'success': False,
+                'message': 'No data provided'
+            }), 400
+            
+        reflection = data.get('reflection')
+        if not reflection:
+            logger.warning(f"Missing reflection text for entry {entry_id}")
+            return jsonify({
+                'success': False,
+                'message': 'Reflection text is required'
+            }), 400
+            
+        # Get the journal entry
+        try:
+            entry = JournalEntry.query.get(entry_id)
+            if entry is None:
+                logger.error(f"Journal entry not found: ID {entry_id}")
+                return jsonify({
+                    'success': False,
+                    'message': 'Journal entry not found'
+                }), 404
+        except Exception as db_err:
+            logger.error(f"Database error fetching entry {entry_id}: {str(db_err)}")
+            return jsonify({
+                'success': False,
+                'message': 'Database error'
+            }), 500
+            
+        # Check authorization
+        if entry.user_id != current_user.id:
+            logger.warning(f"Unauthorized access to entry {entry_id} by user {current_user.id}")
+            return jsonify({
+                'success': False,
+                'message': 'Unauthorized access'
+            }), 403
+            
+        # Save the reflection
+        try:
+            entry.user_reflection = reflection
+            entry.updated_at = datetime.utcnow()
+            db.session.commit()
+            logger.info(f"Successfully saved reflection for entry {entry_id}")
+        except Exception as update_err:
+            logger.error(f"Error saving reflection for entry {entry_id}: {str(update_err)}")
+            return jsonify({
+                'success': False,
+                'message': 'Error saving reflection'
+            }), 500
+            
+        # Generate followup message
+        followup_message = None
+        try:
+            # Get structured data
+            structured_data = get_structured_data_for_entry(entry)
+            
+            # If there's already a followup message in the structured data, use that
+            if structured_data and 'followup_text' in structured_data:
+                followup_message = structured_data['followup_text']
+            else:
+                # Otherwise, generate one with OpenAI
+                logger.debug(f"Generating followup message for entry {entry_id}")
+                try:
+                    analysis_result = analyze_journal_with_gpt(
+                        journal_text=f"{entry.content}\n\nUser Reflection: {reflection}",
+                        anxiety_level=entry.anxiety_level,
+                        user_id=current_user.id,
+                        mode="followup"  # Indicate this is a followup request
+                    )
+                    
+                    # Check if we got a valid response
+                    if analysis_result and "followup_text" in analysis_result:
+                        followup_message = analysis_result.get("followup_text")
+                        
+                        # Update structured data with the followup message
+                        if not structured_data:
+                            structured_data = {}
+                        structured_data['followup_text'] = followup_message
+                        
+                        # Save structured data
+                        entry.structured_data = json.dumps(structured_data)
+                        db.session.commit()
+                except Exception as gpt_err:
+                    logger.error(f"Error generating followup message: {str(gpt_err)}")
+                    followup_message = "Thank you for sharing your thoughts. Your reflection shows a willingness to explore your feelings, which is an important part of emotional growth. What further insights has this process given you about yourself or your situation?"
+        except Exception as followup_err:
+            logger.error(f"Error handling followup message: {str(followup_err)}")
+            # Don't fail the whole request if we can't generate a followup
+            
+        # Return success response
+        return jsonify({
+            'success': True,
+            'message': 'Reflection saved successfully',
+            'followup_message': followup_message
+        })
+            
+    except Exception as e:
+        logger.error(f"Unexpected error in save_conversation_reflection: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': 'An unexpected error occurred'
+        }), 500
+
 # API endpoint to save user reflections
 @journal_bp.route('/save-initial-reflection', methods=['POST'])
 @login_required
@@ -275,41 +402,6 @@ def save_initial_reflection():
         return jsonify({"error": "Server error occurred while saving your reflection"}), 500
 
 # API endpoint to check if a closing message is ready
-@journal_bp.route('/<int:entry_id>/save-conversation-reflection', methods=['POST'])
-@login_required
-def save_conversation_reflection(entry_id):
-    """
-    API endpoint to save a user reflection to a journal entry in the conversation UI.
-    This handles the reflection response to Mira's prompt.
-    """
-    # Get the journal entry
-    entry = db.session.get(JournalEntry, entry_id)
-    if not entry:
-        logger.error(f"Entry {entry_id} not found when trying to save user reflection")
-        return jsonify({"success": False, "message": "Journal entry not found"})
-
-    # Ensure the entry belongs to the current user
-    if entry.user_id != current_user.id:
-        logger.error(f"Unauthorized attempt to save reflection: User {current_user.id} tried to access entry {entry_id} belonging to user {entry.user_id}")
-        return jsonify({"success": False, "message": "Unauthorized"})
-
-    try:
-        # Get the reflection from the request data
-        data = request.get_json()
-        user_reflection = data.get('reflection', '')
-
-        if not user_reflection:
-            logger.warning(f"Empty reflection submitted for entry {entry_id}")
-            return jsonify({"success": False, "message": "Reflection cannot be empty"})
-
-        # Save the reflection to the entry
-        entry.user_reflection = user_reflection
-        db.session.commit()
-        logger.info(f"User reflection saved for entry {entry_id} by user {current_user.id}")
-
-        # Check if there's a followup message we can use
-        followup_message = None
-        structured_data = get_structured_data_for_entry(entry)
         
         if structured_data and 'followup_text' in structured_data:
             followup_message = structured_data.get('followup_text')

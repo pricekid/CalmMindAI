@@ -557,6 +557,8 @@
 {% endblock %}
 
 {% block scripts %}
+<!-- Include reflection handler for conversational UI -->
+<script src="{{ url_for('static', filename='js/reflection-handler.js') }}"></script>
 <script>
     // Reflection Area Functionality
     document.addEventListener('DOMContentLoaded', function() {
