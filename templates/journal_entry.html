@@ -179,6 +179,33 @@
 <div class="container mt-4">
   <div class="row">
     <div class="col-md-12">
+      <div class="card mb-4">
+        <div class="card-body">
+          <form method="POST" id="journal-form">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+              {{ form.title.label(class="form-label") }}
+              {{ form.title(class="form-control") }}
+            </div>
+            <div class="mb-3">
+              {{ form.content.label(class="form-label") }}
+              {{ form.content(class="form-control", rows="6") }}
+            </div>
+            <div class="mb-3">
+              {{ form.anxiety_level.label(class="form-label") }}
+              <input type="range" class="form-range" min="1" max="10" id="anxiety-slider" oninput="updateAnxietyLabel(this.value)">
+              <div class="text-center mt-2">
+                Level: <span id="anxiety-value" class="badge bg-primary">5</span>
+                {{ form.anxiety_level(id="anxiety-input", style="display: none;") }}
+              </div>
+            </div>
+            <div class="d-grid">
+              {{ form.submit(class="btn btn-primary", id="journal-submit-button") }}
+            </div>
+          </form>
+        </div>
+      </div>
+
       <ul class="nav nav-tabs" id="insightTabs" role="tablist">
         <li class="nav-item" role="presentation">
           <button class="nav-link active" id="listen-tab" data-bs-toggle="tab" data-bs-target="#listen" type="button" role="tab">
