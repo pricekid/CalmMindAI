@@ -905,16 +905,14 @@ def view_journal_entry(entry_id):
     if entry.user_id != current_user.id:
         abort(403)
 
-    # Create a form but don't use it for editing
-    form = JournalEntryForm()
-    form.title.data = entry.title
-    form.content.data = entry.content
-    form.anxiety_level.data = entry.anxiety_level
-    # Use undefer() to explicitly load the deferred user_reflection column when needed
+    # Get existing entry with deferred columns
     entry = JournalEntry.query.options(
         undefer(JournalEntry.user_reflection),
         undefer(JournalEntry.second_reflection)
     ).get_or_404(entry_id)
+
+    # Create form only if we need to edit (which we don't in view mode)
+    form = None
 
     # Ensure the entry belongs to the current user
     if entry.user_id != current_user.id:
