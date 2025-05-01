@@ -531,6 +531,7 @@ def get_recurring_patterns(user_id: int, min_entries: int = 3) -> List[Dict[str,
     """
     Identify recurring thought patterns from a user's journal entries.
     Only returns patterns if the user has at least min_entries entries.
+    Uses SQLAlchemy to query the database directly instead of JSON files.
 
     Args:
         user_id: The ID of the user
@@ -539,32 +540,78 @@ def get_recurring_patterns(user_id: int, min_entries: int = 3) -> List[Dict[str,
     Returns:
         A list of dictionaries with pattern and count
     """
-    entries = get_journal_entries_for_user(user_id)
-
-    # Only analyze if user has enough entries
-    if len(entries) < min_entries:
-        return []
-
-    # Extract all patterns from all entries
-    all_patterns = []
-    for entry in entries:
-        patterns = entry.get('cbt_patterns', [])
-        if patterns:
-            for pattern in patterns:
-                pattern_name = pattern.get('pattern')
-                if pattern_name and pattern_name not in ["Error analyzing entry", "API Quota Exceeded", "API Configuration Issue"]:
-                    all_patterns.append(pattern_name)
-
-    # Count occurrences of each pattern
-    pattern_counts = {}
-    for pattern in all_patterns:
-        pattern_counts[pattern] = pattern_counts.get(pattern, 0) + 1
-
-    # Sort patterns by count (descending) and return top patterns
-    sorted_patterns = [{"pattern": p, "count": c} for p, c in pattern_counts.items()]
-    sorted_patterns.sort(key=lambda x: x["count"], reverse=True)
-
-    return sorted_patterns[:3]  # Return top 3 patterns
+    # Import needed modules
+    from app import db
+    from models import JournalEntry, CBTRecommendation
+    from sqlalchemy import func, distinct
+    
+    try:
+        # First check if the user has enough entries
+        entry_count = JournalEntry.query.filter(JournalEntry.user_id == user_id).count()
+        
+        if entry_count < min_entries:
+            logger.debug(f"User {user_id} has only {entry_count} entries, less than minimum {min_entries}")
+            return []
+        
+        # Get patterns with counts using SQL aggregation
+        # This gets the count of each pattern and sorts by frequency
+        patterns_query = db.session.query(
+            CBTRecommendation.thought_pattern, 
+            func.count(CBTRecommendation.thought_pattern).label('count')
+        ).join(
+            JournalEntry, 
+            CBTRecommendation.journal_entry_id == JournalEntry.id
+        ).filter(
+            JournalEntry.user_id == user_id,
+            JournalEntry.is_analyzed == True,
+            ~CBTRecommendation.thought_pattern.in_(["Error analyzing entry", "API Quota Exceeded", "API Configuration Issue"])
+        ).group_by(
+            CBTRecommendation.thought_pattern
+        ).order_by(
+            func.count(CBTRecommendation.thought_pattern).desc()
+        )
+        
+        # Execute the query
+        patterns = patterns_query.all()
+        
+        # Format the results
+        result = [{'pattern': pattern, 'count': count} for pattern, count in patterns]
+        
+        # Return top 3 patterns
+        return result[:3]
+        
+    except Exception as e:
+        logger.error(f"Error getting recurring patterns for user {user_id}: {str(e)}")
+        
+        # Fall back to the JSON-based method if database query fails
+        logger.warning("Falling back to JSON-based pattern analysis")
+        
+        entries = get_journal_entries_for_user(user_id)
+    
+        # Only analyze if user has enough entries
+        if len(entries) < min_entries:
+            return []
+    
+        # Extract all patterns from all entries
+        all_patterns = []
+        for entry in entries:
+            patterns = entry.get('cbt_patterns', [])
+            if patterns:
+                for pattern in patterns:
+                    pattern_name = pattern.get('pattern')
+                    if pattern_name and pattern_name not in ["Error analyzing entry", "API Quota Exceeded", "API Configuration Issue"]:
+                        all_patterns.append(pattern_name)
+    
+        # Count occurrences of each pattern
+        pattern_counts = {}
+        for pattern in all_patterns:
+            pattern_counts[pattern] = pattern_counts.get(pattern, 0) + 1
+    
+        # Sort patterns by count (descending) and return top patterns
+        sorted_patterns = [{"pattern": p, "count": c} for p, c in pattern_counts.items()]
+        sorted_patterns.sort(key=lambda x: x["count"], reverse=True)
+    
+        return sorted_patterns[:3]  # Return top 3 patterns
 
 def classify_journal_sentiment(text: str, anxiety_level: Optional[int] = None) -> str:
     """

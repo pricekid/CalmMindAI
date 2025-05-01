@@ -483,6 +483,9 @@ def save_reflection():
 @login_required
 def journal_list():
     page = request.args.get('page', 1, type=int)
+    
+    # Log the current user for debugging
+    logger.info(f"User {current_user.id} accessing journal list page {page}")
 
     # Use load_only to specify only the columns we need, avoiding the deferred user_reflection column
     entries_query = JournalEntry.query\
@@ -498,6 +501,13 @@ def journal_list():
         ))\
         .filter(JournalEntry.user_id == current_user.id)\
         .order_by(desc(JournalEntry.created_at))
+    
+    # Log the query for debugging
+    logger.debug(f"Journal entries query: {str(entries_query)}")
+    
+    # Count total entries for this user
+    total_entries = entries_query.count()
+    logger.info(f"Found {total_entries} total entries for user {current_user.id}")
 
     entries = entries_query.paginate(page=page, per_page=10)
 
@@ -517,14 +527,16 @@ def journal_list():
         .filter(JournalEntry.user_id == current_user.id)\
         .order_by(desc(JournalEntry.created_at))\
         .limit(30).all()
+    
+    logger.info(f"Retrieved {len(all_entries)} entries for visualization")
 
     # Format the entry data for visualization
     journal_data = [{
         'id': entry.id,
         'title': entry.title,
         'anxiety_level': entry.anxiety_level,
-        'created_at': entry.created_at.isoformat(),
-        'content': entry.content[:100],  # Only send snippet for privacy/performance
+        'created_at': entry.created_at.isoformat() if entry.created_at else datetime.utcnow().isoformat(),
+        'content': entry.content[:100] if entry.content else "",  # Only send snippet for privacy/performance
         'is_analyzed': entry.is_analyzed
     } for entry in all_entries]
 
