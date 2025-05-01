@@ -895,6 +895,8 @@ def new_journal_entry():
 @journal_bp.route('/<int:entry_id>')
 @login_required
 def view_journal_entry(entry_id):
+    logger.info(f"User {current_user.id} viewing journal entry {entry_id}")
+    
     # Use undefer() to explicitly load the deferred columns
     entry = JournalEntry.query.options(
         undefer(JournalEntry.user_reflection),
@@ -903,20 +905,11 @@ def view_journal_entry(entry_id):
 
     # Ensure the entry belongs to the current user
     if entry.user_id != current_user.id:
+        logger.warning(f"Unauthorized access attempt: User {current_user.id} tried to access entry {entry_id} belonging to user {entry.user_id}")
         abort(403)
-
-    # Get existing entry with deferred columns
-    entry = JournalEntry.query.options(
-        undefer(JournalEntry.user_reflection),
-        undefer(JournalEntry.second_reflection)
-    ).get_or_404(entry_id)
 
     # Create form only if we need to edit (which we don't in view mode)
     form = None
-
-    # Ensure the entry belongs to the current user
-    if entry.user_id != current_user.id:
-        abort(403)
 
     # Check if we have an earned badge to display
     from flask import session
