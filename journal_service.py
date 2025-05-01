@@ -1134,6 +1134,9 @@ Omit any fields that are not relevant or not supported by the journal.
                         }
 
                 # Handle the new structured response format
+                # Check if we have the new narrative format with structured_response
+                has_narrative_format = 'narrative_response' in result and 'structured_response' in result
+                
                 # Check if we have the enhanced reflective pause format fields
                 has_enhanced_format = all(k in result for k in ['insight_text', 'reflection_prompt', 'followup_text']) and any(k in result for k in ['relationship_exploration', 'actionable_templates'])
 
@@ -1143,7 +1146,97 @@ Omit any fields that are not relevant or not supported by the journal.
                 # Check if we have all the expected fields for the previous format
                 has_structured_format = all(k in result for k in ['intro', 'reflection', 'distortions', 'strategies', 'reflection_prompt', 'outro'])
 
-                if has_enhanced_format:
+                if has_narrative_format:
+                    logger.debug("Found new narrative format with structured_response")
+                    
+                    # Get the narrative response for the main display
+                    narrative_response = result.get('narrative_response', '')
+                    
+                    # Get the structured response for interactive elements
+                    structured_response = result.get('structured_response', {})
+                    
+                    # Extract components from structured response
+                    insight_text = structured_response.get('insight_text', '')
+                    reflection_prompt = structured_response.get('reflection_prompt', '')
+                    followup_text = structured_response.get('followup_text', '')
+                    thought_patterns = structured_response.get('thought_patterns', [])
+                    strategies = structured_response.get('strategies', [])
+                    templates = structured_response.get('templates', [])
+                    relationship_questions = structured_response.get('relationship_questions', [])
+                    
+                    # Format thought patterns
+                    thought_patterns_text = ""
+                    if thought_patterns:
+                        thought_patterns_text = "\n\n## Thought Patterns\n"
+                        for pattern in thought_patterns:
+                            if isinstance(pattern, dict):
+                                pattern_name = pattern.get('pattern', '')
+                                description = pattern.get('description', '')
+                                thought_patterns_text += f"\n**{pattern_name}**\n{description}\n"
+                            elif isinstance(pattern, str):
+                                thought_patterns_text += f"\n**{pattern}**\n"
+                    
+                    # Format strategies
+                    strategies_text = ""
+                    if strategies:
+                        strategies_text = "\n\n## Suggested Strategies\n"
+                        for i, strategy in enumerate(strategies, 1):
+                            if isinstance(strategy, dict):
+                                title = strategy.get('title', f"Strategy {i}")
+                                description = strategy.get('description', '')
+                                action = strategy.get('action', '')
+                                strategies_text += f"\n**{i}. {title}**\n{description} {action}\n"
+                            elif isinstance(strategy, str):
+                                strategies_text += f"\n**{i}. Strategy {i}**\n{strategy}\n"
+                    
+                    # Format templates
+                    templates_text = ""
+                    if templates:
+                        templates_text = "\n\n## Ready-to-Use Templates\n"
+                        for i, template in enumerate(templates, 1):
+                            if isinstance(template, dict):
+                                situation = template.get('situation', f"Situation {i}")
+                                text = template.get('text', '')
+                                guidance = template.get('guidance', '')
+                                templates_text += f"\n**For {situation}:**\n\"{text}\"\n"
+                                if guidance:
+                                    templates_text += f"Then: {guidance}\n"
+                            elif isinstance(template, str):
+                                templates_text += f"\n**Template {i}:**\n\"{template}\"\n"
+                    
+                    # Format relationship questions
+                    relationship_text = ""
+                    if relationship_questions:
+                        relationship_text = "\n\n## Relationship Context Questions\n"
+                        for i, question in enumerate(relationship_questions, 1):
+                            if isinstance(question, dict):
+                                q_text = question.get('question', '')
+                                purpose = question.get('purpose', '')
+                                relationship_text += f"• **{q_text}**\n"
+                                if purpose:
+                                    relationship_text += f"  ({purpose})\n\n"
+                            elif isinstance(question, str):
+                                relationship_text += f"• **{question}**\n\n"
+                    
+                    # Use the narrative response as the main coach response
+                    coach_response = narrative_response
+                    
+                    # Make sure we have a sign-off
+                    if "Coach Mira" not in coach_response and "Mira" not in coach_response:
+                        coach_response += "\n\nWarmly,\nCoach Mira"
+                    
+                    # Store structured data for UI components
+                    result['structured_data'] = {
+                        'insight_text': insight_text,
+                        'reflection_prompt': reflection_prompt,
+                        'followup_text': followup_text,
+                        'thought_patterns': thought_patterns,
+                        'strategies': strategies,
+                        'templates': templates,
+                        'relationship_questions': relationship_questions
+                    }
+                    
+                elif has_enhanced_format:
                     logger.debug("Found enhanced format with relationship exploration and actionable templates")
 
                     # Get the three parts of the reflective pause format
