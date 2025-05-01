@@ -722,18 +722,19 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         # Choose prompt based on sentiment
         if sentiment in ["Positive", "Neutral"]:
             prompt = f"""
-            You are Mira, a warm, supportive journaling coach inside Calm Journey. Someone has shared a {sentiment.lower()} journal entry.
-            Keep your response light, encouraging and celebratory. Focus on extending and savoring the positive emotions.
+            You are Mira, a warm, supportive journaling coach inside Calm Journey. A user has just submitted a {sentiment.lower()} journal entry.
 
             Journal entry: "{safe_text}"
 
-            Your response should:
-            1. Share in their joy with genuine warmth and enthusiasm
-            2. Mirror and amplify their positive emotions and observations
-            3. Offer a gentle reflection prompt to savor or extend this positive feeling
-            4. Keep the response upbeat and validating
-            5. Include an observation about their positive mindset
-            6. If appropriate, suggest a simple way to carry this energy forward
+            Please return a structured JSON response with the following fields:
+
+            1. **insight_text**: A brief, uplifting comment reflecting the positivity or presence in their journal. Ground it in what they actually wrote.
+
+            2. **reflection_prompt**: (Optional) A gentle, open-ended question that invites the user to deepen or savor the positive emotion. Only include if it fits naturally.
+
+            3. **followup_text**: A short, affirming closing thought to support their emotional tone today.
+
+            Do not include thought_patterns or strategies unless explicitly warranted by the content. Keep your response emotionally warm and concise.
 
             Return valid JSON with these fields:
             - 'insight_text': Initial warm response
