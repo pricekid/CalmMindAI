@@ -1482,9 +1482,31 @@ Omit any fields that are not relevant or not supported by the journal.
                         "recommendation": "Continue journaling regularly to build self-awareness."
                     }]
 
-                # Add structured data if available
-                structured_data = result.get('structured_response', None)
-
+                # For new format, structured_data is the structured_response object
+                # For old format, it's the previously constructed structured_data
+                structured_data = result.get('structured_data', {})
+                
+                # If we have the new narrative format
+                if has_narrative_format:
+                    structured_data = result.get('structured_response', {})
+                    
+                    # Get the thought patterns from the structured response
+                    thought_patterns = structured_data.get('thought_patterns', [])
+                    if thought_patterns:
+                        # Format thought patterns consistently
+                        cbt_patterns = []
+                        for pattern in thought_patterns:
+                            if isinstance(pattern, dict):
+                                cbt_patterns.append({
+                                    "pattern": pattern.get('pattern', ''),
+                                    "description": pattern.get('description', '')
+                                })
+                            elif isinstance(pattern, str):
+                                cbt_patterns.append({
+                                    "pattern": pattern,
+                                    "description": ""
+                                })
+                
                 # Return formatted results with structured data for UI improvements
                 return {
                     "gpt_response": coach_response,
