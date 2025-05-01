@@ -4,18 +4,8 @@
   "current_streak": 1,
   "longest_streak": 2,
   "last_entry_date": "2025-05-01",
-  "total_xp": 840,
+  "total_xp": 870,
   "xp_history": [
-    {
-      "amount": 30,
-      "reason": "Completed onboarding process",
-      "date": "2025-04-18 16:34:39"
-    },
-    {
-      "amount": 5,
-      "reason": "Logged your mood",
-      "date": "2025-04-22 15:22:56"
-    },
     {
       "amount": 10,
       "reason": "Created a new journal entry",
@@ -255,6 +245,16 @@
       "amount": 20,
       "reason": "Received insights on journal entry",
       "date": "2025-05-01 12:22:30"
+    },
+    {
+      "amount": 10,
+      "reason": "Created a new journal entry",
+      "date": "2025-05-01 12:27:38"
+    },
+    {
+      "amount": 20,
+      "reason": "Received insights on journal entry",
+      "date": "2025-05-01 12:27:38"
     }
   ]
 }
