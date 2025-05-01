@@ -1101,7 +1101,19 @@ def view_journal_entry(entry_id):
     for json_entry in user_entries:
         if json_entry.get('id') == entry_id:
             structured_data = json_entry.get('structured_data')
+            logger.debug(f"Found structured_data in JSON for entry {entry_id}: {structured_data is not None}")
+            if structured_data:
+                logger.debug(f"structured_data keys: {list(structured_data.keys()) if isinstance(structured_data, dict) else 'not a dict'}")
             break
+    
+    # If no structured data found, create default empty structure
+    if not structured_data:
+        logger.debug(f"No structured_data found for entry {entry_id}, creating default structure")
+        structured_data = {
+            'insight_text': entry.initial_insight or '',
+            'reflection_prompt': "What thoughts come to mind as you reflect on this entry?",
+        }
+        logger.debug(f"Created default structured_data with keys: {list(structured_data.keys())}")
 
     return render_template('journal_entry.html', 
                           title=entry.title, 
