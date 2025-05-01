@@ -4186,5 +4186,25 @@
     ],
     "structured_data": null,
     "user_reflection": null
+  },
+  {
+    "id": 192,
+    "user_id": 1,
+    "title": "testing testing agains",
+    "content": "Today is a wonderful day",
+    "anxiety_level": 1,
+    "created_at": "2025-05-01T12:22:27.421027",
+    "updated_at": "2025-05-01T12:22:29.853887",
+    "is_analyzed": true,
+    "gpt_response": "It's wonderful to hear that you're having a great day! Moments like these are treasures that brighten our lives.\n\nWhat made today stand out as wonderful for you?\n\nKeep embracing these joyful moments. They add so much warmth to our journey!\n\n## Thought Patterns\n\n\n## Suggested Strategies\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- Journal Reflection\n- Disqualifying the Positive\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Journal Reflection",
+        "description": "Your journal entry has been saved.",
+        "recommendation": "Continue journaling regularly to build self-awareness."
+      }
+    ],
+    "structured_data": null,
+    "user_reflection": null
   }
 ]
