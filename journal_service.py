@@ -956,6 +956,27 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                     if len(content) > 20000:
                         logger.warning(f"Response content is very large ({len(content)} chars), trimming for parsing")
                         content = content[:20000]
+                        
+                    # Parse the initial JSON
+                    result = json.loads(content)
+                    
+                    # Clean the result by removing empty fields
+                    cleaned_result = {}
+                    for key, value in result.items():
+                        # Skip empty strings, empty lists, or None values
+                        if value and (isinstance(value, str) and value.strip() or 
+                                    isinstance(value, (list, dict)) and value):
+                            cleaned_result[key] = value
+                            
+                    # Only include thought_patterns if distortions are present
+                    if 'distortions' not in cleaned_result or not cleaned_result['distortions']:
+                        cleaned_result.pop('thought_patterns', None)
+                        
+                    # Only include strategies if there's emotional struggle
+                    if sentiment not in ["Concern", "Distress"]:
+                        cleaned_result.pop('strategies', None)
+                    
+                    result = cleaned_result
                     
                     # Sometimes the API returns content with non-JSON text before or after the JSON
                     # Try to extract just the JSON part using regex
