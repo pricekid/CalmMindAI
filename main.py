@@ -1,5 +1,7 @@
-from app import app, db
+from app import app, db, csrf
+import subprocess
 import logging
+import os
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
