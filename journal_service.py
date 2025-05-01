@@ -726,10 +726,12 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
 
             Journal entry: "{safe_text}"
 
-            Please return a simple JSON response with exactly these three fields:
-            - 'insight_text': A brief, warm comment celebrating what they've shared (1-2 sentences)
-            - 'reflection_prompt': A single open-ended question to explore their positive experience
-            - 'followup_text': A short, gentle closing thought that supports moving forward with this energy
+            This is a moment for affirmation and celebration, not analysis. Please return a simple JSON response with only:
+            - 'insight_text': A warm comment celebrating what they've shared (1-2 sentences, grounded in their specific experience)
+            - 'reflection_prompt': (Optional) One gentle question that helps extend their positive feeling
+            - 'followup_text': (Optional) A brief closing thought that supports their current emotional tone
+
+            DO NOT include any analysis of thought patterns, CBT strategies, or suggestions for improvement. Focus purely on affirming and extending their positive experience.
 
             Example for "today is a wonderful day":
             {{
@@ -738,7 +740,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
                 "followup_text": "May this positive energy carry you gently into whatever comes next."
             }}
 
-            Keep your response concise and warm, focusing only on these three elements.
+            Keep your response warm and celebratory, focusing only on these elements.
             """
         else:
             prompt = f"""
