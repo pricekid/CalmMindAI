@@ -874,7 +874,8 @@ def new_journal_entry():
             return redirect('/journal')
     
     return render_template('journal_entry.html', title='New Journal Entry', 
-                          form=form, legend='New Journal Entry')
+                          form=form, legend='New Journal Entry',
+                          structured_data={'insight_text': '', 'reflection_prompt': ''})
 
 # View journal entry
 @journal_bp.route('/<int:entry_id>')
