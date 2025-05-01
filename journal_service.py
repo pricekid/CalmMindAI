@@ -726,15 +726,21 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
 
             Journal entry: "{safe_text}"
 
-            This is a moment for affirmation and celebration, not analysis. Please return a simple JSON response with only:
-            - 'insight_text': A warm comment celebrating what they've shared (1-2 sentences, grounded in their specific experience)
-            - 'reflection_prompt': (Optional) One gentle question that helps extend their positive feeling
-            - 'followup_text': (Optional) A brief closing thought that supports their current emotional tone
+            This is a moment for celebration and affirmation. Return a simple JSON response with exactly:
+            - 'insight_text': One warm, specific comment that reflects their positive experience and its value
+            - 'reflection_prompt': A gentle question that helps carry this positive energy forward
+            - 'followup_text': A brief closing thought that supports savoring this moment
 
-            DO NOT include any analysis of thought patterns, CBT strategies, or suggestions for improvement. Focus purely on affirming and extending their positive experience.
-
-            Example for "today is a wonderful day":
+            Example for "Today is a fantastic day. Everything is going as planned!":
             {{
+                "insight_text": "It's so good to see everything going as planned — moments like this reflect your efforts and create space for ease and joy.",
+                "reflection_prompt": "What's one part of today you want to carry into tomorrow?",
+                "followup_text": "Let yourself fully receive the goodness of this moment. You deserve it."
+            }}
+
+            Keep your response encouraging and warm, focusing on their specific experience.
+            
+            Journal entry: "{safe_text}"
                 "insight_text": "It's so good to hear that today feels wonderful — noticing and naming joy is a powerful act.",
                 "reflection_prompt": "What made today feel wonderful for you?", 
                 "followup_text": "May this positive energy carry you gently into whatever comes next."
