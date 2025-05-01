@@ -2,12 +2,9 @@
 Notification service - All notifications permanently disabled
 """
 import os
-import smtplib
 import logging
 import json
 import pytz
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 
 # Set up logging
@@ -17,38 +14,8 @@ logger = logging.getLogger(__name__)
 
 # Function to check if notifications are blocked
 def check_notifications_blocked():
-    '''Check if notifications are blocked by the existence of a block file'''
-    # Check block file
-    block_file = os.path.join('data', 'notifications_blocked')
-    if os.path.exists(block_file):
-        logger.info("Notifications blocked by block file")
-        return True
-
-    # Check time - only allow between 5:45am and 6:15am Caribbean time
-    caribbean_tz = pytz.timezone('America/Port_of_Spain')
-    current_time = datetime.now(caribbean_tz)
-
-    # Create absolute timestamps for today's window
-    today = current_time.date()
-    allowed_start = caribbean_tz.localize(datetime.combine(today, datetime.min.time().replace(hour=5, minute=45)))
-    allowed_end = caribbean_tz.localize(datetime.combine(today, datetime.min.time().replace(hour=6, minute=15)))
-
-    # Force block outside window
-    if not (allowed_start <= current_time <= allowed_end):
-        logger.warning(f"Notifications blocked - current time {current_time} is outside allowed window")
-        logger.warning(f"Window: {allowed_start} to {allowed_end}")
-
-        # Create block file
-        try:
-            with open(block_file, 'w') as f:
-                f.write(str(datetime.now(pytz.UTC)))
-            logger.info("Created notification block file")
-        except Exception as e:
-            logger.error(f"Error creating block file: {e}")
-
-        return True
-
-    return False
+    """Check if notifications are blocked"""
+    return True
 
 def ensure_data_directory():
     """Ensure the data directory exists"""
@@ -103,7 +70,7 @@ def send_email(*args, **kwargs):
 
 def send_test_email(*args, **kwargs):
     """Test email function is disabled"""
-    logger.info("Test email notifications are permanently disabled")
+    logger.info("Test email notifications are permanently disabled") 
     return {"success": False, "error": "Notifications are permanently disabled"}
 
 def send_login_link(*args, **kwargs):
@@ -114,11 +81,6 @@ def send_login_link(*args, **kwargs):
 def send_daily_reminder(*args, **kwargs):
     """Daily reminders are disabled"""
     logger.info("Daily reminder notifications are permanently disabled")
-    return {"success": False, "error": "Notifications are permanently disabled"}
-
-def send_daily_reminder_direct(*args, **kwargs):
-    """Direct daily reminders are disabled"""
-    logger.info("Direct daily reminders are permanently disabled")
     return {"success": False, "error": "Notifications are permanently disabled"}
 
 def send_weekly_summary(user, stats):
