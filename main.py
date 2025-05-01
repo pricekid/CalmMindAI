@@ -1,4 +1,8 @@
-from app import app, csrf
+from app import app, db
+
+# Ensure database tables exist
+with app.app_context():
+    db.create_all(), csrf
 import subprocess
 import logging
 import os
