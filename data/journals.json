@@ -4253,25 +4253,5 @@
     ],
     "structured_data": null,
     "user_reflection": null
-  },
-  {
-    "id": 195,
-    "user_id": 1,
-    "title": "testing",
-    "content": "its a fantastic day. everything is going as planned",
-    "anxiety_level": 1,
-    "created_at": "2025-05-01T12:55:31.000031",
-    "updated_at": "2025-05-01T12:55:48.148003",
-    "is_analyzed": true,
-    "gpt_response": "<div class='validation-section mb-4'>Thank you for sharing your journal entry. I've read through your thoughts.</div>\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- Disqualifying the Positive\n- Filtering\n\n\nWarmly,\nCoach Mira",
-    "cbt_patterns": [
-      {
-        "pattern": "Processing Limitation",
-        "description": "We encountered a technical issue analyzing your entry.",
-        "recommendation": "Your journal has been saved. The insights will be available soon."
-      }
-    ],
-    "structured_data": null,
-    "user_reflection": null
   }
 ]
