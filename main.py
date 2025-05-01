@@ -28,11 +28,5 @@ if __name__ == "__main__":
     # Log key application routes for debugging
     logger.info("Emergency routes: %s", [rule.rule for rule in app.url_map.iter_rules() if 'emergency' in rule.rule])
 
-    import argparse
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--port', type=int, default=5000)
-    args = parser.parse_args()
-
     # Start the web application
-    app.run(host="0.0.0.0", port=args.port, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
