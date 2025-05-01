@@ -1,0 +1,96 @@
+/* Conversation UI Styles */
+
+/* Chat message containers */
+.chat-message {
+    margin-bottom: 1.5rem;
+    animation: messageAppear 0.3s ease-out;
+}
+
+@keyframes messageAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Avatar styling */
+.chat-avatar-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Chat bubble styling */
+.chat-bubble {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    padding: 12px 16px;
+    position: relative;
+    flex: 1;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* User message styling */
+.user-bubble {
+    background-color: #e9f5ff;
+    border: 1px solid #d0e8ff;
+}
+
+/* Mira message styling */
+.mira-bubble {
+    background-color: #f0f7f4;
+    border: 1px solid #d8eae1;
+}
+
+/* Chat content formatting */
+.chat-content {
+    word-break: break-word;
+}
+
+.chat-info {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+/* Reflection prompt styling */
+.reflection-prompt-box {
+    background-color: #f8f9fa;
+    border-left: 3px solid #17a2b8;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-style: italic;
+    margin: 1rem 0;
+}
+
+/* Dark theme adjustments */
+[data-bs-theme="dark"] .user-bubble {
+    background-color: #1e3a5f;
+    border: 1px solid #2a5288;
+    color: #e9ecef;
+}
+
+[data-bs-theme="dark"] .mira-bubble {
+    background-color: #1e3c33;
+    border: 1px solid #2a584a;
+    color: #e9ecef;
+}
+
+[data-bs-theme="dark"] .reflection-prompt-box {
+    background-color: #2a2e35;
+    border-left: 3px solid #17a2b8;
+    color: #e9ecef;
+}
+
+/* Chat actions styling */
+.chat-actions {
+    margin-top: 0.75rem;
+}

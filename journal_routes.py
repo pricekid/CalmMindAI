@@ -25,6 +25,38 @@ logger.setLevel(logging.DEBUG)
 # Create blueprint
 journal_bp = Blueprint('journal_blueprint', __name__, url_prefix='/journal')
 
+def get_structured_data_for_entry(entry):
+    """
+    Helper function to get structured data for a journal entry.
+    Tries to fetch from JSON file first, then creates default if not found.
+    
+    Args:
+        entry: JournalEntry model instance
+        
+    Returns:
+        Dictionary of structured data
+    """
+    # Try to get from saved journal entries first
+    user_entries = get_journal_entries_for_user(entry.user_id)
+    structured_data = None
+    
+    for json_entry in user_entries:
+        if json_entry.get('id') == entry.id:
+            structured_data = json_entry.get('structured_data')
+            if structured_data:
+                logger.debug(f"Found structured_data in JSON for entry {entry.id}")
+                break
+    
+    # If no structured data found, create default structure
+    if not structured_data:
+        logger.debug(f"No structured_data found for entry {entry.id}, creating default structure")
+        structured_data = {
+            'insight_text': entry.initial_insight or '',
+            'reflection_prompt': "What thoughts come to mind as you reflect on this entry?",
+        }
+    
+    return structured_data
+
 def convert_markdown_to_html(text):
     """
     Convert markdown formatting to HTML for better display.
@@ -243,6 +275,55 @@ def save_initial_reflection():
         return jsonify({"error": "Server error occurred while saving your reflection"}), 500
 
 # API endpoint to check if a closing message is ready
+@journal_bp.route('/<int:entry_id>/save-conversation-reflection', methods=['POST'])
+@login_required
+def save_conversation_reflection(entry_id):
+    """
+    API endpoint to save a user reflection to a journal entry in the conversation UI.
+    This handles the reflection response to Mira's prompt.
+    """
+    # Get the journal entry
+    entry = db.session.get(JournalEntry, entry_id)
+    if not entry:
+        logger.error(f"Entry {entry_id} not found when trying to save user reflection")
+        return jsonify({"success": False, "message": "Journal entry not found"})
+
+    # Ensure the entry belongs to the current user
+    if entry.user_id != current_user.id:
+        logger.error(f"Unauthorized attempt to save reflection: User {current_user.id} tried to access entry {entry_id} belonging to user {entry.user_id}")
+        return jsonify({"success": False, "message": "Unauthorized"})
+
+    try:
+        # Get the reflection from the request data
+        data = request.get_json()
+        user_reflection = data.get('reflection', '')
+
+        if not user_reflection:
+            logger.warning(f"Empty reflection submitted for entry {entry_id}")
+            return jsonify({"success": False, "message": "Reflection cannot be empty"})
+
+        # Save the reflection to the entry
+        entry.user_reflection = user_reflection
+        db.session.commit()
+        logger.info(f"User reflection saved for entry {entry_id} by user {current_user.id}")
+
+        # Check if there's a followup message we can use
+        followup_message = None
+        structured_data = get_structured_data_for_entry(entry)
+        
+        if structured_data and 'followup_text' in structured_data:
+            followup_message = structured_data.get('followup_text')
+            logger.debug(f"Using existing followup_text as followup message")
+        
+        return jsonify({
+            "success": True, 
+            "message": "Reflection saved successfully",
+            "followup_message": followup_message
+        })
+    except Exception as e:
+        logger.error(f"Error saving user reflection: {str(e)}")
+        return jsonify({"success": False, "message": f"Error: {str(e)}"})
+
 @journal_bp.route('/check-closing/<int:entry_id>', methods=['GET'])
 @login_required
 def check_closing_message(entry_id):
