@@ -55,16 +55,31 @@ def get_openai_api_key():
     # Log key source for debugging (sanitized)
     if api_key:
         logger.debug(f"Using OpenAI API key from environment variable (length: {len(api_key)})")
-    else:
-        # If not in environment, try to get from admin config
+        
+        # Validate API key format
+        if '@' in api_key and '.' in api_key:
+            logger.warning(f"Environment OPENAI_API_KEY appears to be an email address ({api_key}), not a valid API key")
+            api_key = None
+        elif not (api_key.startswith('sk-') or api_key.startswith('org-')):
+            logger.warning(f"Environment OPENAI_API_KEY has invalid format: starts with '{api_key[:10]}...'")
+            # Try using a placeholder to test the validation
+            api_key = None
+    
+    # If not in environment or invalid format, try to get from admin config
+    if not api_key:
         config = get_config()
         admin_key = config.get("openai_api_key")
         if admin_key:
             logger.debug(f"Using OpenAI API key from admin config (length: {len(admin_key)})")
+            # Validate admin API key format
+            if '@' in admin_key or not admin_key.startswith('sk-'):
+                logger.warning(f"Admin config API key has invalid format")
+                admin_key = None
             api_key = admin_key
-        else:
-            logger.warning("No OpenAI API key found in environment or admin config")
-
+        
+        if not api_key:
+            logger.warning("No valid OpenAI API key found in environment or admin config")
+            
     return api_key
 
 def get_openai_model():
@@ -636,7 +651,16 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
 
         # Log the configuration details (sanitized)
         if api_key:
-            logger.debug(f"API key found (length: {len(api_key)}, starts with: {api_key[:3]}...)")
+            # Check if the API key is a valid format (starts with sk-)
+            if api_key.startswith('sk-'):
+                logger.debug(f"API key found with valid format (length: {len(api_key)}, starts with: {api_key[:5]}...)")
+            else:
+                logger.warning(f"API key found but has unexpected format: {api_key[:10]}... (length: {len(api_key)})")
+                # Try to fix the key if it looks like an email
+                if '@' in api_key and '.' in api_key:
+                    logger.warning("API key appears to be an email address instead of an API key")
+                    # This will trigger the proper error handling below
+                    api_key = None
         else:
             logger.debug("No API key found in environment or admin settings")
 
