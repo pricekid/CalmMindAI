@@ -224,23 +224,132 @@
         <div class="tab-pane fade show active" id="listen" role="tabpanel">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Mira's Insights</h4>
-              <p class="card-text insight-text">{{ structured_data.insight_text | safe }}</p>
-
-              <div class="reflection-section mt-4">
-                <h5>Reflection Prompt</h5>
-                <p class="reflection-prompt">{{ structured_data.reflection_prompt | safe }}</p>
-
-                <button class="btn btn-primary mt-3" id="server-tts-button">
-                  <i class="bi bi-cloud"></i> Listen to Mira's Response
-                </button>
-                <audio id="serverAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
-
+              <h4 class="card-title">Conversation with Mira</h4>
+              
+              <!-- User's Journal Entry (Speech Bubble) -->
+              <div class="chat-message user-message mb-4">
+                <div class="d-flex">
+                  <div class="chat-avatar me-3">
+                    <div class="chat-avatar-circle bg-primary text-white">
+                      <span>{{ current_user.username[0].upper() }}</span>
+                    </div>
+                  </div>
+                  <div class="chat-bubble user-bubble">
+                    <div class="chat-content">
+                      <h6 class="mb-1">{{ entry.title }}</h6>
+                      <p class="mb-0">{{ entry.content | nl2br }}</p>
+                      <div class="chat-info small text-muted mt-1">
+                        <span>{{ entry.created_at.strftime('%b %d, %Y at %I:%M %p') }}</span>
+                        <span class="ms-2">Anxiety Level: {{ entry.anxiety_level }}/10</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-
-              <div class="signature mt-4">
-                <p>Warmly, Coach Mira</p>
+              
+              <!-- Mira's Response (Speech Bubble) -->
+              <div class="chat-message mira-message mb-4">
+                <div class="d-flex">
+                  <div class="chat-avatar me-3">
+                    <div class="chat-avatar-circle bg-info text-white">
+                      <span>M</span>
+                    </div>
+                  </div>
+                  <div class="chat-bubble mira-bubble">
+                    <div class="chat-content">
+                      {% if structured_data.narrative_response %}
+                        <p class="mb-3">{{ structured_data.narrative_response | safe }}</p>
+                      {% else %}
+                        <p class="mb-3">{{ structured_data.insight_text | safe }}</p>
+                        
+                        <div class="reflection-prompt-box mt-3 mb-3">
+                          <p class="reflection-prompt mb-0">{{ structured_data.reflection_prompt | safe }}</p>
+                        </div>
+                      {% endif %}
+                      
+                      <div class="chat-actions mt-3">
+                        <button class="btn btn-sm btn-primary" id="server-tts-button">
+                          <i class="bi bi-volume-up"></i> Listen
+                        </button>
+                        <button class="btn btn-sm btn-outline-primary ms-2 reflection-btn">
+                          <i class="bi bi-pencil"></i> Reflect
+                        </button>
+                      </div>
+                      
+                      <audio id="serverAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
+                      
+                      <div class="chat-info text-end small text-muted mt-2">
+                        <span>Coach Mira</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+              
+              <!-- User's Reflection Area (Initially Hidden) -->
+              <div class="user-reflection-area" style="display: none;">
+                <div class="chat-message user-reflection-message mb-4">
+                  <div class="d-flex">
+                    <div class="chat-avatar me-3">
+                      <div class="chat-avatar-circle bg-primary text-white">
+                        <span>{{ current_user.username[0].upper() }}</span>
+                      </div>
+                    </div>
+                    <div class="chat-bubble user-bubble">
+                      <div class="chat-content">
+                        <textarea class="form-control" id="user-reflection-input" rows="3" 
+                                 placeholder="Share your thoughts on Mira's reflection prompt..."></textarea>
+                        <div class="d-flex justify-content-end mt-2">
+                          <button class="btn btn-sm btn-outline-secondary me-2 cancel-reflection-btn">Cancel</button>
+                          <button class="btn btn-sm btn-primary save-reflection-btn" data-entry-id="{{ entry.id }}">Save Reflection</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Display Saved User Reflection If Available -->
+              {% if entry.user_reflection %}
+              <div class="chat-message user-message mb-4">
+                <div class="d-flex">
+                  <div class="chat-avatar me-3">
+                    <div class="chat-avatar-circle bg-primary text-white">
+                      <span>{{ current_user.username[0].upper() }}</span>
+                    </div>
+                  </div>
+                  <div class="chat-bubble user-bubble">
+                    <div class="chat-content">
+                      <p class="mb-0">{{ entry.user_reflection | nl2br }}</p>
+                      <div class="chat-info small text-muted mt-1">
+                        <span>Your reflection</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+              
+              <!-- Mira's Follow-up Response If Available -->
+              {% if structured_data.followup_text %}
+              <div class="chat-message mira-message mb-4">
+                <div class="d-flex">
+                  <div class="chat-avatar me-3">
+                    <div class="chat-avatar-circle bg-info text-white">
+                      <span>M</span>
+                    </div>
+                  </div>
+                  <div class="chat-bubble mira-bubble">
+                    <div class="chat-content">
+                      <p class="mb-0">{{ structured_data.followup_text | safe }}</p>
+                      <div class="chat-info text-end small text-muted mt-2">
+                        <span>Coach Mira</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
             </div>
           </div>
         </div>
