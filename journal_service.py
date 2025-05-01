@@ -553,7 +553,7 @@ def get_recurring_patterns(user_id: int, min_entries: int = 3) -> List[Dict[str,
 
 def classify_journal_sentiment(text: str, anxiety_level: Optional[int] = None) -> str:
     """
-    Classify journal sentiment as Positive, Neutral, Concern, or Distress
+    Classify journal sentiment as Joyful, Positive, Neutral, Concern, or Distress
     based on content and anxiety level.
     """
     # Check anxiety level first if provided
@@ -561,12 +561,19 @@ def classify_journal_sentiment(text: str, anxiety_level: Optional[int] = None) -
         return "Distress"
     elif anxiety_level and anxiety_level >= 5:
         return "Concern"
+    elif anxiety_level and anxiety_level <= 2:
+        return "Joyful"
 
     # Analyze text content
-    distress_indicators = [
-        "anxious", "worried", "scared", "depressed", "hopeless",
-        "overwhelmed", "stressed", "panic", "afraid", "terrified",
-        "lonely", "miserable", "hate", "angry", "frustrated"
+    joyful_indicators = [
+        "wonderful", "amazing", "blessed", "fantastic", "thrilled",
+        "delighted", "overjoyed", "ecstatic", "blissful", "incredible"
+    ]
+    
+    positive_indicators = [
+        "happy", "grateful", "thankful", "excited", "proud",
+        "peaceful", "calm", "good", "love", "enjoy",
+        "appreciate", "hopeful", "pleased", "content"
     ]
 
     concern_indicators = [
@@ -574,10 +581,10 @@ def classify_journal_sentiment(text: str, anxiety_level: Optional[int] = None) -
         "tired", "annoyed", "difficult", "hard", "struggle"
     ]
 
-    positive_indicators = [
-        "happy", "grateful", "thankful", "excited", "proud",
-        "peaceful", "calm", "good", "wonderful", "blessed",
-        "love", "enjoy", "appreciate", "hopeful", "pleased"
+    distress_indicators = [
+        "anxious", "worried", "scared", "depressed", "hopeless",
+        "overwhelmed", "stressed", "panic", "afraid", "terrified",
+        "lonely", "miserable", "hate", "angry", "frustrated"
     ]
 
     text_lower = text.lower()
@@ -716,17 +723,17 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         if sentiment in ["Positive", "Neutral"]:
             prompt = f"""
             You are Mira, a warm, supportive journaling coach inside Calm Journey. Someone has shared a {sentiment.lower()} journal entry.
-            Keep your response light and encouraging. Do not analyze for problems or suggest therapy unless explicitly mentioned.
+            Keep your response light, encouraging and celebratory. Focus on extending and savoring the positive emotions.
 
             Journal entry: "{safe_text}"
 
             Your response should:
-            1. Acknowledge their sharing and mirror their positive/neutral tone
-            2. Reinforce any positive observations or insights they've made
-            3. Offer a simple reflection prompt that naturally extends their thoughts
-            4. Keep the response brief and upbeat
-            5. Include at least one thought pattern that recognizes their positive mindset
-            6. Suggest one simple strategy to build on this positive moment
+            1. Share in their joy with genuine warmth and enthusiasm
+            2. Mirror and amplify their positive emotions and observations
+            3. Offer a gentle reflection prompt to savor or extend this positive feeling
+            4. Keep the response upbeat and validating
+            5. Include an observation about their positive mindset
+            6. If appropriate, suggest a simple way to carry this energy forward
 
             Return valid JSON with these fields:
             - 'insight_text': Initial warm response
