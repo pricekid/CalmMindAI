@@ -1,14 +1,13 @@
 from app import app, db
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Ensure database tables exist
 with app.app_context():
-    db.create_all(), csrf
-import subprocess
-import logging
-import os
-from start_scheduler import start_scheduler, find_scheduler_process
-# Don't import blueprints here as they're already imported and registered in app.py
-import startup  # Import the startup script to ensure scheduler is running
+    db.create_all()
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
