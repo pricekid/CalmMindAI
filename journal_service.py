@@ -564,9 +564,18 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
     Returns:
         Dictionary with response and identified patterns
     """
-    # Handle None or empty values
-    safe_text = journal_text if journal_text else "No journal content provided"
+    # Handle None or empty values with more robust validation
+    if not journal_text or journal_text.strip() == "":
+        logger.error("Empty or invalid journal text provided")
+        return {
+            "gpt_response": "I wasn't able to read your journal entry. Please try again.",
+            "cbt_patterns": [],
+            "structured_data": None
+        }
+    safe_text = journal_text.strip()
     safe_anxiety = anxiety_level if anxiety_level is not None else 5  # Default to mid-level anxiety
+    
+    logger.debug(f"Analyzing journal text (first 100 chars): {safe_text[:100]}...")
     try:
         # Get API key and model settings with detailed logging
         api_key = get_openai_api_key()
