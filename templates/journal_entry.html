@@ -115,953 +115,184 @@
     color: #212529 !important;
     background-color: #f8f9fa !important;
 }
+
+/* Tab styles */
+.nav-tabs .nav-link.active, .nav-tabs .nav-link:focus {
+    background-color: #007bff;
+    color: white;
+    border-bottom: 2px solid #007bff;
+}
+
+.nav-tabs .nav-link {
+    border: 1px solid #ced4da;
+    border-bottom: 1px solid transparent;
+    border-radius: 0.25rem 0.25rem 0 0;
+}
+
+.tab-content {
+  border: 1px solid #dee2e6;
+  border-top: 0;
+  border-radius: 0 0 0.25rem 0.25rem;
+}
+
+.template-card {
+  border: 1px solid #dee2e6;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #f8f9fa;
+  margin-bottom: 10px;
+}
+
+.cbt-section {
+  margin-bottom: 20px;
+  border: 1px solid #dee2e6;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.cbt-section h5 {
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.insight-text {
+    font-style: italic;
+    color: #495057;
+}
+
+.reflection-prompt {
+    font-style: italic;
+    color: #495057;
+}
+
+.signature {
+    text-align: right;
+    font-style: italic;
+    color: #6c757d;
+}
+
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Include badge earned modal if a badge was earned -->
-{% include 'components/badge_earned.html' %}
 <div class="container mt-4">
-    <div class="row">
-        <div class="col-lg-8 mx-auto">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h2 class="mb-0">
-                        {% if view_only %}
-                        Journal Entry: {{ entry.title }}
-                        {% else %}
-                        {% if entry %}Edit{% else %}New{% endif %} Journal Entry
-                        {% endif %}
-                    </h2>
-                </div>
-                <div class="card-body">
-                    {% if view_only and entry %}
-                    <!-- View only mode -->
-                    <div class="mb-3">
-                        <h5 class="form-label">Date</h5>
-                        <p>{{ entry.created_at.strftime('%B %d, %Y at %I:%M %p') }}</p>
-                    </div>
-                    <div class="mb-3">
-                        <h5 class="form-label">Anxiety Level</h5>
-                        <p>
-                            {% if entry.anxiety_level <= 3 %}
-                            <span class="badge bg-success">{{ entry.anxiety_level }}</span>
-                            {% elif entry.anxiety_level <= 6 %}
-                            <span class="badge bg-warning text-dark">{{ entry.anxiety_level }}</span>
-                            {% else %}
-                            <span class="badge bg-danger">{{ entry.anxiety_level }}</span>
-                            {% endif %}
-                            /10
-                        </p>
-                    </div>
-                    <div class="mb-4">
-                        <h5 class="form-label">Journal Content</h5>
-                        <div class="p-3 bg-light rounded text-dark">
-                            {{ entry.content | nl2br | safe }}
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <a href="{{ url_for('journal_blueprint.update_journal_entry', entry_id=entry.id) }}" class="btn btn-primary">
-                            <i class="bi bi-pencil"></i> Edit Entry
-                        </a>
-                        <a href="{{ url_for('journal_blueprint.journal_list') }}" class="btn btn-outline-secondary ms-2">
-                            <i class="bi bi-arrow-left"></i> Back to Journal
-                        </a>
-                    </div>
-                    {% else %}
-                    <!-- Edit/New mode -->
-                    <form id="journal-form" method="POST">
-                        {{ form.hidden_tag() }}
-                        <div class="form-group mb-3">
-                            {{ form.title.label(class="form-label") }}
-                            {% if form.title.errors %}
-                                {{ form.title(class="form-control is-invalid") }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.title.errors %}
-                                        {{ error }}
-                                    {% endfor %}
-                                </div>
-                            {% else %}
-                                {{ form.title(class="form-control") }}
-                            {% endif %}
-                        </div>
-                        <div class="form-group mb-3">
-                            {{ form.content.label(class="form-label") }}
-                            <div class="voice-input-container">
-                                {% if form.content.errors %}
-                                    {{ form.content(class="form-control is-invalid", rows=8, id="journal-content") }}
-                                    <div class="invalid-feedback">
-                                        {% for error in form.content.errors %}
-                                            {{ error }}
-                                        {% endfor %}
-                                    </div>
-                                {% else %}
-                                    {{ form.content(class="form-control", rows=8, id="journal-content") }}
-                                {% endif %}
-                                
-                                <div class="voice-input-controls">
-                                    <button type="button" id="voice-input-button" class="btn btn-outline-primary" 
-                                            title="Start Voice Input (Click again to stop)">
-                                        <i class="bi bi-mic"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <div id="voice-input-status" class="voice-status mt-2 d-none">
-                                <div class="d-flex align-items-center">
-                                    <div class="spinner-grow spinner-grow-sm text-primary me-2" role="status">
-                                        <span class="visually-hidden">Listening...</span>
-                                    </div>
-                                    <span id="voice-status-text">Listening... Click mic button again to stop</span>
-                                </div>
-                            </div>
-                            
-                            <div class="form-text mt-2">
-                                Express yourself freely. This journal is private to you, and the AI 
-                                analysis is only used to help you identify patterns and suggest coping strategies.
-                                <span class="text-primary ms-2"><i class="bi bi-info-circle"></i> Voice input is available!</span>
-                            </div>
-                        </div>
-                        <div class="form-group mb-4">
-                            {{ form.anxiety_level.label(class="form-label") }}
-                            <div class="range-container">
-                                <input type="range" class="form-range" id="anxiety-slider" min="1" max="10" value="{{ form.anxiety_level.data or 5 }}" oninput="updateAnxietyLabel(this.value)">
-                                <div class="range-labels d-flex justify-content-between">
-                                    <span>Low</span>
-                                    <span>Medium</span>
-                                    <span>High</span>
-                                </div>
-                            </div>
-                            <div class="text-center mb-2">
-                                <span id="anxiety-value" class="badge bg-primary">{{ form.anxiety_level.data or 5 }}</span>/10
-                            </div>
-                            {{ form.anxiety_level(class="d-none", id="anxiety-input") }}
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" id="journal-submit-button" class="btn btn-primary">
-                                <i class="bi bi-journal-check"></i> Save Entry
-                            </button>
-                            <a href="{{ url_for('journal_blueprint.journal_list') }}" class="btn btn-outline-secondary ms-2">
-                                <i class="bi bi-x-circle"></i> Cancel
-                            </a>
-                        </div>
-                    </form>
-                    {% endif %}
-                </div>
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="nav nav-tabs" id="insightTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="listen-tab" data-bs-toggle="tab" data-bs-target="#listen" type="button" role="tab">
+            Mira's Insights (Listen)
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="interact-tab" data-bs-toggle="tab" data-bs-target="#interact" type="button" role="tab">
+            CBT Tools & Prompts (Interact)
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content mt-3" id="insightTabContent">
+        <!-- Listen Tab -->
+        <div class="tab-pane fade show active" id="listen" role="tabpanel">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Mira's Insights</h4>
+              <p class="card-text insight-text">{{ structured_data.insight_text | safe }}</p>
+
+              <div class="reflection-section mt-4">
+                <h5>Reflection Prompt</h5>
+                <p class="reflection-prompt">{{ structured_data.reflection_prompt | safe }}</p>
+
+                <button class="btn btn-primary mt-3" id="server-tts-button">
+                  <i class="bi bi-cloud"></i> Listen to Mira's Response
+                </button>
+                <audio id="serverAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
+
+              </div>
+
+              <div class="signature mt-4">
+                <p>Warmly, Coach Mira</p>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-</div>
 
-{% if entry and entry.is_analyzed %}
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-lg-8 mx-auto">
-            <!-- Initial Analysis Card -->
-            <div class="card shadow mb-4" id="initial-insight-card">
-                <div class="card-header bg-primary text-white">
-                    <h3 class="mb-0">Initial Insight</h3>
-                </div>
-                <div class="card-body">
-                    <div class="initial-insight">
-                        {% if entry.initial_insight %}
-                            {% if '<div class=' not in entry.initial_insight %}
-                                <!-- First clean markdown symbols that might have remained -->
-                                {% set cleaned_insight = entry.initial_insight.replace('#', '').replace('*', '').replace('- ', '').replace('##', '') %}
-                                
-                                <!-- Format unstructured content for better readability -->
-                                {% set paragraphs = cleaned_insight.split('\n\n') %}
-                                
-                                <!-- First paragraph is usually validation -->
-                                {% if paragraphs|length > 0 %}
-                                    <div class="validation-section mb-4">{{ paragraphs[0] | safe }}</div>
-                                {% endif %}
-                                
-                                <!-- Process remaining paragraphs -->
-                                {% for paragraph in paragraphs[1:] %}
-                                    <!-- Remove any leading dash/bullet characters -->
-                                    {% set clean_paragraph = paragraph.strip() %}
-                                    {% if clean_paragraph.startswith('-') %}
-                                        {% set clean_paragraph = clean_paragraph[1:].strip() %}
-                                    {% endif %}
-                                    
-                                    {% if 'pattern' in clean_paragraph.lower() or 'distortion' in clean_paragraph.lower() %}
-                                        <div class="thought-patterns-section mb-4">
-                                            <h5 class="mb-3">Thought Patterns</h5>
-                                            {{ clean_paragraph | safe }}
-                                        </div>
-                                    {% elif 'strateg' in clean_paragraph.lower() or 'technique' in clean_paragraph.lower() or 'exercise' in clean_paragraph.lower() %}
-                                        <div class="strategies-section mb-4">
-                                            <h5 class="mb-3">Suggested Strategies</h5>
-                                            {{ clean_paragraph | safe }}
-                                        </div>
-                                    {% elif 'reflect' in clean_paragraph.lower() or 'consider' in clean_paragraph.lower() or 'ask yourself' in clean_paragraph.lower() %}
-                                        <div class="reflection-section mb-4">
-                                            <h5 class="mb-3">Reflection Prompts</h5>
-                                            {{ clean_paragraph | safe }}
-                                        </div>
-                                    {% elif loop.last and 'warmly' in clean_paragraph.lower() %}
-                                        <div class="closing-section mt-4">{{ clean_paragraph | safe }}</div>
-                                    {% else %}
-                                        <div class="paragraph mb-3">{{ clean_paragraph | safe }}</div>
-                                    {% endif %}
-                                {% endfor %}
-                            {% else %}
-                                <!-- Content already has HTML formatting -->
-                                {{ entry.initial_insight | safe }}
-                            {% endif %}
-                        {% else %}
-                            No initial insight available
-                        {% endif %}
-                    </div>
-                    {% if not entry.user_reflection %}
-                    <div class="reflection-input mt-4">
-                        <h4>Your Reflection</h4>
-                        <textarea id="reflection-text" class="form-control" rows="4" 
-                                placeholder="Take a moment to reflect on these insights. What resonates with you?"></textarea>
-                        <button id="submit-reflection" class="btn btn-primary mt-2">
-                            Share Your Reflection
-                        </button>
+        <!-- Interact Tab -->
+        <div class="tab-pane fade" id="interact" role="tabpanel">
+          <div class="card">
+            <div class="card-body">
+              {% if structured_data.distortions %}
+              <div class="cbt-section">
+                <h5>Thought Patterns</h5>
+                <ul class="list-unstyled">
+                  {% for distortion in structured_data.distortions %}
+                  <li class="mb-2"><strong>{{ distortion.pattern }}</strong>: {{ distortion.description | safe }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% endif %}
+
+              {% if structured_data.strategies %}
+              <div class="cbt-section mt-4">
+                <h5>Strategies</h5>
+                <ul class="list-unstyled">
+                  {% for strategy in structured_data.strategies %}
+                  <li class="mb-2">{{ strategy.title | safe }}: {{ strategy.description | safe }}
+                    {% if strategy.action_step %}
+                    <div class="action-step mt-2">
+                        <strong class="text-dark" style="background-color: #f0f0f0; padding: 2px 5px; border-radius: 3px; display: inline-block;">Try this:</strong> {{ strategy.action_step | safe }}
                     </div>
                     {% endif %}
-                </div>
-            </div>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% endif %}
 
-            <!-- User's Reflection Card -->
-            {% if entry.user_reflection %}
-            <div class="card shadow mb-4" id="reflection-card">
-                <div class="card-header bg-success text-white">
-                    <h3 class="mb-0">Your Reflection</h3>
+              {% if structured_data.actionable_templates %}
+              <div class="cbt-section mt-4">
+                <h5>Communication Templates</h5>
+                {% for template in structured_data.actionable_templates %}
+                <div class="template-card mb-3">
+                  <p class="mb-2"><em>"{{ template.template | safe }}"</em></p>
+                  {% if template.follow_up_guidance %}
+                  <div class="guidance mt-2">
+                    <p class="small mb-0"><strong>Then:</strong> {{ template.follow_up_guidance | safe }}</p>
+                  </div>
+                  {% endif %}
                 </div>
-                <div class="card-body">
-                    <div class="user-reflection">
-                        {{ entry.user_reflection | safe }}
-                    </div>
-                </div>
-            </div>
+                {% endfor %}
+              </div>
+              {% endif %}
 
-            <!-- Follow-up Insight Card -->
-            <div class="card shadow mb-4" id="followup-card">
-                <div class="card-header bg-info text-white">
-                    <h3 class="mb-0">Follow-up Insight</h3>
-                </div>
-                <div class="card-body">
-                    <div class="followup-insight">
-                        {% if entry.followup_insight %}
-                            {% if '<div class=' not in entry.followup_insight %}
-                                <!-- First clean markdown symbols that might have remained -->
-                                {% set cleaned_insight = entry.followup_insight.replace('#', '').replace('*', '').replace('- ', '').replace('##', '') %}
-                                
-                                <!-- Format unstructured content for better readability -->
-                                {% set paragraphs = cleaned_insight.split('\n\n') %}
-                                
-                                <!-- First paragraph is usually validation -->
-                                {% if paragraphs|length > 0 %}
-                                    <div class="validation-section mb-4">{{ paragraphs[0] | safe }}</div>
-                                {% endif %}
-                                
-                                <!-- Process remaining paragraphs -->
-                                {% for paragraph in paragraphs[1:] %}
-                                    <!-- Remove any leading dash/bullet characters -->
-                                    {% set clean_paragraph = paragraph.strip() %}
-                                    {% if clean_paragraph.startswith('-') %}
-                                        {% set clean_paragraph = clean_paragraph[1:].strip() %}
-                                    {% endif %}
-                                    
-                                    {% if 'pattern' in clean_paragraph.lower() or 'distortion' in clean_paragraph.lower() %}
-                                        <div class="thought-patterns-section mb-4">
-                                            <h5 class="mb-3">Thought Patterns</h5>
-                                            {{ clean_paragraph | safe }}
-                                        </div>
-                                    {% elif 'strateg' in clean_paragraph.lower() or 'technique' in clean_paragraph.lower() or 'exercise' in clean_paragraph.lower() %}
-                                        <div class="strategies-section mb-4">
-                                            <h5 class="mb-3">Suggested Strategies</h5>
-                                            {{ clean_paragraph | safe }}
-                                        </div>
-                                    {% elif 'reflect' in clean_paragraph.lower() or 'consider' in clean_paragraph.lower() or 'ask yourself' in clean_paragraph.lower() %}
-                                        <div class="reflection-section mb-4">
-                                            <h5 class="mb-3">Reflection Prompts</h5>
-                                            {{ clean_paragraph | safe }}
-                                        </div>
-                                    {% elif loop.last and 'warmly' in clean_paragraph.lower() %}
-                                        <div class="closing-section mt-4">{{ clean_paragraph | safe }}</div>
-                                    {% else %}
-                                        <div class="paragraph mb-3">{{ clean_paragraph | safe }}</div>
-                                    {% endif %}
-                                {% endfor %}
-                            {% else %}
-                                <!-- Content already has HTML formatting -->
-                                {{ entry.followup_insight | safe }}
-                            {% endif %}
-                        {% else %}
-                            Awaiting follow-up insight...
-                        {% endif %}
-                    </div>
-                    {% if not entry.second_reflection %}
-                    <div class="second-reflection-input mt-4">
-                        <h4>Your Response</h4>
-                        <textarea id="second-reflection-text" class="form-control" rows="4" 
-                                placeholder="How do these additional insights land with you?"></textarea>
-                        <button id="submit-second-reflection" class="btn btn-primary mt-2">
-                            Share Your Response
-                        </button>
-                    </div>
+              {% if structured_data.relationship_exploration %}
+              <div class="cbt-section mt-4">
+                <h5>Relationship Context Questions</h5>
+                <ul class="list-unstyled">
+                  {% for question in structured_data.relationship_exploration %}
+                  <li class="mb-2"><strong>{{ question.question | safe }}</strong>
+                    {% if question.purpose %}
+                    <p class="text-muted small mb-0 mt-1">{{ question.purpose | safe }}</p>
                     {% endif %}
-                </div>
-            </div>
-            {% endif %}
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% endif %}
 
-            <!-- Final Response Card -->
-            {% if entry.second_reflection %}
-            <div class="card shadow mb-4" id="second-reflection-card">
-                <div class="card-header bg-success text-white">
-                    <h3 class="mb-0">Your Final Response</h3>
-                </div>
-                <div class="card-body">
-                    <div class="second-reflection">
-                        {{ entry.second_reflection | safe }}
-                    </div>
-                </div>
+              {% if structured_data.followup_text %}
+              <div class="mt-4">
+                <p class="followup-text">{{ structured_data.followup_text | safe }}</p>
+              </div>
+              {% endif %}
             </div>
-
-            <!-- Closing Message Card -->
-            <div class="card shadow" id="closing-card">
-                <div class="card-header bg-primary text-white">
-                    <h3 class="mb-0">Closing Thoughts</h3>
-                </div>
-                <div class="card-body">
-                    <div class="closing-message">
-                        {% if entry.closing_message %}
-                            {% if '<div class=' not in entry.closing_message %}
-                                <!-- First clean markdown symbols that might have remained -->
-                                {% set cleaned_insight = entry.closing_message.replace('#', '').replace('*', '').replace('- ', '').replace('##', '') %}
-                                
-                                <!-- Format unstructured content for better readability -->
-                                {% set paragraphs = cleaned_insight.split('\n\n') %}
-                                
-                                <!-- First paragraph is usually validation -->
-                                {% if paragraphs|length > 0 %}
-                                    <div class="validation-section mb-4">{{ paragraphs[0] | safe }}</div>
-                                {% endif %}
-                                
-                                <!-- Process remaining paragraphs -->
-                                {% for paragraph in paragraphs[1:] %}
-                                    <!-- Remove any leading dash/bullet characters -->
-                                    {% set clean_paragraph = paragraph.strip() %}
-                                    {% if clean_paragraph.startswith('-') %}
-                                        {% set clean_paragraph = clean_paragraph[1:].strip() %}
-                                    {% endif %}
-                                    
-                                    {% if 'pattern' in clean_paragraph.lower() or 'distortion' in clean_paragraph.lower() %}
-                                        <div class="thought-patterns-section mb-4">
-                                            <h5 class="mb-3">Thought Patterns</h5>
-                                            {{ clean_paragraph | safe }}
-                                        </div>
-                                    {% elif 'strateg' in clean_paragraph.lower() or 'technique' in clean_paragraph.lower() or 'exercise' in clean_paragraph.lower() %}
-                                        <div class="strategies-section mb-4">
-                                            <h5 class="mb-3">Suggested Strategies</h5>
-                                            {{ clean_paragraph | safe }}
-                                        </div>
-                                    {% elif 'reflect' in clean_paragraph.lower() or 'consider' in clean_paragraph.lower() or 'ask yourself' in clean_paragraph.lower() %}
-                                        <div class="reflection-section mb-4">
-                                            <h5 class="mb-3">Reflection Prompts</h5>
-                                            {{ clean_paragraph | safe }}
-                                        </div>
-                                    {% elif loop.last and 'warmly' in clean_paragraph.lower() %}
-                                        <div class="closing-section mt-4">{{ clean_paragraph | safe }}</div>
-                                    {% else %}
-                                        <div class="paragraph mb-3">{{ clean_paragraph | safe }}</div>
-                                    {% endif %}
-                                {% endfor %}
-                            {% else %}
-                                <!-- Content already has HTML formatting -->
-                                {{ entry.closing_message | safe }}
-                            {% endif %}
-                        {% else %}
-                            Awaiting closing message...
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            {% endif %}
-
-            <div class="card shadow" id="analysis-card">
-                <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #007bff; color: white;">
-                    <h3 class="mb-0">Mira's Insights</h3>
-                    <button type="button" class="btn btn-sm btn-outline-light" id="refresh-analysis" data-journal-id="{% if entry %}{{ entry.id }}{% endif %}">
-                        <i class="bi bi-arrow-repeat"></i> Refresh Analysis
-                    </button>
-                </div>
-                <div class="card-body" style="background-color: white !important;">
-                    <div id="analysis-content" style="background-color: white !important; color: #212529 !important; padding: 20px; border-radius: 8px; border: 1px solid #e9ecef; line-height: 1.6;">
-                        <div class="coach-insights" style="color: #212529;">
-                            {% if structured_data %}
-                                <!-- Display structured content with reflective pause -->
-                                {% if structured_data.insight_text %}
-                                <div class="insight-text mb-4">
-                                    <p>{{ structured_data.insight_text | safe }}</p>
-                                </div>
-                                {% endif %}
-                                
-                                {% if structured_data.reflection_prompt %}
-                                <div class="reflection-pause mb-4" id="reflection-pause">
-                                    <div class="reflection-prompt p-3 my-4 bg-light rounded border-start border-4 border-primary">
-                                        <p class="mb-2"><strong>👉 {{ structured_data.reflection_prompt }}</strong></p>
-                                        
-                                        <!-- Reflection input box -->
-                                        <div class="reflection-input mt-3">
-                                            <textarea id="user-reflection" class="form-control mb-2" rows="3" 
-                                                placeholder="Write your reflection here..."></textarea>
-                                            <div class="d-flex justify-content-between">
-                                                <small class="text-muted">Your reflection will be saved to your journal</small>
-                                                <button id="continue-reflection" class="btn btn-primary btn-sm">Continue</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- This section will be hidden until user completes reflection -->
-                                <div class="followup-content d-none" id="followup-content">
-                                    {% if structured_data.followup_text %}
-                                    <div class="followup-text mb-4">
-                                        <p>{{ structured_data.followup_text | safe }}</p>
-                                    </div>
-                                    {% endif %}
-                                    
-                                    {% if structured_data.distortions %}
-                                    <div class="distortions mb-4">
-                                        <h5 class="mt-4 mb-3">Thought Patterns</h5>
-                                        <ul class="list-group">
-                                        {% for distortion in structured_data.distortions %}
-                                            <li class="list-group-item">
-                                                <strong>{{ distortion.pattern }}</strong>: {{ distortion.description }}
-                                                {% if distortion.emotional_need %}
-                                                <div class="emotional-need mt-2">
-                                                    <small class="text-muted">Related to your need for: <span class="badge bg-secondary">{{ distortion.emotional_need }}</span></small>
-                                                </div>
-                                                {% endif %}
-                                            </li>
-                                        {% endfor %}
-                                        </ul>
-                                    </div>
-                                    {% endif %}
-                                    
-                                    {% if structured_data.strategies %}
-                                    <div class="strategies mb-4">
-                                        <h5 class="mt-4 mb-3">CBT Strategies</h5>
-                                        <div class="strategy-cards">
-                                        {% for strategy in structured_data.strategies %}
-                                            <div class="card mb-3">
-                                                <div class="card-body">
-                                                    <h6 class="card-title text-primary">{{ strategy.title }}</h6>
-                                                    <p>{{ strategy.description }}</p>
-                                                    {% if strategy.action_step %}
-                                                    <div class="action-step mt-2">
-                                                        <strong class="text-dark" style="background-color: #f0f0f0; padding: 2px 5px; border-radius: 3px; display: inline-block;">Try this:</strong> {{ strategy.action_step }}
-                                                    </div>
-                                                    {% endif %}
-                                                    {% if strategy.emotional_need_addressed %}
-                                                    <div class="emotional-need mt-2">
-                                                        <small class="text-muted">Addresses your need for: <span class="badge bg-info text-dark">{{ strategy.emotional_need_addressed }}</span></small>
-                                                    </div>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                    
-                                    {% if structured_data.relationship_exploration %}
-                                    <div class="relationship-exploration mb-4">
-                                        <h5 class="mt-4 mb-3">Relationship Context Questions</h5>
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <ul class="list-group list-group-flush">
-                                                {% for question in structured_data.relationship_exploration %}
-                                                    <li class="list-group-item d-flex align-items-start">
-                                                        <span class="me-2">🔍</span>
-                                                        <div>
-                                                            <strong>{{ question.question }}</strong>
-                                                            {% if question.purpose %}
-                                                            <p class="text-muted small mb-0 mt-1">{{ question.purpose }}</p>
-                                                            {% endif %}
-                                                        </div>
-                                                    </li>
-                                                {% endfor %}
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                    
-                                    {% if structured_data.actionable_templates %}
-                                    <div class="actionable-templates mb-4">
-                                        <h5 class="mt-4 mb-3">Communication Templates</h5>
-                                        <div class="accordion" id="templatesAccordion">
-                                        {% for template in structured_data.actionable_templates %}
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="template-heading-{{ loop.index }}">
-                                                    <button class="accordion-button collapsed" type="button" 
-                                                            data-bs-toggle="collapse" 
-                                                            data-bs-target="#template-collapse-{{ loop.index }}" 
-                                                            aria-expanded="false" 
-                                                            aria-controls="template-collapse-{{ loop.index }}">
-                                                        For {{ template.situation }}
-                                                    </button>
-                                                </h2>
-                                                <div id="template-collapse-{{ loop.index }}" 
-                                                    class="accordion-collapse collapse" 
-                                                    aria-labelledby="template-heading-{{ loop.index }}" 
-                                                    data-bs-parent="#templatesAccordion">
-                                                    <div class="accordion-body">
-                                                        <div class="template-content p-3 bg-light rounded">
-                                                            <p class="mb-2"><em>"{{ template.template }}"</em></p>
-                                                        </div>
-                                                        {% if template.follow_up_guidance %}
-                                                        <div class="guidance mt-2">
-                                                            <p class="small mb-0"><strong>Then:</strong> {{ template.follow_up_guidance }}</p>
-                                                        </div>
-                                                        {% endif %}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                </div>
-                                {% else %}
-                                <!-- Fall back to the old structured format -->
-                                {% if structured_data.intro %}
-                                <div class="intro mb-4">
-                                    <p>{{ structured_data.intro | safe }}</p>
-                                </div>
-                                {% endif %}
-                                
-                                {% if structured_data.reflection %}
-                                <div class="reflection mb-4">
-                                    <p>{{ structured_data.reflection | safe }}</p>
-                                </div>
-                                {% endif %}
-                                
-                                {% if structured_data.distortions %}
-                                <div class="distortions mb-4">
-                                    <h5 class="mt-4 mb-3" id="thought-patterns-header">Thought Patterns</h5>
-                                    <ul class="list-group">
-                                    {% for distortion in structured_data.distortions %}
-                                        <li class="list-group-item">
-                                            <strong>{{ distortion.pattern }}</strong>: {{ distortion.description }}
-                                        </li>
-                                    {% endfor %}
-                                    </ul>
-                                </div>
-                                {% endif %}
-                                
-                                {% if structured_data.strategies %}
-                                <div class="strategies mb-4">
-                                    <h5 class="mt-4 mb-3" id="cbt-strategies-header">CBT Strategies</h5>
-                                    <div class="strategy-cards">
-                                    {% for strategy in structured_data.strategies %}
-                                        <div class="card mb-3">
-                                            <div class="card-body">
-                                                <h6 class="card-title text-primary">{{ strategy.title }}</h6>
-                                                <p>{{ strategy.description }}</p>
-                                                {% if strategy.action_step %}
-                                                <div class="action-step mt-2">
-                                                    <strong class="text-dark" style="background-color: #f0f0f0; padding: 2px 5px; border-radius: 3px; display: inline-block;">Try this:</strong> {{ strategy.action_step }}
-                                                </div>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                    </div>
-                                </div>
-                                {% endif %}
-                                
-                                {% if structured_data.reflection_prompt %}
-                                <div class="reflection-prompt mb-4">
-                                    <h5 class="mt-4 mb-3" id="reflection-prompt-header">Reflection Prompt</h5>
-                                    <blockquote class="blockquote">
-                                        <p class="mb-0">{{ structured_data.reflection_prompt }}</p>
-                                    </blockquote>
-                                </div>
-                                {% endif %}
-                                
-                                {% if structured_data.outro %}
-                                <div class="outro mt-4">
-                                    <p>{{ structured_data.outro | safe }}</p>
-                                </div>
-                                {% endif %}
-                                {% endif %}
-                            {% else %}
-                                <!-- Fall back to unstructured content -->
-                                {{ coach_response | safe }}
-                            {% endif %}
-                        </div>
-                        <div class="text-center mt-3">
-                            <button id="stop-reading" class="btn btn-outline-danger btn-sm" style="display: none;">
-                                <i class="bi bi-stop-fill"></i> Stop Reading
-                            </button>
-                            
-                            <div class="d-inline-flex align-items-center">
-                                <button id="server-tts-button" class="btn btn-primary btn-sm">
-                                    <i class="bi bi-cloud"></i> Listen to Mira's Response
-                                </button>
-                                <button type="button" class="btn btn-sm ms-2" id="analysis-voice-settings-btn" 
-                                        title="Voice Settings" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        style="background-color: #f1f3f5; border: 1px solid #ced4da; color: #495057;">
-                                    Settings
-                                </button>
-                            </div>
-                            <audio id="serverAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
-                        </div>
-                    </div>
-                    
-                    <style>
-                        /* Voice settings styling */
-                        .voice-settings-btn {
-                            transition: all 0.2s ease;
-                            position: relative;
-                            width: 36px !important;
-                            height: 31px !important;
-                            padding: 0 !important;
-                            display: flex !important;
-                            align-items: center !important;
-                            justify-content: center !important;
-                            border-radius: 4px !important;
-                            background-color: #f8f9fa !important;
-                            border: 1px solid #ced4da !important;
-                        }
-                        
-                        .voice-settings-btn:hover {
-                            transform: rotate(15deg);
-                            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-                        }
-                        
-                        .voice-settings-btn i {
-                            font-size: 1.25rem !important;
-                            color: #6c757d !important;
-                        }
-                        
-                        /* Gear button styling */
-                        .gear-button:hover {
-                            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-                            background-color: #e9ecef !important;
-                        }
-                        
-                        .gear-button:hover svg {
-                            transform: rotate(20deg);
-                        }
-                        
-                        .voice-cards {
-                            display: grid;
-                            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                            gap: 12px;
-                            margin-top: 15px;
-                        }
-                        
-                        .voice-card {
-                            border: 2px solid #e9ecef;
-                            border-radius: 8px;
-                            padding: 15px;
-                            cursor: pointer;
-                            position: relative;
-                            transition: all 0.2s ease;
-                            background-color: #fff;
-                            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-                        }
-                        
-                        .voice-card:hover {
-                            border-color: #0d6efd;
-                            transform: translateY(-2px);
-                            box-shadow: 0 4px 8px rgba(13, 110, 253, 0.15);
-                        }
-                        
-                        .voice-card.selected {
-                            border-color: #0d6efd;
-                            background-color: #f0f7ff;
-                            box-shadow: 0 4px 8px rgba(13, 110, 253, 0.2);
-                        }
-                        
-                        .voice-radio {
-                            position: absolute;
-                            opacity: 0;
-                            width: 0;
-                            height: 0;
-                        }
-                        
-                        .voice-name {
-                            font-weight: 600;
-                            font-size: 1.1rem;
-                            color: #212529;
-                            margin-bottom: 5px;
-                        }
-                        
-                        .voice-personality {
-                            display: inline-block;
-                            font-size: 0.8rem;
-                            font-weight: 500;
-                            background-color: #e9ecef;
-                            color: #495057;
-                            padding: 2px 8px;
-                            border-radius: 12px;
-                            margin-bottom: 8px;
-                        }
-                        
-                        .voice-description {
-                            font-size: 0.85rem;
-                            color: #6c757d;
-                            line-height: 1.4;
-                        }
-                        
-                        .selected-indicator {
-                            position: absolute;
-                            top: 10px;
-                            right: 10px;
-                            color: #0d6efd;
-                            font-size: 1.2rem;
-                            opacity: 0;
-                            transition: opacity 0.2s ease;
-                        }
-                        
-                        .voice-card.selected .selected-indicator {
-                            opacity: 1;
-                        }
-                        
-                        /* Coach insights styling */
-                        .coach-insights p {
-                            margin-bottom: 1rem;
-                            font-size: 1rem;
-                        }
-                        .coach-insights h5 {
-                            margin-top: 1.5rem;
-                            margin-bottom: 1rem;
-                            color: #007bff;
-                            font-weight: 600;
-                            border-bottom: 1px solid #e9ecef;
-                            padding-bottom: 0.5rem;
-                        }
-                        /* Structured data styling */
-                        .intro, .outro {
-                            font-style: italic;
-                            color: #495057;
-                        }
-                        .distortions .list-group-item {
-                            border-left: 3px solid #dc3545;
-                        }
-                        .strategy-cards .card {
-                            border-left: 3px solid #28a745;
-                            transition: transform 0.2s ease;
-                        }
-                        .strategy-cards .card:hover {
-                            transform: translateY(-3px);
-                            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-                        }
-                        .action-step {
-                            background-color: #f8f9fa;
-                            padding: 8px;
-                            border-radius: 4px;
-                            border-left: 3px solid #17a2b8;
-                        }
-                        .reflection-prompt blockquote {
-                            font-style: italic;
-                            background-color: #f8f9fa;
-                            border-left: 3px solid #6c757d;
-                            padding: 1rem;
-                        }
-                        /* Voice input styling */
-                        .voice-input-container {
-                            position: relative;
-                        }
-                        .voice-input-controls {
-                            position: absolute;
-                            bottom: 10px;
-                            right: 10px;
-                            z-index: 10;
-                        }
-                        #voice-input-button {
-                            border-radius: 50%;
-                            width: 40px;
-                            height: 40px;
-                            padding: 0;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-                        }
-                        #voice-input-button.active {
-                            background-color: #dc3545;
-                            border-color: #dc3545;
-                            color: white;
-                            animation: pulse 1.5s infinite;
-                        }
-                        .voice-status {
-                            padding: 8px 12px;
-                            border-radius: 4px;
-                            background-color: #f8f9fa;
-                            border: 1px solid #dee2e6;
-                        }
-                        @keyframes pulse {
-                            0% {
-                                transform: scale(1);
-                                opacity: 1;
-                            }
-                            50% {
-                                transform: scale(1.05);
-                                opacity: 0.8;
-                            }
-                            100% {
-                                transform: scale(1);
-                                opacity: 1;
-                            }
-                        }
-                        
-                        /* Voice tooltip styling */
-                        .voice-tooltip-container {
-                            position: fixed;
-                            z-index: 9999;
-                            bottom: 20px;
-                            right: 20px;
-                            opacity: 0;
-                            transform: translateY(20px);
-                            transition: opacity 0.3s ease, transform 0.3s ease;
-                        }
-                        
-                        .voice-tooltip-container.visible {
-                            opacity: 1;
-                            transform: translateY(0);
-                        }
-                        
-                        .voice-tooltip {
-                            background: white;
-                            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                            border-radius: 8px;
-                            padding: 0;
-                            max-width: 300px;
-                            position: relative;
-                            border: 1px solid #dee2e6;
-                        }
-                        
-                        .voice-tooltip .tooltip-content {
-                            padding: 15px;
-                        }
-                        
-                        .voice-tooltip p {
-                            margin-bottom: 8px;
-                        }
-                        
-                        .voice-tooltip .arrow {
-                            position: absolute;
-                            width: 10px;
-                            height: 10px;
-                            background: white;
-                            transform: rotate(45deg);
-                            top: -5px;
-                            right: 20px;
-                            border-left: 1px solid #dee2e6;
-                            border-top: 1px solid #dee2e6;
-                        }
-                        
-                        /* Structured insights styling */
-                        .structured-insights {
-                            font-family: 'Nunito', sans-serif;
-                            color: #333;
-                        }
-                        
-                        .coach-intro {
-                            font-size: 1.1rem;
-                            line-height: 1.6;
-                            color: #2c3e50;
-                        }
-                        
-                        .coach-patterns, .coach-strategies, .coach-reflections {
-                            background-color: #f8f9fa;
-                            border-radius: 8px;
-                            padding: 15px;
-                            margin-bottom: 20px;
-                            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-                        }
-                        
-                        .coach-patterns h5, .coach-strategies h5, .coach-reflections h5 {
-                            color: #28a745;
-                            font-weight: 600;
-                            margin-bottom: 15px;
-                            border-bottom: 2px solid #e9ecef;
-                            padding-bottom: 8px;
-                        }
-                        
-                        .coach-patterns .coach-pattern-list li,
-                        .coach-strategies .coach-strategy-list li {
-                            margin-bottom: 12px;
-                            line-height: 1.5;
-                        }
-                        
-                        .coach-patterns .coach-pattern-list li strong,
-                        .coach-strategies .coach-strategy-list li strong {
-                            color: #495057;
-                            font-weight: 600;
-                        }
-                        
-                        .coach-reflections .coach-reflection-list li {
-                            font-style: italic;
-                            color: #495057;
-                            padding: 8px 0;
-                        }
-                        
-                        .coach-outro {
-                            font-size: 1.05rem;
-                            line-height: 1.6;
-                            color: #2c3e50;
-                            margin-top: 15px;
-                        }
-                        
-                        .coach-signature {
-                            font-style: italic;
-                            text-align: right;
-                            margin-top: 20px;
-                            color: #6c757d;
-                        }
-                    </style>
-                    
-                    <!-- Placeholder for AI coaching button -->
-                    <div class="text-center mt-4">
-                        <button class="btn btn-outline-success" id="ask-coach" data-journal-id="{% if entry %}{{ entry.id }}{% endif %}">
-                            <i class="bi bi-chat-dots"></i> 
-                            Ask Mira for Personalized Guidance
-                        </button>
-                    </div>
-                    
-                    <!-- Response area (hidden initially) -->
-                    <div id="coach-response" class="mt-4 bg-light p-3 rounded" style="display: none;">
-                        <h5><i class="bi bi-chat-heart-fill text-success"></i> Mira's Personal Guidance:</h5>
-                        <div id="coach-message" class="mt-2 bg-white p-3 rounded text-dark">
-                            <!-- Will be filled by AJAX response -->
-                        </div>
-                        <div class="text-center mt-3">
-                            <button id="stop-guidance" class="btn btn-outline-danger btn-sm" style="display: none;">
-                                <i class="bi bi-stop-fill"></i> Stop Reading
-                            </button>
-                            
-                            <div class="d-inline-flex align-items-center">
-                                <button id="server-tts-guidance-button" class="btn btn-primary btn-sm">
-                                    <i class="bi bi-cloud"></i> Listen to Mira's Guidance
-                                </button>
-                                <button type="button" class="btn btn-sm ms-2" id="guidance-voice-settings-btn" 
-                                        title="Voice Settings" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        style="background-color: #f1f3f5; border: 1px solid #ced4da; color: #495057;">
-                                    Settings
-                                </button>
-                            </div>
-                            <audio id="serverGuidanceAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
-{% endif %}
 
 {% if entry and not entry.is_analyzed %}
 <div class="container mt-4">
@@ -2200,7 +1431,7 @@
             text = text.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
             
             // Advanced text preprocessing for more natural sounding speech
-
+            
             // Add explicit speech breaks using SSML-like patterns for better naturalness
             // We'll use commas as the natural break points in speech synthesis
             
@@ -2467,7 +1698,7 @@
             
             console.error('Error generating speech:', error);
             // Reset button state
-            button.disabled = false;
+            button.disabled= false;
             button.innerHTML = '<i class="bi bi-cloud"></i> Listen to Mira\'s Response';
             
             // Show specific error message based on the error
@@ -3043,7 +2274,7 @@
             return '';
         }
     }
-
+    
     // Initialize conversation journaling when page loads
     document.addEventListener('DOMContentLoaded', function() {
         setupConversationalJournaling();
