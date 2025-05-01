@@ -3,51 +3,8 @@
 {% block title %}Journal Entry{% endblock %}
 
 {% block styles %}
-<!-- Badge notification styles and Chat UI Styles -->
+<!-- Badge notification styles -->
 <style>
-/* Chat conversation styles */
-.chat-message {
-    margin-bottom: 1.5rem;
-}
-
-.chat-avatar-circle {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 1.2rem;
-}
-
-.chat-bubble {
-    background-color: #f8f9fa;
-    border-radius: 12px;
-    padding: 12px 16px;
-    position: relative;
-    flex: 1;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.user-bubble {
-    background-color: #e9f5ff;
-    border: 1px solid #d0e8ff;
-}
-
-.mira-bubble {
-    background-color: #f0f7f4;
-    border: 1px solid #d8eae1;
-}
-
-.chat-content {
-    word-break: break-word;
-}
-
-.chat-info {
-    font-size: 0.8rem;
-    color: #6c757d;
-}
 
 .reflection-prompt-box {
     background-color: #f8f9fa;
@@ -294,6 +251,9 @@
             <div class="card-body">
               <h4 class="card-title">Conversation with Mira</h4>
               
+              <!-- Chat Container - This div is used by reflection-handler.js to append new messages -->
+              <div class="chat-container">
+              
               <!-- User's Journal Entry (Speech Bubble) -->
               <div class="chat-message user-message mb-4">
                 <div class="d-flex">
@@ -355,7 +315,7 @@
               </div>
               
               <!-- User's Reflection Area (Initially Hidden) -->
-              <div class="user-reflection-area" style="display: none;">
+              <div class="reflection-form" style="display: none;" data-entry-id="{{ entry.id }}">
                 <div class="chat-message user-reflection-message mb-4">
                   <div class="d-flex">
                     <div class="chat-avatar me-3">
@@ -365,11 +325,11 @@
                     </div>
                     <div class="chat-bubble user-bubble">
                       <div class="chat-content">
-                        <textarea class="form-control" id="user-reflection-input" rows="3" 
+                        <textarea class="form-control reflection-input" rows="3" 
                                  placeholder="Share your thoughts on Mira's reflection prompt..."></textarea>
                         <div class="d-flex justify-content-end mt-2">
-                          <button class="btn btn-sm btn-outline-secondary me-2 cancel-reflection-btn">Cancel</button>
-                          <button class="btn btn-sm btn-primary save-reflection-btn" data-entry-id="{{ entry.id }}">Save Reflection</button>
+                          <button class="btn btn-sm btn-outline-secondary me-2 cancel-reflection">Cancel</button>
+                          <button class="btn btn-sm btn-primary submit-reflection">Submit Reflection</button>
                         </div>
                       </div>
                     </div>
@@ -418,6 +378,8 @@
                 </div>
               </div>
               {% endif %}
+              
+              </div> <!-- End of chat-container -->
             </div>
           </div>
         </div>
@@ -600,113 +562,21 @@
     document.addEventListener('DOMContentLoaded', function() {
         // Reflection button handlers
         const reflectionBtn = document.querySelector('.reflection-btn');
-        const cancelReflectionBtn = document.querySelector('.cancel-reflection-btn');
-        const saveReflectionBtn = document.querySelector('.save-reflection-btn');
-        const reflectionArea = document.querySelector('.user-reflection-area');
-        const reflectionInput = document.getElementById('user-reflection-input');
+        const reflectionForm = document.querySelector('.reflection-form');
         
-        if (reflectionBtn) {
+        if (reflectionBtn && reflectionForm) {
             reflectionBtn.addEventListener('click', function() {
-                reflectionArea.style.display = 'block';
-                reflectionInput.focus();
-                // Scroll to the reflection area
-                reflectionArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            });
-        }
-        
-        if (cancelReflectionBtn) {
-            cancelReflectionBtn.addEventListener('click', function() {
-                reflectionArea.style.display = 'none';
-                reflectionInput.value = '';
-            });
-        }
-        
-        if (saveReflectionBtn) {
-            saveReflectionBtn.addEventListener('click', function() {
-                const entryId = this.getAttribute('data-entry-id');
-                const reflection = reflectionInput.value.trim();
-                
-                if (!reflection) {
-                    alert('Please enter your reflection before saving.');
-                    return;
+                reflectionForm.style.display = 'block';
+                const reflectionInput = reflectionForm.querySelector('.reflection-input');
+                if (reflectionInput) {
+                    reflectionInput.focus();
                 }
-                
-                // Send the reflection to the server
-                fetch(`/journal/${entryId}/save-conversation-reflection`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': document.querySelector('input[name="csrf_token"]').value
-                    },
-                    body: JSON.stringify({ reflection: reflection })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Create a new reflection bubble without reloading
-                        const userReflectionBubble = document.createElement('div');
-                        userReflectionBubble.className = 'chat-message user-message mb-4';
-                        userReflectionBubble.innerHTML = `
-                            <div class="d-flex">
-                                <div class="chat-avatar me-3">
-                                    <div class="chat-avatar-circle bg-primary text-white">
-                                        <span>${document.querySelector('.chat-avatar-circle span').textContent}</span>
-                                    </div>
-                                </div>
-                                <div class="chat-bubble user-bubble">
-                                    <div class="chat-content">
-                                        <p class="mb-0">${reflection.replace(/\n/g, '<br>')}</p>
-                                        <div class="chat-info small text-muted mt-1">
-                                            <span>Your reflection</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                        
-                        // Insert before the reflection area
-                        reflectionArea.parentNode.insertBefore(userReflectionBubble, reflectionArea);
-                        
-                        // Hide the reflection input
-                        reflectionArea.style.display = 'none';
-                        reflectionInput.value = '';
-                        
-                        // Check if a follow-up response is available
-                        if (data.followup_message) {
-                            // Create a follow-up message from Mira
-                            const miraFollowupBubble = document.createElement('div');
-                            miraFollowupBubble.className = 'chat-message mira-message mb-4';
-                            miraFollowupBubble.innerHTML = `
-                                <div class="d-flex">
-                                    <div class="chat-avatar me-3">
-                                        <div class="chat-avatar-circle bg-info text-white">
-                                            <span>M</span>
-                                        </div>
-                                    </div>
-                                    <div class="chat-bubble mira-bubble">
-                                        <div class="chat-content">
-                                            <p class="mb-0">${data.followup_message}</p>
-                                            <div class="chat-info text-end small text-muted mt-2">
-                                                <span>Coach Mira</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            `;
-                            
-                            // Insert after the user reflection
-                            userReflectionBubble.parentNode.insertBefore(miraFollowupBubble, userReflectionBubble.nextSibling);
-                        }
-                    } else {
-                        alert('There was an error saving your reflection: ' + data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error saving reflection:', error);
-                    alert('There was an error saving your reflection. Please try again.');
-                });
+                // Scroll to the reflection area
+                reflectionForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
             });
         }
+        
+        // The rest of the reflection functionality is now handled in reflection-handler.js
     });
 
     // Voice input functionality

@@ -1,385 +1,217 @@
+/**
+ * Reflection Handler for Calm Journey
+ * Manages the interaction with reflection prompts in the conversation UI
+ */
 
-// Reflection handler functionality
 document.addEventListener('DOMContentLoaded', function() {
-    const submitReflection = document.getElementById('submit-reflection');
-    const submitSecondReflection = document.getElementById('submit-second-reflection');
-    
-    if (submitReflection) {
-        submitReflection.addEventListener('click', function() {
-            let reflectionText, entryId;
-            
-            // Get the reflection text with validation
-            try {
-                const reflectionTextElement = document.getElementById('reflection-text');
-                if (!reflectionTextElement) {
-                    throw new Error('Reflection text element not found');
-                }
-                
-                reflectionText = reflectionTextElement.value;
-                
-                // Validate reflection text is not empty
-                if (!reflectionText || reflectionText.trim().length === 0) {
-                    alert('Please enter your reflection before submitting.');
-                    return;
-                }
-                
-                // Safely get the entry ID with multiple fallbacks
-                // Try to get from data attribute first
-                const entryContainer = this.closest('[data-entry-id]');
-                if (entryContainer && entryContainer.dataset && entryContainer.dataset.entryId) {
-                    entryId = entryContainer.dataset.entryId;
-                    console.log('Using data attribute entry ID:', entryId);
-                } else {
-                    // Fallback to URL
-                    try {
-                        const urlParts = window.location.pathname.split('/');
-                        entryId = urlParts[urlParts.length - 1];
-                        console.log('Using URL-based entry ID fallback:', entryId);
-                    } catch (urlErr) {
-                        console.error('Error extracting ID from URL:', urlErr);
-                        
-                        // Final fallback - look for entry ID in the page
-                        const hiddenEntryIdField = document.querySelector('input[name="entry_id"]');
-                        if (hiddenEntryIdField) {
-                            entryId = hiddenEntryIdField.value;
-                            console.log('Using hidden field entry ID fallback:', entryId);
-                        }
-                    }
-                }
-                
-                // If we still don't have a valid entry ID, alert and exit
-                if (!entryId) {
-                    console.error('Could not determine entry ID');
-                    alert('Could not determine which journal entry to save for. Please try refreshing the page.');
-                    return;
-                }
-                
-                // Validate entry ID is a number
-                if (isNaN(parseInt(entryId))) {
-                    console.error('Invalid entry ID format:', entryId);
-                    alert('The journal entry ID is invalid. Please try refreshing the page.');
-                    return;
-                }
-                
-                // Disable button and show loading state
-                submitReflection.disabled = true;
-                const originalButtonText = submitReflection.textContent || 'Share Your Reflection';
-                submitReflection.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...';
-                
-                // Set timeout to re-enable button if server doesn't respond
-                const buttonTimeout = setTimeout(() => {
-                    if (submitReflection.disabled) {
-                        submitReflection.disabled = false;
-                        submitReflection.innerHTML = originalButtonText;
-                        alert('The server is taking longer than expected. Your reflection might still be processing. Please check after a moment.');
-                    }
-                }, 15000); // 15 second timeout
-                
-            } catch (err) {
-                console.error('Error preparing to save initial reflection:', err);
-                alert('There was a problem preparing to save your reflection. Please try again or refresh the page.');
-                return;
-            }
-            
-            // Attempt to send the reflection to the server
-            console.log("Saving initial reflection for entry:", entryId);
-            
-            fetch('/journal/save-initial-reflection', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content || ''
-                },
-                body: JSON.stringify({
-                    entry_id: entryId,
-                    reflection_text: reflectionText
-                })
-            })
-            .then(response => {
-                // Check if response is ok before parsing JSON
-                if (!response.ok) {
-                    throw new Error(`Server returned ${response.status}: ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    // Success! Show a brief message before reloading
-                    const successMessage = document.createElement('div');
-                    successMessage.className = 'alert alert-success mt-3';
-                    successMessage.textContent = 'Your reflection has been saved successfully!';
-                    
-                    const insertAfter = submitReflection.parentNode;
-                    if (insertAfter && insertAfter.parentNode) {
-                        insertAfter.parentNode.insertBefore(successMessage, insertAfter.nextSibling);
-                    }
-                    
-                    // Show success message but don't immediately reload
-                    // This gives more time for the server to process the reflection
-                    submitReflection.innerHTML = '<i class="fas fa-check-circle"></i> Saved Successfully';
-                    
-                    // Update the page elements to show the saved reflection without reload
-                    const reflectionContainer = document.getElementById('reflection-container');
-                    if (reflectionContainer) {
-                        reflectionContainer.innerHTML = `<div class="alert alert-success">
-                            <h5><i class="fas fa-check-circle"></i> Your reflection has been saved!</h5>
-                            <p>${reflectionText}</p>
-                            <hr>
-                            <p class="mb-0">Mira is working on her response...</p>
-                        </div>`;
-                    }
-                    
-                    // Check after 5 seconds if the follow-up insight is ready
-                    setTimeout(() => {
-                        fetch(`/journal/check-followup/${entryId}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.ready) {
-                                // Only reload if the insight is ready
-                                window.location.reload();
-                            } else {
-                                // Show a message saying it's still processing
-                                const processingMsg = document.createElement('div');
-                                processingMsg.className = 'alert alert-info mt-3';
-                                processingMsg.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Mira is still working on her response. This page will refresh automatically when it's ready.`;
-                                
-                                if (reflectionContainer) {
-                                    reflectionContainer.appendChild(processingMsg);
-                                }
-                                
-                                // Check again in 5 more seconds
-                                setTimeout(() => {
-                                    window.location.reload();
-                                }, 5000);
-                            }
-                        })
-                        .catch(err => {
-                            // If there's an error checking, just reload after a delay
-                            setTimeout(() => {
-                                window.location.reload();
-                            }, 2000);
-                        });
-                    }, 5000);
-                } else {
-                    // Server returned an error
-                    console.error('Server error:', data.error);
-                    alert('Error saving reflection: ' + (data.error || 'Unknown error'));
-                    submitReflection.disabled = false;
-                    submitReflection.innerHTML = originalButtonText || 'Share Your Reflection';
-                }
-            })
-            .catch(error => {
-                // Network or parsing error
-                console.error('Error:', error);
-                alert('Error saving reflection: ' + error.message);
-                submitReflection.disabled = false;
-                submitReflection.innerHTML = originalButtonText || 'Share Your Reflection';
-            })
-            .finally(() => {
-                // Clear the timeout regardless of outcome
-                clearTimeout(buttonTimeout);
-            });
-        });
-    }
-    
-    if (submitSecondReflection) {
-        submitSecondReflection.addEventListener('click', function() {
-            let reflectionText, entryId;
-            
-            // Get the reflection text with validation
-            try {
-                const reflectionTextElement = document.getElementById('second-reflection-text');
-                if (!reflectionTextElement) {
-                    throw new Error('Second reflection text element not found');
-                }
-                
-                reflectionText = reflectionTextElement.value;
-                
-                // Validate reflection text is not empty
-                if (!reflectionText || reflectionText.trim().length === 0) {
-                    alert('Please enter your reflection before submitting.');
-                    return;
-                }
-                
-                // Safely get the entry ID with multiple fallbacks
-                // Try to get from data attribute first
-                const entryContainer = this.closest('[data-entry-id]');
-                if (entryContainer && entryContainer.dataset && entryContainer.dataset.entryId) {
-                    entryId = entryContainer.dataset.entryId;
-                    console.log('Using data attribute entry ID:', entryId);
-                } else {
-                    // Fallback to URL
-                    try {
-                        const urlParts = window.location.pathname.split('/');
-                        entryId = urlParts[urlParts.length - 1];
-                        console.log('Using URL-based entry ID fallback:', entryId);
-                    } catch (urlErr) {
-                        console.error('Error extracting ID from URL:', urlErr);
-                        
-                        // Final fallback - look for entry ID in the page
-                        const hiddenEntryIdField = document.querySelector('input[name="entry_id"]');
-                        if (hiddenEntryIdField) {
-                            entryId = hiddenEntryIdField.value;
-                            console.log('Using hidden field entry ID fallback:', entryId);
-                        }
-                    }
-                }
-                
-                // If we still don't have a valid entry ID, alert and exit
-                if (!entryId) {
-                    console.error('Could not determine entry ID');
-                    alert('Could not determine which journal entry to save for. Please try refreshing the page.');
-                    return;
-                }
-                
-                // Validate entry ID is a number
-                if (isNaN(parseInt(entryId))) {
-                    console.error('Invalid entry ID format:', entryId);
-                    alert('The journal entry ID is invalid. Please try refreshing the page.');
-                    return;
-                }
-                
-                // Disable button and show loading state
-                submitSecondReflection.disabled = true;
-                const originalButtonText = submitSecondReflection.textContent || 'Share Your Response';
-                submitSecondReflection.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...';
-                
-                // Set timeout to re-enable button if server doesn't respond
-                const buttonTimeout = setTimeout(() => {
-                    if (submitSecondReflection.disabled) {
-                        submitSecondReflection.disabled = false;
-                        submitSecondReflection.innerHTML = originalButtonText;
-                        alert('The server is taking longer than expected. Your reflection might still be processing. Please check after a moment.');
-                    }
-                }, 15000); // 15 second timeout
-                
-            } catch (err) {
-                console.error('Error preparing to save second reflection:', err);
-                alert('There was a problem preparing to save your reflection. Please try again or refresh the page.');
-                return;
-            }
-            
-            // Add a loading message to indicate to the user that their reflection is being processed
-            const loadingMessage = document.createElement('div');
-            loadingMessage.className = 'alert alert-info mt-3';
-            loadingMessage.textContent = 'Processing your reflection. This may take a moment...';
-            loadingMessage.id = 'reflection-loading-message';
-            
-            const insertAfter = submitSecondReflection.parentNode;
-            if (insertAfter && insertAfter.parentNode) {
-                insertAfter.parentNode.insertBefore(loadingMessage, insertAfter.nextSibling);
-            }
-            
-            // Attempt to send the reflection to the server
-            console.log("Saving second reflection for entry:", entryId);
-            
-            fetch('/journal/save-second-reflection', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content || ''
-                },
-                body: JSON.stringify({
-                    entry_id: entryId,
-                    reflection_text: reflectionText
-                })
-            })
-            .then(response => {
-                // Check if response is ok before parsing JSON
-                if (!response.ok) {
-                    throw new Error(`Server returned ${response.status}: ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Remove the loading message
-                const loadingMsg = document.getElementById('reflection-loading-message');
-                if (loadingMsg) {
-                    loadingMsg.remove();
-                }
-                
-                if (data.success) {
-                    // Success! Show a brief message before reloading
-                    const successMessage = document.createElement('div');
-                    successMessage.className = 'alert alert-success mt-3';
-                    successMessage.textContent = 'Your reflection has been saved successfully! Coach Mira is preparing her final thoughts...';
-                    
-                    const insertAfter = submitSecondReflection.parentNode;
-                    if (insertAfter && insertAfter.parentNode) {
-                        insertAfter.parentNode.insertBefore(successMessage, insertAfter.nextSibling);
-                    }
-                    
-                    // Show success message but don't immediately reload
-                    // This gives more time for the server to process the reflection
-                    submitSecondReflection.innerHTML = '<i class="fas fa-check-circle"></i> Saved Successfully';
-                    
-                    // Update the page elements to show the saved reflection without reload
-                    const reflectionContainer = document.getElementById('second-reflection-container');
-                    if (reflectionContainer) {
-                        reflectionContainer.innerHTML = `<div class="alert alert-success">
-                            <h5><i class="fas fa-check-circle"></i> Your final reflection has been saved!</h5>
-                            <p>${reflectionText}</p>
-                            <hr>
-                            <p class="mb-0">Mira is preparing her closing thoughts...</p>
-                        </div>`;
-                    }
-                    
-                    // Check after 5 seconds if the closing message is ready
-                    setTimeout(() => {
-                        fetch(`/journal/check-closing/${entryId}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.ready) {
-                                // Only reload if the insight is ready
-                                window.location.reload();
-                            } else {
-                                // Show a message saying it's still processing
-                                const processingMsg = document.createElement('div');
-                                processingMsg.className = 'alert alert-info mt-3';
-                                processingMsg.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Mira is still working on her closing message. This page will refresh automatically when it's ready.`;
-                                
-                                if (reflectionContainer) {
-                                    reflectionContainer.appendChild(processingMsg);
-                                }
-                                
-                                // Check again in 5 more seconds
-                                setTimeout(() => {
-                                    window.location.reload();
-                                }, 5000);
-                            }
-                        })
-                        .catch(err => {
-                            // If there's an error checking, just reload after a delay
-                            setTimeout(() => {
-                                window.location.reload();
-                            }, 2000);
-                        });
-                    }, 5000);
-                } else {
-                    // Server returned an error
-                    console.error('Server error:', data.error);
-                    alert('Error saving reflection: ' + (data.error || 'Unknown error'));
-                    submitSecondReflection.disabled = false;
-                    submitSecondReflection.innerHTML = originalButtonText || 'Share Your Response';
-                }
-            })
-            .catch(error => {
-                // Remove the loading message
-                const loadingMsg = document.getElementById('reflection-loading-message');
-                if (loadingMsg) {
-                    loadingMsg.remove();
-                }
-                
-                // Network or parsing error
-                console.error('Error:', error);
-                alert('Error saving reflection: ' + error.message);
-                submitSecondReflection.disabled = false;
-                submitSecondReflection.innerHTML = originalButtonText || 'Share Your Response';
-            })
-            .finally(() => {
-                // Clear the timeout regardless of outcome
-                clearTimeout(buttonTimeout);
-            });
-        });
-    }
+    // Initialize reflection handlers
+    initReflectionHandlers();
 });
+
+function initReflectionHandlers() {
+    // Find all reflection input areas
+    const reflectionForms = document.querySelectorAll('.reflection-form');
+    
+    reflectionForms.forEach(form => {
+        const submitButton = form.querySelector('.submit-reflection');
+        const reflectionInput = form.querySelector('.reflection-input');
+        const entryId = form.getAttribute('data-entry-id');
+        
+        if (submitButton && reflectionInput && entryId) {
+            // Add event listener for the submit button
+            submitButton.addEventListener('click', function() {
+                submitReflection(reflectionInput, entryId);
+            });
+            
+            // Add event listener for Enter key in textarea
+            reflectionInput.addEventListener('keydown', function(event) {
+                // Check if Enter was pressed without Shift (Shift+Enter creates a new line)
+                if (event.key === 'Enter' && !event.shiftKey) {
+                    event.preventDefault(); // Prevent default form submission
+                    submitButton.click(); // Trigger the submit button click
+                }
+            });
+        }
+    });
+}
+
+function submitReflection(reflectionInput, entryId) {
+    const reflection = reflectionInput.value.trim();
+    
+    // Validate input
+    if (!reflection) {
+        showAlert('Please enter your reflection before submitting.', 'warning');
+        return;
+    }
+    
+    // Get CSRF token from meta tag
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+    
+    // Show loading indicator
+    showReflectionLoading(true);
+    
+    // Send the reflection to the server
+    fetch(`/journal/${entryId}/save-conversation-reflection`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken
+        },
+        body: JSON.stringify({ reflection: reflection })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            // Handle successful save
+            addUserReflectionBubble(reflection, entryId);
+            hideReflectionForm();
+            
+            // If there's a followup message, add it
+            if (data.followup_message) {
+                addMiraFollowupBubble(data.followup_message);
+            }
+        } else {
+            showAlert(`Error: ${data.message}`, 'danger');
+        }
+    })
+    .catch(error => {
+        console.error('Error saving reflection:', error);
+        showAlert('There was an error saving your reflection. Please try again.', 'danger');
+    })
+    .finally(() => {
+        // Hide loading indicator
+        showReflectionLoading(false);
+    });
+}
+
+function addUserReflectionBubble(reflectionText, entryId) {
+    // Create a new reflection bubble
+    const chatContainer = document.querySelector('.chat-container');
+    
+    if (!chatContainer) {
+        console.error('Chat container not found');
+        return;
+    }
+    
+    // Get user initial from existing avatar if possible
+    let userInitial = 'U';
+    const existingUserAvatar = document.querySelector('.chat-avatar-circle span');
+    if (existingUserAvatar) {
+        userInitial = existingUserAvatar.textContent;
+    }
+    
+    // Create the user reflection bubble
+    const userReflectionBubble = document.createElement('div');
+    userReflectionBubble.className = 'chat-message user-message mb-4';
+    userReflectionBubble.innerHTML = `
+        <div class="d-flex">
+            <div class="chat-avatar me-3">
+                <div class="chat-avatar-circle bg-primary text-white">
+                    <span>${userInitial}</span>
+                </div>
+            </div>
+            <div class="chat-bubble user-bubble">
+                <div class="chat-content">
+                    <p class="mb-0">${reflectionText.replace(/\n/g, '<br>')}</p>
+                    <div class="chat-info small text-muted mt-1">
+                        <span>Your reflection</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Add it to the chat container
+    chatContainer.appendChild(userReflectionBubble);
+    
+    // Scroll to the new message
+    userReflectionBubble.scrollIntoView({ behavior: 'smooth' });
+}
+
+function addMiraFollowupBubble(followupText) {
+    // Create a new Mira response bubble
+    const chatContainer = document.querySelector('.chat-container');
+    
+    if (!chatContainer) {
+        console.error('Chat container not found');
+        return;
+    }
+    
+    // Create the Mira followup bubble
+    const miraFollowupBubble = document.createElement('div');
+    miraFollowupBubble.className = 'chat-message mira-message mb-4';
+    miraFollowupBubble.innerHTML = `
+        <div class="d-flex">
+            <div class="chat-avatar me-3">
+                <div class="chat-avatar-circle bg-info text-white">
+                    <span>M</span>
+                </div>
+            </div>
+            <div class="chat-bubble mira-bubble">
+                <div class="chat-content">
+                    <p class="mb-0">${followupText.replace(/\n/g, '<br>')}</p>
+                    <div class="chat-info text-end small text-muted mt-2">
+                        <span>Coach Mira</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Add it to the chat container
+    chatContainer.appendChild(miraFollowupBubble);
+    
+    // Scroll to the new message
+    miraFollowupBubble.scrollIntoView({ behavior: 'smooth' });
+}
+
+function hideReflectionForm() {
+    // Hide the reflection form after submission
+    const reflectionForm = document.querySelector('.reflection-form');
+    if (reflectionForm) {
+        reflectionForm.style.display = 'none';
+    }
+}
+
+function showReflectionLoading(isLoading) {
+    // Show/hide loading indicator
+    const submitButton = document.querySelector('.submit-reflection');
+    
+    if (submitButton) {
+        if (isLoading) {
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...';
+        } else {
+            submitButton.disabled = false;
+            submitButton.innerHTML = 'Submit Reflection';
+        }
+    }
+}
+
+function showAlert(message, type) {
+    // Create an alert element
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+    alertDiv.role = 'alert';
+    alertDiv.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+    
+    // Find the container to append the alert
+    const container = document.querySelector('.container');
+    if (container) {
+        container.insertBefore(alertDiv, container.firstChild);
+        
+        // Auto-dismiss after 5 seconds
+        setTimeout(() => {
+            alertDiv.classList.remove('show');
+            setTimeout(() => alertDiv.remove(), 150);
+        }, 5000);
+    }
+}
