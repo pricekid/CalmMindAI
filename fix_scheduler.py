@@ -138,12 +138,10 @@ def fix_scheduler_environment():
         logger.info("Set MAIL_PORT to 587")
     
     if not mail_vars['MAIL_USERNAME']:
-        os.environ['MAIL_USERNAME'] = 'calmjourney7@gmail.com'
-        logger.info("Set MAIL_USERNAME to calmjourney7@gmail.com")
+        logger.info("MAIL_USERNAME not set")
     
     if not mail_vars['MAIL_DEFAULT_SENDER']:
-        os.environ['MAIL_DEFAULT_SENDER'] = 'calmjourney7@gmail.com'
-        logger.info("Set MAIL_DEFAULT_SENDER to calmjourney7@gmail.com")
+        logger.info("MAIL_DEFAULT_SENDER not set")
     
     # Check if password is set, which is critical
     if not mail_vars['MAIL_PASSWORD']:
