@@ -726,22 +726,19 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
 
             Journal entry: "{safe_text}"
 
-            Please return a structured JSON response with the following fields:
+            Please return a simple JSON response with exactly these three fields:
+            - 'insight_text': A brief, warm comment celebrating what they've shared (1-2 sentences)
+            - 'reflection_prompt': A single open-ended question to explore their positive experience
+            - 'followup_text': A short, gentle closing thought that supports moving forward with this energy
 
-            1. **insight_text**: A brief, uplifting comment reflecting the positivity or presence in their journal. Ground it in what they actually wrote.
+            Example for "today is a wonderful day":
+            {{
+                "insight_text": "It's so good to hear that today feels wonderful — noticing and naming joy is a powerful act.",
+                "reflection_prompt": "What made today feel wonderful for you?", 
+                "followup_text": "May this positive energy carry you gently into whatever comes next."
+            }}
 
-            2. **reflection_prompt**: (Optional) A gentle, open-ended question that invites the user to deepen or savor the positive emotion. Only include if it fits naturally.
-
-            3. **followup_text**: A short, affirming closing thought to support their emotional tone today.
-
-            Do not include thought_patterns or strategies unless explicitly warranted by the content. Keep your response emotionally warm and concise.
-
-            Return valid JSON with these fields:
-            - 'insight_text': Initial warm response
-            - 'reflection_prompt': A gentle question to explore their positive experience
-            - 'followup_text': Encouraging close
-            - 'thought_patterns': At least one pattern recognizing positive thinking
-            - 'strategies': One simple suggestion to enhance the moment
+            Keep your response concise and warm, focusing only on these three elements.
             """
         else:
             prompt = f"""
