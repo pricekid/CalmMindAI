@@ -721,7 +721,6 @@ def new_journal_entry():
                             # Reflection section
                             formatted_paragraphs.append(f"<div class='reflection-section mb-4'><h5 class='mb-3'>Reflection Prompts</h5>{paragraph}</div>")
                         elif i == len(paragraphs) - 1 and "warmly" in paragraph.lower():
-elif i == len(paragraphs) - 1 and "warmly" in paragraph.lower():
                             # Closing section
                             formatted_paragraphs.append(f"<div class='closing-section mt-4'>{paragraph}</div>")
                         else:
