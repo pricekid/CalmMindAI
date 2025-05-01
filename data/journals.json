@@ -3231,17 +3231,14 @@
     "created_at": "2025-04-09T12:20:36.762905",
     "updated_at": "2025-04-09T12:20:40.531279",
     "is_analyzed": true,
-    "gpt_response": "I want to start by saying how brave you are for sharing what\u2019s on your mind. It\u2019s completely understandable to feel anxious when it seems like everyone around you is moving forward while you're standing still. That feeling of being stuck can be so isolating, but you're not alone in this.\n\nIt sounds like you\u2019re really feeling the pressure to keep up with the pace of life around you, and it\u2019s weighing heavily on your sense of self-worth. Comparing yourself to others is something many of us do, and it can be tough when it leads to anxiety and self-doubt.\n\nHere are a couple of thought patterns that might be popping up:\n\nComparison Trap: This is when we measure our own worth against others' achievements. It\u2019s easy to forget that we all have unique paths and timelines.\n\nAll-or-Nothing Thinking: This is about seeing things in black-and-white, like feeling you\u2019re either moving forward or completely stuck. Life often has a lot more gray areas.\n\nTo help with these, here are a few things you might try:\n\nThought Reframing: When you catch yourself in the comparison trap, remind yourself of your own unique strengths and the progress you\u2019ve made, however small it might seem.\n\nGratitude Practice: Each day, jot down a couple of things you\u2019re grateful for in your life right now. It can help shift focus from what\u2019s missing to what\u2019s present.\n\nMindful Moments: Spend a few minutes each day just being present. Whether it\u2019s through meditation or simply sitting quietly, it can help ground you and reduce feelings of anxiety.\n\nAnd here\u2019s a little reflection for today:\n\"What is one small step I can take towards my goals that feels manageable right now?\"\n\nYou\u2019re doing important work by tuning into these feelings, and every step you take is valuable. Remember, progress doesn\u2019t always look like a big leap forward. Sometimes it\u2019s just about taking one small, steady step at a time.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- Mind Reading\n- All-or-Nothing Thinking\n\n\nWarmly,\nCoach Mira",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Comparison Trap",
-        "description": "Measuring your own worth against others' achievements, often leading to feelings of inadequacy.",
-        "recommendation": "Thought Reframing: Focus on your own strengths and unique progress."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This pattern makes you see situations in black and white, without middle ground. It can lead to feeling stuck when life doesn't meet exact expectations. - Challenge this by identifying grey areas and acknowledging partial successes."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Seeing things in black-and-white terms, which can make you feel either completely successful or completely stuck.",
-        "recommendation": "Gratitude Practice: Helps shift focus to what you have rather than what you lack."
+        "thought_pattern": "Comparison Trap",
+        "recommendation": "Comparing yourself to others often disregards your unique journey and achievements, increasing feelings of inadequacy. - Practice gratitude for your own milestones, no matter their size."
       }
     ]
   },
@@ -3314,17 +3311,14 @@
     "created_at": "2025-04-09T12:43:38.738942",
     "updated_at": "2025-04-09T12:43:42.920317",
     "is_analyzed": true,
-    "gpt_response": "Hey there, I just want to start by acknowledging the courage it takes to share how you're feeling. It's completely understandable to feel overwhelmed and frustrated when your week isn't going as planned. You're not alone in this, and it's great that you're recognizing these patterns \u2014 that self-awareness is a big step forward.\n\nIt sounds like you're feeling caught in a difficult spot between wanting to help out and needing to take care of your own workload. It can be tough to say no, especially when you worry about how it might come across to others. That feeling of being drained is totally valid, especially when it feels like you're carrying more than you intended.\n\nLet's look at a couple of thought patterns that might be playing a role here:\n\nAll-or-Nothing Thinking: This pattern makes us see situations in extremes, like feeling either helpful or selfish. But remember, life is full of in-betweens, and setting boundaries doesn't make you any less supportive.\nMind Reading: You might be assuming your colleague will think you're selfish if you say no, but unless they've told you that, it might just be anxiety filling in the gaps.\n\nHere are a few strategies you might find helpful:\n\nThought Reframing: Try to reframe the idea of saying no. Instead of thinking \"I'm being selfish,\" consider \"I'm being responsible with my time so I can give my best when I do help.\"\nBoundary Setting Practice: Think about a small, manageable way to practice setting a boundary. Maybe start with something simple, like giving yourself a set time to work on your own projects before considering other tasks.\nGratitude Practice: At the end of the day, jot down a couple of things you're grateful for about your own work and contributions. This can help shift focus from what's overwhelming to what's fulfilling.\n\nHere's a reflection prompt for you:\n\"What is one small way I can honor my own needs while still feeling like I'm contributing positively?\"\n\nYou're doing such important work by reflecting on this. Remember, each step you take is valuable, and I'm here with you as you navigate this journey.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n\n\nWarmly,\nCoach Mira",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "This pattern makes us see situations in extremes with no middle ground.",
-        "recommendation": "Thought reframing to find the middle ground and recognize the shades of gray in situations."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This pattern involves seeing situations in only two categories instead of on a continuum. It can make you feel like you either have to help everyone or no one at all. - Try recognizing the middle ground by setting small, manageable boundaries."
       },
       {
-        "pattern": "Mind Reading",
-        "description": "Assuming you know what others are thinking without having concrete evidence.",
-        "recommendation": "Challenge these assumptions by seeking clarification or focusing on what you know to be true."
+        "thought_pattern": "Overcommitment",
+        "recommendation": "Taking on too much often stems from a desire to please others, but it can lead to stress and exhaustion, affecting your own priorities. - Practice saying 'no' to maintain balance and focus on your own tasks."
       }
     ]
   },
@@ -3357,17 +3351,14 @@
     "created_at": "2025-04-09T13:20:25.033623",
     "updated_at": "2025-04-09T13:20:30.116848",
     "is_analyzed": true,
-    "gpt_response": "First off, thank you for sharing your thoughts with me. It takes courage to open up about these feelings, and it's completely okay to feel this way. You're not alone in this, and it's great that you're reflecting on it. \n\nIt sounds like there's a lot of pressure between wanting to connect with others and the fear of how you might come across. That push and pull can be really draining, and it makes sense that you'd feel stuck right now. \n\nLet's look at a couple of thought patterns that might be popping up:\n\nAll-or-Nothing Thinking: This is when things feel like they're either all good or all bad. For example, thinking you have to either go to the event and be perfect or stay home to avoid any awkwardness. It's helpful to remember that there's a whole gray area in between those extremes. \nMind Reading: You're predicting how you'll be perceived, like being seen as weird or boring, without real evidence. It's anxiety's way of filling in the blanks with fears, not facts. \n\nHere are a few things you might try:\n\nThought Reframing: When you catch yourself thinking \"I'll mess it up,\" try to reframe it to something like \"I might have awkward moments, but that's okay. Everyone does.\" \nBehavioral Experiment: Consider going to the event for just a short period, like 30 minutes. It's a way to dip your toes in without feeling overwhelmed by the whole night.\nGratitude Practice: After the event, jot down a few things that went well or that you appreciated. It could be as simple as a nice conversation or the fact that you showed up.\n\nAnd a small reflection for today:\n\"What\u2019s one thing I enjoy about connecting with others that I want to experience this weekend?\"\n\nYou're doing important work by being aware of these thoughts and patterns. Remember, every step you take is progress, no matter how small.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n\n\nWarmly,\nCoach Mira",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Seeing situations in black-or-white terms, without recognizing the gray areas in between.",
-        "recommendation": "Thought Reframing: Challenge the extremes by considering the middle ground."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This pattern involves viewing situations in extremes, like believing you'll either be perfectly social or entirely awkward. It can create unnecessary pressure and anxiety around social events. - Try to identify a middle ground, such as envisioning a realistic scenario where you have both comfortable and awkward moments."
       },
       {
-        "pattern": "Mind Reading",
-        "description": "Predicting what others think of you without actual evidence.",
-        "recommendation": "Behavioral Experiment: Attend the event for a short time to gather real feedback."
+        "thought_pattern": "Overcommitment",
+        "recommendation": "Feeling guilty for backing out can lead you to commit to more than feels comfortable, creating a cycle of stress and avoidance. This pattern can make social situations feel overwhelming. - Consider setting a small goal, like attending for just an hour, to reduce pressure and maintain your boundaries."
       }
     ]
   },
@@ -3380,17 +3371,14 @@
     "created_at": "2025-04-09T13:33:50.537294",
     "updated_at": "2025-04-09T13:33:56.958139",
     "is_analyzed": true,
-    "gpt_response": "I want to start by saying that it's really brave of you to share how you're feeling. It's so easy to take on too much because of the fear of being perceived as selfish or unreliable, and you're not alone in feeling overwhelmed when this happens.\n\nYou're experiencing that familiar tug-of-war between wanting to help others and needing to protect your own time and energy. It's tough to manage those boundaries, especially when anxiety whispers that saying no might make you seem uncooperative.\n\nLet's look at a couple of thought patterns that might be at play here:\n\nAll-or-Nothing Thinking: This is when you see things in black and white, like believing that saying no makes you a bad colleague. But remember, setting boundaries doesn\u2019t mean you\u2019re unkind or unreliable.\nMind Reading: You're assuming your colleague might think less of you if you set a boundary. But have they actually expressed that, or is it anxiety filling in the gaps?\n\nHere are a few strategies you could try:\n\nThought Reframing: Try to shift from \"I have to help or they'll think I'm selfish\" to \"I can still be supportive without overextending myself.\"\nBoundary Setting: Practice saying no gently. You might say, \"I'm sorry, I can't take this on right now, but maybe I can help in a smaller way.\"\nGratitude Practice: At the end of each day, jot down one thing you accomplished or a moment you felt proud of setting a boundary, no matter how small.\n\nAnd for today's reflection, consider this question:\n\"What small boundary could I set today that would help me feel more balanced?\"\n\nYou're making progress just by being aware of these patterns. It's a journey, and you're taking important steps. Remember, even small changes count.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n\n\nWarmly,\nCoach Mira",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "This is when you see things in extremes, like believing you're either completely reliable or entirely selfish.",
-        "recommendation": "Thought Reframing: Shift your perspective to find a more balanced view that acknowledges your ability to be supportive without overextending."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Seeing things in black and white terms, without recognizing the gray areas - Thought Reframing: Challenge the idea that you have to help fully or not at all. Look for a balanced perspective."
       },
       {
-        "pattern": "Mind Reading",
-        "description": "You're assuming others are judging you negatively without any clear evidence.",
-        "recommendation": "Boundary Setting: Practice saying no in a kind way, to reinforce that setting limits doesn\u2019t mean you\u2019re being unhelpful."
+        "thought_pattern": "Overcommitment",
+        "recommendation": "Saying yes to too many things, leading to feeling stretched thin - Boundary Setting: Practice saying no gently but firmly to maintain your own priorities."
       }
     ]
   },
@@ -3403,17 +3391,14 @@
     "created_at": "2025-04-09T15:04:51.612805",
     "updated_at": "2025-04-09T15:05:55.031988",
     "is_analyzed": true,
-    "gpt_response": "Hey there! I really appreciate you taking the time to check in, even if it's just a quick 'test.' It's a huge step to engage with your feelings, no matter how small they may seem right now.\n\nIt sounds like you're just dipping your toes into the journaling waters, and that's a great place to start. Even short entries are a way of keeping the door open to understanding yourself better.\n\nBased on what you've shared in the past, here are a couple of thought patterns that might pop up for you:\n\nAll-or-Nothing Thinking: This is when we see things in black and white terms. Maybe there's a tendency to think, 'If it's not perfect, it's a fail.'\nMind Reading: This involves assuming you know what others are thinking about you, often not in the most positive light. \n\nHere are a few gentle CBT strategies you could try:\n\nThought Reframing: Next time you catch an all-or-nothing thought, try to find a middle ground. Instead of thinking 'I have to do this perfectly,' try 'Doing my best is enough.'\nMindfulness Practice: Spend a few minutes each day practicing being in the moment. This can help reduce mind reading by bringing your focus back to the present.\n\nAnd a little reflection for today:\n\"What's one thing I can accept about myself today, just as I am?\"\n\nRemember, you're on a journey, and every little step counts. You're doing amazing work by simply being curious about your thoughts and feelings.\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n\n\nWarmly,\nCoach Mira",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Seeing situations in black-and-white terms, without recognizing any middle ground.",
-        "recommendation": "Thought Reframing: Try to find a middle ground in your thoughts."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This is when you view situations in extreme terms, like seeing things as either a complete success or a total failure, without recognizing the middle ground. - Thought Reframing: Practice seeing the nuances and middle ground in situations instead of only the extremes."
       },
       {
-        "pattern": "Mind Reading",
-        "description": "Assuming you know what others are thinking about you, often negatively.",
-        "recommendation": "Mindfulness Practice: Focus on being present to reduce assumptions about others."
+        "thought_pattern": "Comparison Trap",
+        "recommendation": "This involves constantly comparing yourself to others, which can lead to feelings of inadequacy and decreased self-esteem. - Gratitude Practice: Focus on three things you\u2019re grateful for in your own life to shift attention away from comparisons."
       }
     ]
   },
@@ -3426,17 +3411,34 @@
     "created_at": "2025-04-10T00:11:36.145374",
     "updated_at": "2025-04-10T00:11:47.830394",
     "is_analyzed": true,
-    "gpt_response": "First, I want to acknowledge how brave it is for you to share your feelings. It\u2019s not easy to admit when things feel off with someone we care about, and your openness here is a big step.\n\nFrom what you\u2019ve written, it seems like you\u2019re feeling undervalued in your relationship. That can be really tough, especially when you\u2019re hoping for your feelings to be acknowledged and met with genuine care.\n\nThere might be a couple of thought patterns at play here:\n\nMind Reading: You might be assuming your partner doesn\u2019t care because you\u2019re interpreting their actions this way. But unless they\u2019ve explicitly told you this, it might be your anxiety filling in the gaps.\n\nAll-or-Nothing Thinking: It\u2019s easy to slip into thinking that they either care completely or not at all, when in reality, feelings and actions often exist in a gray area.\n\nHere are some gentle CBT strategies you might find helpful:\n\nThought Reframing: Try to catch yourself when you\u2019re thinking \"They don\u2019t care at all\" and reframe it to \"There are moments when I feel unheard, but it doesn\u2019t mean they never care.\"\n\nBoundary Setting: Consider what you need to feel valued and how you could communicate this to your partner. Practicing assertive communication might help in expressing your needs more clearly.\n\nGratitude Practice: Reflect on any small moments where you did feel cared for. This isn\u2019t to ignore your feelings but to create a balanced view of your relationship.\n\nFor today\u2019s reflection:\n\"What would feeling cared for look like in your relationship? How might you express this to your partner?\"\n\nRemember, recognizing these feelings is a vital part of understanding and strengthening your relationship. You're doing important work by addressing this.\n\nWarmly,\nCoach Mira",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Mind Reading",
-        "description": "Assuming you know what someone else is thinking without them telling you.",
-        "recommendation": "Thought Reframing to challenge and adjust these assumptions."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, without acknowledging the shades of grey in between. - Thought Reframing: Look for evidence of care, even if it's not as frequent or grand as you might hope."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Seeing things in black and white terms, without recognizing the gray areas.",
-        "recommendation": "Boundary Setting to define and communicate your emotional needs."
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what others are thinking without having factual evidence to support it. - Open Communication: Discuss your feelings and invite your partner to share their thoughts."
+      }
+    ]
+  },
+  {
+    "id": 153,
+    "user_id": 7,
+    "title": "April 12th",
+    "content": "I\u2019m feeling so undisciplined unmotivated and tired. I can\u2019t tell what\u2019s wrong but I feel like there\u2019s an underlying issue that I\u2019m unaware of. I know I\u2019m missing having female friends people to talk to and confide in my one friend on the island is more of a romantic relationship which may not be the healthiest for either of us because we are so different but in ways it is helpful because we help each other grow in the areas that we are different. I guess in a selfish way we both enjoy each other\u2018s company and that having someone there the masculine and feminine energy just not sure what to do with it so hard to walk away not even sure that\u2019s the right decision since there is love there I think I really need to just figure out what I want Which honestly I know what I want but it seems that it\u2019s not enough or it\u2019s an issue I feel like everything is about how to make more money. Granted you do need money to do what you want to do in life and have little luxuries and vacations and buy what you wanna buy, but it gets tiring if that\u2019s the goal, the whole time on the other hand, I need to learn to live with little and shop differently if I\u2019m not going to be making extra money, but there\u2019s this pressure to do it simply because of the person I\u2019m in relationship with so it takes away my motivation to even try because of the pressure. I feel like I get more accomplished and I have better work habits when I\u2019m not dealing with anyone relationship wise, but then loneliness set in and I miss that companionship. So I wonder do you just have to take both and if so, how do you navigate being healthy and hold and picking up good habits while also putting energy into a relationship. Not to mention three children that you\u2019re raising on your own basically. So much to think about but in the end of the day, I and my children have everything we need maybe not everything we want but everything we need.",
+    "anxiety_level": 8,
+    "created_at": "2025-04-12T18:30:28.100421",
+    "updated_at": "2025-04-12T19:01:38.901377",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Seeing things in black-and-white terms, without considering the middle ground. - Thought Reframing: Find a middle ground by setting small, achievable steps for both personal goals and relationships."
+      },
+      {
+        "thought_pattern": "Emotional Reasoning",
+        "recommendation": "Believing that because you feel something strongly, it must be true. - Gratitude Practice: Shift focus to what you appreciate to counteract feelings of insufficiency."
       }
     ]
   },
@@ -3449,17 +3451,14 @@
     "created_at": "2025-04-14T15:54:31.658284",
     "updated_at": "2025-04-14T16:12:25.783534",
     "is_analyzed": true,
-    "gpt_response": "I want to acknowledge the courage it takes to share your feelings, especially when you're feeling so overwhelmed. It's clear that you're passionate about your work and care deeply for those you help, and it's understandable to feel burnt out when it seems like your efforts aren't appreciated. \n\nYou're grappling with the weight of wanting to help your clients and feeling frustrated when progress isn't visible. This can be incredibly draining, especially when your work is entwined with your sense of purpose.\n\nHere are a few thought patterns that may be surfacing:\n\nAll-or-Nothing Thinking: It seems like you're seeing your work as either a success or a failure, with no middle ground. This can amplify feelings of frustration.\nEmotional Reasoning: Feeling overwhelmed might make it seem like you're not making a difference, but feelings aren't always the full story.\n\nHere are a few gentle CBT strategies you could try:\n\nThought Reframing: Try recognizing small successes in your work, even if they seem minor. Reflecting on these can shift your perspective and renew your sense of purpose.\nGratitude Practice: Each day, write down one thing you appreciate about your work or a small win. This can help balance the focus from what's draining to what's fulfilling.\nBoundary Setting: Consider setting clear boundaries to protect your energy, ensuring you have time for self-care and reflection outside work.\n\nAnd a little reflection for today:\n\"What originally inspired me to become a social worker, and how can I reconnect with that motivation in small ways?\"\n\nRemember, you're making a difference by simply being present and trying. It\u2019s okay to take care of yourself too, and even small steps can lead to meaningful change.\n\nWarmly,\nCoach Mira",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Viewing situations in black-or-white terms without recognizing the spectrum of possibilities in between.",
-        "recommendation": "Thought Reframing: Challenge this pattern by identifying and acknowledging the gray areas and small successes in your work."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-or-white terms without recognizing the spectrum of possibilities in between. - Thought Reframing: Challenge this pattern by identifying and acknowledging the gray areas and small successes in your work."
       },
       {
-        "pattern": "Emotional Reasoning",
-        "description": "Believing that because you feel a certain way, it must be true.",
-        "recommendation": "Gratitude Practice: Focus on positive aspects or wins, however small, to counterbalance negative feelings."
+        "thought_pattern": "Emotional Reasoning",
+        "recommendation": "Believing that because you feel a certain way, it must be true. - Gratitude Practice: Focus on positive aspects or wins, however small, to counterbalance negative feelings."
       }
     ]
   },
@@ -3472,17 +3471,14 @@
     "created_at": "2025-04-14T16:23:06.640185",
     "updated_at": "2025-04-14T16:23:15.960107",
     "is_analyzed": true,
-    "gpt_response": "I want to acknowledge how deeply challenging and draining it must be to feel this way. It's clear you care profoundly about your work and your clients, and that passion is a true testament to your dedication.\n\nIt sounds like you're grappling with feelings of frustration and exhaustion, feeling like you're giving so much of yourself but not seeing the progress you hope for. That can be incredibly disheartening, especially when you're driven by a desire to make a difference.\n\nHere are a few thought patterns that may be surfacing:\n\nAll-or-Nothing Thinking: It might feel like your efforts are wasted because you're not seeing the results you want, but remember, change often happens in small steps, not leaps.\nCatastrophizing: It can feel like the situation is unbearable and will never improve, but there might be smaller, positive moments that are easy to miss when you're feeling overwhelmed.\n\nHere are a few gentle CBT strategies you could try:\n\nThought Reframing: Challenge the belief that your clients don't want help. Consider small successes or moments of gratitude you've witnessed in your work.\nBoundary Setting: Reflect on what boundaries might help you feel more balanced and prevent burnout. It\u2019s okay to protect your own well-being, too.\nGratitude Practice: Each day, write down a small win or positive interaction, no matter how minor it seems.\n\nAnd a little reflection for today: \"What is one thing I can do to nurture my passion for helping others in a sustainable way?\"\n\nYou're doing important inner work by reflecting on these feelings. Remember, even small steps towards balance and self-care are meaningful.\n\nWarmly,\nCoach Mira",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Seeing situations in black-and-white terms, without recognizing the middle ground or spectrum of possibilities.",
-        "recommendation": "Try to identify and appreciate even small successes or positive interactions in your work."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Seeing situations in black-and-white terms, without recognizing the middle ground or spectrum of possibilities. - Try to identify and appreciate even small successes or positive interactions in your work."
       },
       {
-        "pattern": "Catastrophizing",
-        "description": "Imagining the worst possible outcome or viewing a situation as far worse than it is.",
-        "recommendation": "Focus on identifying and acknowledging any small positive changes or moments of progress."
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst possible outcome or viewing a situation as far worse than it is. - Focus on identifying and acknowledging any small positive changes or moments of progress."
       }
     ]
   },
@@ -3495,47 +3491,36 @@
     "created_at": "2025-04-14T17:42:40.977243",
     "updated_at": "2025-04-14T17:45:17.335488",
     "is_analyzed": true,
-    "gpt_response": "Hi Hasina, I can sense how overwhelming and heart-wrenching this situation feels for you. You're trying to balance so much: your work, your daughter's well-being, and managing the complexities of co-parenting. Your deep concern for your daughter truly shows how much you care about her future.\n\nThe situation with your daughter seems like it's pulling you in many directions, leaving you feeling stressed and perhaps at a loss for what to do next. It's clear you're doing everything you can to support and guide her, even when the path forward feels uncertain and challenging.\n\nThought Patterns That May Be Surfacing:\n* All-or-Nothing Thinking: You might be seeing the situation as completely out of control because things aren't improving as quickly as you'd hoped.\n* Catastrophizing: There seems to be a focus on worst-case scenarios, like fearing the most negative outcomes for your daughter without seeing the potential for positive change.\n\n\nCBT-Based Strategies:\n1. Focus on Small Wins Instead of viewing the situation as a single overwhelming problem, try to focus on small steps and victories, no matter how minor they seem. Write down one positive interaction or behavior your daughter has shown recently, and reflect on how you can encourage more of this.\n2. Set Clear Boundaries Establish boundaries that keep both you and your daughter safe and clear about expectations. This can help in managing the chaos and bringing some order to the situation. Sit down with your daughter to discuss and agree on one or two non-negotiable rules, and explain the reasons behind them.\n\n\nReflection Prompt: \"What is one thing you can do today to support your daughter without feeling overwhelmed by the bigger picture?\"\n\n\nRemember, you're not alone in this. You're doing your best, and that counts for a lot. Take care of yourself as you navigate these challenges. With warmth, Coach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Viewing situations in black-and-white terms without recognizing the gray areas.",
-        "recommendation": "Practice recognizing and celebrating small successes even amidst larger challenges."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, without recognizing the gray areas in between. - Challenge these thoughts by considering more balanced, realistic alternatives."
       },
       {
-        "pattern": "Catastrophizing",
-        "description": "Imagining the worst possible outcome and believing it will happen.",
-        "recommendation": "Challenge these thoughts by asking yourself what the most likely outcome is and what steps you can take to mitigate risks."
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what others are thinking or feeling without having all the facts. - Check the validity of these assumptions by gathering more information directly from those involved."
       }
-    ],
-    "structured_data": {
-      "intro": "Hi Hasina, I can sense how overwhelming and heart-wrenching this situation feels for you. You're trying to balance so much: your work, your daughter's well-being, and managing the complexities of co-parenting. Your deep concern for your daughter truly shows how much you care about her future.",
-      "reflection": "The situation with your daughter seems like it's pulling you in many directions, leaving you feeling stressed and perhaps at a loss for what to do next. It's clear you're doing everything you can to support and guide her, even when the path forward feels uncertain and challenging.",
-      "distortions": [
-        {
-          "pattern": "All-or-Nothing Thinking",
-          "description": "You might be seeing the situation as completely out of control because things aren't improving as quickly as you'd hoped."
-        },
-        {
-          "pattern": "Catastrophizing",
-          "description": "There seems to be a focus on worst-case scenarios, like fearing the most negative outcomes for your daughter without seeing the potential for positive change."
-        }
-      ],
-      "strategies": [
-        {
-          "title": "Focus on Small Wins",
-          "description": "Instead of viewing the situation as a single overwhelming problem, try to focus on small steps and victories, no matter how minor they seem.",
-          "action_step": "Write down one positive interaction or behavior your daughter has shown recently, and reflect on how you can encourage more of this."
-        },
-        {
-          "title": "Set Clear Boundaries",
-          "description": "Establish boundaries that keep both you and your daughter safe and clear about expectations. This can help in managing the chaos and bringing some order to the situation.",
-          "action_step": "Sit down with your daughter to discuss and agree on one or two non-negotiable rules, and explain the reasons behind them."
-        }
-      ],
-      "reflection_prompt": "\n\nReflection Prompt: \"What is one thing you can do today to support your daughter without feeling overwhelmed by the bigger picture?\"\n",
-      "outro": "Remember, you're not alone in this. You're doing your best, and that counts for a lot. Take care of yourself as you navigate these challenges. With warmth, Coach Mira"
-    }
+    ]
+  },
+  {
+    "id": 157,
+    "user_id": 22,
+    "title": "Everyday stress ",
+    "content": "I feel burden by day to day financial conflicts while still trying to maintain a balance trying to support my family and it just seems so vain and wondering how will it all end seeing nothing like better days ahead ",
+    "anxiety_level": 1,
+    "created_at": "2025-04-14T18:53:33.882026",
+    "updated_at": "2025-04-14T18:53:41.722776",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst possible outcome without considering more likely, less dramatic possibilities. - Thought Reframing: Challenge catastrophic thoughts by looking for evidence that things could turn out differently."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, without recognizing the spectrum of possibilities in between. - Gratitude Practice: Focus on identifying small positives or grey areas in your experiences."
+      }
+    ]
   },
   {
     "id": 158,
@@ -3546,47 +3531,116 @@
     "created_at": "2025-04-14T19:06:44.561409",
     "updated_at": "2025-04-14T19:06:58.596137",
     "is_analyzed": true,
-    "gpt_response": "Hi Hasina, I'm so sorry to hear about the overwhelming situation you're facing. It's clear that you're carrying a lot of responsibility and concern for your daughter, and managing this alongside your work must be incredibly taxing. Your dedication to her well-being shines through, even amidst such challenging circumstances.\n\nReading through your conversation, it's evident that you're trying to navigate a very complex and emotionally charged situation with your daughter. The fear, frustration, and sadness you're experiencing are completely understandable given the circumstances. You're doing your best to protect her and guide her, even when it feels like your efforts aren't making the impact you hope for. It's also clear that you're trying to maintain open communication, even when it's difficult.\n\nThought Patterns That May Be Surfacing:\n* Catastrophizing: You might be imagining the worst-case scenarios for your daughter's future, such as pregnancy or STDs, which can amplify your anxiety and make it harder to focus on the steps you can take now.\n* All-or-Nothing Thinking: It seems like you may view the situation as either completely out of control or perfectly managed, which can make it difficult to see the small successes and progress that may be happening.\n\n\nCBT-Based Strategies:\n1. Reframing the Situation Try to identify and acknowledge the small victories and positive behaviors, even if they seem minor. This can help break the cycle of all-or-nothing thinking. Each day, write down one positive interaction or small success you notice, such as a moment of calm discussion with your daughter.\n2. Establishing Boundaries Clear boundaries can provide a sense of structure and safety for both you and your daughter. These boundaries should be consistent and communicated with care. Outline specific boundaries regarding safety (e.g., curfews, communication about whereabouts) and discuss these with your daughter, involving her in the agreement process where possible.\n\n\nReflection Prompt: \"What small changes or actions have you noticed recently that could indicate progress, even if they seem minor?\"\n\n\nRemember, you're doing everything you can to support your daughter through this difficult time. You're not alone in this, and it's okay to seek support for yourself as well. Please take care of yourself, and reach out if you need additional help. Warmly, Coach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Catastrophizing",
-        "description": "Imagining the worst outcomes can increase anxiety and make it hard to see solutions.",
-        "recommendation": "Practice grounding techniques such as deep breathing or mindfulness to help bring focus back to the present and reduce overwhelming thoughts."
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst outcomes can increase anxiety and make it hard to see solutions. - Practice grounding techniques such as deep breathing or mindfulness to help bring focus back to the present and reduce overwhelming thoughts."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Viewing situations in extremes can hinder seeing the gray areas and progress.",
-        "recommendation": "Use a journal to track progress and acknowledge positive moments, no matter how small, to help balance your perspective."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in extremes can hinder seeing the gray areas and progress. - Use a journal to track progress and acknowledge positive moments, no matter how small, to help balance your perspective."
       }
-    ],
-    "structured_data": {
-      "intro": "Hi Hasina, I'm so sorry to hear about the overwhelming situation you're facing. It's clear that you're carrying a lot of responsibility and concern for your daughter, and managing this alongside your work must be incredibly taxing. Your dedication to her well-being shines through, even amidst such challenging circumstances.",
-      "reflection": "Reading through your conversation, it's evident that you're trying to navigate a very complex and emotionally charged situation with your daughter. The fear, frustration, and sadness you're experiencing are completely understandable given the circumstances. You're doing your best to protect her and guide her, even when it feels like your efforts aren't making the impact you hope for. It's also clear that you're trying to maintain open communication, even when it's difficult.",
-      "distortions": [
-        {
-          "pattern": "Catastrophizing",
-          "description": "You might be imagining the worst-case scenarios for your daughter's future, such as pregnancy or STDs, which can amplify your anxiety and make it harder to focus on the steps you can take now."
-        },
-        {
-          "pattern": "All-or-Nothing Thinking",
-          "description": "It seems like you may view the situation as either completely out of control or perfectly managed, which can make it difficult to see the small successes and progress that may be happening."
-        }
-      ],
-      "strategies": [
-        {
-          "title": "Reframing the Situation",
-          "description": "Try to identify and acknowledge the small victories and positive behaviors, even if they seem minor. This can help break the cycle of all-or-nothing thinking.",
-          "action_step": "Each day, write down one positive interaction or small success you notice, such as a moment of calm discussion with your daughter."
-        },
-        {
-          "title": "Establishing Boundaries",
-          "description": "Clear boundaries can provide a sense of structure and safety for both you and your daughter. These boundaries should be consistent and communicated with care.",
-          "action_step": "Outline specific boundaries regarding safety (e.g., curfews, communication about whereabouts) and discuss these with your daughter, involving her in the agreement process where possible."
-        }
-      ],
-      "reflection_prompt": "\n\nReflection Prompt: \"What small changes or actions have you noticed recently that could indicate progress, even if they seem minor?\"\n",
-      "outro": "Remember, you're doing everything you can to support your daughter through this difficult time. You're not alone in this, and it's okay to seek support for yourself as well. Please take care of yourself, and reach out if you need additional help. Warmly, Coach Mira"
-    }
+    ]
+  },
+  {
+    "id": 159,
+    "user_id": 1,
+    "title": "watching Tv",
+    "content": "I am  watching a TV show and my sister/brother changes the\r\nchannel to a show i don\u2019t like",
+    "anxiety_level": 4,
+    "created_at": "2025-04-16T19:23:56.798853",
+    "updated_at": "2025-04-16T19:24:05.147203",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what others are thinking without concrete evidence. - Try to gather evidence before concluding what others think. Ask clarifying questions if possible."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black or white terms, without recognizing the middle ground. - Practice finding a middle ground or compromise, recognizing that not everything is all-or-nothing."
+      }
+    ]
+  },
+  {
+    "id": 160,
+    "user_id": 7,
+    "title": "Frustrated ",
+    "content": "Dealing with pmdd is soooooo difficult! I hate how my moods swing, how I don\u2019t feel motivated, how I have no energy.  And all I can think about is how I\u2019m failing my children, significant other, and friends during this time.",
+    "anxiety_level": 10,
+    "created_at": "2025-04-16T23:26:19.020650",
+    "updated_at": "2025-04-16T23:26:28.230781",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in extreme terms, without considering the middle ground. - Practice finding the middle ground by identifying one thing you did well each day, even if it feels small."
+      },
+      {
+        "thought_pattern": "Personalization",
+        "recommendation": "Blaming yourself for events outside your control or feeling responsible for others' emotions. - Try writing about a situation separating your emotions from others' to clarify what you can control."
+      }
+    ]
+  },
+  {
+    "id": 161,
+    "user_id": 22,
+    "title": "Trust is a detrimental while being a fundamental tool to gain confidence while maintaining partnership ",
+    "content": "I'm tried of two faced individuals, every partnership results in being stab in the back but now I find myself exhausted enough not to even fuss over these things ,I just say ok whatever it is that's out of my control I just say ok while overriding my emotions ",
+    "anxiety_level": 5,
+    "created_at": "2025-04-17T13:31:52.667728",
+    "updated_at": "2025-04-17T13:32:03.319368",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "You may be seeing each new partnership through the lens of past betrayals, assuming the same outcome. - Consider journaling about what makes each relationship unique and focus on individual traits rather than past patterns."
+      },
+      {
+        "thought_pattern": "Emotional Reasoning",
+        "recommendation": "This occurs when you let your emotions dictate your reality, such as feeling exhausted and thus accepting things as unchangeable. - Engage in mindfulness practices to become more aware of your emotions without letting them control your perceptions."
+      }
+    ]
+  },
+  {
+    "id": 162,
+    "user_id": 27,
+    "title": "I am fine ",
+    "content": "Horses ",
+    "anxiety_level": 7,
+    "created_at": "2025-04-18T16:12:33.487247",
+    "updated_at": "2025-04-18T16:12:46.110890",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "A tendency to use a single concept to encapsulate broader emotions or experiences. - Try breaking down the thought into smaller components by asking yourself what each part means to you."
+      },
+      {
+        "thought_pattern": "Filtering",
+        "recommendation": "Focusing on one aspect while potentially ignoring other relevant emotions or thoughts. - Practice broadening your perspective by listing other thoughts or feelings that might be present alongside the main focus."
+      }
+    ]
+  },
+  {
+    "id": 163,
+    "user_id": 29,
+    "title": "Tester",
+    "content": "My most current exams, my sister\u2019s exams, graduation, tertiary education, my physical well being, my summer job.",
+    "anxiety_level": 5,
+    "created_at": "2025-04-18T22:46:35.051317",
+    "updated_at": "2025-04-18T22:46:45.556049",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This pattern involves seeing situations in black-and-white terms, without recognizing the spectrum in between. - Practice finding the middle ground by acknowledging small successes in each area, even if everything isn't perfect."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "This involves seeing a single negative event as a never-ending pattern of defeat. - Challenge this pattern by identifying specific instances where things went well, even when some areas were challenging."
+      }
+    ]
   },
   {
     "id": 164,
@@ -3597,21 +3651,16 @@
     "created_at": "2025-04-20T16:18:50.988394",
     "updated_at": "2025-04-20T16:18:59.403398",
     "is_analyzed": true,
-    "gpt_response": "It sounds like you're juggling a lot right now, and it's understandable to feel overwhelmed with so many demands on your time. It's important to recognize and honor all that you're managing. Sometimes, when everything feels urgent, it can be difficult to see the bigger picture and prioritize what's truly important.\n\nTake a moment. What's one expectation you've been holding that feels heavy \u2014 and might not be fully yours to carry?\n\nRemember, you're doing your best with the time you have. It's okay to set boundaries and prioritize your needs alongside others'. You're not alone in feeling this way, and taking small steps can make a big difference.\n\nThought Patterns That May Be Surfacing:\n* All-or-Nothing Thinking: You may be viewing your tasks as all equally urgent, which can make everything feel overwhelming and critical.\n* Catastrophizing: There's a tendency to feel like there's never enough time, which can amplify anxiety about getting everything done.\n\n\nCBT-Based Strategies:\n1. Prioritization Exercise Create a list of your tasks and categorize them into 'urgent,' 'important,' and 'can wait.' This helps clarify what needs immediate attention. Spend 10 minutes listing your tasks and categorizing them today.\n2. Time Blocking Allocate specific time slots for different activities to ensure you're dedicating focused time to each area without overwhelming yourself. Choose one day this week to try time blocking, even for just a couple of hours.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "This pattern involves seeing things in black-and-white terms, such as thinking you must do everything perfectly or not at all.",
-        "recommendation": "Practice cognitive restructuring by challenging this pattern with evidence of past successes and partial completions that were beneficial."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This pattern involves viewing situations in black-or-white terms, without recognizing the middle ground. - Try to recognize and celebrate small accomplishments throughout the day, even if they're not perfect."
       },
       {
-        "pattern": "Catastrophizing",
-        "description": "Imagining the worst-case scenario about not having enough time, which can lead to increased stress.",
-        "recommendation": "Use grounding techniques to focus on the present moment and what can realistically be accomplished today."
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "This involves expecting the worst-case scenario, which can increase anxiety. - Practice grounding techniques, such as deep breathing or mindful observation, to help stay present and reduce anxiety."
       }
-    ],
-    "structured_data": null,
-    "user_reflection": null
+    ]
   },
   {
     "id": 165,
@@ -3622,21 +3671,16 @@
     "created_at": "2025-04-22T15:40:00.317120",
     "updated_at": "2025-04-22T15:40:11.816656",
     "is_analyzed": true,
-    "gpt_response": "Hello, it's clear that you're feeling a bit stuck and perhaps a bit hard on yourself. It's important to recognize that acknowledging these challenges is a significant step in itself. It shows your willingness to grow and improve, which is a strength. Let's explore these feelings together and see how we can gently reframe them.\n\nTake a moment. What's one expectation you've been holding that feels heavy \u2014 and might not be fully yours to carry?\n\nRemember, progress isn't always linear. By identifying and addressing these areas, you're already on the path to change. Be patient and kind with yourself as you navigate this journey.\n\nThought Patterns That May Be Surfacing:\n* All-or-Nothing Thinking: You might be viewing your progress in terms of absolute success or failure, which can overlook the small, meaningful steps you're taking.\n* Catastrophizing: Assuming the worst about your ability to tackle these issues can make them seem more daunting than they are.\n\n\nCBT-Based Strategies:\n1. Set Small, Achievable Goals Breaking down your larger goals into smaller, manageable steps can help you build momentum and confidence. Today, identify one small action you can take towards improving discipline, like setting a timer for 10 minutes to focus on a task.\n2. Mindful Financial Review Take a compassionate look at your finances without judgment to understand your patterns and where changes can be made. Spend 15 minutes reviewing your last month's spending to identify any patterns or surprises.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Viewing situations in black and white terms without recognizing the spectrum of possibilities.",
-        "recommendation": "Practice recognizing shades of gray in your progress and celebrate small successes."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black and white terms without recognizing the spectrum of possibilities. - Practice recognizing shades of gray in your progress and celebrate small successes."
       },
       {
-        "pattern": "Catastrophizing",
-        "description": "Imagining the worst-case scenario and feeling overwhelmed by potential negative outcomes.",
-        "recommendation": "Challenge catastrophic thoughts by asking yourself how likely they are and what evidence supports them."
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Imagining the worst-case scenario and feeling overwhelmed by potential negative outcomes. - Challenge catastrophic thoughts by asking yourself how likely they are and what evidence supports them."
       }
-    ],
-    "structured_data": null,
-    "user_reflection": null
+    ]
   },
   {
     "id": 166,
@@ -3647,21 +3691,56 @@
     "created_at": "2025-04-22T15:51:05.312525",
     "updated_at": "2025-04-22T15:51:17.416649",
     "is_analyzed": true,
-    "gpt_response": "It's completely understandable to feel like you should be further along, especially when societal pressures or personal expectations weigh heavily on you. It's clear you're aware of some areas you want to improve, like discipline and financial management. Recognizing these is already a significant step forward.\n\nTake a moment. Can you identify one small, manageable change you could make that might start to shift your feelings of being 'stuck'?\n\nRemember, progress often comes in smaller, incremental steps rather than giant leaps. Be gentle with yourself as you navigate these changes.\n\nThought Patterns That May Be Surfacing:\n* All-or-Nothing Thinking: You might be viewing your progress in life as 'all' or 'nothing', feeling like you need to achieve everything at once to be successful.\n* Catastrophizing: There's a tendency to imagine the worst-case scenario, such as assuming that current challenges will prevent future success entirely.\n\n\nCBT-Based Strategies:\n1. Set Micro-Goals Breaking down your larger objectives into smaller, achievable steps can make them feel more manageable and less overwhelming. Choose one specific area, like financial management, and set a small goal, such as tracking your expenses for a week.\n2. Mindful Reflection Spend a few moments each day reflecting on what went well, no matter how small, to build a more balanced view of your progress. At the end of each day, note down one success or positive moment, even if it's minor, to reinforce positive thinking.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Viewing life progress as a binary success or failure.",
-        "recommendation": "Use a journal to track progress in small steps and celebrate partial achievements."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing life progress as a binary success or failure. - Use a journal to track progress in small steps and celebrate partial achievements."
       },
       {
-        "pattern": "Catastrophizing",
-        "description": "Assuming current challenges will lead to complete failure.",
-        "recommendation": "Practice grounding techniques to bring focus back to the present and what can be controlled."
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Assuming current challenges will lead to complete failure. - Practice grounding techniques to bring focus back to the present and what can be controlled."
       }
-    ],
-    "structured_data": null,
-    "user_reflection": null
+    ]
+  },
+  {
+    "id": 167,
+    "user_id": 26,
+    "title": "Terrified About Work",
+    "content": "I\u2019m terrified of what my life is about to look like. I was known and popular and thriving, or at least getting there, and now it feels like I\u2019ve lost everything and that everyone has turned their back on me. I\u2019ve worked so hard for so many years and now it\u2019s like \u2026 for what? Things seem so easy for everyone else and it\u2019s always such a tumultuous journey for me. ",
+    "anxiety_level": 10,
+    "created_at": "2025-04-22T18:11:25.191161",
+    "updated_at": "2025-04-22T18:11:39.546725",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black and white terms, without recognizing the gray areas. - Challenge this pattern by identifying at least three positive outcomes from your current situation, even if they are small."
+      },
+      {
+        "thought_pattern": "Fortune Telling",
+        "recommendation": "Predicting negative future events as if they are certain. - Practice evidence-based thinking by listing reasons why your predictions might not come true, focusing on the present reality."
+      }
+    ]
+  },
+  {
+    "id": 168,
+    "user_id": 4,
+    "title": "Busy Day Back",
+    "content": "My pattern is to hit the ground running. I need to buildnin a break day. This might mean returning a day early.  Booked and fitting it all in. Nothing beats a failure but a try!",
+    "anxiety_level": 2,
+    "created_at": "2025-04-23T22:44:07.404570",
+    "updated_at": "2025-04-23T22:44:17.156033",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Seeing things in extremes, like needing to fit everything in or nothing at all. - Practice seeing the middle ground by acknowledging partial successes and incremental progress."
+      },
+      {
+        "thought_pattern": "Overgeneralization",
+        "recommendation": "Believing that if you don't manage perfectly, it equates to failure. - Challenge this by writing down successes and areas where you did manage well."
+      }
+    ]
   },
   {
     "id": 169,
@@ -3672,21 +3751,16 @@
     "created_at": "2025-04-28T17:06:38.614155",
     "updated_at": "2025-04-28T17:06:46.721862",
     "is_analyzed": true,
-    "gpt_response": "It sounds like you're feeling quite overwhelmed with the demands placed on you right now. It's understandable to feel stretched when everyone seems to need something from you at once. Let's explore how these demands might be impacting your sense of control and well-being.\n\nTake a moment. What's one expectation you've been holding that feels heavy \u2014 and might not be fully yours to carry?\n\nIt's okay to acknowledge that you have limits and that it's important to take care of yourself, too. Consider what boundaries might help you regain a sense of balance.\n\nThought Patterns That May Be Surfacing:\n* All-or-Nothing Thinking: You might be seeing your situation as entirely overwhelming, without recognizing any manageable parts or potential solutions.\n* Catastrophizing: There's a tendency to predict that all these demands will lead to an unmanageable situation, increasing your stress.\n\n\nCBT-Based Strategies:\n1. Set Clear Boundaries Identifying where you can say no or delegate tasks can help manage the overwhelming demands. Choose one area today where you can gently assert a boundary, such as declining an extra task or asking for help.\n2. Prioritize Self-Care Taking small steps to prioritize your own needs can help you feel more balanced. Schedule a short, relaxing activity for yourself within the next day, like a walk or reading time.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Catastrophizing\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Seeing things in black-and-white terms can leave you feeling trapped.",
-        "recommendation": "Challenge this by identifying one thing you can accomplish or change."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Seeing things in black-and-white terms can leave you feeling trapped. - Challenge this by identifying one thing you can accomplish or change."
       },
       {
-        "pattern": "Catastrophizing",
-        "description": "This involves assuming the worst will happen, which can be paralyzing.",
-        "recommendation": "Try listing three realistic outcomes for the demands you're facing."
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "This involves assuming the worst will happen, which can be paralyzing. - Try listing three realistic outcomes for the demands you're facing."
       }
-    ],
-    "structured_data": null,
-    "user_reflection": null
+    ]
   },
   {
     "id": 170,
@@ -3695,23 +3769,18 @@
     "content": "my partner went away for 10 day. for teh first 2 days she messaged briefly, the finallly she calle don teh 3rd day. i missed her call but wheni called back she was at home with family and was talking to me, but most of the time i spent listening to her talking to others. he rmum then called and she told me she woudl call me back, but she didnt. following day she messaged good mornng and said she was out and about at work. noth9ng since. how shoudl i feel",
     "anxiety_level": 5,
     "created_at": "2025-04-28T18:34:56.250064",
-    "updated_at": "2025-04-28T18:35:04.858371",
+    "updated_at": "2025-04-28T18:37:02.995180",
     "is_analyzed": true,
-    "gpt_response": "It sounds like you're feeling a bit disconnected and unsure about how to interpret your partner's communication while she's away. It's understandable to miss her and wish for more frequent interaction. It's important to acknowledge that your feelings are valid, and it might be helpful to explore how your expectations are influencing these emotions.\n\nTake a moment. What's one expectation you've been holding that feels heavy \u2014 and might not be fully yours to carry?\n\nRemember, it's okay to feel uncertain about how to react when communication isn't what you hoped for. Giving yourself grace and checking in with your own needs can help you find balance.\n\nThought Patterns That May Be Surfacing:\n* Mind Reading: Assuming your partner's lack of communication means something negative about your relationship without direct evidence.\n* Catastrophizing: Imagining the worst-case scenario about the lack of communication, which can amplify feelings of anxiety.\n\n\nCBT-Based Strategies:\n1. Reality Check Challenge your assumptions by gathering facts. Consider what you know for sure versus what you're assuming. Write down what your partner has communicated versus what you are inferring. This can help separate fact from assumption.\n2. Communicate Needs Express how you're feeling and what you need from your partner in terms of communication. Next time you speak, gently share how much you value hearing from her and suggest a communication rhythm that works for both of you.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Catastrophizing\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Mind Reading",
-        "description": "Assuming your partner's actions have specific meanings without asking them directly.",
-        "recommendation": "Try the 'Ask, Don't Assume' technique: formulate questions that clarify what you're unsure about."
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming your partner's actions have specific meanings without asking them directly. - Try the 'Ask, Don't Assume' technique: formulate questions that clarify what you're unsure about."
       },
       {
-        "pattern": "Catastrophizing",
-        "description": "Focusing on the worst possible outcome of the situation.",
-        "recommendation": "Practice 'Worst-Case, Best-Case, Most Likely' scenario planning to gain perspective."
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Focusing on the worst possible outcome of the situation. - Practice 'Worst-Case, Best-Case, Most Likely' scenario planning to gain perspective."
       }
-    ],
-    "structured_data": null,
-    "user_reflection": null
+    ]
   },
   {
     "id": 171,
@@ -3720,48 +3789,18 @@
     "content": "my partner went away for 10 day. for teh first 2 days she messaged briefly, the finallly she called on the 3rd day. i missed her call but wheni called back she was at home with family and was talking to me, but most of the time i spent listening to her talking to others. her mum then called and she told me she woudl call me back, but she didnt. following day she messaged good mornng and said she was out and about at work. nothing since. how shoudl i feel",
     "anxiety_level": 5,
     "created_at": "2025-04-28T18:41:29.573609",
-    "updated_at": "2025-04-28T18:41:38.539067",
+    "updated_at": "2025-04-28T18:43:45.969236",
     "is_analyzed": true,
-    "gpt_response": "It's understandable to feel a bit puzzled and perhaps even a little neglected when communication doesn't go as expected, especially when you're missing someone. It seems like there's a longing for connection and reassurance during her absence.\n\nTake a moment. How might you express your need for more regular communication in a way that feels comfortable to both you and your partner?\n\nRemember, it's okay to want to feel connected and to seek clarity on how both of you can maintain that connection while apart.\n\nThought Patterns That May Be Surfacing:\n* Mind Reading: You might be assuming what your partner's lack of communication means about her feelings for you or her priorities, without direct evidence.\n* All-or-Nothing Thinking: You might be interpreting her not calling back as a sign of not caring, rather than considering other possible reasons for her silence.\n\n\nCBT-Based Strategies:\n1. Clarify Expectations Discuss with your partner what kind of communication you both expect when apart. This can help avoid misunderstandings and align expectations. Schedule a time to talk with your partner about how often you'd like to communicate when one of you is away.\n2. Mindfulness Practice Focus on the present moment to help reduce anxiety about the unknowns. This can help in grounding your emotions and reducing overthinking. Spend 5 minutes each morning focusing on your breathing, noticing any thoughts that arise without judgment.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Catastrophizing\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Mind Reading",
-        "description": "Assuming you know what someone else is thinking or feeling without evidence.",
-        "recommendation": "Challenge this by asking for clarity directly from the person involved."
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what someone else is thinking or feeling without evidence. - Challenge this by asking for clarity directly from the person involved."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Seeing things in black-and-white terms, without recognizing the nuances in between.",
-        "recommendation": "Practice finding the middle ground by considering a range of possible explanations for a situation."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Seeing things in black-and-white terms, without recognizing the nuances in between. - Practice finding the middle ground by considering a range of possible explanations for a situation."
       }
-    ],
-    "structured_data": null,
-    "user_reflection": null
-  },
-  {
-    "id": 172,
-    "user_id": 1,
-    "title": "Relationship  Issues 3",
-    "content": "my partner went away for 10 day. for teh first 2 days she messaged briefly, the finallly she called on the 3rd day. i missed her call but wheni called back she was at home with family and was talking to me, but most of the time i spent listening to her talking to others. her mum then called and she told me she woudl call me back, but she didnt. following day she messaged good mornng and said she was out and about at work. nothing since. how shoudl i feel",
-    "anxiety_level": 6,
-    "created_at": "2025-04-28T18:56:24.391638",
-    "updated_at": "2025-04-28T18:56:34.338363",
-    "is_analyzed": true,
-    "gpt_response": "It's understandable that you're feeling uncertain about how to feel after the recent interactions with your partner. It seems like you're craving more connection and communication, which is completely natural when someone important to you is away. It's easy to feel a bit left out when their focus seems elsewhere, especially if you've been accustomed to more frequent contact.\n\nTake a moment. What's one expectation you've been holding that feels heavy \u2014 and might not be fully yours to carry?\n\nRemember that your feelings of wanting more connection are valid. It might be helpful to express your needs with gentle honesty. You're allowed to ask for the connection you need.\n\nThought Patterns That May Be Surfacing:\n* All-or-Nothing Thinking: You might be viewing the situation as either all good or all bad, feeling disconnected due to a few missed calls despite earlier messages.\n* Mind Reading: Assuming your partner's lack of contact reflects a lack of interest or care, without having direct confirmation of their thoughts or feelings.\n\n\nCBT-Based Strategies:\n1. Open Communication Engage in a calm conversation with your partner about how you feel when communication is sparse. Expressing your feelings can open up a dialogue and lead to mutual understanding. Plan a time to talk or write a message sharing your feelings and what you need to feel more connected.\n2. Reframe Thoughts Challenge the thought that the lack of communication means something negative. Consider other reasons for her busyness, such as family obligations. Write down the evidence for and against the thought that she's not interested, and find a more balanced perspective.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
-    "cbt_patterns": [
-      {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Viewing situations in black-and-white terms without recognizing the nuances.",
-        "recommendation": "Practice finding the middle ground by listing exceptions to the rule."
-      },
-      {
-        "pattern": "Mind Reading",
-        "description": "Assuming you know what someone else is thinking.",
-        "recommendation": "Ask clarifying questions instead of assuming, to gain more accurate insights into their thoughts."
-      }
-    ],
-    "structured_data": null,
-    "user_reflection": null
+    ]
   },
   {
     "id": 173,
@@ -3770,23 +3809,38 @@
     "content": "my partner went away for 10 day. for teh first 2 days she messaged briefly, the finallly she called on the 3rd day. i missed her call but wheni called back she was at home with family and was talking to me, but most of the time i spent listening to her talking to others. her mum then called and she told me she woudl call me back, but she didnt. following day she messaged good mornng and said she was out and about at work. nothing since. how shoudl i feel",
     "anxiety_level": 6,
     "created_at": "2025-04-28T19:47:10.886893",
-    "updated_at": "2025-04-28T19:47:20.601845",
+    "updated_at": "2025-04-28T19:48:25.486538",
     "is_analyzed": true,
-    "gpt_response": "It sounds like you're feeling a bit left out and unsure about how to interpret your partner's recent communication style while she's away. It's normal to feel a bit disconnected when physical distance combines with less frequent communication. Your feelings are valid, especially when you're used to a different rhythm in your relationship.\n\nTake a moment. Can you identify what specific reassurance or action from your partner would help you feel more connected right now?\n\nRemember, communication styles can shift with changing environments. It might be helpful to express your needs gently when you next have a conversation. This could open a pathway to more mutual understanding.\n\nThought Patterns That May Be Surfacing:\n* Mind Reading: You might be assuming your partner is intentionally not communicating, without having full context of her situation.\n* All-or-Nothing Thinking: You may be interpreting the lack of communication as an indication of a problem in the relationship, rather than a temporary change.\n\n\nCBT-Based Strategies:\n1. Communicate Needs Clearly Express what you need in a way that's clear but gentle. Share how her communication style impacts you, focusing on your feelings rather than placing blame. Next time you talk, use 'I feel' statements to express your emotions and needs. For example, 'I feel a bit disconnected when we don't talk as much, and I would love to hear your voice more often.'\n2. Reframe the Situation Shift your perspective to consider alternate explanations for her behavior, such as a busy schedule or needing family time. Write down three possible reasons for her behavior that are not negative or personal. Reflect on how these reasons might change your emotional response.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Mind Reading",
-        "description": "Assuming you know what your partner is thinking or feeling about the relationship based on limited interactions.",
-        "recommendation": "Practice open communication to clarify intentions and feelings, avoiding assumptions."
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what your partner is thinking or feeling about the relationship based on limited interactions. - Practice open communication to clarify intentions and feelings, avoiding assumptions."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Viewing the situation as entirely negative due to lack of communication, rather than seeing it as a temporary phase.",
-        "recommendation": "Try to identify gray areas where things might not be as extreme as they seem. Reflect on past situations where things have improved."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing the situation as entirely negative due to lack of communication, rather than seeing it as a temporary phase. - Try to identify gray areas where things might not be as extreme as they seem. Reflect on past situations where things have improved."
       }
-    ],
-    "structured_data": null,
-    "user_reflection": null
+    ]
+  },
+  {
+    "id": 172,
+    "user_id": 1,
+    "title": "Relationship  Issues 3",
+    "content": "my partner went away for 10 day. for teh first 2 days she messaged briefly, the finallly she called on the 3rd day. i missed her call but wheni called back she was at home with family and was talking to me, but most of the time i spent listening to her talking to others. her mum then called and she told me she woudl call me back, but she didnt. following day she messaged good mornng and said she was out and about at work. nothing since. how shoudl i feel",
+    "anxiety_level": 6,
+    "created_at": "2025-04-28T18:56:24.391638",
+    "updated_at": "2025-04-28T19:03:33.323972",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms without recognizing the nuances. - Practice finding the middle ground by listing exceptions to the rule."
+      },
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you know what someone else is thinking. - Ask clarifying questions instead of assuming, to gain more accurate insights into their thoughts."
+      }
+    ]
   },
   {
     "id": 174,
@@ -3797,23 +3851,16 @@
     "created_at": "2025-04-28T23:09:24.652496",
     "updated_at": "2025-04-28T23:09:49.329077",
     "is_analyzed": true,
-    "gpt_response": "From your journal, it seems you might be feeling a mix of 'neglected' and 'anxious' due to your partner's limited communication. It's understandable to feel this way, especially when there is a gap between your expectations and reality. Your need for connection and assurance might feel unmet right now, leading to these emotions. In relationships, communication patterns can sometimes lead to feeling unimportant, especially when our partners are physically distant and engaged elsewhere.\n\nTake a moment. What's one expectation you've been holding about this relationship that feels heavy \u2014 and might point to an important emotional need?\n\nConsider reaching out to your partner using a structured communication approach. Here's a script you might try: 'I feel neglected when we don't communicate as expected because it makes me question our connection. What I need is more frequent updates or a call when you're free.' This can help clarify your needs while inviting a conversation about mutual expectations. Additionally, try a reality-check exercise by listing evidence for and against the fear that she's becoming distant as a way to ground your feelings.\n\nThought Patterns That May Be Surfacing:\n* Mind Reading: Assuming that your partner's lack of communication means she is less interested or prioritizing others over you. This often stems from a need for reassurance and validation. This may relate to your need for Validation and connection.\n* Catastrophizing: Imagining the worst-case scenario where this communication gap signifies a breakdown in the relationship. This relates to a need for security and stability. This may relate to your need for Safety and security.\n\n\nCBT-Based Strategies:\n1. Communication Script Template Use this script when you're next able to communicate with your partner, either through a message or call, to express your feelings and needs clearly. I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request]. This helps address your need for Connection and understanding.\n2. Reality-Check Exercise Use this to address fears of distance growing between you and your partner. It helps separate assumptions from facts. List evidence for and against your fear that your partner is becoming distant. This helps address your need for Reassurance and clarity.\n3. Emotion Regulation Technique When feeling anxious or neglected, use this grounding technique to help manage emotions. When you feel anxious, try deep breathing: Inhale deeply for a count of four, hold for four, exhale for four, and repeat. This helps address your need for Emotional balance and self-soothing.\n\n\nRelationship Context Questions to Consider:\n\u2022 Has this communication pattern happened before in this relationship? (Exploring recurring patterns to identify relationship dynamics)\n\u2022 What expectations were set before your partner left? (Examining unspoken assumptions that may contribute to distress)\n\n\nReady-to-Use Templates:\n\u2022 For When reaching out to express your needs:\n  \"I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request].\"\n  Then: Follow up by listening to their perspective and negotiate a mutual understanding.\n\u2022 For When managing anxiety while waiting for a response:\n  \"When I feel anxious, I will engage in a calming activity like a short walk instead of repeatedly checking my phone.\"\n  Then: If no response comes, remind yourself of the positive interactions you've had previously.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Mind Reading",
-        "description": "This pattern involves assuming your partner's thoughts or feelings without direct communication, often leading to misunderstandings in relationships.",
-        "recommendation": "Practice direct communication and check in with your partner about their feelings and intentions.",
-        "core_need": "Validation and connection"
+        "thought_pattern": "Mind Reading",
+        "recommendation": "This pattern involves assuming your partner's thoughts or feelings without direct communication, often leading to misunderstandings in relationships. - Practice direct communication and check in with your partner about their feelings and intentions."
       },
       {
-        "pattern": "Catastrophizing",
-        "description": "This involves imagining worst-case scenarios, which can amplify feelings of insecurity in relationships.",
-        "recommendation": "Engage in reality-check exercises to ground your thoughts in facts rather than fears.",
-        "core_need": "Safety and reassurance"
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "This involves imagining worst-case scenarios, which can amplify feelings of insecurity in relationships. - Engage in reality-check exercises to ground your thoughts in facts rather than fears."
       }
-    ],
-    "structured_data": null,
-    "user_reflection": null
+    ]
   },
   {
     "id": 175,
@@ -3824,23 +3871,16 @@
     "created_at": "2025-04-28T23:22:13.170416",
     "updated_at": "2025-04-28T23:22:27.110783",
     "is_analyzed": true,
-    "gpt_response": "It sounds like you might be feeling neglected and unimportant with the way communication has been unfolding during your partner's trip. It's understandable that this lack of connection can stir up feelings of anxiety about your relationship's standing. These feelings may be rooted in a fundamental need for connection and reassurance, especially when there's physical distance.\n\nTake a moment. What's one expectation you've been holding about this relationship that feels heavy \u2014 and might point to an important emotional need?\n\nA helpful step might be to express your feelings to your partner in a way that is clear and non-confrontational. You could use a script like: 'I felt neglected when our call was interrupted and we didn't reconnect because I value our communication. What I need is some time to talk when you're free.' Additionally, consider a reality-check exercise: list evidence for and against the fear that you are not a priority to your partner. This can help ground your feelings in reality and reduce anxiety.\n\nThought Patterns That May Be Surfacing:\n* All-or-Nothing Thinking: This pattern might lead you to interpret the lack of communication as a sign that you are not important to your partner, disregarding times they have shown you care. This may relate to your need for Validation.\n* Mind Reading: Assuming your partner's lack of communication means they don't care can leave you feeling more anxious. It's important to remember that we can't truly know what others are thinking without asking. This may relate to your need for Connection.\n\n\nCBT-Based Strategies:\n1. Communication Script Template Use this script when you next have a chance to talk with your partner. It helps clarify your feelings and needs in a constructive manner. I feel [neglected] when [our calls are interrupted] because [I value our time together]. What I need is [some dedicated time to connect]. This helps address your need for Connection.\n2. Reality-Check Exercise Challenge the assumption that you're not a priority by examining the evidence. List evidence for and against your fear that you are not important to your partner. This helps address your need for Validation.\n3. Emotion Regulation Technique To manage feelings of neglect or anxiety, try grounding techniques. When you feel neglected, try this grounding technique: focus on your breathing, counting each inhale and exhale to ten, then repeat. This helps address your need for Emotional Stability.\n\n\nRelationship Context Questions to Consider:\n\u2022 Has this communication pattern happened before in this relationship? (Exploring recurring patterns to identify relationship dynamics)\n\u2022 What expectations were set before your partner left? (Examining unspoken assumptions that may contribute to distress)\n\n\nReady-to-Use Templates:\n\u2022 For When reaching out to express your needs:\n  \"I feel [neglected] when [our calls are interrupted] because [I value our time together]. What I need is [some dedicated time to connect].\"\n  Then: After sending, give your partner space to respond, and prepare to have an open conversation about how to improve communication.\n\u2022 For When managing anxiety while waiting for a response:\n  \"When I feel [anxious], I will [practice deep breathing] instead of [overthinking].\"\n  Then: If your anxiety persists, take a walk or engage in a relaxing activity to help manage stress.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "This pattern can lead you to see situations in black-and-white terms, such as believing that if your partner doesn\u2019t call back immediately, they don\u2019t care.",
-        "recommendation": "Use a reality-check exercise to find a more balanced perspective.",
-        "core_need": "Validation"
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This pattern can lead you to see situations in black-and-white terms, such as believing that if your partner doesn\u2019t call back immediately, they don\u2019t care. - Use a reality-check exercise to find a more balanced perspective."
       },
       {
-        "pattern": "Mind Reading",
-        "description": "This involves assuming you know what others are thinking, which can create unnecessary anxiety when you feel your partner is ignoring you.",
-        "recommendation": "Practice open communication to clarify intentions and reduce misunderstandings.",
-        "core_need": "Connection"
+        "thought_pattern": "Mind Reading",
+        "recommendation": "This involves assuming you know what others are thinking, which can create unnecessary anxiety when you feel your partner is ignoring you. - Practice open communication to clarify intentions and reduce misunderstandings."
       }
-    ],
-    "structured_data": null,
-    "user_reflection": null
+    ]
   },
   {
     "id": 176,
@@ -3851,23 +3891,16 @@
     "created_at": "2025-04-29T00:07:59.429234",
     "updated_at": "2025-04-29T00:08:13.202012",
     "is_analyzed": true,
-    "gpt_response": "From what you've shared, it seems you might be feeling neglected and unimportant in the relationship right now. The lack of communication and feeling sidelined during your partner's call could understandably make you anxious. This situation might be tapping into a deeper need for connection and reassurance, especially when your efforts to reconnect weren't reciprocated immediately.\n\nTake a moment. What's one expectation you've been holding about this relationship that feels heavy \u2014 and might point to an important emotional need?\n\nTo express your feelings constructively, try using this script: 'I feel neglected when our communication is limited because it makes me anxious about our connection. What I need is more regular check-ins to feel reassured.' Additionally, consider a reality-check exercise: list evidence for and against the fear that you are not a priority. This can help balance your perspective. When feelings of anxiety rise, try grounding yourself with deep breathing exercises, counting slowly to 10 with each breath to manage intense emotions.\n\nThought Patterns That May Be Surfacing:\n* Mind Reading: Assuming your partner's lack of communication means she doesn't care about you or the relationship. This may relate to your need for The core emotional need here is connection and reassurance..\n* All-or-Nothing Thinking: Thinking that her not calling back means she doesn't care at all about you. This may relate to your need for The need for validation and feeling valued in the relationship..\n\n\nCBT-Based Strategies:\n1. Communication Script Template Use this script when you next have a chance to express your feelings to your partner. I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request]. This helps address your need for The specific emotional need this strategy helps fulfill is the need for connection and understanding..\n2. Reality-Check Exercise Use this exercise to challenge the assumption that your partner's actions mean you're not important to her. List evidence for and against your fear that [specific fear related to the relationship] This helps address your need for The specific emotional need this strategy helps fulfill is reassurance..\n3. Emotion Regulation Technique Use deep breathing to manage anxiety when waiting for a response or feeling disconnected. When you feel [specific emotion], try this specific grounding technique: take slow, deep breaths, counting to 10 with each inhale and exhale. This helps address your need for The need for emotional stability and self-soothing..\n\n\nRelationship Context Questions to Consider:\n\u2022 Has this communication pattern happened before in this relationship? (Exploring recurring patterns to identify relationship dynamics)\n\u2022 What expectations were set before your partner left? (Examining unspoken assumptions that may contribute to distress)\n\n\nReady-to-Use Templates:\n\u2022 For When reaching out to express your needs:\n  \"A ready-to-use message template they can adapt for their specific situation\"\n  Then: After using this template, be open to a conversation and actively listen to your partner's perspective.\n\u2022 For When managing anxiety while waiting for a response:\n  \"When I feel [specific emotion], I will [healthy coping action] instead of [unhealthy reaction]\"\n  Then: If your partner doesn't respond as expected, remind yourself of other ways to feel connected, like reaching out to a friend or engaging in a hobby.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Mind Reading",
-        "description": "Believing you can infer your partner's thoughts or feelings based on her actions or inactions.",
-        "recommendation": "Use evidence-based thinking to challenge assumptions.",
-        "core_need": "The need for open communication and reassurance."
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Believing you can infer your partner's thoughts or feelings based on her actions or inactions. - Use evidence-based thinking to challenge assumptions."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Viewing situations in black-and-white terms, such as interpreting a lack of immediate contact as a total lack of care.",
-        "recommendation": "Introduce shades of gray by considering other possible explanations for her behavior.",
-        "core_need": "The need for nuanced understanding and assurance."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in black-and-white terms, such as interpreting a lack of immediate contact as a total lack of care. - Introduce shades of gray by considering other possible explanations for her behavior."
       }
-    ],
-    "structured_data": null,
-    "user_reflection": null
+    ]
   },
   {
     "id": 177,
@@ -3878,23 +3911,16 @@
     "created_at": "2025-04-29T00:12:54.015661",
     "updated_at": "2025-04-29T00:13:09.000440",
     "is_analyzed": true,
-    "gpt_response": "It sounds like you're feeling overlooked and perhaps a bit unimportant due to your partner's lack of communication while she's away. This situation might be stirring up feelings of neglect, especially since you were left waiting after she promised to call back. This suggests a need for connection and reassurance in your relationship. Your partner's attention to others while on the phone may have contributed to feelings of being sidelined, which can be quite frustrating.\n\nTake a moment. What's one expectation you've been holding about this relationship that feels heavy \u2014 and might point to an important emotional need?\n\nTo help you communicate your feelings and needs clearly, consider using this script: 'I feel neglected when I don't hear back from you after a promised call because it makes me feel unimportant. What I need is regular updates and a more dedicated time to connect, so I feel reassured.' Additionally, try a reality-check exercise by listing evidence for and against the fear that your partner's lack of communication means she doesn't care about you. This can help ground your thoughts in reality.\n\nThought Patterns That May Be Surfacing:\n* All-or-Nothing Thinking: This pattern might be causing you to see your partner's communication as either all good or all bad, without acknowledging the nuances of her situation, like being with family. This may relate to your need for Connection.\n* Mind Reading: You might be assuming your partner's lack of communication means she's not thinking about you, which can fuel feelings of neglect. This may relate to your need for Reassurance.\n\n\nCBT-Based Strategies:\n1. Communication Script Template Use this script when you next have a chance to talk to your partner about how her communication affects you. I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request]. This helps address your need for Connection and reassurance.\n2. Reality-Check Exercise Challenge the assumption that her lack of communication signifies a lack of care. List evidence for and against your fear that her lack of communication means she doesn't care about you. This helps address your need for Reassurance.\n3. Emotion Regulation Technique Manage feelings of neglect by grounding yourself when these emotions arise. When you feel neglected, try this grounding technique: name five things you can see, four you can touch, three you can hear, two you can smell, and one you can taste. This helps address your need for Emotional grounding.\n\n\nRelationship Context Questions to Consider:\n\u2022 Has this communication pattern happened before in this relationship? (Exploring recurring patterns to identify relationship dynamics)\n\u2022 What expectations were set before your partner left? (Examining unspoken assumptions that may contribute to distress)\n\n\nReady-to-Use Templates:\n\u2022 For When reaching out to express your needs:\n  \"I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request].\"\n  Then: After using this template, observe her response and discuss how you both can improve communication.\n\u2022 For When managing anxiety while waiting for a response:\n  \"When I feel anxious, I will practice deep breathing instead of repeatedly checking my phone.\"\n  Then: Reflect on how this approach affects your anxiety and adjust as needed.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Viewing your relationship communication as entirely one way or another can lead to misunderstandings.",
-        "recommendation": "Practice recognizing grey areas in communication patterns to reduce stress.",
-        "core_need": "Connection"
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing your relationship communication as entirely one way or another can lead to misunderstandings. - Practice recognizing grey areas in communication patterns to reduce stress."
       },
       {
-        "pattern": "Mind Reading",
-        "description": "Assuming what your partner feels or thinks without evidence can create unnecessary tension.",
-        "recommendation": "Communicate openly about your needs and check in with your partner about hers.",
-        "core_need": "Reassurance"
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming what your partner feels or thinks without evidence can create unnecessary tension. - Communicate openly about your needs and check in with your partner about hers."
       }
-    ],
-    "structured_data": null,
-    "user_reflection": null
+    ]
   },
   {
     "id": 178,
@@ -3905,64 +3931,16 @@
     "created_at": "2025-04-29T14:48:06.519667",
     "updated_at": "2025-04-29T14:48:25.016828",
     "is_analyzed": true,
-    "gpt_response": "It's understandable that hearing 'I miss you' can stir mixed emotions. You might feel a sense of warmth and connection, but also uncertainty about what this means for your relationship. This brief communication could evoke feelings of hope, but also anxiety if expectations or past experiences complicate how you interpret this message.\n\nTake a moment. What's one expectation you've been holding about this relationship that feels heavy \u2014 and might point to an important emotional need?\n\nConsider using an 'I-statement' to express your feelings or clarify intentions: 'I feel hopeful when you say you miss me because it suggests a connection. What I need is to understand how you see our relationship moving forward.' This can help both of you align on your needs and expectations. Additionally, try a reality-check exercise: List evidence for and against the assumption that this call signifies a deeper commitment. This will help manage any all-or-nothing thinking and bring clarity.\n\nThought Patterns That May Be Surfacing:\n* Mind Reading: You might be guessing what she means by 'I miss you' without asking for clarification, which can lead to misunderstandings. This may relate to your need for The core emotional need here is for clear communication and understanding..\n* All-or-Nothing Thinking: Interpreting her statement as either a full commitment or meaningless could lead to extreme conclusions. This may relate to your need for This pattern highlights the need for certainty and security in the relationship..\n\n\nCBT-Based Strategies:\n1. Communication Script Template Use this script to have a clear conversation about what 'I miss you' means for both of you. I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request]. This helps address your need for This strategy helps fulfill the need for clarity and mutual understanding..\n2. Reality-Check Exercise Check assumptions by evaluating the evidence for and against your interpretations. List evidence for and against your fear that 'I miss you' signifies a deeper commitment. This helps address your need for This helps fulfill the need for realistic and balanced thinking..\n3. Emotion Regulation Technique Manage anxiety or uncertainty through grounding techniques. When you feel anxious, try this grounding technique: take five deep breaths, focus on the sensation of your feet on the ground, and remind yourself of past positive communications. This helps address your need for This technique addresses the need for emotional stability and calm..\n\n\nRelationship Context Questions to Consider:\n\u2022 Has this communication pattern happened before in this relationship? (Exploring recurring patterns to identify relationship dynamics.)\n\u2022 What expectations were set before this call? (Examining unspoken assumptions that may contribute to distress.)\n\n\nReady-to-Use Templates:\n\u2022 For When reaching out to express your needs:\n  \"I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request].\"\n  Then: After using this template, listen actively to her response and gauge whether your needs align.\n\u2022 For When managing anxiety while waiting for a response:\n  \"When I feel anxious, I will practice deep breathing instead of jumping to conclusions.\"\n  Then: If anxiety persists, remind yourself of times when communication was clear and positive.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Mind Reading",
-        "description": "This pattern involves assuming you know what the other person means without asking.",
-        "recommendation": "Use direct communication to clarify intentions and meanings.",
-        "core_need": "The need for direct communication and understanding."
+        "thought_pattern": "Mind Reading",
+        "recommendation": "This pattern involves assuming you know what the other person means without asking. - Use direct communication to clarify intentions and meanings."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Interpreting situations in black-and-white terms without considering nuance.",
-        "recommendation": "Practice looking for the 'middle ground' and recognizing the complexity in relationships.",
-        "core_need": "The need for balanced perspectives and emotional security."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Interpreting situations in black-and-white terms without considering nuance. - Practice looking for the 'middle ground' and recognizing the complexity in relationships."
       }
-    ],
-    "structured_data": null,
-    "user_reflection": null
-  },
-  {
-    "id": 179,
-    "user_id": 1,
-    "title": "april 29th ",
-    "content": "she was hesistant about saying she missed me.i asked her why and she laughed",
-    "anxiety_level": 5,
-    "created_at": "2025-04-29T14:54:48.417538",
-    "updated_at": "2025-04-29T15:05:46.250895",
-    "is_analyzed": true,
-    "gpt_response": "It sounds like you might be feeling a bit confused or even unimportant when she hesitated to express that she missed you. Her laughter might have left you questioning the sincerity or depth of her feelings, possibly triggering an emotional need for reassurance or validation in the relationship. This pattern of interpreting actions (or lack thereof) might connect to a fear of being undervalued or not prioritized, which can be painful.\n\nTake a moment. What's one expectation you've been holding about this relationship that feels heavy \u2014 and might point to an important emotional need?\n\nConsider using this communication script: 'I feel uncertain when there's hesitation in expressing feelings because it makes me worry about the strength of our connection. What I need is reassurance that our bond is important to you.' This can help clarify your needs while inviting openness. Additionally, try listing evidence for and against the idea that her laughter was dismissive, to challenge any assumptions. When feeling unimportant, grounding yourself through a calming technique like deep breathing can help manage these emotions.\n\nThought Patterns That May Be Surfacing:\n* Mind Reading: Assuming you know what her hesitation and laughter mean without checking in with her can lead to misunderstandings. This often connects to a need for clarity and assurance. This may relate to your need for The core emotional need for clear communication and validation from your partner..\n* All-or-Nothing Thinking: Interpreting her hesitation as a sign that she doesn't care can create a black-and-white view that overlooks nuances. This might stem from a desire for security and certainty in the relationship. This may relate to your need for The core emotional need for stability and reassurance in the relationship..\n\n\nCBT-Based Strategies:\n1. Communication Script Template Use this script when you're feeling uncertain about your partner's feelings. It helps articulate your emotional experience and request reassurance. I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request]. This helps address your need for The specific emotional need for validation and clarity..\n2. Reality-Check Exercise Challenge assumptions by examining evidence about your partner's intentions and feelings. List evidence for and against your fear that her laughter was dismissive. This helps address your need for The need for a balanced perspective and emotional security..\n3. Emotion Regulation Technique Manage feelings of uncertainty by grounding yourself with a calming technique. When you feel unimportant, try this specific grounding technique: Take five deep breaths, focusing on the sensation of air entering and leaving your body. This helps address your need for The need for emotional balance and self-soothing..\n\n\nRelationship Context Questions to Consider:\n\u2022 Has this communication pattern happened before in this relationship? (Exploring recurring patterns to identify relationship dynamics.)\n\u2022 What expectations were set before your partner left? (Examining unspoken assumptions that may contribute to distress.)\n\n\nReady-to-Use Templates:\n\u2022 For When reaching out to express your needs:\n  \"I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request].\"\n  Then: After using this template, listen actively to their response and clarify any miscommunications.\n\u2022 For When managing anxiety while waiting for a response:\n  \"When I feel anxious, I will take deep breaths instead of assuming the worst.\"\n  Then: If anxiety persists, remind yourself of past positive interactions to counter negative assumptions.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
-    "cbt_patterns": [
-      {
-        "pattern": "Mind Reading",
-        "description": "This pattern can lead you to make assumptions about your partner's feelings without confirmation, creating unnecessary tension.",
-        "recommendation": "Engage in open dialogue to verify assumptions and understand your partner's perspective.",
-        "core_need": "The emotional need for transparency and reassurance."
-      },
-      {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "This pattern may cause you to view situations in extremes, potentially ignoring the complexities of your partner's actions.",
-        "recommendation": "Practice integrating shades of gray in your interpretations to foster a more nuanced understanding.",
-        "core_need": "The need for a balanced view and emotional stability."
-      }
-    ],
-    "structured_data": null,
-    "user_reflection": null
-  },
-  {
-    "id": 180,
-    "user_id": 1,
-    "title": "test journal entry",
-    "content": "i am writing this to test teh journal entry",
-    "anxiety_level": 1,
-    "created_at": "2025-04-29T15:35:40.985230",
-    "updated_at": "2025-04-29T15:57:08.156708",
-    "is_analyzed": true,
-    "gpt_response": "<div class='validation-section mb-4'>It seems like you're taking a moment to test out this journaling space, perhaps to get comfortable with the process or explore how it feels. Even in a neutral entry, there's an opportunity to reflect on the patterns we've seen before, like mind reading and all-or-nothing thinking, particularly in relation to your relationship challenges. This suggests an underlying need for connection and reassurance.</div><div class='paragraph mb-3'>Take a moment. What's one expectation you've been holding about this relationship that feels heavy \u2014 and might point to an important emotional need?</div><div class='thought-patterns-section mb-4'><h5 class='mb-3'>Thought Patterns</h5>Consider using this journaling platform as a space to explore these recurring patterns. Here's a practical step: next time you feel an urge to assume or predict your partner's thoughts or actions, pause and write down what you're assuming. Then, ask yourself if there is concrete evidence supporting this. This can help you cultivate a more grounded perspective.</div><div class='thought-patterns-section mb-4'><h5 class='mb-3'>Thought Patterns</h5><h4 class=\"mt-4 mb-3\">Thought Patterns</div><div class='paragraph mb-3'><strong>Mind Reading</strong></h4>This involves assuming you know what others are thinking or feeling without concrete evidence, often leading to unnecessary anxiety or miscommunication. This may relate to your need for The need for validation and connection..</div><div class='paragraph mb-3'><strong>All-or-Nothing Thinking</strong>\nViewing situations in black-and-white terms without recognizing the grey areas, which can amplify feelings of anxiety or disappointment. This may relate to your need for The need for clarity and stability..</div><div class='strategies-section mb-4'><h5 class='mb-3'>Suggested Strategies</h5><h4 class=\"mt-4 mb-3\">Suggested Strategies</div><div class='paragraph mb-3'><strong>1. Communication Script Template</strong></h4>Use this script when you want to express your feelings without assumptions clouding the message. I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request]. This helps address your need for The need for clear communication and validation..</div><div class='strategies-section mb-4'><h5 class='mb-3'>Suggested Strategies</h5><strong>2. Reality-Check Exercise</strong>\nChallenge the assumptions you might be making about your partner's thoughts or feelings. List evidence for and against your fear that [specific fear related to the relationship]. This helps address your need for The need for reassurance and connection..</div><div class='strategies-section mb-4'><h5 class='mb-3'>Suggested Strategies</h5><strong>3. Emotion Regulation Technique</strong>\nManage any rising anxiety by grounding yourself in the present moment. When you feel anxious, try this specific grounding technique: take a deep breath, focus on the sensation of your feet on the ground, and identify three things you can see, hear, and feel. This helps address your need for The need for calm and stability..</div><div class='thought-patterns-section mb-4'><h5 class='mb-3'>Thought Patterns</h5><h4 class=\"mt-4 mb-3\">Relationship Context Questions</h4><ul class=\"mb-3\"><li><strong>Has this communication pattern happened before in this relationship?</strong></li></ul>  (Exploring recurring patterns to identify relationship dynamics.)</div><div class='paragraph mb-3'>\u2022 <strong>What expectations were set before your partner left?</strong>\n  (Examining unspoken assumptions that may contribute to distress.)</div><div class='paragraph mb-3'></div><div class='paragraph mb-3'><h4 class=\"mt-4 mb-3\">Ready-to-Use Templates</div><div class='paragraph mb-3'><strong>For When reaching out to express your needs:</strong></h4>\"Hi [Partner's Name], I feel [emotion] when [behavior] because [reason]. It would really help me if [request].\"\nThen: After using this template, pay attention to how your partner responds and discuss any adjustments to meet both your needs.</div><div class='strategies-section mb-4'><h5 class='mb-3'>Suggested Strategies</h5><strong>For When managing anxiety while waiting for a response:</strong>\n\"When I feel anxious, I will focus on deep breathing instead of jumping to conclusions.\"\nThen: If anxiety persists, remind yourself of the reality-check exercise and revisit your list of evidence.</div><div class='paragraph mb-3'>\nWarmly,\nCoach Mira</div><div class='thought-patterns-section mb-4'><h5 class='mb-3'>Thought Patterns</h5>We're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n</div>",
-    "cbt_patterns": [],
-    "structured_data": null,
-    "user_reflection": null
+    ]
   },
   {
     "id": 182,
@@ -3973,23 +3951,67 @@
     "created_at": "2025-04-29T16:41:48.078889",
     "updated_at": "2025-04-29T16:42:15.675261",
     "is_analyzed": true,
-    "gpt_response": "It seems like you're taking a moment to test the features within this journaling app, and that's perfectly okay. It's important to sometimes step back and evaluate the tools we use. Your recent entries, though, have shown a pattern of feeling uncertain and perhaps a bit anxious about your partner's expressions of affection. The recurring themes of 'Mind Reading' and 'All-or-Nothing Thinking' suggest a deeper need for clarity and reassurance in your relationship.\n\nTake a moment. What's one expectation you've been holding about this relationship that feels heavy \u2014 and might point to an important emotional need?\n\nTo address the feelings of uncertainty, consider using this communication script in your next conversation: 'I feel uncertain when I don't hear from you because it makes me question our closeness. What I need is more frequent communication to feel connected.' This can help clarify your needs and potentially improve the mutual understanding in your relationship.\n\n## Thought Patterns\n\n**Mind Reading**\nThis pattern involves assuming what your partner thinks or feels without clear evidence, often leading to anxiety and miscommunication. This may relate to your need for The core need here is for validation and clarity within the relationship..\n\n**All-or-Nothing Thinking**\nThis involves seeing situations in black-and-white terms, which can lead to heightened emotional responses and difficulty in seeing the nuances of your partner's feelings. This may relate to your need for The core need here is for reassurance and balance in emotional exchanges..\n\n\n## Suggested Strategies\n\n**1. Communication Script Template**\nUse this when you need to express your feelings and needs clearly to your partner. I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request]. This helps address your need for This strategy helps fulfill the need for clarity and emotional connection..\n\n**2. Reality-Check Exercise**\nChallenge your assumptions by listing evidence for and against your fear that your partner doesn't care. List evidence for and against your fear that [specific fear related to the relationship] This helps address your need for This helps fulfill the need for reassurance and balanced perspective..\n\n**3. Emotion Regulation Technique**\nManage feelings of anxiety and uncertainty by using grounding techniques. When you feel [specific emotion], try this specific grounding technique: take a few deep breaths, focus on the present moment, and remind yourself of the positive aspects of your relationship. This helps address your need for This strategy helps fulfill the need for emotional stability and self-soothing..\n\n\n## Relationship Context Questions\n\u2022 **Has this communication pattern happened before in this relationship?**\n  (Exploring recurring patterns to identify relationship dynamics)\n\n\u2022 **What expectations were set before your partner left?**\n  (Examining unspoken assumptions that may contribute to distress)\n\n\n\n## Ready-to-Use Templates\n\n**For When reaching out to express your needs:**\n\"I feel [emotion] when [situation]. I need [need].\"\nThen: After using this template, observe your partner's response and discuss how you can both support each other's needs.\n\n**For When managing anxiety while waiting for a response:**\n\"When I feel anxious, I will take deep breaths instead of assuming the worst.\"\nThen: After calming your mind, re-evaluate the situation with a clearer perspective and prepare to discuss your thoughts calmly when you do hear back.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Mind Reading",
-        "description": "Assuming your partner's thoughts or feelings without evidence can lead to miscommunication and unnecessary stress.",
-        "recommendation": "Practice asking clarifying questions to verify assumptions.",
-        "core_need": "This pattern often seeks validation and assurance."
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming your partner's thoughts or feelings without evidence can lead to miscommunication and unnecessary stress. - Practice asking clarifying questions to verify assumptions."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Viewing situations as black-and-white can oversimplify complex emotional interactions.",
-        "recommendation": "Focus on recognizing the spectrum of feelings and responses.",
-        "core_need": "This pattern often seeks certainty and balanced understanding."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations as black-and-white can oversimplify complex emotional interactions. - Focus on recognizing the spectrum of feelings and responses."
       }
-    ],
-    "structured_data": null,
-    "user_reflection": null
+    ]
+  },
+  {
+    "id": 180,
+    "user_id": 1,
+    "title": "test journal entry",
+    "content": "i am writing this to test teh journal entry..",
+    "anxiety_level": 1,
+    "created_at": "2025-04-29T15:35:40.985230",
+    "updated_at": "2025-04-29T16:34:06.811050",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming you understand your partner's thoughts or feelings without direct communication can create misunderstandings. - Use open-ended questions to encourage dialogue and reduce assumptions."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing situations in extremes can lead to misinterpretations of your partner's actions or feelings. - Identify gray areas and explore them to broaden perspectives."
+      }
+    ]
+  },
+  {
+    "id": 179,
+    "user_id": 1,
+    "title": "april 29th ",
+    "content": "she was hesistant about saying she missed me.i asked her why and she laughed",
+    "anxiety_level": 5,
+    "created_at": "2025-04-29T14:54:48.417538",
+    "updated_at": "2025-04-29T15:05:46.250895",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "This pattern can lead you to make assumptions about your partner's feelings without confirmation, creating unnecessary tension. - Engage in open dialogue to verify assumptions and understand your partner's perspective."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "This pattern may cause you to view situations in extremes, potentially ignoring the complexities of your partner's actions. - Practice integrating shades of gray in your interpretations to foster a more nuanced understanding."
+      }
+    ]
+  },
+  {
+    "id": 181,
+    "user_id": 1,
+    "title": "testing journal entry 2",
+    "content": "i am enterinsg this to test a feature format on teh app",
+    "anxiety_level": 1,
+    "created_at": "2025-04-29T16:35:13.817035",
+    "updated_at": "2025-04-29T16:35:13.817038",
+    "is_analyzed": false,
+    "recommendations": []
   },
   {
     "id": 183,
@@ -3998,25 +4020,18 @@
     "content": "Full day of work today. cant wait to get started. well i am started. just need to continue",
     "anxiety_level": 1,
     "created_at": "2025-04-29T17:02:50.131928",
-    "updated_at": "2025-04-29T17:03:08.395449",
+    "updated_at": "2025-04-29T17:05:26.680091",
     "is_analyzed": true,
-    "gpt_response": "It seems like you're feeling a steady sense of neutrality as you begin your workday. This neutrality might be reflecting a sense of routine or stability in your work life, which can be comforting. Given your recent experiences with relationship-related challenges and fluctuating anxiety levels, it's important to acknowledge the peace that comes with a low anxiety day.\n\nTake a moment. What's one expectation you've been holding about this relationship that feels heavy \u2014 and might point to an important emotional need?\n\nConsider using an 'I-statement' to express any unmet needs in your relationship: 'I feel [emotion] when [specific behavior] occurs because it affects me by [impact]. What I need is [specific request].' This can open up a dialogue that addresses both your needs and the dynamics at play.\n\n## Thought Patterns\n\n**Mind Reading**\nThis pattern involves assuming what your partner is thinking or feeling without checking if it's accurate. It often stems from a need for connection and understanding, as you try to predict your partner's thoughts to avoid misunderstandings. This may relate to your need for Connection and understanding.\n\n**All-or-Nothing Thinking**\nThis involves viewing situations in black-and-white terms, which can create unnecessary pressure or lead to feeling overwhelmed when things don't go perfectly. It may arise from a need for control or assurance. This may relate to your need for Control and assurance.\n\n\n## Suggested Strategies\n\n**1. Communication Script Template**\nUse this script when discussing relationship dynamics to express your feelings clearly and constructively. I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request]. This helps address your need for Clear communication and understanding.\n\n**2. Reality-Check Exercise**\nChallenge assumptions by examining evidence for and against your beliefs about your partner's intentions. List evidence for and against your fear that [specific fear related to the relationship] This helps address your need for Reassurance and clarity.\n\n**3. Emotion Regulation Technique**\nUse this technique to ground yourself when feeling overwhelmed by relationship dynamics. When you feel [specific emotion], try this grounding technique: take deep breaths, focusing on the sensation of air entering and leaving your lungs. This helps address your need for Emotional stability and calm.\n\n\n## Relationship Context Questions\n\u2022 **Has this communication pattern happened before in this relationship?**\n  (Exploring recurring patterns to identify relationship dynamics)\n\n\u2022 **What expectations were set before your partner left?**\n  (Examining unspoken assumptions that may contribute to distress)\n\n\n\n## Ready-to-Use Templates\n\n**For When reaching out to express your needs:**\n\"I feel [emotion] when [specific behavior] occurs because [impact]. What I need is [specific request].\"\nThen: After using this template, observe how your partner responds and be open to a dialogue. Adjust your approach based on their feedback and the conversation's progress.\n\n**For When managing anxiety while waiting for a response:**\n\"When I feel [specific emotion], I will [healthy coping action] instead of [unhealthy reaction]\"\nThen: Reflect on the outcome of using this strategy, noting any changes in your emotional state or relationship dynamics.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Mind Reading",
-        "description": "Assuming what your partner is thinking can cause unnecessary stress and misunderstandings.",
-        "recommendation": "Practice checking in with your partner about their thoughts and feelings directly instead of assuming.",
-        "core_need": "Connection and reassurance"
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming what your partner is thinking can cause unnecessary stress and misunderstandings. - Practice checking in with your partner about their thoughts and feelings directly instead of assuming."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Viewing experiences in extremes can lead to heightened stress when situations don't align with expectations.",
-        "recommendation": "Work on identifying gray areas and finding middle ground in your perspective.",
-        "core_need": "Flexibility and balance"
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing experiences in extremes can lead to heightened stress when situations don't align with expectations. - Work on identifying gray areas and finding middle ground in your perspective."
       }
-    ],
-    "structured_data": null,
-    "user_reflection": null
+    ]
   },
   {
     "id": 184,
@@ -4027,23 +4042,16 @@
     "created_at": "2025-04-29T17:07:09.340326",
     "updated_at": "2025-04-29T21:34:55.371268",
     "is_analyzed": true,
-    "gpt_response": "It looks like you're experimenting with the journal features, which can be a neutral and exploratory space. Testing and trying out new things often come with a sense of curiosity or even a touch of uncertainty about what you'll discover or how it will work for you. This effort to engage, even in small ways, shows your openness to new experiences.\n\nTake a moment. What's one expectation you've been holding about your journaling process that feels important \u2014 and might point to an emotional need you want to explore further?\n\nIt's great that you're testing out features. To continue building on this exploration, consider setting a small goal for your next entry, like reflecting on a recent emotion or event. This can help you create a routine that feels meaningful. You might start with: 'Today, I felt [specific emotion] when [specific event] happened. This made me realize I need [specific need].' This keeps your journaling purposeful and personal.\n\n## Thought Patterns\n\n**Mind Reading**\nYou might be guessing how others perceive your actions or intentions, which can lead to unnecessary assumptions about their thoughts. This may relate to your need for Validation and understanding.\n\n**All-or-Nothing Thinking**\nThis could manifest in thoughts like seeing your journaling as either completely successful or not useful at all. This may relate to your need for Certainty and assurance.\n\n\n## Suggested Strategies\n\n**1. Communication Script Template**\nUse this to express your needs or thoughts clearly in your journal entries. I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request]. This helps address your need for Clarity and expression.\n\n**2. Reality-Check Exercise**\nChallenge any assumptions you might have about the effectiveness of your journaling. List evidence for and against your belief that journaling won\u2019t be beneficial for you. This helps address your need for Confidence in personal growth.\n\n**3. Emotion Regulation Technique**\nHelps manage any frustration or impatience with the journaling process. When you feel uncertain, try grounding by focusing on your breath: inhale for 4 counts, hold for 4, exhale for 4. This helps address your need for Calm and reassurance.\n\n\n## Relationship Context Questions\n\u2022 **Has this communication pattern happened before in your journaling process?**\n  (Exploring recurring patterns to identify personal dynamics)\n\n\u2022 **What expectations were set for yourself when you started journaling?**\n  (Examining unspoken assumptions that may contribute to your experience)\n\n\n\n## Ready-to-Use Templates\n\n**For When reaching out to express your needs:**\n\"I noticed that I feel [emotion] about my journaling. I want to [goal or outcome].\"\nThen: Reflect on how this intention aligns with your emotional needs and adjust if necessary.\n\n**For When managing uncertainty about journaling benefits:**\n\"When I feel unsure, I will remind myself of one positive outcome from journaling in the past.\"\nThen: Reflect on the outcome and note any shifts in your perspective.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Mind Reading",
-        "description": "Trying to predict how others might react to your journaling, which can cause unnecessary worry.",
-        "recommendation": "Use reality-check exercises to ground your assumptions.",
-        "core_need": "Validation"
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Trying to predict how others might react to your journaling, which can cause unnecessary worry. - Use reality-check exercises to ground your assumptions."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Viewing your journaling efforts as either a total success or a failure.",
-        "recommendation": "Practice self-compassion by acknowledging even small successes.",
-        "core_need": "Security and balance"
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing your journaling efforts as either a total success or a failure. - Practice self-compassion by acknowledging even small successes."
       }
-    ],
-    "structured_data": null,
-    "user_reflection": null
+    ]
   },
   {
     "id": 185,
@@ -4052,24 +4060,37 @@
     "content": "i never spoke to her about the communication, but she is now calling quite often. at one point she said she missed me\r\n",
     "anxiety_level": 4,
     "created_at": "2025-04-29T21:37:17.668725",
-    "updated_at": "2025-04-29T21:37:40.331412",
+    "updated_at": "2025-04-29T21:39:13.611670",
     "is_analyzed": true,
-    "gpt_response": "It sounds like you're experiencing a mix of emotions, such as curiosity and perhaps a bit of confusion, as your friend reaches out more frequently. This change in communication might be stirring feelings of uncertainty or even a bit of hopefulness about the relationship's direction. The statement 'she missed me' might have made you feel valued and connected, especially if you were feeling overlooked before.\n\nTake a moment. What's one expectation you've been holding about this relationship that feels heavy \u2014 and might point to an important emotional need?\n\nTo navigate this evolving communication, consider using an 'I-statement' to express your feelings and needs. For example: 'I feel appreciated when you say you miss me because it shows you value our connection. What I need is to understand how you see our relationship growing.' This can open a dialogue about expectations and emotional needs. Additionally, try a reality-check exercise by listing what evidence you have for and against assumptions you might be making about her intentions, to clarify your own emotional responses.\n\n## Thought Patterns\n\n**Mind Reading**\nAssuming you know what she's thinking or feeling without direct communication can create misunderstandings. This often connects to a need for clarity and reassurance. This may relate to your need for The core emotional need here is for connection and understanding..\n\n**All-or-Nothing Thinking**\nViewing the communication as either all positive or negative can overlook the nuances of relationships. This might stem from a need for certainty and emotional safety. This may relate to your need for The core emotional need is for emotional stability and predictability..\n\n\n## Suggested Strategies\n\n**1. Communication Script Template**\nUse this script in conversations to express emotions and clarify intentions, fostering open communication. I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request]. This helps address your need for This strategy helps fulfill the need for clarity and connection..\n\n**2. Reality-Check Exercise**\nChallenge assumptions by evaluating evidence for and against your fears about her intentions or the relationship's future. List evidence for and against your fear that she might not be as committed to the relationship as you are. This helps address your need for This strategy helps fulfill the need for emotional stability and reassurance..\n\n**3. Emotion Regulation Technique**\nManage feelings of uncertainty by grounding yourself in the present. When you feel uncertain, try this grounding technique: focus on your breathing, inhale deeply for five seconds, hold for five, and exhale slowly. Repeat until you feel calmer. This helps address your need for This strategy helps fulfill the need for emotional regulation and calm..\n\n\n## Relationship Context Questions\n\u2022 **Has this communication pattern happened before in this relationship?**\n  (Exploring recurring patterns to identify relationship dynamics)\n\n\u2022 **What expectations were set before your partner left?**\n  (Examining unspoken assumptions that may contribute to distress)\n\n\n\n## Ready-to-Use Templates\n\n**For When reaching out to express your needs:**\n\"I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request].\"\nThen: After expressing your needs, listen openly to her response to foster mutual understanding.\n\n**For When managing anxiety while waiting for a response:**\n\"When I feel anxious, I will take deep breaths and remind myself that I can't control her response, only my actions.\"\nThen: If her response is not what you hoped, consider discussing your feelings openly and honestly.\n\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Mind Reading",
-        "description": "Assuming another's thoughts or feelings without evidence can create unnecessary worry and confusion.",
-        "recommendation": "Engage in direct communication to clarify intentions and expectations.",
-        "core_need": "The emotional need this pattern is trying to meet is clarity and reassurance."
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming another's thoughts or feelings without evidence can create unnecessary worry and confusion. - Engage in direct communication to clarify intentions and expectations."
       },
       {
-        "pattern": "All-or-Nothing Thinking",
-        "description": "Perceiving situations in extremes may prevent recognizing the full spectrum of emotions and experiences.",
-        "recommendation": "Practice recognizing and acknowledging the complexity of emotions and situations.",
-        "core_need": "The emotional need this pattern is trying to meet is a sense of stability and understanding."
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Perceiving situations in extremes may prevent recognizing the full spectrum of emotions and experiences. - Practice recognizing and acknowledging the complexity of emotions and situations."
       }
-    ],
-    "structured_data": null,
-    "user_reflection": null
+    ]
+  },
+  {
+    "id": 186,
+    "user_id": 1,
+    "title": "Thoughts",
+    "content": "So On another note she's telling me that both her father and best friend are telling her that We shouldn't be having sex outside of marriage and that if I love her that we would wait I am 52 years old and she's 38 I don't know if I have the patience for Kinsley that because Those I experience when I was a lot younger I didn't expect to experience it with someone her age I didn't say anything when she told me that but she told me first your father say that you know since she since she just recently got divorced she spent some time by herself and not being in a relationship and then her best friend called her and told her you know she's been thinking and that she's thinking that you know she really should be stay through her face And not be having sex instead of marriage I mean mine is like What is it what does they have to do with them they need to just leave their lives and keep their nose all of my business ",
+    "anxiety_level": 5,
+    "created_at": "2025-04-30T14:39:28.584444",
+    "updated_at": "2025-04-30T14:39:55.311452",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Mind Reading",
+        "recommendation": "Assuming how Kinsley's father's and friend's opinions will impact your relationship can lead to unnecessary stress. - Engage in direct communication with Kinsley about how these opinions affect you both."
+      },
+      {
+        "thought_pattern": "All-or-Nothing Thinking",
+        "recommendation": "Viewing the situation as entirely dictated by others can prevent you from seeing the nuances of your relationship. - Focus on flexible thinking and explore various outcomes through open dialogue."
+      }
+    ]
   }
 ]
