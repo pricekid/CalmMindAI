@@ -977,8 +977,14 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
 
                     # Parse the initial JSON
                     result = json.loads(content)
-
-                    # Clean the result by removing empty fields
+                    
+                    # Get sentiment for cleaning
+                    sentiment = classify_journal_sentiment(safe_text, safe_anxiety)
+                    
+                    # Clean the response based on sentiment
+                    result = clean_gpt_response(result, sentiment)
+                    
+                    # Additional cleaning of empty fields
                     cleaned_result = {}
                     for key, value in result.items():
                         # Skip empty strings, empty lists, or None values
