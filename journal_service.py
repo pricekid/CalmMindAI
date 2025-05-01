@@ -551,6 +551,52 @@ def get_recurring_patterns(user_id: int, min_entries: int = 3) -> List[Dict[str,
     
     return sorted_patterns[:3]  # Return top 3 patterns
 
+def classify_journal_sentiment(text: str, anxiety_level: Optional[int] = None) -> str:
+    """
+    Classify journal sentiment as Positive, Neutral, Concern, or Distress
+    based on content and anxiety level.
+    """
+    # Check anxiety level first if provided
+    if anxiety_level and anxiety_level >= 7:
+        return "Distress"
+    elif anxiety_level and anxiety_level >= 5:
+        return "Concern"
+        
+    # Analyze text content
+    distress_indicators = [
+        "anxious", "worried", "scared", "depressed", "hopeless",
+        "overwhelmed", "stressed", "panic", "afraid", "terrified",
+        "lonely", "miserable", "hate", "angry", "frustrated"
+    ]
+    
+    concern_indicators = [
+        "upset", "sad", "confused", "unsure", "bothered",
+        "tired", "annoyed", "difficult", "hard", "struggle"
+    ]
+    
+    positive_indicators = [
+        "happy", "grateful", "thankful", "excited", "proud",
+        "peaceful", "calm", "good", "wonderful", "blessed",
+        "love", "enjoy", "appreciate", "hopeful", "pleased"
+    ]
+    
+    text_lower = text.lower()
+    
+    # Count indicators
+    distress_count = sum(1 for word in distress_indicators if word in text_lower)
+    concern_count = sum(1 for word in concern_indicators if word in text_lower)
+    positive_count = sum(1 for word in positive_indicators if word in text_lower)
+    
+    # Classify based on strongest signal
+    if distress_count > 0 and distress_count >= positive_count:
+        return "Distress"
+    elif concern_count > 0 and concern_count >= positive_count:
+        return "Concern"
+    elif positive_count > 0:
+        return "Positive"
+    else:
+        return "Neutral"
+
 def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: Optional[int] = None, user_id: int = 0) -> Dict[str, Any]:
     """
     Generate an improved AI analysis of a journal entry that's concise and focused,
@@ -662,8 +708,31 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         """
         
         # Create the enhanced structured prompt with greater emotional intelligence and historical awareness
-        prompt = f"""
-        You are Mira, a warm, compassionate CBT journaling coach inside an app called Calm Journey. 
+        # Classify journal sentiment
+        sentiment = classify_journal_sentiment(safe_text, safe_anxiety)
+        logger.debug(f"Journal sentiment classified as: {sentiment}")
+        
+        # Choose prompt based on sentiment
+        if sentiment in ["Positive", "Neutral"]:
+            prompt = f"""
+            You are Mira, a warm, supportive journaling coach inside Calm Journey. Someone has shared a {sentiment.lower()} journal entry.
+            Keep your response light and encouraging. Do not analyze for problems or suggest therapy unless explicitly mentioned.
+            
+            Journal entry: "{safe_text}"
+            
+            Your response should:
+            1. Acknowledge their sharing and mirror their positive/neutral tone
+            2. Reinforce any positive observations or insights they've made
+            3. Offer a simple reflection prompt only if it naturally extends their thoughts
+            4. Keep the response brief and upbeat
+            5. Do not suggest CBT techniques or emotional work unless they've asked
+            
+            Return only valid JSON with 'insight_text', 'reflection_prompt' (optional), and 'followup_text'.
+            Avoid analyzing for patterns or problems when none are expressed.
+            """
+        else:
+            prompt = f"""
+            You are Mira, a warm, compassionate CBT journaling coach inside an app called Calm Journey. 
         Your task is to respond to the following journal entry with deep emotional intelligence, therapeutic insight, and highly personalized CBT strategies.
         You should reference patterns and themes from previous entries when appropriate to show continuity and insight into the user's journey.
         
