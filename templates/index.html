@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 
-{% block title %}Welcome to Calm Journey{% endblock %}
+{% block title %}Mira: Your AI CBT Coach{% endblock %}
 
 {% block content %}
 <div class="row mt-5 mb-5">
     <div class="col-md-6">
-        <h1 class="display-4 fw-bold mb-4">Begin Your Journey to Calm</h1>
-        <p class="lead">Calm Journey is an AI-powered journaling tool that helps you manage anxiety using proven Cognitive Behavioral Therapy techniques.</p>
-        <p class="mb-4">Write about your thoughts and feelings, and our AI assistant will analyze your entries to identify anxiety patterns and provide personalized CBT-based solutions.</p>
+        <h1 class="display-4 fw-bold mb-4">Meet Mira, Your AI Therapy Companion</h1>
+        <p class="lead">Mira is your emotionally intelligent CBT coach that transforms journaling into meaningful conversations about your mental well-being.</p>
+        <p class="mb-4">Share your thoughts and feelings with Mira, and receive personalized guidance using proven cognitive behavioral therapy techniques to help you manage emotions and develop healthier thought patterns.</p>
         
         {% if community_message %}
         <div class="alert alert-info mb-4">
@@ -117,10 +117,10 @@
 
 <div class="text-center mt-5">
     {% if not current_user.is_authenticated %}
-    <h3 class="mb-4">Ready to start your journey?</h3>
+    <h3 class="mb-4">Ready to talk with Mira?</h3>
     <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg">Get Started</a>
     {% else %}
-    <h3 class="mb-4">Continue your journey</h3>
+    <h3 class="mb-4">Continue your conversation with Mira</h3>
     <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg">Go to Dashboard</a>
     {% endif %}
 </div>
