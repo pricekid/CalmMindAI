@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-  <!-- Teddy Bear Logo - matches the provided image -->
-  <g fill="#1D4D4F" stroke="#1D4D4F" stroke-width="8">
+<svg width="300" height="400" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Teddy Bear Logo - matches the provided image with warmer colors -->
+  <g fill="#A05C2C" stroke="#A05C2C" stroke-width="8">
     <!-- Head - rounded bear shape -->
     <circle cx="150" cy="140" r="90" fill="none"/>
     
@@ -10,19 +10,19 @@
     <circle cx="205" cy="85" r="25" fill="none"/>
     
     <!-- Eyes -->
-    <circle cx="125" cy="125" r="6" fill="#1D4D4F" stroke="none"/>
-    <circle cx="175" cy="125" r="6" fill="#1D4D4F" stroke="none"/>
+    <circle cx="125" cy="125" r="6" fill="#A05C2C" stroke="none"/>
+    <circle cx="175" cy="125" r="6" fill="#A05C2C" stroke="none"/>
     
     <!-- Nose and Mouth Area -->
     <circle cx="150" cy="155" r="30" fill="none"/>
     
     <!-- Smile arrow down in mouth -->
-    <path d="M150,170 L150,150 M135,162 L150,170 L165,162" stroke="#1D4D4F" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M150,170 L150,150 M135,162 L150,170 L165,162" stroke="#A05C2C" stroke-width="6" fill="none" stroke-linecap="round"/>
   </g>
   
-  <!-- Text -->
-  <g transform="translate(0,240)">
-    <text x="150" y="0" font-family="serif" font-size="42" font-weight="bold" text-anchor="middle" fill="#1D4D4F">Dear</text>
-    <text x="150" y="50" font-family="serif" font-size="48" font-weight="bold" text-anchor="middle" fill="#1D4D4F">Teddy</text>
+  <!-- Text added below with spacing -->
+  <g transform="translate(0,280)">
+    <text x="150" y="0" font-family="serif" font-size="42" font-weight="bold" text-anchor="middle" fill="#A05C2C">Dear</text>
+    <text x="150" y="50" font-family="serif" font-size="48" font-weight="bold" text-anchor="middle" fill="#A05C2C">Teddy</text>
   </g>
 </svg>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-  <!-- Teddy Bear Logo - matches the provided image -->
-  <g fill="#1D4D4F" stroke="#1D4D4F" stroke-width="8">
+  <!-- Teddy Bear Logo - matches the provided image with warm brown colors -->
+  <g fill="#A05C2C" stroke="#A05C2C" stroke-width="8">
     <!-- Head - rounded bear shape -->
     <circle cx="150" cy="150" r="90" fill="none"/>
     
@@ -10,13 +10,14 @@
     <circle cx="205" cy="95" r="25" fill="none"/>
     
     <!-- Eyes -->
-    <circle cx="125" cy="135" r="6" fill="#1D4D4F" stroke="none"/>
-    <circle cx="175" cy="135" r="6" fill="#1D4D4F" stroke="none"/>
+    <circle cx="125" cy="135" r="6" fill="#A05C2C" stroke="none"/>
+    <circle cx="175" cy="135" r="6" fill="#A05C2C" stroke="none"/>
     
     <!-- Nose and Mouth Area -->
     <circle cx="150" cy="165" r="30" fill="none"/>
     
-    <!-- Smile arrow down in mouth -->
-    <path d="M150,180 L150,160 M135,172 L150,180 L165,172" stroke="#1D4D4F" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <!-- Arrow pointing down in mouth -->
+    <path d="M150,180 L150,150" stroke="#A05C2C" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M135,165 L150,180 L165,165" stroke="#A05C2C" stroke-width="6" fill="none" stroke-linecap="round"/>
   </g>
 </svg>
