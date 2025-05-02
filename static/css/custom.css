@@ -248,16 +248,16 @@ footer a:hover {
     .dashboard-widget {
         margin-bottom: 20px;
     }
-    
+
     #breathing-circle {
         width: 150px;
         height: 150px;
     }
-    
+
     footer {
         text-align: center !important;
     }
-    
+
     footer .text-md-start,
     footer .text-md-end {
         text-align: center !important;
@@ -312,11 +312,20 @@ footer a:hover {
     .journal-entry-row {
         flex-wrap: nowrap;
     }
-    
+
     .journal-entry-badges {
         margin-top: 0;
         margin-left: auto;
         padding-left: 15px;
         flex-shrink: 0;
     }
+}
+
+.form-control {
+    background-color: #ffffff;
+    border: 1px solid var(--warm-peach-light);
+    color: #212529;
+    border-radius: 10px;
+    padding: 12px 15px;
+    transition: all 0.3s ease;
 }
