@@ -1,7 +1,7 @@
 {
   "name": "Calm Journey",
   "short_name": "CalmJourney",
-  "description": "AI-powered mental wellness journaling for emotional support and self-reflection",
+  "description": "A journaling companion for anxiety, clarity, and calm",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1a1a2e",
