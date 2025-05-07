@@ -843,7 +843,7 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
             - If they revealed fears of abandonment, connect this to their relationship patterns.
             - If they shared a vulnerability, honor it with validation and a thoughtful question.
 
-            Return your response in this format:
+            Return your response in JSON format with this structure:
             {{
               "followup_text": "Your thoughtful, empathetic response that builds on their reflection and offers a new insight or question"
             }}
