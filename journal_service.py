@@ -679,7 +679,7 @@ def classify_journal_sentiment(text: str, anxiety_level: Optional[int] = None) -
     else:
         return "Neutral"
 
-def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: Optional[int] = None, user_id: int = 0) -> Dict[str, Any]:
+def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: Optional[int] = None, user_id: int = 0, mode: str = "initial") -> Dict[str, Any]:
     """
     Generate an improved AI analysis of a journal entry that's concise and focused,
     with NLP preprocessing and structured metadata for more personalized responses.
@@ -811,8 +811,41 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
         sentiment = classify_journal_sentiment(safe_text, safe_anxiety)
         logger.debug(f"Journal sentiment classified as: {sentiment}")
 
-        # Choose prompt based on sentiment
-        if sentiment in ["Positive", "Neutral"]:
+        # For followup mode, use a different prompt structure focused on the user's reflection
+        if mode == "followup":
+            # Split the journal text to separate original entry from user reflection
+            # Format is expected to be: "{original_entry}\n\nUser Reflection: {reflection_text}"
+            parts = safe_text.split("\n\nUser Reflection: ", 1)
+            original_entry = parts[0] if len(parts) > 0 else ""
+            reflection_text = parts[1] if len(parts) > 1 else ""
+            
+            logger.debug(f"Processing followup reflection: {reflection_text[:50]}...")
+            
+            prompt = f"""
+            You are Mira, a CBT-informed journaling guide. You've already responded to a journal entry with an emotional insight and reflection prompt. The user has now shared their answer.
+
+            Original Journal Entry: 
+            "{original_entry}"
+            
+            User's Reflection: 
+            "{reflection_text}"
+
+            Based on both the original journal entry and the user's follow-up, return a new, deeper prompt that helps them:
+            - Explore their emotion
+            - Reframe their thinking
+            - Or consider a next step
+
+            Do not repeat previous reflections. Stay grounded in their reply.
+            Return your response in JSON:
+            {{
+                "followup_text": "Your thoughtful, empathetic response that builds on their reflection and offers a new insight or question"
+            }}
+            
+            Keep your response concise (1-3 sentences), warm, and focused on deepening their insight.
+            """
+            
+        # Choose prompt based on sentiment for initial analysis
+        elif sentiment in ["Positive", "Neutral"]:
             prompt = f"""
             You are Mira, a warm, supportive journaling coach inside Calm Journey. A user has just submitted a {sentiment.lower()} journal entry.
 

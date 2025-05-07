@@ -16,6 +16,7 @@ import gamification
 from utils.activity_tracker import track_journal_entry
 import markdown
 import re
+import json
 from csrf_utils import get_csrf_token, validate_csrf_token
 
 # Set up logging with more details
@@ -268,6 +269,19 @@ def save_conversation_reflection(entry_id):
                         # Update structured data with the followup message
                         if not structured_data:
                             structured_data = {}
+                        
+                        # Track conversation history for multi-turn reflection
+                        if 'conversation_history' not in structured_data:
+                            structured_data['conversation_history'] = []
+                        
+                        # Add this exchange to conversation history
+                        structured_data['conversation_history'].append({
+                            'user_reflection': reflection,
+                            'teddy_response': followup_message,
+                            'timestamp': datetime.now().isoformat()
+                        })
+                        
+                        # Update current followup message
                         structured_data['followup_text'] = followup_message
                         
                         # Save structured data
@@ -369,7 +383,8 @@ def save_initial_reflection():
             analysis_result = analyze_journal_with_gpt(
                 journal_text=f"{entry.content}\n\nUser Reflection: {reflection_text}",
                 anxiety_level=entry.anxiety_level,
-                user_id=current_user.id
+                user_id=current_user.id,
+                mode="followup"  # Use followup mode for reflections
             )
 
             # Check if we got a valid response
@@ -520,7 +535,8 @@ def save_second_reflection():
             analysis_result = analyze_journal_with_gpt(
                 journal_text=f"{entry.content}\n\nFirst Reflection: {entry.user_reflection}\nSecond Reflection: {reflection_text}",
                 anxiety_level=entry.anxiety_level,
-                user_id=current_user.id
+                user_id=current_user.id,
+                mode="followup"  # Use followup mode for final reflection too
             )
 
             # Check if we got a valid response
