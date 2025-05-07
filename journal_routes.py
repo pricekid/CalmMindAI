@@ -800,8 +800,18 @@ def new_journal_entry():
             logger.error(f"Database error when saving journal entry: {str(db_error)}")
             db.session.rollback()
             flash('Error saving your journal entry. Please try again.', 'danger')
+            # Create a dummy entry object with default values
+            mock_entry = {
+                'title': form.title.data,
+                'content': form.content.data,
+                'anxiety_level': form.anxiety_level.data,
+                'created_at': datetime.utcnow()
+            }
             return render_template('journal_entry.html', title='New Journal Entry', 
-                                  form=form, legend='New Journal Entry')
+                                  form=form, legend='New Journal Entry',
+                                  entry=mock_entry,
+                                  structured_data={'insight_text': '', 'reflection_prompt': ''},
+                                  view_only=False)
 
         # Analyze the entry using the improved GPT analysis
         try:
@@ -1060,9 +1070,19 @@ def new_journal_entry():
             # Use direct path instead of url_for
             return redirect('/journal')
 
+    # Create a dummy entry object with default values
+    mock_entry = {
+        'title': '',
+        'content': '',
+        'anxiety_level': 5,
+        'created_at': datetime.utcnow()
+    }
+    
     return render_template('journal_entry.html', title='New Journal Entry', 
                           form=form, legend='New Journal Entry',
-                          structured_data={'insight_text': '', 'reflection_prompt': ''})
+                          entry=mock_entry,
+                          structured_data={'insight_text': '', 'reflection_prompt': ''},
+                          view_only=False)
 
 # View journal entry
 @journal_bp.route('/<int:entry_id>')
