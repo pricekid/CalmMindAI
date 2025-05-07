@@ -1285,9 +1285,11 @@ def view_journal_entry(entry_id):
         if not formatted_response.startswith("<p>") and not formatted_response.startswith("<h4") and not formatted_response.startswith("<div"):
             formatted_response = f"<p>{formatted_response}</p>"
 
-        styled_coach_response = f'<div style="color: #000000;">{formatted_response}</div>'
+        # Ensure text color is dark for good contrast regardless of background
+        styled_coach_response = f'<div style="color: #333333;">{formatted_response}</div>'
     else:
-        styled_coach_response = f'<div style="color: #000000;">{coach_response}</div>'
+        # Ensure text color is dark for good contrast regardless of background
+        styled_coach_response = f'<div style="color: #333333;">{coach_response}</div>'
 
     # Get structured data if available
     structured_data = None

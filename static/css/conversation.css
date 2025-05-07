@@ -63,7 +63,15 @@
 .mira-bubble {
   background-color: #f0f7f4;
   border: 1px solid #d8eae1;
-  color: #2c3e50; /* Dark navy text color for better contrast */
+  color: #213547; /* Darker text color for even better contrast */
+}
+
+/* Ensure all text within Mira bubble has good contrast */
+.mira-bubble p, 
+.mira-bubble div, 
+.mira-bubble span, 
+.mira-bubble li {
+  color: #213547 !important; /* Force dark text color for all content */
 }
 
 /* Content within bubbles */
@@ -112,7 +120,13 @@
   font-style: italic;
   margin-top: 15px;
   margin-bottom: 15px;
-  color: #2c3e50; /* Dark navy text color for better contrast */
+  color: #213547; /* Darker text color for better contrast */
+}
+
+/* Ensure reflection prompts have good contrast */
+.reflection-prompt, 
+.reflection-prompt-box p {
+  color: #213547 !important; /* Force dark text color */
 }
 
 /* Chat action buttons */
