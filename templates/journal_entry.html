@@ -204,6 +204,7 @@
 <div class="container mt-4">
   <div class="row">
     <div class="col-md-12">
+      {% if not view_only %}
       <div class="card mb-4">
         <div class="card-body">
           <form method="POST" id="journal-form">
@@ -230,6 +231,7 @@
           </form>
         </div>
       </div>
+      {% endif %}
 
       <ul class="nav nav-tabs" id="insightTabs" role="tablist">
         <li class="nav-item" role="presentation">
