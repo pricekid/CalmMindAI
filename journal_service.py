@@ -1077,11 +1077,31 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
             # Log the API parameters for debugging
             logger.debug(f"Making OpenAI API call with model: {model}, API key (sanitized): {'*****' + api_key[-4:] if api_key else 'None'}")
 
-            # Make the API call with simple explicit instructions to return very basic JSON
-            response = client.chat.completions.create(
-                model=model,
-                messages=[
-                    {"role": "system", "content": """
+            # Determine if this is followup mode for proper API request configuration
+            is_followup_mode = mode == "followup"
+            logger.info(f"API request mode: {'followup' if is_followup_mode else 'initial'}")
+            
+            # Make the API call with appropriate parameters based on mode
+            if is_followup_mode:
+                # For followup mode, use a simpler system message that mentions JSON
+                logger.info("Using response_format=json_object for followup mode")
+                # Ensure there's no conflict with variable names
+                api_response = client.chat.completions.create(
+                    model=model,
+                    messages=[
+                        {"role": "system", "content": "You are Mira, a warm, emotionally intelligent CBT-based coach. Provide a thoughtful followup response in JSON format."},
+                        {"role": "user", "content": prompt}
+                    ],
+                    response_format={"type": "json_object"},
+                    temperature=0.7,
+                    max_tokens=1500
+                )
+            else:
+                # For initial mode, use the standard system message
+                api_response = client.chat.completions.create(
+                    model=model,
+                    messages=[
+                        {"role": "system", "content": """
 You are Mira, an emotionally intelligent CBT-based journaling coach inside Calm Journey. Your goal is to help the user reflect on their emotional experiences in a compassionate, supportive, and directive way.
 
 You will be given a journal entry and additional context about the user's history and emotional patterns.
@@ -1149,7 +1169,7 @@ Omit any fields that are not relevant or not supported by the journal.
             # Parse the response with improved error handling
             try:
                 # Get the raw response content 
-                content = response.choices[0].message.content
+                content = api_response.choices[0].message.content
                 logger.debug(f"Raw OpenAI response content: {content}")  # Log the full content for debugging
                 # Also log the exact format to see any issues
                 logger.debug(f"Response type: {type(content)}, length: {len(content)}")
