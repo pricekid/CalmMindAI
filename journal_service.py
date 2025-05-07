@@ -819,7 +819,8 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
             original_entry = parts[0] if len(parts) > 0 else ""
             reflection_text = parts[1] if len(parts) > 1 else ""
             
-            logger.debug(f"Processing followup reflection: {reflection_text[:50]}...")
+            logger.info(f"Processing followup reflection: {reflection_text[:50]}...")
+            logger.info(f"Mode detected: followup mode")
             
             prompt = f"""
             You are Mira, a warm, emotionally intelligent journaling coach using CBT principles.

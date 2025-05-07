@@ -253,18 +253,34 @@ def save_conversation_reflection(entry_id):
                 followup_message = structured_data['followup_text']
             else:
                 # Otherwise, generate one with OpenAI
-                logger.debug(f"Generating followup message for entry {entry_id}")
+                logger.info(f"Generating followup message for entry {entry_id}")
                 try:
+                    # Add more detailed logging
+                    logger.info(f"Sending followup mode request for entry {entry_id}")
+                    logger.debug(f"User reflection text: {reflection[:100]}...")
+                    
+                    # Enhance the input data with more context
+                    # Full context of journal and reflection for improved follow-up
+                    journal_with_reflection = f"{entry.content}\n\nUser Reflection: {reflection}"
+                    logger.debug(f"Combined journal+reflection text (first 100 chars): {journal_with_reflection[:100]}...")
+                    
+                    # Call GPT with followup mode
                     analysis_result = analyze_journal_with_gpt(
-                        journal_text=f"{entry.content}\n\nUser Reflection: {reflection}",
+                        journal_text=journal_with_reflection,
                         anxiety_level=entry.anxiety_level,
                         user_id=current_user.id,
                         mode="followup"  # Indicate this is a followup request
                     )
                     
+                    # Improved response validation with detailed logging
+                    logger.debug(f"Analysis result type: {type(analysis_result)}")
+                    if isinstance(analysis_result, dict):
+                        logger.debug(f"Analysis result keys: {list(analysis_result.keys())}")
+                    
                     # Check if we got a valid response
                     if analysis_result and "followup_text" in analysis_result:
                         followup_message = analysis_result.get("followup_text")
+                        logger.info(f"Got valid followup response: {followup_message[:100]}...")
                         
                         # Update structured data with the followup message
                         if not structured_data:

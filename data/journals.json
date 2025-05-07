@@ -4419,5 +4419,25 @@
     ],
     "structured_data": null,
     "user_reflection": null
+  },
+  {
+    "id": 201,
+    "user_id": 1,
+    "title": "may6th 2",
+    "content": "I\u2019m tired of always being the one who checks in on people. I send messages, I show up, I ask how they\u2019re doing\u2014but when I\u2019m not okay, no one seems to notice. It makes me feel invisible and kind of stupid for caring so much.\u201d",
+    "anxiety_level": 6,
+    "created_at": "2025-05-07T23:38:12.412328",
+    "updated_at": "2025-05-07T23:38:12.412330",
+    "is_analyzed": false,
+    "gpt_response": "Error occurred during analysis.",
+    "cbt_patterns": [
+      {
+        "pattern": "Error analyzing entry",
+        "description": "We couldn't analyze your journal entry at this time.",
+        "recommendation": "Please try again later or contact support if the problem persists."
+      }
+    ],
+    "structured_data": null,
+    "user_reflection": null
   }
 ]
