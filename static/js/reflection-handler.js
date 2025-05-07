@@ -98,6 +98,18 @@ function addUserReflectionBubble(reflectionText, entryId) {
         return;
     }
     
+    // Check if there's already a user reflection message displayed
+    // to avoid duplication when the page refreshes or reloads
+    const existingReflections = document.querySelectorAll('.chat-message.user-message');
+    for (const existingReflection of existingReflections) {
+        // Check if this is a reflection (not the original journal entry)
+        const reflectionLabel = existingReflection.querySelector('.chat-info span');
+        if (reflectionLabel && reflectionLabel.textContent.trim() === 'Your reflection') {
+            console.log('User reflection already exists in the chat - skipping append');
+            return; // Skip adding a new bubble
+        }
+    }
+    
     // Get user initial from existing avatar if possible
     let userInitial = 'U';
     const existingUserAvatar = document.querySelector('.chat-avatar-circle span');
@@ -140,6 +152,22 @@ function addMiraFollowupBubble(followupText) {
     if (!chatContainer) {
         console.error('Chat container not found');
         return;
+    }
+    
+    // Check if the followup message is already displayed (to prevent duplication)
+    const existingFollowups = document.querySelectorAll('.chat-message.mira-message');
+    for (const existingFollowup of existingFollowups) {
+        // Skip the first Mira message (which is the initial analysis)
+        if (existingFollowup === document.querySelector('.chat-message.mira-message')) {
+            continue;
+        }
+        
+        // Check if this is a followup message
+        const messageContent = existingFollowup.querySelector('.chat-content p');
+        if (messageContent && messageContent.textContent.trim() === followupText.trim()) {
+            console.log('Mira followup already exists in the chat - skipping append');
+            return; // Skip adding a new bubble
+        }
     }
     
     // Create the Mira followup bubble
