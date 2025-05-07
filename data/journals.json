@@ -4361,5 +4361,43 @@
     ],
     "structured_data": null,
     "user_reflection": null
+  },
+  {
+    "id": 199,
+    "user_id": 1,
+    "title": "I am thankful for all the goodthings that are surrounding me today",
+    "content": "I am thankful for all the goodthings that are surrounding me today",
+    "anxiety_level": 1,
+    "created_at": "2025-05-07T23:06:45.706577",
+    "updated_at": "2025-05-07T23:06:56.555867",
+    "is_analyzed": true,
+    "gpt_response": "You've embraced the beauty of gratitude today, and it's wonderful to see you appreciating the positive things around you. This entry feels like a gentle nod to the good moments that sometimes go unnoticed. Take a moment to reflect on what specific things are bringing you joy lately and how acknowledging them makes you feel. Savor these moments\u2014they are the threads that weave a joyful life.\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Journal Reflection",
+        "description": "Your journal entry has been saved.",
+        "recommendation": "Continue journaling regularly to build self-awareness."
+      }
+    ],
+    "structured_data": {
+      "insight_text": "Your recent entries show a delightful trend of gratitude and appreciation, highlighting the positive aspects of your day. This shift towards recognizing the good is a beautiful step in nurturing a positive mindset.",
+      "reflection_prompt": "What are some specific things you're thankful for today, and how do they contribute to your overall sense of well-being?",
+      "strategies": [
+        {
+          "title": "Gratitude Journaling",
+          "description": "Spend a few minutes each day noting specific things that bring joy or gratitude. This practice can enhance positive emotions and well-being.",
+          "action_step": "Write down three things you're thankful for each day and reflect on why they are meaningful to you.",
+          "emotional_need_addressed": "This helps fulfill the need for positivity and appreciation."
+        },
+        {
+          "title": "Moment of Mindfulness",
+          "description": "Take a short break to fully experience a moment of joy or peace. This can help anchor you in the present and enhance gratitude.",
+          "action_step": "Pause and take three deep breaths while focusing on a positive moment or thought. Allow yourself to fully experience it.",
+          "emotional_need_addressed": "This supports the need for presence and serenity."
+        }
+      ],
+      "followup_text": "Keep nurturing the habit of gratitude, as it can profoundly transform your perspective on life. Remember, acknowledging the good in your life is a simple yet powerful way to cultivate happiness. You're on a path of positivity\u2014keep embracing it!"
+    },
+    "user_reflection": null
   }
 ]
