@@ -1288,6 +1288,16 @@ Omit any fields that are not relevant or not supported by the journal.
                 
                 # Check if we have the enhanced reflective pause format fields
                 has_enhanced_format = all(k in result for k in ['insight_text', 'reflection_prompt', 'followup_text']) and any(k in result for k in ['relationship_exploration', 'actionable_templates'])
+                
+                # Special handling for followup mode using the response field
+                if mode == "followup" and 'response' in result:
+                    # For followup mode, the main content is in the 'response' field
+                    # Copy this to other fields for consistent processing
+                    coach_response = result['response']
+                    result['gpt_response'] = coach_response
+                    result['followup_text'] = coach_response
+                    result['followup_message'] = coach_response
+                    logger.info(f"Extracted followup response from 'response' field: {coach_response[:100]}...")
 
                 # Check if we have the reflective pause format fields (older version)
                 has_reflective_pause_format = all(k in result for k in ['insight_text', 'reflection_prompt', 'followup_text'])
