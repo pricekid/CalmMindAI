@@ -895,19 +895,26 @@ def new_journal_entry():
             is_config_error = False
 
             for pattern in cbt_patterns:
-                # Check for different error patterns
-                if pattern["pattern"] == "API Quota Exceeded":
-                    is_api_error = True
-                elif pattern["pattern"] == "API Configuration Issue":
-                    is_config_error = True
+                try:
+                    # Process pattern safely with our handler
+                    pattern_name, recommendation_text = safe_process_pattern(pattern)
+                    
+                    # Check for different error patterns
+                    if pattern_name == "API Quota Exceeded":
+                        is_api_error = True
+                    elif pattern_name == "API Configuration Issue":
+                        is_config_error = True
 
-                # Save recommendation to database
-                recommendation = CBTRecommendation(
-                    thought_pattern=pattern["pattern"],
-                    recommendation=f"{pattern['description']} - {pattern['recommendation']}",
-                    journal_entry_id=entry.id
-                )
-                db.session.add(recommendation)
+                    # Save recommendation to database
+                    recommendation = CBTRecommendation(
+                        thought_pattern=pattern_name,
+                        recommendation=recommendation_text,
+                        journal_entry_id=entry.id
+                    )
+                    db.session.add(recommendation)
+                except Exception as pattern_err:
+                    logger.error(f"Error processing pattern in new entry: {str(pattern_err)}")
+                    # Continue with the next pattern instead of failing completely
 
             entry.is_analyzed = True
 
