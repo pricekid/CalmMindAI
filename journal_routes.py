@@ -8,6 +8,7 @@ from journal_service import (
     get_journal_entries_for_user, count_user_entries,
     get_recurring_patterns
 )
+from recommendation_handler import safe_process_pattern
 from datetime import datetime, timedelta
 from sqlalchemy import desc
 from sqlalchemy.orm import load_only, defer, undefer
@@ -1611,19 +1612,26 @@ def api_analyze_entry(entry_id):
         is_config_error = False
 
         for pattern in cbt_patterns:
-            # Check for different error patterns
-            if pattern["pattern"] == "API Quota Exceeded":
-                is_api_error = True
-            elif pattern["pattern"] == "API Configuration Issue":
-                is_config_error = True
+            try:
+                # Process pattern safely with our new handler
+                pattern_name, recommendation_text = safe_process_pattern(pattern)
+                
+                # Check for different error patterns
+                if pattern_name == "API Quota Exceeded":
+                    is_api_error = True
+                elif pattern_name == "API Configuration Issue":
+                    is_config_error = True
 
-            # Save recommendation to database
-            recommendation = CBTRecommendation(
-                thought_pattern=pattern["pattern"],
-                recommendation=f"{pattern['description']} - {pattern['recommendation']}",
-                journal_entry_id=entry.id
-            )
-            db.session.add(recommendation)
+                # Save recommendation to database
+                recommendation = CBTRecommendation(
+                    thought_pattern=pattern_name,
+                    recommendation=recommendation_text,
+                    journal_entry_id=entry.id
+                )
+                db.session.add(recommendation)
+            except Exception as pattern_err:
+                logger.error(f"Error processing pattern: {str(pattern_err)}")
+                # Continue with the next pattern instead of failing completely
 
         entry.is_analyzed = True
         db.session.commit()
