@@ -5118,5 +5118,54 @@
       "followup_text": "It's okay to feel this way, and it's a valid concern to want mutual care in your relationships. Try using the communication script next time you feel unnoticed to express your needs clearly. Remember, you deserve to be seen and appreciated for all you do."
     },
     "user_reflection": null
+  },
+  {
+    "id": 218,
+    "user_id": 1,
+    "title": "May 7th 17",
+    "content": "\u2019m tired of always being the one who checks in on people. I send messages, I show up, I ask how they\u2019re doing\u2014but when I\u2019m not okay, no one seems to notice. It makes me feel invisible and kind of stupid for caring so much.",
+    "anxiety_level": 6,
+    "created_at": "2025-05-08T03:30:09.010913",
+    "updated_at": "2025-05-08T03:30:18.901061",
+    "is_analyzed": true,
+    "gpt_response": "I hear you. It seems like you're feeling quite invisible and perhaps a bit foolish for investing so much care into others without it being reciprocated. It's understandable to feel this way when your efforts aren't acknowledged. You deserve to be seen and appreciated. Take a moment to consider: When you feel like your efforts go unnoticed, what emotion do you think is trying to surface? Maybe it's hurt, disappointment, or something else. Remember, your care is valuable, and it's okay to seek connections that truly see you.\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": ""
+      },
+      {
+        "pattern": "Mind Reading",
+        "description": ""
+      }
+    ],
+    "structured_data": {
+      "insight_text": "Reading your journal, there's a palpable sense of feeling neglected and unappreciated. This echoes a recurring pattern where you feel your care isn't reciprocated, which might be tied to a deeper need for validation and connection in your relationships.",
+      "reflection_prompt": "Take a moment. When you feel like you're the one always reaching out, what expectation are you holding about these relationships that feels heavy?",
+      "thought_patterns": [
+        "All-or-Nothing Thinking",
+        "Mind Reading"
+      ],
+      "strategies": [
+        {
+          "title": "Communication Script Template",
+          "description": "Use this script when you want to express how you feel about the imbalance in your relationships.",
+          "action_step": "I feel invisible when my efforts aren't acknowledged because it makes me question my value. What I need is for you to reach out sometimes too.",
+          "emotional_need_addressed": "Validation and mutual support"
+        },
+        {
+          "title": "Reality-Check Exercise",
+          "description": "Challenge the belief that no one notices or cares.",
+          "action_step": "List evidence for and against your fear that no one notices when you're not okay.",
+          "emotional_need_addressed": "Reassurance and understanding"
+        }
+      ],
+      "relationship_questions": [
+        "When you feel unseen, does it remind you of a past relationship pattern?",
+        "What small changes in these relationships could make you feel more supported?"
+      ],
+      "followup_text": "Remember, it's perfectly okay to seek relationships where your care is reciprocated. You deserve to be seen and valued. Keep nurturing connections that feel balanced and fulfilling."
+    },
+    "user_reflection": null
   }
 ]

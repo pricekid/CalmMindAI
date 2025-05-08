@@ -1370,6 +1370,10 @@ Omit any fields that are not relevant or not supported by the journal.
                     # Use the narrative response as the main coach response
                     coach_response = narrative_response
                     
+                    # Remove thought patterns section from coach response if present
+                    if "We're starting to notice" in coach_response:
+                        coach_response = coach_response.split("We're starting to notice")[0].strip()
+                    
                     # Make sure we have a sign-off
                     if "Coach Mira" not in coach_response and "Mira" not in coach_response:
                         coach_response += "\n\nWarmly,\nCoach Mira"
@@ -1446,8 +1450,8 @@ Omit any fields that are not relevant or not supported by the journal.
                             if guidance:
                                 templates_text += f"Then: {guidance}\n"
 
-                    # Combine all sections for the enhanced response format
-                    coach_response = f"{insight_text}\n\n{reflection_prompt}\n\n{followup_text}{distortions_text}{strategies_text}{relationship_text}{templates_text}"
+                    # Combine sections for the enhanced response format, but EXCLUDE thought patterns
+                    coach_response = f"{insight_text}\n\n{reflection_prompt}\n\n{followup_text}{strategies_text}{relationship_text}{templates_text}"
 
                     # Add a sign-off if not already present
                     if "Coach Mira" not in coach_response:
@@ -1489,8 +1493,8 @@ Omit any fields that are not relevant or not supported by the journal.
                         action = s.get('action_step', '')
                         strategies_text += f"\n**{i}. {title}**\n{description} {action}\n"
 
-                    # Combine all sections for the legacy response format
-                    coach_response = f"{insight_text}\n\n{reflection_prompt}\n\n{followup_text}{distortions_text}{strategies_text}"
+                    # Combine sections for the legacy response format, but EXCLUDE thought patterns
+                    coach_response = f"{insight_text}\n\n{reflection_prompt}\n\n{followup_text}{strategies_text}"
 
                     # Add a sign-off if not already present
                     if "Coach Mira" not in coach_response:
@@ -1536,8 +1540,8 @@ Omit any fields that are not relevant or not supported by the journal.
                     # Add outro
                     outro = result.get('outro', '')
 
-                    # Combine all sections
-                    coach_response = f"{intro}\n\n{reflection}{distortions_text}{strategies_text}{reflection_prompt}\n\n{outro}"
+                    # Combine sections without thought patterns
+                    coach_response = f"{intro}\n\n{reflection}{strategies_text}{reflection_prompt}\n\n{outro}"
 
                     # Convert to the new reflective pause format for consistency
                     result['structured_data'] = {
