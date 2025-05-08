@@ -105,15 +105,19 @@ function addUserReflectionBubble(reflectionText, entryId) {
         return;
     }
     
-    // Check if there's already a user reflection message displayed
-    // to avoid duplication when the page refreshes or reloads
+    // Only check for exact duplication of the current reflection text
+    // This allows multiple reflections while preventing duplicates
     const existingReflections = document.querySelectorAll('.chat-message.user-message');
     for (const existingReflection of existingReflections) {
-        // Check if this is a reflection (not the original journal entry)
+        // Check if this is a reflection with identical content
         const reflectionLabel = existingReflection.querySelector('.chat-info span');
-        if (reflectionLabel && reflectionLabel.textContent.trim() === 'Your reflection') {
-            console.log('User reflection already exists in the chat - skipping append');
-            return; // Skip adding a new bubble
+        const reflectionContent = existingReflection.querySelector('.chat-content p');
+        if (reflectionLabel && 
+            reflectionLabel.textContent.trim() === 'Your reflection' &&
+            reflectionContent && 
+            reflectionContent.textContent.trim() === reflectionText.trim()) {
+            console.log('Identical user reflection already exists - skipping append');
+            return; // Skip adding a duplicate bubble
         }
     }
     
@@ -181,12 +185,8 @@ function addMiraFollowupBubble(followupText) {
         }
     }
     
-    // If we already have a followup message (not the initial one), don't add another
-    // This helps prevent duplicate followup responses
-    if (followupCount > 0) {
-        console.log('A different followup message already exists - not adding another one');
-        return;
-    }
+    // Allow multiple followup messages to create a conversation flow
+    // Only check for exact duplicates which is handled above
     
     // Create the Mira followup bubble
     const miraFollowupBubble = document.createElement('div');
@@ -224,10 +224,12 @@ function addMiraFollowupBubble(followupText) {
 }
 
 function hideReflectionForm() {
-    // Hide the reflection form after submission
-    const reflectionForm = document.querySelector('.reflection-form');
-    if (reflectionForm) {
-        reflectionForm.style.display = 'none';
+    // Clear the reflection form after submission but keep it visible
+    // to encourage continued conversation
+    const reflectionInput = document.querySelector('.reflection-input');
+    if (reflectionInput) {
+        reflectionInput.value = ''; // Clear the text
+        reflectionInput.focus(); // Re-focus for next message
     }
 }
 
