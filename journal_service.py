@@ -833,22 +833,25 @@ def analyze_journal_with_gpt(journal_text: Optional[str] = None, anxiety_level: 
             User's Reflection: 
             "{reflection_text}"
 
-            Your task is to continue the conversation with a deeper, emotionally aware follow-up. Do not repeat the original insight or prompt. Do not be generic.
+            Your task is to continue the conversation with a deeper, emotionally aware follow-up that ALWAYS ends with a thoughtful, reflective question. Do not repeat the original insight or prompt. Do not be generic.
 
             Build specifically on what the user just revealed:
-            - If they expressed sadness, acknowledge it and gently explore what's behind it.
-            - If they revealed anger, invite a safe outlet or reframe.
+            - If they expressed sadness, acknowledge it and gently explore what's behind it with a question.
+            - If they revealed anger, validate it and ask a question that invites deeper exploration.
             - If they showed resignation, ask what boundary or shift might protect them.
-            - If they mentioned perfectionism, explore how it relates to their self-worth.
-            - If they revealed fears of abandonment, connect this to their relationship patterns.
-            - If they shared a vulnerability, honor it with validation and a thoughtful question.
+            - If they mentioned perfectionism, explore how it relates to their self-worth with a thoughtful question.
+            - If they revealed fears of abandonment, connect this to their relationship patterns and ask a deepening question.
+            - If they shared a vulnerability, honor it with validation and then ask a meaningful question.
 
             Return your response in JSON format with this structure:
             {{
-              "followup_text": "Your thoughtful, empathetic response that builds on their reflection and offers a new insight or question"
+              "followup_text": "Your thoughtful, empathetic response that builds on their reflection and ALWAYS ends with a specific, reflective question that invites deeper exploration"
             }}
             
-            Use a warm, human tone and keep the response (1-3 sentences) specific to what they shared. Your response must clearly show you understood their reflection and are building on it meaningfully.
+            Use a warm, human tone and keep the response (2-4 sentences) specific to what they shared. Your response must:
+            1. Show you understood their reflection
+            2. Build on it meaningfully
+            3. ALWAYS end with a reflective question that invites deeper exploration
             """
             
         # Choose prompt based on sentiment for initial analysis

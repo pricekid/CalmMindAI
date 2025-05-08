@@ -284,9 +284,16 @@ def save_conversation_reflection(entry_id):
                         logger.debug(f"Analysis result keys: {list(analysis_result.keys())}")
                     
                     # Check if we got a valid response
-                    if analysis_result and "followup_text" in analysis_result:
-                        followup_message = analysis_result.get("followup_text")
-                        logger.info(f"Got valid followup response: {followup_message[:100]}...")
+                    if analysis_result:
+                        # Check for either followup_text or gpt_response (depending on which key the API returns)
+                        if "followup_text" in analysis_result:
+                            followup_message = analysis_result.get("followup_text")
+                            logger.info(f"Got valid followup response from followup_text: {followup_message[:100]}...")
+                        elif "gpt_response" in analysis_result:
+                            followup_message = analysis_result.get("gpt_response")
+                            logger.info(f"Got valid followup response from gpt_response: {followup_message[:100]}...")
+                        
+                        # Log success and details
                         logger.info(f"STEP 4 COMPLETE: Processed combined journal ({len(entry.content)} chars) + reflection ({len(reflection)} chars) and got followup response")
                         
                         # Update structured data with the followup message
@@ -305,7 +312,7 @@ def save_conversation_reflection(entry_id):
                         })
                         
                         # Update current followup message - store as both followup_text and followup_message
-                        # for backward compatibility
+                        # for backward compatibility and consistent access
                         structured_data['followup_text'] = followup_message
                         structured_data['followup_message'] = followup_message
                         
@@ -416,11 +423,19 @@ def save_initial_reflection():
             logger.info(f"STEP 4 VERIFICATION: Sent combined journal ({len(entry.content)} chars) + reflection ({len(reflection_text)} chars) to OpenAI for followup insight")
 
             # Check if we got a valid response
-            if not analysis_result or "gpt_response" not in analysis_result:
-                logger.error("Invalid or empty analysis result from GPT")
+            if not analysis_result:
+                logger.error("Empty analysis result from GPT")
                 entry.followup_insight = "I appreciate your reflection. I'm having trouble generating a response right now, but your thoughts are valuable and have been saved."
-            else:
+            # Check for different possible response formats
+            elif "gpt_response" in analysis_result:
                 entry.followup_insight = analysis_result.get("gpt_response")
+                logger.debug(f"Using gpt_response for followup_insight")
+            elif "followup_text" in analysis_result:
+                entry.followup_insight = analysis_result.get("followup_text")
+                logger.debug(f"Using followup_text for followup_insight")
+            else:
+                logger.error(f"No recognized response field found in analysis_result: {list(analysis_result.keys())}")
+                entry.followup_insight = "Thank you for your reflection. I'm processing your thoughts and will have more specific insights soon."
 
             # Commit changes
             db.session.commit()
@@ -575,11 +590,19 @@ def save_second_reflection():
             logger.info(f"STEP 4 VERIFICATION (SECOND REFLECTION): Sent complete conversation history to OpenAI for final response")
 
             # Check if we got a valid response
-            if not analysis_result or "gpt_response" not in analysis_result:
-                logger.error("Invalid or empty analysis result from GPT")
+            if not analysis_result:
+                logger.error("Empty analysis result from GPT")
                 entry.closing_message = "Thank you for sharing your reflections. I appreciate your thoughtful responses. Your insights show a willingness to explore your feelings, which is an important part of emotional growth.\n\nWarmly,\nCoach Mira"
-            else:
+            # Check for different possible response formats
+            elif "gpt_response" in analysis_result:
                 entry.closing_message = analysis_result.get("gpt_response")
+                logger.debug(f"Using gpt_response for closing_message")
+            elif "followup_text" in analysis_result:
+                entry.closing_message = analysis_result.get("followup_text")
+                logger.debug(f"Using followup_text for closing_message")
+            else:
+                logger.error(f"No recognized response field found in analysis_result: {list(analysis_result.keys())}")
+                entry.closing_message = "Thank you for sharing your reflections throughout our conversation. Your willingness to explore your thoughts and feelings demonstrates real courage and self-awareness. I hope our dialogue has offered some helpful perspective.\n\nWarmly,\nCoach Mira"
 
             # Commit changes
             db.session.commit()
