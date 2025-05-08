@@ -4636,5 +4636,48 @@
       "followup_text": "Remember, your feelings are valid, and seeking clarity is a step towards healthier relationships. Consider using the communication script to express your needs. You're doing great by taking the time to understand yourself more deeply."
     },
     "user_reflection": null
+  },
+  {
+    "id": 208,
+    "user_id": 1,
+    "title": "May 7th 9",
+    "content": "I\u2019m tired of always being the one who checks in on people. I send messages, I show up, I ask how they\u2019re doing\u2014but when I\u2019m not okay, no one seems to notice. It makes me feel invisible and kind of stupid for caring so much.",
+    "anxiety_level": 6,
+    "created_at": "2025-05-08T01:45:05.213179",
+    "updated_at": "2025-05-08T01:45:13.508842",
+    "is_analyzed": true,
+    "gpt_response": "It sounds like you're feeling a bit invisible and maybe even a little unappreciated. It's understandable to feel frustrated when your efforts to connect and care for others don't seem reciprocated. Perhaps there's a sense of feeling 'stupid' for caring so much because it feels one-sided. Take a moment to reflect on how these feelings of invisibility and frustration play into your expectations of relationships. Remember, your care is a strength, not a weakness, and it\u2019s okay to want that care to be mutual.\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Mind Reading",
+        "description": ""
+      },
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": ""
+      }
+    ],
+    "structured_data": {
+      "insight_text": "Your journal entry suggests feelings of invisibility and frustration, as well as a sense of being unappreciated. This might be connected to a deeper need for mutual recognition and validation in your relationships.",
+      "reflection_prompt": "When you feel invisible despite your care for others, does it remind you of patterns from your past relationships?",
+      "thought_patterns": [
+        "Mind Reading",
+        "All-or-Nothing Thinking"
+      ],
+      "strategies": [
+        {
+          "title": "Communication Script Template",
+          "description": "Use this script to express your feelings and needs in a relationship.",
+          "action_step": "I feel [invisible] when [I reach out and don't receive a response] because [I value mutual care]. What I need is [for our communication to feel more balanced]."
+        },
+        {
+          "title": "Reality-Check Exercise",
+          "description": "Challenge the assumption that no one cares when you feel unseen.",
+          "action_step": "List evidence for and against your fear that your care goes unnoticed."
+        }
+      ],
+      "followup_text": "Your feelings of frustration are valid, and it\u2019s important to honor your needs for reciprocity in relationships. Consider expressing your feelings with a trusted friend using the script template provided, and practice reality-checking thoughts that may amplify your sense of invisibility. Remember, your care is valuable and deserves to be acknowledged."
+    },
+    "user_reflection": null
   }
 ]

@@ -301,9 +301,7 @@
                         <button class="btn btn-sm btn-primary" id="server-tts-button">
                           <i class="bi bi-volume-up"></i> Listen
                         </button>
-                        <button class="btn btn-sm btn-outline-primary ms-2 reflection-btn">
-                          <i class="bi bi-pencil"></i> Reflect
-                        </button>
+                        <!-- Reflect button removed as reflection form shows automatically -->
                       </div>
                       
                       <audio id="serverAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
@@ -316,8 +314,8 @@
                 </div>
               </div>
               
-              <!-- User's Reflection Area (Initially Hidden) -->
-              <div class="reflection-form" style="display: none;" data-entry-id="{{ entry.id }}">
+              <!-- User's Reflection Area (Automatically Displayed) -->
+              <div class="reflection-form" data-entry-id="{{ entry.id }}">
                 <div class="chat-message user-reflection-message mb-4">
                   <div class="d-flex">
                     <div class="chat-avatar me-3">
@@ -564,20 +562,16 @@
 <script>
     // Reflection Area Functionality
     document.addEventListener('DOMContentLoaded', function() {
-        // Reflection button handlers
-        const reflectionBtn = document.querySelector('.reflection-btn');
+        // Auto-focus the reflection input field when the page loads
         const reflectionForm = document.querySelector('.reflection-form');
         
-        if (reflectionBtn && reflectionForm) {
-            reflectionBtn.addEventListener('click', function() {
-                reflectionForm.style.display = 'block';
-                const reflectionInput = reflectionForm.querySelector('.reflection-input');
-                if (reflectionInput) {
-                    reflectionInput.focus();
-                }
-                // Scroll to the reflection area
-                reflectionForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            });
+        if (reflectionForm) {
+            const reflectionInput = reflectionForm.querySelector('.reflection-input');
+            if (reflectionInput) {
+                reflectionInput.focus();
+            }
+            // Scroll to the reflection area
+            reflectionForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
         
         // The rest of the reflection functionality is now handled in reflection-handler.js
