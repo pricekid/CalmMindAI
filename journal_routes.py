@@ -250,8 +250,13 @@ def save_conversation_reflection(entry_id):
             structured_data = get_structured_data_for_entry(entry)
             
             # If there's already a followup message in the structured data, use that
-            if structured_data and 'followup_text' in structured_data:
-                followup_message = structured_data['followup_text']
+            if structured_data:
+                if 'followup_message' in structured_data:
+                    followup_message = structured_data['followup_message']
+                    logger.debug("Using existing followup_message from structured data")
+                elif 'followup_text' in structured_data:
+                    followup_message = structured_data['followup_text']
+                    logger.debug("Using existing followup_text from structured data")
             else:
                 # Otherwise, generate one with OpenAI
                 logger.info(f"Generating followup message for entry {entry_id}")
@@ -299,8 +304,10 @@ def save_conversation_reflection(entry_id):
                             'timestamp': datetime.now().isoformat()
                         })
                         
-                        # Update current followup message
+                        # Update current followup message - store as both followup_text and followup_message
+                        # for backward compatibility
                         structured_data['followup_text'] = followup_message
+                        structured_data['followup_message'] = followup_message
                         
                         # Save structured data
                         entry.structured_data = json.dumps(structured_data)
@@ -439,9 +446,13 @@ def save_initial_reflection():
 
 # API endpoint to check if a closing message is ready
         
-        if structured_data and 'followup_text' in structured_data:
-            followup_message = structured_data.get('followup_text')
-            logger.debug(f"Using existing followup_text as followup message")
+        if structured_data:
+            if 'followup_message' in structured_data:
+                followup_message = structured_data.get('followup_message')
+                logger.debug(f"Using existing followup_message from structured data")
+            elif 'followup_text' in structured_data:
+                followup_message = structured_data.get('followup_text')
+                logger.debug(f"Using existing followup_text as followup message")
         
         return jsonify({
             "success": True, 

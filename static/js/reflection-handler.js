@@ -72,8 +72,15 @@ function submitReflection(reflectionInput, entryId) {
             hideReflectionForm();
             
             // If there's a followup message, add it
+            // Check for either followup_message or followup_text (backward compatibility)
             if (data.followup_message) {
                 addMiraFollowupBubble(data.followup_message);
+                console.log("Added Mira followup bubble from followup_message");
+            } else if (data.followup_text) {
+                addMiraFollowupBubble(data.followup_text);
+                console.log("Added Mira followup bubble from followup_text");
+            } else {
+                console.log("No followup message found in response:", data);
             }
         } else {
             showAlert(`Error: ${data.message}`, 'danger');
