@@ -462,7 +462,7 @@
   </div>
 </div>
 
-{% if entry and not entry.is_analyzed %}
+{% if entry and not entry.is_analyzed and not structured_data.insight_text %}
 <div class="container mt-4">
     <div class="row">
         <div class="col-lg-8 mx-auto">

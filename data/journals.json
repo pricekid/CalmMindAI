@@ -4547,5 +4547,43 @@
     ],
     "structured_data": null,
     "user_reflection": null
+  },
+  {
+    "id": 206,
+    "user_id": 1,
+    "title": "may 8th 8",
+    "content": "Ready for Analysis\r\nYour entry hasn't been analyzed yet. Would you like Mira to help identify thought patterns and suggest coping strategies?\r\n\r\n",
+    "anxiety_level": 6,
+    "created_at": "2025-05-08T00:54:50.909949",
+    "updated_at": "2025-05-08T00:54:59.769339",
+    "is_analyzed": true,
+    "gpt_response": "Hi there, it seems like you're in a bit of a reflective space today, unsure of what to focus on just yet. I notice a recurring theme in your previous entries about feeling like you're the one doing all the reaching out. It can be exhausting to feel like the effort in relationships always falls on your shoulders. Take a moment to consider if there's a specific situation or relationship that's been weighing on your mind lately. Is there an underlying need for recognition or mutual effort that you wish was being met? Remember, it's okay to want balance and support in your interactions with others. You're doing great just by taking the time to reflect on these feelings. Keep being gentle with yourself.\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Mind Reading",
+        "description": ""
+      },
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": ""
+      }
+    ],
+    "structured_data": {
+      "insight_text": "Your recent journal entries highlight feelings of being the one who always reaches out, which can feel lonely and unappreciated. This pattern might connect to a deeper need for mutuality and acknowledgment in your relationships.",
+      "reflection_prompt": "When you think about always being the one to reach out, what emotion comes up first\u2014frustration, sadness, or perhaps something else?",
+      "thought_patterns": [
+        "Mind Reading",
+        "All-or-Nothing Thinking"
+      ],
+      "strategies": [
+        "Reality-Check Exercise: Examine the assumption that others aren't thinking of you unless they reach out. Is there evidence that they care in other ways?",
+        "Boundaries Setting: Reflect on what you can communicate about your needs for more balanced interactions."
+      ],
+      "relationship_questions": [
+        "What would it feel like to express your need for more reciprocal effort directly?"
+      ],
+      "followup_text": "Reflect on the relationships where you feel this imbalance most. Consider trying a small, gentle conversation about how you'd like to see more mutual effort. You're not alone in wanting connections where you feel seen and valued."
+    },
+    "user_reflection": null
   }
 ]
