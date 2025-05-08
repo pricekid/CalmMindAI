@@ -297,7 +297,12 @@
                           </div>
                         </div>
                       {% else %}
-                        <p class="mb-3" style="color: #000000 !important;">{{ structured_data.insight_text | safe }}</p>
+                        <!-- Extract only the main message part without thought pattern section -->
+                        {% set insight_text = structured_data.insight_text %}
+                        {% if "We're starting to notice" in insight_text %}
+                          {% set insight_text = insight_text.split("We're starting to notice")[0] %}
+                        {% endif %}
+                        <p class="mb-3" style="color: #000000 !important;">{{ insight_text | safe }}</p>
                         
                         <div class="reflection-prompt-box mt-3 mb-3" style="color: #000000 !important;">
                           <div class="d-flex justify-content-between align-items-center">
@@ -376,7 +381,11 @@
                     <div class="chat-content" style="color: #000000 !important;">
                       <div style="color: #000000 !important;">
                         <div class="d-flex justify-content-between align-items-start">
-                          <p class="mb-0 flex-grow-1" style="color: #000000 !important;">{{ structured_data.followup_text | safe }}</p>
+                          {% set followup_text = structured_data.followup_text %}
+                          {% if "We're starting to notice" in followup_text %}
+                            {% set followup_text = followup_text.split("We're starting to notice")[0] %}
+                          {% endif %}
+                          <p class="mb-0 flex-grow-1" style="color: #000000 !important;">{{ followup_text | safe }}</p>
                           <button class="btn btn-sm btn-outline-primary ms-2 followup-tts-button" title="Listen to Mira's followup">
                             <i class="bi bi-volume-up"></i>
                           </button>
