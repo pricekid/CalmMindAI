@@ -288,21 +288,26 @@
                   <div class="chat-bubble mira-bubble">
                     <div class="chat-content" style="color: #000000 !important;">
                       {% if structured_data.narrative_response %}
-                        <p class="mb-3" style="color: #000000 !important;">{{ structured_data.narrative_response | safe }}</p>
+                        <div class="mb-3" style="color: #000000 !important;">
+                          <div class="d-flex justify-content-between align-items-start">
+                            <p class="mb-0 flex-grow-1" style="color: #000000 !important;">{{ structured_data.narrative_response | safe }}</p>
+                            <button class="btn btn-sm btn-outline-primary ms-2" id="server-tts-button" title="Listen to Mira's response">
+                              <i class="bi bi-volume-up"></i>
+                            </button>
+                          </div>
+                        </div>
                       {% else %}
                         <p class="mb-3" style="color: #000000 !important;">{{ structured_data.insight_text | safe }}</p>
                         
                         <div class="reflection-prompt-box mt-3 mb-3" style="color: #000000 !important;">
-                          <p class="reflection-prompt mb-0" style="color: #000000 !important;">{{ structured_data.reflection_prompt | safe }}</p>
+                          <div class="d-flex justify-content-between align-items-center">
+                            <p class="reflection-prompt mb-0 flex-grow-1" style="color: #000000 !important;">{{ structured_data.reflection_prompt | safe }}</p>
+                            <button class="btn btn-sm btn-outline-primary ms-2" id="server-tts-button" title="Listen to Mira's question">
+                              <i class="bi bi-volume-up"></i>
+                            </button>
+                          </div>
                         </div>
                       {% endif %}
-                      
-                      <div class="chat-actions mt-3">
-                        <button class="btn btn-sm btn-primary" id="server-tts-button">
-                          <i class="bi bi-volume-up"></i> Listen
-                        </button>
-                        <!-- Reflect button removed as reflection form shows automatically -->
-                      </div>
                       
                       <audio id="serverAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
                       
@@ -369,7 +374,14 @@
                   </div>
                   <div class="chat-bubble mira-bubble">
                     <div class="chat-content" style="color: #000000 !important;">
-                      <p class="mb-0" style="color: #000000 !important;">{{ structured_data.followup_text | safe }}</p>
+                      <div style="color: #000000 !important;">
+                        <div class="d-flex justify-content-between align-items-start">
+                          <p class="mb-0 flex-grow-1" style="color: #000000 !important;">{{ structured_data.followup_text | safe }}</p>
+                          <button class="btn btn-sm btn-outline-primary ms-2 followup-tts-button" title="Listen to Mira's followup">
+                            <i class="bi bi-volume-up"></i>
+                          </button>
+                        </div>
+                      </div>
                       <div class="chat-info text-end small text-muted mt-2">
                         <span>Coach Mira</span>
                       </div>
