@@ -1607,14 +1607,13 @@ Omit any fields that are not relevant or not supported by the journal.
                     # Combine the formatted paragraphs
                     coach_response = "".join(formatted_paragraphs)
 
-                # Add recurring patterns if applicable
+                # Get recurring patterns but don't add them to coach response
+                # Instead, they will only be returned as part of the structured data
                 recurring_patterns = get_recurring_patterns(user_id)
-
-                if entry_count >= 3 and recurring_patterns:
-                    pattern_insight = "\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n"
-                    for pattern in recurring_patterns[:2]:  # Limit to top 2
-                        pattern_insight += f"- {pattern['pattern']}\n"
-                    coach_response += pattern_insight
+                
+                # We won't add the patterns to the conversation response
+                # This data is still available via the structured_data return value
+                # and will be displayed in the Interact tab, not in conversation
 
                 # Add a sign-off by Coach Mira if not already present
                 if "Coach Mira" not in coach_response:

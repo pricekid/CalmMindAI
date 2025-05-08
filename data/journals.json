@@ -5167,5 +5167,45 @@
       "followup_text": "Remember, it's perfectly okay to seek relationships where your care is reciprocated. You deserve to be seen and valued. Keep nurturing connections that feel balanced and fulfilling."
     },
     "user_reflection": null
+  },
+  {
+    "id": 219,
+    "user_id": 1,
+    "title": "May 7th 19",
+    "content": "I had an interview today for a program I\u2019ve always wanted to join. As soon as I walked out, I started overthinking everything I said. I kept replaying how I stumbled over one answer and felt like I sounded stupid. They probably saw right through me. I don\u2019t belong there\u2014I was pretending the whole time. Even if they do accept me, it\u2019ll just be out of pity or luck.",
+    "anxiety_level": 6,
+    "created_at": "2025-05-08T04:01:03.191733",
+    "updated_at": "2025-05-08T04:01:13.174798",
+    "is_analyzed": true,
+    "gpt_response": "It sounds like your interview experience left you feeling a bit shaken and doubting your performance, which is understandable given how much this opportunity means to you. The replaying of every detail in your mind shows how much you care about making a good impression. It's natural to have some self-doubt, especially when you're stepping into something new and important to you. Take a moment to consider what part of you feels like you were 'pretending'\u2014is it fear of being found out, or perhaps a deeper belief about your own worthiness? Remember, your desire to join this program stems from genuine interest and capability. You are more than just the sum of one interview. You've worked hard to get here, and that's worth acknowledging.\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": ""
+      },
+      {
+        "pattern": "Mind Reading",
+        "description": ""
+      },
+      {
+        "pattern": "Catastrophizing",
+        "description": ""
+      }
+    ],
+    "structured_data": {
+      "insight_text": "Your self-reflection after the interview seems to be clouded by a sense of inadequacy, highlighting an underlying fear of not belonging. This echoes past themes of all-or-nothing thinking and mind reading, where you might assume how others see you without clear evidence.",
+      "reflection_prompt": "When you think about the possibility of being accepted into the program, does it bring up feelings of excitement, fear, or something else entirely?",
+      "thought_patterns": [
+        "All-or-Nothing Thinking",
+        "Mind Reading",
+        "Catastrophizing"
+      ],
+      "strategies": [
+        "Reality-Check Exercise: When you start to think 'I don't belong,' try listing evidence for and against this belief. What have you accomplished that shows you do belong?",
+        "Self-Compassion Exercise: Remind yourself that it's okay to stumble and that everyone has moments of uncertainty. Practice saying, 'Even though I felt unsure, I showed up and gave it my best.'"
+      ],
+      "followup_text": "You are not alone in your feelings of vulnerability. Many people feel this way when stepping into something new and meaningful. Trust in your journey and remember that you are capable and deserving of opportunities that come your way."
+    },
+    "user_reflection": null
   }
 ]
