@@ -4679,5 +4679,53 @@
       "followup_text": "Your feelings of frustration are valid, and it\u2019s important to honor your needs for reciprocity in relationships. Consider expressing your feelings with a trusted friend using the script template provided, and practice reality-checking thoughts that may amplify your sense of invisibility. Remember, your care is valuable and deserves to be acknowledged."
     },
     "user_reflection": null
+  },
+  {
+    "id": 209,
+    "user_id": 1,
+    "title": "May 8th 9",
+    "content": "I\u2019m tired of always being the one who checks in on people. I send messages, I show up, I ask how they\u2019re doing\u2014but when I\u2019m not okay, no one seems to notice. It makes me feel invisible and kind of stupid for caring so much.",
+    "anxiety_level": 6,
+    "created_at": "2025-05-08T02:09:16.491645",
+    "updated_at": "2025-05-08T02:09:27.702197",
+    "is_analyzed": true,
+    "gpt_response": "I can sense how tiring it must be to continually be the one who reaches out, only to feel overlooked in return. It sounds like there's a deep longing for reciprocity and recognition in your relationships\u2014a desire to feel seen and valued. When you reflect on these interactions, is there a particular feeling that stands out more strongly\u2014perhaps a sense of neglect or frustration? You deserve connections that feel balanced and affirming. Remember, your care is not wasted, and your kindness is a strength.\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": ""
+      },
+      {
+        "pattern": "Mind Reading",
+        "description": ""
+      }
+    ],
+    "structured_data": {
+      "insight_text": "It seems like you are feeling neglected and perhaps unimportant in your relationships, as your efforts often go unnoticed. This pattern of giving without receiving can lead to feelings of invisibility. The need for validation and mutual care is significant here.",
+      "reflection_prompt": "When you feel invisible despite your care for others, does it remind you of patterns from your past relationships?",
+      "thought_patterns": [
+        "All-or-Nothing Thinking",
+        "Mind Reading"
+      ],
+      "strategies": [
+        {
+          "title": "Communication Script Template",
+          "description": "Use this script when you want to communicate your needs to someone close.",
+          "action_step": "I feel [invisible/unappreciated] when [my efforts aren't reciprocated] because [I value mutual support]. What I need is [to feel acknowledged and supported].",
+          "emotional_need_addressed": "Validation and connection"
+        },
+        {
+          "title": "Reality-Check Exercise",
+          "description": "Challenge the assumption that your care is unnoticed.",
+          "action_step": "List evidence for and against the belief that others don't care when you're not okay.",
+          "emotional_need_addressed": "Validation and reassurance"
+        }
+      ],
+      "relationship_questions": [
+        "When you think about how one-sided these relationships feel, what emotion comes up first\u2014hurt, anger, something else?"
+      ],
+      "followup_text": "Remember, you are worthy of relationships where care flows both ways. Consider using the communication script to express your needs more directly, and take time to nurture connections that uplift you."
+    },
+    "user_reflection": null
   }
 ]
