@@ -4775,5 +4775,104 @@
       "followup_text": "Remember, your feelings of invisibility are valid, but they don't define your worth. Try using the communication script to express your needs in a way that opens up a dialogue for mutual support."
     },
     "user_reflection": null
+  },
+  {
+    "id": 211,
+    "user_id": 1,
+    "title": "May 8th 11",
+    "content": "\u2019m tired of always being the one who checks in on people. I send messages, I show up, I ask how they\u2019re doing\u2014but when I\u2019m not okay, no one seems to notice. It makes me feel invisible and kind of stupid for caring so much.",
+    "anxiety_level": 6,
+    "created_at": "2025-05-08T02:21:06.093130",
+    "updated_at": "2025-05-08T02:21:14.749648",
+    "is_analyzed": true,
+    "gpt_response": "I hear you. It sounds like you're feeling neglected and unimportant, especially when you reach out to others and don't receive the same care in return. This can understandably make you feel invisible and question your own worth in these relationships. Your effort to connect with people is a beautiful trait, but it's important for it to be reciprocated. How might it feel to consider what you truly need from these relationships? Remember, your feelings are valid, and it's okay to seek balance. You deserve relationships where your needs are also met. Keep being gentle with yourself.\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": ""
+      },
+      {
+        "pattern": "Mind Reading",
+        "description": ""
+      }
+    ],
+    "structured_data": {
+      "insight_text": "It seems you're feeling neglected and perhaps unimportant when your care for others isn't reciprocated. This might be triggering a deeper emotional need for recognition and connection.",
+      "reflection_prompt": "When you think about how one-sided these relationships feel, what emotion comes up first\u2014hurt, anger, something else?",
+      "thought_patterns": [
+        "All-or-Nothing Thinking",
+        "Mind Reading"
+      ],
+      "strategies": [
+        "Explore shared expectations with friends. Ask yourself: What do I hope to receive in return when I show care?"
+      ],
+      "templates": [
+        "I feel neglected when my efforts aren't reciprocated because it makes me question my worth. What I need is mutual care and attention."
+      ],
+      "relationship_questions": [
+        "Has this pattern of one-sidedness appeared in other relationships before?"
+      ],
+      "followup_text": "This awareness is a step toward healthier connections. Keep exploring what you need and why. You deserve to be seen and valued."
+    },
+    "user_reflection": null
+  },
+  {
+    "id": 212,
+    "user_id": 1,
+    "title": "May 7th 12",
+    "content": "\u2019m tired of always being the one who checks in on people. I send messages, I show up, I ask how they\u2019re doing\u2014but when I\u2019m not okay, no one seems to notice. It makes me feel invisible and kind of stupid for caring so much.",
+    "anxiety_level": 6,
+    "created_at": "2025-05-08T02:23:57.998424",
+    "updated_at": "2025-05-08T02:24:11.879429",
+    "is_analyzed": true,
+    "gpt_response": "It sounds like you're feeling a deep sense of invisibility and frustration from always being the one who reaches out without receiving the same in return. It's understandable to feel neglected and even a bit foolish when care isn't reciprocated. Take a moment to reflect on what it feels like to be in this one-sided dynamic. Does it remind you of any past experiences? Remember, your care is a strength, not a weakness.\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "This involves seeing your relationships in black-and-white terms, like being either the only one who cares or not cared for at all."
+      },
+      {
+        "pattern": "Mind Reading",
+        "description": "Assuming others don't care because they don't reach out, without any direct communication."
+      }
+    ],
+    "structured_data": {
+      "insight_text": "You're feeling a mix of invisibility and frustration, which often stems from unmet emotional needs for connection and validation. This pattern of feeling like the one who always gives without receiving may point to deeper relational expectations and needs.",
+      "reflection_prompt": "Take a moment. When you think about how one-sided these interactions feel, what emotion comes up first\u2014hurt, anger, something else?",
+      "thought_patterns": [
+        {
+          "pattern": "All-or-Nothing Thinking",
+          "description": "This involves seeing your relationships in black-and-white terms, like being either the only one who cares or not cared for at all.",
+          "emotional_need": "Validation and mutual recognition"
+        },
+        {
+          "pattern": "Mind Reading",
+          "description": "Assuming others don't care because they don't reach out, without any direct communication.",
+          "emotional_need": "Reassurance and evidence of care from others"
+        }
+      ],
+      "strategies": [
+        {
+          "title": "Communication Script Template",
+          "description": "Use this script to express your feelings and needs to others in a clear and non-confrontational way.",
+          "action_step": "I feel invisible when I always have to reach out because it makes me question my importance in our relationship. What I need is for us to check in with each other more equally.",
+          "emotional_need_addressed": "Mutual recognition and validation"
+        },
+        {
+          "title": "Reality-Check Exercise",
+          "description": "Challenge the assumption that no one cares by listing instances when others have shown care or support.",
+          "action_step": "List evidence for and against the fear that others don't notice when you're not okay.",
+          "emotional_need_addressed": "Validation and reassurance"
+        }
+      ],
+      "relationship_questions": [
+        {
+          "question": "When you reach out and don't get a response, what does that bring up for you emotionally?",
+          "purpose": "Exploring the deeper emotional impact of unreciprocated communication"
+        }
+      ],
+      "followup_text": "Your feelings are important and valid. Consider using the communication script to express your needs to someone you trust. Remember, your ability to care deeply is a valuable part of who you are. You're not alone in this journey."
+    },
+    "user_reflection": null
   }
 ]
