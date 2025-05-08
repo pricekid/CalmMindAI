@@ -282,6 +282,7 @@ def save_conversation_reflection(entry_id):
                     if analysis_result and "followup_text" in analysis_result:
                         followup_message = analysis_result.get("followup_text")
                         logger.info(f"Got valid followup response: {followup_message[:100]}...")
+                        logger.info(f"STEP 4 COMPLETE: Processed combined journal ({len(entry.content)} chars) + reflection ({len(reflection)} chars) and got followup response")
                         
                         # Update structured data with the followup message
                         if not structured_data:
@@ -397,12 +398,15 @@ def save_initial_reflection():
         # Generate Mira's followup insight
         try:
             logger.debug(f"Generating followup insight for entry {entry_id}")
+            # Use followup mode for reflections
             analysis_result = analyze_journal_with_gpt(
                 journal_text=f"{entry.content}\n\nUser Reflection: {reflection_text}",
                 anxiety_level=entry.anxiety_level,
                 user_id=current_user.id,
-                mode="followup"  # Use followup mode for reflections
+                mode="followup"
             )
+            
+            logger.info(f"STEP 4 VERIFICATION: Sent combined journal ({len(entry.content)} chars) + reflection ({len(reflection_text)} chars) to OpenAI for followup insight")
 
             # Check if we got a valid response
             if not analysis_result or "gpt_response" not in analysis_result:
@@ -549,12 +553,15 @@ def save_second_reflection():
         # Generate Mira's closing message
         try:
             logger.debug(f"Generating closing message for entry {entry_id}")
+            # Use followup mode for final reflection too
             analysis_result = analyze_journal_with_gpt(
                 journal_text=f"{entry.content}\n\nFirst Reflection: {entry.user_reflection}\nSecond Reflection: {reflection_text}",
                 anxiety_level=entry.anxiety_level,
                 user_id=current_user.id,
-                mode="followup"  # Use followup mode for final reflection too
+                mode="followup"
             )
+            
+            logger.info(f"STEP 4 VERIFICATION (SECOND REFLECTION): Sent complete conversation history to OpenAI for final response")
 
             # Check if we got a valid response
             if not analysis_result or "gpt_response" not in analysis_result:
