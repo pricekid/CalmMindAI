@@ -47,8 +47,15 @@ function submitReflection(reflectionInput, entryId) {
     // Get CSRF token from meta tag
     const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
     
-    // Show loading indicator
-    showReflectionLoading(true);
+    // Get the specific submit button related to this reflection input
+    const form = reflectionInput.closest('.reflection-form');
+    const submitButton = form.querySelector('.submit-reflection');
+    
+    // Show loading indicator for this specific submit button
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...';
+    }
     
     // Send the reflection to the server
     fetch(`/journal/${entryId}/save-conversation-reflection`, {
@@ -69,15 +76,19 @@ function submitReflection(reflectionInput, entryId) {
         if (data.success) {
             // Handle successful save
             addUserReflectionBubble(reflection, entryId);
-            hideReflectionForm();
+            
+            // Hide the specific reflection form that was submitted
+            if (form) {
+                form.style.display = 'none';
+            }
             
             // If there's a followup message, add it
             // Check for either followup_message or followup_text (backward compatibility)
             if (data.followup_message) {
-                addMiraFollowupBubble(data.followup_message);
+                addMiraFollowupBubble(data.followup_message, entryId);
                 console.log("Added Mira followup bubble from followup_message");
             } else if (data.followup_text) {
-                addMiraFollowupBubble(data.followup_text);
+                addMiraFollowupBubble(data.followup_text, entryId);
                 console.log("Added Mira followup bubble from followup_text");
             } else {
                 console.log("No followup message found in response:", data);
@@ -91,8 +102,11 @@ function submitReflection(reflectionInput, entryId) {
         showAlert('There was an error saving your reflection. Please try again.', 'danger');
     })
     .finally(() => {
-        // Hide loading indicator
-        showReflectionLoading(false);
+        // Reset submit button state
+        if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.innerHTML = 'Submit Reflection';
+        }
     });
 }
 
@@ -156,13 +170,22 @@ function addUserReflectionBubble(reflectionText, entryId) {
     userReflectionBubble.scrollIntoView({ behavior: 'smooth' });
 }
 
-function addMiraFollowupBubble(followupText) {
+function addMiraFollowupBubble(followupText, entryId) {
     // Create a new Mira response bubble
     const chatContainer = document.querySelector('.chat-container');
     
     if (!chatContainer) {
         console.error('Chat container not found');
         return;
+    }
+    
+    // Ensure we have a valid entry ID
+    if (!entryId) {
+        // Try to get the entry ID from the page if not provided
+        const reflectionForm = document.querySelector('.reflection-form');
+        if (reflectionForm) {
+            entryId = reflectionForm.getAttribute('data-entry-id');
+        }
     }
     
     // Check if the followup message is already displayed (to prevent duplication)
@@ -219,17 +242,20 @@ function addMiraFollowupBubble(followupText) {
     // Add it to the chat container
     chatContainer.appendChild(miraFollowupBubble);
     
+    // Clone and add reflection form after each Mira response
+    // This ensures the conversation flow is maintained
+    createNewReflectionForm(chatContainer, entryId);
+    
     // Scroll to the new message
     miraFollowupBubble.scrollIntoView({ behavior: 'smooth' });
 }
 
 function hideReflectionForm() {
-    // Clear the reflection form after submission but keep it visible
-    // to encourage continued conversation
-    const reflectionInput = document.querySelector('.reflection-input');
-    if (reflectionInput) {
-        reflectionInput.value = ''; // Clear the text
-        reflectionInput.focus(); // Re-focus for next message
+    // Find the currently active reflection form and hide it
+    // We identify it as the one that contains the submit button that was just clicked
+    const submittedForm = document.querySelector('.reflection-form .submit-reflection:disabled')?.closest('.reflection-form');
+    if (submittedForm) {
+        submittedForm.style.display = 'none';
     }
 }
 
@@ -245,6 +271,69 @@ function showReflectionLoading(isLoading) {
             submitButton.disabled = false;
             submitButton.innerHTML = 'Submit Reflection';
         }
+    }
+}
+
+function createNewReflectionForm(chatContainer, entryId) {
+    // Get user initial from existing avatar if possible
+    let userInitial = 'U';
+    const existingUserAvatar = document.querySelector('.chat-avatar-circle span');
+    if (existingUserAvatar) {
+        userInitial = existingUserAvatar.textContent;
+    }
+    
+    // Create a new reflection form for continued conversation
+    const newReflectionFormDiv = document.createElement('div');
+    newReflectionFormDiv.className = 'reflection-form';
+    newReflectionFormDiv.setAttribute('data-entry-id', entryId);
+    newReflectionFormDiv.innerHTML = `
+        <div class="chat-message user-reflection-message mb-4">
+            <div class="d-flex">
+                <div class="chat-avatar me-3">
+                    <div class="chat-avatar-circle bg-primary text-white">
+                        <span>${userInitial}</span>
+                    </div>
+                </div>
+                <div class="chat-bubble user-bubble">
+                    <div class="chat-content">
+                        <textarea class="form-control reflection-input" rows="3" 
+                                placeholder="Continue your reflection here..."></textarea>
+                        <div class="d-flex justify-content-end mt-2">
+                            <button class="btn btn-sm btn-outline-secondary me-2 cancel-reflection">Cancel</button>
+                            <button class="btn btn-sm btn-primary submit-reflection">Submit Reflection</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Add the new form to the container
+    chatContainer.appendChild(newReflectionFormDiv);
+    
+    // Add event listeners to the new form
+    const submitButton = newReflectionFormDiv.querySelector('.submit-reflection');
+    const reflectionInput = newReflectionFormDiv.querySelector('.reflection-input');
+    
+    if (submitButton && reflectionInput) {
+        // Add event listener for the submit button
+        submitButton.addEventListener('click', function() {
+            submitReflection(reflectionInput, entryId);
+        });
+        
+        // Add event listener for Enter key in textarea
+        reflectionInput.addEventListener('keydown', function(event) {
+            // Check if Enter was pressed without Shift (Shift+Enter creates a new line)
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault(); // Prevent default form submission
+                submitButton.click(); // Trigger the submit button click
+            }
+        });
+    }
+    
+    // Focus on the new reflection form
+    if (reflectionInput) {
+        reflectionInput.focus();
     }
 }
 
