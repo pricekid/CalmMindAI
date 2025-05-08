@@ -249,79 +249,76 @@ def save_conversation_reflection(entry_id):
             # Get structured data
             structured_data = get_structured_data_for_entry(entry)
             
-            # If there's already a followup message in the structured data, use that
-            if structured_data:
-                if 'followup_message' in structured_data:
-                    followup_message = structured_data['followup_message']
-                    logger.debug("Using existing followup_message from structured data")
-                elif 'followup_text' in structured_data:
-                    followup_message = structured_data['followup_text']
-                    logger.debug("Using existing followup_text from structured data")
-            else:
-                # Otherwise, generate one with OpenAI
-                logger.info(f"Generating followup message for entry {entry_id}")
-                try:
-                    # Add more detailed logging
-                    logger.info(f"Sending followup mode request for entry {entry_id}")
-                    logger.debug(f"User reflection text: {reflection[:100]}...")
+            # Always generate a new personalized followup message with OpenAI
+            # that responds directly to what the user shared in their reflection
+            logger.info(f"Generating followup message for entry {entry_id}")
+            
+            try:
+                # Add more detailed logging
+                logger.info(f"Sending followup mode request for entry {entry_id}")
+                logger.debug(f"User reflection text: {reflection[:100]}...")
+                
+                # Enhance the input data with more context
+                # Full context of journal and reflection for improved follow-up
+                journal_with_reflection = f"{entry.content}\n\nUser Reflection: {reflection}"
+                logger.debug(f"Combined journal+reflection text (first 100 chars): {journal_with_reflection[:100]}...")
+                
+                # Call GPT with followup mode
+                analysis_result = analyze_journal_with_gpt(
+                    journal_text=journal_with_reflection,
+                    anxiety_level=entry.anxiety_level,
+                    user_id=current_user.id,
+                    mode="followup"  # Indicate this is a followup request
+                )
+                
+                # Improved response validation with detailed logging
+                logger.debug(f"Analysis result type: {type(analysis_result)}")
+                if isinstance(analysis_result, dict):
+                    logger.debug(f"Analysis result keys: {list(analysis_result.keys())}")
+                
+                # Check if we got a valid response
+                if analysis_result:
+                    # Check for either followup_text or gpt_response (depending on which key the API returns)
+                    if "followup_text" in analysis_result:
+                        followup_message = analysis_result.get("followup_text")
+                        logger.info(f"Got valid followup response from followup_text: {followup_message[:100]}...")
+                    elif "gpt_response" in analysis_result:
+                        followup_message = analysis_result.get("gpt_response")
+                        logger.info(f"Got valid followup response from gpt_response: {followup_message[:100]}...")
                     
-                    # Enhance the input data with more context
-                    # Full context of journal and reflection for improved follow-up
-                    journal_with_reflection = f"{entry.content}\n\nUser Reflection: {reflection}"
-                    logger.debug(f"Combined journal+reflection text (first 100 chars): {journal_with_reflection[:100]}...")
+                    # Log success and details
+                    logger.info(f"STEP 4 COMPLETE: Processed combined journal ({len(entry.content)} chars) + reflection ({len(reflection)} chars) and got followup response")
                     
-                    # Call GPT with followup mode
-                    analysis_result = analyze_journal_with_gpt(
-                        journal_text=journal_with_reflection,
-                        anxiety_level=entry.anxiety_level,
-                        user_id=current_user.id,
-                        mode="followup"  # Indicate this is a followup request
-                    )
+                    # Update structured data with the followup message
+                    if not structured_data:
+                        structured_data = {}
                     
-                    # Improved response validation with detailed logging
-                    logger.debug(f"Analysis result type: {type(analysis_result)}")
-                    if isinstance(analysis_result, dict):
-                        logger.debug(f"Analysis result keys: {list(analysis_result.keys())}")
+                    # Track conversation history for multi-turn reflection
+                    if 'conversation_history' not in structured_data:
+                        structured_data['conversation_history'] = []
                     
-                    # Check if we got a valid response
-                    if analysis_result:
-                        # Check for either followup_text or gpt_response (depending on which key the API returns)
-                        if "followup_text" in analysis_result:
-                            followup_message = analysis_result.get("followup_text")
-                            logger.info(f"Got valid followup response from followup_text: {followup_message[:100]}...")
-                        elif "gpt_response" in analysis_result:
-                            followup_message = analysis_result.get("gpt_response")
-                            logger.info(f"Got valid followup response from gpt_response: {followup_message[:100]}...")
-                        
-                        # Log success and details
-                        logger.info(f"STEP 4 COMPLETE: Processed combined journal ({len(entry.content)} chars) + reflection ({len(reflection)} chars) and got followup response")
-                        
-                        # Update structured data with the followup message
-                        if not structured_data:
-                            structured_data = {}
-                        
-                        # Track conversation history for multi-turn reflection
-                        if 'conversation_history' not in structured_data:
-                            structured_data['conversation_history'] = []
-                        
-                        # Add this exchange to conversation history
-                        structured_data['conversation_history'].append({
-                            'user_reflection': reflection,
-                            'teddy_response': followup_message,
-                            'timestamp': datetime.now().isoformat()
-                        })
-                        
-                        # Update current followup message - store as both followup_text and followup_message
-                        # for backward compatibility and consistent access
-                        structured_data['followup_text'] = followup_message
-                        structured_data['followup_message'] = followup_message
-                        
-                        # Save structured data
-                        entry.structured_data = json.dumps(structured_data)
-                        db.session.commit()
-                except Exception as gpt_err:
-                    logger.error(f"Error generating followup message: {str(gpt_err)}")
-                    followup_message = "Thank you for sharing your thoughts. Your reflection shows a willingness to explore your feelings, which is an important part of emotional growth. What further insights has this process given you about yourself or your situation?"
+                    # Add this exchange to conversation history
+                    structured_data['conversation_history'].append({
+                        'user_reflection': reflection,
+                        'teddy_response': followup_message,
+                        'timestamp': datetime.now().isoformat()
+                    })
+                    
+                    # Update current followup message - store as both followup_text and followup_message
+                    # for backward compatibility and consistent access
+                    structured_data['followup_text'] = followup_message
+                    structured_data['followup_message'] = followup_message
+                    
+                    # Save structured data
+                    entry.structured_data = json.dumps(structured_data)
+                    db.session.commit()
+                    logger.info(f"Saved new dynamic followup response to database for entry {entry_id}")
+                else:
+                    logger.error("No analysis result returned from GPT")
+                    followup_message = "Thank you for sharing your reflection. What other thoughts or feelings are coming up for you as you continue this exploration?"
+            except Exception as gpt_err:
+                logger.error(f"Error generating followup message: {str(gpt_err)}")
+                followup_message = "Thank you for sharing your thoughts. Your reflection shows a willingness to explore your feelings, which is an important part of emotional growth. What further insights has this process given you about yourself or your situation?"
         except Exception as followup_err:
             logger.error(f"Error handling followup message: {str(followup_err)}")
             # Don't fail the whole request if we can't generate a followup
@@ -460,23 +457,6 @@ def save_initial_reflection():
         return jsonify({"error": "Server error occurred while saving your reflection"}), 500
 
 # API endpoint to check if a closing message is ready
-        
-        if structured_data:
-            if 'followup_message' in structured_data:
-                followup_message = structured_data.get('followup_message')
-                logger.debug(f"Using existing followup_message from structured data")
-            elif 'followup_text' in structured_data:
-                followup_message = structured_data.get('followup_text')
-                logger.debug(f"Using existing followup_text as followup message")
-        
-        return jsonify({
-            "success": True, 
-            "message": "Reflection saved successfully",
-            "followup_message": followup_message
-        })
-    except Exception as e:
-        logger.error(f"Error saving user reflection: {str(e)}")
-        return jsonify({"success": False, "message": f"Error: {str(e)}"})
 
 @journal_bp.route('/check-closing/<int:entry_id>', methods=['GET'])
 @login_required

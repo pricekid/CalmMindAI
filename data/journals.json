@@ -4874,5 +4874,62 @@
       "followup_text": "Your feelings are important and valid. Consider using the communication script to express your needs to someone you trust. Remember, your ability to care deeply is a valuable part of who you are. You're not alone in this journey."
     },
     "user_reflection": null
+  },
+  {
+    "id": 213,
+    "user_id": 1,
+    "title": "May 7th 13",
+    "content": "I\u2019m tired of always being the one who checks in on people. I send messages, I show up, I ask how they\u2019re doing\u2014but when I\u2019m not okay, no one seems to notice. It makes me feel invisible and kind of stupid for caring so much.",
+    "anxiety_level": 6,
+    "created_at": "2025-05-08T02:31:40.294782",
+    "updated_at": "2025-05-08T02:31:52.682807",
+    "is_analyzed": true,
+    "gpt_response": "It sounds like you're feeling a bit unseen and perhaps even unappreciated for the effort you put into maintaining your relationships. When you consistently reach out and don't receive the same in return, it can understandably leave you feeling invisible and maybe even questioning if your care is misplaced. Take a moment to reflect on why these relationships are important to you and how they make you feel when they are reciprocal. Remember, your care and kindness are valuable, and they reflect your strength and compassion. You're worthy of receiving the same attention and care you give to others.\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": "This pattern suggests that you might be perceiving your efforts as entirely unrecognized if not reciprocated immediately. It could be influencing how you gauge the worth of your relationships."
+      },
+      {
+        "pattern": "Mind Reading",
+        "description": "You may be assuming that others don't care because they don't reach out, which could be misunderstanding their intentions or situations."
+      }
+    ],
+    "structured_data": {
+      "insight_text": "Your journal entry reveals feelings of being neglected and unimportant, especially when your efforts to connect aren't reciprocated. It highlights a pattern of all-or-nothing thinking, where you might feel that if others don't reciprocate, it means you shouldn't care at all. This pattern may be connected to a deep need for validation and connection.",
+      "reflection_prompt": "When you think about the times you've reached out and felt unnoticed, what emotion surfaces first\u2014hurt, disappointment, or something else?",
+      "thought_patterns": [
+        {
+          "pattern": "All-or-Nothing Thinking",
+          "description": "This pattern suggests that you might be perceiving your efforts as entirely unrecognized if not reciprocated immediately. It could be influencing how you gauge the worth of your relationships.",
+          "emotional_need": "Validation and recognition"
+        },
+        {
+          "pattern": "Mind Reading",
+          "description": "You may be assuming that others don't care because they don't reach out, which could be misunderstanding their intentions or situations.",
+          "emotional_need": "Understanding and assurance"
+        }
+      ],
+      "strategies": [
+        {
+          "title": "Communication Script Template",
+          "description": "Use this script to express your feelings and needs in your relationships.",
+          "action_step": "I feel invisible when my efforts to reach out aren't reciprocated because it makes me doubt if my care matters. What I need is more engagement from those I care about.",
+          "emotional_need_addressed": "Recognition and support"
+        },
+        {
+          "title": "Reality-Check Exercise",
+          "description": "Challenge the assumption that lack of response means lack of care.",
+          "action_step": "List evidence for and against your belief that others don't care about you as much as you care about them.",
+          "emotional_need_addressed": "Clarity and reassurance"
+        }
+      ],
+      "relationship_questions": [
+        "What expectations do you have about how care should be reciprocated in your relationships?",
+        "Has there been a time when your care was reciprocated? What was that like?"
+      ],
+      "followup_text": "Remember, your care is a reflection of your generous spirit. If you feel unseen, try expressing your needs clearly. Your feelings are valid, and seeking reciprocation is a healthy part of relationships. You're doing great, and it's okay to seek balance."
+    },
+    "user_reflection": null
   }
 ]
