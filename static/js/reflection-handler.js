@@ -239,15 +239,16 @@ function addMiraFollowupBubble(followupText, entryId) {
         </div>
     `;
     
-    // Add it to the chat container
+    // Create a new reflection form for continued conversation
+    const newReflectionForm = createReflectionFormElement(entryId);
+    
+    // Add them both to the chat container in the correct order
+    // First Mira's followup, then the new reflection form
     chatContainer.appendChild(miraFollowupBubble);
+    chatContainer.appendChild(newReflectionForm);
     
-    // Clone and add reflection form after each Mira response
-    // This ensures the conversation flow is maintained
-    createNewReflectionForm(chatContainer, entryId);
-    
-    // Scroll to the new message
-    miraFollowupBubble.scrollIntoView({ behavior: 'smooth' });
+    // Scroll to the new message and reflection form
+    newReflectionForm.scrollIntoView({ behavior: 'smooth' });
 }
 
 function hideReflectionForm() {
@@ -274,7 +275,7 @@ function showReflectionLoading(isLoading) {
     }
 }
 
-function createNewReflectionForm(chatContainer, entryId) {
+function createReflectionFormElement(entryId) {
     // Get user initial from existing avatar if possible
     let userInitial = 'U';
     const existingUserAvatar = document.querySelector('.chat-avatar-circle span');
@@ -297,7 +298,7 @@ function createNewReflectionForm(chatContainer, entryId) {
                 <div class="chat-bubble user-bubble">
                     <div class="chat-content">
                         <textarea class="form-control reflection-input" rows="3" 
-                                placeholder="Continue your reflection here..."></textarea>
+                                placeholder="Share your thoughts on Mira's reflection prompt..."></textarea>
                         <div class="d-flex justify-content-end mt-2">
                             <button class="btn btn-sm btn-outline-secondary me-2 cancel-reflection">Cancel</button>
                             <button class="btn btn-sm btn-primary submit-reflection">Submit Reflection</button>
@@ -307,9 +308,6 @@ function createNewReflectionForm(chatContainer, entryId) {
             </div>
         </div>
     `;
-    
-    // Add the new form to the container
-    chatContainer.appendChild(newReflectionFormDiv);
     
     // Add event listeners to the new form
     const submitButton = newReflectionFormDiv.querySelector('.submit-reflection');
@@ -335,6 +333,16 @@ function createNewReflectionForm(chatContainer, entryId) {
     if (reflectionInput) {
         reflectionInput.focus();
     }
+    
+    return newReflectionFormDiv;
+}
+
+function createNewReflectionForm(chatContainer, entryId) {
+    // Create a new reflection form element
+    const newReflectionFormDiv = createReflectionFormElement(entryId);
+    
+    // Add the new form to the container
+    chatContainer.appendChild(newReflectionFormDiv);
 }
 
 function showAlert(message, type) {
