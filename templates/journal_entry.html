@@ -291,7 +291,7 @@
                         <div class="mb-3" style="color: #000000 !important;">
                           <div class="d-flex justify-content-between align-items-start">
                             <p class="mb-0 flex-grow-1" style="color: #000000 !important;">{{ structured_data.narrative_response | safe }}</p>
-                            <button class="btn btn-sm btn-outline-primary ms-2" id="server-tts-button" title="Listen to Mira's response">
+                            <button class="btn btn-sm btn-outline-primary ms-2 mira-tts-button" title="Listen to Mira's response">
                               <i class="bi bi-volume-up"></i>
                             </button>
                           </div>
@@ -302,7 +302,7 @@
                         <div class="reflection-prompt-box mt-3 mb-3" style="color: #000000 !important;">
                           <div class="d-flex justify-content-between align-items-center">
                             <p class="reflection-prompt mb-0 flex-grow-1" style="color: #000000 !important;">{{ structured_data.reflection_prompt | safe }}</p>
-                            <button class="btn btn-sm btn-outline-primary ms-2" id="server-tts-button" title="Listen to Mira's question">
+                            <button class="btn btn-sm btn-outline-primary ms-2 mira-tts-button" title="Listen to Mira's question">
                               <i class="bi bi-volume-up"></i>
                             </button>
                           </div>
@@ -1059,18 +1059,39 @@
             });
         }
         
-        // Set up the TTS buttons with error handling
-        const serverTtsButton = document.getElementById('server-tts-button');
+        // Set up all TTS buttons with error handling
+        const miraTtsButtons = document.querySelectorAll('.mira-tts-button');
+        const followupTtsButtons = document.querySelectorAll('.followup-tts-button');
         const serverTtsGuidanceButton = document.getElementById('server-tts-guidance-button');
         
-        if (serverTtsButton) {
-            serverTtsButton.addEventListener('click', function() {
-                try {
-                    playServerTTS();
-                } catch (e) {
-                    console.error("Error playing text-to-speech for analysis:", e);
-                    alert("We couldn't play the audio. Please try again or refresh the page.");
-                }
+        if (miraTtsButtons) {
+            miraTtsButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    try {
+                        const isNarrativeResponse = button.closest('.chat-content').querySelector('.mb-0').classList.contains('flex-grow-1');
+                        if (isNarrativeResponse) {
+                            playMiraNarrativeTTS(button);
+                        } else {
+                            playMiraReflectionTTS(button);
+                        }
+                    } catch (e) {
+                        console.error("Error playing text-to-speech for Mira's response:", e);
+                        alert("We couldn't play the audio. Please try again or refresh the page.");
+                    }
+                });
+            });
+        }
+        
+        if (followupTtsButtons) {
+            followupTtsButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    try {
+                        playMiraFollowupTTS(button);
+                    } catch (e) {
+                        console.error("Error playing text-to-speech for Mira's followup:", e);
+                        alert("We couldn't play the audio. Please try again or refresh the page.");
+                    }
+                });
             });
         }
         
@@ -1789,19 +1810,396 @@
         speechSynthesis.getVoices();
     }
     
-    // Server-side TTS function for Analysis
+    // TTS function for Mira's narrative response
+    function playMiraNarrativeTTS(button) {
+        // Get the narrative response text
+        const text = button.closest('.d-flex').querySelector('.mb-0').textContent.trim();
+        const audio = document.getElementById('serverAudio');
+        
+        // Get the selected voice from our settings (using OpenAI voices)
+        const selectedVoice = getVoiceSetting('analysis');
+        
+        // Show loading state
+        button.disabled = true;
+        button.innerHTML = '<i class="bi bi-hourglass-split"></i>';
+        
+        // Reset audio
+        audio.pause();
+        audio.src = '';
+        
+        // Prepare request data
+        const requestData = {
+            text: text,
+            voice: selectedVoice
+        };
+        
+        // Display error message with more detail
+        function displayErrorMessage(message) {
+            // Create error container if it doesn't exist
+            let errorContainer = document.getElementById('tts-error-message');
+            if (!errorContainer) {
+                errorContainer = document.createElement('div');
+                errorContainer.id = 'tts-error-message';
+                errorContainer.className = 'alert alert-danger mt-2';
+                errorContainer.style.fontSize = '0.9rem';
+                audio.parentNode.insertBefore(errorContainer, audio.nextSibling);
+            }
+            
+            errorContainer.innerHTML = `<i class="bi bi-exclamation-triangle"></i> ${message}`;
+            errorContainer.style.display = 'block';
+            
+            // Auto-hide after 10 seconds
+            setTimeout(() => {
+                errorContainer.style.display = 'none';
+            }, 10000);
+        }
+        
+        // Set a timeout to prevent indefinite loading
+        const timeoutId = setTimeout(() => {
+            // If it's been more than 15 seconds, abort and reset
+            if (button.disabled) {
+                console.log('TTS request timed out after 15 seconds');
+                button.disabled = false;
+                button.innerHTML = '<i class="bi bi-volume-up"></i>';
+                displayErrorMessage('Voice generation timed out. Please try again or select a different voice.');
+            }
+        }, 15000);
+        
+        // Request TTS using the OpenAI TTS endpoint
+        fetch('/api/openai-tts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        })
+        .then(response => {
+            // Clear the timeout since we got a response
+            clearTimeout(timeoutId);
+            
+            if (!response.ok) {
+                return response.json().then(data => {
+                    // Get specific error message from the server if available
+                    const errorMessage = data.error || 'Unknown server error';
+                    throw new Error(errorMessage);
+                }).catch(e => {
+                    // If can't parse JSON from error response
+                    throw new Error(`Server error (${response.status}): ${response.statusText}`);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("OpenAI TTS response:", data);
+            
+            // Hide any previous error message
+            const errorContainer = document.getElementById('tts-error-message');
+            if (errorContainer) {
+                errorContainer.style.display = 'none';
+            }
+            
+            // Set the audio source to the URL returned by the server
+            audio.src = data.audio_url;
+            audio.style.display = 'block';
+            
+            // Reset button state
+            button.disabled = false;
+            button.innerHTML = '<i class="bi bi-volume-up"></i>';
+            
+            // Play the audio
+            audio.play();
+        })
+        .catch(error => {
+            // Clear the timeout since we got a response (error)
+            clearTimeout(timeoutId);
+            
+            console.error('Error generating speech:', error);
+            // Reset button state
+            button.disabled = false;
+            button.innerHTML = '<i class="bi bi-volume-up"></i>';
+            
+            // Show specific error message based on the error
+            let errorMessage = 'Sorry, there was a problem generating the audio.';
+            
+            if (error.message.includes('API key')) {
+                errorMessage = 'Voice service configuration issue. Please try again later or contact support.';
+            } else if (error.message.includes('rate limit')) {
+                errorMessage = 'Voice service is temporarily unavailable due to high demand. Please try again in a few minutes.';
+            } else if (error.message.includes('Network')) {
+                errorMessage = 'Network connection issue. Please check your internet connection and try again.';
+            } else if (error.message.includes('timed out')) {
+                errorMessage = 'Voice generation timed out. Please try again or select a different voice.';
+            }
+            
+            displayErrorMessage(errorMessage);
+        });
+    }
+    
+    // TTS function for Mira's reflection prompt
+    function playMiraReflectionTTS(button) {
+        // Get the reflection prompt text
+        const text = button.closest('.d-flex').querySelector('.reflection-prompt').textContent.trim();
+        const audio = document.getElementById('serverAudio');
+        
+        // Get the selected voice from our settings
+        const selectedVoice = getVoiceSetting('analysis');
+        
+        // Show loading state
+        button.disabled = true;
+        button.innerHTML = '<i class="bi bi-hourglass-split"></i>';
+        
+        // Reset audio
+        audio.pause();
+        audio.src = '';
+        
+        // Prepare request data
+        const requestData = {
+            text: text,
+            voice: selectedVoice
+        };
+        
+        // Display error message with more detail
+        function displayErrorMessage(message) {
+            // Create error container if it doesn't exist
+            let errorContainer = document.getElementById('tts-error-message');
+            if (!errorContainer) {
+                errorContainer = document.createElement('div');
+                errorContainer.id = 'tts-error-message';
+                errorContainer.className = 'alert alert-danger mt-2';
+                errorContainer.style.fontSize = '0.9rem';
+                audio.parentNode.insertBefore(errorContainer, audio.nextSibling);
+            }
+            
+            errorContainer.innerHTML = `<i class="bi bi-exclamation-triangle"></i> ${message}`;
+            errorContainer.style.display = 'block';
+            
+            // Auto-hide after 10 seconds
+            setTimeout(() => {
+                errorContainer.style.display = 'none';
+            }, 10000);
+        }
+        
+        // Set a timeout to prevent indefinite loading
+        const timeoutId = setTimeout(() => {
+            // If it's been more than 15 seconds, abort and reset
+            if (button.disabled) {
+                console.log('TTS request timed out after 15 seconds');
+                button.disabled = false;
+                button.innerHTML = '<i class="bi bi-volume-up"></i>';
+                displayErrorMessage('Voice generation timed out. Please try again or select a different voice.');
+            }
+        }, 15000);
+        
+        // Request TTS using the OpenAI TTS endpoint
+        fetch('/api/openai-tts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        })
+        .then(response => {
+            // Clear the timeout since we got a response
+            clearTimeout(timeoutId);
+            
+            if (!response.ok) {
+                return response.json().then(data => {
+                    // Get specific error message from the server if available
+                    const errorMessage = data.error || 'Unknown server error';
+                    throw new Error(errorMessage);
+                }).catch(e => {
+                    // If can't parse JSON from error response
+                    throw new Error(`Server error (${response.status}): ${response.statusText}`);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("OpenAI TTS response:", data);
+            
+            // Hide any previous error message
+            const errorContainer = document.getElementById('tts-error-message');
+            if (errorContainer) {
+                errorContainer.style.display = 'none';
+            }
+            
+            // Set the audio source to the URL returned by the server
+            audio.src = data.audio_url;
+            audio.style.display = 'block';
+            
+            // Reset button state
+            button.disabled = false;
+            button.innerHTML = '<i class="bi bi-volume-up"></i>';
+            
+            // Play the audio
+            audio.play();
+        })
+        .catch(error => {
+            // Clear the timeout since we got a response (error)
+            clearTimeout(timeoutId);
+            
+            console.error('Error generating speech:', error);
+            // Reset button state
+            button.disabled = false;
+            button.innerHTML = '<i class="bi bi-volume-up"></i>';
+            
+            // Show specific error message based on the error
+            let errorMessage = 'Sorry, there was a problem generating the audio.';
+            
+            if (error.message.includes('API key')) {
+                errorMessage = 'Voice service configuration issue. Please try again later or contact support.';
+            } else if (error.message.includes('rate limit')) {
+                errorMessage = 'Voice service is temporarily unavailable due to high demand. Please try again in a few minutes.';
+            } else if (error.message.includes('Network')) {
+                errorMessage = 'Network connection issue. Please check your internet connection and try again.';
+            } else if (error.message.includes('timed out')) {
+                errorMessage = 'Voice generation timed out. Please try again or select a different voice.';
+            }
+            
+            displayErrorMessage(errorMessage);
+        });
+    }
+    
+    // TTS function for Mira's followup message
+    function playMiraFollowupTTS(button) {
+        // Get the followup text
+        const text = button.closest('.d-flex').querySelector('.mb-0').textContent.trim();
+        const audio = document.getElementById('serverAudio');
+        
+        // Get the selected voice from our settings
+        const selectedVoice = getVoiceSetting('analysis');
+        
+        // Show loading state
+        button.disabled = true;
+        button.innerHTML = '<i class="bi bi-hourglass-split"></i>';
+        
+        // Reset audio
+        audio.pause();
+        audio.src = '';
+        
+        // Prepare request data
+        const requestData = {
+            text: text,
+            voice: selectedVoice
+        };
+        
+        // Display error message with more detail
+        function displayErrorMessage(message) {
+            // Create error container if it doesn't exist
+            let errorContainer = document.getElementById('tts-error-message');
+            if (!errorContainer) {
+                errorContainer = document.createElement('div');
+                errorContainer.id = 'tts-error-message';
+                errorContainer.className = 'alert alert-danger mt-2';
+                errorContainer.style.fontSize = '0.9rem';
+                audio.parentNode.insertBefore(errorContainer, audio.nextSibling);
+            }
+            
+            errorContainer.innerHTML = `<i class="bi bi-exclamation-triangle"></i> ${message}`;
+            errorContainer.style.display = 'block';
+            
+            // Auto-hide after 10 seconds
+            setTimeout(() => {
+                errorContainer.style.display = 'none';
+            }, 10000);
+        }
+        
+        // Set a timeout to prevent indefinite loading
+        const timeoutId = setTimeout(() => {
+            // If it's been more than 15 seconds, abort and reset
+            if (button.disabled) {
+                console.log('TTS request timed out after 15 seconds');
+                button.disabled = false;
+                button.innerHTML = '<i class="bi bi-volume-up"></i>';
+                displayErrorMessage('Voice generation timed out. Please try again or select a different voice.');
+            }
+        }, 15000);
+        
+        // Request TTS using the OpenAI TTS endpoint
+        fetch('/api/openai-tts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        })
+        .then(response => {
+            // Clear the timeout since we got a response
+            clearTimeout(timeoutId);
+            
+            if (!response.ok) {
+                return response.json().then(data => {
+                    // Get specific error message from the server if available
+                    const errorMessage = data.error || 'Unknown server error';
+                    throw new Error(errorMessage);
+                }).catch(e => {
+                    // If can't parse JSON from error response
+                    throw new Error(`Server error (${response.status}): ${response.statusText}`);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("OpenAI TTS response:", data);
+            
+            // Hide any previous error message
+            const errorContainer = document.getElementById('tts-error-message');
+            if (errorContainer) {
+                errorContainer.style.display = 'none';
+            }
+            
+            // Set the audio source to the URL returned by the server
+            audio.src = data.audio_url;
+            audio.style.display = 'block';
+            
+            // Reset button state
+            button.disabled = false;
+            button.innerHTML = '<i class="bi bi-volume-up"></i>';
+            
+            // Play the audio
+            audio.play();
+        })
+        .catch(error => {
+            // Clear the timeout since we got a response (error)
+            clearTimeout(timeoutId);
+            
+            console.error('Error generating speech:', error);
+            // Reset button state
+            button.disabled = false;
+            button.innerHTML = '<i class="bi bi-volume-up"></i>';
+            
+            // Show specific error message based on the error
+            let errorMessage = 'Sorry, there was a problem generating the audio.';
+            
+            if (error.message.includes('API key')) {
+                errorMessage = 'Voice service configuration issue. Please try again later or contact support.';
+            } else if (error.message.includes('rate limit')) {
+                errorMessage = 'Voice service is temporarily unavailable due to high demand. Please try again in a few minutes.';
+            } else if (error.message.includes('Network')) {
+                errorMessage = 'Network connection issue. Please check your internet connection and try again.';
+            } else if (error.message.includes('timed out')) {
+                errorMessage = 'Voice generation timed out. Please try again or select a different voice.';
+            }
+            
+            displayErrorMessage(errorMessage);
+        });
+    }
+    
+    // Legacy Server-side TTS function for Analysis (keeping for compatibility)
     function playServerTTS() {
         // Get the coach response text
         const text = document.querySelector('.coach-insights').textContent.trim();
-        const button = document.getElementById('server-tts-button');
+        const button = document.getElementById('server-tts-button') || document.querySelector('.mira-tts-button');
         const audio = document.getElementById('serverAudio');
         
         // Get the selected voice from our settings (now using OpenAI voices)
         const selectedVoice = getVoiceSetting('analysis');
         
         // Show loading state
-        button.disabled = true;
-        button.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating neural audio...';
+        if (button) {
+            button.disabled = true;
+            button.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating neural audio...';
+        }
         
         // Reset audio
         audio.pause();
