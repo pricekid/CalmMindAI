@@ -163,18 +163,29 @@ function addMiraFollowupBubble(followupText) {
     
     // Check if the followup message is already displayed (to prevent duplication)
     const existingFollowups = document.querySelectorAll('.chat-message.mira-message');
+    let firstMiraMessage = document.querySelector('.chat-message.mira-message');
+    let followupCount = 0;
+    
     for (const existingFollowup of existingFollowups) {
         // Skip the first Mira message (which is the initial analysis)
-        if (existingFollowup === document.querySelector('.chat-message.mira-message')) {
+        if (existingFollowup === firstMiraMessage) {
             continue;
         }
+        followupCount++;
         
-        // Check if this is a followup message
+        // Check if this is exactly the same followup message
         const messageContent = existingFollowup.querySelector('.chat-content p');
         if (messageContent && messageContent.textContent.trim() === followupText.trim()) {
-            console.log('Mira followup already exists in the chat - skipping append');
+            console.log('Exact same Mira followup already exists in the chat - skipping append');
             return; // Skip adding a new bubble
         }
+    }
+    
+    // If we already have a followup message (not the initial one), don't add another
+    // This helps prevent duplicate followup responses
+    if (followupCount > 0) {
+        console.log('A different followup message already exists - not adding another one');
+        return;
     }
     
     // Create the Mira followup bubble
@@ -190,6 +201,13 @@ function addMiraFollowupBubble(followupText) {
             <div class="chat-bubble mira-bubble">
                 <div class="chat-content">
                     <p class="mb-0">${followupText.replace(/\n/g, '<br>')}</p>
+                    <div class="chat-controls mt-2">
+                        <button class="btn btn-sm btn-outline-info tts-btn" 
+                                data-text="${followupText.replace(/"/g, '&quot;')}"
+                                title="Listen to this message">
+                            <i class="fas fa-volume-up"></i> Listen
+                        </button>
+                    </div>
                     <div class="chat-info text-end small text-muted mt-2">
                         <span>Coach Mira</span>
                     </div>

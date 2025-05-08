@@ -4727,5 +4727,53 @@
       "followup_text": "Remember, you are worthy of relationships where care flows both ways. Consider using the communication script to express your needs more directly, and take time to nurture connections that uplift you."
     },
     "user_reflection": null
+  },
+  {
+    "id": 210,
+    "user_id": 1,
+    "title": "May 8th 10",
+    "content": "\u2019m tired of always being the one who checks in on people. I send messages, I show up, I ask how they\u2019re doing\u2014but when I\u2019m not okay, no one seems to notice. It makes me feel invisible and kind of stupid for caring so much.",
+    "anxiety_level": 6,
+    "created_at": "2025-05-08T02:16:00.680083",
+    "updated_at": "2025-05-08T02:16:14.739321",
+    "is_analyzed": true,
+    "gpt_response": "Hi there, I can sense the weariness you're feeling from being the one who consistently reaches out to others, only to feel unnoticed when you need support. It sounds like you're experiencing feelings of invisibility, and maybe even questioning if your care for others is misplaced. This is a common feeling when the effort we put into relationships feels unreciprocated. \n\nTake a moment to reflect on what you truly need from these connections that might not be met right now. Is it recognition, support, or perhaps a deeper sense of connection? \n\nRemember, your care and kindness are valuable, and they are not diminished by the current imbalance in these relationships. You deserve to be seen and supported, too.\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Mind Reading",
+        "description": ""
+      },
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": ""
+      }
+    ],
+    "structured_data": {
+      "insight_text": "It seems like you're feeling neglected and unimportant in your relationships because your efforts to connect and care are not reciprocated. This might be tied to an emotional need for validation and connection that feels unmet right now.",
+      "reflection_prompt": "Take a moment. When you feel invisible despite your care for others, does it remind you of patterns from your past relationships?",
+      "thought_patterns": [
+        "Mind Reading",
+        "All-or-Nothing Thinking"
+      ],
+      "strategies": [
+        {
+          "title": "Communication Script Template",
+          "description": "Use this script to express your feelings and needs in conversations.",
+          "action_step": "I feel unimportant when my efforts aren't reciprocated because it leaves me feeling unseen. What I need is more mutual support.",
+          "emotional_need_addressed": "Validation"
+        },
+        {
+          "title": "Reality-Check Exercise",
+          "description": "Challenge the assumption that you are not important to others by examining evidence.",
+          "action_step": "List evidence for and against the belief that your care is unnoticed.",
+          "emotional_need_addressed": "Validation and connection"
+        }
+      ],
+      "relationship_questions": [
+        "When you feel invisible despite your care for others, does it remind you of patterns from your past relationships?"
+      ],
+      "followup_text": "Remember, your feelings of invisibility are valid, but they don't define your worth. Try using the communication script to express your needs in a way that opens up a dialogue for mutual support."
+    },
+    "user_reflection": null
   }
 ]
