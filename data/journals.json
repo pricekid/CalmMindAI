@@ -4585,5 +4585,56 @@
       "followup_text": "Reflect on the relationships where you feel this imbalance most. Consider trying a small, gentle conversation about how you'd like to see more mutual effort. You're not alone in wanting connections where you feel seen and valued."
     },
     "user_reflection": null
+  },
+  {
+    "id": 207,
+    "user_id": 1,
+    "title": "May 7th 9",
+    "content": "Ready for Analysis\r\nYour entry hasn't been analyzed yet. Would you like Mira to help identify thought patterns and suggest coping strategies?\r\n\r\n",
+    "anxiety_level": 6,
+    "created_at": "2025-05-08T01:28:12.349016",
+    "updated_at": "2025-05-08T01:28:24.755223",
+    "is_analyzed": true,
+    "gpt_response": "It seems you're in a place where you're seeking clarity and support, which is such a healthy step forward. The neutral tone of your entry suggests a pause\u2014a moment where you're not quite sure what to feel but are open to understanding more. Reflecting on your recent journals, I notice a theme of feeling like the initiator in your relationships, which might leave you feeling a bit neglected or unappreciated. Take a moment to consider how these patterns make you feel. Would you feel comfortable exploring them further? Remember, your efforts to connect are valuable. You deserve to feel acknowledged and supported. Keep being gentle with yourself as you uncover these layers.\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": ""
+      },
+      {
+        "pattern": "Mind Reading",
+        "description": ""
+      }
+    ],
+    "structured_data": {
+      "insight_text": "Your entry seems to reflect a neutral stance, perhaps a pause before deepening your self-awareness. In your recent journals, there's a recurring theme of feeling like the one who always reaches out, which might bring feelings of neglect or unappreciation.",
+      "reflection_prompt": "Take a moment. When you think about being the one who always checks in, what emotion comes up first\u2014is it disappointment, frustration, or maybe something else?",
+      "thought_patterns": [
+        "All-or-Nothing Thinking",
+        "Mind Reading"
+      ],
+      "strategies": [
+        {
+          "title": "Communication Script Template",
+          "description": "This template can help express your feelings and needs clearly when you feel like your efforts in relationships aren't reciprocated.",
+          "action_step": "I feel [specific emotion] when I am always the one reaching out because it makes me feel [impact]. What I need is [clear request].",
+          "emotional_need_addressed": "The need for mutual effort in relationships."
+        },
+        {
+          "title": "Reality-Check Exercise",
+          "description": "Challenge assumptions that others might not care as much as you do.",
+          "action_step": "List evidence for and against the belief that your relationships are one-sided.",
+          "emotional_need_addressed": "The need for validation and assurance."
+        }
+      ],
+      "relationship_questions": [
+        {
+          "question": "When you think of your efforts in relationships, what expectations do you hold that might not be communicated?",
+          "purpose": "To explore unspoken expectations that contribute to your feelings."
+        }
+      ],
+      "followup_text": "Remember, your feelings are valid, and seeking clarity is a step towards healthier relationships. Consider using the communication script to express your needs. You're doing great by taking the time to understand yourself more deeply."
+    },
+    "user_reflection": null
   }
 ]

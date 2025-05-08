@@ -4,18 +4,8 @@
   "current_streak": 2,
   "longest_streak": 2,
   "last_entry_date": "2025-05-08",
-  "total_xp": 1050,
+  "total_xp": 1080,
   "xp_history": [
-    {
-      "amount": 20,
-      "reason": "Received insights on journal entry",
-      "date": "2025-04-28 18:56:34"
-    },
-    {
-      "amount": 10,
-      "reason": "Created a new journal entry",
-      "date": "2025-04-28 19:47:20"
-    },
     {
       "amount": 20,
       "reason": "Received insights on journal entry",
@@ -255,6 +245,16 @@
       "amount": 20,
       "reason": "Received insights on journal entry",
       "date": "2025-05-08 00:54:59"
+    },
+    {
+      "amount": 10,
+      "reason": "Created a new journal entry",
+      "date": "2025-05-08 01:28:24"
+    },
+    {
+      "amount": 20,
+      "reason": "Received insights on journal entry",
+      "date": "2025-05-08 01:28:24"
     }
   ]
 }
