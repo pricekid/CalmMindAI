@@ -1299,6 +1299,84 @@ def view_journal_entry(entry_id):
     logger.debug(f"is_analyzed: {entry.is_analyzed}")
     logger.debug(f"coach_response length: {len(coach_response) if coach_response else 0}")
     logger.debug(f"coach_response: {coach_response[:100]}...")
+    
+    # If the entry is not analyzed yet, trigger automatic analysis
+    if not entry.is_analyzed and (not coach_response or coach_response.strip() == ""):
+        logger.info(f"Entry {entry_id} not yet analyzed. Automatically triggering analysis...")
+        try:
+            analysis_result = analyze_journal_with_gpt(
+                journal_text=entry.content, 
+                anxiety_level=entry.anxiety_level,
+                user_id=current_user.id
+            )
+            
+            # Update coach_response with the new analysis
+            gpt_response = analysis_result.get("gpt_response", "")
+            if gpt_response:
+                coach_response = gpt_response
+                logger.debug(f"Automatic analysis successful. New coach_response: {coach_response[:100]}...")
+            
+            cbt_patterns = analysis_result.get("cbt_patterns", [])
+            structured_data = analysis_result.get("structured_data", None)
+            
+            # Process the patterns and save recommendations
+            for pattern in cbt_patterns:
+                try:
+                    # Process pattern safely with our handler
+                    pattern_name, recommendation_text = safe_process_pattern(pattern)
+                    
+                    # Save recommendation to database
+                    recommendation = CBTRecommendation(
+                        thought_pattern=pattern_name,
+                        recommendation=recommendation_text,
+                        journal_entry_id=entry.id
+                    )
+                    db.session.add(recommendation)
+                except Exception as pattern_err:
+                    logger.error(f"Error processing pattern in view: {str(pattern_err)}")
+            
+            # Update the entry with the analyzed data
+            entry.is_analyzed = True
+            
+            # Set the conversational fields using structured data if available
+            if structured_data and isinstance(structured_data, dict):
+                logger.debug("Setting conversational fields from structured data")
+                if 'insight_text' in structured_data:
+                    entry.initial_insight = structured_data.get('insight_text')
+                if 'reflection_prompt' in structured_data:
+                    # Include the reflection prompt at the end of the initial insight
+                    if entry.initial_insight:
+                        entry.initial_insight += f"\n\n{structured_data.get('reflection_prompt')}"
+                    else:
+                        entry.initial_insight = structured_data.get('reflection_prompt')
+            else:
+                # Fallback to using gpt_response
+                entry.initial_insight = coach_response
+                
+            # Save changes to database
+            db.session.commit()
+            
+            # Save the complete journal entry to JSON file
+            save_journal_entry(
+                entry_id=entry.id,
+                user_id=current_user.id,
+                title=entry.title,
+                content=entry.content,
+                anxiety_level=entry.anxiety_level,
+                created_at=entry.created_at,
+                updated_at=entry.updated_at,
+                is_analyzed=entry.is_analyzed,
+                gpt_response=coach_response,
+                cbt_patterns=cbt_patterns,
+                structured_data=structured_data
+            )
+            
+            # Flash a message to indicate automatic analysis
+            flash('Your journal entry has been automatically analyzed!', 'success')
+                
+        except Exception as auto_analyze_err:
+            logger.error(f"Error during automatic analysis: {str(auto_analyze_err)}")
+            flash('Could not automatically analyze your entry.', 'warning')
 
     # Format the coach response with markdown conversion
     if coach_response:
