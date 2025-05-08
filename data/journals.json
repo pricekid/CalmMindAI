@@ -4931,5 +4931,41 @@
       "followup_text": "Remember, your care is a reflection of your generous spirit. If you feel unseen, try expressing your needs clearly. Your feelings are valid, and seeking reciprocation is a healthy part of relationships. You're doing great, and it's okay to seek balance."
     },
     "user_reflection": null
+  },
+  {
+    "id": 214,
+    "user_id": 1,
+    "title": "May 7th 14",
+    "content": "\u2019m tired of always being the one who checks in on people. I send messages, I show up, I ask how they\u2019re doing\u2014but when I\u2019m not okay, no one seems to notice. It makes me feel invisible and kind of stupid for caring so much.",
+    "anxiety_level": 6,
+    "created_at": "2025-05-08T02:43:24.646606",
+    "updated_at": "2025-05-08T02:43:33.983383",
+    "is_analyzed": true,
+    "gpt_response": "It sounds like you're feeling a sense of being unappreciated and maybe even invisible when you put so much effort into reaching out to others. It's understandable to feel this way, especially when your care isn't reciprocated. Have you noticed any patterns in how you approach these relationships? Perhaps there's an underlying need for connection and acknowledgment that feels unmet. Consider how you might express these feelings to others in a way that honors your needs. Remember, your feelings are valid and you're worthy of the same care you give so freely to others.\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": ""
+      },
+      {
+        "pattern": "Mind Reading",
+        "description": ""
+      }
+    ],
+    "structured_data": {
+      "insight_text": "Your journal entry reflects feelings of being neglected and perhaps unimportant, despite your efforts to connect with others. This could be related to a deep need for validation and connection that isn't being fulfilled.",
+      "reflection_prompt": "When you feel like your efforts go unnoticed, what emotion comes up first\u2014hurt, frustration, something else?",
+      "thought_patterns": [
+        "All-or-Nothing Thinking",
+        "Mind Reading"
+      ],
+      "strategies": [
+        "Communication Script Template: Use this to express your needs in relationships clearly. 'I feel [emotion] when [behavior] because [impact]. What I need is [request].'",
+        "Reality-Check Exercise: Challenge assumptions by listing evidence for and against your belief that no one notices your efforts.",
+        "Emotion Regulation Technique: When feeling neglected, try a grounding technique like focusing on your breathing or visualizing a calming scene."
+      ],
+      "followup_text": "Take care of yourself by acknowledging your needs and expressing them to others when possible. You're deserving of relationships that nourish you as much as you nourish them."
+    },
+    "user_reflection": null
   }
 ]
