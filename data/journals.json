@@ -4479,5 +4479,53 @@
     ],
     "structured_data": null,
     "user_reflection": null
+  },
+  {
+    "id": 204,
+    "user_id": 1,
+    "title": "may 6th 5",
+    "content": "I\u2019m tired of always being the one who checks in on people. I send messages, I show up, I ask how they\u2019re doing\u2014but when I\u2019m not okay, no one seems to notice. It makes me feel invisible and kind of stupid for caring so much",
+    "anxiety_level": 6,
+    "created_at": "2025-05-08T00:30:32.090654",
+    "updated_at": "2025-05-08T00:32:02.971001",
+    "is_analyzed": true,
+    "gpt_response": "I can sense the deep exhaustion and frustration you're feeling from constantly being the one to reach out and care for others, only to feel invisible when you need support yourself. This pattern of feeling neglected and unappreciated can be incredibly disheartening. Take a moment to reflect on a specific expectation you might have about these relationships that feels particularly heavy\u2014what deeper emotional need might this expectation be pointing to? Remember, your caring nature is a strength, not a flaw. You deserve to feel seen and valued, too.\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Mind Reading",
+        "description": ""
+      },
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": ""
+      }
+    ],
+    "structured_data": {
+      "insight_text": "Your journal captures a sense of feeling neglected and underappreciated, as if your efforts go unnoticed. This might connect to a deeper emotional need for validation and connection. Recognizing this pattern can help in addressing the underlying feelings of invisibility.",
+      "reflection_prompt": "When you think about how one-sided these relationships feel, what emotion comes up first\u2014hurt, anger, something else?",
+      "thought_patterns": [
+        "Mind Reading",
+        "All-or-Nothing Thinking"
+      ],
+      "strategies": [
+        {
+          "title": "Communication Script Template",
+          "description": "When you want to express your feelings to someone close, this script can help frame your emotions and needs clearly.",
+          "action_step": "I feel neglected when my efforts to connect go unnoticed because I value mutual support. What I need is reassurance that my care is reciprocated.",
+          "emotional_need_addressed": "Validation and connection"
+        },
+        {
+          "title": "Reality-Check Exercise",
+          "description": "Challenge the assumption that your efforts are always ignored.",
+          "action_step": "List evidence for and against your fear that you are invisible in your relationships.",
+          "emotional_need_addressed": "Validation"
+        }
+      ],
+      "relationship_questions": [
+        "Has this communication pattern happened before in this relationship?"
+      ],
+      "followup_text": "Remember, you are worthy of the same care and attention you give to others. Try using the communication script to express your needs. You're not alone, and your feelings are valid."
+    },
+    "user_reflection": null
   }
 ]
