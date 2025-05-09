@@ -5207,5 +5207,55 @@
       "followup_text": "You are not alone in your feelings of vulnerability. Many people feel this way when stepping into something new and meaningful. Trust in your journey and remember that you are capable and deserving of opportunities that come your way."
     },
     "user_reflection": null
+  },
+  {
+    "id": 220,
+    "user_id": 1,
+    "title": "May 8th 1",
+    "content": "I had an interview today for a program I\u2019ve always wanted to join. As soon as I walked out, I started overthinking everything I said. I kept replaying how I stumbled over one answer and felt like I sounded stupid. They probably saw right through me. I don\u2019t belong there\u2014I was pretending the whole time. Even if they do accept me, it\u2019ll just be out of pity or luck.",
+    "anxiety_level": 6,
+    "created_at": "2025-05-08T04:09:26.976312",
+    "updated_at": "2025-05-08T04:09:36.864813",
+    "is_analyzed": true,
+    "gpt_response": "It sounds like today was quite a rollercoaster for you, filled with both hope and self-doubt after your interview. As you walked out, your mind seemed to latch onto every little perceived stumble, magnifying it into a feeling of inadequacy. It\u2019s understandable to feel anxious when so much is at stake for something you deeply desire. Let's explore this together: when you think back on the interview, which part of your self-critique feels the strongest? Remember, your worth is not defined by a single moment. You are capable and deserving of the opportunities you seek. Take a deep breath and trust in the effort and passion you bring. You are on a journey, and this is just one step along the way.\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- All-or-Nothing Thinking\n- Mind Reading\n",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": ""
+      },
+      {
+        "pattern": "Mind Reading",
+        "description": ""
+      },
+      {
+        "pattern": "Catastrophizing",
+        "description": ""
+      }
+    ],
+    "structured_data": {
+      "insight_text": "You are experiencing a mix of hope and self-doubt, particularly around feeling inadequate or like an impostor during your interview. This reflects a deeper need for self-validation and acceptance, especially in high-stakes situations.",
+      "reflection_prompt": "When you think about the fear of being 'seen through,' what does that say about the expectations you're placing on yourself to be perfect?",
+      "thought_patterns": [
+        "All-or-Nothing Thinking",
+        "Mind Reading",
+        "Catastrophizing"
+      ],
+      "strategies": [
+        {
+          "title": "Reality-Check Exercise",
+          "description": "Challenge your assumptions by listing evidence for and against your belief that you didn't perform well.",
+          "action_step": "List evidence for and against your fear that 'they saw through you' during the interview.",
+          "emotional_need_addressed": "Self-validation"
+        },
+        {
+          "title": "Grounding Technique",
+          "description": "A method to manage anxiety post-interview by focusing on the present.",
+          "action_step": "When you feel anxious, focus on your breathing: inhale for 4 counts, hold for 4, exhale for 4, and pause for 4.",
+          "emotional_need_addressed": "Emotional regulation"
+        }
+      ],
+      "followup_text": "Remember, this process is about growth, not perfection. It's okay to have moments of doubt, but try to balance them with moments of self-compassion and acknowledgment of your efforts. You\u2019re doing your best, and that is enough. Keep moving forward with hope and resilience."
+    },
+    "user_reflection": null
   }
 ]
