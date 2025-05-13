@@ -1,3 +1,4 @@
+import uuid
 from datetime import datetime, timedelta
 from app import db
 from flask_login import UserMixin
@@ -8,7 +9,7 @@ from sqlalchemy import UniqueConstraint
 
 class User(UserMixin, db.Model):
     __tablename__ = "user"
-    id = db.Column(db.String, primary_key=True)
+    id = db.Column(db.String, primary_key=True, default=lambda: str(uuid.uuid4()))
     username = db.Column(db.String(64), unique=True, nullable=True)
     email = db.Column(db.String(120), unique=True, nullable=True)
     password_hash = db.Column(db.String(256), nullable=True)
