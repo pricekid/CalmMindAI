@@ -30,12 +30,22 @@ body {
     font-family: 'Poppins', 'Segoe UI', Roboto, sans-serif;
 }
 
-/* General styling */
+/* Card Styling */
 .card {
     border-radius: 15px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
+}
+
+.card.bg-light .card-text,
+.card.bg-light .card-title {
+    color: #212529 !important;
+}
+
+.card.bg-dark .card-text,
+.card.bg-dark .card-title {
+    color: #ffffff !important;
 }
 
 /* Ensure text contrast */
