@@ -238,6 +238,18 @@ def dashboard():
         logging.error(f"Error getting community message for dashboard: {str(e)}")
         community_message = "Join our growing community of mindful journalers."
 
+    # Check if we need to update the welcome message shown flag
+    show_welcome = not current_user.welcome_message_shown
+    if show_welcome:
+        # Update the flag to prevent showing the welcome message again
+        try:
+            current_user.welcome_message_shown = True
+            db.session.commit()
+            logging.info(f"Updated welcome_message_shown flag for user {current_user.id}")
+        except Exception as e:
+            logging.error(f"Error updating welcome_message_shown flag: {str(e)}")
+            db.session.rollback()
+    
     return render_template('dashboard.html', 
                           title='Dashboard',
                           recent_entries=recent_entries,

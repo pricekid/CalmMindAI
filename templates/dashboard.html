@@ -12,7 +12,7 @@
 </script>
 
 <!-- First-time user welcome modal -->
-{% if not recent_entries %}
+{% if not current_user.welcome_message_shown %}
 <div class="modal fade" id="welcomeModal" tabindex="-1" aria-labelledby="welcomeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0">
