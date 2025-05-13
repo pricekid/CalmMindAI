@@ -43,8 +43,15 @@ body {
     color: #212529 !important;
 }
 
+.card .card-text,
+.card .card-title,
+.card .text-muted {
+    color: #212529 !important;
+}
+
 .card.bg-dark .card-text,
-.card.bg-dark .card-title {
+.card.bg-dark .card-title,
+.card.bg-dark .text-muted {
     color: #ffffff !important;
 }
 
