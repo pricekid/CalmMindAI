@@ -42,62 +42,28 @@ ensure_data_files_exist()
 @admin_bp.route('/login', methods=['GET', 'POST'])
 def login():
     """Admin login route"""
-    try:
-        logger.debug("Admin login route accessed")
-        
-        # If user is already logged in, redirect appropriately
-        if current_user.is_authenticated:
-            # If regular user, redirect to regular dashboard
-            if not hasattr(current_user, 'get_id') or not current_user.get_id().startswith('admin_'):
-                flash('You are logged in as a regular user. Please log out first to access admin area.', 'warning')
-                return redirect(url_for('dashboard'))
-            else:
-                # Admin is already logged in
-                logger.debug("Admin already authenticated, redirecting to admin dashboard")
+    # If already logged in as admin, redirect to dashboard
+    if current_user.is_authenticated and hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
+        return redirect(url_for('admin.dashboard'))
+
+    form = AdminLoginForm()
+
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+
+        if username == "admin":
+            admin = Admin.get(1)
+            if admin and admin.check_password(password):
+                login_user(admin)
+                next_page = request.args.get('next')
+                if next_page and next_page.startswith('/admin'):
+                    return redirect(next_page)
                 return redirect(url_for('admin.dashboard'))
-        
-        # Check if we're being directed from a protected route that requires login
-        next_url = request.args.get('next')
-        if next_url and not next_url.startswith('/admin'):
-            # If next URL is not an admin route, redirect to regular login
-            logger.debug(f"Redirecting non-admin next URL to regular login: {next_url}")
-            return redirect(url_for('login', next=next_url))
-        
-        # Handle form submission manually instead of using form.validate_on_submit()
-        if request.method == 'POST':
-            username = request.form.get('username')
-            password = request.form.get('password')
-            
-            logger.debug(f"Form submitted with username: {username}")
-            # Check if it's our hardcoded admin
-            if username == "admin":
-                try:
-                    admin = Admin.get(1)
-                    logger.debug("Admin user retrieved")
-                    
-                    if admin and admin.check_password(password):
-                        login_user(admin)
-                        logger.debug("Admin login successful")
-                        next_page = request.args.get('next')
-                        return redirect(next_page if next_page else url_for('admin.dashboard'))
-                    else:
-                        logger.debug("Password check failed")
-                        flash('Login unsuccessful. Please check your credentials.', 'danger')
-                except Exception as e:
-                    logger.error(f"Error retrieving admin: {str(e)}")
-                    logger.error(traceback.format_exc())
-                    flash('An error occurred. Please try again.', 'danger')
-            else:
-                logger.debug("Username is not admin")
-                flash('Login unsuccessful. Please check your credentials.', 'danger')
-        
-        logger.debug("Rendering basic login template")
-        return render_template('admin/basic_login.html', title='Admin Login')
-    except Exception as e:
-        logger.error(f"Unhandled exception in admin login: {str(e)}")
-        logger.error(traceback.format_exc())
-        flash('An error occurred. Please try again.', 'danger')
-        return render_template('admin/basic_login.html', title='Admin Login')
+
+        flash('Invalid username or password', 'danger')
+
+    return render_template('admin/basic_login.html', form=form)
 
 @admin_bp.route('/logout')
 @admin_required
@@ -384,4 +350,3 @@ def scheduler_logs():
         logger.error(f"Error retrieving scheduler logs: {str(e)}")
         logger.error(traceback.format_exc())
         return redirect(url_for('admin.dashboard'))
-
