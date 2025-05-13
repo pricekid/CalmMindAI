@@ -30,8 +30,15 @@ def admin_required(f):
     def decorated_function(*args, **kwargs):
         logger.debug(f"Admin access check - Session: {dict(session)}")
         
-        # Check if user is authenticated
-        if not current_user.is_authenticated:
+        # Check if user is authenticated - with more detailed logging
+        logger.debug(f"Admin access check - is_authenticated: {current_user.is_authenticated}")
+        logger.debug(f"Admin access check - current_user type: {type(current_user)}")
+        logger.debug(f"Admin access check - current_user dir: {dir(current_user)}")
+        
+        # Check if we have the admin ID in session as a fallback
+        has_admin_in_session = session.get('is_admin') and session.get('admin_id')
+        
+        if not current_user.is_authenticated and not has_admin_in_session:
             logger.warning("Admin access denied - User not authenticated")
             flash('Please log in as admin to access this page.', 'danger')
             return redirect(url_for('admin.login', next=request.url))
@@ -40,8 +47,16 @@ def admin_required(f):
         user_id = current_user.get_id() if hasattr(current_user, 'get_id') else 'Unknown'
         logger.debug(f"Admin access check - User ID: {user_id}")
         
-        # Check if user is an admin based on ID format
-        if not hasattr(current_user, 'get_id') or not current_user.get_id().startswith('admin_'):
+        # First try to verify from current_user (if it's properly authenticated)
+        is_admin_by_id = hasattr(current_user, 'get_id') and current_user.get_id() and current_user.get_id().startswith('admin_')
+        
+        # If that fails, check the session for admin flag and ID as backup
+        is_admin_by_session = bool(session.get('is_admin')) and bool(session.get('admin_id'))
+        
+        logger.debug(f"Admin access check - is_admin_by_id: {is_admin_by_id}, is_admin_by_session: {is_admin_by_session}")
+        
+        # Allow access if either method confirms admin status
+        if not is_admin_by_id and not is_admin_by_session:
             logger.warning(f"Admin access denied - Not an admin user: {user_id}")
             flash('You need admin privileges to access this page.', 'danger')
             return redirect(url_for('admin.login', next=request.url))
