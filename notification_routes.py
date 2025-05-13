@@ -5,15 +5,17 @@ to solve environment variable access issues.
 """
 import os
 import logging
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify, current_app, redirect, url_for, flash, render_template
 from notification_service import send_test_email, send_immediate_notification_to_all_users
+from notification_service import send_test_sms
+from app import login_required
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 # Create a blueprint for notification routes
-notification_bp = Blueprint('notifications', __name__)
+notification_bp = Blueprint('notification', __name__)
 
 @notification_bp.route('/api/notifications/test', methods=['POST'])
 def test_notification():
@@ -59,44 +61,98 @@ def test_notification():
             'error': f'Error: {str(e)}'
         }), 500
 
-@notification_bp.route('/api/notifications/send_all', methods=['POST'])
-def send_all_notifications():
+@notification_bp.route('/send_immediate_notification', methods=['POST'])
+@login_required
+def send_immediate_notification():
     """
-    Send a notification to all users who have enabled notifications.
-    
-    This is an admin-only endpoint that requires an admin token.
-    
-    Request JSON format:
-    {
-        "admin_token": "your_admin_token_here"
-    }
-    
-    Returns JSON with statistics about the notification sending process.
+    Send an immediate notification to all users with notifications enabled.
+    This is an admin-only route that can be used to send reminders manually.
     """
     try:
-        data = request.get_json()
-        
-        # Check admin token
-        admin_token = data.get('admin_token')
-        expected_token = os.environ.get('ADMIN_TOKEN')
-        
-        if not admin_token or admin_token != expected_token:
-            return jsonify({
-                'success': False,
-                'error': 'Unauthorized: Invalid admin token'
-            }), 401
-            
         # Send notifications to all eligible users
         stats = send_immediate_notification_to_all_users()
         
-        return jsonify({
-            'success': True,
-            'stats': stats
-        })
+        # Log statistics
+        logger.info(f"Immediate notification sent to {stats.get('success_count', 0)} users")
+        
+        flash(f"Successfully sent notifications to {stats.get('success_count', 0)} users. Failed: {stats.get('failure_count', 0)}", 'success')
+        return redirect(url_for('admin.settings'))
             
     except Exception as e:
         logger.error(f"Error sending notifications to all users: {str(e)}", exc_info=True)
-        return jsonify({
-            'success': False,
-            'error': f'Error: {str(e)}'
-        }), 500
+        flash(f"Error sending notifications: {str(e)}", 'danger')
+        return redirect(url_for('admin.settings'))
+
+@notification_bp.route('/test_email_notification', methods=['POST'])
+@login_required
+def test_email_notification():
+    """Send a test email notification to the provided email address"""
+    try:
+        email_address = request.form.get('email_address')
+        
+        if not email_address:
+            flash('Email address is required', 'danger')
+            return redirect(url_for('admin.settings'))
+        
+        # Send test email
+        success = send_test_email(email_address)
+        
+        if success:
+            flash(f'Test email sent to {email_address}', 'success')
+        else:
+            flash('Failed to send test email. Check server logs for details.', 'danger')
+            
+        return redirect(url_for('admin.settings'))
+        
+    except Exception as e:
+        logger.error(f"Error sending test email: {str(e)}", exc_info=True)
+        flash(f'Error sending test email: {str(e)}', 'danger')
+        return redirect(url_for('admin.settings'))
+
+@notification_bp.route('/test_sms_notification', methods=['POST'])
+@login_required
+def test_sms_notification():
+    """Send a test SMS notification to the provided phone number"""
+    try:
+        phone_number = request.form.get('phone_number')
+        
+        if not phone_number:
+            flash('Phone number is required', 'danger')
+            return redirect(url_for('admin.settings'))
+        
+        # Send test SMS
+        success = send_test_sms(phone_number)
+        
+        if success:
+            flash(f'Test SMS sent to {phone_number}', 'success')
+        else:
+            flash('Failed to send test SMS. Check server logs for details.', 'danger')
+            
+        return redirect(url_for('admin.settings'))
+        
+    except Exception as e:
+        logger.error(f"Error sending test SMS: {str(e)}", exc_info=True)
+        flash(f'Error sending test SMS: {str(e)}', 'danger')
+        return redirect(url_for('admin.settings'))
+
+@notification_bp.route('/send_immediate_sms_notification', methods=['POST'])
+@login_required
+def send_immediate_sms_notification():
+    """Send an immediate SMS notification to all users with SMS notifications enabled"""
+    try:
+        # Import here to avoid circular imports
+        from notification_service import send_immediate_sms_to_all_users
+        
+        # Send SMS to all eligible users
+        stats = send_immediate_sms_to_all_users()
+        
+        # Log statistics
+        logger.info(f"Immediate SMS sent to {stats.get('success_count', 0)} users")
+        
+        flash(f"Successfully sent SMS to {stats.get('success_count', 0)} users. Failed: {stats.get('failure_count', 0)}", 'success')
+        return redirect(url_for('admin.settings'))
+            
+    except Exception as e:
+        logger.error(f"Error sending SMS to all users: {str(e)}", exc_info=True)
+        flash(f"Error sending SMS notifications: {str(e)}", 'danger')
+        return redirect(url_for('admin.settings'))
