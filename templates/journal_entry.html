@@ -211,7 +211,7 @@
             {{ form.hidden_tag() }}
             <div class="mb-3">
               {{ form.title.label(class="form-label") }}
-              {{ form.title(class="form-control") }}
+              {{ form.title(class="form-control", autofocus=true) }}
             </div>
             <div class="mb-3">
               {{ form.content.label(class="form-label") }}
@@ -252,10 +252,10 @@
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">Conversation with Mira</h4>
-              
+
               <!-- Chat Container - This div is used by reflection-handler.js to append new messages -->
               <div class="chat-container">
-              
+
               <!-- User's Journal Entry (Speech Bubble) -->
               <div class="chat-message user-message mb-4">
                 <div class="d-flex">
@@ -276,7 +276,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <!-- Mira's Response (Speech Bubble) -->
               <div class="chat-message mira-message mb-4">
                 <div class="d-flex">
@@ -303,7 +303,7 @@
                           {% set insight_text = insight_text.split("We're starting to notice")[0] %}
                         {% endif %}
                         <p class="mb-3" style="color: #000000 !important;">{{ insight_text | safe }}</p>
-                        
+
                         <div class="reflection-prompt-box mt-3 mb-3" style="color: #000000 !important;">
                           <div class="d-flex justify-content-between align-items-center">
                             <p class="reflection-prompt mb-0 flex-grow-1" style="color: #000000 !important;">{{ structured_data.reflection_prompt | safe }}</p>
@@ -313,9 +313,9 @@
                           </div>
                         </div>
                       {% endif %}
-                      
+
                       <audio id="serverAudio" controls style="display: none; width: 100%; margin-top: 10px;"></audio>
-                      
+
                       <div class="chat-info text-end small text-muted mt-2">
                         <span>Coach Mira</span>
                       </div>
@@ -323,7 +323,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <!-- User's Reflection Area (Automatically Displayed) -->
               <div class="reflection-form" data-entry-id="{{ entry.id }}">
                 <div class="chat-message user-reflection-message mb-4">
@@ -346,7 +346,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <!-- Display Saved User Reflection If Available -->
               {% if entry.user_reflection %}
               <div class="chat-message user-message mb-4">
@@ -367,7 +367,7 @@
                 </div>
               </div>
               {% endif %}
-              
+
               <!-- Mira's Follow-up Response If Available -->
               {% if structured_data.followup_text %}
               <div class="chat-message mira-message mb-4">
@@ -399,7 +399,7 @@
                 </div>
               </div>
               {% endif %}
-              
+
               </div> <!-- End of chat-container -->
             </div>
           </div>
@@ -512,7 +512,7 @@
                 </div>
                 <div class="card-body">
                     <p>The AI analysis helps identify thought patterns from cognitive behavioral therapy (CBT) and suggests personalized coping strategies. Your data is private and secure.</p>
-                    
+
                     <h5 class="mt-3">Common Thought Patterns:</h5>
                     <ul>
                         <li><strong>Catastrophizing:</strong> Assuming the worst will happen</li>
@@ -521,7 +521,7 @@
                         <li><strong>Mind Reading:</strong> Assuming you know what others are thinking</li>
                         <li><strong>Emotional Reasoning:</strong> Believing feelings reflect reality</li>
                     </ul>
-                    
+
                     <p class="text-info mt-3">
                         <i class="bi bi-info-circle"></i> 
                         Analysis takes about 5-10 seconds to complete.
@@ -585,7 +585,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         // Auto-focus the reflection input field when the page loads
         const reflectionForm = document.querySelector('.reflection-form');
-        
+
         if (reflectionForm) {
             const reflectionInput = reflectionForm.querySelector('.reflection-input');
             if (reflectionInput) {
@@ -594,7 +594,7 @@
             // Scroll to the reflection area
             reflectionForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        
+
         // The rest of the reflection functionality is now handled in reflection-handler.js
     });
 
@@ -604,7 +604,7 @@
         const journalContent = document.getElementById('journal-content');
         const statusDiv = document.getElementById('voice-input-status');
         const statusText = document.getElementById('voice-status-text');
-        
+
         // Check if browser supports speech recognition
         if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
             // Hide the voice input button if speech recognition isn't supported
@@ -614,24 +614,24 @@
             console.log('Speech recognition not supported in this browser');
             return;
         }
-        
+
         // Initialize speech recognition
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         const recognition = new SpeechRecognition();
-        
+
         // Configure recognition
         recognition.continuous = true;
         recognition.interimResults = true;
         recognition.lang = 'en-US'; // Default to English
-        
+
         let isListening = false;
         let finalTranscript = '';
-        
+
         // Add event listeners for the voice button
         if (voiceButton && journalContent) {
             voiceButton.addEventListener('click', toggleSpeechRecognition);
         }
-        
+
         // Function to toggle speech recognition on/off
         function toggleSpeechRecognition() {
             if (isListening) {
@@ -640,7 +640,7 @@
                 isListening = false;
                 voiceButton.classList.remove('active');
                 statusDiv.classList.add('d-none');
-                
+
                 // Update button
                 voiceButton.innerHTML = '<i class="bi bi-mic"></i>';
                 voiceButton.title = 'Start Voice Input (Click again to stop)';
@@ -651,18 +651,18 @@
                 } else {
                     finalTranscript = journalContent.value;
                 }
-                
+
                 // Start listening
                 try {
                     recognition.start();
                     isListening = true;
                     voiceButton.classList.add('active');
                     statusDiv.classList.remove('d-none');
-                    
+
                     // Update button
                     voiceButton.innerHTML = '<i class="bi bi-mic-fill"></i>';
                     voiceButton.title = 'Stop Voice Input';
-                    
+
                     console.log('Speech recognition started');
                 } catch (err) {
                     console.error('Speech recognition error:', err);
@@ -670,36 +670,36 @@
                 }
             }
         }
-        
+
         // Handle results
         recognition.onresult = function(event) {
             let interimTranscript = '';
-            
+
             for (let i = event.resultIndex; i < event.results.length; i++) {
                 const transcript = event.results[i][0].transcript;
-                
+
                 if (event.results[i].isFinal) {
                     finalTranscript += transcript + ' ';
                 } else {
                     interimTranscript += transcript;
                 }
             }
-            
+
             // Update textarea with the transcript
             journalContent.value = finalTranscript + interimTranscript;
-            
+
             // Auto-scroll to the bottom of the textarea
             journalContent.scrollTop = journalContent.scrollHeight;
-            
+
             // Update word count in status
             const wordCount = journalContent.value.trim().split(/\s+/).filter(Boolean).length;
             statusText.textContent = `Listening... ${wordCount} words recorded. Click mic button again to stop.`;
         };
-        
+
         // Handle errors
         recognition.onerror = function(event) {
             console.error('Speech recognition error:', event.error);
-            
+
             // If error is not 'aborted' (which happens on normal stop)
             if (event.error !== 'aborted') {
                 // Special handling for permission errors
@@ -717,7 +717,7 @@
                             </ol>
                         </div>
                     `;
-                    
+
                     // Show as a modal instead of an alert for better UX
                     const modalHtml = `
                         <div class="modal fade" id="micPermissionModal" tabindex="-1" aria-hidden="true">
@@ -737,13 +737,13 @@
                             </div>
                         </div>
                     `;
-                    
+
                     // Append modal to body if it doesn't exist
                     if (!document.getElementById('micPermissionModal')) {
                         const modalContainer = document.createElement('div');
                         modalContainer.innerHTML = modalHtml;
                         document.body.appendChild(modalContainer.firstChild);
-                        
+
                         // Initialize and show the modal
                         const modal = new bootstrap.Modal(document.getElementById('micPermissionModal'));
                         modal.show();
@@ -756,7 +756,7 @@
                     // For other errors, show a simple alert
                     alert(`Speech recognition error: ${event.error}. Please try again.`);
                 }
-                
+
                 // Reset state
                 isListening = false;
                 voiceButton.classList.remove('active');
@@ -764,7 +764,7 @@
                 voiceButton.innerHTML = '<i class="bi bi-mic"></i>';
             }
         };
-        
+
         // Handle end of recognition
         recognition.onend = function() {
             if (isListening) {
@@ -783,17 +783,17 @@
             }
         };
     }
-    
+
     // Function to update the anxiety level display
     function updateAnxietyLabel(value) {
         const anxietyValue = document.getElementById('anxiety-value');
         const anxietyInput = document.getElementById('anxiety-input');
-        
+
         // Only proceed if the elements exist (they won't in view-only mode)
         if (anxietyValue && anxietyInput) {
             anxietyValue.textContent = value;
             anxietyInput.value = value;
-            
+
             // Change badge color based on anxiety level
             if (value <= 3) {
                 anxietyValue.className = 'badge bg-success';
@@ -804,11 +804,11 @@
             }
         }
     }
-    
+
     // Function to show voice input tooltip
     function showVoiceInputTooltip() {
         const voiceButton = document.getElementById('voice-input-button');
-        
+
         if (voiceButton && !localStorage.getItem('voice_tooltip_shown')) {
             // Create tooltip content
             const tooltipHtml = `
@@ -821,30 +821,31 @@
                     </div>
                 </div>
             `;
-            
+
             // Create tooltip container
             const tooltipContainer = document.createElement('div');
             tooltipContainer.className = 'voice-tooltip-container';
             tooltipContainer.innerHTML = tooltipHtml;
-            
+
             // Position near the voice button
             const buttonRect = voiceButton.getBoundingClientRect();
             document.body.appendChild(tooltipContainer);
-            
+
             // Add animation class after a small delay
             setTimeout(() => {
                 tooltipContainer.classList.add('visible');
             }, 500);
-            
+
             // Add event listener to close button
             document.getElementById('voice-tooltip-got-it').addEventListener('click', function() {
                 tooltipContainer.classList.remove('visible');
-                setTimeout(() => {
+                setTimeout(() =>```python
+{
                     tooltipContainer.remove();
                 }, 300);
                 localStorage.setItem('voice_tooltip_shown', 'true');
             });
-            
+
             // Also close when clicking outside
             document.addEventListener('click', function closeTooltip(e) {
                 if (!tooltipContainer.contains(e.target) && e.target !== voiceButton) {
@@ -858,10 +859,10 @@
             });
         }
     }
-    
+
     // Set up event listeners when document is ready
     // Voice selection and settings functions - Global scope
-    
+
     // Current voice settings stored in memory
     const voiceSettings = {
         analysis: {
@@ -871,7 +872,7 @@
             voice: localStorage.getItem('guidance_voice') || 'shimmer'
         }
     };
-    
+
     // Voice type options with display names and personality types
     const voiceOptions = [
         { id: 'alloy', name: 'Alloy', description: 'Versatile neutral voice that works well for many contexts', personality: 'Balanced' },
@@ -881,7 +882,7 @@
         { id: 'nova', name: 'Nova', description: 'Weighted, easy-going, and bright female voice', personality: 'Encouraging' },
         { id: 'shimmer', name: 'Shimmer', description: 'Gentle and optimistic female voice', personality: 'Supportive' }
     ];
-    
+
     // Function to open the voice settings modal
     function openVoiceSettingsModal(type) {
         // type can be 'analysis' or 'guidance'
@@ -889,10 +890,10 @@
         const modalTitle = document.getElementById('voiceSettingsModalLabel');
         const voiceOptionsContainer = modal.querySelector('.voice-options');
         const saveButton = document.getElementById('saveVoiceSettings');
-        
+
         // Set the title based on the type
         modalTitle.textContent = type === 'analysis' ? 'Analysis Voice Settings' : 'Guidance Voice Settings';
-        
+
         // Generate card-style radio buttons for each voice option
         voiceOptionsContainer.innerHTML = `
             <div class="voice-cards">
@@ -915,7 +916,7 @@
                 }).join('')}
             </div>
         `;
-        
+
         // Add click event to the cards
         const voiceCards = voiceOptionsContainer.querySelectorAll('.voice-card');
         voiceCards.forEach(card => {
@@ -923,30 +924,30 @@
                 // Update selected state visually
                 voiceCards.forEach(c => c.classList.remove('selected'));
                 this.classList.add('selected');
-                
+
                 // Update radio button
                 const radioInput = this.querySelector('input[type="radio"]');
                 radioInput.checked = true;
             });
         });
-        
+
         // Remove any previous event listeners
         saveButton.replaceWith(saveButton.cloneNode(true));
-        
+
         // Update the save button reference
         const newSaveButton = document.getElementById('saveVoiceSettings');
-        
+
         // Add event listener for save button
         newSaveButton.addEventListener('click', function() {
             // Get the selected voice
             const selectedVoice = modal.querySelector('input[name="voice-type"]:checked').value;
-            
+
             // Update voice settings
             voiceSettings[type].voice = selectedVoice;
-            
+
             // Save to localStorage
             localStorage.setItem(`${type}_voice`, selectedVoice);
-            
+
             // Close the modal safely
             try {
                 const modalInstance = bootstrap.Modal.getInstance(modal);
@@ -971,7 +972,7 @@
                 if (backdrop) backdrop.remove();
             }
         });
-        
+
         // Show the modal with error handling
         try {
             // Check if bootstrap is available
@@ -980,7 +981,7 @@
                 modal.style.display = 'block';
                 modal.classList.add('show');
                 document.body.classList.add('modal-open');
-                
+
                 // Create backdrop if it doesn't exist
                 let backdrop = document.querySelector('.modal-backdrop');
                 if (!backdrop) {
@@ -990,7 +991,7 @@
                 }
                 return;
             }
-            
+
             // Normal bootstrap modal initialization
             const bsModal = new bootstrap.Modal(modal);
             bsModal.show();
@@ -1000,7 +1001,7 @@
             modal.style.display = 'block';
             modal.classList.add('show');
             document.body.classList.add('modal-open');
-            
+
             // Add event listeners to close buttons as a fallback
             const closeButtons = modal.querySelectorAll('[data-bs-dismiss="modal"]');
             closeButtons.forEach(button => {
@@ -1014,37 +1015,43 @@
             });
         }
     }
-    
+
     // Function to get the current voice setting for a type
     function getVoiceSetting(type) {
         return voiceSettings[type].voice;
     }
-    
+
     // Legacy function for backward compatibility
     function setupTTSLanguageSelectors() {
         // Clear old voice settings
         localStorage.removeItem('analysis_voice');
         localStorage.removeItem('guidance_voice');
-        
+
         // Reset to use Shimmer voice for all
         voiceSettings.analysis.voice = 'shimmer';
         voiceSettings.guidance.voice = 'shimmer';
-        
+
         // Save the new settings
         localStorage.setItem('analysis_voice', 'shimmer');
         localStorage.setItem('guidance_voice', 'shimmer');
-        
+
         console.log("Voice settings initialized with Shimmer as default");
     }
-    
+
     document.addEventListener('DOMContentLoaded', function() {
+        // Focus on title field when page loads
+        const titleField = document.getElementById('title');
+        if (titleField) {
+            titleField.focus();
+        }
+
         // Set up language selection for TTS
         setupTTSLanguageSelectors();
-        
+
         // Set up the voice settings buttons
         const analysisSettingsBtn = document.getElementById('analysis-voice-settings-btn');
         const guidanceSettingsBtn = document.getElementById('guidance-voice-settings-btn');
-        
+
         // Add event listeners with error handling
         if (analysisSettingsBtn) {
             analysisSettingsBtn.addEventListener('click', function() {
@@ -1056,7 +1063,7 @@
                 }
             });
         }
-        
+
         if (guidanceSettingsBtn) {
             guidanceSettingsBtn.addEventListener('click', function() {
                 try {
@@ -1067,12 +1074,12 @@
                 }
             });
         }
-        
+
         // Set up all TTS buttons with error handling
         const miraTtsButtons = document.querySelectorAll('.mira-tts-button');
         const followupTtsButtons = document.querySelectorAll('.followup-tts-button');
         const serverTtsGuidanceButton = document.getElementById('server-tts-guidance-button');
-        
+
         if (miraTtsButtons) {
             miraTtsButtons.forEach(button => {
                 button.addEventListener('click', function() {
@@ -1090,7 +1097,7 @@
                 });
             });
         }
-        
+
         if (followupTtsButtons) {
             followupTtsButtons.forEach(button => {
                 button.addEventListener('click', function() {
@@ -1103,7 +1110,7 @@
                 });
             });
         }
-        
+
         if (serverTtsGuidanceButton) {
             serverTtsGuidanceButton.addEventListener('click', function() {
                 try {
@@ -1114,18 +1121,18 @@
                 }
             });
         }
-        
+
         // Set the initial anxiety level (only if we're in edit mode)
         const anxietySlider = document.getElementById('anxiety-slider');
         if (anxietySlider) {
             const sliderValue = anxietySlider.value;
             updateAnxietyLabel(sliderValue);
         }
-        
+
         // Set up the form handling with spinner
         const journalForm = document.getElementById('journal-form');
         const submitButton = document.getElementById('journal-submit-button');
-        
+
         if (journalForm && submitButton) {
             journalForm.addEventListener('submit', function(event) {
                 // Check if form is valid before showing spinner
@@ -1133,19 +1140,19 @@
                     // Replace button content with spinner and text
                     submitButton.innerHTML = '<div class="d-flex align-items-center justify-content-center"><span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving...</div>';
                     submitButton.disabled = true;
-                    
+
                     // Debug log
                     console.log('Showing spinner on journal submit');
                 }
             });
         }
-        
+
         // Setup voice input functionality
         setupVoiceInput();
-        
+
         // Show voice input tooltip after a delay
         setTimeout(showVoiceInputTooltip, 1500);
-        
+
         // Set up the analyze button with spinner
         const analyzeButton = document.getElementById('analyze-entry');
         if (analyzeButton) {
@@ -1166,13 +1173,13 @@
                     const urlParts = window.location.pathname.split('/');
                     journalId = urlParts[urlParts.length - 1];
                 }
-                
+
                 console.log('Using journal ID for analysis:', journalId);
-                
+
                 // Show spinner in button
                 this.innerHTML = '<div class="d-flex align-items-center justify-content-center"><span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Analyzing...</div>';
                 this.disabled = true;
-                
+
                 // Call API to analyze entry
                 fetch(`/api/analyze-entry/${journalId}`)
                     .then(response => response.json())
@@ -1196,7 +1203,7 @@
                     });
             });
         }
-        
+
         // Set up the ask coach button with spinner
         const coachButton = document.getElementById('ask-coach');
         if (coachButton) {
@@ -1217,13 +1224,13 @@
                     const urlParts = window.location.pathname.split('/');
                     journalId = urlParts[urlParts.length - 1];
                 }
-                
+
                 console.log('Using journal ID for coach:', journalId);
-                
+
                 // Show spinner in button
                 this.innerHTML = '<div class="d-flex align-items-center justify-content-center"><span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Asking Mira...</div>';
                 this.disabled = true;
-                
+
                 // Call API to get coaching
                 fetch(`/api/journal-coach/${journalId}`)
                     .then(response => response.json())
@@ -1232,18 +1239,18 @@
                             // Show coach response area and populate it
                             document.getElementById('coach-response').style.display = 'block';
                             const coachMessage = document.getElementById('coach-message');
-                            
+
                             // Check if we have structured data
                             if (data.structured_data) {
                                 // Render structured format
                                 let structuredHtml = '';
                                 const structData = data.structured_data;
-                                
+
                                 // Introduction section
                                 if (structData.intro) {
                                     structuredHtml += `<div class="coach-intro mb-4">${structData.intro}</div>`;
                                 }
-                                
+
                                 // Thought patterns section
                                 if (structData.distortions && structData.distortions.length > 0) {
                                     structuredHtml += `<div class="distortions mb-4">
@@ -1256,7 +1263,7 @@
                                     });
                                     structuredHtml += `</ul></div>`;
                                 }
-                                
+
                                 // Strategies section
                                 if (structData.strategies && structData.strategies.length > 0) {
                                     structuredHtml += `<div class="strategies mb-4">
@@ -1275,7 +1282,7 @@
                                     });
                                     structuredHtml += `</div></div>`;
                                 }
-                                
+
                                 // Reflection prompt
                                 if (structData.reflection_prompt) {
                                     structuredHtml += `<div class="reflection-prompt mb-4">
@@ -1285,17 +1292,17 @@
                                         </blockquote>
                                     </div>`;
                                 }
-                                
+
                                 // Outro
                                 if (structData.outro) {
                                     structuredHtml += `<div class="coach-outro mt-4">${structData.outro}</div>`;
                                 }
-                                
+
                                 // Add signature if not in outro
                                 if (!structuredHtml.includes("Warmly,") && !structuredHtml.includes("Coach Mira")) {
                                     structuredHtml += `<div class="coach-signature mt-3">Warmly,<br>Coach Mira</div>`;
                                 }
-                                
+
                                 coachMessage.innerHTML = `<div class="coach-insights structured-insights">${structuredHtml}</div>`;
                             } else {
                                 // Apply the same CSS as the main response for legacy format
@@ -1306,10 +1313,10 @@
                                 }
                                 coachMessage.innerHTML = `<div class="coach-insights">${responseText}</div>`;
                             }
-                            
+
                             coachMessage.style.color = 'black';
                             coachMessage.style.backgroundColor = 'white';
-                            
+
                             // Make sure the read aloud buttons are visible
                             const readGuidanceButton = document.getElementById('read-guidance');
                             const stopGuidanceButton = document.getElementById('stop-guidance');
@@ -1317,11 +1324,11 @@
                                 readGuidanceButton.style.display = 'inline-block';
                                 stopGuidanceButton.style.display = 'none';
                             }
-                            
+
                             // Reset button
                             this.innerHTML = '<i class="bi bi-chat-dots"></i> Ask Mira Again';
                             this.disabled = false;
-                            
+
                             // Scroll to response
                             document.getElementById('coach-response').scrollIntoView({
                                 behavior: 'smooth',
@@ -1343,7 +1350,7 @@
                     });
             });
         }
-        
+
         // Set up the refresh analysis button
         const refreshButton = document.getElementById('refresh-analysis');
         if (refreshButton) {
@@ -1364,13 +1371,13 @@
                     const urlParts = window.location.pathname.split('/');
                     journalId = urlParts[urlParts.length - 1];
                 }
-                
+
                 console.log('Using journal ID for refresh:', journalId);
-                
+
                 // Show spinner in button
                 this.innerHTML = '<div class="d-flex align-items-center justify-content-center"><span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Refreshing...</div>';
                 this.disabled = true;
-                
+
                 // Call API to analyze entry
                 fetch(`/api/analyze-entry/${journalId}`)
                     .then(response => response.json())
@@ -1394,11 +1401,11 @@
                     });
             });
         }
-        
+
         // Set up text-to-speech functionality
         setupTextToSpeech();
     });
-    
+
     // Text-to-speech functionality
     function setupTextToSpeech() {
         // Check if browser supports speech synthesis
@@ -1412,21 +1419,21 @@
             });
             return;
         }
-        
+
         // Variables to keep track of the current speech state
         let speechSynthesis = window.speechSynthesis;
         let speaking = false;
         let currentUtterance = null;
-        
+
         // Function to get the best voice - defined at this scope to be accessible to onvoiceschanged
         function getBestVoice() {
             const voices = speechSynthesis.getVoices();
-            
+
             // No voices available
             if (!voices || voices.length === 0) {
                 return null;
             }
-            
+
             // Premium quality voices first (typically more natural sounding)
             const highQualityVoices = [
                 // macOS/iOS voices (very natural sounding)
@@ -1441,17 +1448,17 @@
                 // Amazon Polly voices (if available in browser)
                 "Joanna", "Ivy", "Kendra", "Kimberly", "Salli", "Matthew", "Brian"
             ];
-            
+
             // Log available voices for debugging
             console.log("Speech synthesis voices loaded. Available voices:", voices.length);
             console.log("Available voices:");
             voices.forEach((voice, index) => {
                 console.log(`${index + 1}. ${voice.name} (${voice.lang})${voice.default ? ' - DEFAULT' : ''}`);
             });
-            
+
             // Try to identify the selected voice
             let selectedVoice = null;
-            
+
             // Try to find high-quality English voices first
             for (const voiceName of highQualityVoices) {
                 const foundVoice = voices.find(v => 
@@ -1462,7 +1469,7 @@
                     return foundVoice;
                 }
             }
-            
+
             // If no specific high-quality voice is found, try by more general criteria
             // First, try to find any premium/enhanced/neural voice for English
             const premiumVoice = voices.find(voice => 
@@ -1472,11 +1479,11 @@
                  voice.name.toLowerCase().includes('natural')) &&
                 (voice.lang.startsWith('en-'))
             );
-            
+
             if (premiumVoice) {
                 return premiumVoice;
             }
-            
+
             // Next, try to find any female English voice
             const femaleVoice = voices.find(voice => 
                 (voice.name.toLowerCase().includes('female') || 
@@ -1488,51 +1495,51 @@
                  voice.name.toLowerCase().includes('moira')) &&
                 (voice.lang.startsWith('en-'))
             );
-            
+
             if (femaleVoice) {
                 return femaleVoice;
             }
-            
+
             // Fall back to any English voice
             const englishVoice = voices.find(voice => voice.lang.startsWith('en-'));
             if (englishVoice) {
                 return englishVoice;
             }
-            
+
             // Fall back to the default voice
             return voices[0];
         }
-        
+
         // Set up speech for the main analysis
         const readAnalysisButton = document.getElementById('read-analysis');
         const stopAnalysisButton = document.getElementById('stop-reading');
-        
+
         if (readAnalysisButton && stopAnalysisButton) {
             // Get the content to read
             const analysisContent = document.querySelector('.coach-insights');
-            
+
             readAnalysisButton.addEventListener('click', function() {
                 if (speaking) {
                     // If something else is already being read, stop it first
                     speechSynthesis.cancel();
                     resetAllSpeechButtons();
                 }
-                
+
                 // Start reading the analysis
                 if (analysisContent) {
                     speakText(analysisContent.textContent);
-                    
+
                     // Update UI
                     readAnalysisButton.style.display = 'none';
                     stopAnalysisButton.style.display = 'inline-block';
                     speaking = true;
                 }
             });
-            
+
             stopAnalysisButton.addEventListener('click', function() {
                 // Stop reading
                 speechSynthesis.cancel();
-                
+
                 // Update UI
                 stopAnalysisButton.style.display = 'none';
                 readAnalysisButton.style.display = 'inline-block';
@@ -1540,11 +1547,11 @@
                 currentUtterance = null;
             });
         }
-        
+
         // Set up speech for the personalized guidance
         const readGuidanceButton = document.getElementById('read-guidance');
         const stopGuidanceButton = document.getElementById('stop-guidance');
-        
+
         if (readGuidanceButton && stopGuidanceButton) {
             readGuidanceButton.addEventListener('click', function() {
                 if (speaking) {
@@ -1552,20 +1559,20 @@
                     speechSynthesis.cancel();
                     resetAllSpeechButtons();
                 }
-                
+
                 // Get the content to read
                 const guidanceContent = document.getElementById('coach-message');
-                
+
                 if (guidanceContent) {
                     // For structured data, we want to combine all the text in a logical order
                     let textToRead = '';
                     const structuredData = guidanceContent.querySelector('.structured-insights');
-                    
+
                     if (structuredData) {
                         // Get intro
                         const intro = structuredData.querySelector('.intro');
                         if (intro) textToRead += intro.textContent + ' ';
-                        
+
                         // Get thought patterns
                         const patterns = structuredData.querySelector('.distortions');
                         if (patterns) {
@@ -1575,7 +1582,7 @@
                                 textToRead += item.textContent + '. ';
                             });
                         }
-                        
+
                         // Get strategies
                         const strategies = structuredData.querySelector('.strategies');
                         if (strategies) {
@@ -1585,13 +1592,13 @@
                                 const title = item.querySelector('.card-title');
                                 const description = item.querySelector('p');
                                 const actionStep = item.querySelector('.action-step');
-                                
+
                                 if (title) textToRead += title.textContent + ': ';
                                 if (description) textToRead += description.textContent + ' ';
                                 if (actionStep) textToRead += actionStep.textContent + '. ';
                             });
                         }
-                        
+
                         // Get reflection prompt
                         const reflectionPrompt = structuredData.querySelector('.reflection-prompt');
                         if (reflectionPrompt) {
@@ -1599,11 +1606,11 @@
                             const promptText = reflectionPrompt.querySelector('p');
                             if (promptText) textToRead += promptText.textContent + '. ';
                         }
-                        
+
                         // Get outro
                         const outro = structuredData.querySelector('.outro');
                         if (outro) textToRead += outro.textContent + ' ';
-                        
+
                         // Add signature if not present
                         if (!textToRead.includes('Warmly') && !textToRead.includes('Coach Mira')) {
                             textToRead += 'Warmly, Coach Mira';
@@ -1612,20 +1619,20 @@
                         // Use the entire content for legacy responses
                         textToRead = guidanceContent.textContent;
                     }
-                    
+
                     speakText(textToRead);
-                    
+
                     // Update UI
                     readGuidanceButton.style.display = 'none';
                     stopGuidanceButton.style.display = 'inline-block';
                     speaking = true;
                 }
             });
-            
+
             stopGuidanceButton.addEventListener('click', function() {
                 // Stop reading
                 speechSynthesis.cancel();
-                
+
                 // Update UI
                 stopGuidanceButton.style.display = 'none';
                 readGuidanceButton.style.display = 'inline-block';
@@ -1633,7 +1640,7 @@
                 currentUtterance = null;
             });
         }
-        
+
         // Function to reset all speech buttons to their initial state
         function resetAllSpeechButtons() {
             // Reset analysis buttons
@@ -1641,33 +1648,33 @@
                 readAnalysisButton.style.display = 'inline-block';
                 stopAnalysisButton.style.display = 'none';
             }
-            
+
             // Reset guidance buttons
             if (readGuidanceButton && stopGuidanceButton) {
                 readGuidanceButton.style.display = 'inline-block';
                 stopGuidanceButton.style.display = 'none';
             }
-            
+
             speaking = false;
             currentUtterance = null;
         }
-        
+
         // Function to speak text with good settings for reading coaching content
         function speakText(text) {
             // Clean the text - remove extra whitespace and HTML tags
             text = text.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
-            
+
             // Advanced text preprocessing for more natural sounding speech
-            
+
             // Add explicit speech breaks using SSML-like patterns for better naturalness
             // We'll use commas as the natural break points in speech synthesis
-            
+
             // Step 1: Process emphasized text and quotes with appropriate pauses and intonation
             text = text
                 .replace(/\"([^\"]+)\"/g, (match, p1) => '. . "' + p1 + '". . ') // Add longer pauses around quotes with double break
                 .replace(/\*([^\*]+)\*/g, (match, p1) => ' ! ' + p1.toUpperCase() + ' ! ') // Capitalize and emphasize *text*
                 .replace(/\b(important|remember|note)\b/gi, (match) => '. . ' + match.toUpperCase() + '. . '); // Emphasize key words
-                
+
             // Step 2: Improve sentence and phrase boundaries with strategic pauses
             text = text
                 .replace(/\.\s+/g, '. . . ') // Add a longer pause after periods (end of sentences)
@@ -1677,40 +1684,40 @@
                 .replace(/;\s+/g, '; , ')    // Add a medium pause after semicolons
                 .replace(/\s-\s/g, ' , - , ') // Add pauses around dashes used as breaks
                 .replace(/(\.\.\.)(\s|$)/g, '. . . $2'); // Make ellipses more distinct
-                
+
             // Step 3: Make commas produce actual pauses
             text = text
                 .replace(/,\s+/g, ', ') // Ensure proper pause after commas
                 .replace(/,/g, ' , ');   // Turn all commas into pauses with spaces
-                
+
             // Step 4: Handle lists and structured content for better readability
             text = text
                 .replace(/(\d+\.\s+|\-\s+|\•\s+)/g, ' . . $1 ') // Add pause before list items
                 .replace(/(Step \d+):/g, ' . . $1 , ') // Add emphasis to step numbers
-                .replace(/\b(First|Second|Third|Fourth|Fifth|Finally)\b/g, ' . . $1 , '); // Add pause before sequence markers
-            
+                .replace(/\b(First|Second|Third|Fourth|Fifth|Finally)\b/g, ' . . $1 , ') // Add pause before sequence markers
+
             // Create utterance and configure it for a more natural sound
             const utterance = new SpeechSynthesisUtterance(text);
-            
+
             // Voice quality improvement settings
             utterance.rate = 0.82;    // Slightly slower for better comprehension
             utterance.pitch = 1.05;   // Slight pitch adjustment for more warmth
             utterance.volume = 1.0;   // Full volume
-            
+
             // Advanced settings to improve naturalness (where supported)
             try {
                 // Try to apply SSML-inspired enhancements for supported browsers
                 // These are non-standard but work in some browsers
-                
+
                 // @ts-ignore: Property may not exist on type SpeechSynthesisUtterance
                 if (typeof utterance.voiceURI !== 'undefined') {
                     // Try to use a higher quality voice URI
                     utterance.voiceURI = 'premium';
                 }
-                
+
                 // Chrome and Edge can sometimes benefit from these Speech Synthesis properties
                 // Access non-standard properties safely
-                
+
                 // Some browsers support pitch contour for more expressive speech
                 if (typeof utterance.pitchContour !== 'undefined') {
                     utterance.pitchContour = [
@@ -1720,7 +1727,7 @@
                         [1, -1]     // End slightly lower
                     ];
                 }
-                
+
                 // Some Microsoft Edge versions support these
                 try {
                     // Access non-standard properties only available in some browsers
@@ -1734,7 +1741,7 @@
                 } catch (e) {
                     // Ignore error - this property doesn't exist on this browser
                 }
-                
+
                 // Try to influence the conversation style (Microsoft Edge)
                 try {
                     // Access non-standard properties only available in Edge
@@ -1747,46 +1754,46 @@
             } catch (e) {
                 console.log('Advanced speech settings not supported:', e);
             }
-            
+
             // Use the best available voice from our prioritized list
             const bestVoice = getBestVoice();
             if (bestVoice) {
                 utterance.voice = bestVoice;
                 console.log('Using voice: ' + bestVoice.name);
             }
-            
+
             // Handle the end of speech
             utterance.onend = function() {
                 speaking = false;
                 resetAllSpeechButtons();
                 console.log('Speech completed');
             };
-            
+
             // Handle errors
             utterance.onerror = function(event) {
                 console.error('Speech synthesis error:', event.error);
                 speaking = false;
                 resetAllSpeechButtons();
             };
-            
+
             // Start speaking
             currentUtterance = utterance;
             speechSynthesis.speak(utterance);
-            
+
             // Chrome has a bug where it stops speaking after ~15 seconds
             // This is a workaround to keep it going
             const resumeTimer = setInterval(function() {
                 if (speaking && speechSynthesis.paused) {
                     speechSynthesis.resume();
                 }
-                
+
                 // Clear the interval when speech is done
                 if (!speaking) {
                     clearInterval(resumeTimer);
                 }
             }, 5000);
         }
-        
+
         // Handle page visibility changes to prevent speech continuing when the user navigates away
         document.addEventListener('visibilitychange', function() {
             if (document.visibilityState !== 'visible' && speaking) {
@@ -1794,19 +1801,19 @@
                 resetAllSpeechButtons();
             }
         });
-        
+
         // Load voices when they are available (needed for some browsers)
         speechSynthesis.onvoiceschanged = function() {
             const voices = speechSynthesis.getVoices();
             console.log('Speech synthesis voices loaded. Available voices:', voices.length);
-            
+
             // Log the available voices for debugging
             if (voices.length > 0) {
                 console.log('Available voices:');
                 voices.forEach((voice, index) => {
                     console.log(`${index + 1}. ${voice.name} (${voice.lang})${voice.default ? ' - DEFAULT' : ''}`);
                 });
-                
+
                 // Show which voice would be selected by our algorithm
                 const selectedVoice = getBestVoice();
                 if (selectedVoice) {
@@ -1814,34 +1821,34 @@
                 }
             }
         };
-        
+
         // Initialize voices
         speechSynthesis.getVoices();
     }
-    
+
     // TTS function for Mira's narrative response
     function playMiraNarrativeTTS(button) {
         // Get the narrative response text
         const text = button.closest('.d-flex').querySelector('.mb-0').textContent.trim();
         const audio = document.getElementById('serverAudio');
-        
+
         // Get the selected voice from our settings (using OpenAI voices)
         const selectedVoice = getVoiceSetting('analysis');
-        
+
         // Show loading state
         button.disabled = true;
         button.innerHTML = '<i class="bi bi-hourglass-split"></i>';
-        
+
         // Reset audio
         audio.pause();
         audio.src = '';
-        
+
         // Prepare request data
         const requestData = {
             text: text,
             voice: selectedVoice
         };
-        
+
         // Display error message with more detail
         function displayErrorMessage(message) {
             // Create error container if it doesn't exist
@@ -1853,16 +1860,16 @@
                 errorContainer.style.fontSize = '0.9rem';
                 audio.parentNode.insertBefore(errorContainer, audio.nextSibling);
             }
-            
+
             errorContainer.innerHTML = `<i class="bi bi-exclamation-triangle"></i> ${message}`;
             errorContainer.style.display = 'block';
-            
+
             // Auto-hide after 10 seconds
             setTimeout(() => {
                 errorContainer.style.display = 'none';
             }, 10000);
         }
-        
+
         // Set a timeout to prevent indefinite loading
         const timeoutId = setTimeout(() => {
             // If it's been more than 15 seconds, abort and reset
@@ -1873,7 +1880,7 @@
                 displayErrorMessage('Voice generation timed out. Please try again or select a different voice.');
             }
         }, 15000);
-        
+
         // Request TTS using the OpenAI TTS endpoint
         fetch('/api/openai-tts', {
             method: 'POST',
@@ -1885,7 +1892,7 @@
         .then(response => {
             // Clear the timeout since we got a response
             clearTimeout(timeoutId);
-            
+
             if (!response.ok) {
                 return response.json().then(data => {
                     // Get specific error message from the server if available
@@ -1900,36 +1907,36 @@
         })
         .then(data => {
             console.log("OpenAI TTS response:", data);
-            
+
             // Hide any previous error message
             const errorContainer = document.getElementById('tts-error-message');
             if (errorContainer) {
                 errorContainer.style.display = 'none';
             }
-            
+
             // Set the audio source to the URL returned by the server
             audio.src = data.audio_url;
             audio.style.display = 'block';
-            
+
             // Reset button state
             button.disabled = false;
             button.innerHTML = '<i class="bi bi-volume-up"></i>';
-            
+
             // Play the audio
             audio.play();
         })
         .catch(error => {
             // Clear the timeout since we got a response (error)
             clearTimeout(timeoutId);
-            
+
             console.error('Error generating speech:', error);
             // Reset button state
             button.disabled = false;
             button.innerHTML = '<i class="bi bi-volume-up"></i>';
-            
+
             // Show specific error message based on the error
             let errorMessage = 'Sorry, there was a problem generating the audio.';
-            
+
             if (error.message.includes('API key')) {
                 errorMessage = 'Voice service configuration issue. Please try again later or contact support.';
             } else if (error.message.includes('rate limit')) {
@@ -1939,34 +1946,34 @@
             } else if (error.message.includes('timed out')) {
                 errorMessage = 'Voice generation timed out. Please try again or select a different voice.';
             }
-            
+
             displayErrorMessage(errorMessage);
         });
     }
-    
+
     // TTS function for Mira's reflection prompt
     function playMiraReflectionTTS(button) {
         // Get the reflection prompt text
         const text = button.closest('.d-flex').querySelector('.reflection-prompt').textContent.trim();
         const audio = document.getElementById('serverAudio');
-        
+
         // Get the selected voice from our settings
         const selectedVoice = getVoiceSetting('analysis');
-        
+
         // Show loading state
         button.disabled = true;
         button.innerHTML = '<i class="bi bi-hourglass-split"></i>';
-        
+
         // Reset audio
         audio.pause();
         audio.src = '';
-        
+
         // Prepare request data
         const requestData = {
             text: text,
             voice: selectedVoice
         };
-        
+
         // Display error message with more detail
         function displayErrorMessage(message) {
             // Create error container if it doesn't exist
@@ -1978,16 +1985,16 @@
                 errorContainer.style.fontSize = '0.9rem';
                 audio.parentNode.insertBefore(errorContainer, audio.nextSibling);
             }
-            
+
             errorContainer.innerHTML = `<i class="bi bi-exclamation-triangle"></i> ${message}`;
             errorContainer.style.display = 'block';
-            
+
             // Auto-hide after 10 seconds
             setTimeout(() => {
                 errorContainer.style.display = 'none';
             }, 10000);
         }
-        
+
         // Set a timeout to prevent indefinite loading
         const timeoutId = setTimeout(() => {
             // If it's been more than 15 seconds, abort and reset
@@ -1998,7 +2005,7 @@
                 displayErrorMessage('Voice generation timed out. Please try again or select a different voice.');
             }
         }, 15000);
-        
+
         // Request TTS using the OpenAI TTS endpoint
         fetch('/api/openai-tts', {
             method: 'POST',
@@ -2010,7 +2017,7 @@
         .then(response => {
             // Clear the timeout since we got a response
             clearTimeout(timeoutId);
-            
+
             if (!response.ok) {
                 return response.json().then(data => {
                     // Get specific error message from the server if available
@@ -2025,36 +2032,36 @@
         })
         .then(data => {
             console.log("OpenAI TTS response:", data);
-            
+
             // Hide any previous error message
             const errorContainer = document.getElementById('tts-error-message');
             if (errorContainer) {
                 errorContainer.style.display = 'none';
             }
-            
+
             // Set the audio source to the URL returned by the server
             audio.src = data.audio_url;
             audio.style.display = 'block';
-            
+
             // Reset button state
             button.disabled = false;
             button.innerHTML = '<i class="bi bi-volume-up"></i>';
-            
+
             // Play the audio
             audio.play();
         })
         .catch(error => {
             // Clear the timeout since we got a response (error)
             clearTimeout(timeoutId);
-            
+
             console.error('Error generating speech:', error);
             // Reset button state
             button.disabled = false;
             button.innerHTML = '<i class="bi bi-volume-up"></i>';
-            
+
             // Show specific error message based on the error
             let errorMessage = 'Sorry, there was a problem generating the audio.';
-            
+
             if (error.message.includes('API key')) {
                 errorMessage = 'Voice service configuration issue. Please try again later or contact support.';
             } else if (error.message.includes('rate limit')) {
@@ -2064,34 +2071,34 @@
             } else if (error.message.includes('timed out')) {
                 errorMessage = 'Voice generation timed out. Please try again or select a different voice.';
             }
-            
+
             displayErrorMessage(errorMessage);
         });
     }
-    
+
     // TTS function for Mira's followup message
     function playMiraFollowupTTS(button) {
         // Get the followup text
         const text = button.closest('.d-flex').querySelector('.mb-0').textContent.trim();
         const audio = document.getElementById('serverAudio');
-        
+
         // Get the selected voice from our settings
         const selectedVoice = getVoiceSetting('analysis');
-        
+
         // Show loading state
         button.disabled = true;
         button.innerHTML = '<i class="bi bi-hourglass-split"></i>';
-        
+
         // Reset audio
         audio.pause();
         audio.src = '';
-        
+
         // Prepare request data
         const requestData = {
             text: text,
             voice: selectedVoice
         };
-        
+
         // Display error message with more detail
         function displayErrorMessage(message) {
             // Create error container if it doesn't exist
@@ -2103,16 +2110,16 @@
                 errorContainer.style.fontSize = '0.9rem';
                 audio.parentNode.insertBefore(errorContainer, audio.nextSibling);
             }
-            
+
             errorContainer.innerHTML = `<i class="bi bi-exclamation-triangle"></i> ${message}`;
             errorContainer.style.display = 'block';
-            
+
             // Auto-hide after 10 seconds
             setTimeout(() => {
                 errorContainer.style.display = 'none';
             }, 10000);
         }
-        
+
         // Set a timeout to prevent indefinite loading
         const timeoutId = setTimeout(() => {
             // If it's been more than 15 seconds, abort and reset
@@ -2123,7 +2130,7 @@
                 displayErrorMessage('Voice generation timed out. Please try again or select a different voice.');
             }
         }, 15000);
-        
+
         // Request TTS using the OpenAI TTS endpoint
         fetch('/api/openai-tts', {
             method: 'POST',
@@ -2135,7 +2142,7 @@
         .then(response => {
             // Clear the timeout since we got a response
             clearTimeout(timeoutId);
-            
+
             if (!response.ok) {
                 return response.json().then(data => {
                     // Get specific error message from the server if available
@@ -2150,36 +2157,36 @@
         })
         .then(data => {
             console.log("OpenAI TTS response:", data);
-            
+
             // Hide any previous error message
             const errorContainer = document.getElementById('tts-error-message');
             if (errorContainer) {
                 errorContainer.style.display = 'none';
             }
-            
+
             // Set the audio source to the URL returned by the server
             audio.src = data.audio_url;
             audio.style.display = 'block';
-            
+
             // Reset button state
             button.disabled = false;
             button.innerHTML = '<i class="bi bi-volume-up"></i>';
-            
+
             // Play the audio
             audio.play();
         })
         .catch(error => {
             // Clear the timeout since we got a response (error)
             clearTimeout(timeoutId);
-            
+
             console.error('Error generating speech:', error);
             // Reset button state
             button.disabled = false;
             button.innerHTML = '<i class="bi bi-volume-up"></i>';
-            
+
             // Show specific error message based on the error
             let errorMessage = 'Sorry, there was a problem generating the audio.';
-            
+
             if (error.message.includes('API key')) {
                 errorMessage = 'Voice service configuration issue. Please try again later or contact support.';
             } else if (error.message.includes('rate limit')) {
@@ -2189,37 +2196,37 @@
             } else if (error.message.includes('timed out')) {
                 errorMessage = 'Voice generation timed out. Please try again or select a different voice.';
             }
-            
+
             displayErrorMessage(errorMessage);
         });
     }
-    
+
     // Legacy Server-side TTS function for Analysis (keeping for compatibility)
     function playServerTTS() {
         // Get the coach response text
         const text = document.querySelector('.coach-insights').textContent.trim();
         const button = document.getElementById('server-tts-button') || document.querySelector('.mira-tts-button');
         const audio = document.getElementById('serverAudio');
-        
+
         // Get the selected voice from our settings (now using OpenAI voices)
         const selectedVoice = getVoiceSetting('analysis');
-        
+
         // Show loading state
         if (button) {
             button.disabled = true;
             button.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating neural audio...';
         }
-        
+
         // Reset audio
         audio.pause();
         audio.src = '';
-        
+
         // Prepare request data
         const requestData = {
             text: text,
             voice: selectedVoice
         };
-        
+
         // Display error message with more detail
         function displayErrorMessage(message) {
             // Create error container if it doesn't exist
@@ -2231,16 +2238,16 @@
                 errorContainer.style.fontSize = '0.9rem';
                 audio.parentNode.insertBefore(errorContainer, audio.nextSibling);
             }
-            
+
             errorContainer.innerHTML = `<i class="bi bi-exclamation-triangle"></i> ${message}`;
             errorContainer.style.display = 'block';
-            
+
             // Auto-hide after 10 seconds
             setTimeout(() => {
                 errorContainer.style.display = 'none';
             }, 10000);
         }
-        
+
         // Set a timeout to prevent indefinite loading
         const timeoutId = setTimeout(() => {
             // If it's been more than 15 seconds, abort and reset
@@ -2251,7 +2258,7 @@
                 displayErrorMessage('Voice generation timed out. Please try again or select a different voice.');
             }
         }, 15000);
-        
+
         // Request TTS using the OpenAI TTS endpoint
         fetch('/api/openai-tts', {
             method: 'POST',
@@ -2263,7 +2270,7 @@
         .then(response => {
             // Clear the timeout since we got a response
             clearTimeout(timeoutId);
-            
+
             if (!response.ok) {
                 return response.json().then(data => {
                     // Get specific error message from the server if available
@@ -2278,36 +2285,36 @@
         })
         .then(data => {
             console.log("OpenAI TTS response:", data);
-            
+
             // Hide any previous error message
             const errorContainer = document.getElementById('tts-error-message');
             if (errorContainer) {
                 errorContainer.style.display = 'none';
             }
-            
+
             // Set the audio source to the URL returned by the server
             audio.src = data.audio_url;
             audio.style.display = 'block';
-            
+
             // Reset button state
             button.disabled = false;
             button.innerHTML = '<i class="bi bi-cloud-check"></i> Listen to Mira\'s Response';
-            
+
             // Play the audio
             audio.play();
         })
         .catch(error => {
             // Clear the timeout since we got a response (error)
             clearTimeout(timeoutId);
-            
+
             console.error('Error generating speech:', error);
             // Reset button state
             button.disabled= false;
             button.innerHTML = '<i class="bi bi-cloud"></i> Listen to Mira\'s Response';
-            
+
             // Show specific error message based on the error
             let errorMessage = 'Sorry, there was a problem generating the audio.';
-            
+
             if (error.message.includes('API key')) {
                 errorMessage = 'Voice service configuration issue. Please try again later or contact support.';
             } else if (error.message.includes('rate limit')) {
@@ -2317,29 +2324,29 @@
             } else if (error.message.includes('timed out')) {
                 errorMessage = 'Voice generation timed out. Please try again or select a different voice.';
             }
-            
+
             displayErrorMessage(errorMessage);
         });
     }
-    
+
     // Server-side TTS function for Guidance
     function playServerTTSGuidance() {
         // Get the coach message element
         const coachMessage = document.getElementById('coach-message');
         const button = document.getElementById('server-tts-guidance-button');
         const audio = document.getElementById('serverGuidanceAudio');
-        
+
         // Extract text to read based on whether it's structured or not
         let textToRead = '';
         const structuredData = coachMessage.querySelector('.structured-insights');
-        
+
         if (structuredData) {
             // For structured data, we want to combine all the text in a logical order
-            
+
             // Get intro
             const intro = structuredData.querySelector('.intro');
             if (intro) textToRead += intro.textContent + ' ';
-            
+
             // Get thought patterns
             const patterns = structuredData.querySelector('.distortions');
             if (patterns) {
@@ -2349,7 +2356,7 @@
                     textToRead += item.textContent + '. ';
                 });
             }
-            
+
             // Get strategies
             const strategies = structuredData.querySelector('.strategies');
             if (strategies) {
@@ -2359,13 +2366,13 @@
                     const title = item.querySelector('.card-title');
                     const description = item.querySelector('p');
                     const actionStep = item.querySelector('.action-step');
-                    
+
                     if (title) textToRead += title.textContent + ': ';
                     if (description) textToRead += description.textContent + ' ';
                     if (actionStep) textToRead += actionStep.textContent + '. ';
                 });
             }
-            
+
             // Get reflection prompt
             const reflection = structuredData.querySelector('.reflection-prompt');
             if (reflection) {
@@ -2373,11 +2380,11 @@
                 const promptText = reflection.querySelector('p');
                 if (promptText) textToRead += promptText.textContent + '. ';
             }
-            
+
             // Get outro
             const outro = structuredData.querySelector('.outro');
             if (outro) textToRead += outro.textContent + ' ';
-            
+
             // Add signature if not present
             if (!textToRead.includes('Warmly') && !textToRead.includes('Coach Mira')) {
                 textToRead += 'Warmly, Coach Mira';
@@ -2386,24 +2393,24 @@
             // Use the entire content for legacy responses
             textToRead = coachMessage.textContent.trim();
         }
-        
+
         // Get the selected voice from our settings (now using OpenAI voices)
         const selectedVoice = getVoiceSetting('guidance');
-        
+
         // Show loading state
         button.disabled = true;
         button.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating neural audio...';
-        
+
         // Reset audio
         audio.pause();
         audio.src = '';
-        
+
         // Prepare request data
         const requestData = {
             text: textToRead,
             voice: selectedVoice
         };
-        
+
         // Display error message with more detail
         function displayErrorMessage(message) {
             // Create error container if it doesn't exist
@@ -2415,16 +2422,16 @@
                 errorContainer.style.fontSize = '0.9rem';
                 audio.parentNode.insertBefore(errorContainer, audio.nextSibling);
             }
-            
+
             errorContainer.innerHTML = `<i class="bi bi-exclamation-triangle"></i> ${message}`;
             errorContainer.style.display = 'block';
-            
+
             // Auto-hide after 10 seconds
             setTimeout(() => {
                 errorContainer.style.display = 'none';
             }, 10000);
         }
-        
+
         // Set a timeout to prevent indefinite loading
         const timeoutId = setTimeout(() => {
             // If it's been more than 15 seconds, abort and reset
@@ -2435,7 +2442,7 @@
                 displayErrorMessage('Voice generation timed out. Please try again or select a different voice.');
             }
         }, 15000);
-        
+
         // Request TTS using the OpenAI TTS endpoint
         fetch('/api/openai-tts', {
             method: 'POST',
@@ -2447,7 +2454,7 @@
         .then(response => {
             // Clear the timeout since we got a response
             clearTimeout(timeoutId);
-            
+
             if (!response.ok) {
                 return response.json().then(data => {
                     // Get specific error message from the server if available
@@ -2462,36 +2469,36 @@
         })
         .then(data => {
             console.log("OpenAI TTS guidance response:", data);
-            
+
             // Hide any previous error message
             const errorContainer = document.getElementById('tts-guidance-error-message');
             if (errorContainer) {
                 errorContainer.style.display = 'none';
             }
-            
+
             // Set the audio source to the URL returned by the server
             audio.src = data.audio_url;
             audio.style.display = 'block';
-            
+
             // Reset button state
             button.disabled = false;
             button.innerHTML = '<i class="bi bi-cloud-check"></i> Listen to Mira\'s Guidance';
-            
+
             // Play the audio
             audio.play();
         })
         .catch(error => {
             // Clear the timeout since we got a response (error)
             clearTimeout(timeoutId);
-            
+
             console.error('Error generating speech:', error);
             // Reset button state
             button.disabled = false;
             button.innerHTML = '<i class="bi bi-cloud"></i> Listen to Mira\'s Guidance';
-            
+
             // Show specific error message based on the error
             let errorMessage = 'Sorry, there was a problem generating the audio.';
-            
+
             if (error.message.includes('API key')) {
                 errorMessage = 'Voice service configuration issue. Please try again later or contact support.';
             } else if (error.message.includes('rate limit')) {
@@ -2501,22 +2508,22 @@
             } else if (error.message.includes('timed out')) {
                 errorMessage = 'Voice generation timed out. Please try again or select a different voice.';
             }
-            
+
             displayErrorMessage(errorMessage);
         });
     }
-    
+
     // Show badge earned modal if available
     document.addEventListener('DOMContentLoaded', function() {
         {% if earned_badge %}
         var badgeModal = new bootstrap.Modal(document.getElementById('badgeEarnedModal'));
         badgeModal.show();
         {% endif %}
-        
+
         // Setup Reflection Pause functionality
         setupReflectionPause();
     });
-    
+
     // Reflection Pause Functionality
     function setupReflectionPause() {
         // Get elements
@@ -2524,39 +2531,39 @@
         const followupContent = document.getElementById('followup-content');
         const continueButton = document.getElementById('continue-reflection');
         const userReflectionInput = document.getElementById('user-reflection');
-        
+
         // Exit if elements don't exist (not a reflective pause entry)
         if (!reflectionPause || !followupContent || !continueButton || !userReflectionInput) {
             console.log('Reflection pause elements not found, skipping setup');
             return;
         }
-        
+
         console.log('Setting up reflection pause functionality');
-        
+
         // Add click listener for continue button
         continueButton.addEventListener('click', function() {
             // Get user's reflection
             const userReflection = userReflectionInput.value.trim();
             {% if entry %}
             const entryId = '{{ entry.id }}';
-            
+
             // Save the reflection
             saveUserReflection(userReflection, entryId);
             {% else %}
             console.log('No entry ID available, reflection cannot be saved');
             {% endif %}
-            
+
             // Show the followup content with a fade in animation
             followupContent.classList.remove('d-none');
             followupContent.style.opacity = '0';
             followupContent.style.transition = 'opacity 0.5s ease';
-            
+
             // Use a timeout to ensure the transition is visible
             setTimeout(() => {
                 followupContent.style.opacity = '1';
             }, 50);
         });
-        
+
         // Also reveal content if user presses Enter in the textarea (but allow Shift+Enter for new line)
         userReflectionInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
@@ -2565,7 +2572,7 @@
             }
         });
     }
-    
+
     // Function to save user's reflection to the journal entry
     function saveUserReflection(reflection, entryId) {
         // Skip if reflection is empty or entry ID is not valid
@@ -2573,25 +2580,25 @@
             console.log('Empty reflection or missing entry ID, not saving');
             return;
         }
-        
+
         console.log('Saving reflection for entry', entryId);
-        
+
         // Get CSRF token - fallback to empty string if not available
         const csrfToken = '{{ csrf_token() }}' || '';
-        
+
         // Check if entry ID is valid
         if (isNaN(parseInt(entryId))) {
             console.error('Invalid entry ID format:', entryId);
             return;
         }
-        
+
         const payload = {
             entry_id: parseInt(entryId),
             reflection_text: reflection
         };
-        
+
         console.log('Sending reflection data:', payload);
-        
+
         // Make API request
         fetch('/journal/save-reflection', {
             method: 'POST',
@@ -2617,19 +2624,20 @@
         .catch(error => {
             console.error('Error saving reflection:', error);
             // Continue showing the content even if saving failed
-            
+
             // Attempt to save locally if API fails
             try {
                 // Store in localStorage as a fallback
                 const fallbackKey = `reflection_${entryId}`;
-                localStorage.setItem(fallbackKey, reflection);
+                localStorage.setItem(fallbackKey,```python
+ reflection);
                 console.log('Saved reflection to localStorage as fallback');
             } catch (storageError) {
                 console.error('Could not save to localStorage:', storageError);
             }
         });
     }
-    
+
     // Conversation-based journaling functionality
     function setupConversationalJournaling() {
         // Get elements from the page
@@ -2637,7 +2645,7 @@
         const reflectionTextArea = document.getElementById('reflection-text');
         const submitSecondReflectionBtn = document.getElementById('submit-second-reflection');
         const secondReflectionTextArea = document.getElementById('second-reflection-text');
-        
+
         // Only bind if the elements exist (they'll only exist on certain pages)
         if (submitReflectionBtn && reflectionTextArea) {
             console.log('Setting up initial reflection handler');
@@ -2645,47 +2653,47 @@
                 saveInitialReflection();
             });
         }
-        
+
         if (submitSecondReflectionBtn && secondReflectionTextArea) {
             console.log('Setting up second reflection handler');
             submitSecondReflectionBtn.addEventListener('click', function() {
                 saveSecondReflection();
             });
         }
-        
+
         function saveInitialReflection() {
             let reflectionText, entryId;
-            
+
             try {
                 // Add defensive checks for null or undefined elements
                 if (!reflectionTextArea) {
                     console.error('Reflection text area not found');
                     return;
                 }
-                
+
                 reflectionText = reflectionTextArea.value.trim();
                 if (!reflectionText) {
                     alert('Please enter your reflection before continuing.');
                     return;
                 }
-                
+
                 // Get the entry ID from the URL
                 const urlParts = window.location.pathname.split('/');
                 entryId = urlParts[urlParts.length - 1];
-                
+
                 if (!entryId || isNaN(parseInt(entryId))) {
                     console.error('Invalid entry ID format:', entryId);
                     alert('There was an error identifying this journal entry. Please try again or refresh the page.');
                     return;
                 }
-                
+
                 console.log('Saving initial reflection for entry:', entryId);
             } catch (err) {
                 console.error('Error preparing to save initial reflection:', err);
                 alert('There was a problem preparing to save your reflection. Please try again or refresh the page.');
                 return;
             }
-            
+
             // Send the reflection to the server
             fetch('/journal/save-initial-reflection', {
                 method: 'POST',
@@ -2706,25 +2714,25 @@
             })
             .then(data => {
                 console.log('Reflection saved successfully:', data);
-                
+
                 // Show the user's reflection
                 const reflectionCard = document.getElementById('reflection-card');
                 if (reflectionCard) {
                     reflectionCard.classList.remove('d-none');
                 }
-                
+
                 // Update the user reflection in the card
                 const userReflectionDiv = document.querySelector('.user-reflection');
                 if (userReflectionDiv) {
                     userReflectionDiv.innerHTML = reflectionText.replace(/\n/g, '<br>');
                 }
-                
+
                 // Show the followup card if it exists
                 const followupCard = document.getElementById('followup-card');
                 if (followupCard) {
                     followupCard.classList.remove('d-none');
                 }
-                
+
                 // If we have followup data from the response, update it
                 if (data.followup_insight) {
                     const followupInsightDiv = document.querySelector('.followup-insight');
@@ -2732,13 +2740,13 @@
                         followupInsightDiv.innerHTML = data.followup_insight;
                     }
                 }
-                
+
                 // Hide the reflection input
                 const reflectionInput = document.querySelector('.reflection-input');
                 if (reflectionInput) {
                     reflectionInput.classList.add('d-none');
                 }
-                
+
                 // Scroll to the followup card
                 if (followupCard) {
                     followupCard.scrollIntoView({ behavior: 'smooth' });
@@ -2749,42 +2757,42 @@
                 alert('There was a problem saving your reflection. Please try again.');
             });
         }
-        
+
         function saveSecondReflection() {
             let reflectionText, entryId;
-            
+
             try {
                 // Add defensive checks for null or undefined elements
                 if (!secondReflectionTextArea) {
                     console.error('Second reflection text area not found');
                     return;
                 }
-                
+
                 reflectionText = secondReflectionTextArea.value.trim();
                 if (!reflectionText) {
                     alert('Please enter your response before continuing.');
                     return;
                 }
-                
+
                 // Get the entry ID from the URL
                 const urlParts = window.location.pathname.split('/');
                 entryId = urlParts[urlParts.length - 1];
-                
+
                 if (!entryId || isNaN(parseInt(entryId))) {
                     console.error('Invalid entry ID format:', entryId);
                     alert('There was an error identifying this journal entry. Please try again or refresh the page.');
                     return;
                 }
-                
+
                 console.log('Saving second reflection for entry:', entryId);
-                
+
                 // Continue with the fetch request below
             } catch (err) {
                 console.error('Error preparing to save second reflection:', err);
                 alert('There was a problem preparing to save your reflection. Please try again or refresh the page.');
                 return;
             }
-            
+
             // Send the reflection to the server
             fetch('/journal/save-second-reflection', {
                 method: 'POST',
@@ -2805,25 +2813,25 @@
             })
             .then(data => {
                 console.log('Second reflection saved successfully:', data);
-                
+
                 // Show the second reflection card
                 const secondReflectionCard = document.getElementById('second-reflection-card');
                 if (secondReflectionCard) {
                     secondReflectionCard.classList.remove('d-none');
                 }
-                
+
                 // Update the second reflection in the card
                 const secondReflectionDiv = document.querySelector('.second-reflection');
                 if (secondReflectionDiv) {
                     secondReflectionDiv.innerHTML = reflectionText.replace(/\n/g, '<br>');
                 }
-                
+
                 // Show the closing card
                 const closingCard = document.getElementById('closing-card');
                 if (closingCard) {
                     closingCard.classList.remove('d-none');
                 }
-                
+
                 // If we have closing message data from the response, update it
                 if (data.closing_message) {
                     const closingMessageDiv = document.querySelector('.closing-message');
@@ -2831,13 +2839,13 @@
                         closingMessageDiv.innerHTML = data.closing_message;
                     }
                 }
-                
+
                 // Hide the second reflection input
                 const secondReflectionInput = document.querySelector('.second-reflection-input');
                 if (secondReflectionInput) {
                     secondReflectionInput.classList.add('d-none');
                 }
-                
+
                 // Scroll to the closing card
                 if (closingCard) {
                     closingCard.scrollIntoView({ behavior: 'smooth' });
@@ -2848,20 +2856,20 @@
                 alert('There was a problem saving your response. Please try again.');
             });
         }
-        
+
         // Helper function to get CSRF token from meta tag or hidden input
         function getCsrfToken() {
             const metaToken = document.querySelector('meta[name="csrf-token"]');
             if (metaToken) {
                 return metaToken.getAttribute('content');
             }
-            
+
             // If meta tag not found, try to get from hidden input (which is added by {{ form.hidden_tag() }})
             const csrfInput = document.querySelector('input[name="csrf_token"]');
             if (csrfInput) {
                 return csrfInput.value;
             }
-            
+
             // If neither is found, try to get from the form directly
             const form = document.querySelector('form');
             if (form) {
@@ -2872,23 +2880,23 @@
                     }
                 }
             }
-            
+
             // If still not found, return an empty string and log an error
             console.error('CSRF token not found in meta tag or hidden input');
             return '';
         }
     }
-    
+
     // Initialize conversation journaling when page loads
     document.addEventListener('DOMContentLoaded', function() {
         setupConversationalJournaling();
-        
+
         // Handle the reflective pause continue button
         const continueButton = document.getElementById('continue-reflection');
         const reflectionPause = document.getElementById('reflection-pause');
         const followupContent = document.getElementById('followup-content');
         const userReflection = document.getElementById('user-reflection');
-        
+
         if (continueButton && reflectionPause && followupContent) {
             continueButton.addEventListener('click', function() {
                 // Validate that the user has entered a reflection
@@ -2896,18 +2904,18 @@
                     alert('Please enter your reflection before continuing.');
                     return;
                 }
-                
+
                 // Hide the reflection pause and show the followup content
                 reflectionPause.classList.add('d-none');
                 followupContent.classList.remove('d-none');
-                
+
                 // Scroll to the followup content
                 followupContent.scrollIntoView({ behavior: 'smooth' });
-                
+
                 // Save the reflection to the journal if needed
                 // Note: This could be expanded to an AJAX call to save the reflection
                 console.log('User reflection:', userReflection.value);
-                
+
                 // Flash a success message
                 const successAlert = document.createElement('div');
                 successAlert.className = 'alert alert-success alert-dismissible fade show mt-4';
@@ -2916,7 +2924,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 `;
                 followupContent.parentNode.insertBefore(successAlert, followupContent);
-                
+
                 // Auto-dismiss the alert after 5 seconds
                 setTimeout(() => {
                     successAlert.classList.remove('show');
