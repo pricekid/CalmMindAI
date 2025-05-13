@@ -4,7 +4,7 @@ Provides a Blueprint to handle user authentication with enhanced CSRF protection
 """
 
 import logging
-from flask import Blueprint, render_template, redirect, request, flash, session, url_for
+from flask import Blueprint, render_template, redirect, request, flash, session
 from flask_login import login_user, current_user
 from models import User, db
 from csrf_utils import get_csrf_token
@@ -46,8 +46,8 @@ def stable_login():
                     # For debugging
                     logger.info(f"User password hash exists: {user.password_hash is not None}")
                     
-                    # Login successful if password check passes or if Replit Auth user without password
-                    if user.check_password(password) or (user.profile_image_url and user.password_hash is None):
+                    # Login successful if password check passes
+                    if user.check_password(password):
                         # Set permanent session before login
                         session.permanent = True
                         login_user(user, remember=remember)
@@ -81,16 +81,4 @@ def stable_login():
                           csrf_token=csrf_token, 
                           error=error)
 
-@stable_login_bp.route('/replit-auth')
-def replit_auth():
-    """Redirect to Replit Auth login URL"""
-    if current_user.is_authenticated:
-        return redirect('/dashboard')
-        
-    try:
-        from replit_auth import replit
-        # If already imported, just redirect to the login route
-        return redirect(url_for('replit_auth.login'))
-    except ImportError:
-        flash('Replit authentication is not available.', 'danger')
-        return redirect('/stable-login')
+# Replit Auth route removed as requested
