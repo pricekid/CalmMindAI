@@ -477,6 +477,22 @@ with app.app_context():
     from admin_routes import admin_bp
     app.register_blueprint(admin_bp)
     
+    # Register password reset functionality
+    try:
+        from password_reset import setup_password_reset
+        setup_password_reset(app)
+        app.logger.info("Password reset functionality enabled")
+    except ImportError:
+        app.logger.warning("Password reset module not available")
+        
+    # Register admin login-as-user functionality
+    try:
+        from admin_login_as_user import setup_routes
+        setup_routes(app)
+        app.logger.info("Admin login-as-user functionality enabled")
+    except ImportError:
+        app.logger.warning("Admin login-as-user module not available")
+    
     # Register the notification blueprint
     from notification_routes import notification_bp
     app.register_blueprint(notification_bp)

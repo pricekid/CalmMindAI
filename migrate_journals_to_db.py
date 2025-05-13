@@ -1,132 +1,133 @@
 """
-Script to migrate journal entries from JSON files to the database.
-This addresses the issue where users can't see their existing journal entries.
+Migrate journal entries from JSON files to database.
+This script reads all user journal entries from JSON files and adds them to the database.
 """
 import os
 import json
-from datetime import datetime
-import sys
+import datetime
 import logging
-
-# Set up logging
-logging.basicConfig(level=logging.INFO, 
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
-
-# Add the application directory to the Python path
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
-# Import Flask app components
+import sys
 from app import app, db
-from models import User, JournalEntry, CBTRecommendation
+from models import User, JournalEntry
 
-# Define constants
-DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
-JOURNALS_FILE = os.path.join(DATA_DIR, "journals.json")
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def ensure_data_directory():
-    """Ensure the data directory exists"""
-    if not os.path.exists(DATA_DIR):
-        os.makedirs(DATA_DIR, exist_ok=True)
-
-def load_journals_from_json():
-    """Load journal entries from the JSON file"""
-    ensure_data_directory()
+def find_json_journal_files():
+    """Find all user journal JSON files in the data directory"""
+    journal_files = []
+    journal_dir = "data/journals"
     
-    if not os.path.exists(JOURNALS_FILE):
-        logger.warning(f"Journal file {JOURNALS_FILE} does not exist. No journals to migrate.")
-        return []
+    if not os.path.exists(journal_dir):
+        logging.warning(f"Journal directory {journal_dir} does not exist")
+        return journal_files
+    
+    for filename in os.listdir(journal_dir):
+        if filename.startswith("user_") and filename.endswith("_journals.json"):
+            journal_files.append(os.path.join(journal_dir, filename))
+    
+    logging.info(f"Found {len(journal_files)} journal files")
+    return journal_files
+
+def migrate_journal_file(filepath):
+    """Migrate a single journal file to the database"""
+    # Extract user ID from filename (format: user_{user_id}_journals.json)
+    filename = os.path.basename(filepath)
+    user_id = filename.split("_")[1]
+    
+    logging.info(f"Processing journal file for user {user_id}")
+    
+    # Check if user exists in the database
+    user = User.query.get(user_id)
+    if not user:
+        logging.warning(f"User {user_id} not found in database, skipping")
+        return 0
     
     try:
-        with open(JOURNALS_FILE, 'r') as f:
-            return json.load(f)
-    except json.JSONDecodeError:
-        logger.error(f"Error decoding JSON from {JOURNALS_FILE}")
-        return []
-
-def migrate_journals_to_db():
-    """Migrate journal entries from JSON to the database"""
-    with app.app_context():
-        journals = load_journals_from_json()
+        # Load journal entries from file
+        with open(filepath, 'r') as f:
+            journal_entries = json.load(f)
         
-        if not journals:
-            logger.info("No journals found to migrate.")
-            return
+        logging.info(f"Found {len(journal_entries)} entries in file {filename}")
+        imported_count = 0
         
-        logger.info(f"Found {len(journals)} journals to migrate.")
-        
-        # Get existing journal entries by ID
-        existing_ids = {entry.id for entry in JournalEntry.query.all()}
-        
-        # Counter for statistics
-        added_count = 0
-        skipped_count = 0
-        error_count = 0
-        
-        for journal in journals:
-            try:
-                journal_id = journal.get('id')
-                
-                # Skip existing entries
-                if journal_id in existing_ids:
-                    logger.debug(f"Skipping existing journal ID {journal_id}")
-                    skipped_count += 1
-                    continue
-                
-                # Get the user (owner) of this journal
-                user_id = journal.get('user_id')
-                user = User.query.get(user_id)
-                
-                if not user:
-                    logger.warning(f"User {user_id} not found for journal {journal_id}, skipping.")
-                    skipped_count += 1
-                    continue
-                
-                # Create new journal entry from JSON data
-                entry = JournalEntry(
-                    id=journal_id,
-                    title=journal.get('title', 'Untitled Entry'),
-                    content=journal.get('content', ''),
-                    created_at=datetime.fromisoformat(journal.get('created_at')) if journal.get('created_at') else datetime.utcnow(),
-                    updated_at=datetime.fromisoformat(journal.get('updated_at')) if journal.get('updated_at') else datetime.utcnow(),
-                    is_analyzed=journal.get('is_analyzed', False),
-                    anxiety_level=journal.get('anxiety_level'),
-                    initial_insight=journal.get('gpt_response'),
-                    user_reflection=journal.get('user_reflection'),
-                    user_id=user_id
-                )
-                
-                # Add the entry
-                db.session.add(entry)
-                
-                # Add any CBT recommendations if available
-                cbt_patterns = journal.get('cbt_patterns', [])
-                for pattern in cbt_patterns:
-                    if not isinstance(pattern, dict):
-                        continue
-                        
-                    recommendation = CBTRecommendation(
-                        thought_pattern=pattern.get('pattern', 'Unknown Pattern'),
-                        recommendation=pattern.get('description', 'No description provided'),
-                        journal_entry=entry
-                    )
-                    db.session.add(recommendation)
-                
-                added_count += 1
-                
-                # Commit every 10 entries to avoid large transactions
-                if added_count % 10 == 0:
-                    db.session.commit()
-                    logger.info(f"Committed {added_count} entries so far")
-                
-            except Exception as e:
-                error_count += 1
-                logger.error(f"Error migrating journal {journal.get('id')}: {str(e)}")
-        
-        # Final commit for any remaining entries
+        # Process each entry
+        for entry in journal_entries:
+            # Skip if entry doesn't have basic required fields
+            if not all(key in entry for key in ['content', 'created_at']):
+                logging.warning(f"Entry missing required fields, skipping: {entry}")
+                continue
+            
+            # Check if this entry already exists in the database
+            # Use content and timestamp to identify duplicates
+            created_at = datetime.datetime.fromisoformat(entry.get('created_at'))
+            existing_entry = JournalEntry.query.filter_by(
+                user_id=user_id,
+                content=entry.get('content'),
+                created_at=created_at
+            ).first()
+            
+            if existing_entry:
+                logging.info(f"Entry already exists in database, skipping")
+                continue
+            
+            # Create a new journal entry
+            new_entry = JournalEntry(
+                # Use title from entry or generate a default title
+                title=entry.get('title', f"Journal Entry {datetime.datetime.now().strftime('%B %d, %Y')}"),
+                content=entry.get('content'),
+                user_id=user_id,
+                # Convert anxiety level (mood) if present
+                anxiety_level=entry.get('anxiety_level', 
+                                        mood_to_anxiety_level(entry.get('mood', 'neutral'))),
+                initial_insight=entry.get('feedback'),
+                is_analyzed=bool(entry.get('feedback')),
+                created_at=created_at,
+                updated_at=datetime.datetime.fromisoformat(entry.get('updated_at', entry.get('created_at')))
+            )
+            
+            db.session.add(new_entry)
+            imported_count += 1
+            
+        # Commit all changes
         db.session.commit()
+        logging.info(f"Imported {imported_count} entries for user {user_id}")
+        return imported_count
+    
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error migrating file {filepath}: {str(e)}")
+        return 0
+
+def mood_to_anxiety_level(mood):
+    """Convert text mood to numeric anxiety level (1-10)"""
+    mood_map = {
+        'very_anxious': 9,
+        'anxious': 7, 
+        'neutral': 5,
+        'calm': 3,
+        'great': 1
+    }
+    return mood_map.get(mood.lower(), 5)  # Default to 5 (neutral) if mood not found
+
+def migrate_all_journals():
+    """Migrate all journal files to the database"""
+    with app.app_context():
+        journal_files = find_json_journal_files()
+        total_imported = 0
         
-        logger.info(f"Migration complete. Added: {added_count}, Skipped: {skipped_count}, Errors: {error_count}")
-        
+        for filepath in journal_files:
+            imported_count = migrate_journal_file(filepath)
+            total_imported += imported_count
+            
+        logging.info(f"Migration complete. Total entries imported: {total_imported}")
+        return total_imported
+
 if __name__ == "__main__":
-    migrate_journals_to_db()
+    if len(sys.argv) > 1 and sys.argv[1] == '--run':
+        total_imported = migrate_all_journals()
+        print(f"Migration complete. Total entries imported: {total_imported}")
+    else:
+        print("This script will migrate journal entries from JSON files to the database.")
+        print("To run this script, use --run flag:")
+        print("python migrate_journals_to_db.py --run")
