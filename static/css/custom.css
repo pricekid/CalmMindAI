@@ -30,6 +30,32 @@ body {
     font-family: 'Poppins', 'Segoe UI', Roboto, sans-serif;
 }
 
+/* Light text on dark backgrounds */
+body.bg-dark h1,
+body.bg-dark h2,
+body.bg-dark h3,
+body.bg-dark h4,
+body.bg-dark h5,
+body.bg-dark h6,
+body.bg-dark .display-4,
+body.bg-dark .lead,
+body.bg-dark p,
+.bg-dark .text-content,
+.bg-dark .welcome-message,
+.bg-dark .feature-title,
+.bg-dark .cbt-title,
+.bg-dark .continue-title {
+    color: #ffffff !important;
+}
+
+/* Fix specifically mentioned elements */
+.key-features-title,
+.cbt-explanation-title,
+.continue-writing-title,
+.dear-teddy-title {
+    color: #ffffff !important;
+}
+
 /* Card Styling */
 .card {
     border-radius: 15px;
