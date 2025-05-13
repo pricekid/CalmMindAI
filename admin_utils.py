@@ -53,57 +53,148 @@ def ensure_data_files_exist():
 
 def get_admin_stats():
     """Get statistics for the admin dashboard"""
-    # Get real user count
-    total_users = User.query.count()
-    
-    # Get real journal count
-    total_journals = JournalEntry.query.count()
-    
-    # Mock daily active users (would normally come from session data)
-    daily_active = min(10, total_users)
-    
-    # Get journal entries per day (last 7 days)
-    current_date = datetime.utcnow()
-    seven_days_ago = current_date - timedelta(days=7)
-    
-    entries_by_day = []
-    for i in range(7):
-        day = seven_days_ago + timedelta(days=i)
-        day_start = datetime(day.year, day.month, day.day, 0, 0, 0)
-        day_end = datetime(day.year, day.month, day.day, 23, 59, 59)
+    try:
+        # Get real user count from users.json if db query fails
+        try:
+            total_users = User.query.count()
+        except:
+            with open('data/users.json', 'r') as f:
+                users_data = json.load(f)
+                total_users = len(users_data)
         
-        count = JournalEntry.query.filter(
-            JournalEntry.created_at >= day_start,
-            JournalEntry.created_at <= day_end
-        ).count()
+        # Get real journal count from journals.json if db query fails
+        try:
+            total_journals = JournalEntry.query.count()
+        except:
+            with open('data/journals.json', 'r') as f:
+                journals_data = json.load(f)
+                total_journals = len(journals_data)
         
-        entries_by_day.append({
-            'date': day.strftime('%Y-%m-%d'),
-            'count': count
-        })
+        # Calculate daily active users from journal entries in last 24h
+        current_date = datetime.utcnow()
+        yesterday = current_date - timedelta(days=1)
+        
+        try:
+            daily_active = JournalEntry.query.filter(
+                JournalEntry.created_at >= yesterday
+            ).distinct(JournalEntry.user_id).count()
+        except:
+            # Fallback to json data
+            with open('data/journals.json', 'r') as f:
+                journals_data = json.load(f)
+                active_users = set()
+                for entry in journals_data:
+                    entry_date = datetime.fromisoformat(entry['created_at'].replace('Z', '+00:00'))
+                    if entry_date >= yesterday:
+                        active_users.add(entry['user_id'])
+                daily_active = len(active_users)
+        
+        # Get journal entries per day (last 7 days)
+        seven_days_ago = current_date - timedelta(days=7)
+        entries_by_day = []
+        
+        try:
+            for i in range(7):
+                day = seven_days_ago + timedelta(days=i)
+                day_start = datetime(day.year, day.month, day.day, 0, 0, 0)
+                day_end = datetime(day.year, day.month, day.day, 23, 59, 59)
+                
+                count = JournalEntry.query.filter(
+                    JournalEntry.created_at >= day_start,
+                    JournalEntry.created_at <= day_end
+                ).count()
+                
+                entries_by_day.append({
+                    'date': day.strftime('%Y-%m-%d'),
+                    'count': count
+                })
+        except:
+            # Fallback to json data
+            with open('data/journals.json', 'r') as f:
+                journals_data = json.load(f)
+                daily_counts = {}
+                for entry in journals_data:
+                    entry_date = datetime.fromisoformat(entry['created_at'].replace('Z', '+00:00'))
+                    day_str = entry_date.strftime('%Y-%m-%d')
+                    if entry_date >= seven_days_ago:
+                        daily_counts[day_str] = daily_counts.get(day_str, 0) + 1
+                
+                for i in range(7):
+                    day = seven_days_ago + timedelta(days=i)
+                    day_str = day.strftime('%Y-%m-%d')
+                    entries_by_day.append({
+                        'date': day_str,
+                        'count': daily_counts.get(day_str, 0)
+                    })
+        
+        # Count users with notifications enabled
+        try:
+            sms_enabled_users = User.query.filter_by(sms_notifications_enabled=True).count()
+            email_enabled_users = User.query.filter_by(notifications_enabled=True).count()
+        except:
+            # Fallback to checking users.json
+            with open('data/users.json', 'r') as f:
+                users_data = json.load(f)
+                sms_enabled_users = sum(1 for user in users_data if user.get('sms_notifications_enabled', False))
+                email_enabled_users = sum(1 for user in users_data if user.get('notifications_enabled', False))
     
-    # Count users with SMS notifications enabled
-    sms_enabled_users = User.query.filter_by(sms_notifications_enabled=True).count()
-    
-    # Count users with email notifications enabled
-    email_enabled_users = User.query.filter_by(notifications_enabled=True).count()
-    
-    # Mock top anxiety themes (would normally use NLP or tags)
-    anxiety_themes = [
-        {'theme': 'Work Stress', 'count': 12},
-        {'theme': 'Social Anxiety', 'count': 8},
-        {'theme': 'Health Concerns', 'count': 6}
-    ]
-    
-    return {
-        'total_users': total_users,
-        'total_journals': total_journals,
-        'daily_active_users': daily_active,
-        'entries_by_day': entries_by_day,
-        'anxiety_themes': anxiety_themes,
-        'sms_enabled_users': sms_enabled_users,
-        'email_enabled_users': email_enabled_users
-    }
+    # Calculate actual anxiety themes from journal entries
+        try:
+            recommendations = CBTRecommendation.query.all()
+            themes = {}
+            for rec in recommendations:
+                if rec.thought_pattern:
+                    themes[rec.thought_pattern] = themes.get(rec.thought_pattern, 0) + 1
+            
+            anxiety_themes = [
+                {'theme': theme, 'count': count}
+                for theme, count in sorted(themes.items(), key=lambda x: x[1], reverse=True)[:3]
+            ]
+        except:
+            # Fallback to analyzing journals.json
+            with open('data/journals.json', 'r') as f:
+                journals_data = json.load(f)
+                themes = {}
+                for entry in journals_data:
+                    for rec in entry.get('recommendations', []):
+                        pattern = rec.get('thought_pattern')
+                        if pattern:
+                            themes[pattern] = themes.get(pattern, 0) + 1
+            
+            anxiety_themes = [
+                {'theme': theme, 'count': count}
+                for theme, count in sorted(themes.items(), key=lambda x: x[1], reverse=True)[:3]
+            ] if themes else [
+                {'theme': 'Work Stress', 'count': 0},
+                {'theme': 'Social Anxiety', 'count': 0},
+                {'theme': 'Health Concerns', 'count': 0}
+            ]
+        
+        return {
+            'total_users': total_users,
+            'total_journals': total_journals,
+            'daily_active_users': daily_active,
+            'entries_by_day': entries_by_day,
+            'anxiety_themes': anxiety_themes,
+            'sms_enabled_users': sms_enabled_users,
+            'email_enabled_users': email_enabled_users
+        }
+    except Exception as e:
+        logger.error(f"Error getting admin stats: {str(e)}")
+        # Return safe defaults
+        return {
+            'total_users': 0,
+            'total_journals': 0,
+            'daily_active_users': 0,
+            'entries_by_day': [{'date': datetime.utcnow().strftime('%Y-%m-%d'), 'count': 0}],
+            'anxiety_themes': [
+                {'theme': 'Work Stress', 'count': 0},
+                {'theme': 'Social Anxiety', 'count': 0},
+                {'theme': 'Health Concerns', 'count': 0}
+            ],
+            'sms_enabled_users': 0,
+            'email_enabled_users': 0
+        }
 
 def export_journal_entries():
     """Export journal entries to journals.json"""
