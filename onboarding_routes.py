@@ -3,9 +3,14 @@ Routes for the onboarding process for new users.
 """
 from flask import Blueprint, render_template, redirect, url_for, session, request, flash
 from flask_login import current_user
-from app import login_required
+from app import login_required, db
 from flask_wtf import FlaskForm
+from models import User, JournalEntry
 import random
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
 
 # Create Blueprint
 onboarding_bp = Blueprint('onboarding', __name__)
@@ -159,21 +164,17 @@ def generate_cbt_feedback(mood):
 
 def create_first_journal_entry(content, mood, feedback):
     """
-    Create the user's first journal entry.
+    Create the user's first journal entry in the database.
     
     Args:
         content: Journal content
         mood: User's mood
         feedback: CBT feedback
     """
-    import os
-    import json
     import datetime
-    from pathlib import Path
-    
-    # Make sure data directory exists
-    Path("data").mkdir(exist_ok=True)
-    Path("data/journals").mkdir(exist_ok=True)
+    import logging
+    from app import db
+    from models import JournalEntry
     
     # Get user ID
     user_id = current_user.id
@@ -182,81 +183,78 @@ def create_first_journal_entry(content, mood, feedback):
     if feedback is None:
         feedback = "Remember that your thoughts influence your emotions, and both can be examined and shifted. This journal is a great way to track patterns and develop greater self-awareness."
     
-    # Create journal entry
-    journal_entry = {
-        "id": 1,  # First entry
-        "user_id": user_id,
-        "content": content,
-        "mood": mood,
-        "feedback": feedback,
-        "created_at": datetime.datetime.now().isoformat(),
-        "updated_at": datetime.datetime.now().isoformat()
+    try:
+        # Create new journal entry in the database
+        journal_entry = JournalEntry(
+            title="My First Journal Entry",
+            content=content,
+            user_id=user_id,
+            anxiety_level=mood_to_anxiety_level(mood),
+            initial_insight=feedback,
+            is_analyzed=True
+        )
+        
+        # Add to database and commit
+        db.session.add(journal_entry)
+        db.session.commit()
+        
+        logging.info(f"Created first journal entry for user {user_id}")
+        
+        # Also update gamification stats (if available)
+        try:
+            from gamification import award_xp, XP_REWARDS
+            award_xp(user_id, XP_REWARDS['journal_entry_created'], "Created first journal entry during onboarding")
+        except (ImportError, KeyError) as e:
+            # If gamification module not available or key not found, skip
+            logging.error(f"Error awarding gamification XP: {str(e)}")
+            
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error creating first journal entry: {str(e)}")
+        
+def mood_to_anxiety_level(mood):
+    """
+    Convert mood string to anxiety level (1-10).
+    
+    Args:
+        mood: Mood string from onboarding (very_anxious, anxious, neutral, calm, great)
+        
+    Returns:
+        int: Anxiety level (1-10, where 1 is calm and 10 is very anxious)
+    """
+    mood_map = {
+        'very_anxious': 9,
+        'anxious': 7, 
+        'neutral': 5,
+        'calm': 3,
+        'great': 1
     }
     
-    # Get user's journal file
-    journal_file = f"data/journals/user_{user_id}_journals.json"
-    
-    # Load existing journals or create new list
-    journals = []
-    if os.path.exists(journal_file):
-        try:
-            with open(journal_file, "r") as f:
-                journals = json.load(f)
-                # Get the next ID
-                if journals:
-                    journal_entry["id"] = max(j.get("id", 0) for j in journals) + 1
-        except:
-            # If error reading file, start with empty list
-            journals = []
-    
-    # Add the new entry
-    journals.append(journal_entry)
-    
-    # Save updated journals
-    with open(journal_file, "w") as f:
-        json.dump(journals, f, indent=2)
-    
-    # Also update gamification stats (if available)
-    try:
-        from gamification import award_xp, XP_REWARDS
-        award_xp(user_id, XP_REWARDS['journal_entry_created'], "Created first journal entry during onboarding")
-    except (ImportError, KeyError) as e:
-        # If gamification module not available or key not found, skip
-        print(f"Error awarding gamification XP: {str(e)}")
-        pass
+    return mood_map.get(mood, 5)  # Default to 5 (neutral) if mood not found
 
 def mark_user_as_not_new():
     """
-    Mark the current user as not new.
+    Mark the current user as not new by setting welcome_message_shown to True.
     """
-    import os
-    import json
-    from pathlib import Path
+    import logging
+    from app import db
+    from models import User
     
     # Get user ID
     user_id = current_user.id
     
-    # Make sure data directory exists
-    Path("data").mkdir(exist_ok=True)
-    
-    # Load users
-    users_file = "data/users.json"
-    if os.path.exists(users_file):
-        try:
-            with open(users_file, "r") as f:
-                users = json.load(f)
-                
-            # Find the user and update is_new_user flag
-            for user in users:
-                if user.get("id") == user_id:
-                    user["is_new_user"] = False
-                    break
-            
-            # Save updated users
-            with open(users_file, "w") as f:
-                json.dump(users, f, indent=2)
-        except Exception as e:
-            print(f"Error updating user: {str(e)}")
+    try:
+        # Find the user in the database and update welcome_message_shown flag
+        user = User.query.get(user_id)
+        if user:
+            user.welcome_message_shown = True
+            db.session.commit()
+            logging.info(f"Marked user {user_id} as not new (welcome_message_shown = True)")
+        else:
+            logging.error(f"User {user_id} not found in database")
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error updating user welcome_message_shown flag: {str(e)}")
     
     # Clear onboarding data from session except last_feedback
     session.pop('onboarding_mood', None)
@@ -270,8 +268,7 @@ def mark_user_as_not_new():
         award_xp(user_id, XP_REWARDS['onboarding_complete'], "Completed onboarding process")
     except (ImportError, KeyError) as e:
         # If gamification module not available or key not found, skip
-        print(f"Error awarding gamification XP: {str(e)}")
-        pass
+        logging.error(f"Error awarding gamification XP: {str(e)}")
 
 def is_new_user(user_id):
     """
@@ -283,28 +280,27 @@ def is_new_user(user_id):
     Returns:
         bool: True if user is new, False otherwise
     """
-    import os
-    
-    # Check if user has a journals file
-    journal_file = f"data/journals/user_{user_id}_journals.json"
-    if os.path.exists(journal_file):
-        return False
+    try:
+        from models import JournalEntry, User
+        from app import db
+        import logging
         
-    # Check is_new_user flag in users.json
-    users_file = "data/users.json"
-    if os.path.exists(users_file):
-        try:
-            import json
-            with open(users_file, "r") as f:
-                users = json.load(f)
-                
-            # Find the user
-            for user in users:
-                if user.get("id") == user_id:
-                    return user.get("is_new_user", True)
-        except:
-            # If error reading file, assume user is new
-            pass
-    
-    # Default to True if we couldn't determine
-    return True
+        # Check if user has any journal entries in the database
+        journal_count = JournalEntry.query.filter_by(user_id=user_id).count()
+        if journal_count > 0:
+            logging.info(f"User {user_id} has {journal_count} journal entries")
+            return False
+            
+        # Check if welcome_message_shown flag is set on user
+        user = User.query.get(user_id)
+        if user and user.welcome_message_shown:
+            logging.info(f"User {user_id} has seen the welcome message")
+            return False
+            
+        logging.info(f"User {user_id} is new (no journal entries and hasn't seen welcome message)")
+        return True
+        
+    except Exception as e:
+        logging.error(f"Error checking if user is new: {str(e)}")
+        # Default to True if we couldn't determine
+        return True
