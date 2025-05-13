@@ -52,19 +52,23 @@ def login():
         if form.validate_on_submit():
             username = form.username.data
             password = form.password.data
+            logger.info(f"Admin login attempt with username: {username}")
             admin = None
             
             if username == "admin":
                 admin = Admin.get(1)
+                logger.info(f"Admin user object created: {admin is not None}")
                 
             if admin and admin.check_password(password):
+                logger.info("Admin password verification successful")
                 login_user(admin)
+                logger.info(f"Admin login successful for user: {username}")
                 next_page = request.args.get('next')
                 if next_page and next_page.startswith('/admin'):
                     return redirect(next_page)
                 return redirect(url_for('admin.dashboard'))
             else:
-                logger.warning('Failed admin login attempt - invalid password')
+                logger.warning(f'Failed admin login attempt - username: {username}')
                 flash('Invalid username or password', 'danger')
         else:
             logger.warning('Form validation failed')
