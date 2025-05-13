@@ -45,7 +45,12 @@ app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
     "pool_recycle": 300,
     "pool_pre_ping": True,
     "pool_timeout": 60,
-    "isolation_level": "READ COMMITTED"  # More forgiving isolation level for general web apps
+    "pool_size": 10,
+    "max_overflow": 20,
+    "isolation_level": "READ COMMITTED",  # More forgiving isolation level for general web apps
+    "connect_args": {
+        "connect_timeout": 10
+    }
 }
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
