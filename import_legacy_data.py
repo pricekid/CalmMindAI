@@ -158,16 +158,20 @@ def import_legacy_journals(id_mapping):
                         else:
                             created_at = datetime.utcnow()
                         
-                        # Create new entry
+                        # Create new entry with mapped field names
                         new_entry = JournalEntry(
                             user_id=new_user_id,
                             title=entry.get('title', ''),
                             content=entry.get('content', ''),
                             created_at=created_at,
                             anxiety_level=entry.get('anxiety_level'),
-                            analysis=entry.get('analysis', ''),
-                            reflection=entry.get('reflection', ''),
-                            user_reflection=entry.get('user_reflection', '')
+                            # Map old field names to new schema
+                            initial_insight=entry.get('analysis', ''),
+                            followup_insight=entry.get('reflection', ''),
+                            user_reflection=entry.get('user_reflection', ''),
+                            # Set reasonable defaults for new fields
+                            is_analyzed=True if entry.get('analysis') else False,
+                            conversation_complete=True if entry.get('reflection') else False
                         )
                         
                         db.session.add(new_entry)
@@ -175,11 +179,17 @@ def import_legacy_journals(id_mapping):
                         
                         # Create CBT recommendation if available
                         if 'thought_pattern' in entry and entry['thought_pattern']:
+                            # Combine old alternative thought and action step to match new schema
+                            recommendation_text = ""
+                            if entry.get('alternative_thought'):
+                                recommendation_text += f"Alternative thought: {entry.get('alternative_thought', '')}\n\n"
+                            if entry.get('action_step'):
+                                recommendation_text += f"Action step: {entry.get('action_step', '')}"
+                                
                             recommendation = CBTRecommendation(
                                 journal_entry_id=new_entry.id,
                                 thought_pattern=entry.get('thought_pattern', ''),
-                                alternative_thought=entry.get('alternative_thought', ''),
-                                action_step=entry.get('action_step', '')
+                                recommendation=recommendation_text or "Consider reframing this thought pattern."
                             )
                             db.session.add(recommendation)
                     
