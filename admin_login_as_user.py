@@ -3,6 +3,7 @@ Add functionality for administrators to log in as any user.
 This is useful for troubleshooting user issues and helping users access their accounts.
 """
 import logging
+import os
 from flask import Blueprint, redirect, url_for, flash, render_template, request, session
 from flask_login import login_user, current_user
 from app import app, db

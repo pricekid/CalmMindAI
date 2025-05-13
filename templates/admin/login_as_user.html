@@ -1,0 +1,40 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Login As User{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Login As User</h5>
+        </div>
+        <div class="card-body">
+          <div class="alert alert-warning">
+            <strong>Warning:</strong> This will log you in as the selected user. You will have full access to their account.
+            A banner will be shown at the top of the page to remind you that you're impersonating a user.
+          </div>
+          
+          <form method="POST" action="{{ url_for('admin_login_as_user.users_login_as') }}">
+            <div class="mb-3">
+              <label for="user_id" class="form-label">Select User</label>
+              <select name="user_id" id="user_id" class="form-select" required>
+                <option value="">-- Select a user --</option>
+                {% for user in users %}
+                <option value="{{ user.id }}">
+                  {{ user.username or user.email or user.id }} 
+                  {% if user.email %}({{ user.email }}){% endif %}
+                  - Created: {{ user.created_at.strftime('%Y-%m-%d') }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Login As Selected User</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
