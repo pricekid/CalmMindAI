@@ -60,8 +60,17 @@ def login():
                 if next_page and next_page.startswith('/admin'):
                     return redirect(next_page)
                 return redirect(url_for('admin.dashboard'))
-
-        flash('Invalid username or password', 'danger')
+            else:
+                app.logger.warning('Failed admin login attempt - invalid password')
+                flash('Invalid password', 'danger')
+        else:
+            app.logger.warning('Failed admin login attempt - invalid username')
+            flash('Invalid username', 'danger')
+    elif request.method == 'POST':
+        app.logger.warning('Form validation failed')
+        for field, errors in form.errors.items():
+            for error in errors:
+                flash(f'{field}: {error}', 'danger')
 
     return render_template('admin/basic_login.html', form=form)
 
