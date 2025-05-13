@@ -406,6 +406,14 @@ def login_required(f):
 from models import User
 from admin_models import Admin
 
+# Import emergency admin blueprint
+try:
+    from emergency_admin import emergency_admin_bp
+    has_emergency_admin = True
+except ImportError:
+    app.logger.warning("Emergency admin module not available")
+    has_emergency_admin = False
+
 @login_manager.user_loader
 def load_user(user_id):
     # Check if this is an admin user (user_id will be a string like "admin_1")
@@ -602,6 +610,12 @@ with app.app_context():
         app.logger.info("Onboarding blueprint registered successfully")
     except ImportError:
         app.logger.warning("Onboarding module not available")
+        
+    # Register the emergency admin blueprint
+    if has_emergency_admin:
+        app.register_blueprint(emergency_admin_bp)
+        csrf.exempt(emergency_admin_bp)
+        app.logger.info("Emergency admin blueprint registered with CSRF exemption")
     
     # Explicitly exempt specific routes from CSRF protection only if they exist
     # This prevents errors when certain blueprints aren't loaded
