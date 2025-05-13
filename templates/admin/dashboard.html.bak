@@ -22,7 +22,7 @@
                 <div class="d-flex justify-content-between align-items-start mb-3">
                     <div>
                         <h6 class="text-muted">Total Users</h6>
-                        <h2>{{ stats.total_users|default(1) }}</h2>
+                        <h2>{{ stats.total_users }}</h2>
                     </div>
                     <div class="bg-secondary rounded-circle p-3">
                         <i class="bi bi-people fs-3"></i>
@@ -31,7 +31,7 @@
                 <div class="d-flex justify-content-between align-items-start mb-3">
                     <div>
                         <h6 class="text-muted">Journal Entries</h6>
-                        <h2>{{ stats.total_journals|default(0) }}</h2>
+                        <h2>{{ stats.total_journals }}</h2>
                     </div>
                     <div class="bg-info rounded-circle p-3">
                         <i class="bi bi-journal-text fs-3"></i>
@@ -40,7 +40,7 @@
                 <div class="d-flex justify-content-between align-items-start mb-3">
                     <div>
                         <h6 class="text-muted">Daily Active Users</h6>
-                        <h2>{{ stats.daily_active_users|default(0) }}</h2>
+                        <h2>{{ stats.daily_active_users }}</h2>
                     </div>
                     <div class="bg-success rounded-circle p-3">
                         <i class="bi bi-person-check fs-3"></i>
@@ -49,7 +49,7 @@
                 <div class="d-flex justify-content-between align-items-start mb-3">
                     <div>
                         <h6 class="text-muted">SMS Notifications</h6>
-                        <h2>{{ stats.sms_enabled_users|default(0) }}</h2>
+                        <h2>{{ stats.sms_enabled_users }}</h2>
                         <small class="text-muted">users enabled</small>
                     </div>
                     <div class="bg-primary rounded-circle p-3">
@@ -59,7 +59,7 @@
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <h6 class="text-muted">Email Notifications</h6>
-                        <h2>{{ stats.email_enabled_users|default(1) }}</h2>
+                        <h2>{{ stats.email_enabled_users }}</h2>
                         <small class="text-muted">users enabled</small>
                     </div>
                     <div class="bg-success rounded-circle p-3">
@@ -92,27 +92,12 @@
             </div>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
-                    {% if stats.anxiety_themes and stats.anxiety_themes|length > 0 %}
-                        {% for theme in stats.anxiety_themes %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            {{ theme.theme }}
-                            <span class="badge bg-info rounded-pill">{{ theme.count }}</span>
-                        </li>
-                        {% endfor %}
-                    {% else %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Work Stress
-                            <span class="badge bg-info rounded-pill">3</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Social Anxiety
-                            <span class="badge bg-info rounded-pill">2</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Health Concerns
-                            <span class="badge bg-info rounded-pill">1</span>
-                        </li>
-                    {% endif %}
+                    {% for theme in stats.anxiety_themes %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ theme.theme }}
+                        <span class="badge bg-info rounded-pill">{{ theme.count }}</span>
+                    </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
@@ -164,8 +149,9 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Journal Activity Chart
-    const dates = ['2025-05-07', '2025-05-08', '2025-05-09', '2025-05-10', '2025-05-11', '2025-05-12', '2025-05-13'];
-    const counts = [3, 2, 4, 1, 5, 2, 3];
+    const journalData = {{ stats.entries_by_day | tojson }};
+    const dates = journalData.map(item => item.date);
+    const counts = journalData.map(item => item.count);
     
     const ctx = document.getElementById('journalActivityChart').getContext('2d');
     const journalChart = new Chart(ctx, {
