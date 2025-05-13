@@ -49,11 +49,13 @@ def login():
     form = AdminLoginForm()
 
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+        form = AdminLoginForm()
+        if form.validate_on_submit():
+            username = form.username.data
+            password = form.password.data
 
-        if username == "admin":
-            admin = Admin.get(1)
+            if username == "admin":
+                admin = Admin.get(1)
             if admin and admin.check_password(password):
                 login_user(admin)
                 next_page = request.args.get('next')
