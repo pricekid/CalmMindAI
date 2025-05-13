@@ -137,6 +137,24 @@ body.bg-dark p,
     color: #212529 !important;
 }
 
+/* Badge container styling for better contrast */
+.badge-container .card {
+    background-color: #ffffff !important;
+}
+
+.badge-container .card h6,
+.badge-container .card .text-muted,
+.badge-container .card small {
+    color: #212529 !important;
+    font-weight: 500;
+}
+
+/* Improve locked badges contrast */
+.locked-achievement small.text-muted {
+    color: #495057 !important;
+    font-weight: 500;
+}
+
 .card.bg-dark {
     color: #ffffff !important;
     background-color: #1f2937 !important; /* Slightly lighter dark for better contrast */
@@ -152,12 +170,22 @@ body.bg-dark p,
 
 /* Fix specific dashboard card text */
 .streak-fact-box,
-.anxiety-management-tools .card-text,
 .card .badge-earned,
 .card .level-name,
 .streak-card-text,
 .streak-fact,
 .streak-card * {
+    color: #212529 !important;
+    font-weight: 500;
+}
+
+/* Fix anxiety management tools text */
+.anxiety-management-tools .card {
+    background-color: #ffffff !important;
+}
+
+.anxiety-management-tools .card .card-title,
+.anxiety-management-tools .card .card-text {
     color: #212529 !important;
     font-weight: 500;
 }
@@ -185,11 +213,51 @@ body.bg-dark p,
 
 /* Fix muted text contrast */
 .text-muted {
-    color: #9ea7b3 !important;
+    color: #6c757d !important;
+    font-weight: 500;
 }
 
 .bg-dark .text-muted {
-    color: #bdc7d4 !important;
+    color: #d1d5db !important;
+    font-weight: 500;
+}
+
+/* Streak badge styling for better contrast */
+.streak-badge {
+    color: #212529 !important;
+    background-color: #ffffff !important;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Improve text contrast on icons in anxiety management tools */
+.text-info {
+    color: #0dcaf0 !important;
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.4);
+}
+
+/* Generic badge styling for better contrast */
+.badge {
+    font-weight: 600;
+    padding: 0.35em 0.65em;
+}
+
+.badge.bg-secondary {
+    background-color: #495057 !important;
+    color: #ffffff !important;
+}
+
+.badge.bg-info {
+    background-color: #0dcaf0 !important;
+    color: #212529 !important;
+    font-weight: 700;
+}
+
+/* Specific fixes for streak badges in dashboard */
+.card h6 {
+    color: #212529 !important; 
+    font-weight: 600;
 }
 
 /* Ensure text contrast */
