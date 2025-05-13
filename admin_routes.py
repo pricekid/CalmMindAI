@@ -48,9 +48,9 @@ def login():
 
     form = AdminLoginForm()
 
-    if form.validate_on_submit():
-        username = form.username.data
-        password = form.password.data
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
 
         if username == "admin":
             admin = Admin.get(1)
@@ -62,10 +62,10 @@ def login():
                 return redirect(url_for('admin.dashboard'))
             else:
                 logger.warning('Failed admin login attempt - invalid password')
-                flash('Invalid password', 'danger')
+                flash('Invalid username or password', 'danger')
         else:
             logger.warning('Failed admin login attempt - invalid username')
-            flash('Invalid username', 'danger')
+            flash('Invalid username or password', 'danger')
     elif request.method == 'POST':
         logger.warning('Form validation failed')
         for field, errors in form.errors.items():
