@@ -84,8 +84,8 @@
 
 <div class="row mt-5 mb-4">
     <div class="col-lg-8 mx-auto text-center">
-        <h2 class="mb-4 text-light">How Cognitive Behavioral Therapy Works</h2>
-        <p class="lead text-light">CBT is a proven therapeutic approach that helps you identify and challenge negative thought patterns that contribute to anxiety.</p>
+        <h2 class="mb-4 text-white fw-bold">How Cognitive Behavioral Therapy Works</h2>
+        <p class="lead text-white">CBT is a proven therapeutic approach that helps you identify and challenge negative thought patterns that contribute to anxiety.</p>
     </div>
 </div>
 
@@ -125,7 +125,9 @@
     {% if not current_user.is_authenticated %}
     <h3 class="mb-4">Ready to tell Teddy how you feel?</h3>
     <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-2">Get Started</a>
-    <a href="{{ url_for('login_routes.login') }}" class="btn btn-warm btn-lg">Login</a>
+    <a href="{{ url_for('replit_auth.login') }}" class="btn btn-warm btn-lg">
+        <i class="fas fa-code me-1"></i> Login with Replit
+    </a>
     {% else %}
     <h3 class="mb-4">Continue writing to Teddy</h3>
     <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg">Go to Dashboard</a>

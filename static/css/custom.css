@@ -35,7 +35,7 @@ body {
     color: #9eeaf9 !important; /* Brighter, higher contrast blue */
 }
 
-/* Ensure header text is visible on dark backgrounds */
+/* Ensure header text is visible on dark backgrounds with enhanced contrast */
 .welcome-header h1,
 .welcome-header h2,
 .welcome-header h3,
@@ -46,7 +46,8 @@ h1.display-4,
 .bg-dark p,
 .bg-dark .lead {
     color: #ffffff !important;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    font-weight: 500;
 }
 
 .bg-dark {
@@ -109,7 +110,8 @@ body.bg-dark p,
 
 .card.bg-light .card-text,
 .card.bg-light .card-title {
-    color: #212529 !important;
+    color: #1f2937 !important; /* Darker text on light background */
+    font-weight: 500;
 }
 
 /* Card text contrast fixes */
