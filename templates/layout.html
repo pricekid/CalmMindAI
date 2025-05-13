@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Dear Teddy{% endblock %}</title>
     <link rel="icon" href="{{ url_for('static', filename='images/teddy-logo.svg') }}" type="image/svg+xml">
-    
+
     <!-- PWA Support -->
     <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
     <meta name="theme-color" content="#1D4D4F">
@@ -13,7 +13,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Dear Teddy">
     <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/icon-192x192.png') }}">
-    
+
     <!-- Bootstrap 5 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <!-- Font Awesome Icons -->
@@ -138,7 +138,7 @@
                     <span class="ms-2 fs-5 d-inline-block" style="color: #A05C2C;">Dear Teddy</span>
                 </div>
                 <div class="col-md-4 mb-3 mb-md-0">
-                    <p class="mb-0">&copy; 2025 Dear Teddy | A journaling companion for anxiety, clarity, and calm</p>
+                    <p class="mb-0">&copy; 2025 Dear Teddy | journaling companion for anxiety, clarity, and calm</p>
                 </div>
                 <div class="col-md-4 mb-3 mb-md-0 text-md-end">
                     <a href="#" class="text-dark me-3"><i class="fas fa-envelope"></i></a>
@@ -172,7 +172,7 @@
     <!-- PWA Install Button -->
     <script src="{{ url_for('static', filename='js/install-button.js') }}"></script>
     {% block scripts %}{% endblock %}
-    
+
     <!-- PWA Installation Notification - Will appear only if PWA is not installed -->
     <div id="pwa-install-banner" style="display:none;" class="position-fixed bottom-0 start-0 end-0 p-3 bg-light text-dark border-top">
         <div class="container d-flex justify-content-between align-items-center">
