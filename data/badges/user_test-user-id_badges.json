@@ -1,0 +1,20 @@
+{
+  "earned_badges": [],
+  "earned_dates": {},
+  "current_streak": 0,
+  "longest_streak": 0,
+  "last_entry_date": null,
+  "total_xp": 45,
+  "xp_history": [
+    {
+      "amount": 15,
+      "reason": "Created first journal entry during onboarding",
+      "date": "2025-05-13 19:10:14"
+    },
+    {
+      "amount": 30,
+      "reason": "Completed onboarding process",
+      "date": "2025-05-13 19:10:15"
+    }
+  ]
+}

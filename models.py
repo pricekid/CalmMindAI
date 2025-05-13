@@ -28,6 +28,9 @@ class User(UserMixin, db.Model):
     phone_number = db.Column(db.String(20), nullable=True)
     sms_notifications_enabled = db.Column(db.Boolean, default=False)
     
+    # UI state flags
+    welcome_message_shown = db.Column(db.Boolean, default=False)
+    
     # Relationships
     journal_entries = db.relationship('JournalEntry', backref='author', lazy='dynamic')
     mood_logs = db.relationship('MoodLog', backref='user', lazy='dynamic')
