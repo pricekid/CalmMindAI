@@ -155,11 +155,21 @@ body.bg-dark p,
 .modal-body,
 .modal-title,
 .form-label,
-.lead,
-.display-4,
-h1, h2, h3, h4, h5, h6,
-.text-content {
+.lead:not(.bg-dark .lead),
+.display-4:not(.bg-dark .display-4),
+h1:not(.bg-dark h1), 
+h2:not(.bg-dark h2), 
+h3:not(.bg-dark h3), 
+h4:not(.bg-dark h4), 
+h5:not(.bg-dark h5), 
+h6:not(.bg-dark h6),
+.text-content:not(.bg-dark .text-content) {
     color: #212529 !important;
+}
+
+body.bg-dark .lead,
+.bg-dark .lead {
+    color: #ffffff !important;
 }
 
 /* Dark background text */
