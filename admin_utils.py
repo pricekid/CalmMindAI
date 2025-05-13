@@ -185,12 +185,39 @@ def get_admin_stats():
             # Get recommendations and count theme occurrences
             themes = {}
             
-            # Use a fresh session to avoid transaction issues
-            with db.create_scoped_session() as new_session:
-                recommendations = new_session.query(CBTRecommendation).all()
+            # Use the standard session with error handling
+            try:
+                # Use the standard existing session
+                recommendations = db.session.query(CBTRecommendation).all()
                 for rec in recommendations:
                     if rec.thought_pattern:
                         themes[rec.thought_pattern] = themes.get(rec.thought_pattern, 0) + 1
+                        
+                # If we've made it here, transaction is ok
+                logger.debug(f"Successfully retrieved {len(recommendations)} recommendations")
+            except Exception as query_error:
+                logger.error(f"Error querying recommendations: {query_error}")
+                # Rollback and reattempt with a simpler query
+                db.session.rollback()
+                
+                # Just get the top anxiety patterns directly with SQL
+                try:
+                    sql = """
+                        SELECT thought_pattern, COUNT(*) as count 
+                        FROM cbt_recommendation 
+                        WHERE thought_pattern IS NOT NULL 
+                        GROUP BY thought_pattern 
+                        ORDER BY count DESC 
+                        LIMIT 3
+                    """
+                    results = db.session.execute(sql).fetchall()
+                    for row in results:
+                        themes[row[0]] = row[1]
+                    logger.debug(f"Retrieved themes via direct SQL: {themes}")
+                except Exception as sql_e:
+                    logger.error(f"SQL fallback also failed: {sql_e}")
+                    # Let the outer exception handler set default themes
+                    raise
             
             anxiety_themes = [
                 {'theme': theme, 'count': count}
@@ -199,7 +226,7 @@ def get_admin_stats():
             logger.debug(f"Found anxiety themes: {anxiety_themes}")
         except Exception as e:
             logger.error(f"Database error calculating anxiety themes: {e}")
-            # Always use non-zero default values
+            # Always use non-zero default values 
             anxiety_themes = [
                 {'theme': 'Work Stress', 'count': 3},
                 {'theme': 'Social Anxiety', 'count': 2},
