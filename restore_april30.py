@@ -13,7 +13,7 @@ import uuid
 from datetime import datetime, time
 
 from app import app, db
-from models import User, JournalEntry
+from models import User, JournalEntry, CBTRecommendation
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
@@ -161,6 +161,26 @@ def delete_all_data():
         
         # Create backups before deletion
         try:
+            # Backup CBT recommendations
+            current_cbts = CBTRecommendation.query.all()
+            backup_data = []
+            for cbt in current_cbts:
+                cbt_dict = {c.name: getattr(cbt, c.name) for c in cbt.__table__.columns}
+                # Convert datetime objects to strings
+                for key, value in cbt_dict.items():
+                    if isinstance(value, datetime):
+                        cbt_dict[key] = value.isoformat()
+                    elif isinstance(value, time):
+                        cbt_dict[key] = value.isoformat()
+                backup_data.append(cbt_dict)
+            
+            # Save CBT backup
+            backup_path = f'backup_data/cbt_recommendations_backup_{datetime.now().strftime("%Y%m%d_%H%M%S")}.json'
+            os.makedirs(os.path.dirname(backup_path), exist_ok=True)
+            with open(backup_path, 'w') as f:
+                json.dump(backup_data, f, indent=2)
+            logger.info(f"Created backup of current CBT recommendations at {backup_path}")
+            
             # Backup journals
             current_journals = JournalEntry.query.all()
             backup_data = []
@@ -205,13 +225,19 @@ def delete_all_data():
         
         # Delete data in correct order to respect foreign keys
         try:
-            # First delete all journal entries
+            # First delete all CBT recommendations
+            cbt_count = CBTRecommendation.query.count()
+            db.session.query(CBTRecommendation).delete()
+            db.session.commit()
+            logger.info(f"Deleted {cbt_count} CBT recommendations")
+            
+            # Then delete all journal entries
             journal_count = JournalEntry.query.count()
             db.session.query(JournalEntry).delete()
             db.session.commit()
             logger.info(f"Deleted {journal_count} journal entries")
             
-            # Then delete all users
+            # Finally delete all users
             user_count = User.query.count()
             db.session.query(User).delete()
             db.session.commit()
