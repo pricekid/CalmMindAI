@@ -131,6 +131,32 @@ body.bg-dark p,
     font-weight: 500;
 }
 
+/* Specific streak card styles */
+.streak-badge-card {
+    background-color: #ffffff !important;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.streak-badge-card h6 {
+    background-color: #0d6efd;
+    color: #ffffff !important;
+    padding: 8px 12px;
+    margin: 0;
+    text-align: center;
+    font-weight: 600;
+}
+
+.streak-badge-card small {
+    display: block;
+    padding: 8px 12px;
+    text-align: center;
+    background-color: #ffffff;
+    color: #495057 !important;
+    font-weight: 500;
+}
+
 .badge-to-earn p,
 .badge-to-earn div,
 .badge-to-earn span {
@@ -229,6 +255,45 @@ body.bg-dark p,
     font-weight: 600;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for badge containers with day streaks */
+.p-3.rounded-3 {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+}
+
+.p-3.rounded-3 h5,
+.p-3.rounded-3 h6,
+.p-3.rounded-3 p,
+.p-3.rounded-3 div,
+.p-3.rounded-3 span {
+    color: #212529 !important;
+    font-weight: 500;
+}
+
+/* Add specific classes for streak badges */
+.card h6 {
+    color: #212529 !important;
+    font-weight: 600;
+    background-color: #0d6efd;
+    color: #ffffff !important;
+    padding: 6px 12px;
+    border-radius: 5px;
+    display: inline-block;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 8px;
+}
+
+/* Streak description text */
+.card small {
+    color: #495057 !important;
+    font-weight: 500;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 5px;
 }
 
 /* Improve text contrast on icons in anxiety management tools */

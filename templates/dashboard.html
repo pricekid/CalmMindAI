@@ -278,25 +278,25 @@
                 
                 <!-- Earned Badges Preview -->
                 <div class="col-md-8">
-                    <div class="p-3 badge-container rounded-3" style="background: rgba(255,255,255,0.05); height: 100%;">
-                        <h5 class="mb-3">{% if badge_data.dashboard_badges %}Your Badges{% else %}Badges to Earn{% endif %}</h5>
+                    <div class="p-3 badge-container rounded-3 bg-white" style="height: 100%;">
+                        <h5 class="mb-3 text-dark fw-bold">{% if badge_data.dashboard_badges %}Your Badges{% else %}Badges to Earn{% endif %}</h5>
                         
                         <div class="row g-3">
                             {% if badge_data.dashboard_badges %}
                                 <!-- Show earned badges -->
                                 {% for badge in badge_data.dashboard_badges %}
                                 <div class="col-md-4">
-                                    <div class="card h-100 text-center">
+                                    <div class="card h-100 text-center bg-white">
                                         <div class="card-body">
-                                            <div class="achievement-icon mb-2" style="background-color: {{ badge.color }};">
+                                            <div class="achievement-icon mb-2" style="background-color: {{ badge.color }}; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
                                                 <i class="fas {{ badge.icon }} fa-lg"></i>
                                             </div>
-                                            <h6>{{ badge.name }}</h6>
-                                            <small class="text-muted">{{ badge.description }}</small>
+                                            <h6 class="text-dark fw-bold">{{ badge.name }}</h6>
+                                            <small class="text-dark">{{ badge.description }}</small>
                                             <!-- XP Reward Badge -->
                                             {% if badge.xp_reward %}
                                             <div class="mt-2">
-                                                <span class="badge bg-info">+{{ badge.xp_reward }} XP</span>
+                                                <span class="badge bg-primary">+{{ badge.xp_reward }} XP</span>
                                             </div>
                                             {% endif %}
                                         </div>
@@ -308,17 +308,17 @@
                                 {% if badge_data.next_badges %}
                                     {% for badge in badge_data.next_badges %}
                                     <div class="col-md-4">
-                                        <div class="card h-100 text-center locked-achievement">
+                                        <div class="card h-100 text-center locked-achievement bg-white">
                                             <div class="card-body">
-                                                <div class="achievement-icon mb-2" style="background-color: {{ badge.color }}; opacity: 0.5;">
+                                                <div class="achievement-icon mb-2" style="background-color: {{ badge.color }}; opacity: 0.8;">
                                                     <i class="fas {{ badge.icon }} fa-lg"></i>
                                                 </div>
-                                                <h6>{{ badge.name }}</h6>
-                                                <small class="text-muted">{{ badge.hint }}</small>
+                                                <h6 class="text-dark fw-bold">{{ badge.name }}</h6>
+                                                <small class="text-dark">{{ badge.hint }}</small>
                                                 <!-- XP Reward Badge -->
                                                 {% if badge.xp_reward %}
                                                 <div class="mt-2">
-                                                    <span class="badge bg-secondary">+{{ badge.xp_reward }} XP</span>
+                                                    <span class="badge bg-primary">+{{ badge.xp_reward }} XP</span>
                                                 </div>
                                                 {% endif %}
                                             </div>
