@@ -10,20 +10,24 @@
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
         border: none;
     }
-    
+
     .form-control {
         border: 2px solid rgba(230, 185, 128, 0.3);
         background-color: rgba(33, 37, 41, 0.6);
         transition: all 0.3s ease;
         color: #ffffff;
     }
-    
+
+    .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
     .form-control:focus {
         border-color: var(--warm-peach);
         box-shadow: 0 0 0 0.25rem rgba(230, 185, 128, 0.2);
         background-color: rgba(33, 37, 41, 0.8);
     }
-    
+
     .btn-register {
         background: linear-gradient(135deg, var(--warm-peach), #d1a673);
         border: none;
@@ -35,24 +39,24 @@
         transition: all 0.3s ease;
         box-shadow: 0 6px 15px rgba(209, 166, 115, 0.3);
     }
-    
+
     .btn-register:hover {
         transform: translateY(-3px);
         box-shadow: 0 10px 20px rgba(209, 166, 115, 0.4);
         background: linear-gradient(135deg, #d1a673, var(--warm-peach));
     }
-    
+
     .form-help {
         font-size: 0.85rem;
         color: rgba(230, 185, 128, 0.8);
         margin-top: 5px;
     }
-    
+
     .card-header-custom {
         position: relative;
         padding-bottom: 20px;
     }
-    
+
     .card-header-custom::after {
         content: "";
         position: absolute;
@@ -64,7 +68,7 @@
         background: linear-gradient(to right, var(--warm-peach), rgba(230, 185, 128, 0.3));
         border-radius: 2px;
     }
-    
+
     .social-proof {
         background: rgba(230, 185, 128, 0.1);
         padding: 15px;
@@ -72,14 +76,14 @@
         margin: 20px 0;
         text-align: center;
     }
-    
+
     .links-footer a {
         color: var(--warm-peach);
         text-decoration: none;
         font-weight: 500;
         transition: all 0.3s ease;
     }
-    
+
     .links-footer a:hover {
         color: #d1a673;
         text-decoration: underline;
@@ -99,7 +103,7 @@
                 <div class="card-body p-4">
                     <form method="POST" action="">
                         {{ form.hidden_tag() }}
-                        
+
                         <div class="mb-3">
                             {{ form.username.label(class="form-label", style="color: var(--warm-peach);") }}
                             {% if form.username.errors %}
@@ -114,7 +118,7 @@
                             {% endif %}
                             <div class="form-help">Choose a username that feels calming to you</div>
                         </div>
-                        
+
                         <div class="mb-3">
                             {{ form.email.label(class="form-label", style="color: var(--warm-peach);") }}
                             {% if form.email.errors %}
@@ -128,7 +132,7 @@
                                 {{ form.email(class="form-control") }}
                             {% endif %}
                         </div>
-                        
+
                         <div class="mb-3">
                             {{ form.password.label(class="form-label", style="color: var(--warm-peach);") }}
                             {% if form.password.errors %}
@@ -143,7 +147,7 @@
                             {% endif %}
                             <div class="form-help">Use at least 6 characters with a mix of letters, numbers and symbols</div>
                         </div>
-                        
+
                         <div class="mb-4">
                             {{ form.confirm_password.label(class="form-label", style="color: var(--warm-peach);") }}
                             {% if form.confirm_password.errors %}
@@ -157,14 +161,14 @@
                                 {{ form.confirm_password(class="form-control") }}
                             {% endif %}
                         </div>
-                        
+
                         <div class="social-proof">
                             <div><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i></div>
                             <p class="mb-0 mt-2" style="color: rgba(255, 255, 255, 0.8);">
                                 <i>"This app has been a game-changer for my anxiety management."</i>
                             </p>
                         </div>
-                        
+
                         <div class="d-grid">
                             {{ form.submit(class="btn btn-register btn-lg", id="register-button") }}
                         </div>
@@ -174,7 +178,7 @@
                     <p class="mb-0">Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
                 </div>
             </div>
-            
+
             <div class="text-center mt-4 links-footer">
                 <p>
                     <small class="text-muted">
@@ -198,7 +202,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.querySelector('form');
         const registerButton = document.getElementById('register-button');
-        
+
         if (form && registerButton) {
             form.addEventListener('submit', function(e) {
                 if (form.checkValidity()) {
