@@ -511,6 +511,16 @@ body.bg-dark .lead,
     font-weight: 300;
 }
 
+/* Ensure breathing page has proper text contrast on dark backgrounds */
+.card.bg-dark p, 
+.card.bg-dark li, 
+.card.bg-dark ol, 
+.card.bg-dark ul {
+    color: #ffffff !important;
+    font-weight: 400;
+    text-shadow: none;
+}
+
 /* Dashboard widgets */
 .dashboard-widget {
     padding: 20px;
