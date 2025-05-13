@@ -74,13 +74,21 @@ def direct_login():
 @admin_bp.route('/login', methods=['GET', 'POST'])
 def login():
     """Admin login route"""
+    logger.debug(f"Admin login - Session data before login: {dict(session)}")
+    
     # If already logged in as admin, redirect to dashboard
     if current_user.is_authenticated and hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
+        logger.debug(f"Admin already authenticated: {current_user.get_id()}")
         return redirect(url_for('admin.dashboard'))
 
     form = AdminLoginForm()
 
     if request.method == 'POST':
+        # Log CSRF token for debugging
+        csrf_token = request.form.get('csrf_token', 'Not found')
+        logger.debug(f"CSRF token in form: {csrf_token}")
+        logger.debug(f"CSRF token in session: {session.get('csrf_token', 'Not found')}")
+        
         if form.validate_on_submit():
             username = form.username.data
             password = form.password.data
@@ -88,6 +96,7 @@ def login():
             
             # Try to find the admin in the database
             admin = Admin.query.filter_by(username=username).first()
+            logger.debug(f"Found admin in database: {admin is not None}")
             
             # If not found but username is 'admin', create a default admin account
             if not admin and username == "admin":
@@ -97,15 +106,24 @@ def login():
             
             # Check password and log in
             if admin and admin.check_password(password):
+                # Log admin ID before login
+                if hasattr(admin, 'get_id'):
+                    logger.debug(f"Admin ID before login_user: {admin.get_id()}")
+                
                 # Set session permanent to True to extend lifetime
                 session.permanent = True
                 
                 # Log in the admin user
-                login_user(admin)
+                login_user(admin, remember=True)
                 
                 # Add custom session variable for extra verification
                 session['is_admin'] = True
                 session['admin_username'] = admin.username
+                session['admin_id'] = admin.id
+                
+                # Log session after login
+                logger.debug(f"Admin login succeeded - User ID: {current_user.get_id()}")
+                logger.debug(f"Session data after login: {dict(session)}")
                 
                 logger.info(f"Admin login successful for user: {username}")
                 
@@ -120,15 +138,34 @@ def login():
             logger.warning('Form validation failed')
             for field, errors in form.errors.items():
                 for error in errors:
+                    logger.warning(f'Form validation error - {field}: {error}')
                     flash(f'{field}: {error}', 'danger')
 
-    return render_template('admin/basic_login.html', form=form)
+    # Add session data for diagnostic purposes
+    return render_template('admin/basic_login.html', form=form, title='Admin Login')
 
 @admin_bp.route('/logout')
 @admin_required
 def logout():
     """Admin logout route"""
+    # Log session before logout
+    logger.debug(f"Admin logout - Session before logout: {dict(session)}")
+    logger.debug(f"Admin logout - User ID before logout: {current_user.get_id() if hasattr(current_user, 'get_id') else 'Unknown'}")
+    
+    # Clear admin-specific session variables
+    if 'is_admin' in session:
+        session.pop('is_admin', None)
+    if 'admin_username' in session:
+        session.pop('admin_username', None)
+    if 'admin_id' in session:
+        session.pop('admin_id', None)
+    
+    # Log out the user through Flask-Login
     logout_user()
+    
+    # Log session after logout
+    logger.debug(f"Admin logout - Session after logout: {dict(session)}")
+    
     flash('You have been logged out.', 'info')
     return redirect(url_for('admin.login'))
 

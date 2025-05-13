@@ -15,6 +15,13 @@ class Admin(UserMixin, db.Model):
     password_hash = db.Column(db.String(256), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
+    def __init__(self, **kwargs):
+        """
+        Initialize an Admin object with keyword arguments.
+        This fixes the LSP issue with the constructor.
+        """
+        super(Admin, self).__init__(**kwargs)
+    
     def set_password(self, password):
         """Set the password hash for the admin."""
         self.password_hash = generate_password_hash(password)
@@ -60,7 +67,9 @@ class Admin(UserMixin, db.Model):
             if str(user_id) == "1" and not admin:
                 print("Creating default admin with ID 1")
                 # Create a default admin account if none exists
-                default_admin = Admin(id="1", username="admin")
+                default_admin = Admin()
+                default_admin.id = "1"
+                default_admin.username = "admin"
                 default_admin.set_password("admin123")  # Set a default password
                 
                 try:
