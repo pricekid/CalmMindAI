@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
+from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify, session
 from flask_login import login_user, logout_user, current_user
 from functools import wraps
 import os
@@ -45,15 +45,30 @@ ensure_data_files_exist()
 @admin_bp.route('/direct-login')
 def direct_login():
     """Emergency direct admin login without password"""
-    admin = Admin.get(1)
-    if admin:
+    try:
+        # Try to get admin from database or create default admin
+        admin = Admin.get("1")
+        if not admin:
+            logger.error("Failed to get or create admin user")
+            flash("Failed to find or create admin user.", "danger")
+            return redirect(url_for('admin.login'))
+        
+        # Set session permanent to True
+        session.permanent = True
+        
+        # Log in the admin user
         login_user(admin)
+        
+        # Add custom session variables for extra verification
+        session['is_admin'] = True
+        session['admin_username'] = admin.username
+        
         logger.info("Admin direct login successful")
         flash("You've been logged in as admin via the direct login method.", "success")
         return redirect(url_for('admin.dashboard'))
-    else:
-        logger.error("Failed to create admin user for direct login")
-        flash("Failed to log in as admin. Contact system administrator.", "danger")
+    except Exception as e:
+        logger.error(f"Admin direct login failed: {str(e)}")
+        flash(f"Failed to log in as admin: {str(e)}", "danger")
         return redirect(url_for('admin.login'))
 
 @admin_bp.route('/login', methods=['GET', 'POST'])

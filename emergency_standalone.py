@@ -21,11 +21,28 @@ def standalone_admin():
     For emergency access only.
     """
     # Get admin info directly without authentication
-    admin = Admin(1, "admin", "placeholder")
-    admin_info = {
-        "id": admin.id,
-        "username": admin.username
-    }
+    try:
+        # Try to get the admin from the database
+        admin = Admin.get("1")
+        
+        # If admin is not found, create a fallback admin object
+        if not admin:
+            # Create placeholder admin info
+            admin_info = {
+                "id": "1",
+                "username": "admin (not found in database)"
+            }
+        else:
+            admin_info = {
+                "id": admin.id,
+                "username": admin.username
+            }
+    except Exception as e:
+        logger.error(f"Error getting admin: {e}")
+        admin_info = {
+            "id": "error",
+            "username": f"Error: {str(e)}"
+        }
     
     # Custom HTML response
     html_response = f"""

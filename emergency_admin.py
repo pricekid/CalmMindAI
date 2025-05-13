@@ -31,12 +31,28 @@ def direct_admin_login():
         flash("You are already logged in as admin.", "info")
         return redirect('/admin/dashboard')
     
-    # Create admin and log in
-    admin = Admin(1, "admin", "placeholder_hash")
-    logger.info(f"Created admin object: {admin}")
-    
+    # Get admin from database or create default admin
     try:
+        # Try to get the admin user from the database
+        admin = Admin.get("1")
+        if not admin:
+            logger.error("Failed to get or create admin user")
+            flash("Failed to find or create admin user.", "danger")
+            return redirect('/')
+            
+        logger.info(f"Got admin object: {admin}")
+        
+        # Set session permanent to True
+        from flask import session
+        session.permanent = True
+        
+        # Log in the admin user
         login_user(admin)
+        
+        # Add custom session variables for extra verification
+        session['is_admin'] = True
+        session['admin_username'] = admin.username
+        
         logger.info("Emergency admin login successful")
         flash("You've been logged in as admin via the emergency login method.", "success")
         return redirect('/admin/dashboard')
