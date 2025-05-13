@@ -74,9 +74,19 @@ body {
 .card .badge-earned,
 .card .level-name,
 .streak-card-text,
-.streak-fact {
+.streak-fact,
+.streak-card * {
     color: #212529 !important;
     font-weight: 500;
+}
+
+.streak-title,
+.streak-description,
+.streak-card .text-muted,
+.streak-card p,
+.streak-card div {
+    color: #212529 !important;
+    text-shadow: none;
 }
 
 .achievement-card .card-text,
