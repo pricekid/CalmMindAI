@@ -46,14 +46,24 @@ body {
 /* Card text contrast fixes */
 .card {
     color: #212529 !important;
+    background-color: #ffffff;
 }
 
+.card,
 .card .card-text,
 .card .card-title,
 .card .text-content,
-.card p {
+.card p,
+.card span,
+.card div {
     color: #212529 !important;
     font-weight: 500;
+}
+
+.badge-to-earn p,
+.badge-to-earn div,
+.badge-to-earn span {
+    color: #212529 !important;
 }
 
 .card.bg-dark {

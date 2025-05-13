@@ -99,9 +99,22 @@
   animation: badgeEarned 1s ease;
 }
 
-/* Achievement Cards */
+/* Achievement card styles */
 .achievement-card {
-  transition: transform 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  background-color: #ffffff;
+  color: #212529;
+}
+
+.achievement-card p,
+.achievement-card div,
+.achievement-card span {
+  color: #212529 !important;
 }
 
 .achievement-card:hover {
