@@ -7,11 +7,17 @@ from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
 from sqlalchemy import UniqueConstraint
 
 class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password_hash = db.Column(db.String(256), nullable=False)
+    __tablename__ = "user"
+    id = db.Column(db.String, primary_key=True)
+    username = db.Column(db.String(64), unique=True, nullable=True)
+    email = db.Column(db.String(120), unique=True, nullable=True)
+    password_hash = db.Column(db.String(256), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    # Profile information from Replit Auth
+    first_name = db.Column(db.String(64), nullable=True)
+    last_name = db.Column(db.String(64), nullable=True)
+    profile_image_url = db.Column(db.String(256), nullable=True)
     
     # Email notification settings
     notifications_enabled = db.Column(db.Boolean, default=True)
@@ -63,6 +69,7 @@ class User(UserMixin, db.Model):
         return f'<User {self.username}>'
 
 class JournalEntry(db.Model):
+    __tablename__ = "journal_entry"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120), nullable=False)
     content = db.Column(db.Text, nullable=False)
@@ -80,7 +87,7 @@ class JournalEntry(db.Model):
     conversation_complete = db.Column(db.Boolean, default=False)  # Track if conversation is done
     
     # Foreign key
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.String, db.ForeignKey('user.id'), nullable=False)
     
     # Relationships
     recommendations = db.relationship('CBTRecommendation', backref='journal_entry', lazy=True)
@@ -89,6 +96,7 @@ class JournalEntry(db.Model):
         return f'<JournalEntry {self.title}>'
 
 class CBTRecommendation(db.Model):
+    __tablename__ = "cbt_recommendation"
     id = db.Column(db.Integer, primary_key=True)
     thought_pattern = db.Column(db.String(255), nullable=False)
     recommendation = db.Column(db.Text, nullable=False)
@@ -101,13 +109,30 @@ class CBTRecommendation(db.Model):
         return f'<CBTRecommendation {self.id}>'
 
 class MoodLog(db.Model):
+    __tablename__ = "mood_log"
     id = db.Column(db.Integer, primary_key=True)
     mood_score = db.Column(db.Integer, nullable=False)  # 1-10 scale
     notes = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # Foreign key
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.String, db.ForeignKey('user.id'), nullable=False)
     
     def __repr__(self):
         return f'<MoodLog {self.mood_score}>'
+
+# Required for Replit Auth - OAuth model for storing tokens
+class FlaskDanceOAuth(OAuthConsumerMixin, db.Model):
+    __tablename__ = "flask_dance_oauth"
+    # Override the mixin's tablename
+    
+    user_id = db.Column(db.String, db.ForeignKey("user.id"))
+    browser_session_key = db.Column(db.String, nullable=False)
+    user = db.relationship(User)
+
+    __table_args__ = (UniqueConstraint(
+        'user_id',
+        'browser_session_key',
+        'provider',
+        name='uq_user_browser_session_key_provider',
+    ),)

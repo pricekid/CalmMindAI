@@ -2,6 +2,7 @@ import jwt
 import os
 import uuid
 from functools import wraps
+from urllib.parse import urlencode
 
 from flask import g, session, redirect, request, render_template, url_for
 from flask_dance.consumer import (
@@ -16,7 +17,7 @@ from sqlalchemy.exc import NoResultFound
 from werkzeug.local import LocalProxy
 
 from app import app, db
-from models import OAuth, User
+from models import FlaskDanceOAuth as OAuth, User
 
 login_manager = LoginManager(app)
 
@@ -30,11 +31,12 @@ class UserSessionStorage(BaseStorage):
 
     def get(self, blueprint):
         try:
-            token = db.session.query(OAuth).filter_by(
+            oauth_entry = db.session.query(OAuth).filter_by(
                 user_id=current_user.get_id(),
                 browser_session_key=g.browser_session_key,
                 provider=blueprint.name,
-            ).one().token
+            ).one()
+            token = oauth_entry.token
         except NoResultFound:
             token = None
         return token
@@ -164,6 +166,7 @@ def require_login(f):
 
         expires_in = replit.token.get('expires_in', 0)
         if expires_in < 0:
+            issuer_url = os.environ.get('ISSUER_URL', "https://replit.com/oidc")
             refresh_token_url = issuer_url + "/token"
             try:
                 token = replit.refresh_token(token_url=refresh_token_url,
