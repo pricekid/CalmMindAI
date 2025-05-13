@@ -28,14 +28,30 @@ logging.basicConfig(level=logging.DEBUG)
 def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        # Check if user is authenticated and is an admin
+        logger.debug(f"Admin access check - Session: {dict(session)}")
+        
+        # Check if user is authenticated
         if not current_user.is_authenticated:
+            logger.warning("Admin access denied - User not authenticated")
             flash('Please log in as admin to access this page.', 'danger')
             return redirect(url_for('admin.login', next=request.url))
-        # Check if user is an admin (user_id should start with "admin_")
+            
+        # Log user ID for debugging
+        user_id = current_user.get_id() if hasattr(current_user, 'get_id') else 'Unknown'
+        logger.debug(f"Admin access check - User ID: {user_id}")
+        
+        # Check if user is an admin based on ID format
         if not hasattr(current_user, 'get_id') or not current_user.get_id().startswith('admin_'):
+            logger.warning(f"Admin access denied - Not an admin user: {user_id}")
             flash('You need admin privileges to access this page.', 'danger')
             return redirect(url_for('admin.login', next=request.url))
+            
+        # Double-check with session variables as a backup verification
+        if 'is_admin' not in session:
+            logger.warning(f"Admin access suspicious - Missing is_admin in session for user: {user_id}")
+            # We'll still allow access if the ID check passed, but log this suspicious activity
+        
+        logger.debug(f"Admin access granted to {user_id}")
         return f(*args, **kwargs)
     return decorated_function
 
@@ -53,15 +69,26 @@ def direct_login():
             flash("Failed to find or create admin user.", "danger")
             return redirect(url_for('admin.login'))
         
+        # Log admin ID before login
+        if hasattr(admin, 'get_id'):
+            logger.debug(f"Direct login - Admin ID before login_user: {admin.get_id()}")
+            
         # Set session permanent to True
         session.permanent = True
         
-        # Log in the admin user
-        login_user(admin)
+        # Log in the admin user with remember flag
+        login_user(admin, remember=True)
         
         # Add custom session variables for extra verification
-        session['is_admin'] = True
-        session['admin_username'] = admin.username
+        session.update({
+            'is_admin': True,
+            'admin_username': admin.username or '',
+            'admin_id': admin.id or ''
+        })
+        
+        # Log session after login
+        logger.debug(f"Direct login succeeded - User ID: {current_user.get_id()}")
+        logger.debug(f"Session data after login: {dict(session)}")
         
         logger.info("Admin direct login successful")
         flash("You've been logged in as admin via the direct login method.", "success")
@@ -117,9 +144,12 @@ def login():
                 login_user(admin, remember=True)
                 
                 # Add custom session variable for extra verification
-                session['is_admin'] = True
-                session['admin_username'] = admin.username
-                session['admin_id'] = admin.id
+                # Use .update method to handle None values more gracefully
+                session.update({
+                    'is_admin': True,
+                    'admin_username': admin.username or '',
+                    'admin_id': admin.id or ''
+                })
                 
                 # Log session after login
                 logger.debug(f"Admin login succeeded - User ID: {current_user.get_id()}")
@@ -152,13 +182,14 @@ def logout():
     logger.debug(f"Admin logout - Session before logout: {dict(session)}")
     logger.debug(f"Admin logout - User ID before logout: {current_user.get_id() if hasattr(current_user, 'get_id') else 'Unknown'}")
     
-    # Clear admin-specific session variables
-    if 'is_admin' in session:
-        session.pop('is_admin', None)
-    if 'admin_username' in session:
-        session.pop('admin_username', None)
-    if 'admin_id' in session:
-        session.pop('admin_id', None)
+    # Clear admin-specific session variables safely
+    admin_keys = ['is_admin', 'admin_username', 'admin_id']
+    for key in admin_keys:
+        try:
+            if key in session:
+                session.pop(key, None)
+        except Exception as e:
+            logger.warning(f"Error clearing session key {key}: {str(e)}")
     
     # Log out the user through Flask-Login
     logout_user()
