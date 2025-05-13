@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Your Profile</h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4 text-center mb-3">
+              {% if user.profile_image_url %}
+                <img src="{{ user.profile_image_url }}" alt="Profile Picture" class="img-fluid rounded-circle mb-3" style="max-width: 150px; max-height: 150px; object-fit: cover;">
+              {% else %}
+                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 150px; height: 150px;">
+                  <span class="display-4 text-muted">{{ user.first_name[0] if user.first_name else (user.username[0] if user.username else '?') }}</span>
+                </div>
+              {% endif %}
+            </div>
+            <div class="col-md-8">
+              <h5>User Information</h5>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>User ID:</strong> {{ user.id }}</li>
+                <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+                <li class="list-group-item"><strong>First Name:</strong> {{ user.first_name or 'Not provided' }}</li>
+                <li class="list-group-item"><strong>Last Name:</strong> {{ user.last_name or 'Not provided' }}</li>
+                <li class="list-group-item"><strong>Member Since:</strong> {{ user.created_at.strftime('%B %d, %Y') }}</li>
+              </ul>
+            </div>
+          </div>
+          <hr>
+          <div class="d-flex justify-content-between">
+            <a href="{{ url_for('replit_auth.protected') }}" class="btn btn-primary">Back to Protected Page</a>
+            <a href="{{ url_for('replit_auth.logout') }}" class="btn btn-danger">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

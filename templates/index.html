@@ -18,7 +18,10 @@
         {% if not current_user.is_authenticated %}
         <div class="mt-4">
             <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-2">Sign Up</a>
-            <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-lg">Login</a>
+            <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-lg me-2">Login</a>
+            <a href="{{ url_for('login_with_replit') }}" class="btn btn-dark btn-lg">
+                <i class="fas fa-code me-1"></i> Login with Replit
+            </a>
         </div>
         {% else %}
         <div class="mt-4">
@@ -115,7 +118,10 @@
 <div class="text-center mt-5">
     {% if not current_user.is_authenticated %}
     <h3 class="mb-4">Ready to tell Teddy how you feel?</h3>
-    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg">Get Started</a>
+    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-2">Get Started</a>
+    <a href="{{ url_for('login_with_replit') }}" class="btn btn-dark btn-lg">
+        <i class="fas fa-code me-1"></i> Login with Replit
+    </a>
     {% else %}
     <h3 class="mb-4">Continue writing to Teddy</h3>
     <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg">Go to Dashboard</a>

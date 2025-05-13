@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Protected Page</h4>
+        </div>
+        <div class="card-body">
+          <h5>Welcome, {{ user.first_name if user.first_name else user.username }}!</h5>
+          <p>This is a protected page that only authenticated users can access.</p>
+          <p>Your User ID: {{ user.id }}</p>
+          <p>Email: {{ user.email }}</p>
+          <hr>
+          <a href="{{ url_for('replit_auth.profile') }}" class="btn btn-info">View Profile</a>
+          <a href="{{ url_for('replit_auth.logout') }}" class="btn btn-danger">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
