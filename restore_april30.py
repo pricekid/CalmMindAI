@@ -10,7 +10,7 @@ import os
 import json
 import logging
 import uuid
-from datetime import datetime
+from datetime import datetime, time
 
 from app import app, db
 from models import User, JournalEntry
@@ -88,19 +88,8 @@ def import_users_from_backup():
     users = load_users_from_backup()
     id_mapping = load_id_mapping()
     
-    # Clear existing users if needed
+    # Import users
     with app.app_context():
-        existing_count = User.query.count()
-        logger.info(f"Current user count in database: {existing_count}")
-        
-        if input(f"This will replace {existing_count} existing users with {len(users)} users from backup. Continue? (y/n): ").lower() != 'y':
-            logger.info("User import canceled")
-            return
-        
-        # Delete existing users
-        db.session.query(User).delete()
-        db.session.commit()
-        logger.info("Deleted existing users")
         
         # Import users from backup
         for user_data in users:
@@ -113,14 +102,13 @@ def import_users_from_backup():
             new_id = id_mapping[old_id]
             
             # Create user with mapped UUID
-            new_user = User(
-                id=new_id,
-                username=user_data.get('username'),
-                email=user_data.get('email'),
-                created_at=datetime.fromisoformat(user_data.get('created_at')),
-                notifications_enabled=user_data.get('notifications_enabled', False),
-                sms_notifications_enabled=user_data.get('sms_notifications_enabled', False)
-            )
+            new_user = User()
+            new_user.id = new_id
+            new_user.username = user_data.get('username')
+            new_user.email = user_data.get('email')
+            new_user.created_at = datetime.fromisoformat(user_data.get('created_at'))
+            new_user.notifications_enabled = user_data.get('notifications_enabled', False)
+            new_user.sms_notifications_enabled = user_data.get('sms_notifications_enabled', False)
             
             db.session.add(new_user)
         
@@ -135,19 +123,8 @@ def import_journals_from_backup():
     journals = load_journals_from_backup()
     id_mapping = load_id_mapping()
     
-    # Clear existing journals if needed
+    # Import journals
     with app.app_context():
-        existing_count = JournalEntry.query.count()
-        logger.info(f"Current journal count in database: {existing_count}")
-        
-        if input(f"This will replace {existing_count} existing journals with {len(journals)} journals from backup. Continue? (y/n): ").lower() != 'y':
-            logger.info("Journal import canceled")
-            return
-        
-        # Delete existing journals
-        db.session.query(JournalEntry).delete()
-        db.session.commit()
-        logger.info("Deleted existing journals")
         
         # Import journals from backup
         for journal_data in journals:
@@ -161,25 +138,99 @@ def import_journals_from_backup():
             new_user_id = id_mapping[old_user_id]
             
             # Create journal entry with mapped user UUID
-            new_journal = JournalEntry(
-                id=journal_data.get('id'),
-                user_id=new_user_id,
-                title=journal_data.get('title', 'Untitled Entry'),  # Handle missing title
-                content=journal_data.get('content', ''),
-                created_at=datetime.fromisoformat(journal_data.get('created_at')),
-                updated_at=datetime.fromisoformat(journal_data.get('updated_at', journal_data.get('created_at'))),
-                anxiety_level=5,  # Default value
-                initial_insight=journal_data.get('feedback', journal_data.get('analysis', None))  # Handle field name changes
-            )
+            new_journal = JournalEntry()
+            new_journal.id = journal_data.get('id')
+            new_journal.user_id = new_user_id
+            new_journal.title = journal_data.get('title', 'Untitled Entry')  # Handle missing title
+            new_journal.content = journal_data.get('content', '')
+            new_journal.created_at = datetime.fromisoformat(journal_data.get('created_at'))
+            new_journal.updated_at = datetime.fromisoformat(journal_data.get('updated_at', journal_data.get('created_at')))
+            new_journal.anxiety_level = 5  # Default value
+            # Handle field name changes
+            new_journal.initial_insight = journal_data.get('feedback', journal_data.get('analysis', None))
             
             db.session.add(new_journal)
         
         db.session.commit()
         logger.info(f"Imported {len(journals)} journals")
 
+def delete_all_data():
+    """Delete all data in the database to prepare for import"""
+    with app.app_context():
+        logger.info("Deleting all existing data")
+        
+        # Create backups before deletion
+        try:
+            # Backup journals
+            current_journals = JournalEntry.query.all()
+            backup_data = []
+            for journal in current_journals:
+                journal_dict = {c.name: getattr(journal, c.name) for c in journal.__table__.columns}
+                # Convert datetime objects to strings
+                for key, value in journal_dict.items():
+                    if isinstance(value, datetime):
+                        journal_dict[key] = value.isoformat()
+                    elif isinstance(value, time):
+                        journal_dict[key] = value.isoformat()
+                backup_data.append(journal_dict)
+            
+            # Save journal backup
+            backup_path = f'backup_data/journals_backup_{datetime.now().strftime("%Y%m%d_%H%M%S")}.json'
+            os.makedirs(os.path.dirname(backup_path), exist_ok=True)
+            with open(backup_path, 'w') as f:
+                json.dump(backup_data, f, indent=2)
+            logger.info(f"Created backup of current journals at {backup_path}")
+            
+            # Backup users
+            current_users = User.query.all()
+            backup_data = []
+            for user in current_users:
+                user_dict = {c.name: getattr(user, c.name) for c in user.__table__.columns}
+                # Convert datetime objects to strings
+                for key, value in user_dict.items():
+                    if isinstance(value, datetime):
+                        user_dict[key] = value.isoformat()
+                    elif isinstance(value, time):
+                        user_dict[key] = value.isoformat()
+                backup_data.append(user_dict)
+            
+            # Save user backup
+            backup_path = f'backup_data/users_backup_{datetime.now().strftime("%Y%m%d_%H%M%S")}.json'
+            os.makedirs(os.path.dirname(backup_path), exist_ok=True)
+            with open(backup_path, 'w') as f:
+                json.dump(backup_data, f, indent=2)
+            logger.info(f"Created backup of current users at {backup_path}")
+        except Exception as e:
+            logger.error(f"Failed to create backups: {e}")
+        
+        # Delete data in correct order to respect foreign keys
+        try:
+            # First delete all journal entries
+            journal_count = JournalEntry.query.count()
+            db.session.query(JournalEntry).delete()
+            db.session.commit()
+            logger.info(f"Deleted {journal_count} journal entries")
+            
+            # Then delete all users
+            user_count = User.query.count()
+            db.session.query(User).delete()
+            db.session.commit()
+            logger.info(f"Deleted {user_count} users")
+            
+            return True
+        except Exception as e:
+            logger.error(f"Error deleting data: {e}")
+            db.session.rollback()
+            return False
+
 def main():
     """Main function to restore database to April 30th state"""
     logger.info("Starting April 30th database restoration")
+    
+    # First delete all existing data
+    if not delete_all_data():
+        logger.error("Failed to delete existing data, aborting restoration")
+        return
     
     # Import users first to establish ID mapping
     import_users_from_backup()
