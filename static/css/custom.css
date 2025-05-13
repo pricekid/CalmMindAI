@@ -72,8 +72,11 @@ body {
 .streak-fact-box,
 .anxiety-management-tools .card-text,
 .card .badge-earned,
-.card .level-name {
+.card .level-name,
+.streak-card-text,
+.streak-fact {
     color: #212529 !important;
+    font-weight: 500;
 }
 
 .achievement-card .card-text,

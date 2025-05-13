@@ -26,10 +26,8 @@
   transform: scale(1.1);
 }
 
-.level-badge *,
-.streak-card * {
-  color: #212529 !important;
-  font-weight: 500;
+.level-badge * {
+  color: white !important;
 }
 
 .streak-card {
@@ -38,6 +36,14 @@
   padding: 10px;
   margin: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.streak-card *,
+.streak-card .streak-title,
+.streak-card .streak-description,
+.streak-card .text-muted {
+  color: #212529 !important;
+  font-weight: 500;
 }
 
 .streak-card .streak-title {
