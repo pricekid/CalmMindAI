@@ -201,6 +201,28 @@
 {% endblock %}
 
 {% block content %}
+<script>
+// Define updateAnxietyLabel function at the top level
+function updateAnxietyLabel(value) {
+  const anxietyValue = document.getElementById('anxiety-value');
+  const anxietyInput = document.getElementById('anxiety-input');
+  
+  if (anxietyValue && anxietyInput) {
+    anxietyValue.textContent = value;
+    anxietyInput.value = value;
+    
+    // Change badge color based on anxiety level
+    if (value <= 3) {
+      anxietyValue.className = 'badge bg-success';
+    } else if (value <= 6) {
+      anxietyValue.className = 'badge bg-warning text-dark';
+    } else {
+      anxietyValue.className = 'badge bg-danger';
+    }
+  }
+}
+</script>
+
 <div class="container mt-4">
   <div class="row">
     <div class="col-md-12">
@@ -219,10 +241,10 @@
             </div>
             <div class="mb-3">
               {{ form.anxiety_level.label(class="form-label") }}
-              <input type="range" class="form-range" min="1" max="10" id="anxiety-slider" oninput="updateAnxietyLabel(this.value)">
+              <input type="range" class="form-range" min="1" max="10" id="anxiety-slider" value="5" oninput="updateAnxietyLabel(this.value)">
               <div class="text-center mt-2">
                 Level: <span id="anxiety-value" class="badge bg-primary">5</span>
-                {{ form.anxiety_level(id="anxiety-input", style="display: none;") }}
+                {{ form.anxiety_level(id="anxiety-input", style="display: none;", value="5") }}
               </div>
             </div>
             <div class="d-grid">
@@ -784,26 +806,7 @@
         };
     }
 
-    // Function to update the anxiety level display
-    function updateAnxietyLabel(value) {
-        const anxietyValue = document.getElementById('anxiety-value');
-        const anxietyInput = document.getElementById('anxiety-input');
-
-        // Only proceed if the elements exist (they won't in view-only mode)
-        if (anxietyValue && anxietyInput) {
-            anxietyValue.textContent = value;
-            anxietyInput.value = value;
-
-            // Change badge color based on anxiety level
-            if (value <= 3) {
-                anxietyValue.className = 'badge bg-success';
-            } else if (value <= 6) {
-                anxietyValue.className = 'badge bg-warning text-dark';
-            } else {
-                anxietyValue.className = 'badge bg-danger';
-            }
-        }
-    }
+    // Anxiety level display function is defined at the top of the page
 
     // Function to show voice input tooltip
     function showVoiceInputTooltip() {
