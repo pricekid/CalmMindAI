@@ -61,6 +61,9 @@ app.config['SESSION_COOKIE_SECURE'] = False  # Set to True in production with HT
 app.config['SESSION_COOKIE_HTTPONLY'] = True  # Prevent JavaScript access to session cookie
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Compatible with most browsers
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)  # Extended session lifetime
+app.config['SESSION_TYPE'] = 'filesystem'  # Store sessions on filesystem for reliability
+app.config['SESSION_USE_SIGNER'] = True  # Add a signature to session cookies
+app.config['SESSION_PERMANENT'] = True  # Make sessions permanent by default
 
 # Email configuration
 app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
