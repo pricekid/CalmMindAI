@@ -20,7 +20,13 @@ def get_csrf_token():
     try:
         from flask_wtf.csrf import generate_csrf
         token = generate_csrf()
-        logger.debug("Generated/retrieved CSRF token")
+        
+        # Ensure token is directly stored in session with the proper key
+        # This ensures consistent access across the application
+        session['_csrf_token'] = token
+        session.modified = True
+        
+        logger.debug(f"Generated/retrieved CSRF token (length: {len(token)})")
         return token
     except Exception as e:
         logger.error(f"CSRF token generation error: {e}")
@@ -29,6 +35,11 @@ def get_csrf_token():
         import time
         emergency_token = hashlib.sha256(f"emergency_{time.time()}".encode()).hexdigest()
         logger.warning(f"Using emergency CSRF token")
+        
+        # Store emergency token in session
+        session['_csrf_token'] = emergency_token
+        session.modified = True
+        
         return emergency_token
 
 def validate_csrf_token(token):

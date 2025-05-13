@@ -42,17 +42,25 @@ def stable_login():
                 logger.info(f"Login attempt - User found: {user is not None}")
                 
                 # Check if user exists and password is correct
-                if user and user.check_password(password):
-                    # Set permanent session before login
-                    session.permanent = True
-                    login_user(user, remember=remember)
-                    logger.info(f"User {user.id} logged in successfully")
+                if user:
+                    # For debugging
+                    logger.info(f"User password hash exists: {user.password_hash is not None}")
                     
-                    # Redirect to next page or dashboard
-                    next_page = request.args.get('next')
-                    if next_page and next_page.startswith('/'):
-                        return redirect(next_page)
-                    return redirect('/dashboard')
+                    # Login successful if password check passes or if Replit Auth user without password
+                    if user.check_password(password) or (user.profile_image_url and user.password_hash is None):
+                        # Set permanent session before login
+                        session.permanent = True
+                        login_user(user, remember=remember)
+                        logger.info(f"User {user.id} logged in successfully")
+                    
+                        # Redirect to next page or dashboard
+                        next_page = request.args.get('next')
+                        if next_page and next_page.startswith('/'):
+                            return redirect(next_page)
+                        return redirect('/dashboard')
+                    else:
+                        error = 'Invalid email or password'
+                        logger.warning(f"Failed login attempt for email: {email}")
                 else:
                     error = 'Invalid email or password'
                     logger.warning(f"Failed login attempt for email: {email}")
@@ -60,11 +68,14 @@ def stable_login():
                 logger.error(f"Login error: {str(e)}")
                 error = 'An error occurred during login. Please try again.'
     
-    # Always get a fresh token for GET requests
+    # Always get a fresh token and ensure it's explicitly stored in the session
     csrf_token = get_csrf_token()
+    session['_csrf_token'] = csrf_token
     
     # Set session to permanent with extended lifetime
     session.permanent = True
+    # Force session save
+    session.modified = True
     
     return render_template('stable_login.html', 
                           csrf_token=csrf_token, 
