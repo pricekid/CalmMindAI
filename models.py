@@ -3,6 +3,8 @@ from app import db
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import deferred, load_only
+from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
+from sqlalchemy import UniqueConstraint
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
