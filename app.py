@@ -1,11 +1,12 @@
 import os
 import logging
-from flask import Flask, url_for, redirect, request, flash, render_template
+from flask import Flask, url_for, redirect, request, flash, render_template, session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
 from flask_login import LoginManager, current_user, login_required as original_login_required
 from flask_wtf.csrf import CSRFProtect
 from flask_mail import Mail
+from flask_session import Session
 from functools import wraps
 
 # Configure logging
@@ -17,6 +18,7 @@ class Base(DeclarativeBase):
 db = SQLAlchemy(model_class=Base)
 csrf = CSRFProtect()
 mail = Mail()
+sess = Session()
 
 # Create the app
 app = Flask(__name__)
@@ -83,6 +85,7 @@ app.config['BASE_URL'] = os.environ.get('BASE_URL', '')
 db.init_app(app)
 csrf.init_app(app)
 mail.init_app(app)
+sess.init_app(app)
 
 # Apply CSRF debug middleware to log token validation details
 from csrf_debug import CSRFDebugMiddleware
@@ -429,15 +432,16 @@ except ImportError:
 def load_user(user_id):
     # Check if this is an admin user (user_id will be a string like "admin_1")
     if isinstance(user_id, str) and user_id.startswith('admin_'):
-        admin_id = int(user_id.split('_')[1])
-        return Admin.get(admin_id)
+        try:
+            admin_id = user_id.split('_')[1]
+            return Admin.get(admin_id)
+        except Exception as e:
+            app.logger.error(f"Error loading admin user: {str(e)}")
+            return None
+    
     # Regular user
     try:
-        # Don't use transaction for simple user loading to avoid conflicts
-        # with existing transactions in the request
-        return db.session.get(User, int(user_id))
-    except ValueError:
-        return None
+        return User.query.get(user_id)
     except Exception as e:
         # Log the error and return None to force re-login
         app.logger.error(f"Database error in load_user: {str(e)}")

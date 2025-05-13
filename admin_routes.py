@@ -70,16 +70,30 @@ def login():
             username = form.username.data
             password = form.password.data
             logger.info(f"Admin login attempt with username: {username}")
-            admin = None
             
-            if username == "admin":
-                admin = Admin.get(1)
-                logger.info(f"Admin user object created: {admin is not None}")
-                
+            # Try to find the admin in the database
+            admin = Admin.query.filter_by(username=username).first()
+            
+            # If not found but username is 'admin', create a default admin account
+            if not admin and username == "admin":
+                # Try to use the static method to get or create default admin
+                admin = Admin.get("1")
+                logger.info(f"Default admin user created: {admin is not None}")
+            
+            # Check password and log in
             if admin and admin.check_password(password):
-                logger.info("Admin password verification successful")
+                # Set session permanent to True to extend lifetime
+                session.permanent = True
+                
+                # Log in the admin user
                 login_user(admin)
+                
+                # Add custom session variable for extra verification
+                session['is_admin'] = True
+                session['admin_username'] = admin.username
+                
                 logger.info(f"Admin login successful for user: {username}")
+                
                 next_page = request.args.get('next')
                 if next_page and next_page.startswith('/admin'):
                     return redirect(next_page)
