@@ -1,0 +1,50 @@
+[
+  {
+    "timestamp": "2025-04-05T22:52:56.544687",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 221",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-06T19:26:56.371985",
+    "type": "startup_check",
+    "message": "Found stale PID file for scheduler (PID 221). Removing.",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-06T19:26:57.387229",
+    "type": "scheduler_startup",
+    "message": "Started scheduler on host 9f8cae3f4bd8 at 2025-04-06 19:26:57.387075",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-06T19:26:58.326434",
+    "type": "scheduler_startup",
+    "message": "Starting notification scheduler at 2025-04-06 19:26:58.326277",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-06T19:26:58.326874",
+    "type": "scheduler_health",
+    "message": "Scheduler health check at 2025-04-06 19:26:58.326761",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-06T19:26:58.327168",
+    "type": "scheduler_health_error",
+    "message": "Error in scheduler health check: 'Job' object has no attribute 'next_run_time'",
+    "success": false
+  },
+  {
+    "timestamp": "2025-04-06T19:26:58.328157",
+    "type": "scheduler_start",
+    "message": "Scheduler started successfully",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-06T19:28:54.295406",
+    "type": "startup_check",
+    "message": "Scheduler already running with PID 108",
+    "success": true
+  }
+]

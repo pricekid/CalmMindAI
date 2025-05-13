@@ -1,0 +1,58 @@
+[
+  {
+    "timestamp": "2025-04-21T16:55:46.568118",
+    "user_id": "2",
+    "notification_type": "email",
+    "recipient": "naturalarts@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-21T16:55:48.822893",
+    "user_id": "3",
+    "notification_type": "email",
+    "recipient": "jacqueline12006@yahoo.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-21T16:55:50.819828",
+    "user_id": "5",
+    "notification_type": "email",
+    "recipient": "ken.maycock@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-21T16:55:52.606809",
+    "user_id": "6",
+    "notification_type": "email",
+    "recipient": "josiahjosey6@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-21T16:55:54.451650",
+    "user_id": "8",
+    "notification_type": "email",
+    "recipient": "naturalarts2@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-21T16:55:56.424427",
+    "user_id": "4",
+    "notification_type": "email",
+    "recipient": "nscott392@yahoo.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-21T16:55:58.379569",
+    "user_id": "7",
+    "notification_type": "email",
+    "recipient": "tonia.chapman246@gmail.com",
+    "success": true
+  },
+  {
+    "timestamp": "2025-04-21T16:56:01.700865",
+    "user_id": "9",
+    "notification_type": "email",
+    "recipient": "naturalarts@hotmail.com",
+    "success": true
+  }
+]

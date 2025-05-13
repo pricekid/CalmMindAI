@@ -1,0 +1,40 @@
+[
+  {
+    "id": 1,
+    "user_id": "0bcfecef-6436-49d1-8bcc-dab38f3ba1ee",
+    "title": "Sample Test Entry",
+    "content": "This is a test entry to verify schema compatibility.",
+    "anxiety_level": 5,
+    "created_at": "2025-05-13T15:50:15.570879",
+    "updated_at": "2025-05-13T15:50:15.573246",
+    "is_analyzed": true,
+    "recommendations": [
+      {
+        "thought_pattern": "Catastrophizing",
+        "recommendation": "Try to challenge this thought by considering more realistic outcomes."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "user_id": "d45aac71-ac00-4491-8ea7-9fa2079297a2",
+    "title": "Untitled Entry",
+    "content": "worried about crime in my island and how it may affect teh futur eof our island. barbados is so lovely, but crime has increase 300% since teh start of teh year",
+    "anxiety_level": null,
+    "created_at": "2025-04-18T16:34:38.711907",
+    "updated_at": "2025-04-18T16:34:38.711907",
+    "is_analyzed": false,
+    "recommendations": []
+  },
+  {
+    "id": 3,
+    "user_id": "0bcfecef-6436-49d1-8bcc-dab38f3ba1ee",
+    "title": "Untitled Entry",
+    "content": "Bit tired today. been working on so many differnet project, yet unable to get any to work the way i would like",
+    "anxiety_level": null,
+    "created_at": "2025-05-13T00:58:05.035438",
+    "updated_at": "2025-05-13T00:58:05.035438",
+    "is_analyzed": false,
+    "recommendations": []
+  }
+]
