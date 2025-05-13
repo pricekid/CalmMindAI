@@ -406,13 +406,21 @@ def login_required(f):
 from models import User
 from admin_models import Admin
 
-# Import emergency admin blueprint
+# Import emergency admin blueprints
 try:
     from emergency_admin import emergency_admin_bp
     has_emergency_admin = True
 except ImportError:
     app.logger.warning("Emergency admin module not available")
     has_emergency_admin = False
+    
+# Import standalone admin blueprint
+try:
+    from emergency_standalone import standalone_admin_bp
+    has_standalone_admin = True
+except ImportError:
+    app.logger.warning("Standalone admin module not available")
+    has_standalone_admin = False
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -616,6 +624,12 @@ with app.app_context():
         app.register_blueprint(emergency_admin_bp)
         csrf.exempt(emergency_admin_bp)
         app.logger.info("Emergency admin blueprint registered with CSRF exemption")
+        
+    # Register the standalone admin blueprint
+    if has_standalone_admin:
+        app.register_blueprint(standalone_admin_bp)
+        csrf.exempt(standalone_admin_bp)
+        app.logger.info("Standalone admin blueprint registered with CSRF exemption")
     
     # Explicitly exempt specific routes from CSRF protection only if they exist
     # This prevents errors when certain blueprints aren't loaded
