@@ -136,13 +136,34 @@ def logout():
 @admin_required
 def dashboard():
     """Admin dashboard with statistics"""
+    # Check admin session data and log it
+    if hasattr(current_user, 'get_id'):
+        logger.debug(f"Admin dashboard - current_user.get_id(): {current_user.get_id()}")
+    else:
+        logger.debug("Admin dashboard - current_user has no get_id() method")
+        
+    logger.debug(f"Admin dashboard - current_user.is_authenticated: {current_user.is_authenticated}")
+    
+    # Get session data for debugging
+    logger.debug(f"Session data: {dict(session)}")
+    
+    # Get admin statistics
     stats = get_admin_stats()
 
     # Export data to JSON files
     export_journal_entries()
     export_users()
 
-    return render_template('admin/dashboard.html', title='Admin Dashboard', stats=stats)
+    # Add admin user data to the context
+    admin_data = {
+        'user_id': current_user.get_id() if hasattr(current_user, 'get_id') else 'Unknown',
+        'username': current_user.username if hasattr(current_user, 'username') else 'Unknown',
+    }
+
+    return render_template('admin/dashboard.html', 
+                          title='Admin Dashboard', 
+                          stats=stats,
+                          admin=admin_data)
 
 @admin_bp.route('/journals')
 @admin_required

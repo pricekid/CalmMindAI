@@ -105,6 +105,15 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         {% if current_user.is_authenticated %}
                         <li class="nav-item">
+                            <span class="nav-link">
+                                <i class="bi bi-person-circle"></i> 
+                                {{ current_user.username if hasattr(current_user, 'username') else 'Admin' }}
+                                {% if admin is defined %}
+                                <small class="text-muted">({{ admin.user_id }})</small>
+                                {% endif %}
+                            </span>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('index') }}" target="_blank">
                                 <i class="bi bi-box-arrow-up-right"></i> View Site
                             </a>

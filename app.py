@@ -430,13 +430,20 @@ except ImportError:
 
 @login_manager.user_loader
 def load_user(user_id):
+    app.logger.debug(f"load_user called with user_id: {user_id}, type: {type(user_id)}")
+    
     # Check if this is an admin user (user_id will be a string like "admin_1")
     if isinstance(user_id, str) and user_id.startswith('admin_'):
         try:
             admin_id = user_id.split('_')[1]
-            return Admin.get(admin_id)
+            app.logger.debug(f"Extracted admin_id: {admin_id} from user_id: {user_id}")
+            admin = Admin.get(admin_id)
+            app.logger.debug(f"Admin.get({admin_id}) returned: {admin}")
+            return admin
         except Exception as e:
             app.logger.error(f"Error loading admin user: {str(e)}")
+            import traceback
+            app.logger.error(traceback.format_exc())
             return None
     
     # Regular user

@@ -29,28 +29,54 @@ class Admin(UserMixin, db.Model):
     
     def get_id(self):
         """Return a unique identifier for this admin user."""
-        return f"admin_{self.id}"
+        admin_id = f"admin_{self.id}"
+        print(f"Admin.get_id() called, returning: {admin_id}")
+        return admin_id
     
     @staticmethod
     def get(user_id):
         """
         Required for Flask-Login. Returns the admin user by ID.
-        user_id: The numeric portion of the admin ID (after "admin_").
+        user_id: The admin ID, which may be in one of several formats:
+        - "admin_1" (from session cookie)
+        - "1" (direct numeric ID)
         """
         try:
+            # Log the user_id we received
+            print(f"Admin.get() called with user_id: {user_id}, type: {type(user_id)}")
+            
+            # Extract the numeric portion if in "admin_X" format
+            if isinstance(user_id, str) and user_id.startswith("admin_"):
+                user_id = user_id.split("_")[1]
+                print(f"Extracted numeric portion: {user_id}")
+            
             # Try to get admin from database
             admin = Admin.query.get(user_id)
             if admin:
+                print(f"Found admin in database: {admin.username}")
                 return admin
                 
             # If admin not found in database but ID is 1, create default admin
             if str(user_id) == "1" and not admin:
+                print("Creating default admin with ID 1")
                 # Create a default admin account if none exists
                 default_admin = Admin(id="1", username="admin")
                 default_admin.set_password("admin123")  # Set a default password
-                db.session.add(default_admin)
-                db.session.commit()
-                return default_admin
+                
+                try:
+                    db.session.add(default_admin)
+                    db.session.commit()
+                    print("Default admin created successfully")
+                    return default_admin
+                except Exception as commit_error:
+                    print(f"Error committing default admin: {commit_error}")
+                    db.session.rollback()
+                    # Try one more time to get the admin in case it was created by another process
+                    return Admin.query.get("1")
         except Exception as e:
             print(f"Error in Admin.get: {e}")
+            import traceback
+            print(traceback.format_exc())
+        
+        print("Admin.get() returning None")
         return None
