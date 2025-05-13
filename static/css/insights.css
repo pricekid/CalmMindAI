@@ -73,6 +73,18 @@
   color: #2c3e50;
 }
 
+.insights-content p,
+.insights-content div,
+.insights-content span,
+.insights-content li {
+  color: #2c3e50 !important;
+}
+
+.insights-header h3,
+.insights-header p {
+  color: #ffffff !important;
+}
+
 .reflection-prompt {
   font-style: italic;
   color: #495057;

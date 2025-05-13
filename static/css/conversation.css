@@ -52,6 +52,16 @@
   color: #2c3e50; /* Base text color for all bubbles */
 }
 
+.chat-bubble p,
+.chat-bubble div,
+.chat-bubble span {
+  color: #2c3e50 !important;
+}
+
+.chat-info {
+  color: #495057 !important;
+}
+
 /* User bubble customization */
 .user-bubble {
   background-color: #e9f5ff;
