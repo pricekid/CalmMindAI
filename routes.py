@@ -58,29 +58,32 @@ def login():
     error = None
     if request.method == 'POST':
         app.logger.info("Processing login form submission")
-        
-        email = request.form.get('email', '').lower()
-        password = request.form.get('password', '')
-        remember = request.form.get('remember') == 'on'
-        
-        # Validate inputs
-        if not email or not password:
-            error = 'Email and password are required'
-        else:
-            user = User.query.filter_by(email=email).first()
-            if user and user.check_password(password):
-                # Set permanent session before login
-                session.permanent = True
-                login_user(user, remember=remember)
-                app.logger.info(f"User {user.id} logged in successfully")
-                
-                next_page = request.args.get('next')
-                if next_page and next_page.startswith('/'):
-                    return redirect(next_page)
-                return redirect('/dashboard')
+        try:
+            email = request.form.get('email', '').lower() if request.form.get('email') else ''
+            password = request.form.get('password', '')
+            remember = request.form.get('remember') == 'on'
+            
+            # Validate inputs
+            if not email or not password:
+                error = 'Email and password are required'
             else:
-                error = 'Invalid email or password'
-                app.logger.warning(f"Failed login attempt for email: {email}")
+                user = User.query.filter_by(email=email).first()
+                if user and user.check_password(password):
+                    # Set permanent session before login
+                    session.permanent = True
+                    login_user(user, remember=remember)
+                    app.logger.info(f"User {user.id} logged in successfully")
+                    
+                    next_page = request.args.get('next')
+                    if next_page and next_page.startswith('/'):
+                        return redirect(next_page)
+                    return redirect('/dashboard')
+                else:
+                    error = 'Invalid email or password'
+                    app.logger.warning(f"Failed login attempt for email: {email}")
+        except Exception as e:
+            app.logger.error(f"Unhandled exception in login route: {str(e)}")
+            error = 'An error occurred during login. Please try again.'
     
     # Always get a fresh token for GET requests
     csrf_token = get_csrf_token()
