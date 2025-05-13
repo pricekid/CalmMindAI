@@ -367,9 +367,14 @@ footer a:hover {
 
 .form-control {
     background-color: #ffffff;
-    border: 1px solid var(--warm-peach-light);
+    border: 1px solid #ced4da;
     color: #212529;
     border-radius: 10px;
     padding: 12px 15px;
     transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--warm-peach);
+    box-shadow: 0 0 0 0.2rem rgba(230, 185, 128, 0.25);
 }
