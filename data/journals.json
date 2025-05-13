@@ -11,40 +11,41 @@
     "recommendations": []
   },
   {
+    "id": 6,
+    "user_id": "test-user-id",
+    "title": "Journal Entry May 13, 2025",
+    "content": "Today is a bit of a rough day. but all in all i am managing ok.",
+    "anxiety_level": 5,
+    "created_at": "2025-05-13T19:10:14.861776",
+    "updated_at": "2025-05-13T19:10:14.861782",
+    "is_analyzed": true,
+    "recommendations": []
+  },
+  {
     "id": 4,
     "user_id": "test-user-id",
     "title": "May 13th 2025",
     "content": "TOday is a alright day. met with the undp team. i got teh snese taht one person was trying to shut me out, while teh otehr was seeking was to work with me. but i am",
     "anxiety_level": 5,
     "created_at": "2025-05-13T19:27:22.263924",
-    "updated_at": "2025-05-13T19:27:31.955039",
+    "updated_at": "2025-05-13T19:30:11.859584",
     "is_analyzed": true,
-    "gpt_response": "It sounds like your day had a mix of interactions that left you feeling a bit uncertain. One person seemed to be closing a door, while another was more open to collaboration. This can bring up mixed feelings\u2014perhaps a bit of confusion or even a sense of uncertainty about where you stand. I wonder how this makes you feel about your role within the team. Take a moment to consider how these interactions align with your expectations of teamwork. Remember, you bring valuable perspectives and skills to the table. Trust in your ability to navigate these dynamics with grace.\n\nWarmly,\nCoach Mira",
-    "cbt_patterns": [
+    "recommendations": [
       {
-        "pattern": "Filtering",
-        "description": ""
+        "thought_pattern": "Filtering",
+        "recommendation": ""
       }
-    ],
-    "structured_data": {
-      "insight_text": "Your day included interactions that may have left you feeling somewhat uncertain, with one person appearing to shut you out and another being more receptive. This might tap into feelings of acceptance and belonging within the team.",
-      "reflection_prompt": "When you think about the mixed signals you received today, what emotion surfaces first\u2014confusion, disappointment, or something else?",
-      "thought_patterns": [
-        "Filtering"
-      ],
-      "strategies": [
-        {
-          "title": "Reality-Check Exercise",
-          "description": "This exercise is helpful in assessing your assumptions about the intentions of others.",
-          "action_step": "List evidence for and against your perception that someone is trying to shut you out.",
-          "emotional_need_addressed": "Validation and connection"
-        }
-      ],
-      "relationship_questions": [
-        "Have you noticed similar patterns in previous team interactions, where one person seems more distant?"
-      ],
-      "followup_text": "Remember, not every interaction defines your value. You're capable of fostering positive connections, even amidst mixed signals."
-    },
-    "user_reflection": null
+    ]
+  },
+  {
+    "id": 5,
+    "user_id": "0bcfecef-6436-49d1-8bcc-dab38f3ba1ee",
+    "title": "Journal Entry May 13, 2025",
+    "content": "Bit tired today. been working on so many differnet project, yet unable to get any to work the way i would like",
+    "anxiety_level": 3,
+    "created_at": "2025-05-13T00:58:05.035438",
+    "updated_at": "2025-05-13T00:58:05.035445",
+    "is_analyzed": true,
+    "recommendations": []
   }
 ]

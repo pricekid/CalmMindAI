@@ -137,6 +137,13 @@
     "username": "Kindspire",
     "email": "teddy@kindspire.app",
     "created_at": "2025-04-08T10:39:40.641561",
-    "entry_count": 0
+    "entry_count": 1
+  },
+  {
+    "id": "test-user-id",
+    "username": "TestUser",
+    "email": "test@example.com",
+    "created_at": "2025-05-13T19:08:06.047727",
+    "entry_count": 2
   }
 ]

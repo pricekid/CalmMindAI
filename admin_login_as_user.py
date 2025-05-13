@@ -40,8 +40,8 @@ def users_login_as():
         return redirect(url_for('admin_login_as_user.users_login_as_form'))
     
     # Store admin session info to return later
-    session['admin_id'] = current_user.id
-    session['is_admin_impersonating'] = True
+    admin_id = current_user.id
+    admin_username = current_user.username if hasattr(current_user, 'username') else "admin"
     
     # Find the user
     user = User.query.get(user_id)
@@ -49,10 +49,19 @@ def users_login_as():
         flash('User not found', 'error')
         return redirect(url_for('admin_login_as_user.users_login_as_form'))
     
+    # Clear admin session data
+    session.pop('is_admin', None)
+    session.pop('admin_username', None)
+    
+    # Store admin data for later return
+    session['admin_id'] = admin_id
+    session['is_admin_impersonating'] = True
+    session['original_admin_username'] = admin_username
+    
     # Log in as user
     login_user(user)
     flash(f'You are now logged in as {user.username or user.email or user.id}', 'warning')
-    logging.info(f"Admin {session['admin_id']} is now impersonating user {user.id}")
+    logging.info(f"Admin {admin_id} is now impersonating user {user.id}")
     
     # Redirect to the user's dashboard
     return redirect(url_for('dashboard'))
@@ -67,12 +76,18 @@ def return_to_admin():
         if admin:
             # Log back in as admin
             login_user(admin)
+            
+            # Restore admin session flags
+            session['is_admin'] = True
+            session['admin_username'] = session.get('original_admin_username', 'admin')
+            session['admin_id'] = admin_id
+            
             flash('Returned to admin account', 'info')
             logging.info(f"Admin {admin_id} returned from impersonating a user")
             
             # Clean up session
-            session.pop('admin_id', None)
             session.pop('is_admin_impersonating', None)
+            session.pop('original_admin_username', None)
             
             return redirect(url_for('admin.dashboard'))
     
