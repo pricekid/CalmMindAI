@@ -1,1 +1,13 @@
-[]
+[
+  {
+    "id": 1,
+    "user_id": "d45aac71-ac00-4491-8ea7-9fa2079297a2",
+    "title": "Untitled Entry",
+    "content": "thinking about the crisis in barbados with crime and how it will affcet our quality of life",
+    "anxiety_level": 5,
+    "created_at": "2025-04-18T16:24:23.543270",
+    "updated_at": "2025-04-18T16:24:23.543277",
+    "is_analyzed": false,
+    "recommendations": []
+  }
+]
