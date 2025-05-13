@@ -30,6 +30,11 @@ body {
     font-family: 'Poppins', 'Segoe UI', Roboto, sans-serif;
 }
 
+/* Fix text-info color for better contrast */
+.text-info {
+    color: #9eeaf9 !important; /* Brighter, higher contrast blue */
+}
+
 /* Ensure header text is visible on dark backgrounds */
 .welcome-header h1,
 .welcome-header h2,
@@ -132,6 +137,7 @@ body.bg-dark p,
 
 .card.bg-dark {
     color: #ffffff !important;
+    background-color: #1f2937 !important; /* Slightly lighter dark for better contrast */
 }
 
 .card.bg-dark .card-text,
@@ -173,6 +179,15 @@ body.bg-dark p,
 .card.bg-dark .card-title,
 .card.bg-dark .text-muted {
     color: #ffffff !important;
+}
+
+/* Fix muted text contrast */
+.text-muted {
+    color: #9ea7b3 !important;
+}
+
+.bg-dark .text-muted {
+    color: #bdc7d4 !important;
 }
 
 /* Ensure text contrast */
@@ -254,17 +269,31 @@ body.bg-dark .lead,
     color: #2d2d2d;
 }
 
+/* Fix contrast issues with btn-outline-info */
+.btn-outline-info {
+    border-color: #ffffff;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.btn-outline-info:hover {
+    background-color: #ffffff;
+    color: #2d2d2d;
+    border-color: #ffffff;
+}
+
 /* Add btn-warm variant */
 .btn-warm {
-    background-color: var(--warm-peach);
-    border-color: var(--warm-peach);
-    color: #2d2d2d;
+    background-color: #d96941; /* Darker warm color for better text contrast */
+    border-color: #d96941;
+    color: #ffffff;
+    font-weight: 500;
 }
 
 .btn-warm:hover {
-    background-color: #d1a673;
-    border-color: #d1a673;
-    color: #2d2d2d;
+    background-color: #c75a36;
+    border-color: #c75a36;
+    color: #ffffff;
 }
 
 /* Journal card styling */
