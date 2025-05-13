@@ -57,3 +57,23 @@ def status():
     }
     
     return render_template('admin/emergency_status.html', debug_info=debug_info)
+    
+@emergency_admin_bp.route('/dashboard')
+def emergency_dashboard():
+    """
+    Emergency admin dashboard with minimal functionality.
+    """
+    # Check if user is logged in as admin
+    if not current_user.is_authenticated or not hasattr(current_user, 'get_id') or not current_user.get_id().startswith('admin_'):
+        logger.warning("Unauthorized access attempt to emergency dashboard")
+        flash("You need to be logged in as admin to access this page.", "danger")
+        return redirect('/emergency/admin-login')
+        
+    # Get some basic stats if possible
+    stats = {
+        "admin_id": current_user.id,
+        "admin_username": current_user.username,
+        "login_time": "Current Session"
+    }
+    
+    return render_template('admin/emergency_dashboard.html', stats=stats)

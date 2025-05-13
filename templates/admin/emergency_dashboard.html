@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Emergency Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .card {
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .action-card {
+            margin-top: 20px;
+        }
+        h1, h2, h3 {
+            color: #343a40;
+        }
+        .stats-item {
+            padding: 10px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .stats-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <h1 class="text-center mb-4">Emergency Admin Dashboard</h1>
+                
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                
+                <div class="row">
+                    <!-- Admin Info Card -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-dark text-white">
+                                <h5 class="mb-0">Admin Information</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="stats-item d-flex justify-content-between">
+                                    <span>Admin ID:</span>
+                                    <strong>{{ stats.admin_id }}</strong>
+                                </div>
+                                <div class="stats-item d-flex justify-content-between">
+                                    <span>Username:</span>
+                                    <strong>{{ stats.admin_username }}</strong>
+                                </div>
+                                <div class="stats-item d-flex justify-content-between">
+                                    <span>Login Time:</span>
+                                    <strong>{{ stats.login_time }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Emergency Actions Card -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-danger text-white">
+                                <h5 class="mb-0">Emergency Actions</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-grid gap-2">
+                                    <a href="/emergency/status" class="btn btn-outline-secondary">Check Login Status</a>
+                                    <a href="/emergency/admin-login" class="btn btn-outline-dark">Emergency Admin Login</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Links Card -->
+                <div class="card action-card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Navigation</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                <div class="d-grid">
+                                    <a href="/" class="btn btn-outline-dark">Home Page</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="d-grid">
+                                    <a href="/admin/dashboard" class="btn btn-primary">Regular Admin Dashboard</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="d-grid">
+                                    <a href="/admin/users" class="btn btn-outline-secondary">User Management</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="d-grid">
+                                    <a href="/admin/journals" class="btn btn-outline-secondary">Journal Entries</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- System Info Card -->
+                <div class="card action-card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">System Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>This is an emergency admin interface designed to provide access when the regular admin routes are not working properly. If you're seeing this page, you've successfully authenticated as an admin user.</p>
+                        <p>Use this interface for essential system maintenance and troubleshooting when regular admin access is unavailable.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
