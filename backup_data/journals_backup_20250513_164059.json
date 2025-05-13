@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "title": "Untitled Entry",
+    "content": "thinking about the crisis in barbados with crime and how it will affcet our quality of life",
+    "created_at": "2025-04-18T16:24:23.543270",
+    "updated_at": "2025-04-18T16:24:23.543277",
+    "is_analyzed": false,
+    "anxiety_level": 5,
+    "initial_insight": "Anxiety often comes from overestimating threats and underestimating our ability to cope. Consider what might really happen and remind yourself of past challenges you've overcome.",
+    "user_reflection": null,
+    "followup_insight": null,
+    "second_reflection": null,
+    "closing_message": null,
+    "conversation_complete": false,
+    "user_id": "d45aac71-ac00-4491-8ea7-9fa2079297a2"
+  }
+]
