@@ -154,6 +154,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'admin_login_as_user.users_login_as_form' %}active{% endif %}" 
+                           href="{{ url_for('admin_login_as_user.users_login_as_form') }}">
+                            <i class="bi bi-person-check"></i> Login As User
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {% if request.endpoint == 'admin.settings' %}active{% endif %}" 
                            href="{{ url_for('admin.settings') }}">
                             <i class="bi bi-gear"></i> Settings

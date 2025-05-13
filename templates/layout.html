@@ -33,6 +33,13 @@
     {% block styles %}{% endblock %}
 </head>
 <body>
+    {% if session.get("is_admin_impersonating") %}
+    <div class="alert alert-warning mb-0 text-center" style="border-radius: 0;">
+      <strong>ADMIN MODE:</strong> You are currently viewing this page as a user. 
+      <a href="{{ url_for('admin_login_as_user.return_to_admin') }}" class="alert-link">Return to admin account</a>
+    </div>
+    {% endif %}
+    
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
         <div class="container">
