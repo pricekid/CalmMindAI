@@ -622,10 +622,13 @@ with app.app_context():
     except ImportError:
         app.logger.warning("OpenAI TTS service module not available")
     
-    # No longer importing stable_login module since its functionality 
-    # is now directly in routes.py to avoid the NoneType split error
-    # The '/stable-login' route is handled directly in routes.py
-    app.logger.info("Stable login route is directly managed in routes.py")
+    # Register the stable login blueprint with improved CSRF handling
+    try:
+        from stable_login import stable_login_bp
+        app.register_blueprint(stable_login_bp)
+        app.logger.info("Stable login blueprint registered with enhanced CSRF handling")
+    except ImportError:
+        app.logger.warning("Stable login blueprint not available")
     
     # Register the onboarding blueprint
     try:

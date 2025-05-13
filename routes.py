@@ -43,57 +43,17 @@ def simple_register_fallback():
     # Redirect to the correct path for the simple registration page
     return redirect('/register-simple')
 
-# Direct stable login implementation in routes.py
+# Main login route that redirects to stable login
 @app.route('/login', methods=['GET', 'POST'])
-@app.route('/stable-login', methods=['GET', 'POST'])
 def login():
     """
-    Secure login route with direct CSRF token handling
+    Main login route that redirects to stable login
     """
     if current_user.is_authenticated:
         return redirect('/dashboard')
     
-    from csrf_utils import get_csrf_token
-    
-    error = None
-    if request.method == 'POST':
-        app.logger.info("Processing login form submission")
-        try:
-            email = request.form.get('email', '').lower() if request.form.get('email') else ''
-            password = request.form.get('password', '')
-            remember = request.form.get('remember') == 'on'
-            
-            # Validate inputs
-            if not email or not password:
-                error = 'Email and password are required'
-            else:
-                user = User.query.filter_by(email=email).first()
-                if user and user.check_password(password):
-                    # Set permanent session before login
-                    session.permanent = True
-                    login_user(user, remember=remember)
-                    app.logger.info(f"User {user.id} logged in successfully")
-                    
-                    next_page = request.args.get('next')
-                    if next_page and next_page.startswith('/'):
-                        return redirect(next_page)
-                    return redirect('/dashboard')
-                else:
-                    error = 'Invalid email or password'
-                    app.logger.warning(f"Failed login attempt for email: {email}")
-        except Exception as e:
-            app.logger.error(f"Unhandled exception in login route: {str(e)}")
-            error = 'An error occurred during login. Please try again.'
-    
-    # Always get a fresh token for GET requests
-    csrf_token = get_csrf_token()
-    
-    # Set session to permanent with extended lifetime
-    session.permanent = True
-    
-    return render_template('stable_login.html', 
-                          csrf_token=csrf_token, 
-                          error=error)
+    # Use direct path instead of url_for to avoid circular imports
+    return redirect('/stable-login')
 
 # Token-based login route for email links
 @app.route('/login/token/<token>')
