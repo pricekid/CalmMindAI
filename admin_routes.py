@@ -49,13 +49,14 @@ def login():
     form = AdminLoginForm()
 
     if request.method == 'POST':
-        form = AdminLoginForm()
         if form.validate_on_submit():
             username = form.username.data
             password = form.password.data
-
+            admin = None
+            
             if username == "admin":
                 admin = Admin.get(1)
+                
             if admin and admin.check_password(password):
                 login_user(admin)
                 next_page = request.args.get('next')
@@ -66,13 +67,10 @@ def login():
                 logger.warning('Failed admin login attempt - invalid password')
                 flash('Invalid username or password', 'danger')
         else:
-            logger.warning('Failed admin login attempt - invalid username')
-            flash('Invalid username or password', 'danger')
-    elif request.method == 'POST':
-        logger.warning('Form validation failed')
-        for field, errors in form.errors.items():
-            for error in errors:
-                flash(f'{field}: {error}', 'danger')
+            logger.warning('Form validation failed')
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash(f'{field}: {error}', 'danger')
 
     return render_template('admin/basic_login.html', form=form)
 
