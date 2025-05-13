@@ -43,21 +43,37 @@ body {
     color: #212529 !important;
 }
 
+/* Card text contrast fixes */
+.card {
+    color: #212529 !important;
+}
+
 .card .card-text,
-.card .card-title {
+.card .card-title,
+.card .text-content,
+.card p {
     color: #212529 !important;
     font-weight: 500;
 }
 
-.card.bg-light .text-muted {
-    color: #495057 !important;
+.card.bg-dark {
+    color: #ffffff !important;
 }
 
-.card.bg-dark .text-muted,
 .card.bg-dark .card-text,
-.card.bg-dark .card-title {
+.card.bg-dark .card-title,
+.card.bg-dark .text-content,
+.card.bg-dark p {
     color: #ffffff !important;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Fix specific dashboard card text */
+.streak-fact-box,
+.anxiety-management-tools .card-text,
+.card .badge-earned,
+.card .level-name {
+    color: #212529 !important;
 }
 
 .achievement-card .card-text,
