@@ -9,9 +9,8 @@ logging.basicConfig(level=logging.INFO)
 with app.app_context():
     db.create_all()
 
-# Replit Auth disabled as requested
-# from replit_routes import replit_bp
-# app.register_blueprint(replit_bp, url_prefix='/auth')
+# No Auth integration is required in main.py
+# Authentication is handled in app.py and routes.py
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
