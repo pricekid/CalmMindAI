@@ -91,20 +91,7 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav">
-                    {% if session.get('is_admin') %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-user-shield me-1"></i>
-                            Admin
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminDropdown">
-                            <li><a class="dropdown-item" href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('admin.journals') }}">Journal Entries</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('admin.users') }}">Users</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('admin.settings') }}">Settings</a></li>
-                        </ul>
-                    </li>
-                    {% endif %}
+                    <!-- Admin dropdown has been integrated into the user dropdown -->
                     {% if current_user.is_authenticated %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
