@@ -231,9 +231,11 @@ body.bg-dark .lead,
 }
 
 .light-bg {
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(255, 255, 255, 0.98);
     padding: 1rem;
-    border-radius: 8px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .card:hover {

@@ -5,30 +5,32 @@
 {% block content %}
 <div class="row mt-5 mb-5">
     <div class="col-md-6">
-        <h1 class="display-4 fw-bold mb-4">Dear Teddy</h1>
-        <p class="lead">Write it all out. Teddy's listening.</p>
-        <p class="mb-4">Dear Teddy is a journaling companion for anxiety, clarity, and calm. Share your thoughts and feelings, and receive personalized guidance using proven cognitive behavioral therapy techniques to help you manage emotions and develop healthier thought patterns.</p>
+        <div class="light-bg py-4 px-4 rounded mb-3">
+            <h1 class="display-4 fw-bold mb-4 text-dark">Dear Teddy</h1>
+            <p class="lead text-dark fw-bold">Write it all out. Teddy's listening.</p>
+            <p class="mb-4 text-dark">Dear Teddy is a journaling companion for anxiety, clarity, and calm. Share your thoughts and feelings, and receive personalized guidance using proven cognitive behavioral therapy techniques to help you manage emotions and develop healthier thought patterns.</p>
 
-        {% if community_message %}
-        <div class="alert alert-info mb-4">
-            <i class="fas fa-users me-2"></i> {{ community_message }}
-        </div>
-        {% endif %}
+            {% if community_message %}
+            <div class="alert alert-info mb-4">
+                <i class="fas fa-users me-2"></i> {{ community_message }}
+            </div>
+            {% endif %}
 
-        {% if not current_user.is_authenticated %}
-        <div class="mt-4">
-            <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-2">Sign Up</a>
-            <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-lg me-2">Login</a>
-            <a href="{{ url_for('replit_auth.login') }}" class="btn btn-primary btn-lg">
-                <i class="fas fa-code me-1"></i> Login with Replit
-            </a>
+            {% if not current_user.is_authenticated %}
+            <div class="mt-4">
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-2">Sign Up</a>
+                <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-lg me-2">Login</a>
+                <a href="{{ url_for('replit_auth.login') }}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-code me-1"></i> Login with Replit
+                </a>
+            </div>
+            {% else %}
+            <div class="mt-4">
+                <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg me-2">Go to Dashboard</a>
+                <a href="{{ url_for('journal_blueprint.new_journal_entry') }}" class="btn btn-outline-secondary btn-lg">Write a Journal Entry</a>
+            </div>
+            {% endif %}
         </div>
-        {% else %}
-        <div class="mt-4">
-            <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg me-2">Go to Dashboard</a>
-            <a href="{{ url_for('journal_blueprint.new_journal_entry') }}" class="btn btn-outline-secondary btn-lg">Write a Journal Entry</a>
-        </div>
-        {% endif %}
     </div>
     <div class="col-md-6 d-flex align-items-center justify-content-center">
         <div class="text-center">
@@ -40,97 +42,99 @@
 <hr class="my-5">
 
 <div class="row g-4 mb-5">
-    <h2 class="text-center mb-4">Key Features</h2>
+    <h2 class="text-center mb-4 light-bg py-3 mx-auto" style="max-width: 300px; border-radius: 30px; color: #1f2937; font-weight: bold;">Key Features</h2>
 
     <div class="col-md-4">
-        <div class="card h-100 border-0 bg-dark text-light">
+        <div class="card h-100 border-0 light-bg">
             <div class="card-body text-center">
                 <div class="mb-3">
-                    <i class="fas fa-brain fa-3x text-info"></i>
+                    <i class="fas fa-brain fa-3x" style="color: #0078d7;"></i>
                 </div>
-                <h3 class="card-title h5">AI-Powered CBT Analysis</h3>
-                <p class="card-text">Our AI analyzes your journal entries to identify anxiety patterns and provides personalized CBT techniques.</p>
-                <a href="{{ url_for('journal_blueprint.new_journal_entry') }}" class="btn btn-outline-info">Try Analysis</a>
+                <h3 class="card-title h5 text-dark fw-bold">AI-Powered CBT Analysis</h3>
+                <p class="card-text text-dark">Our AI analyzes your journal entries to identify anxiety patterns and provides personalized CBT techniques.</p>
+                <a href="{{ url_for('journal_blueprint.new_journal_entry') }}" class="btn btn-primary">Try Analysis</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-4">
-        <div class="card h-100 border-0 bg-dark text-light">
+        <div class="card h-100 border-0 light-bg">
             <div class="card-body text-center">
                 <div class="mb-3">
-                    <i class="fas fa-book-open fa-3x text-info"></i>
+                    <i class="fas fa-book-open fa-3x" style="color: #0078d7;"></i>
                 </div>
-                <h3 class="card-title h5">Digital Journal</h3>
-                <p class="card-text">Write, edit, and review your thoughts in a private, secure digital journal to track your mental health journey.</p>
-                <a href="{{ url_for('journal_blueprint.journal_list') }}" class="btn btn-outline-info">Open Journal</a>
+                <h3 class="card-title h5 text-dark fw-bold">Digital Journal</h3>
+                <p class="card-text text-dark">Write, edit, and review your thoughts in a private, secure digital journal to track your mental health journey.</p>
+                <a href="{{ url_for('journal_blueprint.journal_list') }}" class="btn btn-primary">Open Journal</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-4">
-        <div class="card h-100 border-0 bg-light">
+        <div class="card h-100 border-0 light-bg">
             <div class="card-body text-center">
                 <div class="mb-3">
-                    <i class="fas fa-wind fa-3x text-info"></i>
+                    <i class="fas fa-wind fa-3x" style="color: #0078d7;"></i>
                 </div>
-                <h3 class="card-title h5 text-dark">Breathing Exercises</h3>
+                <h3 class="card-title h5 text-dark fw-bold">Breathing Exercises</h3>
                 <p class="card-text text-dark">Interactive guided breathing exercises to help you manage anxiety in the moment and practice mindfulness.</p>
-                <a href="{{ url_for('breathing') }}" class="btn btn-outline-info">Start Exercise</a>
+                <a href="{{ url_for('breathing') }}" class="btn btn-primary">Start Exercise</a>
             </div>
         </div>
     </div>
 </div>
 
 <div class="row mt-5 mb-4">
-    <div class="col-lg-8 mx-auto text-center">
-        <h2 class="mb-4 text-white fw-bold">How Cognitive Behavioral Therapy Works</h2>
-        <p class="lead text-white">CBT is a proven therapeutic approach that helps you identify and challenge negative thought patterns that contribute to anxiety.</p>
+    <div class="col-lg-8 mx-auto text-center light-bg">
+        <h2 class="mb-4 text-dark fw-bold">How Cognitive Behavioral Therapy Works</h2>
+        <p class="lead text-dark">CBT is a proven therapeutic approach that helps you identify and challenge negative thought patterns that contribute to anxiety.</p>
     </div>
 </div>
 
 <div class="row g-4 mb-5">
     <div class="col-md-4">
-        <div class="card h-100 bg-light">
+        <div class="card h-100 light-bg">
             <div class="card-body">
-                <h5 class="card-title"><i class="fas fa-search me-2 text-info"></i> Recognize</h5>
-                <p class="card-text">Learn to identify negative thought patterns and cognitive distortions that contribute to anxiety.</p>
-                <a href="{{ url_for('journal_blueprint.new_journal_entry') }}" class="btn btn-outline-info">Start Writing</a>
+                <h5 class="card-title text-dark fw-bold"><i class="fas fa-search me-2" style="color: #0078d7;"></i> Recognize</h5>
+                <p class="card-text text-dark">Learn to identify negative thought patterns and cognitive distortions that contribute to anxiety.</p>
+                <a href="{{ url_for('journal_blueprint.new_journal_entry') }}" class="btn btn-primary">Start Writing</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-4">
-        <div class="card h-100 bg-dark text-light">
+        <div class="card h-100 light-bg">
             <div class="card-body">
-                <h5 class="card-title"><i class="fas fa-question-circle me-2 text-info"></i> Challenge</h5>
-                <p class="card-text">Question the validity of anxious thoughts and examine the evidence for and against them.</p>
-                <a href="{{ url_for('journal_blueprint.new_journal_entry') }}" class="btn btn-outline-info">Challenge Thoughts</a>
+                <h5 class="card-title text-dark fw-bold"><i class="fas fa-question-circle me-2" style="color: #0078d7;"></i> Challenge</h5>
+                <p class="card-text text-dark">Question the validity of anxious thoughts and examine the evidence for and against them.</p>
+                <a href="{{ url_for('journal_blueprint.new_journal_entry') }}" class="btn btn-primary">Challenge Thoughts</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-4">
-        <div class="card h-100 bg-dark text-light">
+        <div class="card h-100 light-bg">
             <div class="card-body">
-                <h5 class="card-title"><i class="fas fa-exchange-alt me-2 text-info"></i> Replace</h5>
-                <p class="card-text">Develop balanced, realistic thoughts to replace distorted thinking patterns.</p>
-                <a href="{{ url_for('journal_blueprint.new_journal_entry') }}" class="btn btn-outline-info">Transform Thinking</a>
+                <h5 class="card-title text-dark fw-bold"><i class="fas fa-exchange-alt me-2" style="color: #0078d7;"></i> Replace</h5>
+                <p class="card-text text-dark">Develop balanced, realistic thoughts to replace distorted thinking patterns.</p>
+                <a href="{{ url_for('journal_blueprint.new_journal_entry') }}" class="btn btn-primary">Transform Thinking</a>
             </div>
         </div>
     </div>
 </div>
 
 <div class="text-center mt-5">
-    {% if not current_user.is_authenticated %}
-    <h3 class="mb-4">Ready to tell Teddy how you feel?</h3>
-    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-2">Get Started</a>
-    <a href="{{ url_for('replit_auth.login') }}" class="btn btn-warm btn-lg">
-        <i class="fas fa-code me-1"></i> Login with Replit
-    </a>
-    {% else %}
-    <h3 class="mb-4">Continue writing to Teddy</h3>
-    <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg">Go to Dashboard</a>
-    {% endif %}
+    <div class="light-bg py-4 px-4 rounded">
+        {% if not current_user.is_authenticated %}
+        <h3 class="mb-4 text-dark fw-bold">Ready to tell Teddy how you feel?</h3>
+        <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-2">Get Started</a>
+        <a href="{{ url_for('replit_auth.login') }}" class="btn btn-warm btn-lg">
+            <i class="fas fa-code me-1"></i> Login with Replit
+        </a>
+        {% else %}
+        <h3 class="mb-4 text-dark fw-bold">Continue writing to Teddy</h3>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg">Go to Dashboard</a>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}
