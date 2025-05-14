@@ -719,6 +719,14 @@ with app.app_context():
             app.logger.info("CSRF exemption applied to openai_tts_bp")
     except:
         pass
+        
+    # Register the email template preview blueprint
+    try:
+        from preview_email import preview_email_bp
+        app.register_blueprint(preview_email_bp)
+        app.logger.info("Email preview blueprint registered successfully")
+    except ImportError:
+        app.logger.warning("Email preview module not available")
     
     # Exempt API endpoints that need to bypass CSRF
     try:
