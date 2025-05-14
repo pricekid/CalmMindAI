@@ -96,8 +96,7 @@ def send_update_notification(email, email_id=None, dry_run=True):
             html_content=html_content
         )
         
-        # Set tracking ID in headers for deliverability tracking
-        message.add_header({"X-Email-ID": str(email_id)})
+        # Note: We're not using custom headers as they are not compatible with the current Mail object
         
         # Send email
         sg = SendGridAPIClient(api_key)

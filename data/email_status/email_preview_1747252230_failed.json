@@ -1,0 +1,8 @@
+{
+  "email_id": "preview_1747252230",
+  "recipient": "teddy.leon@alumni.uwi.edu",
+  "status": "failed",
+  "status_code": null,
+  "error": "'dict' object has no attribute 'personalization'",
+  "timestamp": "2025-05-14T19:50:30.870592"
+}
