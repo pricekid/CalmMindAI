@@ -58,8 +58,8 @@
             margin-bottom: 20px;
         }
         .highlight {
-            background-color: #f8f4ea;
-            border-left: 5px solid #E6B980;
+            background-color: #FDF6EC;
+            border-left: 5px solid #A05C2C;
             padding: 20px;
             margin: 25px 0;
             border-radius: 0 8px 8px 0;
@@ -67,7 +67,7 @@
         .highlight-title {
             font-weight: bold;
             font-size: 18px;
-            color: #1D4D4F;
+            color: #A05C2C;
             margin-top: 0;
             margin-bottom: 10px;
         }
@@ -77,7 +77,7 @@
         }
         .button {
             display: inline-block;
-            background: linear-gradient(135deg, #1D4D4F 0%, #2A6567 100%);
+            background: linear-gradient(135deg, #A05C2C 0%, #C27C4A 100%);
             color: white;
             padding: 14px 28px;
             text-decoration: none;
@@ -85,16 +85,16 @@
             font-weight: bold;
             font-size: 16px;
             letter-spacing: 0.5px;
-            box-shadow: 0 4px 8px rgba(29, 77, 79, 0.2);
+            box-shadow: 0 4px 8px rgba(160, 92, 44, 0.3);
             transition: all 0.3s ease;
         }
         .button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(29, 77, 79, 0.25);
+            box-shadow: 0 6px 12px rgba(160, 92, 44, 0.4);
         }
         .section-title {
             font-size: 22px;
-            color: #1D4D4F;
+            color: #A05C2C;
             margin-top: 35px;
             margin-bottom: 20px;
             text-align: center;
@@ -105,7 +105,7 @@
             display: block;
             width: 50px;
             height: 3px;
-            background-color: #E6B980;
+            background-color: #A05C2C;
             margin: 8px auto 0;
         }
         .features {
@@ -115,23 +115,29 @@
             margin: 25px 0;
         }
         .feature {
-            background-color: #f9f9f9;
+            background: linear-gradient(to bottom, #fff8f0, #fff);
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid rgba(160, 92, 44, 0.15);
+            box-shadow: 0 2px 6px rgba(160, 92, 44, 0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
+            transition: transform 0.2s ease;
+        }
+        .feature:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(160, 92, 44, 0.15);
         }
         .feature-icon {
             font-size: 30px;
-            color: #1D4D4F;
+            color: #A05C2C; /* Warm teddy brown */
             margin-bottom: 10px;
         }
         .feature-title {
             font-weight: bold;
-            color: #1D4D4F;
+            color: #1D4D4F; /* Teal accent for some elements */
             margin: 0 0 8px 0;
         }
         .divider {
@@ -144,11 +150,12 @@
             margin-top: 25px;
         }
         .footer {
-            background-color: #f5f5f5;
+            background-color: #FDF6EC;
             text-align: center;
             padding: 20px;
             font-size: 12px;
-            color: #777;
+            color: #A05C2C;
+            border-top: 1px solid rgba(160, 92, 44, 0.1);
         }
         @media (max-width: 600px) {
             .features {
@@ -200,7 +207,7 @@
         <div class="content">
             <p class="greeting">Hello,</p>
             
-            <p>We're excited to announce that <strong>Calm Journey</strong> is now <strong>Dear Teddy</strong>! This name change reflects our renewed focus on being your compassionate journaling companion for anxiety, clarity, and emotional wellness.</p>
+            <p>We're excited to announce that <strong>Calm Journey</strong> is now <strong>Dear Teddy</strong>! This name change reflects our renewed focus on being your warm, compassionate journaling companion for anxiety management, emotional clarity, and finding calm in your daily life.</p>
             
             <div class="highlight">
                 <p class="highlight-title">Important Security Update</p>
