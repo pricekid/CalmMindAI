@@ -1,10 +1,12 @@
 """
-Notification service - All notifications permanently disabled
+Notification service - Properly configured to send emails via SendGrid
 """
 import logging
 import os
 import json
 from datetime import datetime
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail, Email, To, Content
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -14,7 +16,8 @@ logger = logging.getLogger(__name__)
 # Function to check if notifications are blocked
 def check_notifications_blocked():
     """Check if notifications are blocked"""
-    return True
+    # We're enabling notifications, so return False
+    return False
 
 def ensure_data_directory():
     """Ensure the data directory exists"""

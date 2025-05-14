@@ -18,9 +18,9 @@ def send_test_email(recipient_email):
     print(f"SendGrid API key found (first 5 chars): {sendgrid_api_key[:5]}...")
     
     # Create message
-    from_email = Email("noreply@dearteddy.app")
+    from_email = Email("calmjourney7@gmail.com")
     to_email = To(recipient_email)
-    subject = "Test Email from Dear Teddy"
+    subject = "Test Email from Calm Journey"
     html_content = """
     <html>
         <body>
