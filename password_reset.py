@@ -59,12 +59,18 @@ def forgot_password():
         # Send email with reset link
         reset_url = url_for('reset.reset_password', token=token, _external=True)
         
-        # In a real app, send an actual email
-        # For demo purposes, just log it and show to the admin
-        logging.info(f"Password reset link for {email}: {reset_url}")
+        # Send email using SendGrid
+        success = send_reset_email(email, reset_url)
+        
+        if success:
+            logging.info(f"Password reset email sent to {email}")
+        else:
+            logging.error(f"Failed to send password reset email to {email}")
+            
+        # Don't reveal if email was sent successfully to prevent email enumeration
         flash('If that email is in our system, you will receive a reset link shortly', 'info')
         
-        # For demonstration, also flash the reset URL (remove in production)
+        # For demonstration in debug mode, also show the reset URL
         if app.debug:
             flash(f'Debug mode: Reset URL is {reset_url}', 'info')
             
