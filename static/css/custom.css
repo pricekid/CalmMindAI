@@ -515,7 +515,11 @@ body.bg-dark .lead,
 .card.bg-dark p, 
 .card.bg-dark li, 
 .card.bg-dark ol, 
-.card.bg-dark ul {
+.card.bg-dark ul,
+.card.bg-dark label,
+.card.bg-dark span,
+.card.bg-dark #timer-display,
+.card.bg-dark .form-label {
     color: #ffffff !important;
     font-weight: 400;
     text-shadow: none;
