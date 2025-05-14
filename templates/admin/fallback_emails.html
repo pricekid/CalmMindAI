@@ -1,0 +1,166 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1>Fallback Emails</h1>
+            <p class="text-muted">
+                These emails would have been sent via SendGrid but were saved locally due to API issues.
+                <span class="badge bg-warning text-dark">Total: {{ count }}</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#infoCollapse">
+                        <i class="bi bi-info-circle"></i> About Fallback Emails
+                    </button>
+                </div>
+                <div>
+                    <a href="{{ url_for('fallback.clear_all_fallback_emails') }}" class="btn btn-danger" 
+                       onclick="return confirm('Are you sure you want to clear all fallback emails? This cannot be undone.');">
+                        <i class="bi bi-trash"></i> Clear All Emails
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="collapse mb-4" id="infoCollapse">
+        <div class="card card-body">
+            <h5>About the Fallback Email System</h5>
+            <p>
+                When the SendGrid email service fails to send emails (e.g., due to API key issues), 
+                the application saves these emails locally as JSON files. This allows administrators 
+                to review what emails would have been sent.
+            </p>
+            <p>
+                <strong>How it works:</strong>
+            </p>
+            <ol>
+                <li>The application tries to send an email via SendGrid</li>
+                <li>If SendGrid fails, the email content is saved to <code>data/fallback_emails/</code></li>
+                <li>Admins can view these emails on this page</li>
+                <li>When SendGrid is working again, these emails will not be re-sent automatically</li>
+            </ol>
+            <p class="text-warning">
+                <i class="bi bi-exclamation-triangle"></i> To fix email delivery, please update the SendGrid API key in the 
+                <a href="{{ url_for('admin.settings') }}">Settings</a> page.
+            </p>
+        </div>
+    </div>
+
+    {% if count == 0 %}
+    <div class="alert alert-info">
+        <i class="bi bi-info-circle"></i> No fallback emails found. This means either all emails were sent successfully via SendGrid, or no emails have been triggered yet.
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Recipient</th>
+                            <th>Subject</th>
+                            <th>Timestamp</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for email in emails %}
+                        <tr>
+                            <td>
+                                <span class="badge 
+                                      {% if email.type == 'password_reset' %}bg-danger{% 
+                                      elif email.type == 'notification' %}bg-primary{% 
+                                      elif email.type == 'test_email' %}bg-info{% 
+                                      else %}bg-secondary{% endif %}">
+                                    {{ email.type }}
+                                </span>
+                            </td>
+                            <td>{{ email.recipient }}</td>
+                            <td>{{ email.subject }}</td>
+                            <td>{{ email.timestamp }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#emailModal-{{ loop.index }}">
+                                    <i class="bi bi-envelope-open"></i> View
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Modals -->
+    {% for email in emails %}
+    <div class="modal fade" id="emailModal-{{ loop.index }}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ email.subject }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row mb-3">
+                            <div class="col-md-3 text-muted">Type:</div>
+                            <div class="col-md-9">
+                                <span class="badge 
+                                      {% if email.type == 'password_reset' %}bg-danger{% 
+                                      elif email.type == 'notification' %}bg-primary{% 
+                                      elif email.type == 'test_email' %}bg-info{% 
+                                      else %}bg-secondary{% endif %}">
+                                    {{ email.type }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3 text-muted">To:</div>
+                            <div class="col-md-9">{{ email.recipient }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3 text-muted">From:</div>
+                            <div class="col-md-9">dearteddybb@gmail.com</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3 text-muted">Timestamp:</div>
+                            <div class="col-md-9">{{ email.timestamp }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3 text-muted">File:</div>
+                            <div class="col-md-9"><code>{{ email.file }}</code></div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Email Content
+                                    </div>
+                                    <div class="card-body bg-white text-dark">
+                                        <iframe srcdoc="{{ email.content|safe }}" style="width: 100%; height: 400px; border: none;"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}

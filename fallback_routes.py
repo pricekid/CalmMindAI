@@ -17,10 +17,10 @@ fallback_bp = Blueprint('fallback', __name__)
 def view_fallback_emails():
     """View fallback emails that would have been sent via SendGrid"""
     emails = get_recent_emails(limit=50)
-    return jsonify({
-        'count': len(emails),
-        'emails': emails
-    })
+    return render_template('admin/fallback_emails.html', 
+                          emails=emails,
+                          count=len(emails),
+                          title="Fallback Emails")
 
 @fallback_bp.route('/admin/clear-fallback-emails')
 @login_required
