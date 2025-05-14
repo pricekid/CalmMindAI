@@ -6,10 +6,10 @@
     <title>Important Update: Calm Journey is now Dear Teddy</title>
     <style>
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
             line-height: 1.6;
             color: #333;
-            background-color: #f9f9f9;
+            background-color: #FDF6EC; /* Warm cream background */
             margin: 0;
             padding: 0;
         }
@@ -17,12 +17,12 @@
             max-width: 600px;
             margin: 0 auto;
             background-color: #ffffff;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(160, 92, 44, 0.15); /* Teddy brown shadow */
         }
         .header {
-            background: linear-gradient(135deg, #1D4D4F 0%, #2A6567 100%);
+            background: linear-gradient(135deg, #A05C2C 0%, #C27C4A 100%); /* Warm teddy brown gradient */
             padding: 30px;
             text-align: center;
             color: white;
@@ -36,11 +36,18 @@
         .logo {
             margin-bottom: 15px;
         }
+        .logo-img {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            display: block;
+        }
         .logo-text {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: bold;
             color: white;
             letter-spacing: 1px;
+            margin-top: 10px;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
         }
         .content {
@@ -148,12 +155,43 @@
                 grid-template-columns: 1fr;
             }
         }
+        .teddy-bear {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            display: block;
+            stroke: #A05C2C;
+            fill: none;
+            stroke-width: 8;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <div class="logo">
+                <!-- Teddy Bear SVG Logo -->
+                <svg class="teddy-bear" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                  <g fill="none" stroke="#A05C2C" stroke-width="8">
+                    <!-- Head - rounded bear shape -->
+                    <circle cx="150" cy="150" r="90" fill="none"/>
+                    
+                    <!-- Ears -->
+                    <circle cx="95" cy="95" r="25" fill="none"/>
+                    <circle cx="205" cy="95" r="25" fill="none"/>
+                    
+                    <!-- Eyes -->
+                    <circle cx="125" cy="135" r="6" fill="#A05C2C" stroke="none"/>
+                    <circle cx="175" cy="135" r="6" fill="#A05C2C" stroke="none"/>
+                    
+                    <!-- Nose and Mouth Area -->
+                    <circle cx="150" cy="165" r="30" fill="none"/>
+                    
+                    <!-- Arrow pointing down in mouth -->
+                    <path d="M150,180 L150,150" stroke="#A05C2C" stroke-width="6" fill="none" stroke-linecap="round"/>
+                    <path d="M135,165 L150,180 L165,165" stroke="#A05C2C" stroke-width="6" fill="none" stroke-linecap="round"/>
+                  </g>
+                </svg>
                 <div class="logo-text">Dear Teddy</div>
             </div>
             <h1>We've Changed Our Name!</h1>
