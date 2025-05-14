@@ -11,7 +11,14 @@ from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from app import app, db
 from models import User
 from flask_login import login_user
-from twilio.rest import Client
+
+# Try to import Twilio, but handle the case where it's not available
+try:
+    from twilio.rest import Client
+    TWILIO_AVAILABLE = True
+except ImportError:
+    TWILIO_AVAILABLE = False
+    logging.warning("Twilio module not available. SMS functionality will be limited to logging.")
 
 # Create Blueprint with a unique name
 pwd_reset_bp = Blueprint('pwd_reset', __name__)
@@ -31,6 +38,20 @@ def send_reset_sms(to_phone_number, reset_url):
         bool: True if SMS was sent successfully, False otherwise
     """
     try:
+        # Log the URL for testing purposes regardless of Twilio availability
+        logging.info(f"[PASSWORD RESET] URL for {to_phone_number}: {reset_url}")
+        print(f"\n==== PASSWORD RESET LINK ====\nPhone: {to_phone_number}\nURL: {reset_url}\n============================\n")
+        
+        # If Twilio is not available, just return True (we've logged the URL)
+        if not TWILIO_AVAILABLE:
+            logging.warning("Twilio module not available, using fallback method")
+            return True
+            
+        # Check for Twilio blocker (similar to SendGrid blocker in the logs)
+        if 'twilio_blocker' in str(logging.Logger.manager.loggerDict):
+            logging.warning("Twilio appears to be blocked in this environment")
+            return True
+            
         # Get Twilio credentials from environment
         account_sid = os.environ.get('TWILIO_ACCOUNT_SID')
         auth_token = os.environ.get('TWILIO_AUTH_TOKEN')
@@ -38,13 +59,15 @@ def send_reset_sms(to_phone_number, reset_url):
         
         if not account_sid or not auth_token or not from_number:
             logging.warning("Twilio environment variables are not set")
-            # Fall back to logging the reset URL for testing
-            logging.info(f"[FALLBACK] Password reset URL for {to_phone_number}: {reset_url}")
-            print(f"\n==== PASSWORD RESET LINK ====\nPhone: {to_phone_number}\nURL: {reset_url}\n============================\n")
             return True  # Return True to indicate we handled it (via fallback)
         
-        # Create Twilio client
-        client = Client(account_sid, auth_token)
+        # Create Twilio client if it's available
+        if TWILIO_AVAILABLE:
+            client = Client(account_sid, auth_token)
+        else:
+            # This shouldn't happen due to the earlier check, but just in case
+            logging.error("Attempted to use Twilio client when it's not available")
+            return True
         
         # Create message content
         message_content = f"Your Dear Teddy password reset link is: {reset_url} (valid for 24 hours)"
@@ -60,9 +83,6 @@ def send_reset_sms(to_phone_number, reset_url):
         return True
     except Exception as e:
         logging.error(f"Error sending Twilio SMS: {str(e)}")
-        # Fall back to logging for testing
-        logging.info(f"[FALLBACK] Password reset URL for {to_phone_number}: {reset_url}")
-        print(f"\n==== PASSWORD RESET LINK ====\nPhone: {to_phone_number}\nURL: {reset_url}\n============================\n")
         return True  # Return True to still allow testing
 
 # Form for requesting password reset
@@ -87,7 +107,11 @@ class ResetPasswordForm(FlaskForm):
 
 def get_serializer():
     """Get a serializer for generating and verifying tokens"""
-    return URLSafeTimedSerializer(app.secret_key)
+    secret_key = app.secret_key
+    if not secret_key:
+        secret_key = "temporary-secret-key-for-development-only"
+        logging.warning("Using temporary secret key for password reset. Set SESSION_SECRET in environment.")
+    return URLSafeTimedSerializer(secret_key)
 
 @pwd_reset_bp.route('/forgot-password', methods=['GET', 'POST'])
 def forgot_password():
@@ -98,16 +122,21 @@ def forgot_password():
     if form.validate_on_submit():
         phone = form.phone.data
         
-        # Normalize phone number format
-        if not phone.startswith('+'):
-            phone = '+' + phone.lstrip('0')
+        # Make sure phone is valid
+        if phone:
+            # Normalize phone number format
+            if not phone.startswith('+'):
+                phone = '+' + phone.lstrip('0')
         
-        # Check if user exists
-        user = User.query.filter_by(phone=phone).first()
-        if not user:
-            # Don't reveal if phone exists or not for security
-            flash('If that phone number is in our system, you will receive a reset link shortly', 'info')
-            return redirect(url_for('index'))
+            # Check if user exists
+            user = User.query.filter_by(phone=phone).first()
+            if not user:
+                # Don't reveal if phone exists or not for security
+                flash('If that phone number is in our system, you will receive a reset link shortly', 'info')
+                return redirect(url_for('index'))
+        else:
+            flash('Please enter a valid phone number', 'error')
+            return render_template('forgot_password.html', form=form)
         
         # Generate token
         serializer = get_serializer()

@@ -487,13 +487,13 @@ with app.app_context():
     from admin_routes import admin_bp
     app.register_blueprint(admin_bp)
     
-    # Register password reset functionality
+    # Register Twilio SMS-based password reset functionality
     try:
-        from password_reset import setup_password_reset
+        from twilio_password_reset import setup_password_reset
         setup_password_reset(app)
-        app.logger.info("Password reset functionality enabled")
-    except ImportError:
-        app.logger.warning("Password reset module not available")
+        app.logger.info("Password reset functionality enabled with Twilio SMS")
+    except ImportError as e:
+        app.logger.warning(f"Password reset module not available: {str(e)}")
         
     # Register admin login-as-user functionality
     try:
