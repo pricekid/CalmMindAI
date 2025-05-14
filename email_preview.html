@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Preview</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1D4D4F;
+        }
+        .preview-container {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+        .button {
+            display: inline-block;
+            background-color: #1D4D4F;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dear Teddy App Update Notification Preview</h1>
+        <p>This is how the email will appear to recipients:</p>
+        
+        <div class="preview-container">
+            <iframe src="/app_update_preview_1747242631.html"></iframe>
+        </div>
+        
+        <p>To send this notification to all users, run the following command:</p>
+        <pre>python send_app_update_notification.py --send</pre>
+        
+        <a href="/" class="button">Return to App</a>
+    </div>
+</body>
+</html>
