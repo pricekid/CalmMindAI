@@ -16,6 +16,15 @@ from datetime import datetime, timedelta
 import gamification  # Import the gamification module
 from utils.activity_tracker import get_community_message  # Import journal activity tracker
 
+# Import password reset module and initialize it
+try:
+    from password_reset import setup_password_reset, reset_bp
+    setup_password_reset(app)
+    app.register_blueprint(reset_bp, url_prefix='/reset')
+    app.logger.info("Password reset functionality enabled")
+except Exception as e:
+    app.logger.warning(f"Password reset module not available: {str(e)}")
+
 # Home page
 @app.route('/')
 def index():
