@@ -24,6 +24,14 @@ try:
 except Exception as e:
     app.logger.warning(f"Password reset module import error: {str(e)}")
 
+# Import fallback email routes
+try:
+    from fallback_routes import register_fallback_routes
+    register_fallback_routes(app)
+    app.logger.info("Fallback email routes registered successfully")
+except Exception as e:
+    app.logger.warning(f"Fallback email routes error: {str(e)}")
+
 # Home page
 @app.route('/')
 def index():

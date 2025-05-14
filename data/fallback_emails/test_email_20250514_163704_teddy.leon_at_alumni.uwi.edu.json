@@ -1,0 +1,7 @@
+{
+  "recipient": "teddy.leon@alumni.uwi.edu",
+  "subject": "Test Email from Dear Teddy",
+  "content": "\n        <html>\n            <body>\n                <h1>Test Email</h1>\n                <p>This is a test email sent from the Calm Journey application.</p>\n                <p>If you're seeing this, the email notification system is working correctly!</p>\n            </body>\n        </html>\n        ",
+  "type": "test_email",
+  "timestamp": "2025-05-14T16:37:04.234459"
+}
