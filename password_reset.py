@@ -70,7 +70,7 @@ def send_reset_email(to_email, reset_url):
         sg = SendGridAPIClient(sendgrid_api_key)
         
         # Create email
-        from_email = Email("calmjourney7@gmail.com")  # SendGrid verified sender email
+        from_email = Email("dearteddybb@gmail.com")  # SendGrid verified sender email
         subject = "Reset Your Dear Teddy Password"
         to_email_obj = To(to_email)
         

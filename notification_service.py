@@ -57,9 +57,9 @@ def send_test_email(email_address):
             return False
         
         # Create message
-        from_email = Email("calmjourney7@gmail.com")
+        from_email = Email("dearteddybb@gmail.com")
         to_email = To(email_address)
-        subject = "Test Email from Calm Journey"
+        subject = "Test Email from Dear Teddy"
         html_content = """
         <html>
             <body>
@@ -141,7 +141,7 @@ def send_email(recipient, subject, html_content, text_content=None):
             return {"success": False, "error": "SendGrid API key not configured"}
         
         # Create message
-        from_email = Email("calmjourney7@gmail.com")
+        from_email = Email("dearteddybb@gmail.com")
         to_email = To(recipient)
         
         # Create mail with content

@@ -37,12 +37,12 @@ def test_direct_email(email_address):
     """Test sending an email using the direct send_email function."""
     logger.info(f"Sending direct email to {email_address}")
     
-    subject = "Verification Email from Calm Journey"
+    subject = "Verification Email from Dear Teddy"
     html_content = """
     <html>
         <body>
             <h1>Email Verification</h1>
-            <p>This is a verification email sent directly from the Calm Journey application.</p>
+            <p>This is a verification email sent directly from the Dear Teddy application.</p>
             <p>If you're seeing this, email functionality has been successfully restored!</p>
         </body>
     </html>
