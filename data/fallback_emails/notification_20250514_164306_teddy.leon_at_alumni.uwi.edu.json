@@ -1,0 +1,7 @@
+{
+  "recipient": "teddy.leon@alumni.uwi.edu",
+  "subject": "Verification Email from Dear Teddy",
+  "content": "\n    <html>\n        <body>\n            <h1>Email Verification</h1>\n            <p>This is a verification email sent directly from the Dear Teddy application.</p>\n            <p>If you're seeing this, email functionality has been successfully restored!</p>\n        </body>\n    </html>\n    ",
+  "type": "notification",
+  "timestamp": "2025-05-14T16:43:06.562833"
+}

@@ -23,12 +23,11 @@ def test_sendgrid_direct(recipient_email="teddy.leon@alumni.uwi.edu"):
         logger.info(f"Using SendGrid API key: {api_key[:5]}...")
         
         # Create a minimal message
-        message = Mail(
-            from_email='dearteddybb@gmail.com',
-            to_emails=recipient_email,
-            subject='Simple SendGrid Test',
-            plain_text_content='This is a direct test of the SendGrid API'
-        )
+        from_email = Email("dearteddybb@gmail.com")
+        to_email = To(recipient_email)
+        subject = "Simple SendGrid Test"
+        content = Content("text/plain", "This is a direct test of the SendGrid API")
+        message = Mail(from_email, to_email, subject, content)
         
         # Send message
         sg = SendGridAPIClient(api_key)
