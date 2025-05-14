@@ -129,7 +129,7 @@ def forgot_password():
                 phone = '+' + phone.lstrip('0')
         
             # Check if user exists
-            user = User.query.filter_by(phone=phone).first()
+            user = User.query.filter_by(phone_number=phone).first()
             if not user:
                 # Don't reveal if phone exists or not for security
                 flash('If that phone number is in our system, you will receive a reset link shortly', 'info')
@@ -178,7 +178,7 @@ def reset_password(token):
         return redirect(url_for('pwd_reset.forgot_password'))
     
     # Find the user
-    user = User.query.filter_by(phone=phone).first()
+    user = User.query.filter_by(phone_number=phone).first()
     if not user:
         flash('User not found', 'error')
         return redirect(url_for('pwd_reset.forgot_password'))
