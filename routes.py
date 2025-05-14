@@ -18,11 +18,17 @@ from utils.activity_tracker import get_community_message  # Import journal activ
 
 # Import password reset module (initialization happens in app.py)
 try:
-    # Import but don't initialize - this is handled in app.py
-    from password_reset import pwd_reset_bp
-    app.logger.info("Password reset module imported in routes")
-except Exception as e:
-    app.logger.warning(f"Password reset module import error: {str(e)}")
+    # Try to import the new improved password reset module
+    from improved_password_reset import register_password_reset
+    register_password_reset(app)
+    app.logger.info("Improved password reset functionality enabled with SendGrid")
+except ImportError:
+    # Fall back to the original module if the improved one isn't available
+    try:
+        from password_reset import pwd_reset_bp
+        app.logger.info("Legacy password reset module imported in routes")
+    except Exception as e:
+        app.logger.warning(f"Password reset module import error: {str(e)}")
 
 # Import fallback email routes
 try:
