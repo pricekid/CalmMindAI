@@ -1,73 +1,60 @@
 """
-Script to immediately send a test email with the updated referral message.
-This will send a real email using the current email template.
+Test script to send a direct email using SendGrid.
 """
 import os
 import sys
-import logging
-import json
-from datetime import datetime
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail, Email, To, Content
 
-# Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
-
-def send_test_email_to_user(user_id=2):  # Default to Jeff Peter (user ID 2)
+def send_test_email(recipient_email):
     """
-    Send a test email to a specific user to verify the referral message.
+    Send a test email via SendGrid directly.
+    """
+    sendgrid_api_key = os.environ.get('SENDGRID_API_KEY')
+    if not sendgrid_api_key:
+        print("ERROR: SENDGRID_API_KEY environment variable is not set")
+        return False
     
-    Args:
-        user_id: The ID of the user to send the test email to (default: 2)
+    print(f"SendGrid API key found (first 5 chars): {sendgrid_api_key[:5]}...")
+    
+    # Create message
+    from_email = Email("noreply@dearteddy.app")
+    to_email = To(recipient_email)
+    subject = "Test Email from Dear Teddy"
+    html_content = """
+    <html>
+        <body>
+            <h1>Test Email</h1>
+            <p>This is a test email sent directly from the SendGrid API.</p>
+            <p>If you're seeing this, the SendGrid integration is working correctly!</p>
+        </body>
+    </html>
     """
+    content = Content("text/html", html_content)
+    
+    # Create mail
+    mail = Mail(from_email, to_email, subject, content)
+    
     try:
-        # Load users
-        with open('data/users.json', 'r') as f:
-            users = json.load(f)
-        
-        # Find the user with the specified ID
-        user = None
-        for u in users:
-            if u.get('id') == user_id:
-                user = u
-                break
-        
-        if not user:
-            logger.error(f"User with ID {user_id} not found")
-            return False
-        
-        logger.info(f"Sending test email to {user['username']} ({user['email']})")
-        
-        # Import the send_daily_reminder function
-        from notification_service import send_daily_reminder
-        
-        # Send the test email
-        result = send_daily_reminder(user)
-        
-        if result:
-            logger.info(f"Successfully sent test email to {user['username']} ({user['email']})")
-            return True
-        else:
-            logger.error(f"Failed to send test email to {user['username']} ({user['email']})")
-            return False
+        # Send the email
+        sg = SendGridAPIClient(sendgrid_api_key)
+        response = sg.send(mail)
+        print(f"Email sent to {recipient_email}")
+        print(f"Status code: {response.status_code}")
+        return True
     except Exception as e:
-        logger.error(f"Error sending test email: {str(e)}")
+        print(f"Error sending email: {str(e)}")
         return False
 
 if __name__ == "__main__":
-    print("Sending test email with referral message...")
+    if len(sys.argv) < 2:
+        print("Usage: python send_test_email_now.py <email_address>")
+        sys.exit(1)
     
-    # Use Jeff Peter (user ID 2) by default
-    user_id = 2  # naturalarts@gmail.com
-    
-    if len(sys.argv) > 1:
-        try:
-            user_id = int(sys.argv[1])
-        except ValueError:
-            print(f"Invalid user ID: {sys.argv[1]}. Using default user ID 2.")
-    
-    success = send_test_email_to_user(user_id)
+    recipient_email = sys.argv[1]
+    success = send_test_email(recipient_email)
     
     if success:
-        print("Test email sent successfully! Check your inbox to see the referral message.")
+        print("Email sent successfully!")
     else:
-        print("Failed to send test email. Check the logs for more information.")
+        print("Failed to send email.")
