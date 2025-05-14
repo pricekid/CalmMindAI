@@ -487,11 +487,11 @@ with app.app_context():
     from admin_routes import admin_bp
     app.register_blueprint(admin_bp)
     
-    # Register Twilio SMS-based password reset functionality
+    # Register SendGrid email-based password reset functionality
     try:
-        from twilio_password_reset import setup_password_reset
+        from password_reset import setup_password_reset
         setup_password_reset(app)
-        app.logger.info("Password reset functionality enabled with Twilio SMS")
+        app.logger.info("Password reset functionality enabled with SendGrid")
     except ImportError as e:
         app.logger.warning(f"Password reset module not available: {str(e)}")
         

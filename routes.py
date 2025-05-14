@@ -19,7 +19,7 @@ from utils.activity_tracker import get_community_message  # Import journal activ
 # Import password reset module (initialization happens in app.py)
 try:
     # Import but don't initialize - this is handled in app.py
-    from password_reset import reset_bp
+    from password_reset import pwd_reset_bp
     app.logger.info("Password reset module imported in routes")
 except Exception as e:
     app.logger.warning(f"Password reset module import error: {str(e)}")
