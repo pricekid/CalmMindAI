@@ -8,6 +8,14 @@ from datetime import datetime
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, Email, To, Content
 
+# Import fallback email functionality
+try:
+    from fallback_email import save_fallback_email
+    FALLBACK_AVAILABLE = True
+except ImportError:
+    FALLBACK_AVAILABLE = False
+    logging.warning("Fallback email module not available")
+
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -81,6 +89,16 @@ def send_test_email(email_address):
         
     except Exception as e:
         logger.error(f"Error sending test email: {str(e)}")
+        
+        # Use fallback email system if available
+        if FALLBACK_AVAILABLE:
+            try:
+                save_fallback_email(email_address, subject, html_content, email_type="test_email")
+                logger.info(f"Test email saved to fallback system for {email_address}")
+                return True
+            except Exception as fallback_error:
+                logger.error(f"Error using fallback email system: {str(fallback_error)}")
+        
         return False
 
 def send_test_sms(phone_number):
@@ -160,6 +178,16 @@ def send_email(recipient, subject, html_content, text_content=None):
     
     except Exception as e:
         logger.error(f"Error sending email to {recipient}: {str(e)}")
+        
+        # Use fallback email system if available
+        if FALLBACK_AVAILABLE:
+            try:
+                save_fallback_email(recipient, subject, html_content, email_type="notification")
+                logger.info(f"Email saved to fallback system for {recipient}")
+                return {"success": True, "fallback": True, "message": "Email saved to fallback system"}
+            except Exception as fallback_error:
+                logger.error(f"Error using fallback email system: {str(fallback_error)}")
+        
         return {"success": False, "error": str(e)}
 
 def send_immediate_notification_to_all_users():

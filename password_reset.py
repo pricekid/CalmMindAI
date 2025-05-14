@@ -14,6 +14,14 @@ from flask_login import login_user
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, Email, To, Content
 
+# Import fallback email functionality
+try:
+    from fallback_email import save_fallback_email
+    FALLBACK_AVAILABLE = True
+except ImportError:
+    FALLBACK_AVAILABLE = False
+    logging.warning("Fallback email module not available")
+
 # Create Blueprint with a unique name
 pwd_reset_bp = Blueprint('pwd_reset', __name__)
 
@@ -83,7 +91,16 @@ def send_reset_email(to_email, reset_url):
         return True
     except Exception as e:
         logging.error(f"Error sending via SendGrid: {str(e)}")
-        # Fall back to logging the reset URL for testing
+        
+        # Use our fallback email system if available
+        if FALLBACK_AVAILABLE:
+            try:
+                save_fallback_email(to_email, "Reset Your Dear Teddy Password", html_content, email_type="password_reset")
+                logging.info(f"Password reset email saved to fallback system for {to_email}")
+            except Exception as fallback_error:
+                logging.error(f"Error using fallback email system: {str(fallback_error)}")
+        
+        # Always log the reset URL for debugging
         logging.info(f"[FALLBACK] Password reset URL for {to_email}: {reset_url}")
         print(f"\n==== PASSWORD RESET LINK ====\nEmail: {to_email}\nURL: {reset_url}\n============================\n")
         return True  # Return True to still allow testing
