@@ -70,7 +70,7 @@ def test_sendgrid_direct(recipient_email, verbose=False):
         message = Mail(from_email, to_email, subject, content)
         
         # Add category for tracking
-        message.category = "test"
+        message.add_category("test")
         
         # Create SendGrid client and send
         if verbose:
@@ -89,7 +89,11 @@ def test_sendgrid_direct(recipient_email, verbose=False):
         # Log the response details
         logger.info(f"Email sent in {end_time - start_time:.2f} seconds")
         logger.info(f"Status code: {response.status_code}")
-        logger.info(f"Response headers: {response.headers if verbose else {k: response.headers[k] for k in ['X-Message-Id'] if k in response.headers}}")
+        # Log headers more safely
+        if verbose:
+            logger.info(f"Response headers: {dict(response.headers)}")
+        elif 'X-Message-Id' in response.headers:
+            logger.info(f"Message ID: {response.headers['X-Message-Id']}")
         
         return True
         
