@@ -1,11 +1,11 @@
 {
-  "name": "Calm Journey",
-  "short_name": "CalmJourney",
+  "name": "Dear Teddy",
+  "short_name": "DearTeddy",
   "description": "A journaling companion for anxiety, clarity, and calm",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1a1a2e",
-  "theme_color": "#4d5bf9",
+  "theme_color": "#A05C2C",
   "icons": [
     {
       "src": "/static/images/icon-192x192.png",

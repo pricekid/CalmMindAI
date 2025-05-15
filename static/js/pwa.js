@@ -1,4 +1,4 @@
-// Progressive Web App initialization for Calm Journey
+// Progressive Web App initialization for Dear Teddy
 
 // Check if service workers are supported
 if ('serviceWorker' in navigator) {
