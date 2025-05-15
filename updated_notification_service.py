@@ -205,7 +205,7 @@ def send_password_reset_email(email_address, reset_token, reset_url=None):
     
     # Create reset URL if not provided
     if not reset_url:
-        reset_url = f"https://dearteddy-app.replit.app/reset-password/{reset_token}"
+        reset_url = f"https://calm-mind-ai-naturalarts.replit.app/reset-password/{reset_token}"
     
     subject = "Reset Your Dear Teddy Password"
     

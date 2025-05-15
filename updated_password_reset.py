@@ -31,7 +31,7 @@ def generate_token():
 def get_base_url():
     """Get the base URL of the application"""
     # In production, this should come from configuration
-    return os.environ.get('BASE_URL', 'https://dearteddy-app.replit.app')
+    return os.environ.get('BASE_URL', 'https://calm-mind-ai-naturalarts.replit.app')
 
 def store_reset_token(user_id, email):
     """
