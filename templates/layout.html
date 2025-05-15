@@ -31,6 +31,9 @@
     <!-- CSRF Token for JS Ajax requests -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {% block styles %}{% endblock %}
+    
+    <!-- Service Worker Registration for PWA Support -->
+    <script src="{{ url_for('static', filename='js/register-sw.js') }}"></script>
 </head>
 <body>
     {% if session.get("is_admin_impersonating") %}

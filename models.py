@@ -136,8 +136,8 @@ class MoodLog(db.Model):
 
 # Required for Replit Auth - OAuth model for storing tokens
 class FlaskDanceOAuth(OAuthConsumerMixin, db.Model):
+    # Use __table_name__ as a string to avoid LSP error
     __tablename__ = "flask_dance_oauth"
-    # Override the mixin's tablename
     
     user_id = db.Column(db.String, db.ForeignKey("user.id"))
     browser_session_key = db.Column(db.String, nullable=False)
