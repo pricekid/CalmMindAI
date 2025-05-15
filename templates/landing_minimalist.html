@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dear Teddy – Mental Wellness</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  
+  <!-- PWA Support -->
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+  <meta name="theme-color" content="#A05C2C">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-touch-icon" href="{{ url_for('static', filename='images/icon-192x192.png') }}">
+  <link rel="icon" href="{{ url_for('static', filename='images/teddy-logo.svg') }}" type="image/svg+xml">
+</head>
+<body class="bg-black text-white">
+  <div class="min-h-screen grid md:grid-cols-2">
+    <!-- Left content side -->
+    <div class="flex flex-col justify-center p-8 md:p-16 lg:p-24">
+      <div class="max-w-md">
+        <img src="{{ url_for('static', filename='images/teddy-logo.svg') }}" alt="Dear Teddy Logo" class="w-12 h-12 mb-12" onerror="this.src='{{ url_for('static', filename='images/teddy-logo.png') }}'">
+        
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">Meaningful journaling for your mental health</h1>
+        
+        <p class="text-gray-400 text-lg mb-12">
+          A private space to reflect with AI guidance that adapts to your emotional needs.
+        </p>
+        
+        <div class="flex flex-col space-y-4">
+          <a href="{{ url_for('install_app') }}" class="bg-white hover:bg-gray-100 text-black font-bold py-4 px-8 rounded-md transition text-center">
+            Get Started
+          </a>
+          
+          <div class="flex items-center justify-center">
+            <a href="{{ url_for('login') }}" class="text-gray-400 hover:text-white transition">
+              Already using Dear Teddy? Log in
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Right image side -->
+    <div class="hidden md:block bg-gray-900 relative overflow-hidden">
+      <img src="{{ url_for('static', filename='images/dashboard-screenshot.png') }}" alt="App Preview" class="absolute inset-0 w-full h-full object-cover object-center opacity-60 mix-blend-luminosity">
+      <div class="absolute inset-0 bg-gradient-to-br from-black/20 to-black/80"></div>
+    </div>
+  </div>
+</body>
+</html>

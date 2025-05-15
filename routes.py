@@ -410,15 +410,33 @@ def install_app():
     """
     return render_template('install.html')
 
-# Direct landing page view (always shows landing, even when logged in)
+# Landing page preview routes for different design options
 @app.route('/landing')
 def view_landing():
     """
-    Direct access to the landing page, even for logged-in users.
-    This is useful for testing the landing page design.
+    Direct access to the current landing page, even for logged-in users.
     """
-    return render_template('spotify_style_landing.html', 
-                          title='Dear Teddy | Your Mental Wellness Companion')
+    return render_template('landing.html')
+
+@app.route('/landing/warm')
+def view_landing_warm():
+    """Preview the warm and friendly design."""
+    return render_template('landing_warm.html')
+
+@app.route('/landing/professional') 
+def view_landing_professional():
+    """Preview the professional design."""
+    return render_template('landing_professional.html')
+
+@app.route('/landing/minimalist')
+def view_landing_minimalist():
+    """Preview the minimalist design."""
+    return render_template('landing_minimalist.html')
+
+@app.route('/landing/card')
+def view_landing_card():
+    """Preview the card-based design."""
+    return render_template('landing_card.html')
 
 # User account management - Now moved to account_routes.py blueprint
 # This is commented out to avoid conflicts with the blueprint version
