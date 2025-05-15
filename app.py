@@ -781,6 +781,14 @@ with app.app_context():
     except ImportError:
         app.logger.warning("Push notification routes not available")
     
+    # Register journal reminder routes
+    try:
+        from journal_reminder_routes import journal_reminder_bp
+        app.register_blueprint(journal_reminder_bp)
+        app.logger.info("Journal reminder routes registered successfully")
+    except ImportError:
+        app.logger.warning("Journal reminder routes not available")
+    
     # Register emergency login blueprint with CSRF exemption
     try:
         from emergency_direct_login import emergency_bp

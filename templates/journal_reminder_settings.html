@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block title %}Dear Teddy - Journal Reminder Settings{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 mb-0">Journal Reminder Settings</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('save_journal_reminder_settings') }}">
+                        {{ form.hidden_tag() }}
+                        
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            Journaling reminders help you maintain a consistent self-reflection practice. Choose when you'd like to receive prompts for your morning and evening reflections.
+                        </div>
+
+                        <h4 class="mb-3 mt-4">Morning Reminder</h4>
+                        <div class="form-group form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="morning_reminder_enabled" name="morning_reminder_enabled" {% if user.morning_reminder_enabled %}checked{% endif %}>
+                            <label class="form-check-label" for="morning_reminder_enabled">Enable morning journal reminders</label>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label for="morning_reminder_time">Morning reminder time:</label>
+                            <input type="time" class="form-control" id="morning_reminder_time" name="morning_reminder_time" value="{{ user.morning_reminder_time.strftime('%H:%M') if user.morning_reminder_time else '08:00' }}">
+                            <small class="form-text text-muted">Example morning prompt: "What would make today feel like a win?"</small>
+                        </div>
+
+                        <h4 class="mb-3">Evening Reminder</h4>
+                        <div class="form-group form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="evening_reminder_enabled" name="evening_reminder_enabled" {% if user.evening_reminder_enabled %}checked{% endif %}>
+                            <label class="form-check-label" for="evening_reminder_enabled">Enable evening journal reminders</label>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label for="evening_reminder_time">Evening reminder time:</label>
+                            <input type="time" class="form-control" id="evening_reminder_time" name="evening_reminder_time" value="{{ user.evening_reminder_time.strftime('%H:%M') if user.evening_reminder_time else '20:00' }}">
+                            <small class="form-text text-muted">Example evening prompt: "What's one thought you want to leave here tonight?"</small>
+                        </div>
+
+                        <div class="alert alert-warning">
+                            <strong>Note:</strong> You need to enable notifications in your browser for these reminders to work. Check your notification settings in <a href="{{ url_for('notification_settings') }}">Notification Settings</a>.
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-between mt-4">
+                            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+                            <button type="submit" class="btn btn-primary">Save Settings</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Show/hide time pickers based on checkbox state
+    document.addEventListener('DOMContentLoaded', function() {
+        const morningEnabled = document.getElementById('morning_reminder_enabled');
+        const morningTimeGroup = document.getElementById('morning_reminder_time').parentNode;
+        
+        const eveningEnabled = document.getElementById('evening_reminder_enabled');
+        const eveningTimeGroup = document.getElementById('evening_reminder_time').parentNode;
+        
+        function updateVisibility() {
+            morningTimeGroup.style.opacity = morningEnabled.checked ? '1' : '0.5';
+            eveningTimeGroup.style.opacity = eveningEnabled.checked ? '1' : '0.5';
+        }
+        
+        morningEnabled.addEventListener('change', updateVisibility);
+        eveningEnabled.addEventListener('change', updateVisibility);
+        
+        // Initial state
+        updateVisibility();
+    });
+</script>
+{% endblock %}
