@@ -284,10 +284,10 @@ function initPushUI() {
                     </ul>
                     <p class="text-muted small">You can customize notification settings at any time.</p>
                     <div class="d-flex gap-2 mt-3">
-                      <a href="/push-notifications/notification_settings" class="btn btn-sm btn-outline-secondary">
+                      <a href="/push-settings" class="btn btn-sm btn-outline-secondary">
                         <i class="fas fa-cog me-1"></i>Notification Settings
                       </a>
-                      <a href="/journal-reminder/settings" class="btn btn-sm btn-outline-secondary">
+                      <a href="/journal-reminder-settings" class="btn btn-sm btn-outline-secondary">
                         <i class="fas fa-clock me-1"></i>Journal Reminders
                       </a>
                     </div>
