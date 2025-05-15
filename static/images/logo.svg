@@ -2,8 +2,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="200" height="40" viewBox="0 0 200 40">
   <defs>
     <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#4d5bf9;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="0%" style="stop-color:#A05C2C;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d1a673;stop-opacity:1" />
     </linearGradient>
   </defs>
   
@@ -12,12 +12,14 @@
   <circle cx="20" cy="20" r="12" fill="none" stroke="white" stroke-width="1.5" opacity="0.7"/>
   <circle cx="20" cy="20" r="6" fill="url(#grad)"/>
   
-  <!-- Plus Sign in the Center -->
-  <path d="M 20 16 L 20 24 M 16 20 L 24 20" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <!-- Teddy Bear Ears and Face -->
+  <circle cx="14" cy="14" r="5" fill="url(#grad)" />
+  <circle cx="26" cy="14" r="5" fill="url(#grad)" />
+  <circle cx="20" cy="23" r="7" fill="url(#grad)" />
   
-  <!-- Text for "Calm Journey" -->
+  <!-- Text for "Dear Teddy" -->
   <text x="45" y="25" font-family="Poppins, Arial, sans-serif" font-size="16" font-weight="600" fill="white">
-    Calm Journey
+    Dear Teddy
   </text>
   
   <!-- Small tagline text -->
