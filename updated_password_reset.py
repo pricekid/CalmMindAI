@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 # Create blueprint
-password_reset_bp = Blueprint('password_reset', __name__)
+password_reset_bp = Blueprint('updated_password_reset', __name__)
 
 # Dictionary to store reset tokens (in a production app, these should be in a database)
 # Format: {token: {'user_id': user_id, 'email': email, 'expires': expires_datetime}}
@@ -90,6 +90,7 @@ def clear_expired_tokens():
     return len(expired_tokens)
 
 @password_reset_bp.route('/forgot-password', methods=['GET', 'POST'])
+@password_reset_bp.route('/reset-password', methods=['GET', 'POST']) # Alternative route for compatibility
 def forgot_password():
     """Handle forgot password requests"""
     if current_user.is_authenticated:
@@ -132,6 +133,7 @@ def forgot_password():
     return render_template('forgot_password.html')
 
 @password_reset_bp.route('/reset-password/<token>', methods=['GET', 'POST'])
+@password_reset_bp.route('/reset-password/<token>/', methods=['GET', 'POST']) # Allow optional trailing slash
 def reset_password(token):
     """Handle password reset with token"""
     if current_user.is_authenticated:
@@ -190,6 +192,7 @@ def reset_metrics():
 
 def register_password_reset(app):
     """Register password reset routes with Flask app"""
-    app.register_blueprint(password_reset_bp)
+    # Add a unique name for this blueprint to avoid conflicts
+    app.register_blueprint(password_reset_bp, name='updated_password_reset_bp')
     logger.info("Password reset routes registered with updated SendGrid email integration")
     return True

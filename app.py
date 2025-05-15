@@ -495,6 +495,8 @@ with app.app_context():
     except ImportError as e:
         app.logger.warning(f"Password reset module not available: {str(e)}")
         
+    # We're using the original password reset module as it's already properly registered
+        
     # Register admin login-as-user functionality
     try:
         from admin_login_as_user import setup_routes
