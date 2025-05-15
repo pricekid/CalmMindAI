@@ -24,6 +24,12 @@ class User(UserMixin, db.Model):
     notifications_enabled = db.Column(db.Boolean, default=True)
     notification_time = db.Column(db.Time, default=datetime.strptime('09:00', '%H:%M').time())
     
+    # Journal reminder preferences
+    morning_reminder_enabled = db.Column(db.Boolean, default=True)
+    morning_reminder_time = db.Column(db.Time, default=datetime.strptime('08:00', '%H:%M').time())
+    evening_reminder_enabled = db.Column(db.Boolean, default=True)
+    evening_reminder_time = db.Column(db.Time, default=datetime.strptime('20:00', '%H:%M').time())
+    
     # SMS notification settings
     phone_number = db.Column(db.String(20), nullable=True)
     sms_notifications_enabled = db.Column(db.Boolean, default=False)
