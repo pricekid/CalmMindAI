@@ -133,19 +133,60 @@ def send_test_email(email_address):
     Returns:
         bool: True if the email was sent successfully (or saved to fallback)
     """
-    subject = "Test Email from Dear Teddy"
-    html_content = """
-    <html>
-        <body>
-            <h1>Test Email</h1>
-            <p>This is a test email sent from the Dear Teddy application.</p>
-            <p>If you're seeing this, the email notification system is working correctly!</p>
-            <p>Time sent: {timestamp}</p>
-        </body>
-    </html>
-    """.format(timestamp=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    from flask import render_template
     
-    result = send_email(email_address, subject, html_content)
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    subject = "Test Email from Dear Teddy"
+    
+    try:
+        # Render the templates
+        html_content = render_template(
+            'emails/standard_notification.html',
+            title="Email System Test",
+            message=f"This is a test email sent from the Dear Teddy application. If you're seeing this, the email notification system is working correctly! Time sent: {timestamp}",
+            highlight="<p><strong>Note:</strong> This is an automated message sent to verify the email delivery system. No action is required.</p>",
+            action_url="https://dearteddy-app.replit.app",
+            action_text="Visit Dear Teddy"
+        )
+        
+        text_content = render_template(
+            'emails/standard_notification.txt',
+            title="Email System Test",
+            message=f"This is a test email sent from the Dear Teddy application. If you're seeing this, the email notification system is working correctly! Time sent: {timestamp}",
+            highlight_text="NOTE: This is an automated message sent to verify the email delivery system. No action is required.",
+            action_url="https://dearteddy-app.replit.app"
+        )
+        
+        logger.info(f"Successfully rendered test email templates for {email_address}")
+    except Exception as e:
+        logger.error(f"Error rendering test email templates: {str(e)}")
+        # Fallback to simple HTML if template rendering fails
+        html_content = f"""
+        <html>
+            <body style="font-family: Arial, sans-serif;">
+                <div style="background-color: #A05C2C; padding: 20px; color: white; text-align: center;">
+                    <h1>Dear Teddy</h1>
+                </div>
+                <div style="padding: 20px;">
+                    <h2>Test Email</h2>
+                    <p>This is a test email sent from the Dear Teddy application.</p>
+                    <p>If you're seeing this, the email notification system is working correctly!</p>
+                    <p>Time sent: {timestamp}</p>
+                </div>
+            </body>
+        </html>
+        """
+        text_content = f"""
+        DEAR TEDDY - TEST EMAIL
+        
+        This is a test email sent from the Dear Teddy application.
+        If you're seeing this, the email notification system is working correctly!
+        
+        Time sent: {timestamp}
+        """
+    
+    # Send email with both HTML and text content
+    result = send_email(email_address, subject, html_content, text_content)
     return result.get('success', False)
 
 def send_password_reset_email(email_address, reset_token, reset_url=None):
