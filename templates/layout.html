@@ -100,6 +100,9 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="{{ url_for('account.account') }}">Account Settings</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('push_notifications.notification_settings') }}">
+                                    <i class="fas fa-bell me-1"></i>Notification Settings
+                                </a></li>
                                 <li><a class="dropdown-item" href="{{ url_for('achievements') }}">My Achievements</a></li>
                                 {% if session.get('is_admin') %}
                                 <li><hr class="dropdown-divider"></li>
