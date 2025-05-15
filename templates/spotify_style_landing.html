@@ -50,11 +50,17 @@
         .content-section {
             padding: 4rem;
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         
         .image-section {
             flex: 1;
             position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         .logo {
@@ -90,16 +96,17 @@
         .download-button {
             display: none; /* Hidden by default, shown by JS when installation is available */
             padding: 0.8rem 2rem;
-            background-color: white;
+            background-color: var(--teddy-secondary);
             border: none;
             border-radius: 50px;
             font-weight: 700;
             font-size: 1rem;
-            color: var(--teddy-secondary);
+            color: white;
             cursor: pointer;
             transition: all 0.2s ease;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             margin-bottom: 1.5rem;
+            align-self: flex-start;
         }
         
         .download-button:hover {
@@ -130,15 +137,9 @@
             margin-left: 0.25rem;
         }
         
-        .app-image {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 12px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        .phone-mockup {
+            width: 300px;
+            height: auto;
         }
         
         @media (max-width: 992px) {
@@ -150,6 +151,7 @@
             .content-section {
                 padding: 2.5rem 2rem;
                 text-align: center;
+                order: 2;
             }
             
             .description {
@@ -157,8 +159,17 @@
                 margin-right: auto;
             }
             
+            .download-button {
+                align-self: center;
+            }
+            
             .image-section {
-                display: none;
+                padding: 2rem 0;
+                order: 1;
+            }
+            
+            .phone-mockup {
+                width: 200px;
             }
         }
     </style>
@@ -187,7 +198,7 @@
         </div>
         
         <div class="image-section">
-            <img src="{{ url_for('static', filename='images/dashboard-screenshot.png') }}" alt="Dear Teddy App Screenshot" class="app-image">
+            <img src="{{ url_for('static', filename='images/landing-phone-mockup.svg') }}" alt="Dear Teddy App Screenshot" class="phone-mockup">
         </div>
     </div>
 
