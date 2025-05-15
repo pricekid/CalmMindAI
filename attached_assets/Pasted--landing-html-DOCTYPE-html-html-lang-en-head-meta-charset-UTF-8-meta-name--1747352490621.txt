@@ -1,3 +1,24 @@
+<!-- landing.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dear Teddy – Calm Journaling</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-indigo-100 to-pink-100 text-gray-800">
+  <div class="min-h-screen flex flex-col justify-center items-center text-center px-4">
+    <img src="/static/icons/icon-192.png" alt="Dear Teddy Icon" class="w-20 h-20 mb-4">
+    <h1 class="text-3xl font-bold mb-2">Download Dear Teddy</h1>
+    <p class="mb-6 max-w-md text-lg">A gentle CBT-based journaling app for anxiety, designed to feel like talking to a trusted friend.</p>
+    <a href="/install" class="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg shadow hover:bg-blue-700 transition">Install the App</a>
+    <img src="/static/img/app-preview.png" alt="App Preview" class="mt-10 max-w-sm rounded-xl shadow-lg">
+  </div>
+</body>
+</html>
+
+<!-- install.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,14 +26,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Install Dear Teddy</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  
-  <!-- PWA Support -->
-  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
-  <meta name="theme-color" content="#A05C2C">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-touch-icon" href="{{ url_for('static', filename='images/icon-192x192.png') }}">
-  <link rel="icon" href="{{ url_for('static', filename='images/teddy-logo.svg') }}" type="image/svg+xml">
 </head>
 <body class="bg-white text-gray-800 flex flex-col justify-center items-center min-h-screen px-4">
   <h1 class="text-2xl font-semibold mb-4">Install Dear Teddy</h1>

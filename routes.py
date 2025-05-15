@@ -44,19 +44,18 @@ try:
 except Exception as e:
     app.logger.warning(f"Fallback email routes error: {str(e)}")
 
-# Home page - Spotify-style landing page
+# Home page - Simple landing page
 @app.route('/')
 def index():
     """
-    New Spotify-style landing page that focuses solely on app installation.
-    This is a simplified page with a clean UI focused on PWA installation.
+    Clean, simple landing page focused on app installation with Tailwind CSS.
+    For returning users who are logged in, redirect to the dashboard.
     """
     # For returning users who are logged in, redirect to the dashboard
     if current_user.is_authenticated:
         return redirect(url_for('dashboard'))
         
-    return render_template('spotify_style_landing.html', 
-                          title='Dear Teddy | Your Mental Wellness Companion')
+    return render_template('landing.html')
 
 # User registration
 @app.route('/register', methods=['GET', 'POST'])
@@ -406,10 +405,10 @@ def offline():
 @app.route('/install')
 def install_app():
     """
-    Installation instructions page for the Progressive Web App.
-    This provides browser-specific guidance on how to install the app.
+    Installation page for the Progressive Web App.
+    This provides an install button that appears when PWA installation is available.
     """
-    return render_template('install.html', title='Install Dear Teddy')
+    return render_template('install.html')
 
 # Direct landing page view (always shows landing, even when logged in)
 @app.route('/landing')
