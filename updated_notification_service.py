@@ -16,6 +16,18 @@ try:
 except ImportError:
     FALLBACK_AVAILABLE = False
     logging.warning("Fallback email module not available")
+    
+    # Define a fallback function to use when the module isn't available
+    def save_fallback_email(recipient, subject, content, email_type="general"):
+        """
+        Fallback function when the fallback_email module isn't available.
+        This just logs the email that would have been sent.
+        
+        Returns:
+            str: A message indicating the email would have been saved
+        """
+        logging.warning(f"Would have saved fallback email to {recipient} with subject '{subject}'")
+        return "fallback_not_available"
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -66,13 +78,28 @@ def send_email(to_email, subject, html_content, text_content=None):
             logger.error("SendGrid API key not found in environment variables")
             raise ValueError("SendGrid API key not configured")
         
-        # Create message with simplified approach (this avoids bugs in the more complex API)
-        message = Mail(
-            from_email=SENDER_EMAIL,
-            to_emails=to_email,
-            subject=subject,
-            html_content=html_content
-        )
+        # Create message with the proper content types
+        from sendgrid.helpers.mail import Content, Mail
+
+        if text_content:
+            # Use both HTML and plain text content for better deliverability
+            message = Mail(
+                from_email=SENDER_EMAIL,
+                to_emails=to_email,
+                subject=subject
+            )
+            message.add_content(Content("text/plain", text_content))
+            message.add_content(Content("text/html", html_content))
+            logger.info(f"Email prepared with both HTML and plain text content")
+        else:
+            # Fall back to HTML-only if text content isn't provided
+            message = Mail(
+                from_email=SENDER_EMAIL,
+                to_emails=to_email,
+                subject=subject,
+                html_content=html_content
+            )
+            logger.info(f"Email prepared with HTML content only")
         
         # Send email
         sg = SendGridAPIClient(sendgrid_api_key)
@@ -87,7 +114,8 @@ def send_email(to_email, subject, html_content, text_content=None):
         # Use fallback email system if available
         if FALLBACK_AVAILABLE:
             try:
-                fallback_file = save_fallback_email(to_email, subject, html_content, email_type="notification")
+                # Call the fallback function with the parameters it expects
+                fallback_file = save_fallback_email(recipient=to_email, subject=subject, content=html_content, email_type="notification")
                 logger.info(f"Email saved to fallback system for {to_email}: {fallback_file}")
                 return {"success": True, "fallback": True, "message": "Email saved to fallback system"}
             except Exception as fallback_error:
@@ -192,6 +220,8 @@ def send_immediate_notification_to_all_users():
     Returns:
         dict: Result with success/failure counts
     """
+    from flask import render_template
+    
     # Load users from data store
     users = load_users()
     if not isinstance(users, list):
@@ -211,19 +241,63 @@ def send_immediate_notification_to_all_users():
             continue
         
         email = user.get('email')
-        subject = "Dear Teddy Notification"
-        html_content = """
-        <html>
-            <body>
-                <h1>Dear Teddy Update</h1>
-                <p>This is a notification from your Dear Teddy application.</p>
-                <p>Your wellbeing matters to us. Take a moment today to reflect and journal.</p>
-                <p><a href="https://dearteddy-app.replit.app">Visit Dear Teddy</a></p>
-            </body>
-        </html>
-        """
+        subject = "Dear Teddy - Time to Journal"
         
-        result = send_email(email, subject, html_content)
+        # Generate personalized content
+        first_name = user.get('first_name', '')
+        greeting = f"Hello {first_name}," if first_name else "Hello,"
+        
+        try:
+            # Render the templates
+            html_content = render_template(
+                'emails/standard_notification.html',
+                title="Time to Journal",
+                message="Your wellbeing matters to us. Take a moment today to reflect and journal.",
+                action_url="https://dearteddy-app.replit.app/journal",
+                action_text="Start Journaling"
+            )
+            
+            text_content = render_template(
+                'emails/standard_notification.txt',
+                title="Time to Journal",
+                message="Your wellbeing matters to us. Take a moment today to reflect and journal.",
+                action_url="https://dearteddy-app.replit.app/journal"
+            )
+            
+            logger.info(f"Successfully rendered notification templates for {email}")
+        except Exception as e:
+            logger.error(f"Error rendering notification templates: {str(e)}")
+            # Fallback to simple HTML if template rendering fails
+            html_content = f"""
+            <html>
+                <body style="font-family: Arial, sans-serif;">
+                    <div style="background-color: #A05C2C; padding: 20px; color: white; text-align: center;">
+                        <h1>Dear Teddy</h1>
+                    </div>
+                    <div style="padding: 20px;">
+                        <h2>Time to Journal</h2>
+                        <p>{greeting}</p>
+                        <p>Your wellbeing matters to us. Take a moment today to reflect and journal.</p>
+                        <p style="text-align: center; margin: 30px 0;">
+                            <a href="https://dearteddy-app.replit.app/journal" style="background-color: #A05C2C; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px;">Start Journaling</a>
+                        </p>
+                    </div>
+                </body>
+            </html>
+            """
+            text_content = f"""
+            DEAR TEDDY - TIME TO JOURNAL
+            
+            {greeting}
+            
+            Your wellbeing matters to us. Take a moment today to reflect and journal.
+            
+            Visit: https://dearteddy-app.replit.app/journal
+            
+            The Dear Teddy Team
+            """
+        
+        result = send_email(email, subject, html_content, text_content)
         results.append({
             'user_id': user.get('id'),
             'email': email,

@@ -1,0 +1,23 @@
+DEAR TEDDY NOTIFICATION
+{{ title|default("") }}
+
+Hello,
+
+{{ message|default("Your wellbeing matters to us. Take a moment today to reflect and journal.") }}
+
+{% if highlight_text %}
+{{ highlight_text }}
+{% endif %}
+
+Visit Dear Teddy: {{ action_url|default('https://dearteddy-app.replit.app') }}
+
+With warmth and care,
+The Dear Teddy Team
+
+---
+
+© 2025 Dear Teddy. All rights reserved.
+Visit us at: https://dearteddy-app.replit.app
+{% if unsubscribe_url %}
+To unsubscribe from these notifications, visit: {{ unsubscribe_url }}
+{% endif %}

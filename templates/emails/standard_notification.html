@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dear Teddy Notification</title>
+    <style>
+        body {
+            font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #FDF6EC; /* Warm cream background */
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(160, 92, 44, 0.15); /* Teddy brown shadow */
+        }
+        .header {
+            background: linear-gradient(135deg, #A05C2C 0%, #C27C4A 100%); /* Warm teddy brown gradient */
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+        .logo {
+            margin-bottom: 15px;
+        }
+        .logo-text {
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+        .content {
+            padding: 30px;
+        }
+        .highlight {
+            background-color: #FDF6EC;
+            border-left: 5px solid #A05C2C;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .button-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #A05C2C 0%, #C27C4A 100%);
+            color: white;
+            padding: 14px 28px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 8px rgba(160, 92, 44, 0.3);
+            transition: all 0.3s ease;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(160, 92, 44, 0.4);
+        }
+        .footer {
+            background-color: #FDF6EC;
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #A05C2C;
+            border-top: 1px solid rgba(160, 92, 44, 0.1);
+        }
+        .teddy-bear {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            display: block;
+            stroke: #FFFFFF;
+            fill: none;
+            stroke-width: 8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <!-- Teddy Bear SVG Logo -->
+                <svg class="teddy-bear" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                  <g fill="none" stroke="#FFFFFF" stroke-width="8">
+                    <!-- Head - rounded bear shape -->
+                    <circle cx="150" cy="150" r="90" fill="none"/>
+                    
+                    <!-- Ears -->
+                    <circle cx="95" cy="95" r="25" fill="none"/>
+                    <circle cx="205" cy="95" r="25" fill="none"/>
+                    
+                    <!-- Eyes -->
+                    <circle cx="125" cy="135" r="6" fill="#FFFFFF" stroke="none"/>
+                    <circle cx="175" cy="135" r="6" fill="#FFFFFF" stroke="none"/>
+                    
+                    <!-- Nose and Mouth Area -->
+                    <circle cx="150" cy="165" r="30" fill="none"/>
+                    
+                    <!-- Arrow pointing down in mouth -->
+                    <path d="M150,180 L150,150" stroke="#FFFFFF" stroke-width="6" fill="none" stroke-linecap="round"/>
+                    <path d="M135,165 L150,180 L165,165" stroke="#FFFFFF" stroke-width="6" fill="none" stroke-linecap="round"/>
+                  </g>
+                </svg>
+                <div class="logo-text">Dear Teddy</div>
+            </div>
+            <h1>{{ title|default("Notification") }}</h1>
+        </div>
+        
+        <div class="content">
+            <p>Hello,</p>
+            
+            <p>{{ message|default("Your wellbeing matters to us. Take a moment today to reflect and journal.") }}</p>
+            
+            {% if highlight %}
+            <div class="highlight">
+                {{ highlight|safe }}
+            </div>
+            {% endif %}
+            
+            <div class="button-container">
+                <a href="{{ action_url|default('https://dearteddy-app.replit.app') }}" class="button">{{ action_text|default("Visit Dear Teddy") }}</a>
+            </div>
+            
+            <p>With warmth and care,<br>The Dear Teddy Team</p>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 Dear Teddy. All rights reserved.</p>
+            <p><a href="https://dearteddy-app.replit.app" style="color: #A05C2C; text-decoration: none;">Visit our website</a></p>
+            {% if unsubscribe_url %}
+            <p><a href="{{ unsubscribe_url }}" style="color: #A05C2C;">Unsubscribe</a> from these notifications.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
