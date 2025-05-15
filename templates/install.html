@@ -2,14 +2,34 @@
 
 {% block title %}Install Dear Teddy{% endblock %}
 
+{% block extra_head %}
+<style>
+    body {
+        background-color: #212529 !important;
+        color: white !important;
+    }
+    .lead-heading {
+        background-color: #000000;
+        color: #ffffff;
+        padding: 15px;
+        border-radius: 8px;
+        display: inline-block;
+        margin-bottom: 15px;
+        font-weight: bold;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        border: 1px solid #444;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container py-4">
     <div class="row justify-content-center">
         <div class="col-md-10 col-lg-8">
             <div class="text-center mb-5">
                 <img src="{{ url_for('static', filename='images/teddy-logo.svg') }}" alt="Dear Teddy Logo" class="mb-4" style="max-width: 100px;" onerror="this.src='{{ url_for('static', filename='images/teddy-logo.png') }}'">
-                <h1 class="mb-3" style="background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 5px; color: #ffffff !important; font-weight: bold;">Install Dear Teddy</h1>
-                <p class="lead" style="background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 5px; display: inline-block; color: #ffffff !important; font-weight: bold;">Enhance your mental wellness experience by installing Dear Teddy on your device.</p>
+                <h1 class="mb-3 lead-heading">Install Dear Teddy</h1>
+                <p class="lead lead-heading">Enhance your mental wellness experience by installing Dear Teddy on your device.</p>
             </div>
             
             <div class="card bg-dark border-primary mb-4">
