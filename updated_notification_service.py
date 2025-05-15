@@ -122,7 +122,7 @@ def send_test_email(email_address):
 
 def send_password_reset_email(email_address, reset_token, reset_url=None):
     """
-    Send a password reset email.
+    Send a password reset email using the new template.
     
     Args:
         email_address: The recipient's email address
@@ -132,41 +132,58 @@ def send_password_reset_email(email_address, reset_token, reset_url=None):
     Returns:
         dict: Result with success status
     """
+    from flask import render_template, current_app
+    
     # Create reset URL if not provided
     if not reset_url:
-        reset_url = f"https://calm-mind-ai-naturalarts.replit.app/reset-password/{reset_token}"
+        reset_url = f"https://dearteddy-app.replit.app/reset-password/{reset_token}"
     
     subject = "Reset Your Dear Teddy Password"
-    html_content = f"""
-    <html>
-        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto;">
-            <div style="background-color: #1D4D4F; padding: 20px; text-align: center; color: white;">
-                <h1 style="margin: 0;">Dear Teddy</h1>
-            </div>
-            <div style="padding: 20px; border: 1px solid #ddd; border-top: none;">
-                <h2>Password Reset Request</h2>
-                <p>We received a request to reset your password. If you didn't make this request, you can ignore this email.</p>
-                <p>To reset your password, click the button below:</p>
-                <div style="text-align: center; margin: 30px 0;">
-                    <a href="{reset_url}" style="background-color: #1D4D4F; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold;">Reset Password</a>
-                </div>
-                <p>Or copy and paste this URL into your browser:</p>
-                <p style="word-break: break-all;"><a href="{reset_url}">{reset_url}</a></p>
-                <p>This link will expire in 1 hour for security reasons.</p>
-                <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
-                <p style="font-size: 0.8em; color: #666;">
-                    If you didn't request this password reset, no action is needed on your part.<br>
-                    Your password will remain unchanged.
-                </p>
-            </div>
-            <div style="text-align: center; padding: 20px; font-size: 0.8em; color: #666;">
-                <p>&copy; 2025 Dear Teddy. All rights reserved.</p>
-            </div>
-        </body>
-    </html>
-    """
     
-    return send_email(email_address, subject, html_content)
+    try:
+        # Render the templates with the provided reset URL
+        html_content = render_template('emails/password_reset.html', reset_url=reset_url)
+        text_content = render_template('emails/password_reset.txt', reset_url=reset_url)
+        logger.info(f"Successfully rendered password reset email templates for {email_address}")
+    except Exception as e:
+        logger.error(f"Error rendering password reset email templates: {str(e)}")
+        # Fallback to inline HTML if template rendering fails
+        html_content = f"""
+        <html>
+            <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto;">
+                <div style="background-color: #A05C2C; padding: 20px; text-align: center; color: white;">
+                    <h1 style="margin: 0;">Dear Teddy</h1>
+                </div>
+                <div style="padding: 20px; border: 1px solid #ddd; border-top: none;">
+                    <h2>Password Reset Request</h2>
+                    <p>We received a request to reset your password. If you didn't make this request, you can ignore this email.</p>
+                    <p>To reset your password, click the link below:</p>
+                    <p><a href="{reset_url}">{reset_url}</a></p>
+                    <p>This link will expire in 60 minutes for security reasons.</p>
+                </div>
+                <div style="text-align: center; padding: 20px; font-size: 0.8em; color: #666;">
+                    <p>&copy; 2025 Dear Teddy. All rights reserved.</p>
+                </div>
+            </body>
+        </html>
+        """
+        text_content = f"""
+        DEAR TEDDY PASSWORD RESET
+        
+        We received a request to reset your password for your Dear Teddy account.
+        
+        Please visit the link below to set a new password:
+        {reset_url}
+        
+        This link will expire in 60 minutes for security reasons.
+        
+        If you didn't request a password reset, please ignore this email.
+        
+        © 2025 Dear Teddy. All rights reserved.
+        """
+    
+    # Add text content to the email for better deliverability
+    return send_email(email_address, subject, html_content, text_content)
 
 def send_immediate_notification_to_all_users():
     """
