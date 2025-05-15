@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dear Teddy | Mental Wellness App</title>
+    
+    <!-- PWA Support -->
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <meta name="theme-color" content="#A05C2C">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-touch-icon" href="{{ url_for('static', filename='images/icon-192x192.png') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/teddy-logo.svg') }}" type="image/svg+xml">
+
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --teddy-primary: #A05C2C;
+            --teddy-secondary: #1D4D4F;
+            --teddy-light: #d1a673;
+            --teddy-bg: #f5efe5;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--teddy-bg);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .main-container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            background: linear-gradient(135deg, #e0c6a9 0%, var(--teddy-bg) 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .content-section {
+            padding: 4rem;
+            flex: 1;
+        }
+        
+        .image-section {
+            flex: 1;
+            position: relative;
+        }
+        
+        .logo {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--teddy-secondary);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--teddy-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+        }
+        
+        .download-button {
+            display: none; /* Hidden by default, shown by JS when installation is available */
+            padding: 0.8rem 2rem;
+            background-color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--teddy-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+        
+        .download-button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .download-notice {
+            display: none; /* Hidden by default, shown by JS */
+            background-color: rgba(66, 133, 244, 0.1);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin-top: 1rem;
+            color: #0d57ca;
+            font-size: 0.9rem;
+            align-items: center;
+            max-width: 450px;
+        }
+        
+        .download-notice i {
+            margin-right: 0.5rem;
+        }
+        
+        .download-notice a {
+            color: #0d57ca;
+            font-weight: 600;
+            text-decoration: underline;
+            margin-left: 0.25rem;
+        }
+        
+        .app-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        @media (max-width: 992px) {
+            .main-container {
+                flex-direction: column;
+                margin: 1.5rem;
+            }
+            
+            .content-section {
+                padding: 2.5rem 2rem;
+                text-align: center;
+            }
+            
+            .description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .image-section {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="content-section">
+            <img src="{{ url_for('static', filename='images/teddy-logo.svg') }}" alt="Dear Teddy" class="logo" onerror="this.src='{{ url_for('static', filename='images/teddy-logo.png') }}'">
+            
+            <h1>Dear Teddy</h1>
+            <h2>Your Mental Wellness Companion</h2>
+            
+            <p class="description">
+                Journal your thoughts, track your emotions, and receive supportive insights to help you on your mental wellness journey.
+            </p>
+            
+            <button id="installApp" class="download-button">
+                Install Dear Teddy
+            </button>
+            
+            <div id="installationNotice" class="download-notice">
+                <i class="fas fa-info-circle"></i>
+                <span>Your installation should start automatically. Didn't work?<a href="#" id="tryAgain">Try installing again</a>.</span>
+            </div>
+        </div>
+        
+        <div class="image-section">
+            <img src="{{ url_for('static', filename='images/dashboard-screenshot.png') }}" alt="Dear Teddy App Screenshot" class="app-image">
+        </div>
+    </div>
+
+    <!-- PWA Installation Script -->
+    <script>
+        let deferredPrompt;
+        const installButton = document.getElementById('installApp');
+        const installationNotice = document.getElementById('installationNotice');
+        const tryAgainLink = document.getElementById('tryAgain');
+        
+        // Show button only when PWA installation is available
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installButton.style.display = 'inline-block';
+        });
+        
+        // Handle install button click
+        installButton.addEventListener('click', async () => {
+            if (!deferredPrompt) {
+                return;
+            }
+            
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            deferredPrompt = null;
+            
+            if (outcome === 'accepted') {
+                console.log('User accepted the install prompt');
+                installButton.style.display = 'none';
+                installationNotice.style.display = 'flex';
+            } else {
+                console.log('User dismissed the install prompt');
+            }
+        });
+        
+        // Try again link
+        tryAgainLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (deferredPrompt) {
+                installButton.click();
+            } else {
+                window.location.href = "{{ url_for('install_app') }}";
+            }
+        });
+        
+        // When app is installed
+        window.addEventListener('appinstalled', () => {
+            installButton.style.display = 'none';
+            installationNotice.style.display = 'flex';
+        });
+    </script>
+</body>
+</html>
