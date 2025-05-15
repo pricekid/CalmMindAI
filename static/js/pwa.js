@@ -55,7 +55,7 @@ function showUpdateNotification() {
                 <button type="button" class="btn-close btn-close-white" aria-label="Close" onclick="this.parentElement.parentElement.remove()"></button>
             </div>
             <div class="card-body">
-                <p class="card-text">A new version of Calm Journey is available!</p>
+                <p class="card-text">A new version of Dear Teddy is available!</p>
                 <button class="btn btn-sm btn-light" onclick="window.location.reload()">
                     <i class="fas fa-redo me-1"></i>Refresh Now
                 </button>
@@ -89,7 +89,7 @@ function showInstallPromotion() {
             <div class="container d-flex justify-content-between align-items-center">
                 <div>
                     <i class="fas fa-mobile-alt me-2"></i>
-                    <span>Install Calm Journey on your device for better experience</span>
+                    <span>Install Dear Teddy on your device for better experience</span>
                 </div>
                 <div>
                     <button id="pwa-install-btn" class="btn btn-sm btn-primary me-2">Install</button>
@@ -149,7 +149,7 @@ window.triggerInstall = function() {
                 successMessage.style.zIndex = '1050';
                 successMessage.innerHTML = `
                     <strong><i class="fas fa-check-circle me-2"></i>Successfully installed!</strong>
-                    <p class="mb-0">Calm Journey has been added to your device.</p>
+                    <p class="mb-0">Dear Teddy has been added to your device.</p>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 `;
                 document.body.appendChild(successMessage);

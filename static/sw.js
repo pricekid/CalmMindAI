@@ -1,6 +1,6 @@
-// Service Worker for Calm Journey PWA
+// Service Worker for Dear Teddy PWA
 
-const CACHE_NAME = 'calm-journey-cache-v1';
+const CACHE_NAME = 'dear-teddy-cache-v1';
 const ASSETS_TO_CACHE = [
   '/',
   '/static/css/custom.css',
