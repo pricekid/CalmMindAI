@@ -1,4 +1,4 @@
-// Install button functionality for Calm Journey PWA
+// Install button functionality for Dear Teddy PWA
 
 document.addEventListener('DOMContentLoaded', () => {
     // Create install button elements
@@ -54,12 +54,12 @@ function showInstallInstructions() {
             <div class="modal-content bg-dark">
                 <div class="modal-header">
                     <h5 class="modal-title" id="installInstructionsModalLabel">
-                        <i class="fas fa-download me-2"></i>Install Calm Journey
+                        <i class="fas fa-download me-2"></i>Install Dear Teddy
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>To install Calm Journey on your device:</p>
+                    <p>To install Dear Teddy on your device:</p>
                     ${getInstructionsForBrowser(browserName)}
                 </div>
                 <div class="modal-footer">
@@ -110,7 +110,7 @@ function getInstructionsForBrowser(browser) {
                 <ol class="list-group list-group-numbered list-group-flush bg-transparent">
                     <li class="list-group-item bg-transparent">Look for the install icon <i class="fas fa-arrow-alt-circle-down"></i> in the address bar</li>
                     <li class="list-group-item bg-transparent">Click on it and select "Install"</li>
-                    <li class="list-group-item bg-transparent">Alternatively, click the menu button (⋮) and select "Install Calm Journey..."</li>
+                    <li class="list-group-item bg-transparent">Alternatively, click the menu button (⋮) and select "Install Dear Teddy..."</li>
                 </ol>
             `;
         }
