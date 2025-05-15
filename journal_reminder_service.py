@@ -119,32 +119,36 @@ def send_journal_reminder_notifications():
     This function is intended to be called periodically by a scheduler.
     """
     try:
-        logger.info("Checking for users who need journal reminder notifications...")
+        from app import app
         
-        # Get all users with notifications enabled
-        users = User.query.filter_by(notifications_enabled=True).all()
-        
-        morning_count = 0
-        evening_count = 0
-        
-        for user in users:
-            # Skip users with no push subscriptions
-            if not user.push_subscriptions.count():
-                continue
-                
-            # Check if we should send a morning reminder
-            if should_send_morning_reminder(user):
-                prompt = get_random_prompt("morning")
-                send_journal_reminder(user, prompt, "morning")
-                morning_count += 1
-                
-            # Check if we should send an evening reminder
-            if should_send_evening_reminder(user):
-                prompt = get_random_prompt("evening")
-                send_journal_reminder(user, prompt, "evening")
-                evening_count += 1
-        
-        logger.info(f"Sent {morning_count} morning reminders and {evening_count} evening reminders")
+        # Create application context for database operations
+        with app.app_context():
+            logger.info("Checking for users who need journal reminder notifications...")
+            
+            # Get all users with notifications enabled
+            users = User.query.filter_by(notifications_enabled=True).all()
+            
+            morning_count = 0
+            evening_count = 0
+            
+            for user in users:
+                # Skip users with no push subscriptions
+                if not user.push_subscriptions.count():
+                    continue
+                    
+                # Check if we should send a morning reminder
+                if should_send_morning_reminder(user):
+                    prompt = get_random_prompt("morning")
+                    send_journal_reminder(user, prompt, "morning")
+                    morning_count += 1
+                    
+                # Check if we should send an evening reminder
+                if should_send_evening_reminder(user):
+                    prompt = get_random_prompt("evening")
+                    send_journal_reminder(user, prompt, "evening")
+                    evening_count += 1
+            
+            logger.info(f"Sent {morning_count} morning reminders and {evening_count} evening reminders")
         
     except Exception as e:
         logger.error(f"Error sending journal reminder notifications: {e}")
