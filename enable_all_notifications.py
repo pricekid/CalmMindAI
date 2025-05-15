@@ -1,95 +1,68 @@
-#!/usr/bin/env python3
 """
-Script to enable notifications for all users in the system.
-This updates user preferences in the data/users.json file.
+Script to enable notifications for all users by default.
+This ensures everyone receives journal reminders unless they manually turn them off.
 """
-
 import os
-import json
-import logging
-from datetime import datetime
+import sys
+from datetime import datetime, time
 
-# Set up logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
-
-def ensure_data_directory():
-    """Ensure the data directory exists"""
-    os.makedirs('data', exist_ok=True)
-
-def load_users():
-    """Load users from the data/users.json file"""
-    ensure_data_directory()
-    
+def enable_notifications_for_all_users():
+    """Enable notifications for all users in the system."""
     try:
-        with open('data/users.json', 'r') as f:
-            return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        logger.warning("Users file not found or invalid, creating empty list")
-        return []
-
-def save_users(users):
-    """Save users to the data/users.json file"""
-    ensure_data_directory()
+        from app import app, db
+        from models import User
+        
+        with app.app_context():
+            # Find all users with notifications disabled
+            disabled_users = User.query.filter_by(notifications_enabled=False).all()
+            disabled_count = len(disabled_users)
+            
+            # Find all users with morning reminders disabled
+            morning_disabled = User.query.filter_by(morning_reminder_enabled=False).all()
+            morning_disabled_count = len(morning_disabled)
+            
+            # Find all users with evening reminders disabled
+            evening_disabled = User.query.filter_by(evening_reminder_enabled=False).all()
+            evening_disabled_count = len(evening_disabled)
+            
+            print(f"Found {disabled_count} users with notifications disabled")
+            print(f"Found {morning_disabled_count} users with morning reminders disabled")
+            print(f"Found {evening_disabled_count} users with evening reminders disabled")
+            
+            # Update all users with notifications disabled
+            for user in disabled_users:
+                user.notifications_enabled = True
+                print(f"Enabling notifications for user: {user.username or user.email}")
+            
+            # Update all users with morning reminders disabled
+            for user in morning_disabled:
+                user.morning_reminder_enabled = True
+                print(f"Enabling morning reminders for user: {user.username or user.email}")
+                
+                # Set default morning reminder time if not set
+                if not user.morning_reminder_time:
+                    user.morning_reminder_time = time(8, 0)  # 8:00 AM
+            
+            # Update all users with evening reminders disabled
+            for user in evening_disabled:
+                user.evening_reminder_enabled = True
+                print(f"Enabling evening reminders for user: {user.username or user.email}")
+                
+                # Set default evening reminder time if not set
+                if not user.evening_reminder_time:
+                    user.evening_reminder_time = time(20, 0)  # 8:00 PM
+            
+            # Commit changes to database
+            db.session.commit()
+            
+            print("\nNotifications have been enabled for all users!")
+            print("Users can still manually disable notifications in their settings.")
+            
+    except Exception as e:
+        print(f"Error enabling notifications: {str(e)}")
+        return False
     
-    with open('data/users.json', 'w') as f:
-        json.dump(users, f, indent=2)
-    
-    logger.info(f"Saved {len(users)} users to data/users.json")
-
-def enable_notifications_for_all():
-    """
-    Enable notifications for all users in the system.
-    
-    Returns:
-        dict: Statistics about the update process
-    """
-    # Load users
-    users = load_users()
-    logger.info(f"Loaded {len(users)} users")
-    
-    # Track statistics
-    stats = {
-        'total_users': len(users),
-        'updated_count': 0,
-        'already_enabled': 0
-    }
-    
-    # Update each user
-    for user in users:
-        # Check if notifications_enabled exists and is False
-        if user.get('notifications_enabled', False) == False:
-            user['notifications_enabled'] = True
-            stats['updated_count'] += 1
-            logger.info(f"Enabled notifications for user {user['id']} ({user['email']})")
-        else:
-            # User already has notifications enabled
-            # Ensure the field exists
-            user['notifications_enabled'] = True
-            stats['already_enabled'] += 1
-            logger.info(f"User {user['id']} ({user['email']}) already has notifications enabled")
-    
-    # Save updated users
-    save_users(users)
-    
-    return stats
-
-def main():
-    print("Calm Journey - Enable Notifications for All Users")
-    print("--------------------------------------------------")
-    
-    # Update users
-    print("\nEnabling notifications for all users...")
-    stats = enable_notifications_for_all()
-    
-    # Print stats
-    print("\nUpdate complete!")
-    print(f"Total users: {stats['total_users']}")
-    print(f"Users updated: {stats['updated_count']}")
-    print(f"Users already enabled: {stats['already_enabled']}")
+    return True
 
 if __name__ == "__main__":
-    main()
+    enable_notifications_for_all_users()

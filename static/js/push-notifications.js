@@ -194,6 +194,42 @@ async function testPushNotification() {
   }
 }
 
+// Function to automatically request notification permission
+async function autoRequestPushPermission() {
+  // First check if permission is already granted
+  if (Notification.permission === 'granted') {
+    console.log('Notification permission already granted');
+    // Register existing subscription or create a new one
+    const registration = await navigator.serviceWorker.ready;
+    let subscription = await registration.pushManager.getSubscription();
+    
+    if (subscription) {
+      // Ensure server knows about this subscription
+      await sendSubscriptionToServer(subscription);
+    } else {
+      // Create a new subscription
+      await subscribeToPushNotifications();
+    }
+    return true;
+  }
+  
+  // If permission hasn't been denied yet, request it
+  if (Notification.permission !== 'denied') {
+    // Request permission automatically
+    console.log('Automatically requesting notification permission');
+    try {
+      await subscribeToPushNotifications();
+      return true;
+    } catch (err) {
+      console.error('Failed to auto-request notification permission:', err);
+      return false;
+    }
+  }
+  
+  // If we reach here, permission is denied
+  return false;
+}
+
 // Initialize push notification subscription UI
 function initPushUI() {
   // Wait for DOM to be ready
@@ -210,41 +246,84 @@ function initPushUI() {
       testButton.addEventListener('click', testPushNotification);
     }
     
-    // Check if notifications are already granted
-    if (Notification.permission === 'granted') {
-      // Add a button to the dashboard to enable push
-      const enableContainer = document.getElementById('push-notification-container');
-      if (enableContainer) {
-        enableContainer.innerHTML = `
-          <div class="card bg-dark my-3">
-            <div class="card-body">
-              <h5 class="card-title"><i class="fas fa-bell me-2"></i>Real-time Notifications</h5>
-              <p class="card-text">Get instant notifications for journal reminders, mood tracking, and app updates.</p>
-              <button id="enable-push-btn" class="btn btn-primary">Enable Notifications</button>
+    // Check if on dashboard page
+    const enableContainer = document.getElementById('push-notification-container');
+    if (enableContainer) {
+      // Set up UI based on notification permission status
+      const updateNotificationUI = async () => {
+        if (Notification.permission === 'granted') {
+          // Show success message
+          enableContainer.innerHTML = `
+            <div class="card bg-dark dashboard-widget">
+              <h3><i class="fas fa-bell me-2"></i> Stay Connected</h3>
+              <div class="alert alert-success m-3">
+                <i class="fas fa-check-circle me-2"></i>Push notifications are enabled!
+                <p class="mt-2 mb-0">You'll receive timely reminders for journal prompts, mood tracking, and app updates.</p>
+                <button id="test-push-btn" class="btn btn-sm btn-outline-primary mt-2">Test Notification</button>
+              </div>
             </div>
-          </div>
-        `;
-        
-        const enableButton = document.getElementById('enable-push-btn');
-        if (enableButton) {
-          enableButton.addEventListener('click', async () => {
-            const subscription = await subscribeToPushNotifications();
-            if (subscription) {
-              enableContainer.innerHTML = `
-                <div class="alert alert-success">
-                  <i class="fas fa-check-circle me-2"></i>Push notifications are enabled!
-                  <button id="test-push-btn" class="btn btn-sm btn-primary ms-2">Test Notification</button>
+          `;
+          
+          const testPushBtn = document.getElementById('test-push-btn');
+          if (testPushBtn) {
+            testPushBtn.addEventListener('click', testPushNotification);
+          }
+        } else {
+          // Show enable button
+          enableContainer.innerHTML = `
+            <div class="card bg-dark dashboard-widget">
+              <h3><i class="fas fa-bell me-2"></i> Stay Connected</h3>
+              <div class="p-3">
+                <div class="row">
+                  <div class="col-md-8">
+                    <p>Enable notifications to get timely reminders for:</p>
+                    <ul class="list-unstyled">
+                      <li><i class="fas fa-check-circle text-success me-2"></i> Daily journal prompts</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i> Mood tracking reminders</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i> New features and updates</li>
+                    </ul>
+                    <p class="text-muted small">You can customize notification settings at any time.</p>
+                    <div class="d-flex gap-2 mt-3">
+                      <a href="/push-notifications/notification_settings" class="btn btn-sm btn-outline-secondary">
+                        <i class="fas fa-cog me-1"></i>Notification Settings
+                      </a>
+                      <a href="/journal-reminder/settings" class="btn btn-sm btn-outline-secondary">
+                        <i class="fas fa-clock me-1"></i>Journal Reminders
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-md-4 d-flex align-items-center justify-content-center">
+                    <button id="enable-push-btn" class="btn btn-primary btn-lg">
+                      <i class="fas fa-bell me-2"></i>Enable Notifications
+                    </button>
+                  </div>
                 </div>
-              `;
-              
-              const testPushBtn = document.getElementById('test-push-btn');
-              if (testPushBtn) {
-                testPushBtn.addEventListener('click', testPushNotification);
+              </div>
+            </div>
+          `;
+          
+          const enableButton = document.getElementById('enable-push-btn');
+          if (enableButton) {
+            enableButton.addEventListener('click', async () => {
+              const subscription = await subscribeToPushNotifications();
+              if (subscription) {
+                updateNotificationUI();
               }
-            }
-          });
+            });
+          }
         }
-      }
+      };
+      
+      // Initial UI setup
+      updateNotificationUI();
+      
+      // Auto-request permission after a short delay (gives page time to load)
+      setTimeout(() => {
+        // Only auto-request if we're not sure about permission
+        if (Notification.permission === 'default') {
+          autoRequestPushPermission().then(updateNotificationUI);
+        }
+      }, 3000);
     }
   });
 }
