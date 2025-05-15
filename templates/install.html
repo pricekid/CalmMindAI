@@ -7,14 +7,14 @@
     <div class="row justify-content-center">
         <div class="col-md-10 col-lg-8">
             <div class="text-center mb-5">
-                <img src="{{ url_for('static', filename='images/icon-192x192.png') }}" alt="Dear Teddy Logo" class="mb-4" style="max-width: 100px;">
-                <h1 class="mb-3">Install Dear Teddy</h1>
-                <p class="lead">Enhance your mental wellness experience by installing Dear Teddy on your device.</p>
+                <img src="{{ url_for('static', filename='images/teddy-logo.svg') }}" alt="Dear Teddy Logo" class="mb-4" style="max-width: 100px;" onerror="this.src='{{ url_for('static', filename='images/teddy-logo.png') }}'">
+                <h1 class="mb-3 text-white">Install Dear Teddy</h1>
+                <p class="lead text-white">Enhance your mental wellness experience by installing Dear Teddy on your device.</p>
             </div>
             
             <div class="card bg-dark border-primary mb-4">
                 <div class="card-body">
-                    <h3 class="card-title"><i class="fas fa-star text-primary me-2"></i>Benefits of Installing</h3>
+                    <h3 class="card-title text-white"><i class="fas fa-star text-primary me-2"></i>Benefits of Installing</h3>
                     <div class="row mt-4">
                         <div class="col-md-6">
                             <div class="d-flex mb-3">
@@ -66,7 +66,7 @@
             
             <div class="card bg-dark mb-4">
                 <div class="card-header">
-                    <h3 class="mb-0"><i class="fas fa-download me-2"></i>Installation Instructions</h3>
+                    <h3 class="mb-0 text-white"><i class="fas fa-download me-2"></i>Installation Instructions</h3>
                 </div>
                 <div class="card-body">
                     <div class="mb-4 text-center">
@@ -102,14 +102,14 @@
                     <div class="tab-content p-3 border border-top-0 rounded-bottom" id="browserTabContent">
                         <!-- Chrome Instructions -->
                         <div class="tab-pane fade show active" id="chrome" role="tabpanel">
-                            <h4 class="mb-3">On Desktop:</h4>
+                            <h4 class="mb-3 text-white">On Desktop:</h4>
                             <ol class="list-group list-group-flush mb-4">
                                 <li class="list-group-item bg-transparent text-white border-secondary">Look for the install icon <i class="fas fa-arrow-alt-circle-down"></i> in the address bar (right side)</li>
                                 <li class="list-group-item bg-transparent text-white border-secondary">Click on it and select "Install"</li>
                                 <li class="list-group-item bg-transparent text-white border-secondary">Alternatively, click the menu button (⋮) and select "Install Dear Teddy..."</li>
                             </ol>
                             
-                            <h4 class="mb-3">On Android:</h4>
+                            <h4 class="mb-3 text-white">On Android:</h4>
                             <ol class="list-group list-group-flush">
                                 <li class="list-group-item bg-transparent text-white border-secondary">Tap the menu button (⋮) in the top right corner</li>
                                 <li class="list-group-item bg-transparent text-white border-secondary">Select "Add to Home screen" or "Install app"</li>
@@ -123,7 +123,7 @@
                         
                         <!-- Safari Instructions -->
                         <div class="tab-pane fade" id="safari" role="tabpanel">
-                            <h4 class="mb-3">On iOS (iPhone/iPad):</h4>
+                            <h4 class="mb-3 text-white">On iOS (iPhone/iPad):</h4>
                             <ol class="list-group list-group-flush">
                                 <li class="list-group-item bg-transparent text-white border-secondary">Tap the share button <i class="fas fa-share-square"></i> at the bottom of the screen</li>
                                 <li class="list-group-item bg-transparent text-white border-secondary">Scroll down and tap "Add to Home Screen"</li>
@@ -142,7 +142,7 @@
                         
                         <!-- Edge Instructions -->
                         <div class="tab-pane fade" id="edge" role="tabpanel">
-                            <h4 class="mb-3">On Desktop:</h4>
+                            <h4 class="mb-3 text-white">On Desktop:</h4>
                             <ol class="list-group list-group-flush">
                                 <li class="list-group-item bg-transparent text-white border-secondary">Look for the install icon <i class="fas fa-plus-square"></i> in the address bar</li>
                                 <li class="list-group-item bg-transparent text-white border-secondary">Click it and select "Install"</li>
@@ -156,7 +156,7 @@
                         
                         <!-- Other Browsers Instructions -->
                         <div class="tab-pane fade" id="other" role="tabpanel">
-                            <h4 class="mb-3">General Instructions:</h4>
+                            <h4 class="mb-3 text-white">General Instructions:</h4>
                             <ol class="list-group list-group-flush">
                                 <li class="list-group-item bg-transparent text-white border-secondary">Look for "Add to Home Screen" or "Install" in your browser's menu</li>
                                 <li class="list-group-item bg-transparent text-white border-secondary">On mobile, this is often found in the share menu</li>
@@ -173,7 +173,7 @@
             
             <div class="card bg-dark border-info mb-4">
                 <div class="card-body">
-                    <h4 class="card-title"><i class="fas fa-question-circle text-info me-2"></i>Frequently Asked Questions</h4>
+                    <h4 class="card-title text-white"><i class="fas fa-question-circle text-info me-2"></i>Frequently Asked Questions</h4>
                     
                     <div class="accordion mt-3" id="faqAccordion">
                         <div class="accordion-item bg-dark">
