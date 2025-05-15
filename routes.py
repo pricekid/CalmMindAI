@@ -421,6 +421,16 @@ def view_landing():
     return render_template('spotify_style_landing.html', 
                           title='Dear Teddy | Your Mental Wellness Companion')
 
+# Direct route to log out and see the landing page 
+@app.route('/test-landing')
+def test_landing():
+    """
+    A testing route that logs the user out and redirects to the landing page.
+    This is useful for checking the landing page as a non-logged-in user.
+    """
+    logout_user()
+    return redirect('/')
+
 # User account management - Now moved to account_routes.py blueprint
 # This is commented out to avoid conflicts with the blueprint version
 """
