@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dear Teddy | Mental Wellness App</title>
+    
+    <!-- PWA Support -->
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <meta name="theme-color" content="#A05C2C">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-touch-icon" href="{{ url_for('static', filename='images/icon-192x192.png') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/teddy-logo.svg') }}" type="image/svg+xml">
+
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="main-container">
+            <div class="content-section">
+                <img src="{{ url_for('static', filename='images/teddy-logo.svg') }}" alt="Dear Teddy" class="logo" onerror="this.src='{{ url_for('static', filename='images/teddy-logo.png') }}'">
+                
+                <h1>Dear Teddy</h1>
+                <h2>Your Mental Wellness Companion</h2>
+                
+                <p class="description">
+                    Journal your thoughts, track your emotions, and receive supportive insights to help you on your mental wellness journey.
+                </p>
+                
+                <a href="{{ url_for('register') }}" class="download-button">
+                    Get Started
+                </a>
+                
+                <div id="installationNotice" class="download-notice">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Already have an account? <a href="{{ url_for('login') }}">Log in</a></span>
+                </div>
+            </div>
+            
+            <div class="image-section">
+                <div class="phone-frame">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                        <div class="app-header">
+                            <h3>Dear Teddy</h3>
+                        </div>
+                        <div class="app-content">
+                            <h4>Write it all out, Teddy's listening...</h4>
+                            <div class="journal-box">
+                                <p>Today I noticed I've been feeling anxious about my upcoming presentation...</p>
+                            </div>
+                            <button class="send-btn">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PWA Installation Script -->
+    <script>
+        let deferredPrompt;
+        const installButton = document.querySelector('.download-button');
+        const installationNotice = document.getElementById('installationNotice');
+        
+        // Show notice for PWA installation
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installationNotice.style.display = 'flex';
+        });
+        
+        // Handle app installation
+        if (installButton) {
+            installButton.addEventListener('click', async (e) => {
+                if (deferredPrompt) {
+                    e.preventDefault();
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    deferredPrompt = null;
+                    
+                    if (outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                }
+            });
+        }
+        
+        // When app is installed
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+        });
+    </script>
+</body>
+</html>

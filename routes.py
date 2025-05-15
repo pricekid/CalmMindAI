@@ -55,7 +55,7 @@ def index():
     if current_user.is_authenticated:
         return redirect(url_for('dashboard'))
         
-    return render_template('spotify_style_landing.html', 
+    return render_template('new_landing.html', 
                           title='Dear Teddy | Your Mental Wellness Companion')
 
 # User registration
@@ -418,7 +418,7 @@ def view_landing():
     Direct access to the landing page, even for logged-in users.
     This is useful for testing the landing page design.
     """
-    return render_template('spotify_style_landing.html', 
+    return render_template('new_landing.html', 
                           title='Dear Teddy | Your Mental Wellness Companion')
 
 # Direct route to log out and see the landing page 
