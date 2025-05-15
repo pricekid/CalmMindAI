@@ -100,7 +100,7 @@ app.wsgi_app = CSRFDebugMiddleware(app.wsgi_app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 # Use direct path instead of route name
-login_manager.login_view = "/login"  # Direct path to avoid url_for issues
+login_manager.login_view = "/stable-login"  # Direct path to avoid url_for issues
 login_manager.login_message_category = "info"
 
 # Custom unauthorized handler for login_manager
@@ -110,9 +110,9 @@ def unauthorized():
     if request.path.startswith('/admin'):
         # Use direct path instead of url_for
         return redirect('/admin/login')
-    # For all other paths, use the basic login
+    # For all other paths, use the stable login path
     # Use direct path instead of url_for
-    return redirect('/login')
+    return redirect('/stable-login')
 
 # Add global error handler
 @app.errorhandler(Exception)
