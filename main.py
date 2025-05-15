@@ -8,6 +8,14 @@ logging.basicConfig(level=logging.INFO)
 # Ensure database tables exist
 with app.app_context():
     db.create_all()
+    
+    # Start the journal reminder scheduler
+    try:
+        from journal_reminder_scheduler import start_journal_reminder_scheduler
+        start_journal_reminder_scheduler()
+        logging.info("Journal reminder scheduler started")
+    except Exception as e:
+        logging.error(f"Error starting journal reminder scheduler: {e}")
 
 # No Auth integration is required in main.py
 # Authentication is handled in app.py and routes.py

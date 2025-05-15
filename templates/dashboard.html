@@ -215,6 +215,14 @@
                                 <li><i class="fas fa-check-circle text-success me-2"></i> New features and updates</li>
                             </ul>
                             <p class="text-muted small">You can customize notification settings at any time.</p>
+                            <div class="d-flex gap-2 mt-3">
+                                <a href="{{ url_for('notification_settings') }}" class="btn btn-sm btn-outline-secondary">
+                                    <i class="fas fa-cog me-1"></i>Notification Settings
+                                </a>
+                                <a href="{{ url_for('journal_reminder.journal_reminder_settings') }}" class="btn btn-sm btn-outline-secondary">
+                                    <i class="fas fa-clock me-1"></i>Journal Reminders
+                                </a>
+                            </div>
                         </div>
                         <div class="col-md-4 d-flex align-items-center justify-content-center">
                             <button id="enable-push-btn" class="btn btn-primary btn-lg">

@@ -62,13 +62,13 @@ def save_journal_reminder_settings():
         current_user.evening_reminder_enabled = 'evening_reminder_enabled' in request.form
         
         # Parse time inputs
-        if request.form.get('morning_reminder_time'):
-            time_str = request.form.get('morning_reminder_time')
-            current_user.morning_reminder_time = datetime.strptime(time_str, '%H:%M').time()
+        morning_time = request.form.get('morning_reminder_time')
+        if morning_time and morning_time.strip():
+            current_user.morning_reminder_time = datetime.strptime(morning_time, '%H:%M').time()
             
-        if request.form.get('evening_reminder_time'):
-            time_str = request.form.get('evening_reminder_time')
-            current_user.evening_reminder_time = datetime.strptime(time_str, '%H:%M').time()
+        evening_time = request.form.get('evening_reminder_time')
+        if evening_time and evening_time.strip():
+            current_user.evening_reminder_time = datetime.strptime(evening_time, '%H:%M').time()
         
         # Save changes
         db.session.commit()
