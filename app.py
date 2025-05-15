@@ -773,6 +773,14 @@ with app.app_context():
     except:
         pass
     
+    # Register push notification routes
+    try:
+        from push_notification_routes import init_app as init_push_notifications
+        init_push_notifications(app)
+        app.logger.info("Push notification routes registered successfully")
+    except ImportError:
+        app.logger.warning("Push notification routes not available")
+    
     # Register emergency login blueprint with CSRF exemption
     try:
         from emergency_direct_login import emergency_bp

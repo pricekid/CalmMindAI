@@ -33,4 +33,5 @@ dependencies = [
     "pyjwt>=2.10.1",
     "flask-session>=0.8.0",
     "itsdangerous>=2.2.0",
+    "pywebpush>=2.0.3",
 ]

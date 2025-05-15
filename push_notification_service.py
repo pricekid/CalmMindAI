@@ -22,7 +22,8 @@ logger = logging.getLogger(__name__)
 VAPID_PRIVATE_KEY = os.environ.get('VAPID_PRIVATE_KEY')
 VAPID_PUBLIC_KEY = os.environ.get('VAPID_PUBLIC_KEY')
 VAPID_CLAIMS = {
-    "sub": "mailto:dearteddy@gmail.com"  # Using the same email as password reset
+    "sub": "mailto:dearteddy@gmail.com",  # Using the same email as password reset
+    "aud": "https://fcm.googleapis.com"
 }
 
 def get_public_key():
@@ -59,11 +60,14 @@ def save_subscription(user_id, subscription_json):
             logger.info(f"Subscription already exists for user {user_id}")
             return existing
             
-        # Create a new subscription
-        subscription = PushSubscription(
-            user_id=user_id,
-            subscription_json=subscription_json
-        )
+        # Create a new subscription with Flask-SQLAlchemy model
+        subscription = PushSubscription()
+        subscription.user_id = user_id
+        subscription.subscription_json = subscription_json
+        subscription.journal_reminders = True
+        subscription.mood_reminders = True
+        subscription.feature_updates = True
+        
         db.session.add(subscription)
         db.session.commit()
         logger.info(f"Created new push subscription for user {user_id}")
@@ -231,8 +235,13 @@ def generate_vapid_keys():
         vapid.generate_keys()
         
         # Export keys in the correct format for webpush
-        private_key = vapid.private_key.encode().decode('utf8')
-        public_key = base64.urlsafe_b64encode(vapid.public_key.encode()).decode('utf8')
+        private_key = vapid.private_key
+        if private_key:
+            private_key = private_key.encode().decode('utf8')
+            
+        public_key = vapid.public_key
+        if public_key:
+            public_key = base64.urlsafe_b64encode(public_key.encode()).decode('utf8')
         
         logger.info("Generated new VAPID keys for Web Push")
         
