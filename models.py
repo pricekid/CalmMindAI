@@ -34,6 +34,7 @@ class User(UserMixin, db.Model):
     # Relationships
     journal_entries = db.relationship('JournalEntry', backref='author', lazy='dynamic')
     mood_logs = db.relationship('MoodLog', backref='user', lazy='dynamic')
+    push_subscriptions = db.relationship('PushSubscription', backref='user', lazy='dynamic')
     
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -142,3 +143,22 @@ class FlaskDanceOAuth(OAuthConsumerMixin, db.Model):
         'provider',
         name='uq_user_browser_session_key_provider',
     ),)
+
+class PushSubscription(db.Model):
+    """Model for storing Web Push API subscriptions."""
+    __tablename__ = "push_subscription"
+    id = db.Column(db.Integer, primary_key=True)
+    subscription_json = db.Column(db.Text, nullable=False)  # JSON string with endpoint, keys, etc.
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    last_notification_at = db.Column(db.DateTime, nullable=True)
+    
+    # Settings
+    journal_reminders = db.Column(db.Boolean, default=True)
+    mood_reminders = db.Column(db.Boolean, default=True)
+    feature_updates = db.Column(db.Boolean, default=True)
+    
+    # Foreign key
+    user_id = db.Column(db.String, db.ForeignKey('user.id'), nullable=False)
+    
+    def __repr__(self):
+        return f'<PushSubscription {self.id}>'

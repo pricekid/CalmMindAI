@@ -105,9 +105,9 @@ self.addEventListener('fetch', (event) => {
 // Handle push notifications
 self.addEventListener('push', (event) => {
   const data = event.data.json();
-  const title = data.title || 'Calm Journey';
+  const title = data.title || 'Dear Teddy';
   const options = {
-    body: data.body || 'New notification from Calm Journey',
+    body: data.body || 'New notification from Dear Teddy',
     icon: '/static/images/icon-192x192.png',
     badge: '/static/images/badge.png',
     data: {
