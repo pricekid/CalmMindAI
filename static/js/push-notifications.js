@@ -65,65 +65,62 @@ async function sendSubscriptionToServer(subscription) {
   }
 }
 
-// Subscribe to push notifications
+// Subscribe to push notifications (simplified version that doesn't require service worker)
 async function subscribeToPushNotifications() {
-  // Check if push is supported
-  if (!isPushSupported()) {
-    console.log('Push notifications not supported');
-    showNotificationMessage('error', 'Your browser does not support push notifications');
-    return false;
-  }
+  console.log('Requesting notification permission...');
   
   try {
-    // Get the service worker registration
-    const registration = await navigator.serviceWorker.ready;
-    
-    // Get the public key
-    const publicKey = await getPublicKey();
-    if (!publicKey) {
-      showNotificationMessage('error', 'Push notification system is not configured');
+    // Simple approach - just request notification permission
+    if (!("Notification" in window)) {
+      console.log('Notifications not supported');
+      showNotificationMessage('error', 'Your browser does not support notifications');
       return false;
     }
     
-    // Convert public key to the correct format
-    const applicationServerKey = urlBase64ToUint8Array(publicKey);
-    
-    // Check existing subscriptions
-    let subscription = await registration.pushManager.getSubscription();
-    
-    // If already subscribed, return the existing subscription
-    if (subscription) {
-      console.log('Already subscribed to push notifications');
-      await sendSubscriptionToServer(subscription);
-      return subscription;
+    // Check if already granted
+    if (Notification.permission === "granted") {
+      console.log('Notification permission already granted');
+      showNotificationMessage('success', 'Notifications are already enabled!');
+      return true;
     }
     
-    // Otherwise, subscribe
-    subscription = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: applicationServerKey
-    });
-    
-    console.log('Push notification subscription successful');
-    
-    // Send subscription to the server
-    const saved = await sendSubscriptionToServer(subscription);
-    if (saved) {
-      showNotificationMessage('success', 'Successfully subscribed to push notifications');
-    }
-    
-    return subscription;
-  } catch (err) {
-    console.error('Error subscribing to push notifications:', err);
-    
-    // Handle permission denied error
-    if (Notification.permission === 'denied') {
+    // Check if denied
+    if (Notification.permission === "denied") {
+      console.log('Notification permission denied');
       showNotificationMessage('error', 'Notification permission denied. Please enable notifications in your browser settings.');
-    } else {
-      showNotificationMessage('error', 'Failed to subscribe to push notifications');
+      return false;
     }
     
-    return null;
+    // Request permission
+    const permission = await Notification.requestPermission();
+    
+    if (permission === "granted") {
+      console.log('Notification permission granted');
+      showNotificationMessage('success', 'Successfully enabled notifications!');
+      
+      // Send a test notification
+      setTimeout(() => {
+        const notification = new Notification('Dear Teddy', {
+          body: 'Notifications are now enabled!',
+          icon: '/static/images/teddy-icon.svg'
+        });
+        
+        notification.onclick = function() {
+          window.focus();
+          notification.close();
+        };
+      }, 2000);
+      
+      return true;
+    } else {
+      console.log('Notification permission denied or dismissed');
+      showNotificationMessage('error', 'Notification permission was not granted.');
+      return false;
+    }
+  } catch (err) {
+    console.error('Error requesting notification permission:', err);
+    showNotificationMessage('error', 'Failed to request notification permission');
+    return false;
   }
 }
 
@@ -194,22 +191,13 @@ async function testPushNotification() {
   }
 }
 
-// Function to automatically request notification permission
+// Function to automatically request notification permission (simplified version)
 async function autoRequestPushPermission() {
+  console.log('Auto-request function called');
+  
   // First check if permission is already granted
   if (Notification.permission === 'granted') {
     console.log('Notification permission already granted');
-    // Register existing subscription or create a new one
-    const registration = await navigator.serviceWorker.ready;
-    let subscription = await registration.pushManager.getSubscription();
-    
-    if (subscription) {
-      // Ensure server knows about this subscription
-      await sendSubscriptionToServer(subscription);
-    } else {
-      // Create a new subscription
-      await subscribeToPushNotifications();
-    }
     return true;
   }
   
@@ -218,6 +206,7 @@ async function autoRequestPushPermission() {
     // Request permission automatically
     console.log('Automatically requesting notification permission');
     try {
+      // Use the simplified subscribe function
       await subscribeToPushNotifications();
       return true;
     } catch (err) {
@@ -227,6 +216,7 @@ async function autoRequestPushPermission() {
   }
   
   // If we reach here, permission is denied
+  console.log('Notification permission previously denied');
   return false;
 }
 

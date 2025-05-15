@@ -1,7 +1,10 @@
 // Register Service Worker for PWA and Push Notifications
 document.addEventListener('DOMContentLoaded', function() {
-  console.log('Checking for Service Worker support...');
+  // Disable service worker registration for now to prevent crashes
+  console.log('Service worker registration disabled temporarily');
   
+  // Will re-enable once issues are fixed
+  /*
   if ('serviceWorker' in navigator) {
     console.log('Service Worker is supported');
     
@@ -26,4 +29,5 @@ document.addEventListener('DOMContentLoaded', function() {
   } else {
     console.log('Service Worker is not supported in this browser');
   }
+  */
 });
