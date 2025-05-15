@@ -1,48 +1,329 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Install Dear Teddy</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  
-  <!-- PWA Support -->
-  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
-  <meta name="theme-color" content="#A05C2C">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-touch-icon" href="{{ url_for('static', filename='images/icon-192x192.png') }}">
-  <link rel="icon" href="{{ url_for('static', filename='images/teddy-logo.svg') }}" type="image/svg+xml">
-</head>
-<body class="bg-white text-gray-800 flex flex-col justify-center items-center min-h-screen px-4">
-  <h1 class="text-2xl font-semibold mb-4">Install Dear Teddy</h1>
-  <p class="mb-6 text-center max-w-md">This app lives on your home screen and helps you reflect anytime. Tap below to begin installation.</p>
-  <button id="installBtn" class="bg-blue-600 text-white px-5 py-3 rounded-lg shadow hover:bg-blue-700" style="display: none;">Install Dear Teddy</button>
-  <p id="fallback" class="mt-4 text-sm text-gray-600 hidden">If nothing happens, your browser might not support app installation.</p>
+{% extends "layout.html" %}
 
-  <script>
-    let deferredPrompt;
-    const installBtn = document.getElementById('installBtn');
-    const fallback = document.getElementById('fallback');
+{% block title %}Install Dear Teddy{% endblock %}
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installBtn.style.display = 'block';
+{% block styles %}
+<style>
+    body {
+        background-color: #212529 !important;
+        color: white !important;
+    }
+    .install-container {
+        position: relative;
+        z-index: 1;
+    }
+    .install-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.85);
+        z-index: -1;
+        border-radius: 15px;
+    }
+    .lead-heading {
+        font-size: 1.5rem;
+        background-color: #000000;
+        color: #ffffff !important;
+        padding: 15px;
+        border-radius: 8px;
+        display: inline-block;
+        margin-bottom: 15px;
+        font-weight: bold !important;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        border: 1px solid #444;
+    }
+    h5 {
+        color: white !important;
+    }
+</style>
+{% endblock %}
 
-      installBtn.addEventListener('click', () => {
-        deferredPrompt.prompt();
-        installBtn.style.display = 'none';
-      });
-    });
+{% block scripts %}
+<script>
+    // Force dark theme by overriding Bootstrap's data attribute
+    document.documentElement.setAttribute('data-bs-theme', 'dark');
+</script>
+{% endblock %}
 
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        if (!installBtn.style.display || installBtn.style.display === 'none') {
-          fallback.classList.remove('hidden');
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8 install-container p-4">
+            <div class="text-center mb-5">
+                <img src="{{ url_for('static', filename='images/teddy-logo.svg') }}" alt="Dear Teddy Logo" class="mb-4" style="max-width: 100px;" onerror="this.src='{{ url_for('static', filename='images/teddy-logo.png') }}'">
+                <h1 class="mb-3 lead-heading">Install Dear Teddy</h1>
+                <p class="lead lead-heading">Enhance your mental wellness experience by installing Dear Teddy on your device.</p>
+            </div>
+            
+            <div class="card bg-dark border-primary mb-4">
+                <div class="card-body">
+                    <h3 class="card-title text-white"><i class="fas fa-star text-primary me-2"></i>Benefits of Installing</h3>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="d-flex mb-3">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-wifi-slash fs-3 text-info"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h5>Works Offline</h5>
+                                    <p class="text-light opacity-75">Access your journal entries even without internet connection</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex mb-3">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-bolt fs-3 text-warning"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h5>Faster Access</h5>
+                                    <p class="text-light opacity-75">Launch directly from your home screen with improved speed</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex mb-3">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-bell fs-3 text-danger"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h5>Push Notifications</h5>
+                                    <p class="text-light opacity-75">Receive reminders for journaling and wellness activities</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex mb-3">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-mobile-alt fs-3 text-success"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h5>App-like Experience</h5>
+                                    <p class="text-light opacity-75">Enjoy a full-screen experience without browser controls</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card bg-dark mb-4">
+                <div class="card-header">
+                    <h3 class="mb-0 text-white"><i class="fas fa-download me-2"></i>Installation Instructions</h3>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4 text-center">
+                        <button id="install-now-btn" class="btn btn-lg btn-primary">
+                            <i class="fas fa-download me-2"></i>Install Now
+                        </button>
+                        <p class="text-light opacity-75 mt-2 small">If the button doesn't work, follow the manual instructions below</p>
+                    </div>
+                    
+                    <ul class="nav nav-tabs" id="browserTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="chrome-tab" data-bs-toggle="tab" data-bs-target="#chrome" type="button" role="tab">
+                                <i class="fab fa-chrome me-1"></i> Chrome
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="safari-tab" data-bs-toggle="tab" data-bs-target="#safari" type="button" role="tab">
+                                <i class="fab fa-safari me-1"></i> Safari
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="edge-tab" data-bs-toggle="tab" data-bs-target="#edge" type="button" role="tab">
+                                <i class="fab fa-edge me-1"></i> Edge
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="other-tab" data-bs-toggle="tab" data-bs-target="#other" type="button" role="tab">
+                                <i class="fas fa-globe me-1"></i> Other
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <div class="tab-content p-3 border border-top-0 rounded-bottom" id="browserTabContent">
+                        <!-- Chrome Instructions -->
+                        <div class="tab-pane fade show active" id="chrome" role="tabpanel">
+                            <h4 class="mb-3 text-white">On Desktop:</h4>
+                            <ol class="list-group list-group-flush mb-4">
+                                <li class="list-group-item bg-transparent text-white border-secondary">Look for the install icon <i class="fas fa-arrow-alt-circle-down"></i> in the address bar (right side)</li>
+                                <li class="list-group-item bg-transparent text-white border-secondary">Click on it and select "Install"</li>
+                                <li class="list-group-item bg-transparent text-white border-secondary">Alternatively, click the menu button (⋮) and select "Install Dear Teddy..."</li>
+                            </ol>
+                            
+                            <h4 class="mb-3 text-white">On Android:</h4>
+                            <ol class="list-group list-group-flush">
+                                <li class="list-group-item bg-transparent text-white border-secondary">Tap the menu button (⋮) in the top right corner</li>
+                                <li class="list-group-item bg-transparent text-white border-secondary">Select "Add to Home screen" or "Install app"</li>
+                                <li class="list-group-item bg-transparent text-white border-secondary">Confirm by tapping "Add" or "Install"</li>
+                            </ol>
+                            
+                            <div class="text-center mt-4">
+                                <img src="{{ url_for('static', filename='images/chrome-install.svg') }}" alt="Chrome Install Illustration" class="img-fluid" style="max-width: 300px;">
+                            </div>
+                        </div>
+                        
+                        <!-- Safari Instructions -->
+                        <div class="tab-pane fade" id="safari" role="tabpanel">
+                            <h4 class="mb-3 text-white">On iOS (iPhone/iPad):</h4>
+                            <ol class="list-group list-group-flush">
+                                <li class="list-group-item bg-transparent text-white border-secondary">Tap the share button <i class="fas fa-share-square"></i> at the bottom of the screen</li>
+                                <li class="list-group-item bg-transparent text-white border-secondary">Scroll down and tap "Add to Home Screen"</li>
+                                <li class="list-group-item bg-transparent text-white border-secondary">You can edit the name if desired</li>
+                                <li class="list-group-item bg-transparent text-white border-secondary">Tap "Add" in the top right corner</li>
+                            </ol>
+                            
+                            <div class="alert alert-info mt-4">
+                                <i class="fas fa-info-circle me-2"></i> Safari on macOS doesn't fully support PWA installation. For desktop use, we recommend Chrome or Edge.
+                            </div>
+                            
+                            <div class="text-center mt-4">
+                                <img src="{{ url_for('static', filename='images/safari-install.svg') }}" alt="Safari Install Illustration" class="img-fluid" style="max-width: 300px;">
+                            </div>
+                        </div>
+                        
+                        <!-- Edge Instructions -->
+                        <div class="tab-pane fade" id="edge" role="tabpanel">
+                            <h4 class="mb-3 text-white">On Desktop:</h4>
+                            <ol class="list-group list-group-flush">
+                                <li class="list-group-item bg-transparent text-white border-secondary">Look for the install icon <i class="fas fa-plus-square"></i> in the address bar</li>
+                                <li class="list-group-item bg-transparent text-white border-secondary">Click it and select "Install"</li>
+                                <li class="list-group-item bg-transparent text-white border-secondary">Alternatively, click the menu button (...) and select "Apps" > "Install this site as an app"</li>
+                            </ol>
+                            
+                            <div class="text-center mt-4">
+                                <img src="{{ url_for('static', filename='images/edge-install.svg') }}" alt="Edge Install Illustration" class="img-fluid" style="max-width: 300px;">
+                            </div>
+                        </div>
+                        
+                        <!-- Other Browsers Instructions -->
+                        <div class="tab-pane fade" id="other" role="tabpanel">
+                            <h4 class="mb-3 text-white">General Instructions:</h4>
+                            <ol class="list-group list-group-flush">
+                                <li class="list-group-item bg-transparent text-white border-secondary">Look for "Add to Home Screen" or "Install" in your browser's menu</li>
+                                <li class="list-group-item bg-transparent text-white border-secondary">On mobile, this is often found in the share menu</li>
+                                <li class="list-group-item bg-transparent text-white border-secondary">On desktop, look for an install icon in the address bar or browser menu</li>
+                            </ol>
+                            
+                            <div class="alert alert-warning mt-4">
+                                <i class="fas fa-exclamation-triangle me-2"></i> Some browsers have limited PWA support. For the best experience, we recommend using Chrome, Edge, or Safari on iOS.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card bg-dark border-info mb-4">
+                <div class="card-body">
+                    <h4 class="card-title text-white"><i class="fas fa-question-circle text-info me-2"></i>Frequently Asked Questions</h4>
+                    
+                    <div class="accordion mt-3" id="faqAccordion">
+                        <div class="accordion-item bg-dark">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    Do I need to download anything from an app store?
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    No, you don't need to go through any app store. Progressive Web Apps install directly from your browser to your device, saving you time and storage space.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item bg-dark">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Will the app work when I'm offline?
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes! Once installed, Dear Teddy will work offline for many features. You'll be able to access previously viewed pages and some core functionality even without an internet connection.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item bg-dark">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    How do I uninstall the app?
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <p>To uninstall Dear Teddy:</p>
+                                    <ul>
+                                        <li><strong>On Android:</strong> Same as any other app - long press the icon and select "Uninstall"</li>
+                                        <li><strong>On iOS:</strong> Long press the app icon, tap "Remove App", then confirm</li>
+                                        <li><strong>On Desktop:</strong> Look for app settings/management in your browser, or right-click the app icon and select remove/uninstall</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item bg-dark">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Will the app automatically update?
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes, the app will automatically check for updates when you're online. When a new version is available, you'll be notified and can update with a single click.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Handle install button clicks
+    document.addEventListener('DOMContentLoaded', () => {
+        const installButton = document.getElementById('install-now-btn');
+        if (installButton) {
+            installButton.addEventListener('click', () => {
+                if (typeof window.triggerInstall === 'function') {
+                    window.triggerInstall();
+                } else {
+                    // Fallback if the function isn't available
+                    alert('Installation not available. Please follow the manual instructions for your browser.');
+                }
+            });
         }
-      }, 3000);
+        
+        // Detect browser and select appropriate tab
+        const userAgent = navigator.userAgent;
+        if (userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") == -1) {
+            document.getElementById('safari-tab').click();
+        } else if (userAgent.indexOf("Edge") > -1) {
+            document.getElementById('edge-tab').click();
+        } else if (userAgent.indexOf("Chrome") == -1 && userAgent.indexOf("Safari") == -1 && userAgent.indexOf("Edge") == -1) {
+            document.getElementById('other-tab').click();
+        }
+        
+        // Hide install button if already installed
+        if (window.matchMedia('(display-mode: standalone)').matches ||
+            window.navigator.standalone === true) {
+            installButton.style.display = 'none';
+            
+            // Show already installed message
+            const container = installButton.parentElement;
+            const message = document.createElement('div');
+            message.className = 'alert alert-success';
+            message.innerHTML = '<i class="fas fa-check-circle me-2"></i>Dear Teddy is already installed on your device!';
+            container.replaceChild(message, installButton);
+        }
     });
-  </script>
-</body>
-</html>
+</script>
+{% endblock %}

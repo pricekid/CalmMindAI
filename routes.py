@@ -44,18 +44,19 @@ try:
 except Exception as e:
     app.logger.warning(f"Fallback email routes error: {str(e)}")
 
-# Home page - Simple landing page
+# Home page - Spotify-style landing page
 @app.route('/')
 def index():
     """
-    Clean, simple landing page focused on app installation with Tailwind CSS.
-    For returning users who are logged in, redirect to the dashboard.
+    New Spotify-style landing page that focuses solely on app installation.
+    This is a simplified page with a clean UI focused on PWA installation.
     """
     # For returning users who are logged in, redirect to the dashboard
     if current_user.is_authenticated:
         return redirect(url_for('dashboard'))
         
-    return render_template('landing.html')
+    return render_template('spotify_style_landing.html', 
+                          title='Dear Teddy | Your Mental Wellness Companion')
 
 # User registration
 @app.route('/register', methods=['GET', 'POST'])
@@ -405,38 +406,20 @@ def offline():
 @app.route('/install')
 def install_app():
     """
-    Installation page for the Progressive Web App.
-    This provides an install button that appears when PWA installation is available.
+    Installation instructions page for the Progressive Web App.
+    This provides browser-specific guidance on how to install the app.
     """
-    return render_template('install.html')
+    return render_template('install.html', title='Install Dear Teddy')
 
-# Landing page preview routes for different design options
+# Direct landing page view (always shows landing, even when logged in)
 @app.route('/landing')
 def view_landing():
     """
-    Direct access to the current landing page, even for logged-in users.
+    Direct access to the landing page, even for logged-in users.
+    This is useful for testing the landing page design.
     """
-    return render_template('landing.html')
-
-@app.route('/landing/warm')
-def view_landing_warm():
-    """Preview the warm and friendly design."""
-    return render_template('landing_warm.html')
-
-@app.route('/landing/professional') 
-def view_landing_professional():
-    """Preview the professional design."""
-    return render_template('landing_professional.html')
-
-@app.route('/landing/minimalist')
-def view_landing_minimalist():
-    """Preview the minimalist design."""
-    return render_template('landing_minimalist.html')
-
-@app.route('/landing/card')
-def view_landing_card():
-    """Preview the card-based design."""
-    return render_template('landing_card.html')
+    return render_template('spotify_style_landing.html', 
+                          title='Dear Teddy | Your Mental Wellness Companion')
 
 # User account management - Now moved to account_routes.py blueprint
 # This is commented out to avoid conflicts with the blueprint version
