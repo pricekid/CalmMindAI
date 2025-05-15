@@ -411,6 +411,16 @@ def install_app():
     """
     return render_template('install.html', title='Install Dear Teddy')
 
+# Direct landing page view (always shows landing, even when logged in)
+@app.route('/landing')
+def view_landing():
+    """
+    Direct access to the landing page, even for logged-in users.
+    This is useful for testing the landing page design.
+    """
+    return render_template('spotify_style_landing.html', 
+                          title='Dear Teddy | Your Mental Wellness Companion')
+
 # User account management - Now moved to account_routes.py blueprint
 # This is commented out to avoid conflicts with the blueprint version
 """
