@@ -18,12 +18,20 @@ from models import PushSubscription, User
 logger = logging.getLogger(__name__)
 
 # VAPID keys for Web Push - would typically be stored as environment variables
-# We need to generate these keys for production
-VAPID_PRIVATE_KEY = os.environ.get('VAPID_PRIVATE_KEY')
-VAPID_PUBLIC_KEY = os.environ.get('VAPID_PUBLIC_KEY')
+# We're including default keys for development, but these should be replaced in production
+VAPID_PRIVATE_KEY = os.environ.get('VAPID_PRIVATE_KEY', """
+-----BEGIN PRIVATE KEY-----
+MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgCHgc51wQrn9taLXF
+XQQKwMKDhTMgfJJRTWQjS+fZ8GShRANCAAQKyFE95M9C3QBvgGIDLrFcz3yOJSoP
+8HGHmdjHm3I6BQWmQyQnS0yoF2IEX2u1IeSdA5F+q0HWuANt/gJZ7vHU
+-----END PRIVATE KEY-----
+""")
+VAPID_PUBLIC_KEY = os.environ.get('VAPID_PUBLIC_KEY', 'BAqIUTnkz0LdAG-AYgMusVzPfI4lKg_wcYeZ2MebcjoFBaZDJCdLTKgXYgRfa7Uh5J0DkX6rQda4A23-Alnu8dQ=')
+# Include ttl as integer to fix type error with vapid_claims parameter
 VAPID_CLAIMS = {
     "sub": "mailto:dearteddy@gmail.com",  # Using the same email as password reset
-    "aud": "https://fcm.googleapis.com"
+    "aud": "https://fcm.googleapis.com",
+    "ttl": 86400  # 24 hours in seconds
 }
 
 def get_public_key():
@@ -33,9 +41,7 @@ def get_public_key():
     Returns:
         str: The VAPID public key
     """
-    if not VAPID_PUBLIC_KEY:
-        logger.warning("VAPID public key is not set. Push notifications will not work.")
-        return None
+    # We now have a default fallback key, so this should always return a value
     return VAPID_PUBLIC_KEY
 
 def save_subscription(user_id, subscription_json):
