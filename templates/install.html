@@ -2,30 +2,56 @@
 
 {% block title %}Install Dear Teddy{% endblock %}
 
-{% block extra_head %}
+{% block styles %}
 <style>
     body {
         background-color: #212529 !important;
         color: white !important;
     }
+    .install-container {
+        position: relative;
+        z-index: 1;
+    }
+    .install-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.85);
+        z-index: -1;
+        border-radius: 15px;
+    }
     .lead-heading {
+        font-size: 1.5rem;
         background-color: #000000;
-        color: #ffffff;
+        color: #ffffff !important;
         padding: 15px;
         border-radius: 8px;
         display: inline-block;
         margin-bottom: 15px;
-        font-weight: bold;
+        font-weight: bold !important;
         box-shadow: 0 2px 10px rgba(0,0,0,0.5);
         border: 1px solid #444;
     }
+    h5 {
+        color: white !important;
+    }
 </style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Force dark theme by overriding Bootstrap's data attribute
+    document.documentElement.setAttribute('data-bs-theme', 'dark');
+</script>
 {% endblock %}
 
 {% block content %}
 <div class="container py-4">
     <div class="row justify-content-center">
-        <div class="col-md-10 col-lg-8">
+        <div class="col-md-10 col-lg-8 install-container p-4">
             <div class="text-center mb-5">
                 <img src="{{ url_for('static', filename='images/teddy-logo.svg') }}" alt="Dear Teddy Logo" class="mb-4" style="max-width: 100px;" onerror="this.src='{{ url_for('static', filename='images/teddy-logo.png') }}'">
                 <h1 class="mb-3 lead-heading">Install Dear Teddy</h1>
