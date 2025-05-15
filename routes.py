@@ -44,19 +44,19 @@ try:
 except Exception as e:
     app.logger.warning(f"Fallback email routes error: {str(e)}")
 
-# Home page
+# Home page - Spotify-style landing page
 @app.route('/')
 def index():
-    # Get community journal activity message
-    try:
-        community_message = get_community_message()
-    except Exception as e:
-        logging.error(f"Error getting community message: {str(e)}")
-        community_message = "Join our growing community of mindful journalers."
-
-    return render_template('index.html', 
-                          title='Welcome to Calm Journey',
-                          community_message=community_message)
+    """
+    New Spotify-style landing page that focuses solely on app installation.
+    This is a simplified page with a clean UI focused on PWA installation.
+    """
+    # For returning users who are logged in, redirect to the dashboard
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
+        
+    return render_template('spotify_style_landing.html', 
+                          title='Dear Teddy | Your Mental Wellness Companion')
 
 # User registration
 @app.route('/register', methods=['GET', 'POST'])
@@ -409,7 +409,7 @@ def install_app():
     Installation instructions page for the Progressive Web App.
     This provides browser-specific guidance on how to install the app.
     """
-    return render_template('install.html', title='Install Calm Journey')
+    return render_template('install.html', title='Install Dear Teddy')
 
 # User account management - Now moved to account_routes.py blueprint
 # This is commented out to avoid conflicts with the blueprint version
