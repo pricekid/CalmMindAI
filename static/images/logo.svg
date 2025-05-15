@@ -23,7 +23,7 @@
   </text>
   
   <!-- Small tagline text -->
-  <text x="45" y="36" font-family="Poppins, Arial, sans-serif" font-size="8" fill="#b3b3cc" opacity="0.9">
+  <text x="45" y="36" font-family="Poppins, Arial, sans-serif" font-size="8" fill="#ffffff" opacity="0.95">
     Mindful CBT-based Journaling
   </text>
 </svg>
