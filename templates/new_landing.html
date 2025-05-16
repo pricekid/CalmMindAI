@@ -44,6 +44,14 @@
                         <a class="nav-link" href="#about">About</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="#faq">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link install-btn" href="#" id="navInstallBtn">
+                            <i class="fas fa-download me-1"></i>Install App
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('login') }}">Login</a>
                     </li>
                     <li class="nav-item">
@@ -96,13 +104,66 @@
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h5>Dear Teddy</h5>
+                    <p>Your mental wellness companion for journaling, mood tracking, and emotional support.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h5>Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="{{ url_for('register') }}">Create Account</a></li>
+                        <li><a href="{{ url_for('login') }}">Sign In</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h5>About Us</h5>
+                    <ul class="footer-links">
+                        <li><a href="#about">Our Story</a></li>
+                        <li><a href="#team">Our Team</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h5>Stay Connected</h5>
+                    <div class="social-icons">
+                        <a href="https://facebook.com/dearteddy" target="_blank" class="social-icon" title="Follow us on Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/dearteddyapp" target="_blank" class="social-icon" title="Follow us on Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com/dearteddyapp" target="_blank" class="social-icon" title="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://linkedin.com/company/dearteddy" target="_blank" class="social-icon" title="Connect on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://github.com/dearteddy" target="_blank" class="social-icon" title="View our GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                    <p class="mt-3">Subscribe to our newsletter:</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Your email address" class="newsletter-input">
+                        <button class="newsletter-btn">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Dear Teddy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- PWA Installation Script -->
     <script>
         let deferredPrompt;
-        const installButton = document.querySelector('.download-button');
+        const mainInstallButton = document.querySelector('.download-button');
+        const navInstallButton = document.getElementById('navInstallBtn');
         const installationNotice = document.getElementById('installationNotice');
         
         // Show notice for PWA installation
@@ -110,29 +171,55 @@
             e.preventDefault();
             deferredPrompt = e;
             installationNotice.style.display = 'flex';
+            
+            // Show the Install App button in the navigation
+            if (navInstallButton) {
+                navInstallButton.style.display = 'block';
+            }
         });
         
-        // Handle app installation
-        if (installButton) {
-            installButton.addEventListener('click', async (e) => {
-                if (deferredPrompt) {
-                    e.preventDefault();
-                    deferredPrompt.prompt();
-                    const { outcome } = await deferredPrompt.userChoice;
-                    deferredPrompt = null;
+        // Function to trigger installation
+        const triggerInstallPrompt = async (e) => {
+            if (deferredPrompt) {
+                e.preventDefault();
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                deferredPrompt = null;
+                
+                if (outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
                     
-                    if (outcome === 'accepted') {
-                        console.log('User accepted the install prompt');
-                    } else {
-                        console.log('User dismissed the install prompt');
-                    }
+                    // Hide installation buttons after successful installation
+                    if (navInstallButton) navInstallButton.style.display = 'none';
+                    installationNotice.style.display = 'none';
+                } else {
+                    console.log('User dismissed the install prompt');
                 }
-            });
+            }
+        };
+        
+        // Handle app installation from main button
+        if (mainInstallButton) {
+            mainInstallButton.addEventListener('click', triggerInstallPrompt);
+        }
+        
+        // Handle app installation from nav button
+        if (navInstallButton) {
+            navInstallButton.addEventListener('click', triggerInstallPrompt);
+            
+            // Initially hide the nav install button if installation isn't available
+            if (!deferredPrompt) {
+                navInstallButton.style.display = 'none';
+            }
         }
         
         // When app is installed
         window.addEventListener('appinstalled', () => {
             console.log('PWA was installed');
+            
+            // Hide installation buttons after successful installation
+            if (navInstallButton) navInstallButton.style.display = 'none';
+            installationNotice.style.display = 'none';
         });
     </script>
 </body>
