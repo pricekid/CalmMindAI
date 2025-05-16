@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dear Teddy | Mental Wellness App</title>
+    
+    <!-- PWA Support -->
+    <link rel="manifest" href="static/manifest.json">
+    <meta name="theme-color" content="#A05C2C">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-touch-icon" href="static/images/icon-192x192.png">
+    <link rel="icon" href="static/images/teddy-logo.svg" type="image/svg+xml">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="static/css/landing.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <a class="navbar-brand" href="#">
+                    <img src="static/images/teddy-logo.svg" alt="Dear Teddy" onerror="this.src='static/images/teddy-logo.png'">
+                    <span>Dear Teddy</span>
+                </a>
+                
+                <div class="main-nav">
+                    <ul class="nav-links">
+                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="https://dearteddy-app.replit.app/login">Login</a></li>
+                        <li><a href="#" onclick="showInstallPrompt(); return false;" class="install-app-btn"><i class="fas fa-download"></i> Install App</a></li>
+                        <li><a href="https://dearteddy-app.replit.app/register" class="sign-up">Sign Up</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-toggle d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div class="collapse d-md-none" id="mobileMenu">
+                <ul class="mobile-nav-list">
+                    <li class="mobile-nav-item">
+                        <a href="#" class="mobile-nav-link active">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="mobile-nav-item">
+                        <a href="#features" class="mobile-nav-link">
+                            <i class="fas fa-star"></i>
+                            <span>Features</span>
+                        </a>
+                    </li>
+                    <li class="mobile-nav-item">
+                        <a href="#about" class="mobile-nav-link">
+                            <i class="fas fa-info-circle"></i>
+                            <span>About</span>
+                        </a>
+                    </li>
+                    <li class="mobile-nav-item">
+                        <a href="https://dearteddy-app.replit.app/login" class="mobile-nav-link">
+                            <i class="fas fa-lock"></i>
+                            <span>Login</span>
+                        </a>
+                    </li>
+                    <li class="mobile-nav-item">
+                        <button type="button" onclick="showInstallPrompt()" class="mobile-nav-link mobile-install-btn">
+                            <i class="fas fa-download"></i>
+                            <span>Install App</span>
+                        </button>
+                    </li>
+                    <li class="mobile-nav-item">
+                        <a href="https://dearteddy-app.replit.app/register" class="mobile-nav-link mobile-signup-btn">
+                            <i class="fas fa-user-plus"></i>
+                            <span>Sign Up</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="hero-section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 hero-text">
+                        <h1>Nurture your mental wellness, one journal entry at a time</h1>
+                        <p class="lead">Journal your thoughts, track your emotions, and receive gentle, supportive insights — all designed to help you feel more grounded, day by day.</p>
+                        <div class="hero-buttons">
+                            <a href="https://dearteddy-app.replit.app/register" class="btn btn-primary">Get Started</a>
+                            <a href="#features" class="btn btn-outline">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <div class="phone-container">
+                            <img src="static/images/landing-phone-mockup.svg" alt="App Demo" class="phone-frame">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features-section" id="features">
+            <div class="container text-center">
+                <h2>How Dear Teddy Helps</h2>
+                <p class="section-lead">Our thoughtfully designed features support your emotional wellbeing every step of the way.</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3>Reflective Journaling</h3>
+                        <p>Express your thoughts freely in a private, secure space designed for self-reflection.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>AI-Powered Insights</h3>
+                        <p>Receive thoughtful, personalized feedback that helps you understand your emotional patterns.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Mood Tracking</h3>
+                        <p>Visualize your emotional journey and identify factors that influence your wellbeing.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h3>Gentle Reminders</h3>
+                        <p>Customizable notifications help you maintain a consistent journaling practice.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <div class="about-section" id="about">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <img src="static/images/about-illustration.svg" alt="About Dear Teddy" class="about-image">
+                    </div>
+                    <div class="col-lg-6">
+                        <h2>About Dear Teddy</h2>
+                        <p>Dear Teddy was created with a simple mission: to make emotional wellbeing support accessible to everyone. Our app combines the therapeutic benefits of journaling with gentle AI guidance to help you process your thoughts and feelings.</p>
+                        <p>We believe that regular reflection and emotional awareness are powerful tools for personal growth and mental wellness. Dear Teddy is your companion on this journey - always available, completely private, and endlessly supportive.</p>
+                        <a href="https://dearteddy-app.replit.app/register" class="btn btn-primary">Join Us Today</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crisis Resources Section -->
+        <div class="crisis-resources" id="crisis-resources">
+            <div class="container">
+                <h2>Crisis Resources</h2>
+                <p class="section-lead">If you're experiencing a mental health emergency, please reach out to these resources for immediate support:</p>
+                
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <h3>Lifeline Barbados</h3>
+                        <p class="resource-phone">Call: 536-4500</p>
+                        <p>Free, confidential support for people in distress.</p>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <h3>Crisis Text Line</h3>
+                        <p class="resource-phone">Text HOME to 741741</p>
+                        <p>Available in US, Canada, UK, and Ireland. Free, 24/7 text support with trained crisis counselors.</p>
+                        <a href="https://www.crisistextline.org/" target="_blank" class="resource-button">Visit Website</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <h3>International Association for Suicide Prevention</h3>
+                        <p>Resources for finding local crisis centers worldwide.</p>
+                        <a href="https://www.iasp.info/resources/Crisis_Centres/" target="_blank" class="resource-button">Find a Crisis Center</a>
+                    </div>
+                </div>
+                
+                <div class="crisis-reminder">
+                    <h4>Remember:</h4>
+                    <ul>
+                        <li>Your feelings are valid, but they're not the whole story.</li>
+                        <li>This difficult moment will pass.</li>
+                        <li>You've overcome challenges before, and you can do it again.</li>
+                        <li>There are people who want to help and who care about your wellbeing.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h5>Dear Teddy</h5>
+                <p>Your mental wellness companion for journaling, mood tracking, and emotional support.</p>
+                <p class="footer-tagline">Helping you find clarity and calm, one journal entry at a time.</p>
+            </div>
+            
+            <div class="footer-column">
+                <h5>Quick Links</h5>
+                <ul class="footer-links">
+                    <li><a href="https://dearteddy-app.replit.app/register">Create Account</a></li>
+                    <li><a href="https://dearteddy-app.replit.app/login">Sign In</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><button type="button" onclick="showInstallPrompt()" class="footer-install-btn">Install App</button></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h5>Legal</h5>
+                <ul class="footer-links">
+                    <li><a href="https://dearteddy-app.replit.app/terms">Terms & Conditions</a></li>
+                    <li><a href="https://dearteddy-app.replit.app/privacy">Privacy Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h5>Stay Updated</h5>
+                <p>Subscribe to our newsletter for mental wellness tips and app updates.</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Your Email">
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Dear Teddy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- PWA Installation Script -->
+    <script src="static/js/install.js"></script>
+</body>
+</html>
