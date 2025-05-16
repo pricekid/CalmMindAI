@@ -18,8 +18,8 @@ An AI-powered mental wellness journaling application that provides comprehensive
 2. Create a new Web Service on Render.com
 3. Connect your GitHub repository
 4. Configure the following settings:
-   - Build Command: `pip install -r requirements.txt`
-   - Start Command: `gunicorn --bind 0.0.0.0:$PORT main:app`
+   - Build Command: `poetry install`
+   - Start Command: `poetry run gunicorn --bind 0.0.0.0:$PORT main:app`
 
 5. Add the following environment variables:
    - `DATABASE_URL`: Your PostgreSQL connection string
@@ -46,9 +46,29 @@ This repository includes a `render.yaml` file for easy deployment:
 ## Local Development
 
 1. Clone the repository
-2. Install dependencies: `pip install -r requirements.txt`
-3. Set up environment variables
-4. Run the application: `python main.py`
+2. Install dependencies with Poetry: `poetry install`
+3. Set up environment variables (see deployment section)
+4. Run the application: `poetry run python main.py`
+
+## Troubleshooting Deployment
+
+If you encounter issues with deployment, try these steps:
+
+1. **Database Connection Issues**: 
+   - Verify your `DATABASE_URL` is correct
+   - Ensure your database is accessible from Render.com's IP addresses
+
+2. **Poetry Installation Problems**: 
+   - Check if your `pyproject.toml` file is at the root of the repository
+   - Verify that all dependencies are correctly listed
+
+3. **Application Startup Errors**:
+   - Check the Render.com logs for specific error messages
+   - Make sure all required environment variables are set
+
+4. **API Key Issues**:
+   - Ensure all API keys (OpenAI, SendGrid, Twilio) are valid
+   - Check for any API usage limitations or restrictions
 
 ## Features
 
