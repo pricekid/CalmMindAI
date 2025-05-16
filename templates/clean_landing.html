@@ -752,7 +752,7 @@
                         <li><a href="#features">Features</a></li>
                         <li><a href="#about">About</a></li>
                         <li><a href="{{ url_for('login') }}">Login</a></li>
-                        <li><button type="button" onclick="showInstallPrompt()" class="install-app-btn">Install App</button></li>
+                        <li><a href="#" onclick="showInstallPrompt(); return false;" class="install-app-btn"><i class="fas fa-download"></i> Install App</a></li>
                         <li><a href="{{ url_for('register') }}" class="sign-up">Sign Up</a></li>
                     </ul>
                 </div>
@@ -983,51 +983,48 @@
     
     <!-- PWA Installation Script -->
     <script>
-        // Global variable to store the installation prompt event
-        let deferredPrompt = null;
+        // A simple and robust approach for PWA installation
+        let installPrompt;
         
-        // Function to handle the installation process
+        // Simple handler function for install clicks
         function showInstallPrompt() {
-            console.log('Install button clicked');
-            
-            if (deferredPrompt) {
-                console.log('Installation prompt available, showing it now');
-                
-                // Show the prompt
-                deferredPrompt.prompt();
-                
-                // Wait for the user response
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('User accepted the installation');
-                    } else {
-                        console.log('User declined the installation');
-                    }
-                    
-                    // Clear the saved prompt since it can't be used again
-                    deferredPrompt = null;
-                });
-            } else {
-                console.log('No installation prompt available');
-                alert('This app can only be installed when accessed directly (not in an iframe) and if not already installed. Please try visiting the site directly.');
+            if (!installPrompt) {
+                alert("Installation isn't available right now. This could be because:\n\n" +
+                      "• You've already installed the app\n" +
+                      "• Your browser doesn't support installation\n" +
+                      "• The app doesn't meet installation criteria yet\n\n" +
+                      "Try using Chrome or Edge for the best experience.");
+                return;
             }
+            
+            // Show the installation prompt
+            installPrompt.prompt();
+            
+            // Log the outcome
+            installPrompt.userChoice.then(function(choiceResult) {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                    installPrompt = null;
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+            });
         }
         
-        // Capture the installation prompt event
-        window.addEventListener('beforeinstallprompt', (e) => {
-            console.log('Installation prompt detected and saved for later use');
-            
-            // Prevent the default browser prompt
+        // Listen for the browser's install prompt event
+        window.addEventListener('beforeinstallprompt', function(e) {
+            // Prevent the mini-infobar from appearing on mobile
             e.preventDefault();
             
-            // Store the event for later use
-            deferredPrompt = e;
+            // Save the event so it can be triggered later
+            installPrompt = e;
+            console.log('Install prompt ready');
         });
         
-        // Listen for successful installation
-        window.addEventListener('appinstalled', () => {
-            console.log('PWA has been successfully installed');
-            deferredPrompt = null;
+        // Track when the PWA is successfully installed
+        window.addEventListener('appinstalled', function(e) {
+            console.log('Application was successfully installed');
+            installPrompt = null;
         });
     </script>
 </body>
