@@ -752,7 +752,7 @@
                         <li><a href="#features">Features</a></li>
                         <li><a href="#about">About</a></li>
                         <li><a href="{{ url_for('login') }}">Login</a></li>
-                        <li><a href="javascript:void(0);" id="installBtn" class="install-app">Install App</a></li>
+                        <li><a href="javascript:void(0);" onclick="triggerInstall(event)" id="installBtn" class="install-app">Install App</a></li>
                         <li><a href="{{ url_for('register') }}" class="sign-up">Sign Up</a></li>
                     </ul>
                 </div>
@@ -791,7 +791,7 @@
                         </a>
                     </li>
                     <li class="mobile-nav-item">
-                        <a href="javascript:void(0);" id="mobileInstallBtn" class="mobile-nav-link mobile-install-btn">
+                        <a href="javascript:void(0);" onclick="triggerInstall(event)" id="mobileInstallBtn" class="mobile-nav-link mobile-install-btn">
                             <i class="fas fa-download"></i>
                             <span>Install App</span>
                         </a>
@@ -983,83 +983,49 @@
     
     <!-- PWA Installation Script -->
     <script>
-        // We need to define these variables after DOM is fully loaded
-        let deferredPrompt;
-        let installBtn;
-        let mobileInstallBtn;
-        let footerInstallBtn;
+        // Make the triggerInstall function globally available
+        let deferredPrompt = null;
         
-        // Function to trigger installation
-        const triggerInstall = async (e) => {
+        // Function to trigger installation (globally accessible)
+        function triggerInstall(e) {
             e.preventDefault(); // Prevent default link behavior
             console.log('Install button clicked');
             
             if (deferredPrompt) {
                 console.log('Prompting for installation');
                 deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
                 
-                if (outcome === 'accepted') {
-                    console.log('User accepted the installation');
+                // Wait for the user to respond to the prompt
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the installation');
+                    } else {
+                        console.log('User declined the installation');
+                    }
                     
-                    // Hide installation buttons after successful installation
-                    if (installBtn) installBtn.style.display = 'none';
-                    if (mobileInstallBtn) mobileInstallBtn.style.display = 'none';
-                    if (footerInstallBtn) footerInstallBtn.style.display = 'none';
-                } else {
-                    console.log('User declined the installation');
-                }
-                
-                deferredPrompt = null;
+                    // Clear the saved prompt since it can't be used again
+                    deferredPrompt = null;
+                });
             } else {
                 console.log('No deferred prompt available - the app cannot be installed currently');
                 alert('This app can only be installed when accessed directly (not in an iframe) and if not already installed. Please try visiting the site directly.');
             }
-        };
+        }
         
-        // Wait for DOM to be fully loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            // Get references to buttons
-            installBtn = document.getElementById('installBtn');
-            mobileInstallBtn = document.getElementById('mobileInstallBtn');
-            footerInstallBtn = document.getElementById('footerInstallBtn');
-            
-            // Add event listeners for install buttons
-            if (installBtn) {
-                installBtn.addEventListener('click', triggerInstall);
-                console.log('Desktop install button listener added');
-            }
-            
-            if (mobileInstallBtn) {
-                mobileInstallBtn.addEventListener('click', triggerInstall);
-                console.log('Mobile install button listener added');
-            }
-            
-            if (footerInstallBtn) {
-                footerInstallBtn.addEventListener('click', triggerInstall);
-                console.log('Footer install button listener added');
-            }
-        });
-        
-        // Handle PWA installation
+        // Handle PWA installation - capture the installation prompt
         window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent Chrome 76+ from automatically showing the prompt
             e.preventDefault();
-            deferredPrompt = e;
-            console.log('Installation prompt available');
             
-            // Show the installation buttons (they're already visible by default)
-            if (installBtn) installBtn.style.display = 'inline-block';
-            if (mobileInstallBtn) mobileInstallBtn.style.display = 'block';
-            if (footerInstallBtn) footerInstallBtn.style.display = 'inline-block';
+            // Stash the event so it can be triggered later
+            deferredPrompt = e;
+            console.log('Installation prompt available and saved for later use');
         });
         
         // When app is installed
-        window.addEventListener('appinstalled', () => {
-            console.log('PWA was installed');
-            
-            // Hide installation buttons
-            if (installBtn) installBtn.style.display = 'none';
-            if (mobileInstallBtn) mobileInstallBtn.style.display = 'none';
+        window.addEventListener('appinstalled', (e) => {
+            console.log('PWA was installed successfully');
+            deferredPrompt = null; // Clear the prompt after installation
         });
     </script>
 </body>
