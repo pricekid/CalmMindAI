@@ -1024,6 +1024,12 @@
             mobileInstallBtn.addEventListener('click', triggerInstall);
         }
         
+        // Footer install button
+        const footerInstallBtn = document.getElementById('footerInstallBtn');
+        if (footerInstallBtn) {
+            footerInstallBtn.addEventListener('click', triggerInstall);
+        }
+        
         // When app is installed
         window.addEventListener('appinstalled', () => {
             console.log('PWA was installed');
