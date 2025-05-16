@@ -24,6 +24,7 @@ body {
 
 .main-container {
     display: flex;
+    flex-direction: column;
     width: 100%;
     background-color: var(--teddy-bg);
     border-radius: 12px;
@@ -32,7 +33,7 @@ body {
 }
 
 .content-section {
-    flex: 1;
+    width: 100%;
     padding: 4rem;
     display: flex;
     flex-direction: column;
@@ -41,11 +42,11 @@ body {
 }
 
 .image-section {
-    flex: 1;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
+    padding: 3rem 2rem;
     position: relative;
     background-color: var(--teddy-bg);
 }
@@ -206,7 +207,6 @@ h2 {
     .content-section {
         padding: 2rem;
         text-align: center;
-        order: 2;
     }
     
     .description {
@@ -220,7 +220,6 @@ h2 {
     
     .image-section {
         padding: 2rem 0;
-        order: 1;
     }
     
     .phone-frame {
