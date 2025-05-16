@@ -752,7 +752,7 @@
                         <li><a href="#features">Features</a></li>
                         <li><a href="#about">About</a></li>
                         <li><a href="{{ url_for('login') }}">Login</a></li>
-                        <li><a href="javascript:void(0);" onclick="triggerInstall(event)" id="installBtn" class="install-app">Install App</a></li>
+                        <li><button type="button" onclick="showInstallPrompt()" class="install-app-btn">Install App</button></li>
                         <li><a href="{{ url_for('register') }}" class="sign-up">Sign Up</a></li>
                     </ul>
                 </div>
@@ -791,10 +791,10 @@
                         </a>
                     </li>
                     <li class="mobile-nav-item">
-                        <a href="javascript:void(0);" onclick="triggerInstall(event)" id="mobileInstallBtn" class="mobile-nav-link mobile-install-btn">
+                        <button type="button" onclick="showInstallPrompt()" class="mobile-nav-link mobile-install-btn">
                             <i class="fas fa-download"></i>
                             <span>Install App</span>
-                        </a>
+                        </button>
                     </li>
                     <li class="mobile-nav-item">
                         <a href="{{ url_for('register') }}" class="mobile-nav-link mobile-signup-btn">
@@ -938,7 +938,7 @@
                     <li><a href="{{ url_for('login') }}">Sign In</a></li>
                     <li><a href="#features">Features</a></li>
                     <li><a href="#faq">FAQ</a></li>
-                    <li><a href="#" id="footerInstallBtn">Install App</a></li>
+                    <li><button type="button" onclick="showInstallPrompt()" class="footer-install-btn">Install App</button></li>
                 </ul>
             </div>
             
@@ -983,19 +983,20 @@
     
     <!-- PWA Installation Script -->
     <script>
-        // Make the triggerInstall function globally available
+        // Global variable to store the installation prompt event
         let deferredPrompt = null;
         
-        // Function to trigger installation (globally accessible)
-        function triggerInstall(e) {
-            e.preventDefault(); // Prevent default link behavior
+        // Function to handle the installation process
+        function showInstallPrompt() {
             console.log('Install button clicked');
             
             if (deferredPrompt) {
-                console.log('Prompting for installation');
+                console.log('Installation prompt available, showing it now');
+                
+                // Show the prompt
                 deferredPrompt.prompt();
                 
-                // Wait for the user to respond to the prompt
+                // Wait for the user response
                 deferredPrompt.userChoice.then((choiceResult) => {
                     if (choiceResult.outcome === 'accepted') {
                         console.log('User accepted the installation');
@@ -1007,25 +1008,26 @@
                     deferredPrompt = null;
                 });
             } else {
-                console.log('No deferred prompt available - the app cannot be installed currently');
+                console.log('No installation prompt available');
                 alert('This app can only be installed when accessed directly (not in an iframe) and if not already installed. Please try visiting the site directly.');
             }
         }
         
-        // Handle PWA installation - capture the installation prompt
+        // Capture the installation prompt event
         window.addEventListener('beforeinstallprompt', (e) => {
-            // Prevent Chrome 76+ from automatically showing the prompt
+            console.log('Installation prompt detected and saved for later use');
+            
+            // Prevent the default browser prompt
             e.preventDefault();
             
-            // Stash the event so it can be triggered later
+            // Store the event for later use
             deferredPrompt = e;
-            console.log('Installation prompt available and saved for later use');
         });
         
-        // When app is installed
-        window.addEventListener('appinstalled', (e) => {
-            console.log('PWA was installed successfully');
-            deferredPrompt = null; // Clear the prompt after installation
+        // Listen for successful installation
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA has been successfully installed');
+            deferredPrompt = null;
         });
     </script>
 </body>
