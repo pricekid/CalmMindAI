@@ -11,15 +11,73 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
+}
+
+/* Navigation Styles */
+.navbar {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-brand {
     display: flex;
     align-items: center;
-    justify-content: center;
+    font-weight: 700;
+    color: var(--teddy-primary);
+}
+
+.navbar-brand span {
+    margin-left: 10px;
+    font-size: 1.3rem;
+}
+
+.nav-logo {
+    height: 40px;
+    width: 40px;
+}
+
+.navbar-nav .nav-link {
+    color: #333;
+    font-weight: 500;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--teddy-primary);
+}
+
+.navbar-nav .nav-link.active {
+    color: var(--teddy-primary);
+    font-weight: 600;
+}
+
+.navbar-nav .nav-link.highlight {
+    background-color: var(--teddy-secondary);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 50px;
+    margin-left: 15px;
+}
+
+.navbar-nav .nav-link.highlight:hover {
+    background-color: #16393b;
+    transform: scale(1.05);
 }
 
 .container {
     width: 100%;
     max-width: 1200px;
     padding: 20px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .main-container {
