@@ -484,10 +484,24 @@
             text-decoration: none;
             transition: color 0.3s;
             font-size: 0.95rem;
+            display: flex;
+            flex-direction: column;
         }
         
         .footer-links a:hover {
             color: white;
+        }
+        
+        .footer-link-desc {
+            font-size: 0.8rem;
+            color: #888;
+            font-style: italic;
+            margin-top: 2px;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover .footer-link-desc {
+            color: #aaa;
         }
         
         .social-icons {
@@ -761,7 +775,7 @@
                 <h2>Your Mental Wellness Companion</h2>
                 
                 <p class="description">
-                    Journal your thoughts, track your emotions, and receive supportive insights to help you on your mental wellness journey.
+                    Journal your thoughts, track your emotions, and receive gentle, supportive insights — all designed to help you feel more grounded, day by day.
                 </p>
                 
                 <a href="{{ url_for('register') }}" class="cta-button">
@@ -877,20 +891,22 @@
             <div class="footer-column">
                 <h5>Quick Links</h5>
                 <ul class="footer-links">
-                    <li><a href="{{ url_for('register') }}">Create Account</a></li>
-                    <li><a href="{{ url_for('login') }}">Sign In</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="{{ url_for('register') }}">Create Account <span class="footer-link-desc">- Start your journey</span></a></li>
+                    <li><a href="{{ url_for('login') }}">Sign In <span class="footer-link-desc">- Access your journal</span></a></li>
+                    <li><a href="#features">Features <span class="footer-link-desc">- Explore capabilities</span></a></li>
+                    <li><a href="#faq">FAQ <span class="footer-link-desc">- Common questions</span></a></li>
+                    <li><a href="#" id="footerInstallBtn">Install App <span class="footer-link-desc">- Add to your device</span></a></li>
                 </ul>
             </div>
             
             <div class="footer-column">
                 <h5>About Us</h5>
                 <ul class="footer-links">
-                    <li><a href="#about">Our Story</a></li>
-                    <li><a href="#team">Our Team</a></li>
-                    <li><a href="#contact">Contact Us</a></li>
-                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#about">Our Mission <span class="footer-link-desc">- Why we created Dear Teddy</span></a></li>
+                    <li><a href="#approach">Our Approach <span class="footer-link-desc">- Using CBT principles</span></a></li>
+                    <li><a href="#team">Our Team <span class="footer-link-desc">- Meet the creators</span></a></li>
+                    <li><a href="#contact">Contact Us <span class="footer-link-desc">- Get in touch</span></a></li>
+                    <li><a href="#privacy">Privacy Policy <span class="footer-link-desc">- How we protect your data</span></a></li>
                 </ul>
             </div>
             
