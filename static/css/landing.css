@@ -14,10 +14,10 @@ body {
 }
 
 /* Navigation Styles */
-.navbar {
-    background-color: rgba(255, 255, 255, 0.9);
+.simple-navbar {
+    background-color: white;
     padding: 15px 0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -26,18 +26,18 @@ body {
 .navbar-brand {
     display: flex;
     align-items: center;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--teddy-primary);
 }
 
 .navbar-brand span {
     margin-left: 10px;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 .nav-logo {
-    height: 40px;
-    width: 40px;
+    height: 36px;
+    width: 36px;
 }
 
 .navbar-nav .nav-link {
@@ -45,6 +45,7 @@ body {
     font-weight: 500;
     margin: 0 10px;
     transition: color 0.3s;
+    font-size: 0.95rem;
 }
 
 .navbar-nav .nav-link:hover {
@@ -56,31 +57,27 @@ body {
     font-weight: 600;
 }
 
-.navbar-nav .nav-link.highlight {
+.navbar-nav .nav-link.sign-up-btn {
     background-color: var(--teddy-secondary);
     color: white;
-    padding: 8px 20px;
-    border-radius: 50px;
-    margin-left: 15px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    margin-left: 5px;
+    font-weight: 600;
 }
 
-.navbar-nav .nav-link.highlight:hover {
+.navbar-nav .nav-link.sign-up-btn:hover {
     background-color: #16393b;
-    transform: scale(1.05);
 }
 
 .navbar-nav .nav-link.install-btn {
     color: var(--teddy-primary);
-    border: 2px solid var(--teddy-primary);
-    border-radius: 50px;
-    padding: 8px 20px;
-    margin-right: 10px;
+    background-color: rgba(160, 92, 44, 0.1);
+    border-radius: 4px;
+    padding: 8px 16px;
+    margin-left: 5px;
+    font-weight: 500;
     transition: all 0.3s;
-}
-
-.navbar-nav .nav-link.install-btn:hover {
-    background-color: var(--teddy-primary);
-    color: white;
 }
 
 .container {
@@ -272,10 +269,10 @@ h2 {
 }
 
 /* Footer Styles */
-.footer {
-    background-color: #1a222c;
-    color: #f5f5f5;
-    padding: 60px 0 20px;
+.simple-footer {
+    background-color: #1e2430;
+    color: #e1e1e1;
+    padding: 50px 0 20px;
     margin-top: 60px;
 }
 
@@ -283,33 +280,25 @@ h2 {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
-.footer-section {
+.footer-column {
     flex: 1;
     min-width: 200px;
     margin-bottom: 30px;
     padding: 0 15px;
 }
 
-.footer-section h5 {
+.footer-column h5 {
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin-bottom: 20px;
     font-weight: 600;
     position: relative;
-    padding-bottom: 10px;
-}
-
-.footer-section h5:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 40px;
-    height: 3px;
-    background-color: var(--teddy-primary);
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--teddy-primary);
+    display: inline-block;
 }
 
 .footer-links {
@@ -319,31 +308,32 @@ h2 {
 }
 
 .footer-links li {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .footer-links a {
-    color: #ccc;
+    color: #b8b8b8;
     text-decoration: none;
     transition: color 0.3s;
+    font-size: 0.95rem;
 }
 
 .footer-links a:hover {
-    color: var(--teddy-light);
+    color: white;
 }
 
 .social-icons {
     display: flex;
-    gap: 15px;
+    gap: 12px;
 }
 
 .social-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    background-color: #333;
+    width: 36px;
+    height: 36px;
+    background-color: #313b4c;
     border-radius: 50%;
     color: white;
     text-decoration: none;
@@ -352,15 +342,15 @@ h2 {
 
 .social-icon:hover {
     background-color: var(--teddy-primary);
-    transform: translateY(-3px);
+    transform: translateY(-2px);
 }
 
 .footer-bottom {
     text-align: center;
     padding-top: 20px;
-    border-top: 1px solid #333;
-    color: #999;
-    font-size: 0.9rem;
+    border-top: 1px solid #353a43;
+    color: #888;
+    font-size: 0.85rem;
 }
 
 .newsletter-form {
@@ -372,10 +362,11 @@ h2 {
     flex: 1;
     padding: 10px 15px;
     border: none;
-    background-color: #333;
+    background-color: #2a3546;
     color: white;
     border-radius: 4px 0 0 4px;
     outline: none;
+    font-size: 0.9rem;
 }
 
 .newsletter-input::placeholder {
@@ -383,7 +374,7 @@ h2 {
 }
 
 .newsletter-input:focus {
-    background-color: #3d3d3d;
+    background-color: #343e50;
 }
 
 .newsletter-btn {
@@ -394,6 +385,8 @@ h2 {
     border-radius: 0 4px 4px 0;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-weight: 500;
+    font-size: 0.9rem;
 }
 
 .newsletter-btn:hover {
