@@ -999,7 +999,10 @@
         
         // Function to trigger installation
         const triggerInstall = async (e) => {
+            console.log('Install button clicked');
+            
             if (deferredPrompt) {
+                console.log('Prompting for installation');
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
                 
@@ -1009,9 +1012,15 @@
                     // Hide installation buttons after successful installation
                     if (installBtn) installBtn.style.display = 'none';
                     if (mobileInstallBtn) mobileInstallBtn.style.display = 'none';
+                    if (footerInstallBtn) footerInstallBtn.style.display = 'none';
+                } else {
+                    console.log('User declined the installation');
                 }
                 
                 deferredPrompt = null;
+            } else {
+                console.log('No deferred prompt available - the app cannot be installed currently');
+                alert('This app can only be installed when accessed directly (not in an iframe) and if not already installed. Please try visiting the site directly.');
             }
         };
         
