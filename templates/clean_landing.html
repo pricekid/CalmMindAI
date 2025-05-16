@@ -504,9 +504,51 @@
             color: #aaa;
         }
         
+        .footer-tagline {
+            font-style: italic;
+            color: #a0a0a0;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .footer-connect-text {
+            color: #b8b8b8;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .newsletter-desc {
+            color: #a0a0a0;
+            font-size: 0.85rem;
+            margin-top: -5px;
+            margin-bottom: 10px;
+        }
+        
         .social-icons {
             display: flex;
             gap: 12px;
+            position: relative;
+        }
+        
+        .social-tooltip {
+            position: absolute;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            white-space: nowrap;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .social-icon:hover .social-tooltip {
+            opacity: 1;
         }
         
         .social-icon {
@@ -886,41 +928,44 @@
             <div class="footer-column">
                 <h5>Dear Teddy</h5>
                 <p>Your mental wellness companion for journaling, mood tracking, and emotional support.</p>
+                <p class="footer-tagline">Helping you find clarity and calm, one journal entry at a time.</p>
             </div>
             
             <div class="footer-column">
                 <h5>Quick Links</h5>
                 <ul class="footer-links">
-                    <li><a href="{{ url_for('register') }}">Create Account <span class="footer-link-desc">- Start your journey</span></a></li>
-                    <li><a href="{{ url_for('login') }}">Sign In <span class="footer-link-desc">- Access your journal</span></a></li>
-                    <li><a href="#features">Features <span class="footer-link-desc">- Explore capabilities</span></a></li>
-                    <li><a href="#faq">FAQ <span class="footer-link-desc">- Common questions</span></a></li>
-                    <li><a href="#" id="footerInstallBtn">Install App <span class="footer-link-desc">- Add to your device</span></a></li>
+                    <li><a href="{{ url_for('register') }}">Create Account <span class="footer-link-desc">- Free signup in less than a minute</span></a></li>
+                    <li><a href="{{ url_for('login') }}">Sign In <span class="footer-link-desc">- Access your personal journal</span></a></li>
+                    <li><a href="#features">Features <span class="footer-link-desc">- AI-powered journaling tools</span></a></li>
+                    <li><a href="#faq">FAQ <span class="footer-link-desc">- Answers to common questions</span></a></li>
+                    <li><a href="#" id="footerInstallBtn">Install App <span class="footer-link-desc">- Use offline on your device</span></a></li>
                 </ul>
             </div>
             
             <div class="footer-column">
                 <h5>About Us</h5>
                 <ul class="footer-links">
-                    <li><a href="#about">Our Mission <span class="footer-link-desc">- Why we created Dear Teddy</span></a></li>
-                    <li><a href="#approach">Our Approach <span class="footer-link-desc">- Using CBT principles</span></a></li>
-                    <li><a href="#team">Our Team <span class="footer-link-desc">- Meet the creators</span></a></li>
-                    <li><a href="#contact">Contact Us <span class="footer-link-desc">- Get in touch</span></a></li>
-                    <li><a href="#privacy">Privacy Policy <span class="footer-link-desc">- How we protect your data</span></a></li>
+                    <li><a href="#about">Our Mission <span class="footer-link-desc">- Making mental wellness accessible to all</span></a></li>
+                    <li><a href="#approach">Our Approach <span class="footer-link-desc">- Evidence-based CBT therapeutic techniques</span></a></li>
+                    <li><a href="#team">Our Team <span class="footer-link-desc">- Mental health experts and developers</span></a></li>
+                    <li><a href="#contact">Contact Us <span class="footer-link-desc">- We're here to help and listen</span></a></li>
+                    <li><a href="#privacy">Privacy Policy <span class="footer-link-desc">- Your data is encrypted and secure</span></a></li>
                 </ul>
             </div>
             
             <div class="footer-column">
                 <h5>Stay Connected</h5>
+                <p class="footer-connect-text">Join our community for wellness tips, updates on new features, and mental health resources.</p>
                 <div class="social-icons">
-                    <a href="https://facebook.com/dearteddy" target="_blank" class="social-icon" title="Follow us on Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://twitter.com/dearteddyapp" target="_blank" class="social-icon" title="Follow us on Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="https://instagram.com/dearteddyapp" target="_blank" class="social-icon" title="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://linkedin.com/company/dearteddy" target="_blank" class="social-icon" title="Connect on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="https://github.com/dearteddy" target="_blank" class="social-icon" title="View our GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://facebook.com/dearteddy" target="_blank" class="social-icon" title="Follow us on Facebook"><i class="fab fa-facebook-f"></i><span class="social-tooltip">Daily wellness tips</span></a>
+                    <a href="https://twitter.com/dearteddyapp" target="_blank" class="social-icon" title="Follow us on Twitter"><i class="fab fa-twitter"></i><span class="social-tooltip">Latest updates</span></a>
+                    <a href="https://instagram.com/dearteddyapp" target="_blank" class="social-icon" title="Follow us on Instagram"><i class="fab fa-instagram"></i><span class="social-tooltip">Wellness inspirations</span></a>
+                    <a href="https://linkedin.com/company/dearteddy" target="_blank" class="social-icon" title="Connect on LinkedIn"><i class="fab fa-linkedin-in"></i><span class="social-tooltip">Professional news</span></a>
+                    <a href="https://github.com/dearteddy" target="_blank" class="social-icon" title="View our GitHub"><i class="fab fa-github"></i><span class="social-tooltip">Open source code</span></a>
                 </div>
                 
                 <p class="mt-3">Subscribe to our newsletter:</p>
+                <p class="newsletter-desc">Get monthly tips for mental wellness and app updates.</p>
                 <div class="newsletter-form">
                     <input type="email" placeholder="Your email address" class="newsletter-input">
                     <button type="button" class="newsletter-btn">Subscribe</button>
