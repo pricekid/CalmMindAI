@@ -611,6 +611,15 @@ def about():
     """
     return render_template('about.html', title='About Calm Journey')
 
+# Terms and Conditions page
+@app.route('/terms')
+def terms():
+    """
+    Display the Terms and Conditions for Dear Teddy.
+    This page is available to all users, whether logged in or not.
+    """
+    return render_template('terms.html', title='Terms and Conditions')
+
 # Define template filters globally before routes
 @app.template_filter('pluralize')
 def pluralize(number, singular='', plural='s'):
