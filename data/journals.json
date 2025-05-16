@@ -47,5 +47,29 @@
     "updated_at": "2025-05-13T00:58:05.035445",
     "is_analyzed": true,
     "recommendations": []
+  },
+  {
+    "id": 9,
+    "user_id": "d45aac71-ac00-4491-8ea7-9fa2079297a2",
+    "title": " 16th ",
+    "content": "Making great progress on developing tweh dear teddy app",
+    "anxiety_level": 1,
+    "created_at": "2025-05-16T15:22:50.897268",
+    "updated_at": "2025-05-16T15:22:58.828176",
+    "is_analyzed": true,
+    "gpt_response": "Hi there! It's really wonderful to see you making progress on the Dear Teddy app. Even though your journal entry carries a neutral tone, there's a sense of accomplishment underlying your words. Developing something new can sometimes feel like a neutral task, but there's often a quiet pride in seeing how far you've come. Take a moment to reflect on what this progress means to you personally\u2014what emotions arise when you think about bringing this app to life? Remember, acknowledging even our neutral feelings can lead to deeper insights. Keep celebrating your wins, big or small. You're doing great!\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- Journal Reflection\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Journal Reflection",
+        "description": "Your journal entry has been saved.",
+        "recommendation": "Continue journaling regularly to build self-awareness."
+      }
+    ],
+    "structured_data": {
+      "insight_text": "Your entry reflects a moment of progress and development. While the primary emotion is neutral, there's an underlying sense of achievement in your words. This suggests a steady and consistent effort towards your goals, which is a positive sign of resilience and determination.",
+      "reflection_prompt": "When you think about the progress you've made with the app, what emotions or thoughts come up for you? Are there moments of pride, relief, or something else?",
+      "followup_text": "Keep acknowledging the steps you take, no matter how small they may seem. Progress is progress. You're building something meaningful, and that's worth celebrating. Keep up the great work!"
+    },
+    "user_reflection": null
   }
 ]

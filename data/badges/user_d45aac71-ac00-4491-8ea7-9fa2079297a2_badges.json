@@ -1,0 +1,20 @@
+{
+  "earned_badges": [],
+  "earned_dates": {},
+  "current_streak": 1,
+  "longest_streak": 1,
+  "last_entry_date": "2025-05-16",
+  "total_xp": 30,
+  "xp_history": [
+    {
+      "amount": 10,
+      "reason": "Created a new journal entry",
+      "date": "2025-05-16 15:22:59"
+    },
+    {
+      "amount": 20,
+      "reason": "Received insights on journal entry",
+      "date": "2025-05-16 15:22:59"
+    }
+  ]
+}
