@@ -2,7 +2,7 @@ services:
   - type: web
     name: dearteddy
     env: python
-    buildCommand: poetry install
+    buildCommand: bash build.sh
     startCommand: gunicorn --bind 0.0.0.0:$PORT main:app
     envVars:
       - key: PYTHON_VERSION
