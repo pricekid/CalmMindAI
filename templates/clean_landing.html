@@ -327,7 +327,7 @@
         /* Crisis Resources Section */
         .crisis-resources {
             background-color: #f5f5f5;
-            padding: 40px;
+            padding: 60px 40px;
             text-align: center;
             border-bottom-left-radius: 12px;
             border-bottom-right-radius: 12px;
@@ -337,24 +337,57 @@
             font-size: 1.1rem;
             color: #333;
             max-width: 800px;
-            margin: 0 auto 25px;
+            margin: 0 auto 40px;
             font-weight: 500;
+            line-height: 1.6;
         }
         
-        .resource-buttons {
+        .resource-cards {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 15px;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .resource-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            width: calc(33.33% - 30px);
+            min-width: 280px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .resource-card h3 {
+            color: var(--teddy-primary);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        
+        .resource-phone {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .resource-card p {
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
         
         .resource-button {
             background-color: var(--teddy-secondary);
             color: white;
-            padding: 12px 25px;
+            padding: 10px 25px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
+            display: inline-block;
             transition: all 0.3s;
         }
         
@@ -364,12 +397,42 @@
             color: white;
         }
         
-        .resource-button.emergency {
-            background-color: #d43939;
+        .crisis-reminder {
+            background-color: rgba(160, 92, 44, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
         }
         
-        .resource-button.emergency:hover {
-            background-color: #b82e2e;
+        .crisis-reminder h4 {
+            color: var(--teddy-primary);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .crisis-reminder ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+        }
+        
+        .crisis-reminder li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+            color: #444;
+            line-height: 1.5;
+        }
+        
+        .crisis-reminder li:before {
+            content: "•";
+            color: var(--teddy-primary);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 5px;
+            top: -5px;
         }
         
         /* Footer Styles */
@@ -638,11 +701,39 @@
             
             <!-- Crisis Resources Section -->
             <div class="crisis-resources">
-                <p class="crisis-message">If you're in crisis or someone else is in danger, please reach out to one of these resources for immediate support.</p>
-                <div class="resource-buttons">
-                    <a href="https://988lifeline.org/" target="_blank" class="resource-button">988 Suicide & Crisis Lifeline</a>
-                    <a href="https://www.crisistextline.org/" target="_blank" class="resource-button">Crisis Text Line</a>
-                    <a href="tel:911" class="resource-button emergency">Call 911</a>
+                <h2 class="section-title">Crisis Resources</h2>
+                <p class="crisis-message">It's okay to ask for help when you're feeling overwhelmed. Reaching out is a sign of strength, not weakness. You don't have to face difficult moments alone.</p>
+                
+                <div class="resource-cards">
+                    <div class="resource-card">
+                        <h3>Lifeline Barbados</h3>
+                        <p class="resource-phone">536-4500</p>
+                        <p>Free, confidential support from trained counselors. Available 24/7 for anyone experiencing emotional distress or thoughts of suicide.</p>
+                        <a href="tel:5364500" class="resource-button">Call Now</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <h3>Crisis Text Line (International)</h3>
+                        <p class="resource-phone">Text HOME to 741741</p>
+                        <p>Available in US, Canada, UK, and Ireland. Free, 24/7 text support with trained crisis counselors.</p>
+                        <a href="https://www.crisistextline.org/" target="_blank" class="resource-button">Visit Website</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <h3>International Association for Suicide Prevention</h3>
+                        <p>Resources for finding local crisis centers worldwide.</p>
+                        <a href="https://www.iasp.info/resources/Crisis_Centres/" target="_blank" class="resource-button">Find a Crisis Center</a>
+                    </div>
+                </div>
+                
+                <div class="crisis-reminder">
+                    <h4>Remember:</h4>
+                    <ul>
+                        <li>Your feelings are valid, but they're not the whole story.</li>
+                        <li>This difficult moment will pass.</li>
+                        <li>You've overcome challenges before, and you can do it again.</li>
+                        <li>There are people who want to help and who care about your wellbeing.</li>
+                    </ul>
                 </div>
             </div>
         </div>
