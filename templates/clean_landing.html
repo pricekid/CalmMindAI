@@ -561,6 +561,95 @@
         }
         
         /* Mobile Styles */
+                /* Mobile Navigation Styles */
+        .mobile-menu-toggle {
+            background-color: transparent;
+            border: none;
+            color: var(--teddy-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+        
+        .mobile-menu-toggle:hover {
+            background-color: rgba(160, 92, 44, 0.1);
+        }
+        
+        .mobile-nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            background-color: #f9f6f1;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .mobile-nav-item {
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .mobile-nav-item:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-nav-link {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: #555;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .mobile-nav-link i {
+            margin-right: 15px;
+            font-size: 1.1rem;
+            color: var(--teddy-primary);
+            width: 20px;
+            text-align: center;
+        }
+        
+        .mobile-nav-link:hover {
+            background-color: rgba(160, 92, 44, 0.05);
+            color: var(--teddy-primary);
+        }
+        
+        .mobile-nav-link.active {
+            font-weight: 600;
+            color: var(--teddy-primary);
+            background-color: rgba(160, 92, 44, 0.07);
+        }
+        
+        .mobile-nav-link.mobile-install-btn {
+            background-color: rgba(160, 92, 44, 0.1);
+        }
+        
+        .mobile-nav-link.mobile-install-btn:hover {
+            background-color: rgba(160, 92, 44, 0.2);
+        }
+        
+        .mobile-nav-link.mobile-signup-btn {
+            background-color: var(--teddy-secondary);
+            color: white;
+        }
+        
+        .mobile-nav-link.mobile-signup-btn i {
+            color: white;
+        }
+        
+        .mobile-nav-link.mobile-signup-btn:hover {
+            background-color: #164042;
+            color: white;
+        }
+
         @media (max-width: 768px) {
             .main-nav {
                 display: none;
@@ -578,6 +667,14 @@
             .footer-column {
                 min-width: 100%;
                 margin-bottom: 30px;
+            }
+            
+            .feature-card {
+                width: 100%;
+            }
+            
+            .resource-card {
+                width: 100%;
             }
         }
     </style>
@@ -605,20 +702,50 @@
                 </div>
                 
                 <!-- Mobile Menu Toggle -->
-                <button class="d-md-none btn" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu" aria-expanded="false">
+                <button class="mobile-menu-toggle d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu" aria-expanded="false">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
             
             <!-- Mobile Menu -->
             <div class="collapse d-md-none" id="mobileMenu">
-                <ul class="list-group mt-2">
-                    <li class="list-group-item"><a href="#">Home</a></li>
-                    <li class="list-group-item"><a href="#features">Features</a></li>
-                    <li class="list-group-item"><a href="#about">About</a></li>
-                    <li class="list-group-item"><a href="{{ url_for('login') }}">Login</a></li>
-                    <li class="list-group-item"><a href="#" id="mobileInstallBtn">Install App</a></li>
-                    <li class="list-group-item"><a href="{{ url_for('register') }}" class="text-success">Sign Up</a></li>
+                <ul class="mobile-nav-list">
+                    <li class="mobile-nav-item">
+                        <a href="#" class="mobile-nav-link active">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="mobile-nav-item">
+                        <a href="#features" class="mobile-nav-link">
+                            <i class="fas fa-star"></i>
+                            <span>Features</span>
+                        </a>
+                    </li>
+                    <li class="mobile-nav-item">
+                        <a href="#about" class="mobile-nav-link">
+                            <i class="fas fa-info-circle"></i>
+                            <span>About</span>
+                        </a>
+                    </li>
+                    <li class="mobile-nav-item">
+                        <a href="{{ url_for('login') }}" class="mobile-nav-link">
+                            <i class="fas fa-lock"></i>
+                            <span>Login</span>
+                        </a>
+                    </li>
+                    <li class="mobile-nav-item">
+                        <a href="#" id="mobileInstallBtn" class="mobile-nav-link mobile-install-btn">
+                            <i class="fas fa-download"></i>
+                            <span>Install App</span>
+                        </a>
+                    </li>
+                    <li class="mobile-nav-item">
+                        <a href="{{ url_for('register') }}" class="mobile-nav-link mobile-signup-btn">
+                            <i class="fas fa-user-plus"></i>
+                            <span>Sign Up</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
