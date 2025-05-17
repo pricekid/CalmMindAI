@@ -1,0 +1,562 @@
+
+Search
+
+Live tail
+AST
+
+Menu
+==> Cloning from https://github.com/pricekid/CalmMindAI
+==> Checking out commit 10c623a148b505f22fcd760069183ebafab68cb4 in branch main
+==> Using Python version 3.11.11 (default)
+==> Docs on specifying a Python version: https://render.com/docs/python-version
+==> Using Poetry version 1.7.1 (default)
+==> Docs on specifying a Poetry version: https://render.com/docs/poetry-version
+==> Running build command 'pip install -r requirements.txt'...
+Collecting flask>=2.3.2 (from -r requirements.txt (line 1))
+  Downloading flask-3.1.1-py3-none-any.whl.metadata (3.0 kB)
+Collecting gunicorn>=21.0.0 (from -r requirements.txt (line 2))
+  Downloading gunicorn-23.0.0-py3-none-any.whl.metadata (4.4 kB)
+Collecting flask-sqlalchemy>=3.0.3 (from -r requirements.txt (line 3))
+  Downloading flask_sqlalchemy-3.1.1-py3-none-any.whl.metadata (3.4 kB)
+Collecting psycopg2-binary>=2.9.5 (from -r requirements.txt (line 4))
+  Downloading psycopg2_binary-2.9.10-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+Collecting flask-login>=0.6.2 (from -r requirements.txt (line 5))
+  Downloading Flask_Login-0.6.3-py3-none-any.whl.metadata (5.8 kB)
+Collecting flask-wtf>=1.1.1 (from -r requirements.txt (line 6))
+  Downloading flask_wtf-1.2.2-py3-none-any.whl.metadata (3.4 kB)
+Collecting apscheduler>=3.10.1 (from -r requirements.txt (line 7))
+  Downloading APScheduler-3.11.0-py3-none-any.whl.metadata (6.4 kB)
+Collecting openai>=1.0.0 (from -r requirements.txt (line 8))
+  Downloading openai-1.79.0-py3-none-any.whl.metadata (25 kB)
+Collecting twilio>=8.0.0 (from -r requirements.txt (line 9))
+  Downloading twilio-9.6.1-py2.py3-none-any.whl.metadata (13 kB)
+Collecting sendgrid>=6.9.7 (from -r requirements.txt (line 10))
+  Downloading sendgrid-6.12.2-py3-none-any.whl.metadata (12 kB)
+Collecting flask-mail>=0.9.1 (from -r requirements.txt (line 11))
+  Downloading flask_mail-0.10.0-py3-none-any.whl.metadata (2.1 kB)
+Collecting gtts>=2.3.1 (from -r requirements.txt (line 12))
+  Downloading gTTS-2.5.4-py3-none-any.whl.metadata (4.1 kB)
+Collecting flask-session>=0.5.0 (from -r requirements.txt (line 13))
+  Downloading flask_session-0.8.0-py3-none-any.whl.metadata (5.2 kB)
+Collecting azure-cognitiveservices-speech>=1.25.0 (from -r requirements.txt (line 14))
+  Downloading azure_cognitiveservices_speech-1.43.0-py3-none-manylinux1_x86_64.whl.metadata (1.5 kB)
+Collecting itsdangerous>=2.1.2 (from -r requirements.txt (line 15))
+  Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+Collecting markdown>=3.4.3 (from -r requirements.txt (line 16))
+  Downloading markdown-3.8-py3-none-any.whl.metadata (5.1 kB)
+Collecting email-validator>=2.0.0 (from -r requirements.txt (line 17))
+  Downloading email_validator-2.2.0-py3-none-any.whl.metadata (25 kB)
+Collecting pytz>=2023.3 (from -r requirements.txt (line 18))
+  Downloading pytz-2025.2-py2.py3-none-any.whl.metadata (22 kB)
+Collecting flask-dance>=7.0.0 (from -r requirements.txt (line 19))
+  Downloading flask_dance-7.1.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting pywebpush>=1.14.0 (from -r requirements.txt (line 20))
+  Downloading pywebpush-2.0.3-py3-none-any.whl.metadata (8.3 kB)
+Collecting beautifulsoup4>=4.12.2 (from -r requirements.txt (line 21))
+  Downloading beautifulsoup4-4.13.4-py3-none-any.whl.metadata (3.8 kB)
+Collecting trafilatura>=1.4.1 (from -r requirements.txt (line 22))
+  Downloading trafilatura-2.0.0-py3-none-any.whl.metadata (12 kB)
+Collecting oauthlib>=3.2.2 (from -r requirements.txt (line 23))
+  Downloading oauthlib-3.2.2-py3-none-any.whl.metadata (7.5 kB)
+Collecting requests>=2.28.2 (from -r requirements.txt (line 24))
+  Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+Collecting werkzeug>=2.3.4 (from -r requirements.txt (line 25))
+  Downloading werkzeug-3.1.3-py3-none-any.whl.metadata (3.7 kB)
+Collecting wtforms>=3.0.1 (from -r requirements.txt (line 26))
+  Downloading wtforms-3.2.1-py3-none-any.whl.metadata (5.3 kB)
+Collecting psutil>=5.9.4 (from -r requirements.txt (line 27))
+  Downloading psutil-7.0.0-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (22 kB)
+Collecting pyjwt>=2.6.0 (from -r requirements.txt (line 28))
+  Downloading PyJWT-2.10.1-py3-none-any.whl.metadata (4.0 kB)
+Collecting blinker>=1.9.0 (from flask>=2.3.2->-r requirements.txt (line 1))
+  Downloading blinker-1.9.0-py3-none-any.whl.metadata (1.6 kB)
+Collecting click>=8.1.3 (from flask>=2.3.2->-r requirements.txt (line 1))
+  Downloading click-8.2.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting jinja2>=3.1.2 (from flask>=2.3.2->-r requirements.txt (line 1))
+  Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting markupsafe>=2.1.1 (from flask>=2.3.2->-r requirements.txt (line 1))
+  Downloading MarkupSafe-3.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.0 kB)
+Collecting packaging (from gunicorn>=21.0.0->-r requirements.txt (line 2))
+  Downloading packaging-25.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting sqlalchemy>=2.0.16 (from flask-sqlalchemy>=3.0.3->-r requirements.txt (line 3))
+  Downloading sqlalchemy-2.0.41-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (9.6 kB)
+Collecting tzlocal>=3.0 (from apscheduler>=3.10.1->-r requirements.txt (line 7))
+  Downloading tzlocal-5.3.1-py3-none-any.whl.metadata (7.6 kB)
+Collecting anyio<5,>=3.5.0 (from openai>=1.0.0->-r requirements.txt (line 8))
+  Downloading anyio-4.9.0-py3-none-any.whl.metadata (4.7 kB)
+Collecting distro<2,>=1.7.0 (from openai>=1.0.0->-r requirements.txt (line 8))
+  Downloading distro-1.9.0-py3-none-any.whl.metadata (6.8 kB)
+Collecting httpx<1,>=0.23.0 (from openai>=1.0.0->-r requirements.txt (line 8))
+  Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting jiter<1,>=0.4.0 (from openai>=1.0.0->-r requirements.txt (line 8))
+  Downloading jiter-0.9.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.2 kB)
+Collecting pydantic<3,>=1.9.0 (from openai>=1.0.0->-r requirements.txt (line 8))
+  Downloading pydantic-2.11.4-py3-none-any.whl.metadata (66 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.6/66.6 kB 6.5 MB/s eta 0:00:00
+Collecting sniffio (from openai>=1.0.0->-r requirements.txt (line 8))
+  Downloading sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+Collecting tqdm>4 (from openai>=1.0.0->-r requirements.txt (line 8))
+  Downloading tqdm-4.67.1-py3-none-any.whl.metadata (57 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.7/57.7 kB 13.3 MB/s eta 0:00:00
+Collecting typing-extensions<5,>=4.11 (from openai>=1.0.0->-r requirements.txt (line 8))
+  Downloading typing_extensions-4.13.2-py3-none-any.whl.metadata (3.0 kB)
+Collecting aiohttp>=3.8.4 (from twilio>=8.0.0->-r requirements.txt (line 9))
+  Downloading aiohttp-3.11.18-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.7 kB)
+Collecting aiohttp-retry>=2.8.3 (from twilio>=8.0.0->-r requirements.txt (line 9))
+  Downloading aiohttp_retry-2.9.1-py3-none-any.whl.metadata (8.8 kB)
+Collecting python-http-client>=3.2.1 (from sendgrid>=6.9.7->-r requirements.txt (line 10))
+  Downloading python_http_client-3.3.7-py3-none-any.whl.metadata (6.9 kB)
+Collecting ecdsa<1,>=0.19.1 (from sendgrid>=6.9.7->-r requirements.txt (line 10))
+  Downloading ecdsa-0.19.1-py2.py3-none-any.whl.metadata (29 kB)
+Collecting click>=8.1.3 (from flask>=2.3.2->-r requirements.txt (line 1))
+  Downloading click-8.1.8-py3-none-any.whl.metadata (2.3 kB)
+Collecting msgspec>=0.18.6 (from flask-session>=0.5.0->-r requirements.txt (line 13))
+  Downloading msgspec-0.19.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.9 kB)
+Collecting cachelib (from flask-session>=0.5.0->-r requirements.txt (line 13))
+  Downloading cachelib-0.13.0-py3-none-any.whl.metadata (2.0 kB)
+Collecting dnspython>=2.0.0 (from email-validator>=2.0.0->-r requirements.txt (line 17))
+  Downloading dnspython-2.7.0-py3-none-any.whl.metadata (5.8 kB)
+Collecting idna>=2.0.0 (from email-validator>=2.0.0->-r requirements.txt (line 17))
+  Downloading idna-3.10-py3-none-any.whl.metadata (10 kB)
+Collecting requests-oauthlib>=1.0.0 (from flask-dance>=7.0.0->-r requirements.txt (line 19))
+  Downloading requests_oauthlib-2.0.0-py2.py3-none-any.whl.metadata (11 kB)
+Collecting urlobject (from flask-dance>=7.0.0->-r requirements.txt (line 19))
+  Downloading URLObject-2.4.3.tar.gz (27 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting cryptography>=2.6.1 (from pywebpush>=1.14.0->-r requirements.txt (line 20))
+  Downloading cryptography-45.0.0-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (5.7 kB)
+Collecting http-ece>=1.1.0 (from pywebpush>=1.14.0->-r requirements.txt (line 20))
+  Downloading http_ece-1.2.1.tar.gz (8.8 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting six>=1.15.0 (from pywebpush>=1.14.0->-r requirements.txt (line 20))
+  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting py-vapid>=1.7.0 (from pywebpush>=1.14.0->-r requirements.txt (line 20))
+  Downloading py_vapid-1.9.2-py3-none-any.whl.metadata (4.4 kB)
+Collecting soupsieve>1.2 (from beautifulsoup4>=4.12.2->-r requirements.txt (line 21))
+  Downloading soupsieve-2.7-py3-none-any.whl.metadata (4.6 kB)
+Collecting certifi (from trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Downloading certifi-2025.4.26-py3-none-any.whl.metadata (2.5 kB)
+Collecting charset_normalizer>=3.4.0 (from trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Downloading charset_normalizer-3.4.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (35 kB)
+Collecting courlan>=1.3.2 (from trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Downloading courlan-1.3.2-py3-none-any.whl.metadata (17 kB)
+Collecting htmldate>=1.9.2 (from trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Downloading htmldate-1.9.3-py3-none-any.whl.metadata (10 kB)
+Collecting justext>=3.0.1 (from trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Downloading justext-3.0.2-py2.py3-none-any.whl.metadata (7.3 kB)
+Collecting lxml>=5.3.0 (from trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Downloading lxml-5.4.0-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (3.5 kB)
+Collecting urllib3<3,>=1.26 (from trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Downloading urllib3-2.4.0-py3-none-any.whl.metadata (6.5 kB)
+Collecting aiohappyeyeballs>=2.3.0 (from aiohttp>=3.8.4->twilio>=8.0.0->-r requirements.txt (line 9))
+  Downloading aiohappyeyeballs-2.6.1-py3-none-any.whl.metadata (5.9 kB)
+Collecting aiosignal>=1.1.2 (from aiohttp>=3.8.4->twilio>=8.0.0->-r requirements.txt (line 9))
+  Downloading aiosignal-1.3.2-py2.py3-none-any.whl.metadata (3.8 kB)
+Collecting attrs>=17.3.0 (from aiohttp>=3.8.4->twilio>=8.0.0->-r requirements.txt (line 9))
+  Downloading attrs-25.3.0-py3-none-any.whl.metadata (10 kB)
+Collecting frozenlist>=1.1.1 (from aiohttp>=3.8.4->twilio>=8.0.0->-r requirements.txt (line 9))
+  Downloading frozenlist-1.6.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (16 kB)
+Collecting multidict<7.0,>=4.5 (from aiohttp>=3.8.4->twilio>=8.0.0->-r requirements.txt (line 9))
+  Downloading multidict-6.4.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
+Collecting propcache>=0.2.0 (from aiohttp>=3.8.4->twilio>=8.0.0->-r requirements.txt (line 9))
+  Downloading propcache-0.3.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (10 kB)
+Collecting yarl<2.0,>=1.17.0 (from aiohttp>=3.8.4->twilio>=8.0.0->-r requirements.txt (line 9))
+  Downloading yarl-1.20.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (72 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 72.4/72.4 kB 18.4 MB/s eta 0:00:00
+Collecting babel>=2.16.0 (from courlan>=1.3.2->trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Downloading babel-2.17.0-py3-none-any.whl.metadata (2.0 kB)
+Collecting tld>=0.13 (from courlan>=1.3.2->trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Downloading tld-0.13-py2.py3-none-any.whl.metadata (9.4 kB)
+Collecting cffi>=1.14 (from cryptography>=2.6.1->pywebpush>=1.14.0->-r requirements.txt (line 20))
+  Downloading cffi-1.17.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.5 kB)
+Collecting dateparser>=1.1.2 (from htmldate>=1.9.2->trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Downloading dateparser-1.2.1-py3-none-any.whl.metadata (29 kB)
+Collecting python-dateutil>=2.9.0.post0 (from htmldate>=1.9.2->trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting httpcore==1.* (from httpx<1,>=0.23.0->openai>=1.0.0->-r requirements.txt (line 8))
+  Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting h11>=0.16 (from httpcore==1.*->httpx<1,>=0.23.0->openai>=1.0.0->-r requirements.txt (line 8))
+  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting annotated-types>=0.6.0 (from pydantic<3,>=1.9.0->openai>=1.0.0->-r requirements.txt (line 8))
+  Downloading annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.33.2 (from pydantic<3,>=1.9.0->openai>=1.0.0->-r requirements.txt (line 8))
+  Downloading pydantic_core-2.33.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+Collecting typing-inspection>=0.4.0 (from pydantic<3,>=1.9.0->openai>=1.0.0->-r requirements.txt (line 8))
+  Downloading typing_inspection-0.4.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting greenlet>=1 (from sqlalchemy>=2.0.16->flask-sqlalchemy>=3.0.3->-r requirements.txt (line 3))
+  Downloading greenlet-3.2.2-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (4.1 kB)
+Collecting pycparser (from cffi>=1.14->cryptography>=2.6.1->pywebpush>=1.14.0->-r requirements.txt (line 20))
+  Downloading pycparser-2.22-py3-none-any.whl.metadata (943 bytes)
+Collecting regex!=2019.02.19,!=2021.8.27,>=2015.06.24 (from dateparser>=1.1.2->htmldate>=1.9.2->trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Downloading regex-2024.11.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (40 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 40.5/40.5 kB 9.6 MB/s eta 0:00:00
+Collecting lxml_html_clean (from lxml[html_clean]>=4.4.2->justext>=3.0.1->trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Downloading lxml_html_clean-0.4.2-py3-none-any.whl.metadata (2.4 kB)
+Downloading flask-3.1.1-py3-none-any.whl (103 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 103.3/103.3 kB 24.9 MB/s eta 0:00:00
+Downloading gunicorn-23.0.0-py3-none-any.whl (85 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 85.0/85.0 kB 21.0 MB/s eta 0:00:00
+Downloading flask_sqlalchemy-3.1.1-py3-none-any.whl (25 kB)
+Downloading psycopg2_binary-2.9.10-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.0/3.0 MB 58.6 MB/s eta 0:00:00
+Downloading Flask_Login-0.6.3-py3-none-any.whl (17 kB)
+Downloading flask_wtf-1.2.2-py3-none-any.whl (12 kB)
+Downloading APScheduler-3.11.0-py3-none-any.whl (64 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.0/64.0 kB 17.1 MB/s eta 0:00:00
+Downloading openai-1.79.0-py3-none-any.whl (683 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 683.3/683.3 kB 65.9 MB/s eta 0:00:00
+Downloading twilio-9.6.1-py2.py3-none-any.whl (1.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.9/1.9 MB 76.8 MB/s eta 0:00:00
+Downloading sendgrid-6.12.2-py3-none-any.whl (102 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 102.1/102.1 kB 24.4 MB/s eta 0:00:00
+Downloading flask_mail-0.10.0-py3-none-any.whl (8.5 kB)
+Downloading gTTS-2.5.4-py3-none-any.whl (29 kB)
+Downloading flask_session-0.8.0-py3-none-any.whl (24 kB)
+Downloading azure_cognitiveservices_speech-1.43.0-py3-none-manylinux1_x86_64.whl (40.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 40.9/40.9 MB 53.2 MB/s eta 0:00:00
+Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Downloading markdown-3.8-py3-none-any.whl (106 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 106.2/106.2 kB 27.6 MB/s eta 0:00:00
+Downloading email_validator-2.2.0-py3-none-any.whl (33 kB)
+Downloading pytz-2025.2-py2.py3-none-any.whl (509 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 509.2/509.2 kB 60.1 MB/s eta 0:00:00
+Downloading flask_dance-7.1.0-py3-none-any.whl (62 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.2/62.2 kB 16.9 MB/s eta 0:00:00
+Downloading pywebpush-2.0.3-py3-none-any.whl (21 kB)
+Downloading beautifulsoup4-4.13.4-py3-none-any.whl (187 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 187.3/187.3 kB 38.5 MB/s eta 0:00:00
+Downloading trafilatura-2.0.0-py3-none-any.whl (132 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 132.6/132.6 kB 31.3 MB/s eta 0:00:00
+Downloading oauthlib-3.2.2-py3-none-any.whl (151 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 151.7/151.7 kB 34.8 MB/s eta 0:00:00
+Downloading requests-2.32.3-py3-none-any.whl (64 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.9/64.9 kB 17.3 MB/s eta 0:00:00
+Downloading werkzeug-3.1.3-py3-none-any.whl (224 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 224.5/224.5 kB 43.0 MB/s eta 0:00:00
+Downloading wtforms-3.2.1-py3-none-any.whl (152 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 152.5/152.5 kB 33.9 MB/s eta 0:00:00
+Downloading psutil-7.0.0-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (277 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 278.0/278.0 kB 47.3 MB/s eta 0:00:00
+Downloading PyJWT-2.10.1-py3-none-any.whl (22 kB)
+Downloading aiohttp-3.11.18-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 77.6 MB/s eta 0:00:00
+Downloading aiohttp_retry-2.9.1-py3-none-any.whl (10.0 kB)
+Downloading anyio-4.9.0-py3-none-any.whl (100 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.9/100.9 kB 25.6 MB/s eta 0:00:00
+Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
+Downloading certifi-2025.4.26-py3-none-any.whl (159 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 159.6/159.6 kB 34.8 MB/s eta 0:00:00
+Downloading charset_normalizer-3.4.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (147 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 147.3/147.3 kB 32.9 MB/s eta 0:00:00
+Downloading click-8.1.8-py3-none-any.whl (98 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 98.2/98.2 kB 24.3 MB/s eta 0:00:00
+Downloading courlan-1.3.2-py3-none-any.whl (33 kB)
+Downloading cryptography-45.0.0-cp311-abi3-manylinux_2_34_x86_64.whl (4.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.3/4.3 MB 75.0 MB/s eta 0:00:00
+Downloading distro-1.9.0-py3-none-any.whl (20 kB)
+Downloading dnspython-2.7.0-py3-none-any.whl (313 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 313.6/313.6 kB 48.8 MB/s eta 0:00:00
+Downloading ecdsa-0.19.1-py2.py3-none-any.whl (150 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 150.6/150.6 kB 32.6 MB/s eta 0:00:00
+Downloading htmldate-1.9.3-py3-none-any.whl (31 kB)
+Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 73.5/73.5 kB 16.6 MB/s eta 0:00:00
+Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.8/78.8 kB 18.9 MB/s eta 0:00:00
+Downloading idna-3.10-py3-none-any.whl (70 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 70.4/70.4 kB 17.9 MB/s eta 0:00:00
+Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 134.9/134.9 kB 29.6 MB/s eta 0:00:00
+Downloading jiter-0.9.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (351 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 351.8/351.8 kB 50.5 MB/s eta 0:00:00
+Downloading justext-3.0.2-py2.py3-none-any.whl (837 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 837.9/837.9 kB 66.0 MB/s eta 0:00:00
+Downloading lxml-5.4.0-cp311-cp311-manylinux_2_28_x86_64.whl (4.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.9/4.9 MB 80.9 MB/s eta 0:00:00
+Downloading MarkupSafe-3.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (23 kB)
+Downloading msgspec-0.19.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (210 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 210.7/210.7 kB 40.8 MB/s eta 0:00:00
+Downloading py_vapid-1.9.2-py3-none-any.whl (21 kB)
+Downloading pydantic-2.11.4-py3-none-any.whl (443 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 443.9/443.9 kB 56.4 MB/s eta 0:00:00
+Downloading pydantic_core-2.33.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 78.4 MB/s eta 0:00:00
+Downloading python_http_client-3.3.7-py3-none-any.whl (8.4 kB)
+Downloading requests_oauthlib-2.0.0-py2.py3-none-any.whl (24 kB)
+Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+Downloading soupsieve-2.7-py3-none-any.whl (36 kB)
+Downloading sqlalchemy-2.0.41-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.3/3.3 MB 82.0 MB/s eta 0:00:00
+Downloading tqdm-4.67.1-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.5/78.5 kB 18.3 MB/s eta 0:00:00
+Downloading typing_extensions-4.13.2-py3-none-any.whl (45 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.8/45.8 kB 12.0 MB/s eta 0:00:00
+Downloading tzlocal-5.3.1-py3-none-any.whl (18 kB)
+Downloading urllib3-2.4.0-py3-none-any.whl (128 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 128.7/128.7 kB 30.1 MB/s eta 0:00:00
+Downloading cachelib-0.13.0-py3-none-any.whl (20 kB)
+Downloading packaging-25.0-py3-none-any.whl (66 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.5/66.5 kB 17.2 MB/s eta 0:00:00
+Downloading aiohappyeyeballs-2.6.1-py3-none-any.whl (15 kB)
+Downloading aiosignal-1.3.2-py2.py3-none-any.whl (7.6 kB)
+Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Downloading attrs-25.3.0-py3-none-any.whl (63 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.8/63.8 kB 17.7 MB/s eta 0:00:00
+Downloading babel-2.17.0-py3-none-any.whl (10.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.2/10.2 MB 82.6 MB/s eta 0:00:00
+Downloading cffi-1.17.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (467 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 467.2/467.2 kB 55.8 MB/s eta 0:00:00
+Downloading dateparser-1.2.1-py3-none-any.whl (295 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 295.7/295.7 kB 47.1 MB/s eta 0:00:00
+Downloading frozenlist-1.6.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (313 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 313.6/313.6 kB 49.5 MB/s eta 0:00:00
+Downloading greenlet-3.2.2-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (583 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 583.9/583.9 kB 59.5 MB/s eta 0:00:00
+Downloading multidict-6.4.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (223 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 223.5/223.5 kB 42.0 MB/s eta 0:00:00
+Downloading propcache-0.3.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (232 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 232.5/232.5 kB 41.5 MB/s eta 0:00:00
+Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 229.9/229.9 kB 41.9 MB/s eta 0:00:00
+Downloading tld-0.13-py2.py3-none-any.whl (263 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 263.8/263.8 kB 46.0 MB/s eta 0:00:00
+Downloading typing_inspection-0.4.0-py3-none-any.whl (14 kB)
+Downloading yarl-1.20.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (358 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 358.1/358.1 kB 53.4 MB/s eta 0:00:00
+Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Downloading regex-2024.11.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (792 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 792.7/792.7 kB 66.5 MB/s eta 0:00:00
+Downloading lxml_html_clean-0.4.2-py3-none-any.whl (14 kB)
+Downloading pycparser-2.22-py3-none-any.whl (117 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 117.6/117.6 kB 28.9 MB/s eta 0:00:00
+Building wheels for collected packages: http-ece, urlobject
+  Building wheel for http-ece (pyproject.toml): started
+  Building wheel for http-ece (pyproject.toml): finished with status 'done'
+  Created wheel for http-ece: filename=http_ece-1.2.1-py2.py3-none-any.whl size=4850 sha256=b53c26d9ee5caaed5a7290e7779fa2080a2f5d9e28fdb66865da9659c83078e1
+  Stored in directory: /opt/render/.cache/wheels/f6/71/2f/56e4f843a88c67685db9ddd0161a07f5bed6a8f92be2a52cf3
+  Building wheel for urlobject (pyproject.toml): started
+  Building wheel for urlobject (pyproject.toml): finished with status 'done'
+  Created wheel for urlobject: filename=urlobject-2.4.3-py3-none-any.whl size=14535 sha256=eb3c4bfdb78220b01b627f120f8c0bcf5b315bafe0267db4b0e0e63ecb07e7ef
+  Stored in directory: /opt/render/.cache/wheels/63/69/1e/27e9ecc1870bf9862cc2fb31933b498d6cc6a350e5569d424a
+Successfully built http-ece urlobject
+Installing collected packages: urlobject, pytz, urllib3, tzlocal, typing-extensions, tqdm, tld, soupsieve, sniffio, six, regex, python-http-client, pyjwt, pycparser, psycopg2-binary, psutil, propcache, packaging, oauthlib, multidict, msgspec, markupsafe, markdown, lxml, jiter, itsdangerous, idna, h11, greenlet, frozenlist, dnspython, distro, click, charset_normalizer, certifi, cachelib, blinker, babel, azure-cognitiveservices-speech, attrs, annotated-types, aiohappyeyeballs, yarl, wtforms, werkzeug, typing-inspection, sqlalchemy, requests, python-dateutil, pydantic-core, lxml_html_clean, jinja2, httpcore, gunicorn, email-validator, ecdsa, courlan, cffi, beautifulsoup4, apscheduler, anyio, aiosignal, sendgrid, requests-oauthlib, pydantic, httpx, gtts, flask, dateparser, cryptography, aiohttp, py-vapid, openai, justext, http-ece, htmldate, flask-wtf, flask-sqlalchemy, flask-session, flask-mail, flask-login, flask-dance, aiohttp-retry, twilio, trafilatura, pywebpush
+Successfully installed aiohappyeyeballs-2.6.1 aiohttp-3.11.18 aiohttp-retry-2.9.1 aiosignal-1.3.2 annotated-types-0.7.0 anyio-4.9.0 apscheduler-3.11.0 attrs-25.3.0 azure-cognitiveservices-speech-1.43.0 babel-2.17.0 beautifulsoup4-4.13.4 blinker-1.9.0 cachelib-0.13.0 certifi-2025.4.26 cffi-1.17.1 charset_normalizer-3.4.2 click-8.1.8 courlan-1.3.2 cryptography-45.0.0 dateparser-1.2.1 distro-1.9.0 dnspython-2.7.0 ecdsa-0.19.1 email-validator-2.2.0 flask-3.1.1 flask-dance-7.1.0 flask-login-0.6.3 flask-mail-0.10.0 flask-session-0.8.0 flask-sqlalchemy-3.1.1 flask-wtf-1.2.2 frozenlist-1.6.0 greenlet-3.2.2 gtts-2.5.4 gunicorn-23.0.0 h11-0.16.0 htmldate-1.9.3 http-ece-1.2.1 httpcore-1.0.9 httpx-0.28.1 idna-3.10 itsdangerous-2.2.0 jinja2-3.1.6 jiter-0.9.0 justext-3.0.2 lxml-5.4.0 lxml_html_clean-0.4.2 markdown-3.8 markupsafe-3.0.2 msgspec-0.19.0 multidict-6.4.3 oauthlib-3.2.2 openai-1.79.0 packaging-25.0 propcache-0.3.1 psutil-7.0.0 psycopg2-binary-2.9.10 py-vapid-1.9.2 pycparser-2.22 pydantic-2.11.4 pydantic-core-2.33.2 pyjwt-2.10.1 python-dateutil-2.9.0.post0 python-http-client-3.3.7 pytz-2025.2 pywebpush-2.0.3 regex-2024.11.6 requests-2.32.3 requests-oauthlib-2.0.0 sendgrid-6.12.2 six-1.17.0 sniffio-1.3.1 soupsieve-2.7 sqlalchemy-2.0.41 tld-0.13 tqdm-4.67.1 trafilatura-2.0.0 twilio-9.6.1 typing-extensions-4.13.2 typing-inspection-0.4.0 tzlocal-5.3.1 urllib3-2.4.0 urlobject-2.4.3 werkzeug-3.1.3 wtforms-3.2.1 yarl-1.20.0
+[notice] A new release of pip is available: 24.0 -> 25.1.1
+[notice] To update, run: pip install --upgrade pip
+==> Uploading build...
+==> Uploaded in 10.1s. Compression took 3.6s
+==> Build successful 🎉
+==> Deploying...
+==> Running 'gunicorn --bind 0.0.0.0:$PORT main:app'
+WARNING:app:No SESSION_SECRET found, generating a temporary one
+Traceback (most recent call last):
+  File "/opt/render/project/src/.venv/bin/gunicorn", line 8, in <module>
+    sys.exit(run())
+             ^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/wsgiapp.py", line 66, in run
+    WSGIApplication("%(prog)s [OPTIONS] [APP_MODULE]", prog=prog).run()
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/base.py", line 235, in run
+    super().run()
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/base.py", line 71, in run
+    Arbiter(self).run()
+    ^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/arbiter.py", line 57, in __init__
+    self.setup(app)
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/arbiter.py", line 117, in setup
+    self.app.wsgi()
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/render/project/src/main.py", line 1, in <module>
+    from app import app, db
+  File "/opt/render/project/src/app.py", line 481, in <module>
+    db.create_all()
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/flask_sqlalchemy/extension.py", line 900, in create_all
+    self._call_for_binds(bind_key, "create_all")
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/flask_sqlalchemy/extension.py", line 881, in _call_for_binds
+    getattr(metadata, op_name)(bind=engine)
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/sql/schema.py", line 5924, in create_all
+    bind._run_ddl_visitor(
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 3247, in _run_ddl_visitor
+    with self.begin() as conn:
+  File "/usr/local/lib/python3.11/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 3237, in begin
+    with self.connect() as conn:
+         ^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 3273, in connect
+    return self._connection_cls(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 145, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 3297, in raw_connection
+    return self.pool.connect()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 1264, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/pool/impl.py", line 179, in _do_get
+    with util.safe_reraise():
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/pool/impl.py", line 177, in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 901, in __connect
+    with util.safe_reraise():
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 897, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+    return dialect.connect(*cargs, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 625, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'connect_timeout' is an invalid keyword argument for Connection()
+==> Exited with status 1
+==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+==> Running 'gunicorn --bind 0.0.0.0:$PORT main:app'
+WARNING:app:No SESSION_SECRET found, generating a temporary one
+Traceback (most recent call last):
+  File "/opt/render/project/src/.venv/bin/gunicorn", line 8, in <module>
+    sys.exit(run())
+             ^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/wsgiapp.py", line 66, in run
+    WSGIApplication("%(prog)s [OPTIONS] [APP_MODULE]", prog=prog).run()
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/base.py", line 235, in run
+    super().run()
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/base.py", line 71, in run
+    Arbiter(self).run()
+    ^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/arbiter.py", line 57, in __init__
+    self.setup(app)
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/arbiter.py", line 117, in setup
+    self.app.wsgi()
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/render/project/src/main.py", line 1, in <module>
+    from app import app, db
+  File "/opt/render/project/src/app.py", line 481, in <module>
+    db.create_all()
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/flask_sqlalchemy/extension.py", line 900, in create_all
+    self._call_for_binds(bind_key, "create_all")
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/flask_sqlalchemy/extension.py", line 881, in _call_for_binds
+    getattr(metadata, op_name)(bind=engine)
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/sql/schema.py", line 5924, in create_all
+    bind._run_ddl_visitor(
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 3247, in _run_ddl_visitor
+    with self.begin() as conn:
+  File "/usr/local/lib/python3.11/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 3237, in begin
+    with self.connect() as conn:
+         ^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 3273, in connect
+    return self._connection_cls(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 145, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 3297, in raw_connection
+    return self.pool.connect()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 1264, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/pool/impl.py", line 179, in _do_get
+    with util.safe_reraise():
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/pool/impl.py", line 177, in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 901, in __connect
+    with util.safe_reraise():
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 897, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+    return dialect.connect(*cargs, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 625, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'connect_timeout' is an invalid keyword argument for Connection()
