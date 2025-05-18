@@ -36,6 +36,15 @@ with app.app_context():
         logging.info("Production login blueprint registered successfully")
     except Exception as e:
         logging.error(f"Error registering production login blueprint: {e}")
+        
+    # Configure production login as default for production environments
+    try:
+        # Import and apply production login default configuration
+        from production_login_default import configure_production_login_as_default
+        configure_production_login_as_default(app)
+        logging.info("Production login default configuration applied successfully")
+    except Exception as e:
+        logging.error(f"Error configuring production login default: {e}")
     
     # Start the journal reminder scheduler
     try:
