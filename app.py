@@ -291,7 +291,7 @@ def handle_exception(e):
             <!DOCTYPE html>
             <html>
             <head>
-                <title>Calm Journey - Processing Issue</title>
+                <title>Dear Teddy - Processing Issue</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <style>
                     body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #1a1a1a; color: #f8f9fa; }
@@ -367,7 +367,7 @@ def handle_exception(e):
         <!DOCTYPE html>
         <html>
         <head>
-            <title>Calm Journey - Error</title>
+            <title>Dear Teddy - Error</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
                 body {{ font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #1a1a1a; color: #f8f9fa; }}
