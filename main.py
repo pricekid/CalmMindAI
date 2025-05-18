@@ -27,6 +27,15 @@ with app.app_context():
         logging.info("Test login diagnostic blueprint registered successfully")
     except Exception as e:
         logging.error(f"Error registering test login blueprint: {e}")
+        
+    # Register the production login blueprint for Render deployment
+    try:
+        # Import and register the production login blueprint
+        from production_login_fix import production_login_bp
+        app.register_blueprint(production_login_bp)
+        logging.info("Production login blueprint registered successfully")
+    except Exception as e:
+        logging.error(f"Error registering production login blueprint: {e}")
     
     # Start the journal reminder scheduler
     try:
