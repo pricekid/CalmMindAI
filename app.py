@@ -133,7 +133,7 @@ def handle_exception(e):
         <!DOCTYPE html>
         <html>
         <head>
-            <title>Calm Journey - Error</title>
+            <title>Dear Teddy - Error</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
                 body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #1a1a1a; color: #f8f9fa; }
@@ -173,7 +173,7 @@ def handle_exception(e):
                 <!DOCTYPE html>
                 <html>
                 <head>
-                    <title>Login - Calm Journey</title>
+                    <title>Login - Dear Teddy</title>
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
                     <link rel="stylesheet" href="/static/css/styles.css">
@@ -192,7 +192,7 @@ def handle_exception(e):
                             <div class="col-md-6 mx-auto">
                                 <div class="card shadow">
                                     <div class="card-header">
-                                        <h3 class="mb-0">Login to Calm Journey</h3>
+                                        <h3 class="mb-0">Login to Dear Teddy</h3>
                                     </div>
                                     <div class="card-body">
                                         <form method="POST" action="/basic-login">
@@ -262,7 +262,7 @@ def handle_exception(e):
             <!DOCTYPE html>
             <html>
             <head>
-                <title>Calm Journey - Journal Processing</title>
+                <title>Dear Teddy - Journal Processing</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <style>
                     body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #1a1a1a; color: #f8f9fa; }
