@@ -61,19 +61,31 @@ def check_database():
     """Test database connectivity"""
     logger.info("Testing database connection...")
     try:
-        # Don't import db until after we've checked environment variables
-        from app import db
+        # Get the DATABASE_URL directly from the environment
+        db_url = os.environ.get('DATABASE_URL')
+        if not db_url:
+            logger.error("DATABASE_URL environment variable is not set")
+            return False
+            
+        logger.info("Attempting to connect to database directly...")
         
-        # Simple connection test
-        with db.engine.connect() as conn:
-            result = conn.execute(db.text("SELECT 1"))
-            row = result.fetchone()
-            if row and row[0] == 1:
-                logger.info("Database connection successful.")
-                return True
-            else:
-                logger.error("Database query failed to return expected result.")
-                return False
+        # Import psycopg2 for direct connection
+        import psycopg2
+        
+        # Connect directly with psycopg2
+        conn = psycopg2.connect(db_url)
+        cursor = conn.cursor()
+        cursor.execute("SELECT 1")
+        result = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        
+        if result and result[0] == 1:
+            logger.info("Database connection successful")
+            return True
+        else:
+            logger.error("Database query failed to return expected result")
+            return False
     except Exception as e:
         logger.error(f"Database connection failed: {str(e)}")
         logger.error(traceback.format_exc())
