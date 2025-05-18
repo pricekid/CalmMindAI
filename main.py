@@ -19,6 +19,15 @@ with app.app_context():
     except Exception as e:
         logging.error(f"Error registering notification test routes: {e}")
     
+    # Register the test login diagnostic page to help troubleshoot login issues
+    try:
+        # Import and register the test login blueprint
+        from test_login import test_login_bp
+        app.register_blueprint(test_login_bp)
+        logging.info("Test login diagnostic blueprint registered successfully")
+    except Exception as e:
+        logging.error(f"Error registering test login blueprint: {e}")
+    
     # Start the journal reminder scheduler
     try:
         from journal_reminder_scheduler import start_journal_reminder_scheduler
