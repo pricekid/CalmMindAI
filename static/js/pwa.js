@@ -3,7 +3,7 @@
 // Check if service workers are supported
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/static/sw.js')
+        navigator.serviceWorker.register('/static/service-worker.js')
             .then((registration) => {
                 console.log('Service Worker registered with scope:', registration.scope);
                 
@@ -190,7 +190,7 @@ function dismissInstallPromotion() {
 
 // Handle "appinstalled" event
 window.addEventListener('appinstalled', (evt) => {
-    console.log('Calm Journey was installed');
+    console.log('Dear Teddy was installed');
     localStorage.setItem('pwaInstalled', 'true');
     const banner = document.getElementById('pwa-install-banner');
     if (banner) {
