@@ -37,8 +37,8 @@ def stable_login():
             error = 'Email and password are required'
         else:
             try:
-                # Query user with extra logging
-                user = User.query.filter_by(email=email).first()
+                # Query user with case-insensitive email matching
+                user = User.query.filter(User.email.ilike(email)).first()
                 logger.info(f"Login attempt - User found: {user is not None}")
                 
                 # Check if user exists and password is correct
@@ -47,7 +47,11 @@ def stable_login():
                     logger.info(f"User password hash exists: {user.password_hash is not None}")
                     
                     # Login successful if password check passes
-                    if user.check_password(password):
+                    # Add extra logging for password validation
+                    password_valid = user.check_password(password)
+                    logger.info(f"Password validation result: {password_valid}")
+                    
+                    if password_valid:
                         # Set permanent session before login
                         session.permanent = True
                         login_user(user, remember=remember)
