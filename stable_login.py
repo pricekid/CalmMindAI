@@ -1,5 +1,5 @@
 """
-Stable login module for Calm Journey.
+Stable login module for Dear Teddy.
 Provides a Blueprint to handle user authentication with enhanced CSRF protection.
 """
 

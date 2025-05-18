@@ -151,7 +151,7 @@ def dashboard():
     from onboarding_routes import is_new_user
     if is_new_user(current_user.id):
         # New user, redirect to onboarding
-        flash('Welcome to Calm Journey! Let\'s get you started with a few quick steps.', 'info')
+        flash('Welcome to Dear Teddy! Let\'s get you started with a few quick steps.', 'info')
         return redirect('/onboarding/step-1')
 
     # Get weekly mood summary
@@ -606,10 +606,10 @@ def crisis():
 @app.route('/about')
 def about():
     """
-    Display information about Calm Journey and its mission.
+    Display information about Dear Teddy and its mission.
     This page is available to all users, whether logged in or not.
     """
-    return render_template('about.html', title='About Calm Journey')
+    return render_template('about.html', title='About Dear Teddy')
 
 # Terms and Conditions page
 @app.route('/terms')
