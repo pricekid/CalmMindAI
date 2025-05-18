@@ -1,17 +1,18 @@
 #!/bin/bash
 
-# Check if poetry is installed
-if ! command -v poetry &> /dev/null; then
-    echo "Poetry not found, installing..."
-    curl -sSL https://install.python-poetry.org | python3 -
-fi
-
-# Generate requirements.txt from pyproject.toml
-echo "Generating requirements.txt from pyproject.toml..."
-poetry export -f requirements.txt --output requirements.txt --without-hashes
-
-# Install requirements
-echo "Installing dependencies..."
+# Install dependencies using pip directly (simplified approach)
+echo "Installing dependencies from requirements.txt..."
 pip install -r requirements.txt
+
+# Install additional system dependencies that might be needed
+echo "Installing system dependencies..."
+apt-get update && apt-get install -y --no-install-recommends \
+    libpq-dev \
+    python3-dev \
+    build-essential
+
+# Apply database migrations if needed
+echo "Setting up the application..."
+python -m flask db upgrade || echo "No migrations to apply or migrations failed"
 
 echo "Build completed successfully!"
