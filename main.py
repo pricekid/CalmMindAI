@@ -37,14 +37,14 @@ with app.app_context():
     except Exception as e:
         logging.error(f"Error registering production login blueprint: {e}")
         
-    # Configure production login as default for production environments
+    # Apply production login middleware for Render deployment
     try:
-        # Import and apply production login default configuration
-        from production_login_default import configure_production_login_as_default
-        configure_production_login_as_default(app)
-        logging.info("Production login default configuration applied successfully")
+        # Import and apply production login middleware
+        from production_login_middleware import apply_production_login_middleware
+        apply_production_login_middleware(app)
+        logging.info("Production login middleware applied successfully")
     except Exception as e:
-        logging.error(f"Error configuring production login default: {e}")
+        logging.error(f"Error applying production login middleware: {e}")
     
     # Start the journal reminder scheduler
     try:

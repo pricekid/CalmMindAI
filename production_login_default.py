@@ -22,20 +22,20 @@ def configure_production_login_as_default(app):
         logger.info("Production environment detected - configuring production login as default")
         
         # Add a route to redirect /stable-login to /production-login in production
-        @app.route('/stable-login', methods=['GET'])
+        # Replace the existing route with a new route
+        @app.route('/stable-login-redirect', methods=['GET'])
         def redirect_to_production_login():
             # Only redirect GET requests to avoid breaking form submissions
-            if request.method == 'GET':
-                logger.info("Redirecting from stable login to production login")
-                # Preserve any query parameters like 'next'
-                query_string = request.query_string.decode() if request.query_string else ''
-                target = '/production-login'
-                if query_string:
-                    target = f'{target}?{query_string}'
-                return redirect(target)
-            
-            # Let POST requests pass through to the original handler
-            return app
+            logger.info("Redirecting from stable login to production login")
+            # Preserve any query parameters like 'next'
+            query_string = request.query_string.decode() if request.query_string else ''
+            target = '/production-login'
+            if query_string:
+                target = f'{target}?{query_string}'
+            return redirect(target)
+        
+        # Update the login_manager to point to production login
+        app.config['LOGIN_MANAGER_VIEW'] = '/production-login'
             
         logger.info("Production login redirection configured successfully")
     else:
