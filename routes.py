@@ -44,19 +44,19 @@ try:
 except Exception as e:
     app.logger.warning(f"Fallback email routes error: {str(e)}")
 
-# Home page - Clean landing page
+# Home page - For main application
 @app.route('/')
 def index():
     """
-    New clean landing page that focuses on app installation.
-    This is a simplified page with a clean UI focused on PWA installation.
+    Main application entry point that redirects to dashboard if logged in,
+    otherwise shows login page.
     """
     # For returning users who are logged in, redirect to the dashboard
     if current_user.is_authenticated:
         return redirect(url_for('dashboard'))
         
-    return render_template('clean_landing.html', 
-                          title='Dear Teddy | Your Mental Wellness Companion')
+    # For new users, redirect to login
+    return redirect(url_for('login'))
 
 # User registration
 @app.route('/register', methods=['GET', 'POST'])
