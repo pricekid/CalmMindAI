@@ -28,12 +28,9 @@ def stable_login():
         logger.info(f"Login attempt - Session token length: {len(session_token) if session_token else 0}")
         
         email = request.form.get('email')
-        email = email.lower().strip() if email else ''
+        email = email.lower() if email else ''
         password = request.form.get('password', '')
         remember = request.form.get('remember') == 'on'
-        
-        # Log the email being used for login attempt
-        logger.info(f"Login attempt with email: {email}")
         
         # Extra safety checks
         if not email or not password:
