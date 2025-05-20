@@ -9,6 +9,13 @@ from flask_mail import Mail
 from flask_session import Session
 from functools import wraps
 
+# Import Render.com compatibility module
+try:
+    from render_compatibility import init_render_compatibility, is_render_environment
+    has_render_compatibility = True
+except ImportError:
+    has_render_compatibility = False
+
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 
@@ -91,6 +98,11 @@ db.init_app(app)
 csrf.init_app(app)
 mail.init_app(app)
 sess.init_app(app)
+
+# Apply Render.com compatibility settings if available
+if has_render_compatibility:
+    app = init_render_compatibility(app)
+    app.logger.info(f"Render compatibility settings applied: {app.config['IS_RENDER']}")
 
 # Apply CSRF debug middleware to log token validation details
 from csrf_debug import CSRFDebugMiddleware
