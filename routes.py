@@ -75,74 +75,25 @@ def simple_register_fallback():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """
-    Main login route with environment detection for Replit/Render compatibility
+    Main login route with environment-specific redirect
     """
     if current_user.is_authenticated:
         return redirect('/dashboard')
     
     # Check if we're running on Render.com
-    render_env = False
-    try:
-        from render_compatibility import is_render_environment
-        render_env = is_render_environment()
-    except ImportError:
-        # Fallback to direct environment check if module not available
-        render_env = os.environ.get('RENDER') == 'true'
+    render_env = os.environ.get('RENDER') == 'true'
     
     # Force render login for testing
     if request.args.get('use_render_login') == 'true':
         render_env = True
     
-    # Add environment detection to session for debugging
-    session['is_render_env'] = render_env
-    
-    # If this is Render environment, use a more compatible login approach
+    # Log which login path we're using
     if render_env:
         app.logger.info("Using Render-optimized login")
-        # When deployed on Render, exempt the login form from CSRF protection
-        # This helps avoid cross-origin issues with Render's proxy
-        
-        if request.method == 'POST':
-            # Extract form data
-            email = request.form.get('email', '').lower()
-            password = request.form.get('password', '')
-            remember = request.form.get('remember') == 'on'
-            
-            # Basic validation
-            if not email or not password:
-                flash('Email and password are required', 'danger')
-                return render_template('login.html', error='Email and password are required')
-            
-            try:
-                # Find user by email (case-insensitive)
-                user = User.query.filter(User.email.ilike(email)).first()
-                app.logger.info(f"Render login - User found: {user is not None}")
-                
-                if user and user.check_password(password):
-                    # Explicitly set session cookie parameters for Render
-                    session.permanent = True
-                    session['login_origin'] = 'render_direct'
-                    session.modified = True
-                    
-                    # Complete login
-                    login_user(user, remember=remember)
-                    app.logger.info(f"User {user.id} logged in successfully via Render-optimized login")
-                    
-                    return redirect('/dashboard')
-                else:
-                    flash('Invalid email or password', 'danger')
-                    return render_template('login.html', error='Invalid email or password')
-            except Exception as e:
-                app.logger.error(f"Render login error: {str(e)}")
-                flash('An error occurred during login. Please try again.', 'danger')
-                return render_template('login.html', error='Login error')
-        
-        # GET request, show the login form
-        return render_template('login.html')
-    
-    # Default to stable login for Replit environment
-    app.logger.info("Using stable login for Replit environment")
-    return redirect('/stable-login')
+        return redirect('/r-login')
+    else:
+        app.logger.info("Using stable login for Replit environment")
+        return redirect('/stable-login')
 
 # Token-based login route for email links
 @app.route('/login/token/<token>')
