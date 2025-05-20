@@ -1,99 +1,89 @@
-{% extends "layout.html" %}
-
-{% block title %}Login - Dear Teddy{% endblock %}
-
-{% block content %}
-<div class="row">
-    <div class="col-md-6 mx-auto">
-        <div class="card bg-dark" style="border: 1px solid var(--warm-peach);">
-            <div class="card-header" style="background: linear-gradient(145deg, rgba(230, 185, 128, 0.1), rgba(230, 185, 128, 0.2));">
-                <h3 class="text-center mb-0" style="color: var(--warm-peach);">Welcome Back</h3>
-            </div>
-            <div class="card-body" style="background: linear-gradient(135deg, rgba(33, 37, 41, 0.97), rgba(33, 37, 41, 0.95));">
-                <div class="text-center mb-4">
-                    <div style="width: 80px; height: 80px; margin: 0 auto; background: radial-gradient(circle, var(--warm-peach), #d1a673); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(230, 185, 128, 0.4);">
-                        <i class="fas fa-user" style="font-size: 2.5rem; color: #2d2d2d;"></i>
-                    </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - Dear Teddy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        .login-container {
+            max-width: 450px;
+            margin: 30px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .teddy-logo {
+            max-width: 120px;
+            margin: 0 auto 20px;
+            display: block;
+        }
+        .security-badge {
+            font-size: 12px;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .security-badge svg {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container">
+        <div class="login-container bg-white">
+            <img src="{{ url_for('static', filename='img/teddy-logo.png') }}" alt="Dear Teddy Logo" class="teddy-logo">
+            <h2 class="text-center mb-4">Welcome Back</h2>
+            
+            {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <form method="POST" action="{{ url_for('login') }}">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
                 </div>
-
-                <form method="POST" >
-                    {{ form.hidden_tag() }}
-                    {{ form.csrf_token }}
-                    <div class="mb-3">
-                        {{ form.email.label(class="form-label", style="color: var(--warm-peach);") }}
-                        {% if form.email.errors %}
-                            {{ form.email(class="form-control is-invalid", style="border-color: var(--warm-peach); background-color: rgba(33, 37, 41, 0.8);") }}
-                            <div class="invalid-feedback">
-                                {% for error in form.email.errors %}
-                                    <span>{{ error }}</span>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            {{ form.email(class="form-control", style="border-color: var(--warm-peach); background-color: rgba(33, 37, 41, 0.8);") }}
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form.password.label(class="form-label", style="color: var(--warm-peach);") }}
-                        {% if form.password.errors %}
-                            {{ form.password(class="form-control is-invalid", style="border-color: var(--warm-peach); background-color: rgba(33, 37, 41, 0.8);") }}
-                            <div class="invalid-feedback">
-                                {% for error in form.password.errors %}
-                                    <span>{{ error }}</span>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            {{ form.password(class="form-control", style="border-color: var(--warm-peach); background-color: rgba(33, 37, 41, 0.8);") }}
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3 form-check">
-                        {{ form.remember(class="form-check-input", style="background-color: var(--warm-peach); border-color: var(--warm-peach);") }}
-                        {{ form.remember.label(class="form-check-label") }}
-                    </div>
-
-                    <div class="d-grid mb-3">
-                        {{ form.submit(class="btn btn-warm btn-lg" id="login-button", style="font-weight: 600; box-shadow: 0 4px 8px rgba(209, 166, 115, 0.3);") }}
-                    </div>
-
-                    <div class="text-center">
-                        <small>
-                            <a href="{{ url_for('reset.forgot_password') }}" style="color: var(--warm-peach); text-decoration: none;">Forgot Password?</a>
-                        </small>
-                    </div>
-                </form>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                    <label class="form-check-label" for="remember">Remember me</label>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+                <div class="mt-3 text-center">
+                    <a href="{{ url_for('pwd_reset.forgot_password') }}" class="text-decoration-none">Forgot your password?</a>
+                </div>
+            </form>
+            
+            <div class="security-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shield-lock" viewBox="0 0 16 16">
+                    <path d="M5.338 1.59a61 61 0 0 0-2.837.856.48.48 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533q.115.055.215.095a.54.54 0 0 0 .428 0q.1-.04.215-.095c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453c-.386.273-.744.482-1.048.625-.28.132-.581.24-.829.24s-.548-.108-.829-.24c-.304-.143-.662-.352-1.048-.625a11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56z"/>
+                    <path d="M9.5 6.5a1.5 1.5 0 0 1-1 1.415l.1.585A.5.5 0 0 1 8.1 9H7.9a.5.5 0 0 1-.498-.5l.1-.585A1.5 1.5 0 0 1 6.5 6.5 1.5 1.5 0 0 1 8 5a1.5 1.5 0 0 1 1.5 1.5z"/>
+                </svg>
+                Secure Connection
             </div>
-            <div class="card-footer text-center" style="background: linear-gradient(145deg, rgba(230, 185, 128, 0.1), rgba(230, 185, 128, 0.2));">
-                <p class="mb-0">Don't have an account? <a href="{{ url_for('register') }}" style="color: var(--warm-peach); font-weight: 500; text-decoration: none;">Register here</a></p>
+            
+            {% if session.get('is_render_env') %}
+            <div class="mt-3 text-center">
+                <small class="text-muted">Using Render-optimized login</small>
             </div>
-        </div>
-
-        <div class="text-center mt-4">
-            <p>
-                <small style="color: var(--warm-peach) !important; opacity: 0.9;">
-                    Continue your journey to mental wellness with Dear Teddy.
-                </small>
-            </p>
+            {% endif %}
         </div>
     </div>
-</div>
-{% endblock %}
-
-{% block scripts %}
-<script>
-    // Add loading spinner to login button
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.querySelector('form');
-        const loginButton = document.getElementById('login-button');
-
-        if (form && loginButton) {
-            form.addEventListener('submit', function(e) {
-                if (form.checkValidity()) {
-                    loginButton.disabled = true;
-                    loginButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Logging in...';
-                }
-            });
-        }
-    });
-</script>
-{% endblock %}
+</body>
+</html>
