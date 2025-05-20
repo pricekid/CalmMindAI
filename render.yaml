@@ -1,16 +1,21 @@
+# Render deployment configuration
+
 services:
+  # Main web service
   - type: web
-    name: dearteddy
+    name: dear-teddy
     env: python
-    buildCommand: bash build.sh
-    startCommand: gunicorn --bind 0.0.0.0:$PORT main:app
+    plan: starter
+    buildCommand: ./build.sh
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers=2 --threads=4 --timeout=120 main:app
+    healthCheckPath: /r-login
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11.11
+        value: 3.11.0
+      - key: RENDER
+        value: true
       - key: DATABASE_URL
-        fromDatabase:
-          name: dearteddy-db
-          property: connectionString
+        sync: false
       - key: SESSION_SECRET
         generateValue: true
       - key: OPENAI_API_KEY
@@ -23,8 +28,3 @@ services:
         sync: false
       - key: TWILIO_PHONE_NUMBER
         sync: false
-
-databases:
-  - name: dearteddy-db
-    databaseName: dearteddy
-    user: dearteddy_user

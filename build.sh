@@ -1,17 +1,25 @@
 #!/bin/bash
+set -euo pipefail
 
-# Check if poetry is installed
-if ! command -v poetry &> /dev/null; then
-    echo "Poetry not found, installing..."
-    curl -sSL https://install.python-poetry.org | python3 -
-fi
+# Print Python version for debugging
+python --version
 
-# Generate requirements.txt from pyproject.toml
-echo "Generating requirements.txt from pyproject.toml..."
-poetry export -f requirements.txt --output requirements.txt --without-hashes
-
-# Install requirements
-echo "Installing dependencies..."
+# Install dependencies
+pip install -U pip
 pip install -r requirements.txt
+pip install gunicorn
 
-echo "Build completed successfully!"
+# Check for common package issues
+pip check || echo "Warning: Package dependency check found issues"
+
+# Create necessary directories
+mkdir -p data
+mkdir -p static/audio
+mkdir -p flask_session
+
+# Set Render environment flag
+echo "Setting up Render-specific configuration"
+export RENDER=true
+
+# Print success message
+echo "Build completed successfully"
