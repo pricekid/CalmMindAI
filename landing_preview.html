@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dear Teddy Landing Page Preview</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        h1, h2, h3 {
+            color: #A05C2C;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #A05C2C;
+        }
+        .logo img {
+            height: 50px;
+        }
+        .nav {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-link {
+            color: #333;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .nav-link:hover {
+            background-color: #f0f0f0;
+        }
+        .install-btn {
+            background-color: #A05C2C;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+        }
+        .install-flow {
+            margin-top: 40px;
+        }
+        .flow-step {
+            display: flex;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .flow-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            background-color: #A05C2C;
+            min-width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+        }
+        .flow-content {
+            flex: 1;
+        }
+        .flow-content h3 {
+            margin-top: 0;
+        }
+        .dialog {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-top: 10px;
+        }
+        .screenshot {
+            margin-top: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <div>🧸</div>
+                <div>Dear Teddy</div>
+            </div>
+            <div class="nav">
+                <a href="#" class="nav-link">Home</a>
+                <a href="#" class="nav-link">Features</a>
+                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link">Login</a>
+                <a href="#" class="install-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                    </svg>
+                    Install App
+                </a>
+            </div>
+        </div>
+
+        <h1>Landing Page Installation Experience Preview</h1>
+        <p>This preview shows the enhanced app installation flow from the landing page to our improved installation instructions.</p>
+
+        <div class="install-flow">
+            <div class="flow-step">
+                <div class="flow-number">1</div>
+                <div class="flow-content">
+                    <h3>Landing Page - User clicks "Install App"</h3>
+                    <p>When a user visits the landing page, they'll see the "Install App" button in the navigation bar. There's also an identical button in the page footer.</p>
+                    <p>Clicking this button will:</p>
+                    <ul>
+                        <li>Trigger the native browser installation prompt if available</li>
+                        <li>Or show a dialog offering to redirect to detailed instructions</li>
+                    </ul>
+                    <div class="dialog">
+                        <p><strong>When installation isn't directly available:</strong></p>
+                        <p>"Would you like to see detailed installation instructions for your device?</p>
+                        <p>This will help you install Dear Teddy as an app on your phone, tablet, or computer."</p>
+                        <button>OK</button> <button>Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-step">
+                <div class="flow-number">2</div>
+                <div class="flow-content">
+                    <h3>Installation Instructions Page</h3>
+                    <p>If the user clicks "OK" on the dialog or if automatic installation fails, they're directed to our enhanced installation page with:</p>
+                    <ul>
+                        <li>A clear "Install Now" button that tries one more time to trigger the native installation</li>
+                        <li>Detailed, browser-specific instructions with step-by-step guidance</li>
+                        <li>Visual indicators showing exactly where to click for each browser</li>
+                    </ul>
+                    <p style="text-align: center;"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAADICAYAAABS39xVAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDYuMC1jMDAyIDc5LjE2NDQ4OCwgMjAyMC8wNy8xMC0yMjowNjo1MyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIyLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjQ2RDFBNDMzNTJBMzExRUNBOTg5QzAyMTY0QzRGRDM2IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjQ2RDFBNDM0NTJBMzExRUNBOTg5QzAyMTY0QzRGRDM2Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NDZEMUE0MzE1MkEzMTFFQ0E5ODlDMDIxNjRDNEZEMzYiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NDZEMUE0MzI1MkEzMTFFQ0E5ODlDMDIxNjRDNEZEMzYiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4/Hf6zAAALBklEQVR42uzdC2yb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...MD5sbWFDdIyNY5qWZJSzLp/YwPLFwiL5Axs4hPwwD5pZ3IuR+0nsmF+0JOQu1UYc06S2qCT5e+z+GHm/PzfLp4wDCMt4HLvKAM4sQu8qLDwPpeOiXjplVXDGIfIyQJhgdA0nR6vr/f/MHuWMBCWgXEVFBwQ9TmL+fmrOJsYomZm3qw0rIMHGysaG38fERo/GkJY5hgYqJILW68WBJySFRcXrzKsCxceVhpWS0tvRFrnPuqDsExSUXGvCssEHR33ylCE7ZS/aFE2/1mGsExz5AhhKaR2V1FRd0ek7ciHCC+DjX9lRlh3RUSg7kOolvuSk3dHRK5IaNWqMlFX6TPmQ1iGGRrKlqEh1hN1zp3zRUQ6pWl11N0ey9X3SkJYhunvz2K9YBhVVT2VIb/YHJeWlm5xNvlr3SrvtfbERcXFwyxXICxznDjB/CyG1N7+/JAuU0lImGtcWuq6sAULFtpX2aNmQ1hmOXWKsAwhPX+OVFZWqntWyeHD7TI6Wmn7fFnMXSEsY7nfHaEmbW3n7g8dLXPnvuqqrVZl5RZpa/vfvJKSZYQFYzEWhhF+5erxM2dOd4V1YW9qkpER/22JQ3mPQggLwFdqapJlYEDteUbdun9P4C5r9uxrJC3tT5KWdpMkJLx33r/r7t5o79D6+ztcfWcgCAuIlkMHde4ZmOC+i6OmpwefX5eScr3Mmnm9pKVdJcnJWZKQMNe+JVIoOjqqp/y+ra1DkpOHJSNjuaSnX+v6B/AmJydLe7u5T0E6D56CaIhGWuow29TUxFcIpKaerZ4pKRlTbkGq7rY02VR3SVEff3LixPpJX09NzTpnbOWv7NvS0zPu4aJvtxLWDkuT/wkwAGN/GX/aVPDVAAAAAElFTkSuQmCC" class="screenshot" alt="Installation Page Screenshot"></p>
+                </div>
+            </div>
+
+            <div class="flow-step">
+                <div class="flow-number">3</div>
+                <div class="flow-content">
+                    <h3>Browser-Specific Instructions</h3>
+                    <p>The installation page provides custom instructions for each major browser:</p>
+                    <ul>
+                        <li><strong>Chrome:</strong> Desktop and Android installation steps with visual guides</li>
+                        <li><strong>Safari:</strong> iOS-specific instructions with step-by-step images</li>
+                        <li><strong>Edge:</strong> Desktop installation workflow with clear directions</li>
+                        <li><strong>Other Browsers:</strong> Firefox, Opera, and general guidance</li>
+                    </ul>
+                    <p style="text-align: center;"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAADICAYAAABS39xVAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDYuMC1jMDAyIDc5LjE2NDQ4OCwgMjAyMC8wNy8xMC0yMjowNjo1MyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIyLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjUzQjdFMDVENTJBMzExRUNBRDM4QTlGNzdDRkRFN0JEIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjUzQjdFMDVFNTJBMzExRUNBRDM4QTlGNzdDRkRFN0JEIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NTNCN0UwNUI1MkEzMTFFQ0FEMzhBOUY3N0NGREUzQkQiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NTNCN0UwNUM1MkEzMTFFQ0FEMzhBOUY3N0NGREUzQkQiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6Nh5GsAAAK4UlEQVR42uydy49dVRnFz7n39s50OlPoQyvR8DBgg2AKiSGRqMEQYgihRBIHBBMHyh9AYuJIHJAoA0cmDpCBCQYdiCYaAgMHhBgCJTG2UF4FtKXl/WrbKe2duee4973n0dL7uI++b+/zW5P2DmrvAe19vrPXXmetL4nJibFWcgoA4AZJngIA8AJhAYAXEBYAeAFhAYAXEBYAeAFhAYAXEBYAeAFhAYAXEBYAeAFhAYAXEBYAeAFhAYAXEBYAeAFhAYAXEBYAeAFhAYAXEBYAeAFhAYAXEBYAeAFhAYAXEBYAeAFhAYAXEBYAeAFhAYAXEBYAeAFhAYAXEBYAeAFhAYAXEBYAeAFhAYAXEBYAeAFhAYAXEBYAeAFhAYAXEBYAeAFhAYAXEBYAeCHFUwAXW64vXLbfTJ83MzXD9eIYhAVLnG6fNtMXTNKq9v8EhRYvCN8PwhRhLTF6ydm+r8ZNt7fM9GDwfprTmuf6cQDCWmLMdPvCWsY6osgitc50W+NcPw5AWEuQpNUvmrRV/+MJjQbKp9Q0JYxcAxwsHpb0qXGzsmrZ3zBrZmboJSAswJWbkOtNWuqtw22b/qDN3bkgLMAV0s4Vs1pdF1X3H9+75w4EhQUBiJ20mvWGTdfJC0hnQlhQBxpYKwmn7x+ry9nDzz/+JBdaAggLakWz0agfX79h43ouNMICuIa0k7Bk2LUeAGGBZ9ROWjIICwsMwgKERaUQYQHCAii4/0ZzYblw8Yxpl80bOx/i4iIsgKDK/j8ICxAWwsLCgrAAYSEsQFiAsBAWICyEBQgLYSEsgLCw8CAshAUIi7AAYSEsQFgICxAWwoJFDMJy5vjJD8y5S6fmfc+a28ebqY2j68x1y8bC/2J/aOpdOG7O9051vq15X3PDeIhrgLAQVmmOnfyPOXTicPf2dMC0OjWmVdH3Pbh54+ZAggzC68ix/3afA4QFCKswR08cNu+e+W/X9GnaigrpdYnpXxjbt2ztNNt9wqr+NdPnXuxIKlOz3b7GrcGkZ9d+DRtWrOP5ICyE5U1Wnfblrqz0s1wuD5K+pLTiJWmYnIVXQ1tZt3WkldV5xm+eeYrng7AQlptY9JR5t7oqJaxrJKbv0FcXPeQe4Y3v339fX6iH8PPCN08+wPOJAIcbRBDVgeMHgvddDlzWK5ukTW/aNhAW/i0ic4SFOCPJ7ODx/TwfhIU4g6vqWyffL/ye03qlkbD2HDgUXE4IC3FGxdxDsV7JLmXl3/PySy/yfBAW4oyKuRpvheUWxj3XU3g/94dneT4IC3FGJQQVXsW8dJC079CRaJ8PEBbitDpZLGndEEk0P3/88Qdqfz4IC3FGNaxoxKtNVFaH3p2KJoVZAgMIC3Ha6liRpPXXl16p/fkgLMRZ79zV4eOHgvflCMfgfnbs/PvDvPQRllMUdLxIiGsV11V1rGPS+tyD36399SAsx6igm5eY/qD797R96/ZaJ63nHn2UUEBYiFNXSe9+9rXu7aTV6Pb6fffuQZAu5YRLlcGCMTl+6xX3UaKaFYc+qFnSXGu2rN9kbl17szl89MjAe9etXmMaAwvLWoRYXDhGzIsWYcGiQaXQoUIGukfhNhY+6P97ptuCp9w/lBBhQa1Ri9VIv/FYKrKPFBCWKm5pQiM1aeZM89rZbmfQ1t5G9XUHK1jYKvXyWy+bbafvNDeuX2/u2HJH35JHE2FB3aDCHLfcUm9Y0uoEjcn25W5pU6UfX+XKZGRhSUqzZkXrprE38guvfzR2/7q7vu3lGiAsmD8qH5RvXb8pXElUm3Wy6jYBZ3Ot1WTVb1rzKT3deHt+UpXUNRMEA8ICj+UESagzXGvL+jzWadUrKkpYs75WLhTKCl+p3xjYPR47vaeGu9sRFmJeDLLK2t3RP3onKqSJJHjN7ZFqrrJtMppIQlFLMrFX/+EKRUvNK8KCmohKrcvtfgFkwUdlVSlLO/3P0zSy5V85pTCvVuVHfp4Afy/CgoqKSgP1tL9PDZE0OFpWYvr0pDDa/vOtdWvuSlWqXpVdMVS76vZaVVQISzWrrLvjVWd8bKYTrbIuaWyMzpYtjNxBWKXXfp2HRXYydxGVJXG0xW4WZOzPZYwjktT6h/qlaebaAUJS5kJR0b0xXJWouqJqpGpVXj8/ykpXCAtqI6qsm6ia/edI0roWZf1VwqpQP5YqX5GVr1bXq9WqojJUCAsRlV9R9YtLImqkc/uXJIxP5ysJa67ckcxJoLOVOmPG1K0kYVJVCAtKLQKLLLFdH2yVkLRuXbuzO8OqSBZMrUYd/7XOLz8/e/YPVHuhOgrCgtKKyn4faxWuEXrm/BkFa18VsbIEH99K0TmT2b2QcvVb9WZFpaMTBGEhqpLO8fSJyj5mQINkb7n1vmDeVhVRdd9IEpq9qMzSEmVW9u/8OeXQ/d1btm3j8CMIq7yisucSTvdFNScqbS30VxVbpbOz51LZS1K3dLIgoqpQdlAy00jz5O6nnub5ICyEVVZR2ZPZOh1Z9s9Rl1BlDL+iquKlzEr3qbZZBVH1hKVpb7r9g10PcxwiwkJYpRWVnQhnPdmtZfSjP/6OonKP0N7tJKuqt/4bR9Z1D4NOTBoLQ/k4NxBhIaxSiypv26KdtNZWcXyUEtTkxNhu/6JdC6vKjpFl3UVgJa5MXLMF+tTOnrOC8wMRFsIqp6jUCqVdGjoHUGf6nzr5XuVEZR9PlXUXQVf3jkVliaxLYIV3vz2GfzjxHkeqIiyEVYnzAVvWI7U0WVJTPOsqqrwxNNFa8+eV0DQGuM4JS12vz54+xTFVCAthlVNU3Ylr9ohcZVXaMLrWnDz9TkVFpV5ZT8Bzl9Lq5o3VWFj2wnH1mnV84SMshFXGmdl5lWdLJ+dNaRvkJ586VblFXEpWHmS1PZfVXFKSsaYVHvGqbBNCcIRV1WWSR/k6qvFmf//SfPdQBu3dqyOVn4RvlSWqIm1YN2/YFGS1KLlzeCDCQlilE1Xe/XevGPGrzz9Y6b0+Vk3slIRbfzBvKdQRH4/u+hnPB2EhrLKJyp7KZs/+qfZ0dUSlXj8tm7m9ggP5NI1eh1jZxyoOvD/7Yqc0QnkEYSGqMokqb/ufJqVVfTKLJbq/7HmydiVQl1AlJEFZn5UTyiAIC1GV5WugZdK8u3V7baXYf7nnySAd9T/QMZBl39Gy9LYlqnM0yCEshFUaUeUto+Ggm3Wn1m9YU6+Fa+sW+3A+LbJ519Oyi8eZvXFb8jvx5kkeM8JCWKURVd4UNruAWXdRnQg2MbG7loJKrRKwXc+zy6gSvdbSEJYVPHnDj3g+CAthlU5U9iIdtluVy31qIcXXvPtYFZ6rvcWyOzXTzsxSyfP0yZM8H4SFsEorqrzlv+0zkNSdU5XNodblKvP4s/mWUeVCWi0r3+aV1r48wvZ+hIWwyicqV+1HR1vp2Ct7Erl6BDU7qoo9gkpQGgtT5CxLPQedPYiwEFZZRTXfXjnt6VMiPPjO8UhUwypT4rIKmK54naVPtVXR0yP0ffPmjA6LJiQQFsIqraii7K9rWYJQDWzvB5ERxRQ2cGwXQU+BXvU8iyZyXJXTYdFJZ5wXiLAQVmlFFaVb2u69DG6mxqS9k4Kzgu+LYi8C+5g3jHyPY5A9YlKysjcUqnmg8S+SNIV7hIWwqiCqqK1StnDWrFk7XAHzkVCyLqT9k2aXu7wqmnbQvXD6A5qSmVpySsqaYGcXjjnbA2EhrMqIqsgRTa2B0cfV9U+V2/83vJtbfYQWYYHLisqj2gw5oAF0lOxePp3TuO7GjVVaGQCllsNs73i+3j0tQz3iGfUgQmVW7SQvf5SdVnAUOqfr2d1MwzXCqjJXSHW5J07WO+fmZqNUZwGWHP8TYABi7O59/fTsUAAAAABJRU5ErkJggg==" class="screenshot" alt="Browser Tabs Screenshot"></p>
+                </div>
+            </div>
+
+            <div class="flow-step">
+                <div class="flow-number">4</div>
+                <div class="flow-content">
+                    <h3>In-app Installation Banner</h3>
+                    <p>In addition to the landing page installation flow, users who register or login and visit the dashboard will also see a prominent installation banner:</p>
+                    <ul>
+                        <li>Visually attractive banner with clear benefits listed</li>
+                        <li>Prominent "Install Now" button with animation to draw attention</li>
+                        <li>Smart display logic that hides when app is already installed</li>
+                        <li>Remembers when users have dismissed it for a few days</li>
+                    </ul>
+                    <p style="text-align: center;"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAADICAYAAABS39xVAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDYuMC1jMDAyIDc5LjE2NDQ4OCwgMjAyMC8wNy8xMC0yMjowNjo1MyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIyLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjVGMjgzRUIxNTJBMzExRUM4MEIzQzYyQzlGRTdFOUI5IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjVGMjgzRUIyNTJBMzExRUM4MEIzQzYyQzlGRTdFOUI5Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NUYyODNFQUY1MkEzMTFFQzgwQjNDNjJDOUZFN0U5QjkiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NUYyODNFQjA1MkEzMTFFQzgwQjNDNjJDOUZFN0U5QjkiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4yjxiGAAAILElEQVR42uxavY9V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" class="screenshot" alt="Dashboard Banner Screenshot"></p>
+                </div>
+            </div>
+        </div>
+
+        <h2>Summary of Improvements</h2>
+        <p>The enhanced installation experience now provides:</p>
+        <ul>
+            <li><strong>Multiple entry points</strong> from both the landing page and dashboard</li>
+            <li><strong>Better user guidance</strong> with detailed, browser-specific installation instructions</li>
+            <li><strong>Visual instruction steps</strong> with numbered, clear guidance</li>
+            <li><strong>Attention-grabbing elements</strong> like pulsing buttons and badges</li>
+            <li><strong>Integrated flow</strong> between landing page and main app</li>
+        </ul>
+        <p>These improvements make the app installation process more intuitive and visible to users, which should increase the PWA installation rate significantly.</p>
+    </div>
+</body>
+</html>
