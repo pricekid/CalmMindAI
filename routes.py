@@ -71,16 +71,22 @@ def simple_register_fallback():
     # Redirect to the correct path for the simple registration page
     return redirect('/register-simple')
 
-# Main login route that redirects to stable login
+# Main login route that redirects to stable login or render login based on environment
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """
-    Main login route that redirects to stable login
+    Main login route that chooses the appropriate login implementation
+    based on the environment (Replit vs Render.com)
     """
     if current_user.is_authenticated:
         return redirect('/dashboard')
     
-    # Use direct path instead of url_for to avoid circular imports
+    # Check if we're running on Render.com
+    if os.environ.get('RENDER') == 'true' or request.args.get('use_render_login') == 'true':
+        # Use Render-specific login for Render.com environment
+        return redirect('/render-login')
+    
+    # Default to stable login for other environments (like Replit)
     return redirect('/stable-login')
 
 # Token-based login route for email links

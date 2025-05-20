@@ -9,7 +9,7 @@ from flask import Blueprint, render_template, redirect, request, flash, session,
 from flask_login import login_user, current_user, logout_user
 from models import User, db
 from werkzeug.security import check_password_hash
-from werkzeug.urls import url_parse
+from urllib.parse import urlparse
 
 render_login_bp = Blueprint('render_login', __name__)
 logger = logging.getLogger(__name__)
@@ -55,7 +55,7 @@ def render_login():
                     
                     # Redirect handling
                     next_page = request.args.get('next')
-                    if not next_page or url_parse(next_page).netloc != '':
+                    if not next_page or urlparse(next_page).netloc != '':
                         next_page = '/dashboard'
                     return redirect(next_page)
                 else:
