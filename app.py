@@ -680,14 +680,24 @@ with app.app_context():
     # Register the Render.com-specific login blueprint
     # Import directly to avoid circular import issues
     try:
-        import render_login_fix
-        app.register_blueprint(render_login_fix.render_login_bp)
-        
-        # For Render.com, exempt CSRF to avoid cross-environment issues
-        csrf.exempt(render_login_fix.render_login_bp)
-        app.logger.info("Render login blueprint registered with CSRF exemption for Render.com compatibility")
+        # Try our new optimized Render login system first
+        try:
+            from render_init import register_render_routes
+            # Initialize the Render routes with CSRF exemption
+            register_render_routes(app)
+            app.logger.info("Render-specific optimized login routes registered successfully")
+        except ImportError as e:
+            app.logger.warning(f"New Render login routes not available, falling back to legacy: {str(e)}")
+            
+            # Fall back to legacy render login if needed
+            import render_login_fix
+            app.register_blueprint(render_login_fix.render_login_bp)
+            
+            # For Render.com, exempt CSRF to avoid cross-environment issues
+            csrf.exempt(render_login_fix.render_login_bp)
+            app.logger.info("Legacy Render login blueprint registered with CSRF exemption")
     except ImportError as e:
-        app.logger.warning(f"Render login blueprint not available: {str(e)}")
+        app.logger.warning(f"All Render login solutions unavailable: {str(e)}")
     
     # Register the onboarding blueprint
     try:
