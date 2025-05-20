@@ -420,15 +420,88 @@
                         
                         <!-- Other Browsers Instructions -->
                         <div class="tab-pane fade" id="other" role="tabpanel">
-                            <h4 class="mb-3 text-white">General Instructions:</h4>
-                            <ol class="list-group list-group-flush">
-                                <li class="list-group-item bg-transparent text-white border-secondary">Look for "Add to Home Screen" or "Install" in your browser's menu</li>
-                                <li class="list-group-item bg-transparent text-white border-secondary">On mobile, this is often found in the share menu</li>
-                                <li class="list-group-item bg-transparent text-white border-secondary">On desktop, look for an install icon in the address bar or browser menu</li>
-                            </ol>
+                            <div class="row text-center mb-4">
+                                <div class="col">
+                                    <i class="fas fa-globe browser-icon"></i>
+                                    <h4 class="text-white">Other Browsers</h4>
+                                </div>
+                            </div>
                             
-                            <div class="alert alert-warning mt-4">
-                                <i class="fas fa-exclamation-triangle me-2"></i> Some browsers have limited PWA support. For the best experience, we recommend using Chrome, Edge, or Safari on iOS.
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="card bg-dark border-warning h-100">
+                                        <div class="card-header bg-warning bg-opacity-75 text-dark">
+                                            <h5 class="mb-0"><i class="fab fa-firefox me-2"></i>Firefox</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="installation-step" data-step="1">
+                                                <p class="mb-2">On Android, tap the menu button (⋮)</p>
+                                            </div>
+                                            
+                                            <div class="installation-step" data-step="2">
+                                                <p class="mb-2">Select "Install" or "Add to Home screen"</p>
+                                            </div>
+                                            
+                                            <div class="alert alert-warning mt-3 mb-0">
+                                                <small><i class="fas fa-info-circle me-1"></i> Firefox on desktop has limited PWA support.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mt-4 mt-md-0">
+                                    <div class="card bg-dark border-warning h-100">
+                                        <div class="card-header bg-warning bg-opacity-75 text-dark">
+                                            <h5 class="mb-0"><i class="fab fa-opera me-2"></i>Opera</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="installation-step" data-step="1">
+                                                <p class="mb-2">Tap/click the "+" icon in the address bar</p>
+                                            </div>
+                                            
+                                            <div class="installation-step" data-step="2">
+                                                <p class="mb-2">Select "Install Dear Teddy"</p>
+                                            </div>
+                                            
+                                            <div class="alert alert-warning mt-3 mb-0">
+                                                <small><i class="fas fa-info-circle me-1"></i> If the Install button doesn't appear, try using Chrome or Edge.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card bg-dark border-info mb-4">
+                                <div class="card-header bg-info bg-opacity-50 text-white">
+                                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>General Instructions for All Browsers</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6 class="text-white mb-3">On Mobile:</h6>
+                                            <ol class="list-group list-group-flush mb-3">
+                                                <li class="list-group-item bg-transparent text-white border-secondary">Look for "Add to Home Screen" in the browser menu</li>
+                                                <li class="list-group-item bg-transparent text-white border-secondary">Check the Share menu for installation options</li>
+                                                <li class="list-group-item bg-transparent text-white border-secondary">Look for a install/download icon in the address bar</li>
+                                            </ol>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6 class="text-white mb-3">On Desktop:</h6>
+                                            <ol class="list-group list-group-flush">
+                                                <li class="list-group-item bg-transparent text-white border-secondary">Look for an install icon in the address bar</li>
+                                                <li class="list-group-item bg-transparent text-white border-secondary">Check browser settings for "Apps" or "Install" options</li>
+                                                <li class="list-group-item bg-transparent text-white border-secondary">Try using Chrome or Edge for best results</li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-primary d-flex align-items-center mt-4">
+                                <i class="fas fa-lightbulb me-3 fa-2x"></i>
+                                <div>
+                                    <strong>Recommendation:</strong> For the best installation experience, we recommend using Google Chrome on both desktop and Android devices, or Safari on iOS devices.
+                                </div>
                             </div>
                         </div>
                     </div>

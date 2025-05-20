@@ -1,18 +1,23 @@
 // A simple and robust approach for PWA installation
 let installPrompt;
 
-// Simple handler function for install clicks
+// Handler function for install clicks
 function showInstallPrompt() {
     if (!installPrompt) {
-        alert("Installation isn't available right now. This could be because:\n\n" +
-              "• You've already installed the app\n" +
-              "• Your browser doesn't support installation\n" +
-              "• The app doesn't meet installation criteria yet\n\n" +
-              "Try using Chrome or Edge for the best experience.");
+        // Instead of just showing an alert, redirect to the installation instructions page
+        const goToInstructions = confirm(
+            "Would you like to see detailed installation instructions for your device?\n\n" +
+            "This will help you install Dear Teddy as an app on your phone, tablet, or computer."
+        );
+        
+        if (goToInstructions) {
+            // Redirect to the main app's install page
+            window.location.href = "https://dearteddy-4vqj.onrender.com/install";
+        }
         return;
     }
     
-    // Show the installation prompt
+    // Show the installation prompt if available
     installPrompt.prompt();
     
     // Log the outcome
@@ -20,8 +25,24 @@ function showInstallPrompt() {
         if (choiceResult.outcome === 'accepted') {
             console.log('User accepted the install prompt');
             installPrompt = null;
+            
+            // Show success message
+            setTimeout(function() {
+                alert("Dear Teddy has been successfully installed!\n\nYou can now find it on your home screen or app drawer.");
+            }, 1000);
         } else {
             console.log('User dismissed the install prompt');
+            
+            // Ask if they want instructions instead
+            setTimeout(function() {
+                const needHelp = confirm(
+                    "Would you like to see detailed instructions for installing Dear Teddy manually?"
+                );
+                
+                if (needHelp) {
+                    window.location.href = "https://dearteddy-4vqj.onrender.com/install";
+                }
+            }, 500);
         }
     });
 }
