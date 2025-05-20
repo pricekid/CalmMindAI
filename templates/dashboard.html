@@ -198,6 +198,47 @@
     </div>
 </div>
 
+<!-- Install App Banner Section - Only shows if not already installed -->
+<div class="row mt-4" id="install-app-section">
+    <div class="col-12">
+        <div class="card bg-primary dashboard-widget">
+            <h3 class="text-white"><i class="fas fa-download me-2"></i> Install Dear Teddy On Your Device</h3>
+            <div class="p-3">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <div class="text-white">
+                            <p class="h5 mb-3">Get the full app experience:</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2"><i class="fas fa-check-circle me-2"></i> Works offline</li>
+                                        <li class="mb-2"><i class="fas fa-check-circle me-2"></i> Faster loading times</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2"><i class="fas fa-check-circle me-2"></i> Home screen icon</li>
+                                        <li class="mb-2"><i class="fas fa-check-circle me-2"></i> Full-screen experience</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <p class="small text-white-50 mt-2">No app store needed - installs directly from your browser!</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <button id="dashboard-install-btn" class="btn btn-light btn-lg pulse-button">
+                            <i class="fas fa-download me-2"></i>Install Now
+                        </button>
+                        <div class="mt-2">
+                            <a href="{{ url_for('install') }}" class="text-white small">See detailed instructions</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Push Notifications Section -->
 <div class="row mt-4">
     <div class="col-12">
@@ -419,8 +460,73 @@
 </div>
 {% endblock %}
 
+{% block styles %}
+{{ super() }}
+<style>
+    /* Styling for the install app section */
+    .pulse-button {
+        box-shadow: 0 0 0 rgba(255, 255, 255, 0.4);
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+        }
+        70% {
+            box-shadow: 0 0 0 15px rgba(255, 255, 255, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+        }
+    }
+</style>
+{% endblock %}
+
 {% block scripts %}
 {{ super() }}
 <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 <script src="{{ url_for('static', filename='js/push-notifications.js') }}"></script>
+
+<!-- Installation banner script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const installSection = document.getElementById('install-app-section');
+        const installButton = document.getElementById('dashboard-install-btn');
+        
+        // Only show the install section if not already in standalone mode
+        if (window.matchMedia('(display-mode: standalone)').matches || 
+            window.navigator.standalone === true) {
+            if (installSection) {
+                installSection.style.display = 'none';
+            }
+        }
+        
+        // Connect the install button to the global trigger function
+        if (installButton) {
+            installButton.addEventListener('click', function() {
+                if (typeof window.triggerInstall === 'function') {
+                    window.triggerInstall();
+                } else {
+                    // Redirect to the install page if the function isn't available
+                    window.location.href = "{{ url_for('install') }}";
+                }
+            });
+        }
+        
+        // Check if the user has already dismissed the install prompt
+        const hasUserDismissedPrompt = localStorage.getItem('pwaInstallPromptDismissed');
+        if (hasUserDismissedPrompt && installSection) {
+            // Get the timestamp of when it was dismissed
+            const dismissedTime = parseInt(hasUserDismissedPrompt);
+            const currentTime = Date.now();
+            const daysSinceDismissed = (currentTime - dismissedTime) / (1000 * 60 * 60 * 24);
+            
+            // If it was dismissed within the last 3 days, don't show it
+            if (daysSinceDismissed < 3) {
+                installSection.style.display = 'none';
+            }
+        }
+    });
+</script>
 {% endblock %}

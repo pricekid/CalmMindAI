@@ -38,6 +38,107 @@
     h5 {
         color: white !important;
     }
+    
+    /* Enhanced button styles */
+    .btn-glow {
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        background-color: #A05C2C; /* Dear Teddy primary color */
+        border-color: #A05C2C;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-glow:hover {
+        background-color: #c77a40;
+        border-color: #c77a40;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(160, 92, 44, 0.4) !important;
+    }
+    
+    .btn-glow::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(60deg, 
+            rgba(255,255,255,0) 20%, 
+            rgba(255,255,255,0.1) 30%, 
+            rgba(255,255,255,0.2) 32%, 
+            rgba(255,255,255,0.1) 35%, 
+            rgba(255,255,255,0) 45%);
+        transform: rotate(30deg);
+        z-index: -1;
+        animation: shine 3s infinite;
+    }
+    
+    @keyframes shine {
+        0% { left: -100%; }
+        20% { left: 100%; }
+        100% { left: 100%; }
+    }
+    
+    /* Pulsing badge animation */
+    .pulse-badge {
+        animation: pulse-badge 2s infinite;
+    }
+    
+    @keyframes pulse-badge {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+    
+    /* Enhanced browser tab indicators */
+    .browser-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: #A05C2C;
+    }
+    
+    /* Improved installation step visuals */
+    .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        background-color: #A05C2C;
+        color: white;
+        border-radius: 50%;
+        margin-right: 10px;
+        font-weight: bold;
+    }
+    
+    .installation-step {
+        position: relative;
+        padding-left: 40px;
+        margin-bottom: 15px;
+    }
+    
+    .installation-step::before {
+        content: attr(data-step);
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 30px;
+        height: 30px;
+        background-color: #A05C2C;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
 </style>
 {% endblock %}
 
@@ -116,10 +217,18 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-4 text-center">
-                        <button id="install-now-btn" class="btn btn-lg btn-primary">
-                            <i class="fas fa-download me-2"></i>Install Now
-                        </button>
-                        <p class="text-light opacity-75 mt-2 small">If the button doesn't work, follow the manual instructions below</p>
+                        <div class="install-button-container position-relative py-4">
+                            <div class="position-absolute top-0 start-50 translate-middle-x">
+                                <div class="badge bg-danger pulse-badge">Recommended</div>
+                            </div>
+                            <button id="install-now-btn" class="btn btn-lg btn-primary btn-glow shadow-lg" style="padding: 15px 40px; font-size: 1.25rem;">
+                                <i class="fas fa-download me-2"></i>Install Now
+                            </button>
+                            <div class="position-absolute bottom-0 start-50 translate-middle-x w-100">
+                                <p class="text-light opacity-75 mt-3 small">The fastest way to install Dear Teddy on your device</p>
+                            </div>
+                        </div>
+                        <p class="text-warning mt-1"><i class="fas fa-info-circle me-1"></i> If the button doesn't work, follow the manual instructions below</p>
                     </div>
                     
                     <ul class="nav nav-tabs" id="browserTabs" role="tablist">
@@ -148,22 +257,65 @@
                     <div class="tab-content p-3 border border-top-0 rounded-bottom" id="browserTabContent">
                         <!-- Chrome Instructions -->
                         <div class="tab-pane fade show active" id="chrome" role="tabpanel">
-                            <h4 class="mb-3 text-white">On Desktop:</h4>
-                            <ol class="list-group list-group-flush mb-4">
-                                <li class="list-group-item bg-transparent text-white border-secondary">Look for the install icon <i class="fas fa-arrow-alt-circle-down"></i> in the address bar (right side)</li>
-                                <li class="list-group-item bg-transparent text-white border-secondary">Click on it and select "Install"</li>
-                                <li class="list-group-item bg-transparent text-white border-secondary">Alternatively, click the menu button (⋮) and select "Install Dear Teddy..."</li>
-                            </ol>
+                            <div class="row text-center mb-4">
+                                <div class="col">
+                                    <i class="fab fa-chrome browser-icon"></i>
+                                    <h4 class="text-white">Google Chrome</h4>
+                                </div>
+                            </div>
                             
-                            <h4 class="mb-3 text-white">On Android:</h4>
-                            <ol class="list-group list-group-flush">
-                                <li class="list-group-item bg-transparent text-white border-secondary">Tap the menu button (⋮) in the top right corner</li>
-                                <li class="list-group-item bg-transparent text-white border-secondary">Select "Add to Home screen" or "Install app"</li>
-                                <li class="list-group-item bg-transparent text-white border-secondary">Confirm by tapping "Add" or "Install"</li>
-                            </ol>
+                            <div class="row mb-5">
+                                <div class="col-md-6">
+                                    <div class="card bg-dark border-primary h-100">
+                                        <div class="card-header bg-primary bg-opacity-75 text-white">
+                                            <h5 class="mb-0"><i class="fas fa-desktop me-2"></i>On Desktop</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="installation-step" data-step="1">
+                                                <p class="mb-2">Look for the install icon <i class="fas fa-arrow-alt-circle-down"></i> in the address bar (right side)</p>
+                                                <img src="{{ url_for('static', filename='images/chrome-desktop-step1.png') }}" alt="Chrome Desktop Step 1" class="img-fluid border border-secondary rounded mb-2" onerror="this.style.display='none'">
+                                            </div>
+                                            
+                                            <div class="installation-step" data-step="2">
+                                                <p class="mb-2">Click on it and select "Install"</p>
+                                                <img src="{{ url_for('static', filename='images/chrome-desktop-step2.png') }}" alt="Chrome Desktop Step 2" class="img-fluid border border-secondary rounded mb-2" onerror="this.style.display='none'">
+                                            </div>
+                                            
+                                            <div class="installation-step" data-step="3">
+                                                <p class="mb-2">Alternatively, click the menu button (⋮) and select "Install Dear Teddy..."</p>
+                                                <img src="{{ url_for('static', filename='images/chrome-desktop-step3.png') }}" alt="Chrome Desktop Step 3" class="img-fluid border border-secondary rounded mb-2" onerror="this.style.display='none'">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mt-4 mt-md-0">
+                                    <div class="card bg-dark border-success h-100">
+                                        <div class="card-header bg-success bg-opacity-75 text-white">
+                                            <h5 class="mb-0"><i class="fas fa-mobile-alt me-2"></i>On Android</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="installation-step" data-step="1">
+                                                <p class="mb-2">Tap the menu button (⋮) in the top right corner</p>
+                                                <img src="{{ url_for('static', filename='images/chrome-android-step1.png') }}" alt="Chrome Android Step 1" class="img-fluid border border-secondary rounded mb-2" onerror="this.style.display='none'">
+                                            </div>
+                                            
+                                            <div class="installation-step" data-step="2">
+                                                <p class="mb-2">Select "Add to Home screen" or "Install app"</p>
+                                                <img src="{{ url_for('static', filename='images/chrome-android-step2.png') }}" alt="Chrome Android Step 2" class="img-fluid border border-secondary rounded mb-2" onerror="this.style.display='none'">
+                                            </div>
+                                            
+                                            <div class="installation-step" data-step="3">
+                                                <p class="mb-2">Confirm by tapping "Add" or "Install"</p>
+                                                <img src="{{ url_for('static', filename='images/chrome-android-step3.png') }}" alt="Chrome Android Step 3" class="img-fluid border border-secondary rounded mb-2" onerror="this.style.display='none'">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             
                             <div class="text-center mt-4">
-                                <img src="{{ url_for('static', filename='images/chrome-install.svg') }}" alt="Chrome Install Illustration" class="img-fluid" style="max-width: 300px;">
+                                <img src="{{ url_for('static', filename='images/chrome-install.svg') }}" alt="Chrome Install Illustration" class="img-fluid" style="max-width: 300px;" onerror="this.style.display='none'">
                             </div>
                         </div>
                         
