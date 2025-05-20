@@ -321,34 +321,100 @@
                         
                         <!-- Safari Instructions -->
                         <div class="tab-pane fade" id="safari" role="tabpanel">
-                            <h4 class="mb-3 text-white">On iOS (iPhone/iPad):</h4>
-                            <ol class="list-group list-group-flush">
-                                <li class="list-group-item bg-transparent text-white border-secondary">Tap the share button <i class="fas fa-share-square"></i> at the bottom of the screen</li>
-                                <li class="list-group-item bg-transparent text-white border-secondary">Scroll down and tap "Add to Home Screen"</li>
-                                <li class="list-group-item bg-transparent text-white border-secondary">You can edit the name if desired</li>
-                                <li class="list-group-item bg-transparent text-white border-secondary">Tap "Add" in the top right corner</li>
-                            </ol>
+                            <div class="row text-center mb-4">
+                                <div class="col">
+                                    <i class="fab fa-safari browser-icon"></i>
+                                    <h4 class="text-white">Safari on iOS</h4>
+                                </div>
+                            </div>
                             
-                            <div class="alert alert-info mt-4">
-                                <i class="fas fa-info-circle me-2"></i> Safari on macOS doesn't fully support PWA installation. For desktop use, we recommend Chrome or Edge.
+                            <div class="row mb-5">
+                                <div class="col-md-8 mx-auto">
+                                    <div class="card bg-dark border-info h-100">
+                                        <div class="card-header bg-info bg-opacity-75 text-white">
+                                            <h5 class="mb-0"><i class="fas fa-mobile-alt me-2"></i>On iPhone/iPad</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="installation-step" data-step="1">
+                                                <p class="mb-2">Tap the share button <i class="fas fa-share-square"></i> at the bottom of the screen</p>
+                                                <img src="{{ url_for('static', filename='images/safari-ios-step1.png') }}" alt="Safari iOS Step 1" class="img-fluid border border-secondary rounded mb-2" onerror="this.style.display='none'">
+                                            </div>
+                                            
+                                            <div class="installation-step" data-step="2">
+                                                <p class="mb-2">Scroll down in the share menu and tap "Add to Home Screen"</p>
+                                                <img src="{{ url_for('static', filename='images/safari-ios-step2.png') }}" alt="Safari iOS Step 2" class="img-fluid border border-secondary rounded mb-2" onerror="this.style.display='none'">
+                                            </div>
+                                            
+                                            <div class="installation-step" data-step="3">
+                                                <p class="mb-2">Confirm the app name (or edit if desired)</p>
+                                                <img src="{{ url_for('static', filename='images/safari-ios-step3.png') }}" alt="Safari iOS Step 3" class="img-fluid border border-secondary rounded mb-2" onerror="this.style.display='none'">
+                                            </div>
+                                            
+                                            <div class="installation-step" data-step="4">
+                                                <p class="mb-2">Tap "Add" in the top right corner</p>
+                                                <img src="{{ url_for('static', filename='images/safari-ios-step4.png') }}" alt="Safari iOS Step 4" class="img-fluid border border-secondary rounded mb-2" onerror="this.style.display='none'">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-info mt-4 d-flex align-items-center">
+                                <i class="fas fa-info-circle me-3 fa-2x"></i>
+                                <div>
+                                    <strong>Note:</strong> Safari on macOS doesn't fully support PWA installation. For desktop use, we recommend Chrome or Edge.
+                                </div>
                             </div>
                             
                             <div class="text-center mt-4">
-                                <img src="{{ url_for('static', filename='images/safari-install.svg') }}" alt="Safari Install Illustration" class="img-fluid" style="max-width: 300px;">
+                                <img src="{{ url_for('static', filename='images/safari-install.svg') }}" alt="Safari Install Illustration" class="img-fluid" style="max-width: 300px;" onerror="this.style.display='none'">
                             </div>
                         </div>
                         
                         <!-- Edge Instructions -->
                         <div class="tab-pane fade" id="edge" role="tabpanel">
-                            <h4 class="mb-3 text-white">On Desktop:</h4>
-                            <ol class="list-group list-group-flush">
-                                <li class="list-group-item bg-transparent text-white border-secondary">Look for the install icon <i class="fas fa-plus-square"></i> in the address bar</li>
-                                <li class="list-group-item bg-transparent text-white border-secondary">Click it and select "Install"</li>
-                                <li class="list-group-item bg-transparent text-white border-secondary">Alternatively, click the menu button (...) and select "Apps" > "Install this site as an app"</li>
-                            </ol>
+                            <div class="row text-center mb-4">
+                                <div class="col">
+                                    <i class="fab fa-edge browser-icon"></i>
+                                    <h4 class="text-white">Microsoft Edge</h4>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-5">
+                                <div class="col-md-8 mx-auto">
+                                    <div class="card bg-dark border-info h-100">
+                                        <div class="card-header bg-info bg-opacity-75 text-white">
+                                            <h5 class="mb-0"><i class="fas fa-desktop me-2"></i>On Desktop</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="installation-step" data-step="1">
+                                                <p class="mb-2">Look for the install icon <i class="fas fa-plus-square"></i> in the address bar</p>
+                                                <img src="{{ url_for('static', filename='images/edge-desktop-step1.png') }}" alt="Edge Step 1" class="img-fluid border border-secondary rounded mb-2" onerror="this.style.display='none'">
+                                            </div>
+                                            
+                                            <div class="installation-step" data-step="2">
+                                                <p class="mb-2">Click it and select "Install"</p>
+                                                <img src="{{ url_for('static', filename='images/edge-desktop-step2.png') }}" alt="Edge Step 2" class="img-fluid border border-secondary rounded mb-2" onerror="this.style.display='none'">
+                                            </div>
+                                            
+                                            <div class="installation-step" data-step="3">
+                                                <p class="mb-2">Alternatively, click the menu button (...) and select "Apps" > "Install this site as an app"</p>
+                                                <img src="{{ url_for('static', filename='images/edge-desktop-step3.png') }}" alt="Edge Step 3" class="img-fluid border border-secondary rounded mb-2" onerror="this.style.display='none'">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-success mt-4 d-flex align-items-center">
+                                <i class="fas fa-check-circle me-3 fa-2x"></i>
+                                <div>
+                                    <strong>Pro Tip:</strong> Microsoft Edge has excellent PWA support and will provide a full app experience when installed!
+                                </div>
+                            </div>
                             
                             <div class="text-center mt-4">
-                                <img src="{{ url_for('static', filename='images/edge-install.svg') }}" alt="Edge Install Illustration" class="img-fluid" style="max-width: 300px;">
+                                <img src="{{ url_for('static', filename='images/edge-install.svg') }}" alt="Edge Install Illustration" class="img-fluid" style="max-width: 300px;" onerror="this.style.display='none'">
                             </div>
                         </div>
                         
