@@ -23,7 +23,7 @@ render_bp = Blueprint('render', __name__)
 def render_login():
     """
     Simplified login route for Render.com deployments.
-    This bypasses the standard CSRF protection to avoid cross-domain issues.
+    This completely bypasses CSRF protection to work reliably on Render.
     """
     if current_user.is_authenticated:
         return redirect('/dashboard')
@@ -99,10 +99,11 @@ def register_render_routes(app):
     # Register the blueprint
     app.register_blueprint(render_bp)
     
-    # Exempt the blueprint from CSRF protection if CSRF is enabled
+    # CRITICAL: Always exempt the render_login function from CSRF
     if hasattr(app, 'csrf'):
         app.csrf.exempt(render_bp)
-        logger.info("CSRF protection exempted for Render.com login routes")
+        app.csrf.exempt(render_login)
+        logger.info("CSRF protection completely disabled for Render.com login routes")
     
     # Add an environment flag
     app.config['IS_RENDER'] = os.environ.get('RENDER', 'false').lower() == 'true'

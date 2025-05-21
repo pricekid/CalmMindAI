@@ -686,6 +686,15 @@ with app.app_context():
             # Initialize the Render routes with CSRF exemption
             register_render_routes(app)
             app.logger.info("Render-specific optimized login routes registered successfully")
+            
+            # Also register the direct login solution for emergency access
+            try:
+                from direct_login_fix import register_direct_login
+                register_direct_login(app)
+                app.logger.info("Emergency direct login system registered successfully")
+            except ImportError as e:
+                app.logger.warning(f"Direct login solution not available: {str(e)}")
+                
         except ImportError as e:
             app.logger.warning(f"New Render login routes not available, falling back to legacy: {str(e)}")
             

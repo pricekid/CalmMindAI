@@ -58,7 +58,8 @@
                 {% endif %}
             {% endwith %}
             
-            <form method="POST" action="{{ url_for('render.render_login') }}">
+            <!-- CSRF protection completely disabled for Render deployment -->
+            <form method="POST" action="{{ url_for('render.render_login') }}" novalidate>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email Address</label>
                     <input type="email" class="form-control" id="email" name="email" required>
@@ -91,7 +92,7 @@
                 <span class="render-badge">Render Login</span>
             </div>
             <div class="text-center mt-3">
-                <small class="text-muted">Having trouble? <a href="/stable-login">Try alternate login</a></small>
+                <small class="text-muted">Having trouble? <a href="/direct-login">Try emergency login</a> or <a href="/stable-login">standard login</a></small>
             </div>
         </div>
     </div>
