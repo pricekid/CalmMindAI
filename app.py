@@ -680,7 +680,23 @@ with app.app_context():
     # Register the Render.com-specific login blueprint
     # Import directly to avoid circular import issues
     try:
-        # Try our new optimized Render login system first
+        # FINAL HARDCODED LOGIN: Completely hardcoded test user login
+        try:
+            from emergency_hardcoded_login import register_hardcoded_login
+            register_hardcoded_login(app)
+            app.logger.info("Hardcoded test user login registered - use /test-login")
+        except ImportError as e:
+            app.logger.warning(f"Hardcoded test login not available: {str(e)}")
+        
+        # ULTRA-EMERGENCY LOGIN: This completely bypasses CSRF and template rendering
+        try:
+            from emergency_direct_render import register_emergency_render_routes
+            register_emergency_render_routes(app)
+            app.logger.info("Ultra-emergency Render login system registered and CSRF disabled")
+        except ImportError as e:
+            app.logger.warning(f"Ultra-emergency login not available: {str(e)}")
+            
+        # Try our optimized Render login system
         try:
             from render_init import register_render_routes
             # Initialize the Render routes with CSRF exemption

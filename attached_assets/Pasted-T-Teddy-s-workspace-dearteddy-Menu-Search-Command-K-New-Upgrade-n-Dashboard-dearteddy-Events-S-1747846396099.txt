@@ -1,0 +1,181 @@
+T
+Teddy's workspace
+dearteddy
+Menu
+
+Search
+Command+
+K
+
+New
+
+Upgrade
+
+
+n
+Dashboard
+dearteddy
+Events
+Settings
+Monitor
+Logs
+Metrics
+Manage
+Environment
+Shell
+Scaling
+Previews
+Disks
+Jobs
+
+Changelog
+Invite a friend
+
+Contact support
+Render Status
+Web Service
+dearteddy
+Python 3
+Starter
+Blueprint managed
+
+Connect
+
+Manual Deploy
+pricekid / CalmMindAI
+main
+https://dearteddy-4vqj.onrender.com
+
+May 21, 2025 at 12:25 PM
+live
+0801a87
+Provide alternative login for Render deployments and fix login issues Implements a direct login blueprint and disables CSRF for Render login routes. Replit-Commit-Author: Agent Replit-Commit-Session-Id: cc739730-3a56-4e6e-9f89-b0af0890ddf1 Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/03446022-f254-4b7f-82ac-438d2267f78a/241951dd-e13d-4ee8-b82a-df684afa3ccb.jpg
+dearteddy
+Logs
+
+Logs
+
+All logs
+Search
+Search
+
+Live tail
+AST
+Menu
+DEBUG:tzlocal:/etc/localtime found
+DEBUG:tzlocal:2 found:
+ {'/etc/timezone': 'Etc/UTC', '/etc/localtime is a symlink to': 'Etc/UTC'}
+INFO:apscheduler.scheduler:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+INFO:apscheduler.scheduler:Added job "send_journal_reminder_notifications" to job store "default"
+INFO:apscheduler.scheduler:Scheduler started
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 16:32:26.630010+00:00 (in 299.997390 seconds)
+INFO:journal_reminder_scheduler:Journal reminder scheduler started successfully
+INFO:root:Journal reminder scheduler started
+[2025-05-21 16:27:26 +0000] [82] [INFO] Starting gunicorn 23.0.0
+[2025-05-21 16:27:26 +0000] [82] [INFO] Listening at: http://0.0.0.0:10000 (82)
+[2025-05-21 16:27:26 +0000] [82] [INFO] Using worker: sync
+[2025-05-21 16:27:26 +0000] [86] [INFO] Booting worker with pid: 86
+127.0.0.1 - - [21/May/2025:16:27:27 +0000] "HEAD / HTTP/1.1" 302 0 "-" "Go-http-client/1.1"
+==> Your service is live 🎉
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 16:32:26 UTC)" (scheduled at 2025-05-21 16:32:26.630010+00:00)
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 16:37:26.630010+00:00 (in 299.998244 seconds)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 16:37:26 UTC)" executed successfully
+==> Detected service running on port 10000
+==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 16:42:26.630010+00:00 (in 299.999269 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 16:42:26 UTC)" (scheduled at 2025-05-21 16:37:26.630010+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 16:42:26 UTC)" executed successfully
+DEBUG:csrf_utils:Generated/retrieved CSRF token (length: 91)
+10.214.6.70 - - [21/May/2025:16:39:19 +0000] "GET /stable-login HTTP/1.1" 200 12538 "-" "Mozilla/5.0 (compatible)"
+10.214.201.131 - - [21/May/2025:16:39:21 +0000] "GET /r-login HTTP/1.1" 200 4400 "-" "Mozilla/5.0 (compatible)"
+10.214.201.65 - - [21/May/2025:16:39:25 +0000] "GET /r-login HTTP/1.1" 200 4400 "-" "Mozilla/5.0 (compatible)"
+DEBUG:csrf_utils:Generated/retrieved CSRF token (length: 91)
+10.214.22.233 - - [21/May/2025:16:39:25 +0000] "GET /stable-login HTTP/1.1" 200 12538 "-" "Mozilla/5.0 (compatible)"
+DEBUG:csrf_utils:Generated/retrieved CSRF token (length: 91)
+10.214.6.1 - - [21/May/2025:16:39:29 +0000] "GET /stable-login HTTP/1.1" 200 12538 "-" "Mozilla/5.0 (compatible)"
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 16:47:26.630010+00:00 (in 299.999464 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 16:47:26 UTC)" (scheduled at 2025-05-21 16:42:26.630010+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 16:47:26 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 16:52:26.630010+00:00 (in 299.999432 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 16:52:26 UTC)" (scheduled at 2025-05-21 16:47:26.630010+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 16:52:26 UTC)" executed successfully
+10.214.255.209 - - [21/May/2025:16:51:29 +0000] "GET / HTTP/1.1" 302 199 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+INFO:app:Using Render-optimized login
+10.214.23.106 - - [21/May/2025:16:51:30 +0000] "GET /login HTTP/1.1" 302 203 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.59.69 - - [21/May/2025:16:51:30 +0000] "GET /r-login HTTP/1.1" 200 4400 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.201.65 - - [21/May/2025:16:51:30 +0000] "GET /static/css/bootstrap.min.css HTTP/1.1" 200 0 "https://dearteddy-4vqj.onrender.com/r-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.201.131 - - [21/May/2025:16:51:30 +0000] "GET /static/css/styles.css HTTP/1.1" 200 0 "https://dearteddy-4vqj.onrender.com/r-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.6.70 - - [21/May/2025:16:51:30 +0000] "GET /static/img/teddy-logo.png HTTP/1.1" 200 0 "https://dearteddy-4vqj.onrender.com/r-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+ERROR:app:Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+10.214.72.100 - - [21/May/2025:16:51:31 +0000] "GET /favicon.ico HTTP/1.1" 500 8580 "https://dearteddy-4vqj.onrender.com/r-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+DEBUG:csrf_debug:CSRF Debug - Path: /r-login, Method: POST
+INFO:flask_wtf.csrf:The CSRF token is missing.
+ERROR:app:Unhandled exception: 400 Bad Request: The CSRF token is missing.
+WARNING:app:CSRF validation error: 400 Bad Request: The CSRF token is missing.
+10.214.23.106 - - [21/May/2025:16:51:41 +0000] "POST /r-login HTTP/1.1" 302 213 "https://dearteddy-4vqj.onrender.com/r-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+DEBUG:csrf_utils:Generated/retrieved CSRF token (length: 91)
+10.214.153.3 - - [21/May/2025:16:51:41 +0000] "GET /stable-login HTTP/1.1" 200 12538 "https://dearteddy-4vqj.onrender.com/r-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.22.233 - - [21/May/2025:16:51:41 +0000] "GET /static/css/custom.css HTTP/1.1" 200 0 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.22.233 - - [21/May/2025:16:51:41 +0000] "GET /static/images/logo.svg HTTP/1.1" 200 0 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+ERROR:app:Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+10.214.255.209 - - [21/May/2025:16:51:43 +0000] "GET /favicon.ico HTTP/1.1" 500 8945 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+DEBUG:csrf_debug:CSRF Debug - Path: /stable-login, Method: POST
+INFO:stable_login:Login attempt - Form token length: 91
+INFO:stable_login:Login attempt - Session token length: 91
+INFO:stable_login:Login attempt - User found: False
+WARNING:stable_login:Failed login attempt for email: teddy.leon@alumni.uwi.edu
+DEBUG:csrf_utils:Generated/retrieved CSRF token (length: 91)
+10.214.153.3 - - [21/May/2025:16:51:56 +0000] "POST /stable-login HTTP/1.1" 200 12724 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.153.3 - - [21/May/2025:16:51:57 +0000] "GET /static/images/logo.svg HTTP/1.1" 304 0 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.255.209 - - [21/May/2025:16:51:57 +0000] "GET /static/css/custom.css HTTP/1.1" 304 0 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+ERROR:app:Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+10.214.201.131 - - [21/May/2025:16:51:57 +0000] "GET /favicon.ico HTTP/1.1" 500 8580 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+DEBUG:csrf_debug:CSRF Debug - Path: /stable-login, Method: POST
+INFO:stable_login:Login attempt - Form token length: 91
+INFO:stable_login:Login attempt - Session token length: 91
+INFO:stable_login:Login attempt - User found: False
+WARNING:stable_login:Failed login attempt for email: teddy.leon@alumni.uwi.edu
+DEBUG:csrf_utils:Generated/retrieved CSRF token (length: 91)
+10.214.23.106 - - [21/May/2025:16:52:09 +0000] "POST /stable-login HTTP/1.1" 200 12724 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.255.209 - - [21/May/2025:16:52:09 +0000] "GET /static/css/custom.css HTTP/1.1" 304 0 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.194.166 - - [21/May/2025:16:52:09 +0000] "GET /static/images/logo.svg HTTP/1.1" 304 0 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+ERROR:app:Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+10.214.22.233 - - [21/May/2025:16:52:09 +0000] "GET /favicon.ico HTTP/1.1" 500 8580 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 16:57:26.630010+00:00 (in 299.999456 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 16:57:26 UTC)" (scheduled at 2025-05-21 16:52:26.630010+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 16:57:26 UTC)" executed successfully
+DEBUG:csrf_debug:CSRF Debug - Path: /stable-login, Method: POST
+INFO:stable_login:Login attempt - Form token length: 91
+INFO:stable_login:Login attempt - Session token length: 91
+INFO:stable_login:Login attempt - User found: False
+WARNING:stable_login:Failed login attempt for email: teddy.leon@alumni.uwi.edu
+DEBUG:csrf_utils:Generated/retrieved CSRF token (length: 91)
+10.214.6.70 - - [21/May/2025:16:52:31 +0000] "POST /stable-login HTTP/1.1" 200 12724 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.72.100 - - [21/May/2025:16:52:31 +0000] "GET /static/images/logo.svg HTTP/1.1" 304 0 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.201.131 - - [21/May/2025:16:52:31 +0000] "GET /static/css/custom.css HTTP/1.1" 304 0 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+ERROR:app:Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+10.214.23.106 - - [21/May/2025:16:52:31 +0000] "GET /favicon.ico HTTP/1.1" 500 8580 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+Need better ways to work with logs? Try theRender CLIor set up a log stream integration 
+
+0 services selected:
+
+Move
+
+Generate Blueprint
+
