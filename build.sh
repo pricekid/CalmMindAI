@@ -53,5 +53,15 @@ cp static/favicon.ico favicon.ico 2>/dev/null || true
 echo "Setting up Render-specific configuration"
 export RENDER=true
 
+# Create a .env file for Render deployment
+echo "Creating Render environment file"
+cat > .env << EOF
+RENDER=true
+FLASK_ENV=production
+FLASK_DEBUG=0
+EOF
+
+echo "Render deployment configuration complete"
+
 # Print success message
 echo "Build completed successfully"
