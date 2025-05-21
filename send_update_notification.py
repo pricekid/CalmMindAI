@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 def get_base_url():
     """Get the base URL for links in emails"""
     # Use environment variable if available, otherwise use default
-    return os.environ.get('BASE_URL', 'https://calm-mind-ai-naturalarts.replit.app')
+    return os.environ.get('BASE_URL', 'https://dearteddy-4vqj.onrender.com')
 
 def load_users():
     """Load users from the data/users.json file"""
