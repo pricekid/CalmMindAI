@@ -89,8 +89,8 @@ def login():
     
     # Log which login path we're using
     if render_env:
-        app.logger.info("Using Render-optimized login")
-        return redirect('/r-login')
+        app.logger.info("Using stable login for Render environment (most reliable option)")
+        return redirect('/stable-login')
     else:
         app.logger.info("Using stable login for Replit environment")
         return redirect('/stable-login')

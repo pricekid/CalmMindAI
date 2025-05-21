@@ -677,8 +677,16 @@ with app.app_context():
     except ImportError:
         app.logger.warning("Stable login blueprint not available")
     
-    # Register the Render.com-specific login blueprint
-    # Import directly to avoid circular import issues
+    # Register the stable login as the primary login option
+    # This makes all other login paths redirect to stable-login
+    try:
+        from redirect_to_stable import register_login_redirects
+        register_login_redirects(app)
+        app.logger.info("All login paths now redirect to stable login")
+    except ImportError as e:
+        app.logger.warning(f"Login redirect module not available: {str(e)}")
+    
+    # Keep emergency login options (but they'll redirect to stable login)
     try:
         # FINAL HARDCODED LOGIN: Completely hardcoded test user login
         try:
