@@ -1,198 +1,215 @@
 """
-Enhanced password reset functionality using the updated notification service.
-This module handles password reset request, token generation, and password updates.
+Updated password reset routes that use environment detection to provide correct URLs
+in password reset emails.
 """
+
 import os
 import logging
 import secrets
+import time
 from datetime import datetime, timedelta
-from flask import Blueprint, request, render_template, redirect, url_for, flash, jsonify
-from flask_login import current_user
+from flask import Blueprint, render_template, url_for, flash, redirect, request, abort
+from flask_mail import Message
 from werkzeug.security import generate_password_hash
+from urllib.parse import urlencode
 
-# Import the updated notification service
-from updated_notification_service import send_password_reset_email
+# Import from our environment detection module
+from environment_detection import get_base_url, is_render, is_replit, log_environment
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Create blueprint
-password_reset_bp = Blueprint('updated_password_reset', __name__)
+updated_pwd_reset_bp = Blueprint('updated_pwd_reset', __name__)
 
-# Dictionary to store reset tokens (in a production app, these should be in a database)
-# Format: {token: {'user_id': user_id, 'email': email, 'expires': expires_datetime}}
-reset_tokens = {}
-
-def generate_token():
-    """Generate a secure token for password reset"""
-    return secrets.token_urlsafe(32)
-
-def get_base_url():
-    """Get the base URL of the application"""
-    # In production, this should come from configuration
-    return os.environ.get('BASE_URL', 'https://calm-mind-ai-naturalarts.replit.app')
-
-def store_reset_token(user_id, email):
+def send_password_reset_email(app, user):
     """
-    Store a password reset token.
-    
-    Args:
-        user_id: The user ID
-        email: The user's email address
-        
-    Returns:
-        str: The generated token
+    Send a password reset email to the user with the appropriate URL
+    based on the detected environment.
     """
-    token = generate_token()
-    expires = datetime.utcnow() + timedelta(hours=1)
+    # Get current time as timestamp
+    timestamp = int(time.time())
     
-    reset_tokens[token] = {
-        'user_id': user_id,
-        'email': email,
-        'expires': expires
-    }
+    # Create a secure token
+    token = secrets.token_urlsafe(32)
     
-    return token
+    # Set token expiration to 60 minutes from now
+    expires = timestamp + 3600
+    
+    # Store the token in the user object
+    user.reset_token = token
+    user.reset_token_expires = expires
+    
+    # Get the base URL for the current environment
+    base_url = get_base_url()
+    logger.info(f"Using base URL for password reset: {base_url}")
+    
+    # Create the reset URL with the token
+    params = urlencode({'email': user.email, 'expires': expires})
+    reset_url = f"{base_url}/reset-password/{token}?{params}"
+    
+    # Create email subject and body
+    subject = "Dear Teddy Password Reset"
+    
+    # Email body in HTML format with environment-specific URL
+    html = render_template(
+        'email/password_reset.html',
+        reset_url=reset_url,
+        user=user,
+        expires_minutes=60
+    )
+    
+    # Import the app's email functionality
+    from improved_email_service import send_email
+    
+    # Send the email
+    try:
+        send_email(
+            recipient=user.email,
+            subject=subject,
+            html_content=html
+        )
+        logger.info(f"Password reset email sent to {user.email} with URL: {reset_url}")
+        return True
+    except Exception as e:
+        logger.error(f"Failed to send password reset email: {str(e)}")
+        return False
 
-def validate_token(token):
-    """
-    Validate a password reset token.
-    
-    Args:
-        token: The token to validate
-        
-    Returns:
-        dict or None: The token data if valid, None otherwise
-    """
-    token_data = reset_tokens.get(token)
-    if not token_data:
-        return None
-        
-    if token_data['expires'] < datetime.utcnow():
-        # Token expired
-        del reset_tokens[token]
-        return None
-        
-    return token_data
-
-def clear_expired_tokens():
-    """Clear expired tokens"""
-    now = datetime.utcnow()
-    expired_tokens = [
-        token for token, data in reset_tokens.items()
-        if data['expires'] < now
-    ]
-    
-    for token in expired_tokens:
-        del reset_tokens[token]
-        
-    return len(expired_tokens)
-
-@password_reset_bp.route('/forgot-password', methods=['GET', 'POST'])
-@password_reset_bp.route('/reset-password', methods=['GET', 'POST']) # Alternative route for compatibility
+@updated_pwd_reset_bp.route('/forgot-password', methods=['GET', 'POST'])
 def forgot_password():
-    """Handle forgot password requests"""
+    """
+    Handle forgot password requests.
+    """
+    from app import db
+    from models import User
+    
+    # Check if user is already logged in
+    from flask_login import current_user
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))
-        
+        return redirect('/dashboard')
+    
     if request.method == 'POST':
-        email = request.form.get('email')
+        email = request.form.get('email', '').strip().lower()
+        
         if not email:
             flash('Please enter your email address.', 'danger')
-            return render_template('forgot_password.html')
+            return render_template('forgot_password.html', title='Forgot Password')
+        
+        # Find the user by email (case insensitive)
+        user = User.query.filter(User.email.ilike(email)).first()
+        
+        if user:
+            # Log which environment we're using for the reset
+            env_info = log_environment()
+            logger.info(f"Password reset requested for {email} in {env_info['environment']} environment")
             
-        # Find user by email
-        from app import db
-        from models import User
-        
-        user = User.query.filter_by(email=email).first()
-        if not user:
-            # Don't reveal that the user doesn't exist for security
-            flash('If your email is registered, you will receive a password reset link shortly.', 'info')
-            return render_template('forgot_password.html')
+            # Send the reset email
+            success = send_password_reset_email(None, user)
             
-        # Generate and store token
-        token = store_reset_token(user.id, email)
-        
-        # Send reset email
-        reset_url = f"{get_base_url()}/reset-password/{token}"
-        result = send_password_reset_email(email, token, reset_url)
-        
-        if result.get('success'):
-            flash('If your email is registered, you will receive a password reset link shortly.', 'info')
-            if result.get('fallback'):
-                logger.warning(f"Password reset email for {email} saved to fallback system")
-                flash('Note: Our email delivery system is currently in maintenance mode. Please check your account with admin if you don\'t receive an email.', 'warning')
+            if success:
+                # Update the user in the database
+                try:
+                    db.session.commit()
+                    logger.info(f"Reset token saved for user {user.id}")
+                except Exception as db_error:
+                    logger.error(f"Database error saving reset token: {str(db_error)}")
+                    db.session.rollback()
+                    flash('An error occurred. Please try again later.', 'danger')
+                    return render_template('forgot_password.html', title='Forgot Password')
+                
+                # Show success message
+                flash('A password reset link has been sent to your email address.', 'success')
+                return redirect('/login')
+            else:
+                # Failed to send email
+                flash('Failed to send reset email. Please try again later.', 'danger')
         else:
-            logger.error(f"Failed to send password reset email to {email}: {result.get('error')}")
-            flash('An error occurred while sending the password reset email. Please try again later.', 'danger')
-            
-        return render_template('forgot_password.html')
-        
-    return render_template('forgot_password.html')
+            # Don't reveal that the user doesn't exist for security reasons
+            logger.warning(f"Password reset requested for non-existent user: {email}")
+            flash('If an account exists with that email, a password reset link has been sent.', 'info')
+            return redirect('/login')
+    
+    # GET request - show form
+    return render_template('forgot_password.html', title='Forgot Password')
 
-@password_reset_bp.route('/reset-password/<token>', methods=['GET', 'POST'])
-@password_reset_bp.route('/reset-password/<token>/', methods=['GET', 'POST']) # Allow optional trailing slash
+@updated_pwd_reset_bp.route('/reset-password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
-    """Handle password reset with token"""
+    """
+    Handle password reset with token.
+    """
+    from app import db
+    from models import User
+    
+    # Check if user is already logged in
+    from flask_login import current_user
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))
+        return redirect('/dashboard')
+    
+    # Get email and expiry from query parameters
+    email = request.args.get('email')
+    expires = request.args.get('expires')
+    
+    if not email or not expires:
+        flash('Invalid reset link. Missing parameters.', 'danger')
+        return redirect('/forgot-password')
+    
+    # Check if the token has expired
+    try:
+        expiry_time = int(expires)
+        current_time = int(time.time())
         
-    # Validate token
-    token_data = validate_token(token)
-    if not token_data:
-        flash('The password reset link is invalid or has expired.', 'danger')
-        return redirect(url_for('password_reset.forgot_password'))
-        
+        if current_time > expiry_time:
+            flash('Password reset link has expired. Please request a new one.', 'danger')
+            return redirect('/forgot-password')
+    except ValueError:
+        flash('Invalid reset link. Please request a new one.', 'danger')
+        return redirect('/forgot-password')
+    
+    # Find the user with the given email and token
+    user = User.query.filter_by(email=email, reset_token=token).first()
+    
+    if not user:
+        flash('Invalid reset link. Please request a new one.', 'danger')
+        return redirect('/forgot-password')
+    
+    # Handle form submission
     if request.method == 'POST':
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
         
-        if not password or len(password) < 8:
-            flash('Please enter a password with at least 8 characters.', 'danger')
-            return render_template('reset_password_new.html', token=token)
-            
-        if password != confirm_password:
+        if not password or not confirm_password:
+            flash('Please fill in all fields.', 'danger')
+        elif password != confirm_password:
             flash('Passwords do not match.', 'danger')
-            return render_template('reset_password_new.html', token=token)
+        else:
+            # Update the user's password
+            user.password_hash = generate_password_hash(password)
+            user.reset_token = None
+            user.reset_token_expires = None
             
-        # Update password
-        from app import db
-        from models import User
-        
-        user = User.query.get(token_data['user_id'])
-        if not user:
-            flash('An error occurred. Please try again.', 'danger')
-            return redirect(url_for('password_reset.forgot_password'))
-            
-        # Update user's password
-        user.password_hash = generate_password_hash(password)
-        db.session.commit()
-        
-        # Remove used token
-        del reset_tokens[token]
-        
-        flash('Your password has been updated! You can now log in with your new password.', 'success')
-        return redirect(url_for('login'))
-        
-    return render_template('reset_password_new.html', token=token)
-
-@password_reset_bp.route('/api/password-reset/metrics', methods=['GET'])
-def reset_metrics():
-    """Get password reset metrics (admin only)"""
-    # In a real app, this would be protected
-    expired = clear_expired_tokens()
+            try:
+                db.session.commit()
+                flash('Your password has been reset successfully. You can now log in.', 'success')
+                return redirect('/login')
+            except Exception as e:
+                logger.error(f"Error updating password: {str(e)}")
+                db.session.rollback()
+                flash('An error occurred. Please try again.', 'danger')
     
-    return jsonify({
-        'active_tokens': len(reset_tokens),
-        'expired_tokens_cleared': expired,
-        'timestamp': datetime.utcnow().isoformat()
-    })
+    # GET request - show form
+    return render_template('reset_password.html', title='Reset Password', token=token, email=email, expires=expires)
 
 def register_password_reset(app):
-    """Register password reset routes with Flask app"""
-    # Add a unique name for this blueprint to avoid conflicts
-    app.register_blueprint(password_reset_bp, name='updated_password_reset_bp')
+    """
+    Register the password reset blueprint with the app.
+    """
+    app.register_blueprint(updated_pwd_reset_bp)
     logger.info("Password reset routes registered with updated SendGrid email integration")
-    return True
+    
+    # Log the environment we're running in
+    env_info = log_environment()
+    logger.info(f"Password reset configured for {env_info['environment']} environment")
+    logger.info(f"Using base URL: {env_info['base_url']}")
+    
+    return app
