@@ -158,6 +158,14 @@ def dashboard():
     # Make sure we're not logged in as admin trying to access regular dashboard
     if hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
         return redirect('/admin/dashboard')
+        
+    # Check if this is a Render authentication session and set appropriate flags
+    if request.args.get('render_auth') == 'true' or session.get('render_authenticated'):
+        # Make sure the authentication flag persists in the session
+        session['render_authenticated'] = True 
+        session['login_method'] = 'render_direct'
+        session.permanent = True
+        app.logger.info(f"Dashboard access via Render authentication for user {current_user.id}")
 
     # Check if the user is new and needs onboarding
     from onboarding_routes import is_new_user

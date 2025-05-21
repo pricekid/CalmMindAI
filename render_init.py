@@ -54,10 +54,14 @@ def render_login():
             
             # Log in the user
             login_user(user, remember=remember)
+            # Set a special session flag to indicate this was a Render login
+            session['render_authenticated'] = True
+            session['login_method'] = 'render_direct'
+            session.permanent = True
             logger.info(f"User {user.id} logged in successfully via Render login")
             
-            # Redirect to dashboard
-            return redirect('/dashboard')
+            # Redirect directly to dashboard with a special flag to bypass additional auth checks
+            return redirect('/dashboard?render_auth=true')
         else:
             error = "Invalid email or password"
     

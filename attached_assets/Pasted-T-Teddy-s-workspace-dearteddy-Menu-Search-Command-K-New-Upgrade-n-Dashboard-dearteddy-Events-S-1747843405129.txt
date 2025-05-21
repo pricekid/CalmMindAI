@@ -1,0 +1,579 @@
+T
+Teddy's workspace
+dearteddy
+Menu
+
+Search
+Command+
+K
+
+New
+
+Upgrade
+
+
+n
+Dashboard
+dearteddy
+Events
+Settings
+Monitor
+Logs
+Metrics
+Manage
+Environment
+Shell
+Scaling
+Previews
+Disks
+Jobs
+
+Changelog
+Invite a friend
+
+Contact support
+Render Status
+Web Service
+dearteddy
+Python 3
+Starter
+Blueprint managed
+
+Connect
+
+Manual Deploy
+pricekid / CalmMindAI
+main
+https://dearteddy-4vqj.onrender.com
+
+May 21, 2025 at 10:17 AM
+live
+556cc2f
+Improve application deployment process and ensure stability on Render Adds static assets, placeholder files, and downloads missing Bootstrap CSS in build.sh. Replit-Commit-Author: Agent Replit-Commit-Session-Id: cc739730-3a56-4e6e-9f89-b0af0890ddf1 Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/03446022-f254-4b7f-82ac-438d2267f78a/9b495ab7-bcdf-4767-a039-4fbd238cc0d3.jpg
+dearteddy
+Logs
+
+Logs
+
+All logs
+Search
+Search
+
+Live tail
+AST
+Menu
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:24:01 UTC)" (scheduled at 2025-05-21 14:24:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 14:29:01.220862+00:00 (in 299.992518 seconds)
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:29:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 14:34:01.220862+00:00 (in 299.999424 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:34:01 UTC)" (scheduled at 2025-05-21 14:29:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:34:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 14:39:01.220862+00:00 (in 299.999447 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:39:01 UTC)" (scheduled at 2025-05-21 14:34:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:39:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 14:44:01.220862+00:00 (in 299.999331 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:44:01 UTC)" (scheduled at 2025-05-21 14:39:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:44:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 14:49:01.220862+00:00 (in 299.999506 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:49:01 UTC)" (scheduled at 2025-05-21 14:44:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:49:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 14:54:01.220862+00:00 (in 299.999497 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:54:01 UTC)" (scheduled at 2025-05-21 14:49:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:54:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 14:59:01.220862+00:00 (in 299.999483 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:59:01 UTC)" (scheduled at 2025-05-21 14:54:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:59:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:04:01.220862+00:00 (in 299.999481 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:04:01 UTC)" (scheduled at 2025-05-21 14:59:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:04:01 UTC)" executed successfully
+Collecting dateparser>=1.1.2 (from htmldate>=1.9.2->trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Using cached dateparser-1.2.1-py3-none-any.whl.metadata (29 kB)
+Collecting python-dateutil>=2.9.0.post0 (from htmldate>=1.9.2->trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting regex!=2019.02.19,!=2021.8.27,>=2015.06.24 (from dateparser>=1.1.2->htmldate>=1.9.2->trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Using cached regex-2024.11.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (40 kB)
+Collecting lxml_html_clean (from lxml[html_clean]>=4.4.2->justext>=3.0.1->trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Using cached lxml_html_clean-0.4.2-py3-none-any.whl.metadata (2.4 kB)
+Collecting greenlet>=1 (from sqlalchemy>=2.0.16->flask-sqlalchemy>=3.0.3->-r requirements.txt (line 3))
+  Using cached greenlet-3.2.2-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (4.1 kB)
+Using cached flask-3.1.1-py3-none-any.whl (103 kB)
+Using cached gunicorn-23.0.0-py3-none-any.whl (85 kB)
+Using cached flask_sqlalchemy-3.1.1-py3-none-any.whl (25 kB)
+Using cached psycopg2_binary-2.9.10-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.0 MB)
+Using cached Flask_Login-0.6.3-py3-none-any.whl (17 kB)
+Using cached flask_wtf-1.2.2-py3-none-any.whl (12 kB)
+Using cached APScheduler-3.11.0-py3-none-any.whl (64 kB)
+Using cached openai-1.79.0-py3-none-any.whl (683 kB)
+Using cached anyio-4.9.0-py3-none-any.whl (100 kB)
+Using cached distro-1.9.0-py3-none-any.whl (20 kB)
+Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+Using cached jiter-0.10.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (352 kB)
+Using cached pydantic-2.11.4-py3-none-any.whl (443 kB)
+Using cached pydantic_core-2.33.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.0 MB)
+Using cached typing_extensions-4.13.2-py3-none-any.whl (45 kB)
+Using cached twilio-9.6.1-py2.py3-none-any.whl (1.9 MB)
+Using cached PyJWT-2.10.1-py3-none-any.whl (22 kB)
+Using cached sendgrid-6.12.2-py3-none-any.whl (102 kB)
+Using cached ecdsa-0.19.1-py2.py3-none-any.whl (150 kB)
+Using cached flask_mail-0.10.0-py3-none-any.whl (8.5 kB)
+Using cached gTTS-2.5.4-py3-none-any.whl (29 kB)
+Using cached requests-2.32.3-py3-none-any.whl (64 kB)
+Using cached charset_normalizer-3.4.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (147 kB)
+Using cached click-8.1.8-py3-none-any.whl (98 kB)
+Using cached idna-3.10-py3-none-any.whl (70 kB)
+Using cached urllib3-2.4.0-py3-none-any.whl (128 kB)
+Using cached flask_session-0.8.0-py3-none-any.whl (24 kB)
+Using cached azure_cognitiveservices_speech-1.44.0-py3-none-manylinux1_x86_64.whl (41.0 MB)
+Using cached itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Using cached markdown-3.8-py3-none-any.whl (106 kB)
+Using cached email_validator-2.2.0-py3-none-any.whl (33 kB)
+Using cached pytz-2025.2-py2.py3-none-any.whl (509 kB)
+Using cached flask_dance-7.1.0-py3-none-any.whl (62 kB)
+Using cached pywebpush-2.0.3-py3-none-any.whl (21 kB)
+Using cached beautifulsoup4-4.13.4-py3-none-any.whl (187 kB)
+Using cached trafilatura-2.0.0-py3-none-any.whl (132 kB)
+Using cached oauthlib-3.2.2-py3-none-any.whl (151 kB)
+Using cached werkzeug-3.1.3-py3-none-any.whl (224 kB)
+Using cached wtforms-3.2.1-py3-none-any.whl (152 kB)
+Using cached psutil-7.0.0-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (277 kB)
+Using cached aiohttp-3.11.18-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.7 MB)
+Using cached multidict-6.4.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (223 kB)
+Using cached yarl-1.20.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (358 kB)
+Using cached aiohappyeyeballs-2.6.1-py3-none-any.whl (15 kB)
+Using cached aiohttp_retry-2.9.1-py3-none-any.whl (10.0 kB)
+Using cached aiosignal-1.3.2-py2.py3-none-any.whl (7.6 kB)
+Using cached annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Using cached attrs-25.3.0-py3-none-any.whl (63 kB)
+Using cached azure_core-1.34.0-py3-none-any.whl (207 kB)
+Using cached blinker-1.9.0-py3-none-any.whl (8.5 kB)
+Using cached certifi-2025.4.26-py3-none-any.whl (159 kB)
+Using cached courlan-1.3.2-py3-none-any.whl (33 kB)
+Using cached babel-2.17.0-py3-none-any.whl (10.2 MB)
+Using cached cryptography-45.0.2-cp311-abi3-manylinux_2_34_x86_64.whl (4.5 MB)
+Using cached cffi-1.17.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (467 kB)
+Using cached dnspython-2.7.0-py3-none-any.whl (313 kB)
+Using cached frozenlist-1.6.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (313 kB)
+Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+Using cached htmldate-1.9.3-py3-none-any.whl (31 kB)
+Using cached lxml-5.4.0-cp311-cp311-manylinux_2_28_x86_64.whl (4.9 MB)
+Using cached dateparser-1.2.1-py3-none-any.whl (295 kB)
+Using cached jinja2-3.1.6-py3-none-any.whl (134 kB)
+Using cached justext-3.0.2-py2.py3-none-any.whl (837 kB)
+Using cached MarkupSafe-3.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (23 kB)
+Using cached msgspec-0.19.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (210 kB)
+Using cached propcache-0.3.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (232 kB)
+Using cached py_vapid-1.9.2-py3-none-any.whl (21 kB)
+Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Using cached python_http_client-3.3.7-py3-none-any.whl (8.4 kB)
+Using cached regex-2024.11.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (792 kB)
+Using cached requests_oauthlib-2.0.0-py2.py3-none-any.whl (24 kB)
+Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+Using cached sniffio-1.3.1-py3-none-any.whl (10 kB)
+Using cached soupsieve-2.7-py3-none-any.whl (36 kB)
+Using cached sqlalchemy-2.0.41-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.3 MB)
+Using cached greenlet-3.2.2-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (583 kB)
+Using cached tld-0.13-py2.py3-none-any.whl (263 kB)
+Using cached tqdm-4.67.1-py3-none-any.whl (78 kB)
+Using cached typing_inspection-0.4.0-py3-none-any.whl (14 kB)
+Using cached tzlocal-5.3.1-py3-none-any.whl (18 kB)
+Using cached cachelib-0.13.0-py3-none-any.whl (20 kB)
+Using cached lxml_html_clean-0.4.2-py3-none-any.whl (14 kB)
+Using cached packaging-25.0-py3-none-any.whl (66 kB)
+Using cached pycparser-2.22-py3-none-any.whl (117 kB)
+Installing collected packages: urlobject, pytz, urllib3, tzlocal, typing-extensions, tqdm, tld, soupsieve, sniffio, six, regex, python-http-client, pyjwt, pycparser, psycopg2-binary, psutil, propcache, packaging, oauthlib, multidict, msgspec, markupsafe, markdown, lxml, jiter, itsdangerous, idna, h11, greenlet, frozenlist, dnspython, distro, click, charset-normalizer, certifi, cachelib, blinker, babel, attrs, annotated-types, aiohappyeyeballs, yarl, wtforms, werkzeug, typing-inspection, sqlalchemy, requests, python-dateutil, pydantic-core, lxml_html_clean, jinja2, httpcore, gunicorn, email-validator, ecdsa, courlan, cffi, beautifulsoup4, apscheduler, anyio, aiosignal, sendgrid, requests-oauthlib, pydantic, httpx, gtts, flask, dateparser, cryptography, azure-core, aiohttp, py-vapid, openai, justext, http-ece, htmldate, flask-wtf, flask-sqlalchemy, flask-session, flask-mail, flask-login, flask-dance, azure-cognitiveservices-speech, aiohttp-retry, twilio, trafilatura, pywebpush
+Successfully installed aiohappyeyeballs-2.6.1 aiohttp-3.11.18 aiohttp-retry-2.9.1 aiosignal-1.3.2 annotated-types-0.7.0 anyio-4.9.0 apscheduler-3.11.0 attrs-25.3.0 azure-cognitiveservices-speech-1.44.0 azure-core-1.34.0 babel-2.17.0 beautifulsoup4-4.13.4 blinker-1.9.0 cachelib-0.13.0 certifi-2025.4.26 cffi-1.17.1 charset-normalizer-3.4.2 click-8.1.8 courlan-1.3.2 cryptography-45.0.2 dateparser-1.2.1 distro-1.9.0 dnspython-2.7.0 ecdsa-0.19.1 email-validator-2.2.0 flask-3.1.1 flask-dance-7.1.0 flask-login-0.6.3 flask-mail-0.10.0 flask-session-0.8.0 flask-sqlalchemy-3.1.1 flask-wtf-1.2.2 frozenlist-1.6.0 greenlet-3.2.2 gtts-2.5.4 gunicorn-23.0.0 h11-0.16.0 htmldate-1.9.3 http-ece-1.2.1 httpcore-1.0.9 httpx-0.28.1 idna-3.10 itsdangerous-2.2.0 jinja2-3.1.6 jiter-0.10.0 justext-3.0.2 lxml-5.4.0 lxml_html_clean-0.4.2 markdown-3.8 markupsafe-3.0.2 msgspec-0.19.0 multidict-6.4.4 oauthlib-3.2.2 openai-1.79.0 packaging-25.0 propcache-0.3.1 psutil-7.0.0 psycopg2-binary-2.9.10 py-vapid-1.9.2 pycparser-2.22 pydantic-2.11.4 pydantic-core-2.33.2 pyjwt-2.10.1 python-dateutil-2.9.0.post0 python-http-client-3.3.7 pytz-2025.2 pywebpush-2.0.3 regex-2024.11.6 requests-2.32.3 requests-oauthlib-2.0.0 sendgrid-6.12.2 six-1.17.0 sniffio-1.3.1 soupsieve-2.7 sqlalchemy-2.0.41 tld-0.13 tqdm-4.67.1 trafilatura-2.0.0 twilio-9.6.1 typing-extensions-4.13.2 typing-inspection-0.4.0 tzlocal-5.3.1 urllib3-2.4.0 urlobject-2.4.3 werkzeug-3.1.3 wtforms-3.2.1 yarl-1.20.0
+Requirement already satisfied: gunicorn in ./.venv/lib/python3.11/site-packages (23.0.0)
+Requirement already satisfied: packaging in ./.venv/lib/python3.11/site-packages (from gunicorn) (25.0)
+No broken requirements found.
+Copying static assets...
+Creating placeholder logo
+Creating placeholder CSS
+Downloading Bootstrap CSS
+Creating placeholder favicon
+Setting up Render-specific configuration
+Build completed successfully
+==> Uploading build...
+==> Uploaded in 8.8s. Compression took 3.0s
+==> Build successful 🎉
+==> Deploying...
+==> Running 'gunicorn --bind 0.0.0.0:$PORT main:app'
+INFO:render_compatibility:Render.com environment detected - applying compatibility settings
+INFO:render_compatibility:Applied Render.com-specific cookie and CSRF settings
+INFO:app:Render compatibility settings applied: True
+INFO:updated_password_reset:Password reset routes registered with updated SendGrid email integration
+INFO:app:Updated password reset functionality enabled with working SendGrid
+INFO:root:Fallback email routes registered successfully
+INFO:app:Fallback email routes registered successfully
+INFO:root:Password reset routes registered with SendGrid email integration
+INFO:app:Password reset functionality enabled with SendGrid
+INFO:root:Admin login-as-user routes registered successfully
+INFO:app:Admin login-as-user functionality enabled
+INFO:app:Login routes registered successfully
+WARNING:app:Simple login module not available
+INFO:app:Test reflection routes registered successfully
+INFO:app:Simple dashboard registered successfully
+WARNING:app:Special login module not available
+INFO:app:Standalone reflection test routes registered successfully
+INFO:app:Simple registration blueprint registered successfully
+WARNING:app:Emergency main login module not available
+INFO:app:Simple TTS blueprint registered successfully
+INFO:app:Direct TTS blueprint registered successfully
+INFO:app:Simple direct TTS blueprint registered successfully
+INFO:app:TTS routes blueprint registered successfully
+INFO:app:Premium TTS service blueprint registered successfully
+INFO:app:Enhanced TTS service blueprint registered successfully
+INFO:app:OpenAI TTS service blueprint registered successfully
+INFO:app:Stable login blueprint registered with enhanced CSRF handling
+INFO:render_init:Render deployment mode: True
+INFO:app:Render-specific optimized login routes registered successfully
+INFO:app:Onboarding blueprint registered successfully
+INFO:app:Emergency admin blueprint registered with CSRF exemption
+INFO:app:Standalone admin blueprint registered with CSRF exemption
+INFO:app:CSRF exemption applied to direct_tts_bp
+INFO:app:CSRF exemption applied to simple_direct_tts_bp
+INFO:app:CSRF exemption applied to premium_tts_bp
+INFO:app:CSRF exemption applied to enhanced_tts_bp
+INFO:app:CSRF exemption applied to openai_tts_bp
+INFO:app:Email preview blueprint registered successfully
+INFO:app:CSRF exemption applied to api_journal_coach
+INFO:app:CSRF exemption applied to save_initial_reflection
+INFO:app:CSRF exemption applied to save_second_reflection
+INFO:app:CSRF exemption applied to check_followup_insight
+INFO:app:CSRF exemption applied to check_closing_message
+INFO:app:CSRF exemption applied to api_analyze_entry
+INFO:app:Push notification routes registered successfully
+INFO:app:Push notification routes registered successfully
+INFO:app:Journal reminder routes registered successfully
+INFO:app:Emergency login blueprint registered with CSRF exemption
+INFO:app:Notification test routes registered successfully
+INFO:root:Notification test routes registered successfully
+DEBUG:tzlocal:/etc/timezone found, contents:
+ Etc/UTC
+DEBUG:tzlocal:/etc/localtime found
+DEBUG:tzlocal:2 found:
+ {'/etc/timezone': 'Etc/UTC', '/etc/localtime is a symlink to': 'Etc/UTC'}
+INFO:apscheduler.scheduler:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+INFO:apscheduler.scheduler:Added job "send_journal_reminder_notifications" to job store "default"
+INFO:apscheduler.scheduler:Scheduler started
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 14:24:01.220862+00:00 (in 299.997383 seconds)
+INFO:journal_reminder_scheduler:Journal reminder scheduler started successfully
+INFO:root:Journal reminder scheduler started
+[2025-05-21 14:19:01 +0000] [82] [INFO] Starting gunicorn 23.0.0
+[2025-05-21 14:19:01 +0000] [82] [INFO] Listening at: http://0.0.0.0:10000 (82)
+[2025-05-21 14:19:01 +0000] [82] [INFO] Using worker: sync
+[2025-05-21 14:19:01 +0000] [85] [INFO] Booting worker with pid: 85
+127.0.0.1 - - [21/May/2025:14:19:01 +0000] "HEAD / HTTP/1.1" 302 0 "-" "Go-http-client/1.1"
+==> Your service is live 🎉
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:24:01 UTC)" (scheduled at 2025-05-21 14:24:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 14:29:01.220862+00:00 (in 299.992518 seconds)
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:29:01 UTC)" executed successfully
+==> Detected service running on port 10000
+==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 14:34:01.220862+00:00 (in 299.999424 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:34:01 UTC)" (scheduled at 2025-05-21 14:29:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:34:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 14:39:01.220862+00:00 (in 299.999447 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:39:01 UTC)" (scheduled at 2025-05-21 14:34:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:39:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 14:44:01.220862+00:00 (in 299.999331 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:44:01 UTC)" (scheduled at 2025-05-21 14:39:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:44:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 14:49:01.220862+00:00 (in 299.999506 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:49:01 UTC)" (scheduled at 2025-05-21 14:44:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:49:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 14:54:01.220862+00:00 (in 299.999497 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:54:01 UTC)" (scheduled at 2025-05-21 14:49:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:54:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 14:59:01.220862+00:00 (in 299.999483 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:59:01 UTC)" (scheduled at 2025-05-21 14:54:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:59:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:04:01.220862+00:00 (in 299.999481 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:04:01 UTC)" (scheduled at 2025-05-21 14:59:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:04:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:09:01.220862+00:00 (in 299.999482 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:09:01 UTC)" (scheduled at 2025-05-21 15:04:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:09:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:14:01.220862+00:00 (in 299.999502 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:14:01 UTC)" (scheduled at 2025-05-21 15:09:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:14:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:19:01.220862+00:00 (in 299.999438 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:19:01 UTC)" (scheduled at 2025-05-21 15:14:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:19:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:24:01.220862+00:00 (in 299.999504 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" (scheduled at 2025-05-21 15:19:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:24:01.220862+00:00 (in 299.999504 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" (scheduled at 2025-05-21 15:19:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:24:01.220862+00:00 (in 299.999504 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" (scheduled at 2025-05-21 15:19:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:24:01.220862+00:00 (in 299.999504 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" (scheduled at 2025-05-21 15:19:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:24:01.220862+00:00 (in 299.999504 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" (scheduled at 2025-05-21 15:19:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:29:01.220862+00:00 (in 299.999516 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:29:01 UTC)" (scheduled at 2025-05-21 15:24:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:29:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:34:01.220862+00:00 (in 299.999557 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:34:01 UTC)" (scheduled at 2025-05-21 15:29:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:34:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:39:01.220862+00:00 (in 299.999569 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:39:01 UTC)" (scheduled at 2025-05-21 15:34:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:39:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:24:01.220862+00:00 (in 299.999504 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" (scheduled at 2025-05-21 15:19:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:29:01.220862+00:00 (in 299.999516 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:29:01 UTC)" (scheduled at 2025-05-21 15:24:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:29:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:34:01.220862+00:00 (in 299.999557 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:34:01 UTC)" (scheduled at 2025-05-21 15:29:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:34:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:39:01.220862+00:00 (in 299.999569 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:39:01 UTC)" (scheduled at 2025-05-21 15:34:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:39:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:24:01.220862+00:00 (in 299.999504 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" (scheduled at 2025-05-21 15:19:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:24:01.220862+00:00 (in 299.999504 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" (scheduled at 2025-05-21 15:19:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:29:01.220862+00:00 (in 299.999516 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:29:01 UTC)" (scheduled at 2025-05-21 15:24:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:29:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:34:01.220862+00:00 (in 299.999557 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:34:01 UTC)" (scheduled at 2025-05-21 15:29:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:34:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:39:01.220862+00:00 (in 299.999569 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:39:01 UTC)" (scheduled at 2025-05-21 15:34:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:39:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:24:01.220862+00:00 (in 299.999504 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" (scheduled at 2025-05-21 15:19:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:29:01.220862+00:00 (in 299.999516 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:29:01 UTC)" (scheduled at 2025-05-21 15:24:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:29:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:34:01.220862+00:00 (in 299.999557 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:34:01 UTC)" (scheduled at 2025-05-21 15:29:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:34:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:39:01.220862+00:00 (in 299.999569 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:39:01 UTC)" (scheduled at 2025-05-21 15:34:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:39:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:24:01.220862+00:00 (in 299.999504 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" (scheduled at 2025-05-21 15:19:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:24:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:29:01.220862+00:00 (in 299.999516 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:29:01 UTC)" (scheduled at 2025-05-21 15:24:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:29:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:34:01.220862+00:00 (in 299.999557 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:34:01 UTC)" (scheduled at 2025-05-21 15:29:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:34:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:39:01.220862+00:00 (in 299.999569 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:39:01 UTC)" (scheduled at 2025-05-21 15:34:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:39:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:44:01.220862+00:00 (in 299.999526 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:44:01 UTC)" (scheduled at 2025-05-21 15:39:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:44:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:49:01.220862+00:00 (in 299.999551 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:49:01 UTC)" (scheduled at 2025-05-21 15:44:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:49:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:54:01.220862+00:00 (in 299.999543 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:54:01 UTC)" (scheduled at 2025-05-21 15:49:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:54:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 15:59:01.220862+00:00 (in 299.999553 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:59:01 UTC)" (scheduled at 2025-05-21 15:54:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 15:59:01 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 16:04:01.220862+00:00 (in 299.999407 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 16:04:01 UTC)" (scheduled at 2025-05-21 15:59:01.220862+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 16:04:01 UTC)" executed successfully
+10.214.76.220 - - [21/May/2025:16:00:51 +0000] "GET / HTTP/1.1" 302 199 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+INFO:app:Using Render-optimized login
+10.214.72.100 - - [21/May/2025:16:00:51 +0000] "GET /login HTTP/1.1" 302 203 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.6.70 - - [21/May/2025:16:00:52 +0000] "GET /r-login HTTP/1.1" 200 4088 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.76.220 - - [21/May/2025:16:00:52 +0000] "GET /static/css/bootstrap.min.css HTTP/1.1" 200 0 "https://dearteddy-4vqj.onrender.com/r-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.192.2 - - [21/May/2025:16:00:52 +0000] "GET /static/css/styles.css HTTP/1.1" 200 0 "https://dearteddy-4vqj.onrender.com/r-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.76.220 - - [21/May/2025:16:00:52 +0000] "GET /static/img/teddy-logo.png HTTP/1.1" 200 0 "https://dearteddy-4vqj.onrender.com/r-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+ERROR:app:Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+10.214.192.2 - - [21/May/2025:16:00:52 +0000] "GET /favicon.ico HTTP/1.1" 500 8580 "https://dearteddy-4vqj.onrender.com/r-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+DEBUG:csrf_debug:CSRF Debug - Path: /r-login, Method: POST
+INFO:flask_wtf.csrf:The CSRF token is missing.
+ERROR:app:Unhandled exception: 400 Bad Request: The CSRF token is missing.
+WARNING:app:CSRF validation error: 400 Bad Request: The CSRF token is missing.
+10.214.76.220 - - [21/May/2025:16:01:05 +0000] "POST /r-login HTTP/1.1" 302 213 "https://dearteddy-4vqj.onrender.com/r-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+DEBUG:csrf_utils:Generated/retrieved CSRF token (length: 91)
+10.214.201.131 - - [21/May/2025:16:01:05 +0000] "GET /stable-login HTTP/1.1" 200 12538 "https://dearteddy-4vqj.onrender.com/r-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.76.220 - - [21/May/2025:16:01:06 +0000] "GET /static/css/custom.css HTTP/1.1" 200 0 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.201.65 - - [21/May/2025:16:01:06 +0000] "GET /static/images/logo.svg HTTP/1.1" 200 0 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+ERROR:app:Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+10.214.201.131 - - [21/May/2025:16:01:08 +0000] "GET /favicon.ico HTTP/1.1" 500 8945 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+DEBUG:csrf_debug:CSRF Debug - Path: /stable-login, Method: POST
+INFO:stable_login:Login attempt - Form token length: 91
+INFO:stable_login:Login attempt - Session token length: 91
+INFO:stable_login:Login attempt - User found: False
+WARNING:stable_login:Failed login attempt for email: teddy.leon@alumni.uwi.edu
+DEBUG:csrf_utils:Generated/retrieved CSRF token (length: 91)
+10.214.72.100 - - [21/May/2025:16:01:18 +0000] "POST /stable-login HTTP/1.1" 200 12724 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.72.100 - - [21/May/2025:16:01:18 +0000] "GET /static/css/custom.css HTTP/1.1" 304 0 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.201.131 - - [21/May/2025:16:01:18 +0000] "GET /static/images/logo.svg HTTP/1.1" 304 0 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+ERROR:app:Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+10.214.201.131 - - [21/May/2025:16:01:18 +0000] "GET /favicon.ico HTTP/1.1" 500 8580 "https://dearteddy-4vqj.onrender.com/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+Need better ways to work with logs? Try theRender CLIor set up a log stream integration 
+
+0 services selected:
+
+Move
+
+Generate Blueprint
+
