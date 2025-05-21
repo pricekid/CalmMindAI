@@ -1,0 +1,122 @@
+T
+Teddy's workspace
+dearteddy
+Menu
+
+Search
+Command+
+K
+
+New
+
+Upgrade
+
+
+n
+Dashboard
+dearteddy
+Events
+Settings
+Monitor
+Logs
+Metrics
+Manage
+Environment
+Shell
+Scaling
+Previews
+Disks
+Jobs
+
+Changelog
+Invite a friend
+
+Contact support
+Render Status
+Web Service
+dearteddy
+Python 3
+Starter
+Blueprint managed
+
+Connect
+
+Manual Deploy
+pricekid / CalmMindAI
+main
+https://dearteddy-4vqj.onrender.com
+
+May 20, 2025 at 4:37 PM
+live
+ed43e28
+Improve deployment process and ensure application stability on Render Configures Render deployment, adds health check endpoint, and improves build process for reliability. Replit-Commit-Author: Agent Replit-Commit-Session-Id: cc739730-3a56-4e6e-9f89-b0af0890ddf1 Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/03446022-f254-4b7f-82ac-438d2267f78a/9b495ab7-bcdf-4767-a039-4fbd238cc0d3.jpg
+dearteddy
+Logs
+
+Logs
+
+All logs
+Search
+Search
+
+Live tail
+AST
+Menu
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 13:43:57 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 13:48:57.137238+00:00 (in 299.999514 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 13:48:57 UTC)" (scheduled at 2025-05-21 13:43:57.137238+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 13:48:57 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 13:53:57.137238+00:00 (in 299.999445 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 13:53:57 UTC)" (scheduled at 2025-05-21 13:48:57.137238+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 13:53:57 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 13:58:57.137238+00:00 (in 299.999457 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 13:58:57 UTC)" (scheduled at 2025-05-21 13:53:57.137238+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 13:58:57 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 14:03:57.137238+00:00 (in 299.999548 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:03:57 UTC)" (scheduled at 2025-05-21 13:58:57.137238+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:03:57 UTC)" executed successfully
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 14:08:57.137238+00:00 (in 299.999559 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:08:57 UTC)" (scheduled at 2025-05-21 14:03:57.137238+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:08:57 UTC)" executed successfully
+10.214.76.220 - - [21/May/2025:14:08:17 +0000] "GET / HTTP/1.1" 302 199 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+INFO:app:Using Render-optimized login
+10.214.2.129 - - [21/May/2025:14:08:17 +0000] "GET /login HTTP/1.1" 302 203 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.2.129 - - [21/May/2025:14:08:17 +0000] "GET /r-login HTTP/1.1" 200 4088 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+ERROR:app:Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+10.214.201.65 - - [21/May/2025:14:08:18 +0000] "GET /static/img/teddy-logo.png HTTP/1.1" 500 8580 "https://dearteddy-4vqj.onrender.com/r-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+ERROR:app:Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+10.214.59.69 - - [21/May/2025:14:08:18 +0000] "GET /static/css/styles.css HTTP/1.1" 500 8580 "https://dearteddy-4vqj.onrender.com/r-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+ERROR:app:Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+10.214.152.251 - - [21/May/2025:14:08:18 +0000] "GET /static/css/bootstrap.min.css HTTP/1.1" 500 8580 "https://dearteddy-4vqj.onrender.com/r-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+ERROR:app:Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+10.214.152.251 - - [21/May/2025:14:08:18 +0000] "GET /favicon.ico HTTP/1.1" 500 8580 "https://dearteddy-4vqj.onrender.com/r-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at 2025-05-21 14:13:57.137238+00:00 (in 299.999575 seconds)
+INFO:apscheduler.executors.default:Running job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:13:57 UTC)" (scheduled at 2025-05-21 14:08:57.137238+00:00)
+INFO:journal_reminder_service:Checking for users who need journal reminder notifications...
+INFO:journal_reminder_service:Sent 0 morning reminders and 0 evening reminders
+INFO:apscheduler.executors.default:Job "send_journal_reminder_notifications (trigger: interval[0:05:00], next run at: 2025-05-21 14:13:57 UTC)" executed successfully
+Need better ways to work with logs? Try theRender CLIor set up a log stream integration 
+
+0 services selected:
+
+Move
+
+Generate Blueprint
+
