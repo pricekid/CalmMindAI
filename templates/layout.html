@@ -106,32 +106,32 @@
                                 <li><a class="dropdown-item" href="/notifications/settings">
                                     <i class="fas fa-bell me-1"></i>Notification Settings
                                 </a></li>
-                                <li><a class="dropdown-item" href="{{ url_for('achievements') }}">My Achievements</a></li>
+                                <li><a class="dropdown-item" href="/achievements">My Achievements</a></li>
                                 {% if session.get('is_admin') %}
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{{ url_for('admin.dashboard') }}">
+                                <li><a class="dropdown-item" href="/admin/dashboard">
                                     <i class="fas fa-user-shield me-1"></i>Admin Dashboard
                                 </a></li>
-                                <li><a class="dropdown-item" href="{{ url_for('admin.journals') }}">
+                                <li><a class="dropdown-item" href="/admin/journals">
                                     <i class="fas fa-book me-1"></i>Admin Journals
                                 </a></li>
-                                <li><a class="dropdown-item" href="{{ url_for('admin.users') }}">
+                                <li><a class="dropdown-item" href="/admin/users">
                                     <i class="fas fa-users-cog me-1"></i>Admin Users
                                 </a></li>
-                                <li><a class="dropdown-item" href="{{ url_for('admin.settings') }}">
+                                <li><a class="dropdown-item" href="/admin/settings">
                                     <i class="fas fa-cog me-1"></i>Admin Settings
                                 </a></li>
                                 {% endif %}
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+                                <li><a class="dropdown-item" href="/logout">Logout</a></li>
                             </ul>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link {% if request.path == url_for('login') %}active{% endif %}" href="{{ url_for('login') }}">Login</a>
+                            <a class="nav-link {% if '/login' in request.path %}active{% endif %}" href="/login">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if request.path == url_for('register') %}active{% endif %}" href="{{ url_for('register') }}">Register</a>
+                            <a class="nav-link {% if '/register' in request.path %}active{% endif %}" href="/register">Register</a>
                         </li>
                     {% endif %}
                 </ul>
