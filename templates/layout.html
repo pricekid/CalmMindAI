@@ -60,23 +60,23 @@
                     </li>
                     {% if current_user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link {% if '/dashboard' in request.path %}active{% endif %}" href="{{ url_for('dashboard') }}">Dashboard</a>
+                            <a class="nav-link {% if '/dashboard' in request.path %}active{% endif %}" href="/dashboard">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if '/journal' in request.path %}active{% endif %}" href="{{ url_for('journal') }}">Journal</a>
+                            <a class="nav-link {% if '/journal' in request.path %}active{% endif %}" href="/journal">Journal</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if '/breathing' in request.path %}active{% endif %}" href="{{ url_for('breathing') }}">Breathing</a>
+                            <a class="nav-link {% if '/breathing' in request.path %}active{% endif %}" href="/breathing">Breathing</a>
                         </li>
                     {% endif %}
                     <li class="nav-item">
-                        <a class="nav-link {% if '/crisis' in request.path %}active{% endif %}" href="{{ url_for('crisis') }}">Crisis Resources</a>
+                        <a class="nav-link {% if '/crisis' in request.path %}active{% endif %}" href="/crisis">Crisis Resources</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if '/about' in request.path %}active{% endif %}" href="{{ url_for('about') }}">About</a>
+                        <a class="nav-link {% if '/about' in request.path %}active{% endif %}" href="/about">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if '/install' in request.path %}active{% endif %}" href="{{ url_for('install_app') }}">
+                        <a class="nav-link {% if '/install' in request.path %}active{% endif %}" href="/install">
                             <i class="fas fa-download me-1"></i>Install App
                         </a>
                     </li>
@@ -86,7 +86,7 @@
                             Voice Tools
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="voiceToolsDropdown">
-                            <li><a class="dropdown-item" href="{{ url_for('tts_routes.openai_tts_test') }}">
+                            <li><a class="dropdown-item" href="/tts/openai">
                                 <span style="background-color: #10a37f; color: white; padding: 2px 5px; border-radius: 3px; font-size: 0.7em;">OpenAI</span>
                                 Neural Voices
                             </a></li>
@@ -102,8 +102,8 @@
                                 {{ current_user.username }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="{{ url_for('account.account') }}">Account Settings</a></li>
-                                <li><a class="dropdown-item" href="{{ url_for('push_notifications.notification_settings') }}">
+                                <li><a class="dropdown-item" href="/account">Account Settings</a></li>
+                                <li><a class="dropdown-item" href="/notifications/settings">
                                     <i class="fas fa-bell me-1"></i>Notification Settings
                                 </a></li>
                                 <li><a class="dropdown-item" href="{{ url_for('achievements') }}">My Achievements</a></li>
