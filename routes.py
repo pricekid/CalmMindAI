@@ -426,10 +426,10 @@ def offline():
 @app.route('/install')
 def install_app():
     """
-    Installation instructions page for the Progressive Web App.
-    This provides browser-specific guidance on how to install the app.
+    Redirect from the old install page to the new download page.
+    This prevents the broken flow when users follow links to /install.
     """
-    return render_template('install.html', title='Install Dear Teddy')
+    return redirect('/download')
 
 @app.route('/download')
 def download_page():
