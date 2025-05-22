@@ -431,14 +431,21 @@ def install_app():
     """
     return render_template('install.html', title='Install Dear Teddy')
 
+@app.route('/download')
+def download_page():
+    """
+    Desktop app download page that provides a Spotify-like experience.
+    """
+    return render_template('download.html', title='Download Dear Teddy')
+
 # Direct landing page view (always shows landing, even when logged in)
-@app.route('/landing')
 @app.route('/download-app')
 def download_app():
     """
     Provide a desktop installer for Dear Teddy
     """
     return send_from_directory('static/downloads', 'DearTeddyInstaller.zip', as_attachment=True)
+
 @app.route('/landing')
 def view_landing():
     """

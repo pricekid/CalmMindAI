@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#A05C2C;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1D4D4F;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#grad)" />
+  <rect x="50" y="50" width="700" height="500" fill="white" rx="10" ry="10" />
+  
+  <!-- App Header -->
+  <rect x="50" y="50" width="700" height="60" fill="#A05C2C" rx="10" ry="10" />
+  <text x="100" y="85" font-family="Arial" font-size="20" fill="white">Dear Teddy</text>
+  
+  <!-- Navigation -->
+  <rect x="50" y="110" width="180" height="440" fill="#f8f9fa" rx="0" ry="0" />
+  <text x="70" y="150" font-family="Arial" font-size="16" fill="#333">Dashboard</text>
+  <text x="70" y="190" font-family="Arial" font-size="16" fill="#333">Journal</text>
+  <text x="70" y="230" font-family="Arial" font-size="16" fill="#333">Breathing</text>
+  <text x="70" y="270" font-family="Arial" font-size="16" fill="#333">Resources</text>
+  
+  <!-- Main Content -->
+  <rect x="240" y="120" width="500" height="100" fill="#edf2f7" rx="5" ry="5" />
+  <text x="260" y="150" font-family="Arial" font-size="18" font-weight="bold" fill="#333">Welcome back!</text>
+  <text x="260" y="180" font-family="Arial" font-size="14" fill="#555">How are you feeling today?</text>
+  
+  <!-- Journal Cards -->
+  <rect x="240" y="240" width="230" height="150" fill="#edf2f7" rx="5" ry="5" />
+  <text x="260" y="270" font-family="Arial" font-size="16" fill="#333">Journal Entry #1</text>
+  <text x="260" y="290" font-family="Arial" font-size="12" fill="#666">May 20, 2025</text>
+  
+  <rect x="490" y="240" width="230" height="150" fill="#edf2f7" rx="5" ry="5" />
+  <text x="510" y="270" font-family="Arial" font-size="16" fill="#333">Journal Entry #2</text>
+  <text x="510" y="290" font-family="Arial" font-size="12" fill="#666">May 21, 2025</text>
+  
+  <!-- Mood Tracker -->
+  <rect x="240" y="410" width="500" height="120" fill="#edf2f7" rx="5" ry="5" />
+  <text x="260" y="440" font-family="Arial" font-size="16" fill="#333">Mood Tracker</text>
+  <circle cx="300" cy="480" r="10" fill="#4CAF50" />
+  <circle cx="340" cy="480" r="10" fill="#8BC34A" />
+  <circle cx="380" cy="470" r="10" fill="#CDDC39" />
+  <circle cx="420" cy="450" r="10" fill="#FFEB3B" />
+  <circle cx="460" cy="480" r="10" fill="#FFC107" />
+  <circle cx="500" cy="470" r="10" fill="#FF9800" />
+  <circle cx="540" cy="460" r="10" fill="#FF5722" />
+</svg>
