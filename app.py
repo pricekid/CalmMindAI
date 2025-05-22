@@ -516,14 +516,6 @@ with app.app_context():
         app.logger.info("Admin login-as-user functionality enabled")
     except ImportError:
         app.logger.warning("Admin login-as-user module not available")
-        
-    # Register Render-specific installation routes
-    try:
-        from render_install import register_render_install
-        register_render_install(app)
-        app.logger.info("Render-specific installation routes registered successfully")
-    except Exception as e:
-        app.logger.warning(f"Could not register Render installation routes: {e}")
     
     # Register the notification blueprint
     from notification_routes import notification_bp
