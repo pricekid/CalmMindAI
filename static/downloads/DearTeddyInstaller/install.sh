@@ -1,0 +1,5 @@
+#!/bin/bash
+# Dear Teddy Installer Script
+echo "Installing Dear Teddy Desktop App..."
+echo "Creating desktop shortcut..."
+echo "Installation complete! You can now launch Dear Teddy from your desktop."

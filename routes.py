@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, request, jsonify, abort, make_response, session
+from flask import send_from_directory, render_template, url_for, flash, redirect, request, jsonify, abort, make_response, session
 from flask_login import login_user, current_user, logout_user
 from app import app, db, login_required
 from models import User, JournalEntry, CBTRecommendation, MoodLog
@@ -432,6 +432,13 @@ def install_app():
     return render_template('install.html', title='Install Dear Teddy')
 
 # Direct landing page view (always shows landing, even when logged in)
+@app.route('/landing')
+@app.route('/download-app')
+def download_app():
+    """
+    Provide a desktop installer for Dear Teddy
+    """
+    return send_from_directory('static/downloads', 'DearTeddyInstaller.zip', as_attachment=True)
 @app.route('/landing')
 def view_landing():
     """
@@ -869,7 +876,7 @@ def download_all_data():
 def login_required(f):
     from functools import wraps
     from flask_login import current_user
-    from flask import flash, redirect, request
+    from flask import send_from_directory, flash, redirect, request
 
     @wraps(f)
     def decorated_view(*args, **kwargs):
