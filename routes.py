@@ -442,9 +442,26 @@ def download_page():
 @app.route('/download-app')
 def download_app():
     """
-    Provide a desktop installer for Dear Teddy
+    Provide a desktop installer for Dear Teddy based on the user's operating system
     """
-    return send_from_directory('static/downloads', 'DearTeddyInstaller.zip', as_attachment=True)
+    os_type = request.args.get('os', 'generic')
+    
+    # Create a mapping of OS types to installer filenames
+    installer_files = {
+        'mac': 'DearTeddyInstaller-Mac.zip',
+        'windows': 'DearTeddyInstaller-Windows.zip',
+        'linux': 'DearTeddyInstaller-Linux.zip',
+        'generic': 'DearTeddyInstaller.zip'
+    }
+    
+    # Get the appropriate installer file name
+    installer_file = installer_files.get(os_type, 'DearTeddyInstaller.zip')
+    
+    # Check if the specific OS installer exists, if not, fall back to the generic one
+    if not os.path.exists(os.path.join('static/downloads', installer_file)):
+        installer_file = 'DearTeddyInstaller.zip'
+    
+    return send_from_directory('static/downloads', installer_file, as_attachment=True)
 
 @app.route('/landing')
 def view_landing():
