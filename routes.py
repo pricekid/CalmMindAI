@@ -442,9 +442,11 @@ def download_page():
 @app.route('/download-app')
 def download_app():
     """
-    Provide a desktop installer for Dear Teddy based on the user's operating system
+    Provide a desktop installer for Dear Teddy based on the user's operating system,
+    with an optional redirect to the installation page after download
     """
     os_type = request.args.get('os', 'generic')
+    redirect_after = request.args.get('redirect', 'false').lower() == 'true'
     
     # Create a mapping of OS types to installer filenames
     installer_files = {
@@ -461,7 +463,33 @@ def download_app():
     if not os.path.exists(os.path.join('static/downloads', installer_file)):
         installer_file = 'DearTeddyInstaller.zip'
     
+    # Remember that this user downloaded the app
+    session['downloaded_app'] = True
+    session['downloaded_os'] = os_type
+    
+    # Generate a unique download ID for tracking this download
+    import uuid
+    download_id = str(uuid.uuid4())
+    session['download_id'] = download_id
+    
+    # If redirect is requested, use JavaScript to initiate download and then redirect
+    if redirect_after:
+        return render_template('auto_download.html', 
+                              filename=installer_file,
+                              os_type=os_type,
+                              download_id=download_id)
+    
+    # Normal download without redirect
     return send_from_directory('static/downloads', installer_file, as_attachment=True)
+
+@app.route('/launch-after-install')
+def launch_after_install():
+    """
+    This endpoint is loaded in a page that appears after download completes.
+    It shows instructions for installation and launches the app.
+    """
+    os_type = session.get('downloaded_os', 'generic')
+    return render_template('launch_installer.html', os_type=os_type)
 
 @app.route('/landing')
 def view_landing():

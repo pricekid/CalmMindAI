@@ -1,0 +1,267 @@
+{% extends "layout.html" %}
+
+{% block title %}Launch Dear Teddy{% endblock %}
+
+{% block styles %}
+<style>
+    body {
+        background: linear-gradient(135deg, #A05C2C 0%, #1D4D4F 100%) !important;
+        color: white !important;
+    }
+    
+    .launch-section {
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        color: #333;
+    }
+    
+    .launch-hero {
+        background: linear-gradient(135deg, #A05C2C 0%, #d1a673 100%);
+        padding: 40px;
+        color: white;
+    }
+    
+    .launch-content {
+        padding: 40px;
+    }
+    
+    .launch-btn {
+        background-color: #1D4D4F;
+        color: white;
+        font-weight: bold;
+        padding: 15px 30px;
+        font-size: 18px;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    
+    .launch-btn:hover {
+        background-color: #A05C2C;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        color: white;
+    }
+    
+    .step {
+        display: flex;
+        margin-bottom: 20px;
+        align-items: flex-start;
+    }
+    
+    .step-number {
+        background-color: #A05C2C;
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+    
+    .step-content {
+        flex-grow: 1;
+    }
+    
+    .step-image {
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        margin-top: 10px;
+    }
+    
+    @media (max-width: 768px) {
+        .launch-hero, .launch-content {
+            padding: 20px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="launch-section">
+                <div class="launch-hero text-center">
+                    <h2 class="mb-2">Your download is complete!</h2>
+                    <p class="lead mb-0">Follow the steps below to install Dear Teddy</p>
+                </div>
+                
+                <div class="launch-content">
+                    {% if os_type == 'mac' %}
+                    <h3 class="mb-4">Installing on macOS</h3>
+                    
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h5>Open the downloaded zip file</h5>
+                            <p>Locate the DearTeddyInstaller-Mac.zip file in your Downloads folder and double-click to extract it.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h5>Drag to Applications</h5>
+                            <p>Drag the "DearTeddy.app" file to your Applications folder.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h5>Handle Security Warning</h5>
+                            <p>When first opening the app, if you see a security warning:</p>
+                            <ol>
+                                <li>Right-click (or Control-click) on the app</li>
+                                <li>Select "Open" from the menu</li>
+                                <li>Click "Open" in the dialog box</li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    {% elif os_type == 'windows' %}
+                    <h3 class="mb-4">Installing on Windows</h3>
+                    
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h5>Extract the ZIP file</h5>
+                            <p>Locate the DearTeddyInstaller-Windows.zip file in your Downloads folder. Right-click and select "Extract All..."</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h5>Run the installer</h5>
+                            <p>Open the extracted folder and double-click "Install.bat" to run the installer.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h5>Complete installation</h5>
+                            <p>Follow the on-screen instructions to complete the installation.</p>
+                        </div>
+                    </div>
+                    
+                    {% elif os_type == 'linux' %}
+                    <h3 class="mb-4">Installing on Linux</h3>
+                    
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h5>Extract the ZIP file</h5>
+                            <p>Navigate to your Downloads folder and extract the DearTeddyInstaller-Linux.zip file.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h5>Run the installer</h5>
+                            <p>Open a terminal, navigate to the extracted folder, and run:</p>
+                            <code>chmod +x install.sh && ./install.sh</code>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h5>Complete installation</h5>
+                            <p>Follow the prompts to complete the installation.</p>
+                        </div>
+                    </div>
+                    
+                    {% else %}
+                    <h3 class="mb-4">Installing Dear Teddy</h3>
+                    
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h5>Extract the ZIP file</h5>
+                            <p>Locate the DearTeddyInstaller.zip file in your Downloads folder and extract it.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h5>Run the installer</h5>
+                            <p>Open the extracted folder and run the installer file appropriate for your system.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h5>Complete installation</h5>
+                            <p>Follow the on-screen instructions to complete the installation.</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="text-center mt-5">
+                        <p class="mb-3">Already installed? Launch Dear Teddy now:</p>
+                        <a href="{% if os_type == 'mac' %}dearteddy://launch{% elif os_type == 'windows' %}dearteddy://launch{% else %}https://dearteddy-4vqj.onrender.com/{% endif %}" class="launch-btn" id="launchApp">
+                            <i class="fas fa-rocket me-2"></i> Launch Dear Teddy
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Simulate Spotify-like auto-launch behavior
+    document.addEventListener('DOMContentLoaded', function() {
+        // Wait 3 seconds then try to launch the app
+        setTimeout(function() {
+            // Try to launch the app using custom protocol
+            var launched = false;
+            
+            {% if os_type == 'mac' %}
+            // For Mac, try to use the custom protocol
+            window.location.href = 'dearteddy://launch';
+            
+            // After a short delay, check if the app launched
+            setTimeout(function() {
+                // If it didn't work, we'll still be on this page
+                if (document.visibilityState !== 'hidden') {
+                    // Update the launch button
+                    document.getElementById('launchApp').href = 'https://dearteddy-4vqj.onrender.com/';
+                }
+            }, 1000);
+            {% elif os_type == 'windows' %}
+            // For Windows, try to use the custom protocol
+            window.location.href = 'dearteddy://launch';
+            
+            // After a short delay, check if the app launched
+            setTimeout(function() {
+                // If it didn't work, we'll still be on this page
+                if (document.visibilityState !== 'hidden') {
+                    // Update the launch button
+                    document.getElementById('launchApp').href = 'https://dearteddy-4vqj.onrender.com/';
+                }
+            }, 1000);
+            {% else %}
+            // For all other platforms, just use the web version
+            {% endif %}
+        }, 3000);
+    });
+</script>
+{% endblock %}
