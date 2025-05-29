@@ -160,6 +160,16 @@ def demographics():
     
     return render_template('onboarding_demographics.html', form=form)
 
+@onboarding_bp.route('/skip-demographics')
+@login_required
+def skip_demographics():
+    """
+    Skip demographics step and proceed to final onboarding step
+    """
+    # Mark demographics as completed (skipped)
+    session['demographics_completed'] = True
+    return redirect(url_for('onboarding.step_3'))
+
 @onboarding_bp.route('/step-3', methods=['GET'])
 @login_required
 def step_3():
@@ -323,6 +333,7 @@ def mark_user_as_not_new():
     session.pop('onboarding_mood', None)
     session.pop('onboarding_journal', None)
     session.pop('onboarding_cbt_feedback', None)
+    session.pop('demographics_completed', None)  # Clear demographics flag too
     # We keep 'last_feedback' in the session so it can be displayed on step 3
     
     # Award XP for completing the onboarding process
