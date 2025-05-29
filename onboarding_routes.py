@@ -152,6 +152,9 @@ def demographics():
             logging.error(f"Error updating demographics: {str(e)}")
             db.session.rollback()
         
+        # Mark demographics as completed
+        session['demographics_completed'] = True
+        
         # Redirect to final step
         return redirect(url_for('onboarding.step_3'))
     
@@ -169,6 +172,11 @@ def step_3():
     # Make sure user completed step 2
     if 'onboarding_journal' not in session:
         return redirect(url_for('onboarding.step_1'))
+    
+    # Check if user should go through demographics step first
+    # Only skip demographics if they explicitly came from demographics or skipped it
+    if 'demographics_completed' not in session:
+        return redirect(url_for('onboarding.demographics'))
     
     # Get the feedback from session or use fallback
     cbt_feedback = session.get('onboarding_cbt_feedback', "Thank you for sharing your thoughts. Regular journaling can help you gain insights into your emotions and thought patterns. I'll be here to support your mental wellness journey.")
