@@ -97,10 +97,65 @@ def step_2():
         # Create the first journal entry
         create_first_journal_entry(journal_content, mood, cbt_feedback)
         
-        # Redirect to step 3
-        return redirect(url_for('onboarding.step_3'))
+        # Redirect to demographics step
+        return redirect(url_for('onboarding.demographics'))
     
     return render_template('onboarding_step_2.html', form=form)
+
+@onboarding_bp.route('/demographics', methods=['GET', 'POST'])
+@login_required
+def demographics():
+    """
+    Demographics step: Optional demographic information collection
+    """
+    # Create a simple form for CSRF protection
+    form = FlaskForm()
+    
+    # Make sure user completed step 2
+    if 'onboarding_journal' not in session:
+        return redirect(url_for('onboarding.step_1'))
+    
+    if request.method == 'POST' and form.validate_on_submit():
+        # Get form data - all fields are optional
+        age_range = request.form.get('age_range', '')
+        relationship_status = request.form.get('relationship_status', '')
+        has_children = request.form.get('has_children', '')
+        life_focus = request.form.getlist('life_focus')  # Multi-select
+        life_focus_other = request.form.get('life_focus_other', '')
+        
+        # Add "Other" text if provided
+        if life_focus_other.strip():
+            life_focus.append(f"Other: {life_focus_other.strip()}")
+        
+        # Update user's demographic information
+        try:
+            from app import db
+            from models import User
+            
+            user = User.query.get(current_user.id)
+            if user:
+                # Only update fields that were provided
+                if age_range:
+                    user.age_range = age_range
+                if relationship_status:
+                    user.relationship_status = relationship_status
+                if has_children:
+                    user.has_children = (has_children == 'yes')
+                if life_focus:
+                    # Store as JSON string
+                    import json
+                    user.life_focus = json.dumps(life_focus)
+                
+                db.session.commit()
+                logging.info(f"Updated demographics for user {current_user.id}")
+        except Exception as e:
+            logging.error(f"Error updating demographics: {str(e)}")
+            db.session.rollback()
+        
+        # Redirect to final step
+        return redirect(url_for('onboarding.step_3'))
+    
+    return render_template('onboarding_demographics.html', form=form)
 
 @onboarding_bp.route('/step-3', methods=['GET'])
 @login_required

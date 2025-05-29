@@ -37,6 +37,12 @@ class User(UserMixin, db.Model):
     # UI state flags
     welcome_message_shown = db.Column(db.Boolean, default=False)
     
+    # Demographics (optional fields for personalized AI responses)
+    age_range = db.Column(db.String(20), nullable=True)
+    relationship_status = db.Column(db.String(50), nullable=True)
+    has_children = db.Column(db.Boolean, nullable=True)
+    life_focus = db.Column(db.Text, nullable=True)  # JSON string for multi-select values
+    
     # Relationships
     journal_entries = db.relationship('JournalEntry', backref='author', lazy='dynamic')
     mood_logs = db.relationship('MoodLog', backref='user', lazy='dynamic')
