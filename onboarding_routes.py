@@ -215,10 +215,14 @@ def test_demographics():
         return f"Error in test demographics: {str(e)}", 500
 
 @onboarding_bp.route('/debug')
-@login_required  
 def debug_route():
-    """Simple debug route to test if onboarding routes work"""
-    return f"Debug works! User: {current_user.id}, Session keys: {list(session.keys())}"
+    """Simple debug route to test if onboarding routes work - no login required"""
+    return "Debug route is working! Onboarding blueprint is active."
+
+@onboarding_bp.route('/simple-test')
+def simple_test():
+    """Ultra simple test route"""
+    return "Simple test works!"
 
 @onboarding_bp.route('/skip-demographics')
 @login_required
