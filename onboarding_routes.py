@@ -221,11 +221,14 @@ def test_demographics():
 @onboarding_bp.route('/debug')
 def debug_route():
     """Simple debug route to test if onboarding routes work - no login required"""
-    print(f"DEBUG ROUTE HIT - User Agent: {request.headers.get('User-Agent')}")
-    print(f"DEBUG ROUTE HIT - Full URL: {request.url}")
-    print(f"DEBUG ROUTE HIT - Method: {request.method}")
+    print(f"🔍 DEBUG ROUTE HIT - User Agent: {request.headers.get('User-Agent')}")
+    print(f"🔍 DEBUG ROUTE HIT - Full URL: {request.url}")
+    print(f"🔍 DEBUG ROUTE HIT - Method: {request.method}")
+    print(f"🔍 DEBUG ROUTE HIT - Response: About to return success message")
     logging.info("Onboarding debug route was accessed successfully")
-    return "Debug route is working! Onboarding blueprint is active."
+    response_text = "🔍 DEBUG ROUTE SUCCESS: Onboarding blueprint is working correctly!"
+    print(f"🔍 DEBUG ROUTE - Returning response: {response_text}")
+    return response_text
 
 @onboarding_bp.route('/simple-test')
 def simple_test():
