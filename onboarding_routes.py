@@ -24,6 +24,13 @@ def step_1():
     # Create a simple form for CSRF protection
     form = FlaskForm()
     
+    # Clear any existing onboarding session data for a fresh start
+    session.pop('onboarding_mood', None)
+    session.pop('onboarding_journal', None)
+    session.pop('onboarding_cbt_feedback', None)
+    session.pop('demographics_completed', None)
+    session.pop('last_feedback', None)
+    
     if request.method == 'POST' and form.validate_on_submit():
         mood = request.form.get('mood')
         if not mood:
@@ -32,6 +39,7 @@ def step_1():
             
         # Store the mood in session
         session['onboarding_mood'] = mood
+        session['onboarding_step'] = 1
         
         # Redirect to step 2
         return redirect(url_for('onboarding.step_2'))
@@ -97,6 +105,9 @@ def step_2():
         # Create the first journal entry
         create_first_journal_entry(journal_content, mood, cbt_feedback)
         
+        # Set step tracker to ensure proper flow
+        session['onboarding_step'] = 2
+        
         # Redirect to demographics step
         return redirect(url_for('onboarding.demographics'))
     
@@ -112,7 +123,7 @@ def demographics():
     form = FlaskForm()
     
     # Make sure user completed step 2
-    if 'onboarding_journal' not in session:
+    if 'onboarding_journal' not in session or session.get('onboarding_step', 0) < 2:
         return redirect(url_for('onboarding.step_1'))
     
     if request.method == 'POST' and form.validate_on_submit():
@@ -154,6 +165,7 @@ def demographics():
         
         # Mark demographics as completed
         session['demographics_completed'] = True
+        session['onboarding_step'] = 3
         
         # Redirect to final step
         return redirect(url_for('onboarding.step_3'))
@@ -168,6 +180,7 @@ def skip_demographics():
     """
     # Mark demographics as completed (skipped)
     session['demographics_completed'] = True
+    session['onboarding_step'] = 3
     return redirect(url_for('onboarding.step_3'))
 
 @onboarding_bp.route('/step-3', methods=['GET'])
@@ -180,12 +193,12 @@ def step_3():
     form = FlaskForm()
     
     # Make sure user completed step 2
-    if 'onboarding_journal' not in session:
+    if 'onboarding_journal' not in session or session.get('onboarding_step', 0) < 2:
         return redirect(url_for('onboarding.step_1'))
     
     # Check if user should go through demographics step first
-    # Only skip demographics if they explicitly came from demographics or skipped it
-    if 'demographics_completed' not in session:
+    # Only allow step 3 if demographics was completed or skipped (step >= 3)
+    if session.get('onboarding_step', 0) < 3 or 'demographics_completed' not in session:
         return redirect(url_for('onboarding.demographics'))
     
     # Get the feedback from session or use fallback
