@@ -38,6 +38,10 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = '/stable-login'
 
+@app.route("/")
+def home():
+    return "Home page is working! Try <a href='/test-basic'>/test-basic</a> or <a href='/onboarding/debug'>/onboarding/debug</a>"
+
 @app.route("/test-basic")
 def test_basic():
     return "✅ Basic test route works!"
