@@ -126,6 +126,11 @@ def unauthorized():
     # Use direct path instead of url_for
     return redirect('/stable-login')
 
+# Simple test route to verify app is working
+@app.route('/test-basic')
+def test_basic():
+    return "Basic test route works! This proves the app is running correctly."
+
 # Global error handler completely removed for debugging onboarding routes
 def handle_exception_removed(e):
     from flask import render_template, redirect, url_for, Response, request
