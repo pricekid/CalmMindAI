@@ -108,6 +108,10 @@ def step_2():
         # Set step tracker to ensure proper flow
         session['onboarding_step'] = 2
         
+        # Debug logging
+        print(f"DEBUG: Step 2 completed, redirecting to demographics. Session data: {dict(session)}")
+        logging.info(f"Onboarding step 2 completed for user {current_user.id}, redirecting to demographics")
+        
         # Redirect to demographics step
         return redirect(url_for('onboarding.demographics'))
     
@@ -122,8 +126,13 @@ def demographics():
     # Create a simple form for CSRF protection
     form = FlaskForm()
     
+    # Debug logging
+    print(f"DEBUG: Demographics route accessed. Session data: {dict(session)}")
+    logging.info(f"Demographics route accessed by user {current_user.id}")
+    
     # Make sure user completed step 2
     if 'onboarding_journal' not in session or session.get('onboarding_step', 0) < 2:
+        print(f"DEBUG: Demographics access denied - redirecting to step 1")
         return redirect(url_for('onboarding.step_1'))
     
     if request.method == 'POST' and form.validate_on_submit():
@@ -170,6 +179,19 @@ def demographics():
         # Redirect to final step
         return redirect(url_for('onboarding.step_3'))
     
+    print(f"DEBUG: Rendering demographics template")
+    return render_template('onboarding_demographics.html', form=form)
+
+@onboarding_bp.route('/test-demographics')
+@login_required
+def test_demographics():
+    """Test route to see demographics form directly"""
+    from flask_wtf import FlaskForm
+    form = FlaskForm()
+    # Set minimal session data
+    session['onboarding_journal'] = 'test journal'
+    session['onboarding_step'] = 2
+    print(f"DEBUG: Test demographics route - Session: {dict(session)}")
     return render_template('onboarding_demographics.html', form=form)
 
 @onboarding_bp.route('/skip-demographics')
