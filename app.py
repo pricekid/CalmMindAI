@@ -126,18 +126,22 @@ def unauthorized():
     # Use direct path instead of url_for
     return redirect('/stable-login')
 
-# Add global error handler
-@app.errorhandler(Exception)
-def handle_exception(e):
-    from flask import render_template, redirect, url_for, Response
+# Add global error handler (temporarily disabled for debugging)
+# @app.errorhandler(Exception)
+def handle_exception_disabled(e):
+    from flask import render_template, redirect, url_for, Response, request
     from json.decoder import JSONDecodeError
     
     app.logger.error(f"Unhandled exception: {str(e)}")
     
     # Skip error handling for onboarding routes - let them handle their own errors
-    if request.path.startswith('/onboarding'):
-        app.logger.info(f"Skipping global error handler for onboarding route: {request.path}")
-        raise e  # Re-raise the exception to let Flask handle it normally
+    try:
+        if request.path.startswith('/onboarding'):
+            app.logger.info(f"Skipping global error handler for onboarding route: {request.path}")
+            raise e  # Re-raise the exception to let Flask handle it normally
+    except:
+        # If request context is not available, continue with normal error handling
+        pass
     
     error_message = "Your data was saved, but we couldn't complete the analysis."
     
