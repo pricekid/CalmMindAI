@@ -42,6 +42,13 @@ login_manager.login_view = '/stable-login'
 def home():
     return "Home page is working! Try <a href='/test-basic'>/test-basic</a> or <a href='/onboarding/debug'>/onboarding/debug</a>"
 
+@app.after_request
+def add_no_cache_headers(response):
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    return response
+
 @app.route("/test-basic")
 def test_basic():
     print("TEST-BASIC ROUTE HIT - This should appear in logs")
