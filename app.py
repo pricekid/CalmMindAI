@@ -62,13 +62,10 @@ def load_user(user_id):
     from models import User
     return User.query.get(user_id)
 
-# Register onboarding blueprint
-try:
-    from onboarding_routes import onboarding_bp
-    app.register_blueprint(onboarding_bp, url_prefix='/onboarding')
-    app.logger.info("Onboarding blueprint registered successfully")
-except ImportError:
-    app.logger.warning("Onboarding routes not available")
+# Register ONLY onboarding blueprint for clean testing
+from onboarding_routes import onboarding_bp
+app.register_blueprint(onboarding_bp, url_prefix='/onboarding')
+app.logger.info("Onboarding blueprint registered successfully")
 
 # Create database tables
 with app.app_context():
