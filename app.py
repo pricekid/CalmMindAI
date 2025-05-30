@@ -44,6 +44,8 @@ def home():
 
 @app.route("/test-basic")
 def test_basic():
+    print("TEST-BASIC ROUTE HIT - This should appear in logs")
+    app.logger.info("test-basic route was accessed successfully")
     return "✅ Basic test route works!"
 
 # Basic login required decorator without error handling
