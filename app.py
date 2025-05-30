@@ -126,9 +126,8 @@ def unauthorized():
     # Use direct path instead of url_for
     return redirect('/stable-login')
 
-# Add global error handler (temporarily disabled for debugging)
-# @app.errorhandler(Exception)
-def handle_exception_disabled(e):
+# Global error handler completely removed for debugging onboarding routes
+def handle_exception_removed(e):
     from flask import render_template, redirect, url_for, Response, request
     from json.decoder import JSONDecodeError
     
