@@ -131,26 +131,20 @@ def unauthorized():
 def test_basic():
     return "Basic test route works! This proves the app is running correctly."
 
-# Global error handler completely removed for debugging onboarding routes
-def handle_exception_removed(e):
-    from flask import render_template, redirect, url_for, Response, request
-    from json.decoder import JSONDecodeError
-    
-    app.logger.error(f"Unhandled exception: {str(e)}")
-    
-    # Skip error handling for onboarding routes - let them handle their own errors
-    try:
-        if request.path.startswith('/onboarding'):
-            app.logger.info(f"Skipping global error handler for onboarding route: {request.path}")
-            raise e  # Re-raise the exception to let Flask handle it normally
-    except:
-        # If request context is not available, continue with normal error handling
-        pass
-    
-    error_message = "Your data was saved, but we couldn't complete the analysis."
-    
-    # Check if it's a JSON parsing error (which is likely from OpenAI response)
-    err_str = str(e).lower()
+# All error handlers removed for debugging
+
+from functools import wraps
+
+# Create a custom login_required decorator that checks user type
+def login_required(f):
+    @wraps(f)
+    def decorated_view(*args, **kwargs):
+        # First check if user is authenticated at all
+        if not current_user.is_authenticated:
+            return login_manager.unauthorized()
+        
+        return f(*args, **kwargs)
+    return decorated_view
     
     # For BuildError exceptions (URL building issues) - avoid template rendering which might cause infinite recursion
     if "builderror" in err_str or "could not build url" in err_str:
