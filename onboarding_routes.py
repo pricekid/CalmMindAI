@@ -83,12 +83,17 @@ def step_2():
             last_feedback = generate_insightful_message(mood)
             session['last_feedback'] = last_feedback
             
-        except ImportError as e:
-            # If OpenAI service is unavailable, fall back to the static messages
-            print(f"Error importing OpenAI service: {str(e)}")
+        except Exception as e:
+            # If OpenAI service fails for any reason, fall back to static messages
+            print(f"Error with OpenAI service: {str(e)}")
+            logging.error(f"OpenAI service error during onboarding: {str(e)}")
             
             # Use the static feedback generation function
-            cbt_feedback = generate_cbt_feedback(mood)
+            try:
+                cbt_feedback = generate_cbt_feedback(mood)
+            except:
+                cbt_feedback = "Thank you for sharing your thoughts. Regular journaling can help you gain insights into your emotions and thought patterns."
+            
             session['onboarding_cbt_feedback'] = cbt_feedback
             
             # Fallback to one of the hardcoded CBT-style messages
