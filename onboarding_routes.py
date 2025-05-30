@@ -202,13 +202,23 @@ def demographics():
 @login_required
 def test_demographics():
     """Test route to see demographics form directly"""
-    from flask_wtf import FlaskForm
-    form = FlaskForm()
-    # Set minimal session data
-    session['onboarding_journal'] = 'test journal'
-    session['onboarding_step'] = 2
-    print(f"DEBUG: Test demographics route - Session: {dict(session)}")
-    return render_template('onboarding_demographics.html', form=form)
+    try:
+        from flask_wtf import FlaskForm
+        form = FlaskForm()
+        # Set minimal session data
+        session['onboarding_journal'] = 'test journal'
+        session['onboarding_step'] = 2
+        print(f"DEBUG: Test demographics route - User: {current_user.id}, Session: {dict(session)}")
+        return render_template('onboarding_demographics.html', form=form)
+    except Exception as e:
+        print(f"ERROR in test_demographics: {str(e)}")
+        return f"Error in test demographics: {str(e)}", 500
+
+@onboarding_bp.route('/debug')
+@login_required  
+def debug_route():
+    """Simple debug route to test if onboarding routes work"""
+    return f"Debug works! User: {current_user.id}, Session keys: {list(session.keys())}"
 
 @onboarding_bp.route('/skip-demographics')
 @login_required
