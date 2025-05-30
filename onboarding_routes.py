@@ -107,15 +107,20 @@ def step_2():
             last_feedback = random.choice(cbt_style_messages)
             session['last_feedback'] = last_feedback
         
-        # Create the first journal entry
-        create_first_journal_entry(journal_content, mood, cbt_feedback)
+        # Create the first journal entry (this should succeed even if AI fails)
+        try:
+            create_first_journal_entry(journal_content, mood, cbt_feedback)
+            print(f"DEBUG: Journal entry created successfully")
+        except Exception as e:
+            print(f"ERROR: Failed to create journal entry: {str(e)}")
+            # Still continue with onboarding flow
         
         # Set step tracker to ensure proper flow
         session['onboarding_step'] = 2
+        session['demographics_required'] = True  # Explicit flag for demographics
         
         # Debug logging
         print(f"DEBUG: Step 2 completed, redirecting to demographics. Session data: {dict(session)}")
-        logging.info(f"Onboarding step 2 completed for user {current_user.id}, redirecting to demographics")
         
         # Redirect to demographics step
         return redirect(url_for('onboarding.demographics'))
@@ -133,10 +138,16 @@ def demographics():
     
     # Debug logging
     print(f"DEBUG: Demographics route accessed. Session data: {dict(session)}")
-    logging.info(f"Demographics route accessed by user {current_user.id}")
     
-    # Make sure user completed step 2
-    if 'onboarding_journal' not in session or session.get('onboarding_step', 0) < 2:
+    # Check multiple conditions to ensure user should see demographics
+    step_check = session.get('onboarding_step', 0) >= 2
+    journal_check = 'onboarding_journal' in session
+    demographics_required = session.get('demographics_required', False)
+    
+    print(f"DEBUG: Step check: {step_check}, Journal check: {journal_check}, Demographics required: {demographics_required}")
+    
+    # Make sure user completed step 2 or has explicit demographics flag
+    if not (step_check and journal_check) and not demographics_required:
         print(f"DEBUG: Demographics access denied - redirecting to step 1")
         return redirect(url_for('onboarding.step_1'))
     
