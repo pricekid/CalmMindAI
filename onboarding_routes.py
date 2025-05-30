@@ -202,6 +202,10 @@ def demographics():
 @login_required
 def test_demographics():
     """Test route to see demographics form directly"""
+    print("🔍 Route hit: /onboarding/test-demographics")
+    print(f"🔍 User authenticated: {current_user.is_authenticated}")
+    print(f"🔍 Request method: {request.method}")
+    print(f"🔍 Request URL: {request.url}")
     try:
         from flask_wtf import FlaskForm
         form = FlaskForm()
