@@ -57,6 +57,21 @@ def test_basic():
     app.logger.info("test-basic route was accessed successfully")
     return "✅ Basic test route works!"
 
+@app.route("/cache-test")
+def cache_test():
+    print("🔍 CACHE TEST ROUTE HIT - Direct Flask route")
+    app.logger.info("cache-test route was accessed successfully")
+    timestamp = datetime.utcnow().isoformat()
+    return f"""
+    <h1>🔍 CACHE TEST SUCCESS</h1>
+    <p><strong>Timestamp:</strong> {timestamp}</p>
+    <p><strong>Route:</strong> Direct Flask route (not blueprint)</p>
+    <p><strong>Headers:</strong> Cache control headers should be applied via @after_request</p>
+    <p><strong>Test:</strong> Refresh this page - timestamp should change each time</p>
+    <hr>
+    <p>If you see this message with a fresh timestamp, cache headers are working!</p>
+    """
+
 # Basic login required decorator without error handling
 def login_required(f):
     @wraps(f)
