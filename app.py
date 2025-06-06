@@ -1,5 +1,6 @@
 import os
 import logging
+from datetime import datetime
 from flask import Flask, render_template, request, redirect, flash, session
 from flask_login import LoginManager, current_user
 from flask_wtf import CSRFProtect
@@ -43,10 +44,11 @@ def home():
     return "Home page is working! Try <a href='/test-basic'>/test-basic</a> or <a href='/onboarding/debug'>/onboarding/debug</a>"
 
 @app.after_request
-def add_no_cache_headers(response):
+def add_cache_control_headers(response):
     response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
     response.headers['Pragma'] = 'no-cache'
     response.headers['Expires'] = '0'
+    response.headers['X-Response-Timestamp'] = datetime.utcnow().isoformat() + 'Z'
     return response
 
 @app.route("/test-basic")
