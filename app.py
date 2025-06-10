@@ -41,7 +41,7 @@ login_manager.login_view = '/stable-login'
 
 @app.route("/")
 def home():
-    return render_template('landing.html')
+    return render_template('clean_landing.html')
 
 @app.after_request
 def add_cache_control_headers(response):
