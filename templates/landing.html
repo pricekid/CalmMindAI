@@ -248,8 +248,8 @@
             if (deferredPrompt) {
                 installButton.click();
             } else {
-                // If deferredPrompt is not available, redirect to install page
-                window.location.href = "{{ url_for('install_app') }}";
+                // If deferredPrompt is not available, show install instructions
+                alert('To install Dear Teddy:\n\n1. Open this page in your mobile browser\n2. Tap the browser menu\n3. Select "Add to Home Screen"');
             }
         });
         
