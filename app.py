@@ -43,6 +43,14 @@ login_manager.login_view = '/stable-login'
 def home():
     return render_template('clean_landing.html')
 
+@app.route("/login")
+def login():
+    return render_template('login.html')
+
+@app.route("/register")
+def register():
+    return render_template('register.html')
+
 @app.after_request
 def add_cache_control_headers(response):
     response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
