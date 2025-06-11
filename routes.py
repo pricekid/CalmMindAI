@@ -151,154 +151,51 @@ def logout():
     # Use direct path instead of url_for
     return redirect('/')
 
-# Dashboard
+# Dashboard - Simplified version to avoid navigation errors
 @app.route('/dashboard')
 @login_required
 def dashboard():
+    app.logger.info(f"Dashboard accessed by user {current_user.id}")
+    
+    # Check if admin user
+    if hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
+        return redirect('/admin/dashboard')
+    
+    # Simple fallback values
+    recent_entries = []
+    mood_dates = []
+    mood_scores = []
+    weekly_summary = None
+    badge_data = None
+    community_message = "Welcome to your wellness journey."
+    coping_statement = "Take a moment to breathe deeply. You're exactly where you need to be."
+    mood_form = None
+    
     try:
-        app.logger.info(f"Dashboard accessed by user {current_user.id}")
-        
-        # Make sure we're not logged in as admin trying to access regular dashboard
-        if hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
-            return redirect('/admin/dashboard')
-            
-        # Check if this is a Render authentication session and set appropriate flags
-        if request.args.get('render_auth') == 'true' or session.get('render_authenticated'):
-            # Make sure the authentication flag persists in the session
-            session['render_authenticated'] = True 
-            session['login_method'] = 'render_direct'
-            session.permanent = True
-            app.logger.info(f"Dashboard access via Render authentication for user {current_user.id}")
-
-        # Check if the user is new and needs onboarding
-        try:
-            from onboarding_routes import is_new_user
-            if is_new_user(current_user.id):
-                # New user, redirect to onboarding
-                flash('Welcome to Dear Teddy! Let\'s get you started with a few quick steps.', 'info')
-                return redirect('/onboarding/step-1')
-        except Exception as e:
-            app.logger.warning(f"Could not check onboarding status: {e}")
-
-        # Initialize default values
+        # Only try to get recent entries - simplest query
+        from models import JournalEntry
+        recent_entries = JournalEntry.query.filter(JournalEntry.user_id == current_user.id).order_by(JournalEntry.created_at.desc()).limit(3).all()
+    except:
         recent_entries = []
-        mood_dates = []
-        mood_scores = []
-        weekly_summary = None
-        badge_data = None
-        community_message = "Join our growing community of mindful journalers."
-        coping_statement = "Take a moment to breathe deeply. Remember that your thoughts don't define you, and this moment will pass."
-
-        # Try to get weekly mood summary
-        try:
-            weekly_summary = current_user.get_weekly_summary()
-        except Exception as e:
-            app.logger.warning(f"Could not get weekly summary: {e}")
-
-        # Try to get recent journal entries
-        try:
-            recent_entries = JournalEntry.query\
-                .filter(JournalEntry.user_id == current_user.id)\
-                .order_by(desc(JournalEntry.created_at))\
-                .limit(5).all()
-        except Exception as e:
-            app.logger.warning(f"Could not get recent entries: {e}")
-
-        # Try to get mood data for chart (last 7 days)
-        try:
-            seven_days_ago = datetime.utcnow() - timedelta(days=7)
-            mood_logs = MoodLog.query.filter(
-                MoodLog.user_id == current_user.id,
-                MoodLog.created_at >= seven_days_ago
-            ).order_by(MoodLog.created_at).all()
-
-            # Format mood data for chart.js
-            mood_dates = [log.created_at.strftime('%Y-%m-%d') for log in mood_logs]
-            mood_scores = [log.mood_score for log in mood_logs]
-        except Exception as e:
-            app.logger.warning(f"Could not get mood data: {e}")
-
-        # Try to get achievements and streaks
-        try:
-            import gamification
-            user_id = current_user.id
-            badge_data = gamification.get_user_badges(user_id)
-            badge_data['streak_status'] = gamification.check_streak_status(user_id)
-
-            # Show earned badges on dashboard (limit to 6 most recent for a nice 2x3 grid)
-            if badge_data:
-                dashboard_badges = []
-                # Get the most recent badges (up to 6)
-                for badge_id in badge_data['earned_badges'][-6:]:
-                    if badge_id in badge_data['badge_details']:
-                        dashboard_badges.append(badge_data['badge_details'][badge_id])
-                badge_data['dashboard_badges'] = dashboard_badges
-
-                # Also add next badges to earn (for motivation)
-                next_badges = []
-                # Look through all badges and find up to 3 that aren't earned yet
-                count = 0
-                for badge_id, badge in badge_data['badge_details'].items():
-                    if not badge['earned'] and count < 3:
-                        next_badges.append(badge)
-                        count += 1
-                badge_data['next_badges'] = next_badges
-        except Exception as e:
-            app.logger.warning(f"Could not load achievements: {e}")
-
-        # Get form for mood logging
-        try:
-            from forms import MoodLogForm
-            mood_form = MoodLogForm()
-        except Exception as e:
-            app.logger.warning(f"Could not create mood form: {e}")
-            mood_form = None
-
-        # Try to get community message
-        try:
-            from journal_service import get_community_message
-            community_message = get_community_message()
-        except Exception as e:
-            app.logger.warning(f"Could not get community message: {e}")
-
-        # Check if we need to update the welcome message shown flag
-        try:
-            show_welcome = not current_user.welcome_message_shown
-            if show_welcome:
-                # Update the flag to prevent showing the welcome message again
-                current_user.welcome_message_shown = True
-                db.session.commit()
-                app.logger.info(f"Updated welcome_message_shown flag for user {current_user.id}")
-        except Exception as e:
-            app.logger.warning(f"Could not update welcome flag: {e}")
-            db.session.rollback()
-        
-        return render_template('dashboard.html', 
-                              title='Dashboard',
-                              recent_entries=recent_entries,
-                              mood_dates=mood_dates,
-                              mood_scores=mood_scores,
-                              coping_statement=coping_statement,
-                              mood_form=mood_form,
-                              weekly_summary=weekly_summary,
-                              badge_data=badge_data,
-                              community_message=community_message)
-                              
-    except Exception as e:
-        app.logger.error(f"Critical dashboard error: {e}")
-        # Return a simple error page instead of crashing
-        return render_template_string("""
-        <html>
-        <head><title>Dashboard Error</title></head>
-        <body>
-        <h1>Navigation Error</h1>
-        <p>We're having trouble with some of our internal links. We're working to fix this issue.</p>
-        <p><a href="/">Go to Home Page</a></p>
-        <p><a href="/journal">Go to Journal</a></p>
-        <p><a href="/logout">Logout</a></p>
-        </body>
-        </html>
-        """), 500
+    
+    try:
+        # Update welcome flag if needed
+        if not current_user.welcome_message_shown:
+            current_user.welcome_message_shown = True
+            db.session.commit()
+    except:
+        pass
+    
+    return render_template('dashboard.html', 
+                          title='Dashboard',
+                          recent_entries=recent_entries,
+                          mood_dates=mood_dates,
+                          mood_scores=mood_scores,
+                          coping_statement=coping_statement,
+                          mood_form=mood_form,
+                          weekly_summary=weekly_summary,
+                          badge_data=badge_data,
+                          community_message=community_message)
 
 # Emergency journal route that bypasses the blueprint to avoid redirection issues
 @app.route('/journal')
