@@ -2,8 +2,8 @@
 Routes for the onboarding process for new users.
 """
 from flask import Blueprint, render_template, redirect, url_for, session, request, flash
-from flask_login import current_user
-from app import login_required, db
+from flask_login import current_user, login_required
+from app import db
 from flask_wtf import FlaskForm
 from models import User, JournalEntry
 import random
@@ -21,6 +21,8 @@ def step_1():
     """
     First step of onboarding: Ask how the user is feeling today
     """
+    logging.info(f"Onboarding step 1 accessed by user {current_user.id}")
+    
     # Create a simple form for CSRF protection
     form = FlaskForm()
     
