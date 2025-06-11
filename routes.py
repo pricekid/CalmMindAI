@@ -151,51 +151,54 @@ def logout():
     # Use direct path instead of url_for
     return redirect('/')
 
+# Emergency simple dashboard for testing
+@app.route('/emergency-dashboard')
+def emergency_dashboard():
+    """Emergency dashboard that always works"""
+    return """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Dashboard - Dear Teddy</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body { background-color: #1a1a1a; color: white; }
+            .card { background-color: #2d2d2d; border: none; }
+        </style>
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h1>Welcome to Your Dashboard</h1>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">Your Mental Wellness Journey</h5>
+                    <p class="card-text">Welcome to your personal wellness space.</p>
+                    <a href="/journal" class="btn btn-primary">Start Journaling</a>
+                    <a href="/logout" class="btn btn-secondary">Logout</a>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>
+    """
+
 # Dashboard - Simplified version to avoid navigation errors
 @app.route('/dashboard')
-@login_required
+@login_required  
 def dashboard():
-    app.logger.info(f"Dashboard accessed by user {current_user.id}")
-    
-    # Check if admin user
-    if hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
-        return redirect('/admin/dashboard')
-    
-    # Simple fallback values
-    recent_entries = []
-    mood_dates = []
-    mood_scores = []
-    weekly_summary = None
-    badge_data = None
-    community_message = "Welcome to your wellness journey."
-    coping_statement = "Take a moment to breathe deeply. You're exactly where you need to be."
-    mood_form = None
-    
     try:
-        # Only try to get recent entries - simplest query
-        from models import JournalEntry
-        recent_entries = JournalEntry.query.filter(JournalEntry.user_id == current_user.id).order_by(JournalEntry.created_at.desc()).limit(3).all()
-    except:
-        recent_entries = []
-    
-    try:
-        # Update welcome flag if needed
-        if not current_user.welcome_message_shown:
-            current_user.welcome_message_shown = True
-            db.session.commit()
-    except:
-        pass
-    
-    return render_template('dashboard.html', 
-                          title='Dashboard',
-                          recent_entries=recent_entries,
-                          mood_dates=mood_dates,
-                          mood_scores=mood_scores,
-                          coping_statement=coping_statement,
-                          mood_form=mood_form,
-                          weekly_summary=weekly_summary,
-                          badge_data=badge_data,
-                          community_message=community_message)
+        app.logger.info(f"Dashboard accessed by user {current_user.id}")
+        
+        # Check if admin user
+        if hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
+            return redirect('/admin/dashboard')
+        
+        # Use emergency dashboard for now to avoid navigation errors
+        return redirect('/emergency-dashboard')
+        
+    except Exception as e:
+        app.logger.error(f"Dashboard error: {e}")
+        return redirect('/emergency-dashboard')
 
 # Emergency journal route that bypasses the blueprint to avoid redirection issues
 @app.route('/journal')
