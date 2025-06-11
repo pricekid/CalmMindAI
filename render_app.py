@@ -177,12 +177,21 @@ with app.app_context():
     except Exception as e:
         app.logger.error(f"Error registering marketing integration: {e}")
 
-    # Register stable login
+    # Register stable login blueprint
     try:
-        import stable_login
-        app.logger.info("Stable login registered")
+        from stable_login import stable_login_bp
+        app.register_blueprint(stable_login_bp)
+        app.logger.info("Stable login blueprint registered")
     except Exception as e:
-        app.logger.error(f"Error registering stable login: {e}")
+        app.logger.error(f"Error registering stable login blueprint: {e}")
+
+    # Register simple register blueprint
+    try:
+        from simple_register import simple_register_bp
+        app.register_blueprint(simple_register_bp)
+        app.logger.info("Simple register blueprint registered")
+    except Exception as e:
+        app.logger.error(f"Error registering simple register blueprint: {e}")
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
