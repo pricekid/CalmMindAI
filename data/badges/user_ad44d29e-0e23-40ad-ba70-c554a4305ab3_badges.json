@@ -1,15 +1,25 @@
 {
   "earned_badges": [],
   "earned_dates": {},
-  "current_streak": 0,
-  "longest_streak": 0,
-  "last_entry_date": null,
-  "total_xp": 5,
+  "current_streak": 1,
+  "longest_streak": 1,
+  "last_entry_date": "2025-06-11",
+  "total_xp": 35,
   "xp_history": [
     {
       "amount": 5,
       "reason": "Logged your mood",
       "date": "2025-06-11 13:59:54"
+    },
+    {
+      "amount": 10,
+      "reason": "Created a new journal entry",
+      "date": "2025-06-11 14:53:54"
+    },
+    {
+      "amount": 20,
+      "reason": "Received insights on journal entry",
+      "date": "2025-06-11 14:53:54"
     }
   ]
 }

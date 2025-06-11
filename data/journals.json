@@ -127,5 +127,29 @@
       "followup_text": "Consider jotting down a few ideas or projects that excite you. This can help you channel this sense of alignment into concrete actions. Remember, you're making progress just by being open to exploring these possibilities."
     },
     "user_reflection": null
+  },
+  {
+    "id": 18,
+    "user_id": "ad44d29e-0e23-40ad-ba70-c554a4305ab3",
+    "title": "testing",
+    "content": "nothingmuch on my mind today,. i am breezing",
+    "anxiety_level": 5,
+    "created_at": "2025-06-11T14:53:44.476924",
+    "updated_at": "2025-06-11T14:53:54.745668",
+    "is_analyzed": true,
+    "gpt_response": "It sounds like you're having a calm day, which is a lovely space to be in. Your journal entry reflects a sense of ease, which can be a refreshing change if you've been feeling tense or overwhelmed lately. Take a moment to savor this feeling of lightness and consider what elements of today are contributing to this sense of ease. Is it the pace of your day, the absence of pressing tasks, or something else? Recognizing these can help you cultivate more moments like this. Enjoy the breeze of today, and know that you're doing great by simply being in the moment.\n\nWarmly,\nCoach Mira",
+    "cbt_patterns": [
+      {
+        "pattern": "Journal Reflection",
+        "description": "Your journal entry has been saved.",
+        "recommendation": "Continue journaling regularly to build self-awareness."
+      }
+    ],
+    "structured_data": {
+      "insight_text": "Today's journal entry reflects a neutral to light emotional tone, suggesting a day without significant stressors. This calmness might be a chance to recognize and appreciate what contributes to feeling at ease.",
+      "reflection_prompt": "When you think about this calmness today, what do you notice about your environment or mindset that feels different or particularly soothing?",
+      "followup_text": "As you notice these moments of ease, consider jotting down a few things that contributed to this feeling. It could be a helpful reminder to return to on days that feel more challenging. You're doing wonderfully by acknowledging even the quieter moments in your life."
+    },
+    "user_reflection": null
   }
 ]
