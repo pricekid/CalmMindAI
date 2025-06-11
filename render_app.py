@@ -39,15 +39,32 @@ def nl2br_filter(s):
         return ""
     return s.replace('\n', '<br>')
 
-# Configure the database
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///calm_journey.db")
-app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
-    "pool_recycle": 300,
-    "pool_pre_ping": True,
-    "pool_timeout": 60,
-    "pool_size": 10,
-    "max_overflow": 20,
-}
+# Configure the database with robust URL handling
+database_url = os.environ.get("DATABASE_URL")
+if database_url:
+    # Handle potential postgres:// vs postgresql:// URL schemes
+    if database_url.startswith("postgres://"):
+        database_url = database_url.replace("postgres://", "postgresql://", 1)
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_url
+    # PostgreSQL-specific engine options
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "pool_recycle": 300,
+        "pool_pre_ping": True,
+        "pool_timeout": 30,
+        "pool_size": 5,
+        "max_overflow": 10,
+        "connect_args": {
+            "connect_timeout": 10,
+            "sslmode": "prefer"
+        }
+    }
+else:
+    # Fallback to SQLite for development
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///calm_journey.db"
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "pool_recycle": 300,
+        "pool_pre_ping": True
+    }
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # Configure CSRF protection
