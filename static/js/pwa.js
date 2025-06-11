@@ -73,39 +73,13 @@ window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     // Store the event so it can be triggered later
     deferredPrompt = e;
-    // Update UI to notify the user they can install the PWA
-    showInstallPromotion();
+    // Install promotion disabled
 });
 
-// Show install promotion banner
+// Show install promotion banner (disabled)
 function showInstallPromotion() {
-    // Only show if not already installed and the install prompt is available
-    if (!isAppInstalled() && deferredPrompt) {
-        const installBanner = document.createElement('div');
-        installBanner.id = 'pwa-install-banner';
-        installBanner.className = 'position-fixed bottom-0 start-0 end-0 p-3 bg-dark text-white';
-        installBanner.style.zIndex = '1050';
-        installBanner.innerHTML = `
-            <div class="container d-flex justify-content-between align-items-center">
-                <div>
-                    <i class="fas fa-mobile-alt me-2"></i>
-                    <span>Install Dear Teddy on your device for better experience</span>
-                </div>
-                <div>
-                    <button id="pwa-install-btn" class="btn btn-sm btn-primary me-2">Install</button>
-                    <button id="pwa-dismiss-btn" class="btn btn-sm btn-outline-light">Not Now</button>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(installBanner);
-        
-        // Add event listeners
-        document.getElementById('pwa-install-btn').addEventListener('click', installPWA);
-        document.getElementById('pwa-dismiss-btn').addEventListener('click', dismissInstallPromotion);
-        
-        // Save in local storage that we've shown the banner
-        localStorage.setItem('pwaInstallPromptShown', Date.now());
-    }
+    // Installation promotion disabled - no automatic install banners
+    return;
 }
 
 // Check if the app appears to be installed

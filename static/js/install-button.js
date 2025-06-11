@@ -1,35 +1,8 @@
 // Install button functionality for Dear Teddy PWA
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Create install button elements
-    const createInstallButton = () => {
-        const installContainer = document.createElement('div');
-        installContainer.id = 'install-container';
-        installContainer.className = 'position-fixed bottom-0 end-0 m-3';
-        installContainer.style.zIndex = '1040';
-        
-        // Only show if app is not already installed
-        if (window.matchMedia('(display-mode: standalone)').matches ||
-            window.navigator.standalone === true) {
-            return;
-        }
-        
-        installContainer.innerHTML = `
-            <button id="manual-install-btn" class="btn btn-primary rounded-pill shadow">
-                <i class="fas fa-download me-2"></i>Install App
-            </button>
-        `;
-        
-        document.body.appendChild(installContainer);
-        
-        // Add event listener
-        document.getElementById('manual-install-btn').addEventListener('click', triggerInstall);
-    };
-    
-    // Add install button to page
-    if ('serviceWorker' in navigator) {
-        createInstallButton();
-    }
+    // Install button functionality disabled
+    // No automatic install buttons will be created
 });
 
 // We'll use the global deferredPrompt declared in pwa.js
