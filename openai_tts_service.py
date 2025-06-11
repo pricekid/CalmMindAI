@@ -210,6 +210,18 @@ def openai_tts():
             "details": str(e)
         }), 500
 
+@openai_tts_bp.route('/tts/openai', methods=['GET'])
+def openai_neural_voices():
+    """
+    Render the OpenAI neural voices page.
+    """
+    try:
+        from flask import render_template
+        return render_template('openai_tts_test.html')
+    except Exception as e:
+        logger.error(f"Error rendering OpenAI TTS page: {str(e)}")
+        return f"Error loading neural voices: {str(e)}", 500
+
 @openai_tts_bp.route('/api/openai-voices', methods=['GET'])
 def get_openai_voices():
     """

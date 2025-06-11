@@ -71,5 +71,37 @@
       "followup_text": "Keep acknowledging the steps you take, no matter how small they may seem. Progress is progress. You're building something meaningful, and that's worth celebrating. Keep up the great work!"
     },
     "user_reflection": null
+  },
+  {
+    "id": 16,
+    "user_id": "test-user-id",
+    "title": "today is teh day",
+    "content": "i think great things are going to happen to day",
+    "anxiety_level": 5,
+    "created_at": "2025-06-11T14:21:22.804796",
+    "updated_at": "2025-06-11T14:21:34.628307",
+    "is_analyzed": true,
+    "gpt_response": "It sounds like you're starting today with a sense of hope and anticipation. Even with a neutral emotional tone, there's an undercurrent of optimism in your words. This is a wonderful mindset to hold onto, especially on days when past journals have shown you're managing through rough patches. What are the small actions or thoughts today that make you feel this way? As you move through your day, remember that setting a positive intention can be a powerful step toward creating great outcomes. You deserve to feel hopeful and open to good possibilities.\n\nWarmly,\nCoach Mira\n\nWe're starting to notice a few thought patterns in your journals. Here's what we're seeing:\n- Filtering\n",
+    "cbt_patterns": [
+      {
+        "pattern": "Journal Reflection",
+        "description": "Your journal entry has been saved.",
+        "recommendation": "Continue journaling regularly to build self-awareness."
+      }
+    ],
+    "structured_data": {
+      "insight_text": "Your journal entry suggests a hopeful anticipation for the day. Despite a neutral primary emotion, the choice to express this thought indicates a readiness to embrace positivity, even amidst ongoing management of daily challenges.",
+      "reflection_prompt": "Take a moment. What small actions or thoughts make you feel that great things are going to happen today?",
+      "strategies": [
+        {
+          "title": "Positive Intention Setting",
+          "description": "Use the hopeful start to your day to set small, achievable intentions that align with this positive outlook.",
+          "action_step": "Identify one or two small goals or actions that can bring moments of joy or satisfaction today.",
+          "emotional_need_addressed": "Enhancing a sense of agency and optimism."
+        }
+      ],
+      "followup_text": "As you embrace the day with this positive mindset, remember it's okay to savor the small victories and moments of contentment. You're opening yourself up to good possibilities, which is a beautiful way to approach life. Keep nurturing this outlook, and let it guide you through your journey."
+    },
+    "user_reflection": null
   }
 ]
