@@ -289,7 +289,7 @@ def dashboard():
     # Check if user needs onboarding (new users should see onboarding first)
     if not current_user.welcome_message_shown:
         logging.info(f"New user {current_user.id} needs onboarding, redirecting to onboarding step 1")
-        return redirect('/onboarding/step1')
+        return redirect('/onboarding/step-1')
     
     return render_template('dashboard.html', 
                           title='Dashboard',
