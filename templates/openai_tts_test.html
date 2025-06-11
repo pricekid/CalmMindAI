@@ -181,7 +181,7 @@
 {% block scripts %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Elements
+        // Elements with null checks
         const ttsText = document.getElementById('ttsText');
         const voiceOptions = document.getElementById('voiceOptions');
         const generateBtn = document.getElementById('generateBtn');
@@ -189,13 +189,21 @@
         const loadingIndicator = document.getElementById('loadingIndicator');
         const sampleTexts = document.querySelectorAll('.sample-text');
         
+        // Check if required elements exist
+        if (!ttsText || !voiceOptions || !generateBtn || !audioPlayer) {
+            console.error('Required DOM elements not found');
+            return;
+        }
+        
         // Variables to store selected options
         let selectedVoice = null;
         
         // Add click event listeners to sample texts
         sampleTexts.forEach(sample => {
             sample.addEventListener('click', function() {
-                ttsText.value = this.dataset.text;
+                if (ttsText && this.dataset.text) {
+                    ttsText.value = this.dataset.text;
+                }
             });
         });
         
@@ -207,33 +215,42 @@
                 voiceOptions.innerHTML = '';
                 
                 // Populate voice options
-                for (const [key, description] of Object.entries(data.voices)) {
-                    const voiceOption = document.createElement('div');
-                    voiceOption.className = 'voice-option';
-                    voiceOption.dataset.voice = key;
-                    
-                    // Format the voice name for display
-                    const voiceName = key.charAt(0).toUpperCase() + key.slice(1);
-                    
-                    voiceOption.innerHTML = `
-                        <strong class="text-white">${voiceName}</strong>
-                        <div class="voice-description text-light">${description}</div>
-                    `;
-                    
-                    voiceOption.addEventListener('click', function() {
-                        // Remove selected class from all voice options
-                        document.querySelectorAll('.voice-option').forEach(opt => {
-                            opt.classList.remove('selected');
+                if (data && data.voices) {
+                    for (const [key, description] of Object.entries(data.voices)) {
+                        const voiceOption = document.createElement('div');
+                        voiceOption.className = 'voice-option';
+                        voiceOption.dataset.voice = key;
+                        
+                        // Format the voice name for display
+                        const voiceName = key.charAt(0).toUpperCase() + key.slice(1);
+                        
+                        voiceOption.innerHTML = `
+                            <strong class="text-white">${voiceName}</strong>
+                            <div class="voice-description text-light">${description}</div>
+                        `;
+                        
+                        voiceOption.addEventListener('click', function() {
+                            // Remove selected class from all voice options
+                            document.querySelectorAll('.voice-option').forEach(opt => {
+                                opt.classList.remove('selected');
+                            });
+                            
+                            // Add selected class to this option
+                            this.classList.add('selected');
+                            
+                            // Store selected voice
+                            selectedVoice = this.dataset.voice;
                         });
                         
-                        // Add selected class to this option
-                        this.classList.add('selected');
-                        
-                        // Store selected voice
-                        selectedVoice = this.dataset.voice;
-                    });
-                    
-                    voiceOptions.appendChild(voiceOption);
+                        if (voiceOptions) {
+                            voiceOptions.appendChild(voiceOption);
+                        }
+                    }
+                } else {
+                    console.error('No voice data received');
+                    if (voiceOptions) {
+                        voiceOptions.innerHTML = '<div class="alert alert-danger text-white">No voices available</div>';
+                    }
                 }
                 
                 // Select the first voice by default
