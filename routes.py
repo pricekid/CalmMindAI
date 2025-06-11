@@ -151,54 +151,163 @@ def logout():
     # Use direct path instead of url_for
     return redirect('/')
 
-# Emergency simple dashboard for testing
-@app.route('/emergency-dashboard')
-def emergency_dashboard():
-    """Emergency dashboard that always works"""
-    return """
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Dashboard - Dear Teddy</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <style>
-            body { background-color: #1a1a1a; color: white; }
-            .card { background-color: #2d2d2d; border: none; }
-        </style>
-    </head>
-    <body>
-        <div class="container mt-5">
-            <h1>Welcome to Your Dashboard</h1>
-            <div class="card mt-4">
-                <div class="card-body">
-                    <h5 class="card-title">Your Mental Wellness Journey</h5>
-                    <p class="card-text">Welcome to your personal wellness space.</p>
-                    <a href="/journal" class="btn btn-primary">Start Journaling</a>
-                    <a href="/logout" class="btn btn-secondary">Logout</a>
-                </div>
-            </div>
-        </div>
-    </body>
-    </html>
-    """
-
-# Dashboard - Simplified version to avoid navigation errors
+# Dashboard
 @app.route('/dashboard')
-@login_required  
+@login_required
 def dashboard():
+    # Make sure we're not logged in as admin trying to access regular dashboard
+    if hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
+        return redirect('/admin/dashboard')
+        
+    # Check if this is a Render authentication session and set appropriate flags
+    if request.args.get('render_auth') == 'true' or session.get('render_authenticated'):
+        # Make sure the authentication flag persists in the session
+        session['render_authenticated'] = True 
+        session['login_method'] = 'render_direct'
+        session.permanent = True
+        app.logger.info(f"Dashboard access via Render authentication for user {current_user.id}")
+
+    # Check if the user is new and needs onboarding
+    from onboarding_routes import is_new_user
+    if is_new_user(current_user.id):
+        # New user, redirect to onboarding
+        flash('Welcome to Dear Teddy! Let\'s get you started with a few quick steps.', 'info')
+        return redirect('/onboarding/step-1')
+
+    # Get weekly mood summary
+    weekly_summary = current_user.get_weekly_summary()
+
+    # Get recent journal entries - use load_only to avoid loading deferred columns by default
+    recent_entries = JournalEntry.query\
+        .options(load_only(
+            JournalEntry.id,
+            JournalEntry.title,
+            JournalEntry.content,
+            JournalEntry.created_at,
+            JournalEntry.updated_at,
+            JournalEntry.is_analyzed,
+            JournalEntry.anxiety_level,
+            JournalEntry.user_id
+        ))\
+        .filter(JournalEntry.user_id == current_user.id)\
+        .order_by(desc(JournalEntry.created_at))\
+        .limit(5).all()
+
+    # Get mood data for chart (last 7 days)
+    seven_days_ago = datetime.utcnow() - timedelta(days=7)
+    mood_logs = MoodLog.query.filter(
+        MoodLog.user_id == current_user.id,
+        MoodLog.created_at >= seven_days_ago
+    ).order_by(MoodLog.created_at).all()
+
+    # Format mood data for chart.js
+    mood_dates = [log.created_at.strftime('%Y-%m-%d') for log in mood_logs]
+    mood_scores = [log.mood_score for log in mood_logs]
+
+    # Get latest journal entry for coping statement - use load_only to avoid loading deferred columns
+    latest_entry = JournalEntry.query\
+        .options(load_only(
+            JournalEntry.id,
+            JournalEntry.title,
+            JournalEntry.content,
+            JournalEntry.created_at,
+            JournalEntry.is_analyzed,
+            JournalEntry.anxiety_level,
+            JournalEntry.user_id
+        ))\
+        .filter(JournalEntry.user_id == current_user.id)\
+        .order_by(desc(JournalEntry.created_at))\
+        .first()
+
+    # Default coping statement that doesn't require API
+    coping_statement = "Mira suggests: Take a moment to breathe deeply. Remember that your thoughts don't define you, and this moment will pass."
+
+    # Only try to get a personalized one if we have a journal entry
+    if latest_entry:
+        try:
+            # Use the full journal content for the coping statement if available
+            # Fall back to title if no content, and default to "anxiety management" if neither exists
+            if latest_entry.content and len(latest_entry.content.strip()) > 10:
+                context = latest_entry.content
+            else:
+                context = latest_entry.title or "anxiety management"
+
+            try:
+                # Generate coping statement with improved error handling
+                api_statement = generate_coping_statement(context)
+
+                # Only use API statement if it's valid
+                if api_statement and len(api_statement.strip()) > 10:
+                    coping_statement = api_statement
+
+            except Exception as api_error:
+                # Log the specific API error, but continue with default statement
+                logging.error(f"OpenAI API error in dashboard: {str(api_error)}")
+
+        except Exception as e:
+            # Log any other errors but don't crash 
+            logging.error(f"General error generating coping statement: {str(e)}")
+
+    # Get user's achievements and streaks - NEW FEATURE
+    badge_data = None
     try:
-        app.logger.info(f"Dashboard accessed by user {current_user.id}")
-        
-        # Check if admin user
-        if hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
-            return redirect('/admin/dashboard')
-        
-        # Use emergency dashboard for now to avoid navigation errors
-        return redirect('/emergency-dashboard')
-        
+        user_id = current_user.id
+        badge_data = gamification.get_user_badges(user_id)
+        badge_data['streak_status'] = gamification.check_streak_status(user_id)
+
+        # Show earned badges on dashboard (limit to 6 most recent for a nice 2x3 grid)
+        if badge_data:
+            dashboard_badges = []
+            # Get the most recent badges (up to 6)
+            for badge_id in badge_data['earned_badges'][-6:]:
+                if badge_id in badge_data['badge_details']:
+                    dashboard_badges.append(badge_data['badge_details'][badge_id])
+            badge_data['dashboard_badges'] = dashboard_badges
+
+            # Also add next badges to earn (for motivation)
+            next_badges = []
+            # Look through all badges and find up to 3 that aren't earned yet
+            count = 0
+            for badge_id, badge in badge_data['badge_details'].items():
+                if not badge['earned'] and count < 3:
+                    next_badges.append(badge)
+                    count += 1
+            badge_data['next_badges'] = next_badges
     except Exception as e:
-        app.logger.error(f"Dashboard error: {e}")
-        return redirect('/emergency-dashboard')
+        logging.error(f"Error loading achievements for dashboard: {str(e)}")
+
+    # Get form for mood logging
+    mood_form = MoodLogForm()
+
+    # Get community journal activity message
+    try:
+        community_message = get_community_message()
+    except Exception as e:
+        logging.error(f"Error getting community message for dashboard: {str(e)}")
+        community_message = "Join our growing community of mindful journalers."
+
+    # Check if we need to update the welcome message shown flag
+    show_welcome = not current_user.welcome_message_shown
+    if show_welcome:
+        # Update the flag to prevent showing the welcome message again
+        try:
+            current_user.welcome_message_shown = True
+            db.session.commit()
+            logging.info(f"Updated welcome_message_shown flag for user {current_user.id}")
+        except Exception as e:
+            logging.error(f"Error updating welcome_message_shown flag: {str(e)}")
+            db.session.rollback()
+    
+    return render_template('dashboard.html', 
+                          title='Dashboard',
+                          recent_entries=recent_entries,
+                          mood_dates=mood_dates,
+                          mood_scores=mood_scores,
+                          coping_statement=coping_statement,
+                          mood_form=mood_form,
+                          weekly_summary=weekly_summary,
+                          badge_data=badge_data,
+                          community_message=community_message)
 
 # Emergency journal route that bypasses the blueprint to avoid redirection issues
 @app.route('/journal')

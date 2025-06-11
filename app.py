@@ -126,9 +126,9 @@ def unauthorized():
     # Use direct path instead of url_for
     return redirect('/stable-login')
 
-# Add global error handler - DISABLED to fix dashboard navigation
-# @app.errorhandler(Exception)
-def handle_exception_disabled(e):
+# Add global error handler
+@app.errorhandler(Exception)
+def handle_exception(e):
     from flask import render_template, redirect, url_for, Response
     from json.decoder import JSONDecodeError
     
