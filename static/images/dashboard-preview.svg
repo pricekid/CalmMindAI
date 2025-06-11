@@ -1,0 +1,68 @@
+<svg width="300" height="600" viewBox="0 0 300 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Phone frame -->
+  <rect width="300" height="600" rx="25" ry="25" fill="#2c3e50" stroke="#34495e" stroke-width="2"/>
+  
+  <!-- Screen -->
+  <rect x="15" y="50" width="270" height="500" rx="15" ry="15" fill="#ecf0f1"/>
+  
+  <!-- Status bar -->
+  <rect x="15" y="50" width="270" height="40" rx="15" ry="15" fill="#1D4D4F"/>
+  <text x="30" y="75" fill="white" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Dear Teddy</text>
+  <circle cx="260" cy="70" r="8" fill="#A05C2C"/>
+  
+  <!-- Header -->
+  <rect x="25" y="100" width="250" height="60" fill="white" rx="10"/>
+  <circle cx="50" cy="120" r="12" fill="#A05C2C"/>
+  <text x="70" y="118" fill="#2c3e50" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Welcome back!</text>
+  <text x="70" y="135" fill="#7f8c8d" font-family="Arial, sans-serif" font-size="10">How are you feeling today?</text>
+  
+  <!-- Journal entry card -->
+  <rect x="25" y="180" width="250" height="100" fill="white" rx="10" stroke="#bdc3c7" stroke-width="1"/>
+  <text x="35" y="200" fill="#2c3e50" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Today's Journal</text>
+  <text x="35" y="220" fill="#7f8c8d" font-family="Arial, sans-serif" font-size="10">Share your thoughts and feelings...</text>
+  <rect x="35" y="235" width="200" height="30" fill="#ecf0f1" rx="5"/>
+  <text x="45" y="253" fill="#95a5a6" font-family="Arial, sans-serif" font-size="9">Write it all out, Teddy's listening...</text>
+  
+  <!-- Mood tracker -->
+  <rect x="25" y="300" width="120" height="80" fill="white" rx="10" stroke="#bdc3c7" stroke-width="1"/>
+  <text x="35" y="320" fill="#2c3e50" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Mood Today</text>
+  <circle cx="55" cy="350" r="8" fill="#e74c3c"/>
+  <circle cx="75" cy="350" r="8" fill="#f39c12"/>
+  <circle cx="95" cy="350" r="8" fill="#f1c40f"/>
+  <circle cx="115" cy="350" r="8" fill="#2ecc71"/>
+  <circle cx="135" cy="350" r="8" fill="#3498db"/>
+  
+  <!-- AI insights -->
+  <rect x="155" y="300" width="120" height="80" fill="white" rx="10" stroke="#bdc3c7" stroke-width="1"/>
+  <text x="165" y="320" fill="#2c3e50" font-family="Arial, sans-serif" font-size="11" font-weight="bold">AI Insights</text>
+  <text x="165" y="335" fill="#7f8c8d" font-family="Arial, sans-serif" font-size="9">You're showing positive</text>
+  <text x="165" y="348" fill="#7f8c8d" font-family="Arial, sans-serif" font-size="9">patterns this week!</text>
+  <rect x="165" y="355" width="80" height="15" fill="#A05C2C" rx="7"/>
+  <text x="185" y="365" fill="white" font-family="Arial, sans-serif" font-size="8">View More</text>
+  
+  <!-- Recent entries -->
+  <rect x="25" y="400" width="250" height="120" fill="white" rx="10" stroke="#bdc3c7" stroke-width="1"/>
+  <text x="35" y="420" fill="#2c3e50" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Recent Entries</text>
+  
+  <!-- Entry 1 -->
+  <rect x="35" y="430" width="230" height="25" fill="#f8f9fa" rx="5"/>
+  <text x="45" y="445" fill="#2c3e50" font-family="Arial, sans-serif" font-size="9">Yesterday: Feeling grateful for...</text>
+  <circle cx="250" cy="442" r="4" fill="#2ecc71"/>
+  
+  <!-- Entry 2 -->
+  <rect x="35" y="460" width="230" height="25" fill="#f8f9fa" rx="5"/>
+  <text x="45" y="475" fill="#2c3e50" font-family="Arial, sans-serif" font-size="9">Monday: Challenging day at work...</text>
+  <circle cx="250" cy="472" r="4" fill="#f39c12"/>
+  
+  <!-- Entry 3 -->
+  <rect x="35" y="490" width="230" height="25" fill="#f8f9fa" rx="5"/>
+  <text x="45" y="505" fill="#2c3e50" font-family="Arial, sans-serif" font-size="9">Sunday: Peaceful morning routine</text>
+  <circle cx="250" cy="502" r="4" fill="#3498db"/>
+  
+  <!-- Bottom navigation -->
+  <rect x="15" y="520" width="270" height="30" fill="#1D4D4F" rx="0" ry="0"/>
+  <text x="40" y="540" fill="white" font-family="Arial, sans-serif" font-size="10">Journal</text>
+  <text x="100" y="540" fill="white" font-family="Arial, sans-serif" font-size="10">Insights</text>
+  <text x="160" y="540" fill="white" font-family="Arial, sans-serif" font-size="10">Mood</text>
+  <text x="220" y="540" fill="white" font-family="Arial, sans-serif" font-size="10">Profile</text>
+</svg>
