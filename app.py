@@ -874,3 +874,86 @@ with app.app_context():
         app.logger.info("Emergency login blueprint registered with CSRF exemption")
     except ImportError:
         app.logger.warning("Emergency login blueprint not available")
+
+# ============================================================================
+# DEMOGRAPHICS COLLECTION FUNCTIONALITY
+# ============================================================================
+
+@app.route('/demographics', methods=['GET', 'POST'])
+@original_login_required
+def demographics():
+    """Collect user demographics after registration"""
+    from flask_wtf import FlaskForm
+    from wtforms import SelectField, StringField, SelectMultipleField, SubmitField
+    from wtforms.validators import DataRequired
+    from wtforms.widgets import CheckboxInput, ListWidget
+    
+    class MultiCheckboxField(SelectMultipleField):
+        widget = ListWidget(prefix_label=False)
+        option_widget = CheckboxInput()
+    
+    class DemographicsForm(FlaskForm):
+        age_range = SelectField('Age Range', choices=[
+            ('', 'Select age range'),
+            ('18-25', '18-25'),
+            ('26-35', '26-35'),
+            ('36-45', '36-45'),
+            ('46-55', '46-55'),
+            ('56-65', '56-65'),
+            ('65+', '65+')
+        ], validators=[DataRequired()])
+        
+        gender = SelectField('Gender', choices=[
+            ('', 'Select gender'),
+            ('Male', 'Male'),
+            ('Female', 'Female'),
+            ('Non-binary', 'Non-binary'),
+            ('Prefer not to say', 'Prefer not to say')
+        ], validators=[DataRequired()])
+        
+        location = StringField('Location (City/State)', validators=[DataRequired()])
+        
+        mental_health_concerns = MultiCheckboxField('Primary Mental Health Concerns', choices=[
+            ('Anxiety', 'Anxiety'),
+            ('Depression', 'Depression'),
+            ('Stress', 'Stress'),
+            ('Sleep issues', 'Sleep issues'),
+            ('Relationship issues', 'Relationship issues'),
+            ('Work stress', 'Work stress'),
+            ('Other', 'Other')
+        ])
+        
+        submit = SubmitField('Complete Profile')
+    
+    # Skip if already completed
+    if current_user.demographics_collected:
+        flash('Demographics already collected.', 'info')
+        return redirect(url_for('dashboard'))
+    
+    form = DemographicsForm()
+    
+    if form.validate_on_submit():
+        # Save demographics
+        current_user.age_range = form.age_range.data
+        current_user.gender = form.gender.data
+        current_user.location = form.location.data
+        current_user.mental_health_concerns = ','.join(form.mental_health_concerns.data) if form.mental_health_concerns.data else ''
+        current_user.demographics_collected = True
+        
+        try:
+            db.session.commit()
+            flash('Thank you for completing your profile! This helps us personalize your experience.', 'success')
+            return redirect(url_for('dashboard'))
+        except Exception as e:
+            db.session.rollback()
+            app.logger.error(f"Error saving demographics: {str(e)}")
+            flash('There was an error saving your information. Please try again.', 'error')
+    
+    return render_template('demographics.html', form=form)
+
+# Add demographics check to be used by existing routes
+def check_demographics_required():
+    """Check if current user needs to complete demographics"""
+    if current_user.is_authenticated and not current_user.demographics_collected:
+        return True
+    return False

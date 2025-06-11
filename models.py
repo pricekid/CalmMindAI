@@ -37,6 +37,13 @@ class User(UserMixin, db.Model):
     # UI state flags
     welcome_message_shown = db.Column(db.Boolean, default=False)
     
+    # Demographics fields
+    demographics_collected = db.Column(db.Boolean, default=False)
+    age_range = db.Column(db.String(20), nullable=True)
+    gender = db.Column(db.String(30), nullable=True)
+    location = db.Column(db.String(100), nullable=True)
+    mental_health_concerns = db.Column(db.Text, nullable=True)  # Store as comma-separated values
+    
     # Relationships
     journal_entries = db.relationship('JournalEntry', backref='author', lazy='dynamic')
     mood_logs = db.relationship('MoodLog', backref='user', lazy='dynamic')

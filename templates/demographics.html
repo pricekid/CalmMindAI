@@ -1,0 +1,150 @@
+{% extends "layout.html" %}
+
+{% block title %}Complete Your Profile - Dear Teddy{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="mb-0">
+                        <i class="fas fa-user-plus me-2"></i>Complete Your Profile
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <p class="text-muted">
+                            Help us personalize your Dear Teddy experience by sharing a few details about yourself.
+                            This information helps our AI provide more relevant support and insights.
+                        </p>
+                    </div>
+
+                    <form method="POST" action="{{ url_for('demographics') }}">
+                        {{ form.hidden_tag() }}
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.age_range.id }}" class="form-label">
+                                <i class="fas fa-birthday-cake me-2"></i>Age Range
+                            </label>
+                            {{ form.age_range(class="form-select") }}
+                            {% if form.age_range.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.age_range.errors %}
+                                        <div>{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.gender.id }}" class="form-label">
+                                <i class="fas fa-user me-2"></i>Gender
+                            </label>
+                            {{ form.gender(class="form-select") }}
+                            {% if form.gender.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.gender.errors %}
+                                        <div>{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.location.id }}" class="form-label">
+                                <i class="fas fa-map-marker-alt me-2"></i>Location
+                            </label>
+                            {{ form.location(class="form-control", placeholder="e.g., New York, NY") }}
+                            {% if form.location.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.location.errors %}
+                                        <div>{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">
+                                <i class="fas fa-heart me-2"></i>Primary Mental Health Concerns
+                            </label>
+                            <small class="text-muted d-block mb-2">Select all that apply (optional)</small>
+                            
+                            <div class="row">
+                                {% for choice in form.mental_health_concerns %}
+                                    <div class="col-md-6 mb-2">
+                                        <div class="form-check">
+                                            {{ choice(class="form-check-input") }}
+                                            {{ choice.label(class="form-check-label") }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            
+                            {% if form.mental_health_concerns.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.mental_health_concerns.errors %}
+                                        <div>{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid">
+                            {{ form.submit(class="btn btn-primary btn-lg") }}
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <small class="text-muted">
+                            <i class="fas fa-lock me-1"></i>
+                            Your information is secure and will only be used to enhance your experience.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border: none;
+    border-radius: 15px;
+}
+
+.card-header {
+    border-radius: 15px 15px 0 0 !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.form-select, .form-control {
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    transition: border-color 0.3s ease;
+}
+
+.form-select:focus, .form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.form-check-input:checked {
+    background-color: #667eea;
+    border-color: #667eea;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.2s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+</style>
+{% endblock %}
