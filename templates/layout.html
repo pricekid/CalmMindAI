@@ -128,10 +128,10 @@
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link {% if '/login' in request.path %}active{% endif %}" href="/login">Login</a>
+                            <a class="nav-link {% if '/login' in request.path %}active{% endif %}" href="/stable-login">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if '/register' in request.path %}active{% endif %}" href="/register">Register</a>
+                            <a class="nav-link {% if '/register' in request.path %}active{% endif %}" href="/register-simple">Register</a>
                         </li>
                     {% endif %}
                 </ul>

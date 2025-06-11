@@ -1,0 +1,20 @@
+/* Default styles.css for Dear Teddy */
+/* This file exists to prevent 404 errors - main styles are in custom.css */
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.card {
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.navbar-brand {
+    font-weight: 600;
+}

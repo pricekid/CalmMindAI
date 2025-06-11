@@ -146,52 +146,59 @@ def index():
         return redirect(url_for('dashboard'))
     return redirect(url_for('complete_landing'))
 
-# Register core blueprints only
-with app.app_context():
-    # Import models to create tables
-    try:
-        import models
-        db.create_all()
-        app.logger.info("Database tables created")
-    except Exception as e:
-        app.logger.error(f"Error creating database tables: {e}")
+def initialize_app():
+    """Initialize the application after database setup to avoid circular imports"""
+    with app.app_context():
+        # Initialize database first, then import models
+        db.init_app(app)
+        
+        # Now safely import models after db is initialized
+        try:
+            import models
+            db.create_all()
+            app.logger.info("Database tables created")
+        except Exception as e:
+            app.logger.error(f"Error creating database tables: {e}")
 
-    # Register essential routes
-    try:
-        import routes
-        app.logger.info("Core routes registered")
-    except Exception as e:
-        app.logger.error(f"Error registering routes: {e}")
+        # Register essential routes
+        try:
+            import routes
+            app.logger.info("Core routes registered")
+        except Exception as e:
+            app.logger.error(f"Error registering routes: {e}")
 
-    # Register admin routes
-    try:
-        import admin_routes
-        app.logger.info("Admin routes registered")
-    except Exception as e:
-        app.logger.error(f"Error registering admin routes: {e}")
+        # Register admin routes
+        try:
+            import admin_routes
+            app.logger.info("Admin routes registered")
+        except Exception as e:
+            app.logger.error(f"Error registering admin routes: {e}")
 
-    # Register marketing integration
-    try:
-        import marketing_integration
-        app.logger.info("Marketing integration registered")
-    except Exception as e:
-        app.logger.error(f"Error registering marketing integration: {e}")
+        # Register marketing integration
+        try:
+            import marketing_integration
+            app.logger.info("Marketing integration registered")
+        except Exception as e:
+            app.logger.error(f"Error registering marketing integration: {e}")
 
-    # Register stable login blueprint
-    try:
-        from stable_login import stable_login_bp
-        app.register_blueprint(stable_login_bp)
-        app.logger.info("Stable login blueprint registered")
-    except Exception as e:
-        app.logger.error(f"Error registering stable login blueprint: {e}")
+        # Register stable login blueprint
+        try:
+            from stable_login import stable_login_bp
+            app.register_blueprint(stable_login_bp)
+            app.logger.info("Stable login blueprint registered")
+        except Exception as e:
+            app.logger.error(f"Error registering stable login blueprint: {e}")
 
-    # Register simple register blueprint
-    try:
-        from simple_register import simple_register_bp
-        app.register_blueprint(simple_register_bp)
-        app.logger.info("Simple register blueprint registered")
-    except Exception as e:
-        app.logger.error(f"Error registering simple register blueprint: {e}")
+        # Register simple register blueprint
+        try:
+            from simple_register import simple_register_bp
+            app.register_blueprint(simple_register_bp)
+            app.logger.info("Simple register blueprint registered")
+        except Exception as e:
+            app.logger.error(f"Error registering simple register blueprint: {e}")
+
+# Initialize the application
+initialize_app()
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
