@@ -4,7 +4,7 @@
   "current_streak": 1,
   "longest_streak": 1,
   "last_entry_date": "2025-06-11",
-  "total_xp": 35,
+  "total_xp": 80,
   "xp_history": [
     {
       "amount": 5,
@@ -20,6 +20,16 @@
       "amount": 20,
       "reason": "Received insights on journal entry",
       "date": "2025-06-11 14:53:54"
+    },
+    {
+      "amount": 15,
+      "reason": "Created first journal entry during onboarding",
+      "date": "2025-06-11 15:18:40"
+    },
+    {
+      "amount": 30,
+      "reason": "Completed onboarding process",
+      "date": "2025-06-11 15:18:40"
     }
   ]
 }
