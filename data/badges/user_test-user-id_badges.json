@@ -4,7 +4,7 @@
   "current_streak": 1,
   "longest_streak": 1,
   "last_entry_date": "2025-05-13",
-  "total_xp": 75,
+  "total_xp": 80,
   "xp_history": [
     {
       "amount": 15,
@@ -25,6 +25,11 @@
       "amount": 20,
       "reason": "Received insights on journal entry",
       "date": "2025-05-13 19:27:32"
+    },
+    {
+      "amount": 5,
+      "reason": "Logged your mood",
+      "date": "2025-06-11 14:08:35"
     }
   ]
 }
