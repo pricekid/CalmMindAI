@@ -44,6 +44,12 @@ try:
 except Exception as e:
     app.logger.warning(f"Fallback email routes error: {str(e)}")
 
+# Landing page preview route
+@app.route('/landing-preview')
+def landing_preview():
+    """Serve the static landing page preview"""
+    return send_from_directory('.', 'landing_static_preview.html')
+
 # Home page - For main application
 @app.route('/')
 def index():
