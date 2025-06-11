@@ -349,7 +349,7 @@ body.bg-dark p,
     font-weight: 600;
 }
 
-/* Ensure text contrast */
+/* Ensure text contrast - Fixed for Render.com */
 .welcome-message,
 .onboarding-text,
 .card-text,
@@ -367,6 +367,61 @@ h6:not(.bg-dark h6),
 .text-content:not(.bg-dark .text-content) {
     color: #212529 !important;
     text-shadow: none !important;
+}
+
+/* Specific fixes for login/registration forms - Render.com compatibility */
+.card .form-label,
+.card label,
+.card .text-muted,
+.card .form-text,
+.card .small,
+.card p,
+.card span:not(.badge),
+.login-card .form-label,
+.login-card label,
+.login-card .text-muted,
+.login-card .form-text,
+.registration-card .form-label,
+.registration-card label,
+.registration-card .text-muted,
+.registration-card .form-text {
+    color: #212529 !important;
+    font-weight: 500 !important;
+    opacity: 1 !important;
+}
+
+/* Form input labels specific fix */
+.form-floating > label,
+.form-control + label,
+label[for],
+.form-check-label {
+    color: #495057 !important;
+    font-weight: 500 !important;
+    opacity: 1 !important;
+}
+
+/* Card content text visibility */
+.card-body p,
+.card-body span,
+.card-body .text-muted,
+.card-body .form-text {
+    color: #6c757d !important;
+    font-weight: 400 !important;
+}
+
+/* Ensure proper contrast for all form elements */
+.form-control::placeholder {
+    color: #6c757d !important;
+    opacity: 1 !important;
+}
+
+/* Username/email placeholder and helper text */
+.username-hint,
+.password-hint,
+.form-text.text-muted {
+    color: #6c757d !important;
+    font-size: 0.875rem !important;
+    font-weight: 400 !important;
 }
 
 body.bg-dark .lead,
