@@ -529,6 +529,14 @@ with app.app_context():
     from account_routes import account_bp
     app.register_blueprint(account_bp)
     
+    # Register marketing integration for dearteddy.app connection
+    try:
+        from marketing_integration import register_marketing_integration
+        register_marketing_integration(app)
+        app.logger.info("Marketing integration registered successfully")
+    except ImportError as e:
+        app.logger.warning(f"Marketing integration not available: {str(e)}")
+    
     # Register the login blueprint for specialized login handling
     try:
         from login_routes import login_bp
