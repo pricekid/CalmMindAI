@@ -202,18 +202,6 @@
     <script src="{{ url_for('static', filename='js/install-button.js') }}"></script>
     {% block scripts %}{% endblock %}
 
-    <!-- PWA Installation Notification - Will appear only if PWA is not installed -->
-    <div id="pwa-install-banner" style="display:none;" class="position-fixed bottom-0 start-0 end-0 p-3 bg-light text-dark border-top">
-        <div class="container d-flex justify-content-between align-items-center">
-            <div>
-                <i class="fas fa-mobile-alt me-2"></i>
-                <span>Install Dear Teddy on your device for better experience</span>
-            </div>
-            <div>
-                <button id="pwa-install-btn" class="btn btn-sm btn-primary me-2">Install</button>
-                <button id="pwa-dismiss-btn" class="btn btn-sm btn-outline-dark">Not Now</button>
-            </div>
-        </div>
-    </div>
+
   </body>
 </html>
