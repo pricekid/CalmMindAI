@@ -50,6 +50,12 @@ def landing_preview():
     """Serve the static landing page preview"""
     return send_from_directory('.', 'landing_static_preview.html')
 
+# Complete landing page route
+@app.route('/complete-landing')
+def complete_landing():
+    """Serve the complete landing page with all features"""
+    return send_from_directory('.', 'complete_landing_page.html')
+
 # Home page - For main application
 @app.route('/')
 def index():

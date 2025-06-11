@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dear Teddy | Your Mental Wellness Companion</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --teddy-brown: #A05C2C;
+            --teddy-light-brown: #d1a673;
+            --teddy-teal: #1D4D4F;
+            --teddy-dark-teal: #2c5a5c;
+            --bg-gradient-start: #f8f8f8;
+            --bg-gradient-end: #e9e2d5;
+            --crisis-bg: #2d3748;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        /* Navigation Styling */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--teddy-brown) !important;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .navbar-brand .teddy-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--teddy-brown);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+        
+        .navbar-nav .nav-link {
+            color: #666 !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: color 0.3s ease;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: var(--teddy-brown) !important;
+        }
+        
+        .btn-install {
+            background-color: var(--teddy-brown);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn-install:hover {
+            background-color: var(--teddy-teal);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-signup {
+            background-color: var(--teddy-teal);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            text-decoration: none;
+        }
+        
+        .btn-signup:hover {
+            background-color: var(--teddy-dark-teal);
+            color: white;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 2rem 0;
+        }
+        
+        .hero-content h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--teddy-teal);
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-content p {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .cta-buttons {
+            margin-bottom: 2rem;
+        }
+        
+        .btn-cta {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary-cta {
+            background-color: var(--teddy-brown);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary-cta:hover {
+            background-color: var(--teddy-teal);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            color: white;
+        }
+        
+        .btn-secondary-cta {
+            background-color: transparent;
+            color: var(--teddy-brown);
+            border: 2px solid var(--teddy-brown);
+        }
+        
+        .btn-secondary-cta:hover {
+            background-color: var(--teddy-brown);
+            color: white;
+        }
+        
+        .phone-mockup {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* How Dear Teddy Helps Section */
+        .helps-section {
+            padding: 5rem 0;
+            background: white;
+        }
+        
+        .helps-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--teddy-teal);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .helps-section .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 
+                0 20px 40px -12px rgba(0, 0, 0, 0.15),
+                0 8px 16px -4px rgba(0, 0, 0, 0.1),
+                0 4px 8px -2px rgba(0, 0, 0, 0.05),
+                0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateZ(0);
+            backdrop-filter: blur(10px);
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 32px 64px -12px rgba(0, 0, 0, 0.2),
+                0 16px 32px -8px rgba(0, 0, 0, 0.15),
+                0 8px 16px -4px rgba(0, 0, 0, 0.1),
+                0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--teddy-brown);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .feature-card h3 {
+            font-weight: 600;
+            color: var(--teddy-teal);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* About Section */
+        .about-section {
+            padding: 5rem 0;
+            background: var(--bg-gradient-end);
+        }
+        
+        .about-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--teddy-teal);
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .about-section p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn-join {
+            background-color: var(--teddy-brown);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            border: none;
+            margin-top: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-join:hover {
+            background-color: var(--teddy-teal);
+            transform: translateY(-2px);
+            color: white;
+        }
+        
+        /* Crisis Resources Section */
+        .crisis-section {
+            padding: 5rem 0;
+            background: white;
+        }
+        
+        .crisis-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--teddy-teal);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .crisis-section .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+        
+        .crisis-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+            height: 100%;
+        }
+        
+        .crisis-card h3 {
+            color: var(--teddy-teal);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .crisis-card .phone-number {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--teddy-brown);
+            margin-bottom: 1rem;
+        }
+        
+        .crisis-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn-crisis {
+            background-color: var(--teddy-brown);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            border: none;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-crisis:hover {
+            background-color: var(--teddy-teal);
+            color: white;
+        }
+        
+        /* Remember Section */
+        .remember-section {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+        
+        .remember-box {
+            background: white;
+            border-left: 5px solid var(--teddy-brown);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .remember-box h3 {
+            color: var(--teddy-teal);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .remember-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .remember-box li {
+            color: #666;
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .remember-box li:before {
+            content: "•";
+            color: var(--teddy-brown);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--crisis-bg);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer h5 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .footer a {
+            color: #ccc;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+            transition: color 0.3s ease;
+        }
+        
+        .footer a:hover {
+            color: var(--teddy-light-brown);
+        }
+        
+        .footer .brand-description {
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+        
+        .footer .tagline {
+            color: var(--teddy-light-brown);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .newsletter-form input::placeholder {
+            color: #ccc;
+        }
+        
+        .newsletter-form button {
+            background-color: var(--teddy-brown);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid #4a5568;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            text-align: center;
+            color: #ccc;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .btn-cta {
+                margin-right: 0;
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            .navbar-nav {
+                text-align: center;
+            }
+            
+            .cta-buttons {
+                text-align: center;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">
+                <div class="teddy-icon">🧸</div>
+                Dear Teddy
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#crisis">Crisis Resources</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="window.open('/stable-login', '_blank')">Login</a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex">
+                    <a href="#" class="btn-install" onclick="window.open('/stable-login', '_blank')">Install App</a>
+                    <a href="#" class="btn-signup" onclick="window.open('/register-simple', '_blank')">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <h1>Nurture your mental wellness, one journal entry at a time</h1>
+                        <p>Journal your thoughts, track your emotions, and receive gentle, supportive insights — all designed to help you feel more grounded, day by day.</p>
+                        
+                        <div class="cta-buttons">
+                            <a href="#" class="btn-cta btn-primary-cta" onclick="window.open('/register-simple', '_blank')">Get Started</a>
+                            <a href="#features" class="btn-cta btn-secondary-cta">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="text-center">
+                        <!-- Phone Mockup SVG -->
+                        <svg class="phone-mockup" width="300" height="600" viewBox="0 0 300 600" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Phone frame -->
+                            <rect x="10" y="10" width="280" height="580" rx="30" fill="#1D4D4F" stroke="#2c5a5c" stroke-width="2"/>
+                            <rect x="20" y="50" width="260" height="520" rx="20" fill="#f7fafc"/>
+                            
+                            <!-- Header -->
+                            <rect x="20" y="50" width="260" height="70" rx="20" fill="#A05C2C"/>
+                            <circle cx="50" cy="85" r="15" fill="white"/>
+                            <text x="50" y="90" text-anchor="middle" fill="#A05C2C" font-family="Arial" font-size="12" font-weight="bold">🧸</text>
+                            <text x="150" y="90" text-anchor="middle" fill="white" font-family="Arial" font-size="16" font-weight="bold">Dear Teddy</text>
+                            <circle cx="250" cy="85" r="10" fill="white"/>
+                            <text x="250" y="88" text-anchor="middle" fill="#A05C2C" font-family="Arial" font-size="8">ℹ️</text>
+                            
+                            <!-- Date -->
+                            <text x="30" y="150" fill="#666" font-family="Arial" font-size="12">Tuesday, May 14</text>
+                            
+                            <!-- Journal Prompt Card -->
+                            <rect x="30" y="160" width="240" height="80" rx="12" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+                            <text x="40" y="180" fill="#2d3748" font-family="Arial" font-size="14" font-weight="bold">Today I felt proud about...</text>
+                            <text x="40" y="200" fill="#718096" font-family="Arial" font-size="11">Tap to continue</text>
+                            <circle cx="250" cy="200" r="8" fill="#48bb78"/>
+                            <text x="250" y="204" text-anchor="middle" fill="white" font-family="Arial" font-size="10">→</text>
+                            
+                            <!-- Mood Tracker Card -->
+                            <rect x="30" y="260" width="115" height="100" rx="12" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+                            <text x="40" y="280" fill="#2d3748" font-family="Arial" font-size="12" font-weight="bold">Mood Tracker</text>
+                            <rect x="40" y="290" width="8" height="25" fill="#f56565"/>
+                            <rect x="52" y="285" width="8" height="30" fill="#ed8936"/>
+                            <rect x="64" y="280" width="8" height="35" fill="#ecc94b"/>
+                            <rect x="76" y="285" width="8" height="30" fill="#48bb78"/>
+                            <rect x="88" y="290" width="8" height="25" fill="#38b2ac"/>
+                            <text x="87" y="340" text-anchor="middle" fill="#666" font-family="Arial" font-size="9">This Week</text>
+                            
+                            <!-- AI Insights Card -->
+                            <rect x="155" y="260" width="115" height="100" rx="12" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+                            <text x="165" y="280" fill="#2d3748" font-family="Arial" font-size="12" font-weight="bold">AI Insights</text>
+                            <text x="165" y="300" fill="#718096" font-family="Arial" font-size="9">You've been making great</text>
+                            <text x="165" y="315" fill="#718096" font-family="Arial" font-size="9">progress this week!</text>
+                            <text x="165" y="330" fill="#718096" font-family="Arial" font-size="9">Your mood has improved</text>
+                            <text x="165" y="345" fill="#718096" font-family="Arial" font-size="9">significantly.</text>
+                            
+                            <!-- Bottom Navigation -->
+                            <rect x="30" y="380" width="240" height="60" rx="12" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+                            <circle cx="70" cy="410" r="20" fill="#667eea"/>
+                            <text x="70" y="415" text-anchor="middle" fill="white" font-family="Arial" font-size="12">📝</text>
+                            <circle cx="150" cy="410" r="20" fill="#764ba2"/>
+                            <text x="150" y="415" text-anchor="middle" fill="white" font-family="Arial" font-size="12">📊</text>
+                            <circle cx="230" cy="410" r="20" fill="#A05C2C"/>
+                            <text x="230" y="415" text-anchor="middle" fill="white" font-family="Arial" font-size="12">⚙️</text>
+                            
+                            <!-- Bottom labels -->
+                            <text x="70" y="435" text-anchor="middle" fill="#666" font-family="Arial" font-size="9">Journal</text>
+                            <text x="150" y="435" text-anchor="middle" fill="#666" font-family="Arial" font-size="9">Insights</text>
+                            <text x="230" y="435" text-anchor="middle" fill="#666" font-family="Arial" font-size="9">Settings</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How Dear Teddy Helps Section -->
+    <section id="features" class="helps-section">
+        <div class="container">
+            <h2>How Dear Teddy Helps</h2>
+            <p class="subtitle">Our thoughtfully designed features support your emotional wellbeing every step of the way.</p>
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3>Reflective Journaling</h3>
+                        <p>Express your thoughts freely in a private, secure space designed for self-reflection.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>AI-Powered Insights</h3>
+                        <p>Receive thoughtful, personalized feedback that helps you understand your emotional patterns.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Mood Tracking</h3>
+                        <p>Visualize your emotional journey and identify factors that influence your wellbeing.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h3>Gentle Reminders</h3>
+                        <p>Customizable notifications help you maintain a consistent journaling practice.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Dear Teddy Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div style="width: 400px; height: 300px; background: var(--teddy-brown); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem; margin: 0 auto;">
+                        🧸
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h2>About Dear Teddy</h2>
+                    <p>Dear Teddy was created with a simple mission: to make emotional wellbeing support accessible to everyone. Our app combines the therapeutic benefits of journaling with gentle AI guidance to help you process your thoughts and feelings.</p>
+                    <p>We believe that regular reflection and emotional awareness are powerful tools for personal growth and mental wellness. Dear Teddy is your companion on this journey - always available, completely private, and endlessly supportive.</p>
+                    <a href="#" class="btn-join" onclick="window.open('/register-simple', '_blank')">Join Us Today</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Crisis Resources Section -->
+    <section id="crisis" class="crisis-section">
+        <div class="container">
+            <h2>Crisis Resources</h2>
+            <p class="subtitle">If you're experiencing a mental health emergency, please reach out to these resources for immediate support:</p>
+            
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="crisis-card">
+                        <h3>Lifeline Barbados</h3>
+                        <div class="phone-number">Call: 536-4500</div>
+                        <p>Free, confidential support for people in distress.</p>
+                        <a href="tel:536-4500" class="btn-crisis">Call Now</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="crisis-card">
+                        <h3>Crisis Text Line</h3>
+                        <div class="phone-number">Text HOME to 741741</div>
+                        <p>Available in US, Canada, UK, and Ireland. Free, 24/7 text support with trained crisis counselors.</p>
+                        <a href="https://www.crisistextline.org" target="_blank" class="btn-crisis">Visit Website</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="crisis-card">
+                        <h3>International Association for Suicide Prevention</h3>
+                        <div class="phone-number">Global Resources</div>
+                        <p>Resources for finding local crisis centers worldwide.</p>
+                        <a href="https://www.iasp.info/resources/Crisis_Centres/" target="_blank" class="btn-crisis">Find a Crisis Center</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Remember Section -->
+    <section class="remember-section">
+        <div class="container">
+            <div class="remember-box">
+                <h3>Remember:</h3>
+                <ul>
+                    <li>Your feelings are valid, but they're not the whole story.</li>
+                    <li>This difficult moment will pass.</li>
+                    <li>You've overcome challenges before, and you can do it again.</li>
+                    <li>There are people who want to help and who care about your wellbeing.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Dear Teddy</h5>
+                    <p class="brand-description">Your mental wellness companion for journaling, mood tracking, and emotional support.</p>
+                    <p class="tagline">Helping you find clarity and calm, one journal entry at a time.</p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Quick Links</h5>
+                    <a href="#" onclick="window.open('/register-simple', '_blank')">Create Account</a>
+                    <a href="#" onclick="window.open('/stable-login', '_blank')">Sign In</a>
+                    <a href="#features">Features</a>
+                    <a href="#about">About</a>
+                    <a href="#crisis">Crisis Resources</a>
+                    <a href="#" onclick="window.open('/stable-login', '_blank')">Install App</a>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Legal</h5>
+                    <a href="/terms">Terms & Conditions</a>
+                    <a href="/privacy">Privacy Policy</a>
+                    <a href="/support">Support</a>
+                    <a href="/faq">FAQ</a>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Stay Updated</h5>
+                    <p>Subscribe to our newsletter for mental wellness tips and app updates.</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Your Email" />
+                        <button type="submit">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Dear Teddy. All rights reserved. Made with ❤️ for mental wellness.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Smooth Scrolling -->
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>
