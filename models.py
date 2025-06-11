@@ -1,7 +1,14 @@
 import uuid
 from datetime import datetime, timedelta
-from app import db
 from flask_login import UserMixin
+from flask_sqlalchemy import SQLAlchemy
+
+# Import db from render_app to avoid circular imports
+try:
+    from render_app import db
+except ImportError:
+    # Fallback for when imported from app.py
+    from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import deferred, load_only
 from flask_dance.consumer.storage.sqla import OAuthConsumerMixin

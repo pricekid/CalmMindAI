@@ -149,10 +149,7 @@ def index():
 def initialize_app():
     """Initialize the application after database setup to avoid circular imports"""
     with app.app_context():
-        # Initialize database first, then import models
-        db.init_app(app)
-        
-        # Now safely import models after db is initialized
+        # Database is already initialized above, just import models and create tables
         try:
             import models
             db.create_all()
