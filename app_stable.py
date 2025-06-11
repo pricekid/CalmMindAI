@@ -40,9 +40,6 @@ class User(db.Model):
     password_hash = db.Column(db.String(256), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
-    def __init__(self, **kwargs):
-        super(User, self).__init__(**kwargs)
-    
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
     
@@ -72,9 +69,6 @@ class JournalEntry(db.Model):
     anxiety_level = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     ai_response = db.Column(db.Text)
-    
-    def __init__(self, **kwargs):
-        super(JournalEntry, self).__init__(**kwargs)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -155,3 +149,6 @@ def logout():
 # Create tables
 with app.app_context():
     db.create_all()
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)

@@ -1,0 +1,45 @@
+# Safe Demographics Addition Prompt
+
+## Context
+I have a stable Flask journaling app (Dear Teddy) that works perfectly. I want to add user demographics collection WITHOUT breaking the existing functionality.
+
+## Critical Requirements
+1. **NO NEW BLUEPRINTS** - Add all functionality directly to the main app.py file
+2. **NO SEPARATE ROUTE FILES** - Keep all routes in one place
+3. **MODIFY EXISTING TEMPLATES** - Don't create duplicate templates
+4. **PRESERVE ALL EXISTING FUNCTIONALITY** - Login, register, journal, dashboard must continue working exactly as before
+
+## What I Want to Add
+Add a simple demographics collection step that happens ONCE after a user first registers:
+
+### Demographics to Collect:
+- Age range (dropdown: 18-25, 26-35, 36-45, 46-55, 56-65, 65+)
+- Gender (dropdown: Male, Female, Non-binary, Prefer not to say)
+- Location (text input for city/state)
+- Primary mental health concerns (checkboxes: Anxiety, Depression, Stress, Sleep issues, Relationship issues, Work stress, Other)
+
+### Implementation Requirements:
+1. Add demographics fields to the existing User model
+2. Add a `demographics_collected` boolean field to track completion
+3. After successful registration, redirect to a demographics form instead of dashboard
+4. Once demographics are submitted, redirect to dashboard
+5. For existing users, show the demographics form on their next login if not completed
+6. Store demographics in the database and use them to personalize AI responses
+
+## Implementation Instructions:
+- Modify the existing app_stable.py file ONLY
+- Add the new fields to the User model
+- Add ONE new route `/demographics` to handle the form
+- Modify the register and login routes to check demographics status
+- Create ONE new template `demographics.html`
+- Update database migration to add new columns
+
+## What NOT to do:
+- Don't create any blueprint files
+- Don't create separate route files
+- Don't duplicate existing functionality
+- Don't modify the core login/register/journal functionality
+- Don't add multiple TTS services or admin systems
+- Don't import external route modules
+
+Keep it simple and contained within the single app file structure.
