@@ -10,10 +10,13 @@
         border: 1px solid #343a40;
         border-radius: 5px;
         transition: background-color 0.3s;
+        color: white;
+        background-color: #212529;
     }
     
     .voice-option:hover {
         background-color: #343a40;
+        color: white;
     }
     
     .voice-option.selected {
@@ -90,10 +93,13 @@
         background-color: #212529;
         border-radius: 5px;
         transition: background-color 0.3s;
+        color: white;
+        border: 1px solid #343a40;
     }
     
     .sample-text:hover {
         background-color: #343a40;
+        color: white;
     }
 </style>
 {% endblock %}
@@ -105,26 +111,26 @@
             <h1 class="mb-4">
                 <span class="openai-badge">OpenAI</span> Neural Voices
             </h1>
-            <p class="lead mb-4">Experience human-like text-to-speech with OpenAI's advanced neural voice technology.</p>
+            <p class="lead mb-4 text-light">Experience human-like text-to-speech with OpenAI's advanced neural voice technology.</p>
             
             <!-- Text input -->
             <div class="mb-4">
-                <label for="ttsText" class="form-label">Enter text to convert to speech:</label>
+                <label for="ttsText" class="form-label text-light">Enter text to convert to speech:</label>
                 <textarea id="ttsText" class="form-control mb-3" rows="4" placeholder="Type text here...">Welcome to Calm Journey. I'm here to help you articulate your thoughts and feelings with a natural, soothing voice. Our neural voices sound completely human-like for a more comforting and engaging experience.</textarea>
             </div>
             
             <!-- Sample text options -->
             <div class="sample-texts mb-4">
-                <h5>Sample Texts (click to use):</h5>
+                <h5 class="text-light">Sample Texts (click to use):</h5>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="sample-text" data-text="When we're feeling anxious, our thoughts may race with worry. Try to notice these thoughts without judgment, and gently bring your attention back to the present moment. Remember that you are not your thoughts, and this moment of difficulty will pass.">
-                            <strong>Anxiety Coaching</strong>: A calming message about managing anxious thoughts
+                            <strong class="text-white">Anxiety Coaching</strong>: <span class="text-light">A calming message about managing anxious thoughts</span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="sample-text" data-text="Today I want you to practice a simple breathing exercise. Inhale slowly through your nose for four counts, hold your breath for two counts, and exhale through your mouth for six counts. This can help calm your nervous system when you're feeling overwhelmed.">
-                            <strong>Breathing Exercise</strong>: Instructions for a calming breathing technique
+                            <strong class="text-white">Breathing Exercise</strong>: <span class="text-light">Instructions for a calming breathing technique</span>
                         </div>
                     </div>
                 </div>
@@ -133,13 +139,13 @@
             <div class="row">
                 <!-- Voice Types -->
                 <div class="col-12 mb-4">
-                    <h3>Voice Selection</h3>
-                    <p class="text-muted">Choose a neural voice model that sounds most natural to you</p>
+                    <h3 class="text-light">Voice Selection</h3>
+                    <p class="text-light">Choose a neural voice model that sounds most natural to you</p>
                     <div class="voice-options" id="voiceOptions">
                         <!-- Voice options will be populated by JavaScript -->
                         <div class="loading">
                             <div class="loading-spinner"></div>
-                            <span>Loading voices...</span>
+                            <span class="text-light">Loading voices...</span>
                         </div>
                     </div>
                 </div>
@@ -210,8 +216,8 @@
                     const voiceName = key.charAt(0).toUpperCase() + key.slice(1);
                     
                     voiceOption.innerHTML = `
-                        <strong>${voiceName}</strong>
-                        <div class="voice-description">${description}</div>
+                        <strong class="text-white">${voiceName}</strong>
+                        <div class="voice-description text-light">${description}</div>
                     `;
                     
                     voiceOption.addEventListener('click', function() {
@@ -237,7 +243,7 @@
             })
             .catch(error => {
                 console.error('Error fetching voices:', error);
-                voiceOptions.innerHTML = '<div class="alert alert-danger">Error loading voices</div>';
+                voiceOptions.innerHTML = '<div class="alert alert-danger text-white">Error loading voices</div>';
             });
         
         // Generate speech on button click
