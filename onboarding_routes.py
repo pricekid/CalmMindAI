@@ -24,13 +24,6 @@ def step_1():
     # Create a simple form for CSRF protection
     form = FlaskForm()
     
-    # Clear any existing onboarding session data for a fresh start
-    session.pop('onboarding_mood', None)
-    session.pop('onboarding_journal', None)
-    session.pop('onboarding_cbt_feedback', None)
-    session.pop('demographics_completed', None)
-    session.pop('last_feedback', None)
-    
     if request.method == 'POST' and form.validate_on_submit():
         mood = request.form.get('mood')
         if not mood:
@@ -39,7 +32,6 @@ def step_1():
             
         # Store the mood in session
         session['onboarding_mood'] = mood
-        session['onboarding_step'] = 1
         
         # Redirect to step 2
         return redirect(url_for('onboarding.step_2'))
@@ -83,17 +75,12 @@ def step_2():
             last_feedback = generate_insightful_message(mood)
             session['last_feedback'] = last_feedback
             
-        except Exception as e:
-            # If OpenAI service fails for any reason, fall back to static messages
-            print(f"Error with OpenAI service: {str(e)}")
-            logging.error(f"OpenAI service error during onboarding: {str(e)}")
+        except ImportError as e:
+            # If OpenAI service is unavailable, fall back to the static messages
+            print(f"Error importing OpenAI service: {str(e)}")
             
             # Use the static feedback generation function
-            try:
-                cbt_feedback = generate_cbt_feedback(mood)
-            except:
-                cbt_feedback = "Thank you for sharing your thoughts. Regular journaling can help you gain insights into your emotions and thought patterns."
-            
+            cbt_feedback = generate_cbt_feedback(mood)
             session['onboarding_cbt_feedback'] = cbt_feedback
             
             # Fallback to one of the hardcoded CBT-style messages
@@ -107,144 +94,13 @@ def step_2():
             last_feedback = random.choice(cbt_style_messages)
             session['last_feedback'] = last_feedback
         
-        # Create the first journal entry (this should succeed even if AI fails)
-        try:
-            create_first_journal_entry(journal_content, mood, cbt_feedback)
-            print(f"DEBUG: Journal entry created successfully")
-        except Exception as e:
-            print(f"ERROR: Failed to create journal entry: {str(e)}")
-            # Still continue with onboarding flow
+        # Create the first journal entry
+        create_first_journal_entry(journal_content, mood, cbt_feedback)
         
-        # Set step tracker to ensure proper flow
-        session['onboarding_step'] = 2
-        session['demographics_required'] = True  # Explicit flag for demographics
-        
-        # Debug logging
-        print(f"DEBUG: Step 2 completed, redirecting to demographics. Session data: {dict(session)}")
-        
-        # Redirect to demographics step
-        return redirect(url_for('onboarding.demographics'))
-    
-    return render_template('onboarding_step_2.html', form=form)
-
-@onboarding_bp.route('/demographics', methods=['GET', 'POST'])
-@login_required
-def demographics():
-    """
-    Demographics step: Optional demographic information collection
-    """
-    # Create a simple form for CSRF protection
-    form = FlaskForm()
-    
-    # Debug logging
-    print(f"DEBUG: Demographics route accessed. Session data: {dict(session)}")
-    
-    # Check multiple conditions to ensure user should see demographics
-    step_check = session.get('onboarding_step', 0) >= 2
-    journal_check = 'onboarding_journal' in session
-    demographics_required = session.get('demographics_required', False)
-    
-    print(f"DEBUG: Step check: {step_check}, Journal check: {journal_check}, Demographics required: {demographics_required}")
-    
-    # Make sure user completed step 2 or has explicit demographics flag
-    if not (step_check and journal_check) and not demographics_required:
-        print(f"DEBUG: Demographics access denied - redirecting to step 1")
-        return redirect(url_for('onboarding.step_1'))
-    
-    if request.method == 'POST' and form.validate_on_submit():
-        # Get form data - all fields are optional
-        age_range = request.form.get('age_range', '')
-        relationship_status = request.form.get('relationship_status', '')
-        has_children = request.form.get('has_children', '')
-        life_focus = request.form.getlist('life_focus')  # Multi-select
-        life_focus_other = request.form.get('life_focus_other', '')
-        
-        # Add "Other" text if provided
-        if life_focus_other.strip():
-            life_focus.append(f"Other: {life_focus_other.strip()}")
-        
-        # Update user's demographic information
-        try:
-            from app import db
-            from models import User
-            
-            user = User.query.get(current_user.id)
-            if user:
-                # Only update fields that were provided
-                if age_range:
-                    user.age_range = age_range
-                if relationship_status:
-                    user.relationship_status = relationship_status
-                if has_children:
-                    user.has_children = (has_children == 'yes')
-                if life_focus:
-                    # Store as JSON string
-                    import json
-                    user.life_focus = json.dumps(life_focus)
-                
-                db.session.commit()
-                logging.info(f"Updated demographics for user {current_user.id}")
-        except Exception as e:
-            logging.error(f"Error updating demographics: {str(e)}")
-            db.session.rollback()
-        
-        # Mark demographics as completed
-        session['demographics_completed'] = True
-        session['onboarding_step'] = 3
-        
-        # Redirect to final step
+        # Redirect to step 3
         return redirect(url_for('onboarding.step_3'))
     
-    print(f"DEBUG: Rendering demographics template")
-    return render_template('onboarding_demographics.html', form=form)
-
-@onboarding_bp.route('/test-demographics')
-@login_required
-def test_demographics():
-    """Test route to see demographics form directly"""
-    print("🔍 Route hit: /onboarding/test-demographics")
-    print(f"🔍 User authenticated: {current_user.is_authenticated}")
-    print(f"🔍 Request method: {request.method}")
-    print(f"🔍 Request URL: {request.url}")
-    try:
-        from flask_wtf import FlaskForm
-        form = FlaskForm()
-        # Set minimal session data
-        session['onboarding_journal'] = 'test journal'
-        session['onboarding_step'] = 2
-        print(f"DEBUG: Test demographics route - User: {current_user.id}, Session: {dict(session)}")
-        return render_template('onboarding_demographics.html', form=form)
-    except Exception as e:
-        print(f"ERROR in test_demographics: {str(e)}")
-        return f"Error in test demographics: {str(e)}", 500
-
-@onboarding_bp.route('/debug')
-def debug_route():
-    """Simple debug route to test if onboarding routes work - no login required"""
-    print(f"🔍 DEBUG ROUTE HIT - User Agent: {request.headers.get('User-Agent')}")
-    print(f"🔍 DEBUG ROUTE HIT - Full URL: {request.url}")
-    print(f"🔍 DEBUG ROUTE HIT - Method: {request.method}")
-    print(f"🔍 DEBUG ROUTE HIT - Response: About to return success message")
-    logging.info("Onboarding debug route was accessed successfully")
-    response_text = "🔍 DEBUG ROUTE SUCCESS: Onboarding blueprint is working correctly!"
-    print(f"🔍 DEBUG ROUTE - Returning response: {response_text}")
-    return response_text
-
-@onboarding_bp.route('/simple-test')
-def simple_test():
-    """Ultra simple test route"""
-    return "Simple test works!"
-
-@onboarding_bp.route('/skip-demographics')
-@login_required
-def skip_demographics():
-    """
-    Skip demographics step and proceed to final onboarding step
-    """
-    # Mark demographics as completed (skipped)
-    session['demographics_completed'] = True
-    session['onboarding_step'] = 3
-    return redirect(url_for('onboarding.step_3'))
+    return render_template('onboarding_step_2.html', form=form)
 
 @onboarding_bp.route('/step-3', methods=['GET'])
 @login_required
@@ -256,13 +112,8 @@ def step_3():
     form = FlaskForm()
     
     # Make sure user completed step 2
-    if 'onboarding_journal' not in session or session.get('onboarding_step', 0) < 2:
+    if 'onboarding_journal' not in session:
         return redirect(url_for('onboarding.step_1'))
-    
-    # Check if user should go through demographics step first
-    # Only allow step 3 if demographics was completed or skipped (step >= 3)
-    if session.get('onboarding_step', 0) < 3 or 'demographics_completed' not in session:
-        return redirect(url_for('onboarding.demographics'))
     
     # Get the feedback from session or use fallback
     cbt_feedback = session.get('onboarding_cbt_feedback', "Thank you for sharing your thoughts. Regular journaling can help you gain insights into your emotions and thought patterns. I'll be here to support your mental wellness journey.")
@@ -409,7 +260,6 @@ def mark_user_as_not_new():
     session.pop('onboarding_mood', None)
     session.pop('onboarding_journal', None)
     session.pop('onboarding_cbt_feedback', None)
-    session.pop('demographics_completed', None)  # Clear demographics flag too
     # We keep 'last_feedback' in the session so it can be displayed on step 3
     
     # Award XP for completing the onboarding process

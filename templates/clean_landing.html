@@ -751,9 +751,9 @@
                         <li><a href="#" class="active">Home</a></li>
                         <li><a href="#features">Features</a></li>
                         <li><a href="#about">About</a></li>
-                        <li><a href="/login">Login</a></li>
+                        <li><a href="{{ url_for('login') }}">Login</a></li>
                         <li><a href="#" onclick="showInstallPrompt(); return false;" class="install-app-btn"><i class="fas fa-download"></i> Install App</a></li>
-                        <li><a href="/register" class="sign-up">Sign Up</a></li>
+                        <li><a href="{{ url_for('register') }}" class="sign-up">Sign Up</a></li>
                     </ul>
                 </div>
                 
@@ -785,7 +785,7 @@
                         </a>
                     </li>
                     <li class="mobile-nav-item">
-                        <a href="/login" class="mobile-nav-link">
+                        <a href="{{ url_for('login') }}" class="mobile-nav-link">
                             <i class="fas fa-lock"></i>
                             <span>Login</span>
                         </a>
@@ -797,7 +797,7 @@
                         </button>
                     </li>
                     <li class="mobile-nav-item">
-                        <a href="/register" class="mobile-nav-link mobile-signup-btn">
+                        <a href="{{ url_for('register') }}" class="mobile-nav-link mobile-signup-btn">
                             <i class="fas fa-user-plus"></i>
                             <span>Sign Up</span>
                         </a>
@@ -820,7 +820,7 @@
                     Journal your thoughts, track your emotions, and receive gentle, supportive insights — all designed to help you feel more grounded, day by day.
                 </p>
                 
-                <a href="/register" class="cta-button">
+                <a href="{{ url_for('register') }}" class="cta-button">
                     Get Started
                 </a>
             </div>
@@ -934,8 +934,8 @@
             <div class="footer-column">
                 <h5>Quick Links</h5>
                 <ul class="footer-links">
-                    <li><a href="/register">Create Account</a></li>
-                    <li><a href="/login">Sign In</a></li>
+                    <li><a href="{{ url_for('register') }}">Create Account</a></li>
+                    <li><a href="{{ url_for('login') }}">Sign In</a></li>
                     <li><a href="#features">Features</a></li>
                     <li><a href="#faq">FAQ</a></li>
                     <li><button type="button" onclick="showInstallPrompt()" class="footer-install-btn">Install App</button></li>
