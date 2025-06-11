@@ -1,0 +1,117 @@
+{% extends "layout.html" %}
+
+{% block title %}Dashboard - Dear Teddy{% endblock %}
+
+{% block styles %}
+<style>
+.emergency-notice {
+    background: linear-gradient(135deg, #ff6b6b, #ffa500);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.dashboard-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.action-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    text-decoration: none;
+    display: inline-block;
+    margin: 10px;
+    transition: transform 0.2s;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    color: white;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="emergency-notice">
+        <i class="fas fa-tools me-2"></i>
+        Simplified Dashboard Mode - Some features may be limited
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="dashboard-card">
+                <h2 class="mb-4">Welcome back to Dear Teddy</h2>
+                <p class="lead">Your mental wellness companion is here to support your journey.</p>
+                
+                <div class="text-center mt-4">
+                    <a href="/journal" class="action-btn">
+                        <i class="fas fa-pencil-alt me-2"></i>New Journal Entry
+                    </a>
+                    <a href="/journal-list" class="action-btn">
+                        <i class="fas fa-book me-2"></i>View Past Entries
+                    </a>
+                    <a href="/account" class="action-btn">
+                        <i class="fas fa-user me-2"></i>Account Settings
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="dashboard-card">
+                <h4><i class="fas fa-heart text-danger me-2"></i>Mental Wellness</h4>
+                <p>Take a moment to reflect on your thoughts and feelings through journaling.</p>
+                <small class="text-muted">Regular journaling can help improve emotional awareness and mental clarity.</small>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="dashboard-card">
+                <h4><i class="fas fa-mobile-alt text-primary me-2"></i>Install App</h4>
+                <p>Get the full Dear Teddy experience by installing our app on your device.</p>
+                <a href="/install" class="btn btn-outline-primary btn-sm">Install Instructions</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="dashboard-card text-center">
+                <h5>Need Help?</h5>
+                <p>If you're experiencing issues with the dashboard, try refreshing the page or contact support.</p>
+                <a href="/dashboard" class="btn btn-primary me-2">Try Full Dashboard</a>
+                <a href="/logout" class="btn btn-outline-secondary">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Simple emergency dashboard functionality
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Emergency dashboard loaded successfully');
+    
+    // Add some basic interactivity
+    const actionBtns = document.querySelectorAll('.action-btn');
+    actionBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            console.log('Navigation to:', this.href);
+        });
+    });
+});
+</script>
+{% endblock %}

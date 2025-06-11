@@ -797,6 +797,14 @@ with app.app_context():
     except ImportError:
         app.logger.warning("Email preview module not available")
     
+    # Register emergency dashboard blueprint
+    try:
+        from emergency_dashboard import emergency_dashboard_bp
+        app.register_blueprint(emergency_dashboard_bp)
+        app.logger.info("Emergency dashboard blueprint registered successfully")
+    except ImportError:
+        app.logger.warning("Emergency dashboard module not available")
+    
     # Exempt API endpoints that need to bypass CSRF
     try:
         if 'api_journal_coach' in app.view_functions:
