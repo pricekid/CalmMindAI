@@ -1,0 +1,31 @@
+Agent, our latest smoke test shows a number of critical 500-errors in production. Please address each of the following, commit your changes to main, push, and trigger a Manual Deploy on Render. Then re-run the smoke test and confirm PASS for each item.
+
+1. **Login CSRF**  
+   - 🐞 Fix the login form so the CSRF token renders correctly.  
+   - Ensure the template includes `{{ form.csrf_token }}` (or equivalent) inside `<form>` and that your POST handler’s CSRF check passes.
+
+2. **Password-Reset Flow**  
+   - 🚑 GET `/pwd-reset/forgot` (or your reset-URL) is 500 → restore or register the blueprint, add the missing template, and wire up the route.  
+   - 🚑 POST the reset form → ensure the SendGrid integration and blueprint endpoint exist and return 200.
+
+3. **Static Content Pages**  
+   - 📄 `/terms`, `/privacy`, `/support`, `/faq` are all 500 → register their blueprints (or add routes) and supply the corresponding templates under `templates/`.  
+   - If you intend them to be static Markdown, convert to HTML or use a markdown renderer.
+
+4. **Static Asset Errors**  
+   - 🖼️ `/favicon.ico` is 500 → add a `static/favicon.ico` file (or copy `static/images/teddy-logo.svg` as ICO).  
+   - ⚙️ `/static/js/main.js` is 500 → ensure `main.js` exists in `static/js/` and is committed.
+
+5. **Marketing Integration Endpoints**  
+   - 📣 `/marketing-login`, `/marketing-signup`, `/app-redirect` are all 500 → verify those blueprints are imported and registered in `render_app.py`, and that their templates or redirect logic exist.
+
+6. **Landing-Page Console Errors**  
+   - 🔍 Inspect any JS errors or missing-file 404s on `/complete-landing` → fix broken `<script>` or `<link>` references in your template.
+
+7. **Re-Deploy & Verify**  
+   - Commit all fixes and push to `main`.  
+   - Trigger a Manual Deploy on Render.  
+   - Tail the logs to confirm no new 500s during startup.  
+   - Re-run the full smoke test and report PASS for all nine categories.
+
+Please return a bullet-list summary of each step with its new HTTP status (e.g. “✅ /stable-login GET → 200”, “✅ /terms → 200”). Thanks!  
