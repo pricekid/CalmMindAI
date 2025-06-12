@@ -813,6 +813,22 @@ with app.app_context():
     except ImportError:
         app.logger.warning("Emergency dashboard module not available")
     
+    # Register password reset blueprint
+    try:
+        from pwd_reset import pwd_reset_bp
+        app.register_blueprint(pwd_reset_bp)
+        app.logger.info("Password reset blueprint registered successfully")
+    except ImportError:
+        app.logger.warning("Password reset module not available")
+    
+    # Register static pages blueprint
+    try:
+        from static_pages import static_pages_bp
+        app.register_blueprint(static_pages_bp)
+        app.logger.info("Static pages blueprint registered successfully")
+    except ImportError:
+        app.logger.warning("Static pages module not available")
+    
     # Exempt API endpoints that need to bypass CSRF
     try:
         if 'api_journal_coach' in app.view_functions:

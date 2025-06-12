@@ -194,6 +194,22 @@ def initialize_app():
         except Exception as e:
             app.logger.error(f"Error registering simple register blueprint: {e}")
 
+        # Register password reset blueprint
+        try:
+            from pwd_reset import pwd_reset_bp
+            app.register_blueprint(pwd_reset_bp)
+            app.logger.info("Password reset blueprint registered")
+        except Exception as e:
+            app.logger.error(f"Error registering password reset blueprint: {e}")
+
+        # Register static pages blueprint
+        try:
+            from static_pages import static_pages_bp
+            app.register_blueprint(static_pages_bp)
+            app.logger.info("Static pages blueprint registered")
+        except Exception as e:
+            app.logger.error(f"Error registering static pages blueprint: {e}")
+
 # Initialize the application
 initialize_app()
 

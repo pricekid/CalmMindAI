@@ -14,8 +14,8 @@ from werkzeug.security import generate_password_hash
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Create blueprint
-pwd_reset_bp = Blueprint('pwd_reset', __name__, url_prefix='/pwd-reset')
+# Create blueprint with unique name
+pwd_reset_bp = Blueprint('password_reset_pages', __name__, url_prefix='/pwd-reset')
 
 @pwd_reset_bp.route('/forgot', methods=['GET', 'POST'])
 def forgot_password():
