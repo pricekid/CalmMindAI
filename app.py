@@ -46,6 +46,13 @@ def nl2br_filter(s):
         return ""
     return s.replace('\n', '<br>')
 
+# Add CSRF token function to template context
+@app.context_processor
+def inject_csrf_token():
+    """Make CSRF token function available in all templates"""
+    from csrf_utils import get_csrf_token
+    return dict(csrf_token=get_csrf_token)
+
 # Configure the database
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///calm_journey.db")
 app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
@@ -828,6 +835,13 @@ with app.app_context():
         app.logger.info("Static pages blueprint registered successfully")
     except ImportError:
         app.logger.warning("Static pages module not available")
+    
+    # Add favicon route
+    @app.route('/favicon.ico')
+    def favicon():
+        """Serve favicon from static directory"""
+        from flask import send_from_directory
+        return send_from_directory('static', 'favicon.ico', mimetype='image/x-icon')
     
     # Exempt API endpoints that need to bypass CSRF
     try:
