@@ -243,7 +243,7 @@
                 
                 <form method="POST" action="/stable-login">
                     <!-- Explicit CSRF token field -->
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     
                     <div class="mb-4">
                         <label for="email" class="form-label" style="color: #ffffff; font-weight: 500;">
