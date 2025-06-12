@@ -1,0 +1,37 @@
+Agent, please run a final end-to-end smoke test against our live Dear Teddy site (https://dear-teddy.app) and report back in a bullet-list summary with PASS/FAIL for each step plus any relevant HTTP status codes or error snippets.
+
+1. **Sign-Up Flow**  
+   - POST a valid new user to `/register-simple` (e.g. test@test.com + “Password123!”).  
+   - Confirm HTTP 200 or 302 redirect and presence of “Check your email” or similar confirmation text.
+
+2. **Login Flow**  
+   - GET `/stable-login` → check HTTP 200 and that fields for “Email” and “Password” are present in the HTML.  
+   - POST the test user credentials to `/stable-login` → ensure HTTP 200/302 and the dashboard or landing page loads.
+
+3. **Forgot-Password Flow**  
+   - GET the password-reset form endpoint (e.g. `/pwd-reset/forgot`) → confirm HTTP 200 and form fields.  
+   - POST the test user’s email → confirm HTTP 200 and “Check your email” text.
+
+4. **Navigation Links**  
+   - On each of `/complete-landing`, `/stable-login`, `/register-simple` extract all `<a href="">` links.  
+   - For each link, perform a GET and note any that return non-2xx status or blank pages.
+
+5. **Static Assets**  
+   - GET `/favicon.ico`, `/manifest.json`, `/static/service-worker.js` → confirm HTTP 200.  
+   - GET `/static/css/styles.css` and `/static/js/main.js` → confirm HTTP 200.
+
+6. **HTTP → HTTPS Redirect**  
+   - GET `http://dear-teddy.app/` → confirm HTTP 301/302 redirect to `https://dear-teddy.app/`.
+
+7. **PWA Installability Check**  
+   - Fetch `manifest.json` → verify it contains keys like `name`, `start_url`, `icons`.  
+   - Fetch `service-worker.js` → confirm HTTP 200.
+
+8. **Homepage & Landing Page Checks**  
+   - GET `/` → confirm redirect to `/complete-landing`.  
+   - GET `/complete-landing` → confirm HTTP 200 and key CTAs (“Get Started”, “Learn More”) are in the HTML.
+
+9. **Console & Network Errors**  
+   - Simulate a headless browser load of `/complete-landing` and capture any JavaScript console errors or missing-file network failures.
+
+**Please output** a clean bullet list under each of the nine headings above, with PASS/FAIL, HTTP codes, and any error excerpts. Thank you!  
