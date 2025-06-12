@@ -50,8 +50,8 @@ def nl2br_filter(s):
 @app.context_processor
 def inject_csrf_token():
     """Make CSRF token function available in all templates"""
-    from csrf_utils import get_csrf_token
-    return dict(csrf_token=get_csrf_token)
+    from flask_wtf.csrf import generate_csrf
+    return dict(csrf_token=generate_csrf)
 
 # Configure the database
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///calm_journey.db")

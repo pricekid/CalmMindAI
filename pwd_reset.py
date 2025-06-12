@@ -34,6 +34,7 @@ def forgot_password():
         
         return redirect('/pwd-reset/forgot')
     
+    # CSRF token is automatically available through app context processor
     return render_template('pwd_reset/forgot.html')
 
 @pwd_reset_bp.route('/reset/<token>', methods=['GET', 'POST'])
