@@ -131,6 +131,19 @@
                 <div class="card-body p-4">
                     <form method="POST" action="">
                         {{ form.hidden_tag() }}
+                        
+                        {% if form.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            <h6 class="alert-heading">Please fix the following issues:</h6>
+                            <ul class="mb-0">
+                                {% for field, errs in form.errors.items() %}
+                                    {% for err in errs %}
+                                        <li>{{ err }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
 
                         <div class="mb-3">
                             {{ form.username.label(class="form-label") }}
