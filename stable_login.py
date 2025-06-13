@@ -27,15 +27,18 @@ def stable_login():
         logger.info(f"Login attempt - Form token length: {len(form_token) if form_token else 0}")
         logger.info(f"Login attempt - Session token length: {len(session_token) if session_token else 0}")
         
+        # Check for CSRF token - if missing, set error but continue processing
+        if not form_token:
+            logger.warning("CSRF token missing from login form")
+            error = 'Security token missing. Please refresh the page and try again.'
+        
         email = request.form.get('email')
         email = email.lower() if email else ''
         password = request.form.get('password', '')
         remember = request.form.get('remember') == 'on'
         
-        # Extra safety checks
-        if not email or not password:
-            error = 'Email and password are required'
-        else:
+        # Only proceed with authentication if no CSRF error
+        if not error and email and password:
             try:
                 # Query user with case-insensitive email matching
                 user = User.query.filter(User.email.ilike(email)).first()
@@ -71,6 +74,8 @@ def stable_login():
             except Exception as e:
                 logger.error(f"Login error: {str(e)}")
                 error = 'An error occurred during login. Please try again.'
+        elif not email or not password:
+            error = 'Email and password are required'
     
     # Set session to permanent with extended lifetime
     session.permanent = True
