@@ -73,8 +73,7 @@ def stable_login():
                 error = 'An error occurred during login. Please try again.'
     
     # Always get a fresh token and ensure it's explicitly stored in the session
-    csrf_token = get_csrf_token()
-    session['_csrf_token'] = csrf_token
+    session['_csrf_token'] = get_csrf_token()
     
     # Set session to permanent with extended lifetime
     session.permanent = True

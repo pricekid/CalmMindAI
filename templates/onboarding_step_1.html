@@ -15,7 +15,7 @@
           </p>
 
           <form method="POST" action="{{ url_for('onboarding.step_1') }}">
-            {{ form.csrf_token }}
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <div class="mood-selector mb-5">
               <div class="row text-center">
                 <div class="col">
