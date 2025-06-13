@@ -168,14 +168,17 @@ def register_simple():
         
     except Exception as e:
         # Log the error and rollback
+        import traceback
+        error_details = traceback.format_exc()
         print(f"Registration error: {str(e)}")
+        print(f"Full traceback: {error_details}")
         try:
             db.session.rollback()
         except:
             pass
         
         return render_template_string(REGISTRATION_TEMPLATE, 
-                                    error="Registration failed due to a server error. Please try again.")
+                                    error=f"Registration failed: {str(e)}")
 
 # Health check endpoint
 @simple_register_bp.route('/register-simple/health')

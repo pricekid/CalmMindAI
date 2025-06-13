@@ -73,20 +73,8 @@ def inject_csrf_token():
             return ""
     return dict(csrf_token=csrf_token)
 
-# Configure the database
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///calm_journey.db")
-app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
-    "pool_recycle": 300,
-    "pool_pre_ping": True,
-    "pool_timeout": 60,
-    "pool_size": 10,
-    "max_overflow": 20,
-    "isolation_level": "READ COMMITTED",  # More forgiving isolation level for general web apps
-    "connect_args": {
-        "connect_timeout": 10
-    }
-}
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+# Database configuration is already set in create_app() function
+# Remove duplicate configuration here
 
 # Configure CSRF protection with consistent settings
 app.config["WTF_CSRF_TIME_LIMIT"] = 7200  # 2 hour token expiration (extended)
@@ -657,13 +645,13 @@ with app.app_context():
     except ImportError:
         app.logger.warning("Standalone reflection test module not available")
     
-    # Register the simple registration blueprint with minimal dependencies
+    # Register the fixed simple registration blueprint with minimal dependencies
     try:
-        from simple_register import simple_register_bp
+        from simple_register_fixed import simple_register_bp
         app.register_blueprint(simple_register_bp)
-        app.logger.info("Simple registration blueprint registered successfully")
+        app.logger.info("Clean registration blueprint registered successfully")
     except ImportError:
-        app.logger.warning("Simple registration module not available")
+        app.logger.warning("Clean registration module not available")
     
     # Register working registration system (CSRF-exempt)
     try:
