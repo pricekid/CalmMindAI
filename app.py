@@ -662,6 +662,15 @@ with app.app_context():
     except ImportError:
         app.logger.warning("Final registration module not available")
     
+    # Register minimal registration blueprint
+    try:
+        from minimal_register import bp as minimal_register_bp
+        csrf.exempt(minimal_register_bp)
+        app.register_blueprint(minimal_register_bp)
+        app.logger.info("Minimal registration blueprint registered successfully")
+    except ImportError:
+        app.logger.warning("Minimal registration module not available")
+    
     # We're keeping emergency_login_main.py, emergency_direct_login.py, and emergency_app.py
     # but removing redundant emergency files
     try:
