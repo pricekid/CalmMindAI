@@ -1,13 +1,14 @@
 import os
 import logging
 from flask import Flask, url_for, redirect, request, flash, render_template, session
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import DeclarativeBase
 from flask_login import LoginManager, current_user, login_required as original_login_required
 from flask_wtf.csrf import CSRFProtect
 from flask_mail import Mail
 from flask_session import Session
 from functools import wraps
+
+# Import shared database extension
+from extensions import db
 
 # Import Render.com compatibility module
 try:
@@ -19,25 +20,38 @@ except ImportError:
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 
-class Base(DeclarativeBase):
-    pass
-
-# Import db from models to avoid circular imports
-from models import db
+# Initialize Flask extensions
 csrf = CSRFProtect()
 mail = Mail()
 sess = Session()
 
-# Create the app
-app = Flask(__name__)
+def create_app():
+    """Application factory to create Flask app with proper initialization"""
+    app = Flask(__name__)
+    
+    # Configure secret key
+    if os.environ.get("SESSION_SECRET"):
+        app.secret_key = os.environ.get("SESSION_SECRET")
+    else:
+        import secrets
+        app.logger.warning("No SESSION_SECRET found, generating a temporary one")
+        app.secret_key = secrets.token_hex(32)
+    
+    # Configure database
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "pool_recycle": 300,
+        "pool_pre_ping": True,
+    }
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    
+    # Initialize database with app
+    db.init_app(app)
+    
+    return app
 
-# Ensure a strong secret key for sessions
-if os.environ.get("SESSION_SECRET"):
-    app.secret_key = os.environ.get("SESSION_SECRET")
-else:
-    import secrets
-    app.logger.warning("No SESSION_SECRET found, generating a temporary one")
-    app.secret_key = secrets.token_hex(32)  # Generate a secure key if none exists
+# Create app instance
+app = create_app()
 
 # Add custom Jinja2 filters
 @app.template_filter('nl2br')
@@ -110,7 +124,6 @@ app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER')
 app.config['BASE_URL'] = os.environ.get('BASE_URL', '')
 
 # Initialize the app with extensions
-db.init_app(app)
 csrf.init_app(app)
 
 # Remove Flask-WTF's automatic csrf_token injection after initialization to prevent conflicts

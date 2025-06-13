@@ -1,15 +1,13 @@
 import uuid
 from datetime import datetime, timedelta
 from flask_login import UserMixin
-from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import deferred, load_only
 from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
 from sqlalchemy import UniqueConstraint
 
-# Initialize db here to avoid circular imports
-from flask_sqlalchemy import SQLAlchemy
-db = SQLAlchemy()
+# Import shared database instance
+from extensions import db
 
 class User(UserMixin, db.Model):
     __tablename__ = "user"
