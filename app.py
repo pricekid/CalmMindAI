@@ -969,6 +969,14 @@ with app.app_context():
         app.logger.info("Direct authentication system registered successfully")
     except ImportError:
         app.logger.warning("Direct auth module not available")
+    
+    # Register complete authentication fix (final solution)
+    try:
+        from complete_auth_fix import register_complete_auth
+        register_complete_auth(app)
+        app.logger.info("Complete authentication system registered successfully")
+    except ImportError:
+        app.logger.warning("Complete auth fix module not available")
 
 # ============================================================================
 # DEMOGRAPHICS COLLECTION FUNCTIONALITY
