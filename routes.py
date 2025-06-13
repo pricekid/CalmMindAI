@@ -15,6 +15,10 @@ from io import StringIO
 from datetime import datetime, timedelta
 import gamification  # Import the gamification module
 from utils.activity_tracker import get_community_message  # Import journal activity tracker
+from cache_service import (
+    get_cached_user_entries, cache_user_stats, get_cached_user_stats,
+    preload_user_data
+)
 
 # Import password reset module (initialization happens in app.py)
 try:
@@ -193,21 +197,43 @@ def dashboard():
     # Get weekly mood summary
     weekly_summary = current_user.get_weekly_summary()
 
-    # Get recent journal entries - use load_only to avoid loading deferred columns by default
-    recent_entries = JournalEntry.query\
-        .options(load_only(
-            JournalEntry.id,
-            JournalEntry.title,
-            JournalEntry.content,
-            JournalEntry.created_at,
-            JournalEntry.updated_at,
-            JournalEntry.is_analyzed,
-            JournalEntry.anxiety_level,
-            JournalEntry.user_id
-        ))\
-        .filter(JournalEntry.user_id == current_user.id)\
-        .order_by(desc(JournalEntry.created_at))\
-        .limit(5).all()
+    # Try to get recent journal entries from cache for faster performance
+    cached_entries = get_cached_user_entries(current_user.id)
+    
+    if cached_entries:
+        # Use cached data - take first 5 entries
+        recent_entries_data = cached_entries[:5]
+        
+        # Convert cached data to objects for template compatibility
+        class CachedEntry:
+            def __init__(self, data):
+                self.id = data['id']
+                self.title = data['title']
+                self.content = data['content']
+                self.anxiety_level = data['anxiety_level']
+                self.created_at = datetime.fromisoformat(data['created_at']) if data['created_at'] else None
+                self.is_analyzed = data['is_analyzed']
+        
+        recent_entries = [CachedEntry(entry) for entry in recent_entries_data]
+    else:
+        # Fall back to database query if cache miss
+        recent_entries = JournalEntry.query\
+            .options(load_only(
+                JournalEntry.id,
+                JournalEntry.title,
+                JournalEntry.content,
+                JournalEntry.created_at,
+                JournalEntry.updated_at,
+                JournalEntry.is_analyzed,
+                JournalEntry.anxiety_level,
+                JournalEntry.user_id
+            ))\
+            .filter(JournalEntry.user_id == current_user.id)\
+            .order_by(desc(JournalEntry.created_at))\
+            .limit(5).all()
+        
+        # Preload user data for future requests
+        preload_user_data(current_user.id)
 
     # Get mood data for chart (last 7 days)
     seven_days_ago = datetime.utcnow() - timedelta(days=7)
