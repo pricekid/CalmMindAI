@@ -648,8 +648,8 @@ with app.app_context():
     # Register the fixed simple registration blueprint with minimal dependencies (CSRF-exempt)
     try:
         from simple_register_fixed import simple_register_bp
-        csrf.exempt(simple_register_bp)
         app.register_blueprint(simple_register_bp)
+        csrf.exempt(simple_register_bp)
         app.logger.info("Clean registration blueprint registered successfully with CSRF exemption")
     except ImportError:
         app.logger.warning("Clean registration module not available")
