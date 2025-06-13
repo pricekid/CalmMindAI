@@ -645,11 +645,12 @@ with app.app_context():
     except ImportError:
         app.logger.warning("Standalone reflection test module not available")
     
-    # Register the fixed simple registration blueprint with minimal dependencies
+    # Register the fixed simple registration blueprint with minimal dependencies (CSRF-exempt)
     try:
         from simple_register_fixed import simple_register_bp
+        csrf.exempt(simple_register_bp)
         app.register_blueprint(simple_register_bp)
-        app.logger.info("Clean registration blueprint registered successfully")
+        app.logger.info("Clean registration blueprint registered successfully with CSRF exemption")
     except ImportError:
         app.logger.warning("Clean registration module not available")
     
@@ -670,15 +671,6 @@ with app.app_context():
         app.logger.info("Final registration system registered successfully")
     except ImportError:
         app.logger.warning("Final registration module not available")
-    
-    # Register the clean, fixed registration blueprint
-    try:
-        from simple_register_fixed import simple_register_bp
-        csrf.exempt(simple_register_bp)
-        app.register_blueprint(simple_register_bp)
-        app.logger.info("Clean registration blueprint registered successfully")
-    except ImportError:
-        app.logger.warning("Clean registration module not available")
     
     # Register minimal registration blueprint (backup)
     try:
