@@ -898,7 +898,10 @@ def new_journal_entry():
 
             db.session.add(entry)
             db.session.commit()
-            logger.debug(f"Successfully saved journal entry with ID: {entry.id}")
+            
+            # Invalidate user cache after creating new entry
+            invalidate_user_cache(current_user.id)
+            logger.debug(f"Successfully saved journal entry with ID: {entry.id} and invalidated cache")
         except Exception as db_error:
             logger.error(f"Database error when saving journal entry: {str(db_error)}")
             db.session.rollback()
@@ -1531,6 +1534,9 @@ def update_journal_entry(entry_id):
 
         # Save the changes immediately so they're not lost if analysis fails
         db.session.commit()
+        
+        # Invalidate user cache after updating entry
+        invalidate_user_cache(current_user.id)
 
         # Clear old recommendations
         CBTRecommendation.query.filter_by(journal_entry_id=entry.id).delete()
@@ -1878,6 +1884,9 @@ def delete_journal_entry(entry_id):
         # Delete the entry from database
         db.session.delete(entry)
         db.session.commit()
+        
+        # Invalidate user cache after deleting entry
+        invalidate_user_cache(current_user.id)
 
         # Also delete from JSON storage to update insights/patterns
         from journal_service import delete_journal_entry as delete_json_entry
