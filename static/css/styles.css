@@ -65,3 +65,34 @@ textarea:focus {
     color: #333333 !important;
     background-color: rgba(255, 255, 255, 1) !important;
 }
+
+/* Form labels and help text styling */
+.form-label,
+label.form-label {
+    color: #333333 !important;
+    font-weight: 600 !important;
+    margin-bottom: 8px !important;
+}
+
+.form-help,
+.form-text,
+.help-text {
+    color: #666666 !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+}
+
+/* Override any theme-based light text */
+.bg-dark .form-label,
+.card .form-label,
+.bg-dark label,
+.card label {
+    color: #333333 !important;
+}
+
+.bg-dark .form-help,
+.card .form-help,
+.bg-dark .form-text,
+.card .form-text {
+    color: #666666 !important;
+}

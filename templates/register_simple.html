@@ -58,8 +58,26 @@
 
     .form-help {
         font-size: 0.85rem;
-        color: rgba(230, 185, 128, 0.8);
+        color: #666666 !important;
         margin-top: 5px;
+        font-weight: 500;
+    }
+
+    .form-label {
+        color: #333333 !important;
+        font-weight: 600 !important;
+        margin-bottom: 8px !important;
+    }
+
+    /* Override any light text styling on form elements */
+    .bg-dark .form-label,
+    .card .form-label {
+        color: #333333 !important;
+    }
+
+    .bg-dark .form-help,
+    .card .form-help {
+        color: #666666 !important;
     }
 
     .card-header-custom {
@@ -115,7 +133,7 @@
                         {{ form.hidden_tag() }}
 
                         <div class="mb-3">
-                            {{ form.username.label(class="form-label", style="color: var(--warm-peach);") }}
+                            {{ form.username.label(class="form-label") }}
                             {% if form.username.errors %}
                                 {{ form.username(class="form-control is-invalid") }}
                                 <div class="invalid-feedback">
@@ -130,7 +148,7 @@
                         </div>
 
                         <div class="mb-3">
-                            {{ form.email.label(class="form-label", style="color: var(--warm-peach);") }}
+                            {{ form.email.label(class="form-label") }}
                             {% if form.email.errors %}
                                 {{ form.email(class="form-control is-invalid") }}
                                 <div class="invalid-feedback">

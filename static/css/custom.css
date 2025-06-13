@@ -170,6 +170,43 @@ select:focus {
     border-color: #C08553 !important;
 }
 
+/* Form labels and help text - production-safe styling */
+.form-label,
+label.form-label,
+label {
+    color: #333333 !important;
+    font-weight: 600 !important;
+    margin-bottom: 8px !important;
+}
+
+.form-help,
+.form-text,
+.help-text,
+small.form-text {
+    color: #666666 !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+}
+
+/* Override any dark theme label styling */
+.bg-dark .form-label,
+.card .form-label,
+.bg-dark label,
+.card label,
+body.bg-dark label,
+body.bg-dark .form-label {
+    color: #333333 !important;
+}
+
+.bg-dark .form-help,
+.card .form-help,
+.bg-dark .form-text,
+.card .form-text,
+body.bg-dark .form-help,
+body.bg-dark .form-text {
+    color: #666666 !important;
+}
+
 /* Enhanced 3D Card Styling */
 .card {
     border-radius: 16px;
