@@ -123,8 +123,24 @@ app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER')
 # Use environment variable if available, otherwise URLs will be relative
 app.config['BASE_URL'] = os.environ.get('BASE_URL', '')
 
-# Initialize the app with extensions
+# Initialize CSRF with authentication endpoint exemptions
 csrf.init_app(app)
+
+# Exempt authentication endpoints from CSRF protection
+AUTH_EXEMPT_PATHS = [
+    '/minimal-register', '/auth-register', '/auth-login', '/auth-test-login',
+    '/production-register', '/production-login', '/direct-register', '/direct-login',
+    '/stable-login', '/emergency-register', '/test-login'
+]
+
+@csrf.exempt
+def exempt_auth_endpoints():
+    """Exempt authentication endpoints from CSRF validation"""
+    return request.path in AUTH_EXEMPT_PATHS
+
+# Apply CSRF exemption to authentication paths
+for path in AUTH_EXEMPT_PATHS:
+    csrf.exempt(path)
 
 # Remove Flask-WTF's automatic csrf_token injection after initialization to prevent conflicts
 if 'csrf_token' in app.jinja_env.globals:
