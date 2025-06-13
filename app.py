@@ -952,6 +952,15 @@ with app.app_context():
         app.logger.info("Production registration fix registered successfully")
     except ImportError:
         app.logger.warning("Production registration fix module not available")
+    
+    # Register production authentication fix with CSRF exemption
+    try:
+        from production_auth_fix import production_auth_bp
+        csrf.exempt(production_auth_bp)
+        app.register_blueprint(production_auth_bp)
+        app.logger.info("Production authentication fix registered successfully")
+    except ImportError:
+        app.logger.warning("Production auth fix module not available")
 
 # ============================================================================
 # DEMOGRAPHICS COLLECTION FUNCTIONALITY
