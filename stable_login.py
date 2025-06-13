@@ -82,7 +82,7 @@ def stable_login():
     session.modified = True
     
     return render_template('stable_login.html', 
-                          csrf_token=csrf_token, 
+                          csrf_token=get_csrf_token(), 
                           error=error)
 
 # Replit Auth route removed as requested
