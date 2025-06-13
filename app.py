@@ -683,7 +683,16 @@ with app.app_context():
     except ImportError:
         app.logger.warning("Final registration module not available")
     
-    # Register minimal registration blueprint
+    # Register the clean, fixed registration blueprint
+    try:
+        from simple_register_fixed import simple_register_bp
+        csrf.exempt(simple_register_bp)
+        app.register_blueprint(simple_register_bp)
+        app.logger.info("Clean registration blueprint registered successfully")
+    except ImportError:
+        app.logger.warning("Clean registration module not available")
+    
+    # Register minimal registration blueprint (backup)
     try:
         from minimal_register import bp as minimal_register_bp
         csrf.exempt(minimal_register_bp)

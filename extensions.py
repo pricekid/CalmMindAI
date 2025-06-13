@@ -7,5 +7,5 @@ from sqlalchemy.orm import DeclarativeBase
 class Base(DeclarativeBase):
     pass
 
-# Single shared database instance
+# Single shared database instance - this is the ONLY db instance
 db = SQLAlchemy(model_class=Base)

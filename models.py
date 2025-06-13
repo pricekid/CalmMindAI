@@ -6,7 +6,7 @@ from sqlalchemy.orm import deferred, load_only
 from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
 from sqlalchemy import UniqueConstraint
 
-# Import shared database instance
+# Import the ONLY shared database instance - do not create another one
 from extensions import db
 
 class User(UserMixin, db.Model):
