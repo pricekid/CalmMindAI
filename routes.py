@@ -68,7 +68,7 @@ def index():
         return redirect(url_for('dashboard'))
         
     # For new users, redirect to login
-    return redirect(url_for('login'))
+    return redirect('/stable-login')
 
 # User registration
 @app.route('/register', methods=['GET', 'POST'])

@@ -172,7 +172,7 @@ def reset_password(token):
         del reset_tokens[token]
         
         flash('Your password has been updated! You can now log in with your new password.', 'success')
-        return redirect(url_for('login'))
+        return redirect('/stable-login')
         
     return render_template('reset_password.html', token=token)
 

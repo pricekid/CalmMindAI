@@ -751,7 +751,7 @@
                         <li><a href="#" class="active">Home</a></li>
                         <li><a href="#features">Features</a></li>
                         <li><a href="#about">About</a></li>
-                        <li><a href="{{ url_for('login') }}">Login</a></li>
+                        <li><a href="/stable-login">Login</a></li>
                         <li><a href="#" onclick="showInstallPrompt(); return false;" class="install-app-btn"><i class="fas fa-download"></i> Install App</a></li>
                         <li><a href="{{ url_for('register') }}" class="sign-up">Sign Up</a></li>
                     </ul>
@@ -785,7 +785,7 @@
                         </a>
                     </li>
                     <li class="mobile-nav-item">
-                        <a href="{{ url_for('login') }}" class="mobile-nav-link">
+                        <a href="/stable-login" class="mobile-nav-link">
                             <i class="fas fa-lock"></i>
                             <span>Login</span>
                         </a>
@@ -935,7 +935,7 @@
                 <h5>Quick Links</h5>
                 <ul class="footer-links">
                     <li><a href="{{ url_for('register') }}">Create Account</a></li>
-                    <li><a href="{{ url_for('login') }}">Sign In</a></li>
+                    <li><a href="/stable-login">Sign In</a></li>
                     <li><a href="#features">Features</a></li>
                     <li><a href="#faq">FAQ</a></li>
                     <li><button type="button" onclick="showInstallPrompt()" class="footer-install-btn">Install App</button></li>

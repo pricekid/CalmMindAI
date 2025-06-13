@@ -49,7 +49,7 @@
                 {% endif %}
             {% endwith %}
             
-            <form method="POST" action="{{ url_for('login') }}">
+            <form method="POST" action="/stable-login">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email Address</label>
                     <input type="email" class="form-control" id="email" name="email" required>

@@ -19,7 +19,7 @@
             {% if not current_user.is_authenticated %}
             <div class="mt-4">
                 <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-2">Sign Up</a>
-                <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-lg me-2">Login</a>
+                <a href="/stable-login" class="btn btn-outline-secondary btn-lg me-2">Login</a>
             </div>
             {% else %}
             <div class="mt-4">

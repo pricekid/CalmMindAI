@@ -248,7 +248,7 @@ def create_forgot_password_template():
           </form>
         </div>
         <div class="card-footer text-center">
-          <p class="mb-0">Remember your password? <a href="{{ url_for('login') }}" style="color: #E6B980;">Sign in</a></p>
+          <p class="mb-0">Remember your password? <a href="/stable-login" style="color: #E6B980;">Sign in</a></p>
         </div>
       </div>
     </div>
