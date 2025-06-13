@@ -118,7 +118,8 @@ csrf.init_app(app)
 AUTH_EXEMPT_PATHS = [
     '/minimal-register', '/auth-register', '/auth-login', '/auth-test-login',
     '/production-register', '/production-login', '/direct-register', '/direct-login',
-    '/stable-login', '/emergency-register', '/test-login', '/register', '/login'
+    '/stable-login', '/emergency-register', '/test-login', '/register', '/login',
+    '/register-simple'
 ]
 
 # Apply CSRF exemption using before_request handler
