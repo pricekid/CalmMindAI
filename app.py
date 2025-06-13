@@ -175,12 +175,15 @@ def handle_exception(e):
     from flask import render_template, redirect, url_for, Response
     from json.decoder import JSONDecodeError
     from flask_wtf.csrf import CSRFError
+    import traceback
     
     # Don't handle CSRF validation errors - let them be handled normally
     if isinstance(e, CSRFError) or "'str' object is not callable" in str(e):
         return None  # Let Flask handle the error normally
     
+    # Log the full traceback for better debugging
     app.logger.error(f"Unhandled exception: {str(e)}")
+    app.logger.error(f"Full traceback: {traceback.format_exc()}")
     error_message = "Your data was saved, but we couldn't complete the analysis."
     
     # Check if it's a JSON parsing error (which is likely from OpenAI response)
@@ -894,6 +897,26 @@ with app.app_context():
         app.logger.warning("Password reset module not available")
     
     # Register static pages blueprint
+
+
+# Add a health check endpoint for production debugging
+@app.route('/health')
+def health_check():
+    """Simple health check endpoint"""
+    try:
+        # Test database connection
+        db.session.execute('SELECT 1')
+        db_status = "OK"
+    except Exception as e:
+        db_status = f"ERROR: {str(e)}"
+    
+    return {
+        "status": "running",
+        "database": db_status,
+        "environment": "production" if app.config.get('ENV') == 'production' else "development"
+    }
+
+
     try:
         from static_pages import static_pages_bp
         app.register_blueprint(static_pages_bp)
