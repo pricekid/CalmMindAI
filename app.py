@@ -907,6 +907,14 @@ with app.app_context():
         app.logger.info("Standalone registration system registered successfully")
     except ImportError:
         app.logger.warning("Standalone registration module not available")
+    
+    # Register production registration fix (direct database access)
+    try:
+        from production_registration_fix import register_production_fix
+        register_production_fix(app)
+        app.logger.info("Production registration fix registered successfully")
+    except ImportError:
+        app.logger.warning("Production registration fix module not available")
 
 # ============================================================================
 # DEMOGRAPHICS COLLECTION FUNCTIONALITY
