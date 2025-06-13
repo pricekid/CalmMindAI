@@ -179,16 +179,16 @@ def dashboard():
         session.permanent = True
         app.logger.info(f"Dashboard access via Render authentication for user {current_user.id}")
 
+    # Check if demographics need to be collected FIRST (before onboarding)
+    if not getattr(current_user, 'demographics_collected', False):
+        return redirect('/demographics')
+    
     # Check if the user is new and needs onboarding
     from onboarding_routes import is_new_user
     if is_new_user(current_user.id):
         # New user, redirect to onboarding
         flash('Welcome to Dear Teddy! Let\'s get you started with a few quick steps.', 'info')
         return redirect('/onboarding/step-1')
-    
-    # Check if demographics need to be collected
-    if not getattr(current_user, 'demographics_collected', False):
-        return redirect('/demographics')
 
     # Get weekly mood summary
     weekly_summary = current_user.get_weekly_summary()
