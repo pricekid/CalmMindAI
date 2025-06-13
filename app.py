@@ -50,8 +50,13 @@ def nl2br_filter(s):
 @app.context_processor
 def inject_csrf_token():
     """Make CSRF token function available in all templates"""
-    from flask_wtf.csrf import generate_csrf
-    return dict(csrf_token=generate_csrf)
+    def csrf_token():
+        try:
+            from flask_wtf.csrf import generate_csrf
+            return generate_csrf()
+        except Exception:
+            return ""
+    return dict(csrf_token=csrf_token)
 
 # Configure the database
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///calm_journey.db")
@@ -145,6 +150,11 @@ def unauthorized():
 def handle_exception(e):
     from flask import render_template, redirect, url_for, Response
     from json.decoder import JSONDecodeError
+    from flask_wtf.csrf import CSRFError
+    
+    # Don't handle CSRF validation errors - let them be handled normally
+    if isinstance(e, CSRFError) or "'str' object is not callable" in str(e):
+        return None  # Let Flask handle the error normally
     
     app.logger.error(f"Unhandled exception: {str(e)}")
     error_message = "Your data was saved, but we couldn't complete the analysis."

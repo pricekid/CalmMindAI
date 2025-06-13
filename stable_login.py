@@ -72,16 +72,30 @@ def stable_login():
                 logger.error(f"Login error: {str(e)}")
                 error = 'An error occurred during login. Please try again.'
     
-    # Always get a fresh token and ensure it's explicitly stored in the session
-    session['_csrf_token'] = generate_csrf()
-    
     # Set session to permanent with extended lifetime
     session.permanent = True
     # Force session save
     session.modified = True
     
-    return render_template('stable_login.html', 
-                          csrf_token=generate_csrf(), 
-                          error=error)
+    try:
+        return render_template('stable_login.html', error=error)
+    except Exception as e:
+        logger.error(f"Template rendering error: {str(e)}")
+        # Fallback simple HTML response
+        return f"""
+        <!DOCTYPE html>
+        <html>
+        <head><title>Login - Dear Teddy</title></head>
+        <body>
+            <h1>Login</h1>
+            <form method="post">
+                <input type="email" name="email" placeholder="Email" required><br>
+                <input type="password" name="password" placeholder="Password" required><br>
+                <input type="submit" value="Login">
+            </form>
+            {f'<p style="color: red;">{error}</p>' if error else ''}
+        </body>
+        </html>
+        """
 
 # Replit Auth route removed as requested
