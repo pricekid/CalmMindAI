@@ -843,48 +843,8 @@ with app.app_context():
         from flask import send_from_directory
         return send_from_directory('static', 'favicon.ico', mimetype='image/x-icon')
     
-    # Exempt API endpoints that need to bypass CSRF
-    try:
-        if 'api_journal_coach' in app.view_functions:
-            csrf.exempt(app.view_functions['api_journal_coach'])
-            app.logger.info("CSRF exemption applied to api_journal_coach")
-    except:
-        pass
-        
-    try:
-        if 'journal_blueprint.save_initial_reflection' in app.view_functions:
-            csrf.exempt(app.view_functions['journal_blueprint.save_initial_reflection'])
-            app.logger.info("CSRF exemption applied to save_initial_reflection")
-    except:
-        pass
-        
-    try:
-        if 'journal_blueprint.save_second_reflection' in app.view_functions:
-            csrf.exempt(app.view_functions['journal_blueprint.save_second_reflection'])
-            app.logger.info("CSRF exemption applied to save_second_reflection")
-    except:
-        pass
-        
-    try:
-        if 'journal_blueprint.check_followup_insight' in app.view_functions:
-            csrf.exempt(app.view_functions['journal_blueprint.check_followup_insight'])
-            app.logger.info("CSRF exemption applied to check_followup_insight")
-    except:
-        pass
-        
-    try:
-        if 'journal_blueprint.check_closing_message' in app.view_functions:
-            csrf.exempt(app.view_functions['journal_blueprint.check_closing_message'])
-            app.logger.info("CSRF exemption applied to check_closing_message")
-    except:
-        pass
-        
-    try:
-        if 'api_analyze_entry' in app.view_functions:
-            csrf.exempt(app.view_functions['api_analyze_entry'])
-            app.logger.info("CSRF exemption applied to api_analyze_entry")
-    except:
-        pass
+    # Note: Removed problematic CSRF exemptions that caused 'str' object is not callable errors
+    # API endpoints will use proper CSRF tokens in requests instead
     
     # Register push notification routes
     try:
