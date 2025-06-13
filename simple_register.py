@@ -4,6 +4,7 @@ Simple register route with minimal dependencies to fix the JSON parsing issues.
 import logging
 from flask import render_template, url_for, flash, redirect, Blueprint
 from flask_login import current_user
+
 from forms import RegistrationForm
 from models import User
 from app import db
