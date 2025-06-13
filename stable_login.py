@@ -7,7 +7,7 @@ import logging
 from flask import Blueprint, render_template, redirect, request, flash, session
 from flask_login import login_user, current_user
 from models import User, db
-from csrf_utils import get_csrf_token
+from flask_wtf.csrf import generate_csrf
 import os
 
 stable_login_bp = Blueprint('stable_login', __name__)
@@ -73,7 +73,7 @@ def stable_login():
                 error = 'An error occurred during login. Please try again.'
     
     # Always get a fresh token and ensure it's explicitly stored in the session
-    session['_csrf_token'] = get_csrf_token()
+    session['_csrf_token'] = generate_csrf()
     
     # Set session to permanent with extended lifetime
     session.permanent = True
@@ -81,7 +81,7 @@ def stable_login():
     session.modified = True
     
     return render_template('stable_login.html', 
-                          csrf_token=get_csrf_token(), 
+                          csrf_token=generate_csrf(), 
                           error=error)
 
 # Replit Auth route removed as requested

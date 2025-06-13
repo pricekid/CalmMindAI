@@ -46,14 +46,8 @@ def nl2br_filter(s):
         return ""
     return s.replace('\n', '<br>')
 
-# Add CSRF token function to template context
-@app.context_processor
-def inject_csrf_token():
-    """Make CSRF token function available in all templates"""
-    from flask_wtf.csrf import generate_csrf
-    def csrf_token():
-        return generate_csrf()
-    return dict(csrf_token=csrf_token)
+# CSRF token is automatically available via Flask-WTF as csrf_token()
+# No need for custom context processor as it conflicts with Flask-WTF's built-in functionality
 
 # Configure the database
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///calm_journey.db")
