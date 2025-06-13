@@ -37,13 +37,17 @@ def simple_register():
                 # Check for existing user with comprehensive error handling
                 existing_user_by_email = User.query.filter_by(email=email).first()
                 if existing_user_by_email:
-                    form.email.errors.append('That email is already registered. Please use a different one.')
+                    if not hasattr(form.email, 'errors') or form.email.errors is None:
+                        form.email.errors = []
+                    form.email.errors = list(form.email.errors) + ['That email is already registered. Please use a different one.']
                     logger.warning(f"Registration attempt with existing email: {email}")
                     return render_template('register_simple.html', title='Register', form=form)
                 
                 existing_user_by_username = User.query.filter_by(username=form.username.data).first()
                 if existing_user_by_username:
-                    form.username.errors.append('That username is already taken. Please choose a different one.')
+                    if not hasattr(form.username, 'errors') or form.username.errors is None:
+                        form.username.errors = []
+                    form.username.errors = list(form.username.errors) + ['That username is already taken. Please choose a different one.']
                     logger.warning(f"Registration attempt with existing username: {form.username.data}")
                     return render_template('register_simple.html', title='Register', form=form)
                 
