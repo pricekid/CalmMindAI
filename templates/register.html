@@ -9,14 +9,14 @@
         max-width: 850px;
         margin: 0 auto;
     }
-    
+
     .registration-card {
         border-radius: 20px;
         overflow: hidden;
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
         border: none;
     }
-    
+
     .card-image-side {
         background: linear-gradient(135deg, rgba(209, 166, 115, 0.7), rgba(230, 185, 128, 0.4));
         position: relative;
@@ -28,17 +28,17 @@
         background-position: center;
         background-blend-mode: overlay;
     }
-    
+
     .inspiration-quote {
         padding: 20px;
         color: white;
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
-    
+
     .form-floating {
         margin-bottom: 20px;
     }
-    
+
     .form-floating .form-control {
         border: 2px solid rgba(230, 185, 128, 0.3);
         background-color: rgba(33, 37, 41, 0.6);
@@ -46,22 +46,22 @@
         padding: 1.5rem 1rem 0.75rem;
         transition: all 0.3s ease;
     }
-    
+
     .form-floating .form-control:focus {
         border-color: var(--warm-peach);
         box-shadow: 0 0 0 0.25rem rgba(230, 185, 128, 0.2);
         background-color: rgba(33, 37, 41, 0.8);
     }
-    
+
     .form-floating label {
         padding: 1rem 1rem 0;
         color: rgba(255, 255, 255, 0.7);
     }
-    
+
     .form-floating > .form-control:focus ~ label {
         color: var(--warm-peach);
     }
-    
+
     .form-help-text {
         font-size: 0.85rem;
         color: rgba(230, 185, 128, 0.8);
@@ -69,7 +69,7 @@
         margin-bottom: 15px;
         margin-left: 5px;
     }
-    
+
     .btn-register {
         background: linear-gradient(135deg, var(--warm-peach), #d1a673);
         border: none;
@@ -81,19 +81,19 @@
         transition: all 0.3s ease;
         box-shadow: 0 6px 15px rgba(209, 166, 115, 0.3);
     }
-    
+
     .btn-register:hover {
         transform: translateY(-3px);
         box-shadow: 0 10px 20px rgba(209, 166, 115, 0.4);
         background: linear-gradient(135deg, #d1a673, var(--warm-peach));
     }
-    
+
     .registration-header {
         position: relative;
         z-index: 1;
         margin-bottom: 30px;
     }
-    
+
     .registration-header::after {
         content: "";
         display: block;
@@ -103,13 +103,13 @@
         margin-top: 15px;
         border-radius: 2px;
     }
-    
+
     .registration-subheader {
         color: rgba(255, 255, 255, 0.7);
         font-weight: 300;
         margin-bottom: 30px;
     }
-    
+
     .social-proof {
         background: rgba(230, 185, 128, 0.1);
         padding: 15px;
@@ -117,20 +117,20 @@
         margin: 30px 0 20px;
         text-align: center;
     }
-    
+
     .features-list {
         padding-left: 0;
         list-style: none;
         margin-bottom: 40px;
     }
-    
+
     .features-list li {
         margin-bottom: 12px;
         position: relative;
         padding-left: 28px;
         color: rgba(255, 255, 255, 0.8);
     }
-    
+
     .features-list li::before {
         content: "✓";
         position: absolute;
@@ -138,40 +138,40 @@
         color: var(--warm-peach);
         font-weight: bold;
     }
-    
+
     .already-member {
         margin-top: 25px;
         font-size: 0.95rem;
         color: rgba(255, 255, 255, 0.6);
     }
-    
+
     .already-member a {
         color: var(--warm-peach);
         text-decoration: none;
         font-weight: 500;
         transition: all 0.3s ease;
     }
-    
+
     .already-member a:hover {
         color: #d1a673;
         text-decoration: underline;
     }
-    
+
     .terms-text {
         font-size: 0.85rem;
         color: rgba(255, 255, 255, 0.5);
         margin-top: 15px;
     }
-    
+
     .terms-text a {
         color: rgba(230, 185, 128, 0.8);
         text-decoration: none;
     }
-    
+
     .terms-text a:hover {
         text-decoration: underline;
     }
-    
+
     /* Responsive adjustments */
     @media (max-width: 991.98px) {
         .card-image-side {
@@ -191,26 +191,31 @@
                     <div class="col-lg-7 p-4 p-md-5">
                         <h2 class="registration-header" style="color: var(--warm-peach);">Begin Your Wellness Journey</h2>
                         <p class="registration-subheader">Join thousands who are finding peace and managing anxiety with Dear Teddy.</p>
-                        
-                        <form method="POST" action="">
-                            {{ form.hidden_tag() }}
-                            
+
+                        <form method="post" action="">
+                            {% if form and form.csrf_token %}
+                                {{ form.hidden_tag() }}
+                            {% elif csrf_token %}
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            {% endif %}
+
                             <div class="form-floating">
-                                {% if form.username.errors %}
-                                    {{ form.username(class="form-control is-invalid", placeholder="Username") }}
-                                    <label for="{{ form.username.id }}">Username</label>
-                                    <div class="invalid-feedback">
-                                        {% for error in form.username.errors %}
-                                            <span>{{ error }}</span>
-                                        {% endfor %}
-                                    </div>
-                                {% else %}
+                                {% if form and form.username %}
                                     {{ form.username(class="form-control", placeholder="Username") }}
                                     <label for="{{ form.username.id }}">Username</label>
+                                    {% if form.username.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.username.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                {% else %}
+                                    <input type="text" class="form-control" name="username" id="username" placeholder="Enter a username" required>
                                 {% endif %}
                             </div>
                             <div class="form-help-text">Choose a username that feels calming to you</div>
-                            
+
                             <div class="form-floating">
                                 {% if form.email.errors %}
                                     {{ form.email(class="form-control is-invalid", placeholder="Email") }}
@@ -225,7 +230,7 @@
                                     <label for="{{ form.email.id }}">Email address</label>
                                 {% endif %}
                             </div>
-                            
+
                             <div class="form-floating">
                                 {% if form.password.errors %}
                                     {{ form.password(class="form-control is-invalid", placeholder="Password") }}
@@ -241,7 +246,7 @@
                                 {% endif %}
                             </div>
                             <div class="form-help-text">Use at least 6 characters with a mix of letters, numbers and symbols</div>
-                            
+
                             <div class="form-floating">
                                 {% if form.confirm_password.errors %}
                                     {{ form.confirm_password(class="form-control is-invalid", placeholder="Confirm Password") }}
@@ -256,28 +261,28 @@
                                     <label for="{{ form.confirm_password.id }}">Confirm Password</label>
                                 {% endif %}
                             </div>
-                            
+
                             <div class="social-proof">
                                 <div><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i></div>
                                 <p class="mb-0 mt-2" style="color: rgba(255, 255, 255, 0.8);">
                                     <i>"This app has been a game-changer for my anxiety management."</i>
                                 </p>
                             </div>
-                            
+
                             <div class="d-grid gap-2">
                                 {{ form.submit(class="btn btn-register" id="register-button") }}
                             </div>
-                            
+
                             <p class="already-member text-center">
                                 Already have an account? <a href="/stable-login">Login here</a>
                             </p>
-                            
+
                             <p class="terms-text text-center">
                                 By creating an account, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
                             </p>
                         </form>
                     </div>
-                    
+
                     <!-- Right side: Features -->
                     <div class="col-lg-5 d-none d-lg-block">
                         <div class="card-image-side">
@@ -292,7 +297,7 @@
                                     <li>Private and secure</li>
                                 </ul>
                             </div>
-                            
+
                             <div class="inspiration-quote">
                                 <h5>"The journey of a thousand miles begins with a single step."</h5>
                                 <p class="mb-0">— Lao Tzu</p>
@@ -301,7 +306,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="text-center mt-4">
                 <p>
                     <small class="text-muted" style="color: rgba(230, 185, 128, 0.6) !important;">
@@ -320,7 +325,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.querySelector('form');
         const registerButton = document.getElementById('register-button');
-        
+
         if (form && registerButton) {
             form.addEventListener('submit', function(e) {
                 if (form.checkValidity()) {

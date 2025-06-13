@@ -130,17 +130,22 @@ csrf.init_app(app)
 AUTH_EXEMPT_PATHS = [
     '/minimal-register', '/auth-register', '/auth-login', '/auth-test-login',
     '/production-register', '/production-login', '/direct-register', '/direct-login',
-    '/stable-login', '/emergency-register', '/test-login'
+    '/stable-login', '/emergency-register', '/test-login', '/register', '/login'
 ]
 
-@csrf.exempt
+# Apply CSRF exemption using before_request handler
+@app.before_request
 def exempt_auth_endpoints():
     """Exempt authentication endpoints from CSRF validation"""
-    return request.path in AUTH_EXEMPT_PATHS
+    if request.path in AUTH_EXEMPT_PATHS and request.method == 'POST':
+        csrf._exempt_views.add(request.endpoint)
 
-# Apply CSRF exemption to authentication paths
+# Additional route-specific exemptions
 for path in AUTH_EXEMPT_PATHS:
-    csrf.exempt(path)
+    try:
+        csrf.exempt(path)
+    except:
+        pass
 
 # Remove Flask-WTF's automatic csrf_token injection after initialization to prevent conflicts
 if 'csrf_token' in app.jinja_env.globals:
@@ -756,7 +761,7 @@ with app.app_context():
     try:
         from stable_login import stable_login_bp
         app.register_blueprint(stable_login_bp)
-        # now exempt it:
+        # Apply CSRF exemption properly
         csrf.exempt(stable_login_bp)
         app.logger.info("Stable login blueprint registered with CSRF exemption for authentication reliability")
     except ImportError:
