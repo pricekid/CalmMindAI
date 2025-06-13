@@ -961,6 +961,14 @@ with app.app_context():
         app.logger.info("Production authentication fix registered successfully")
     except ImportError:
         app.logger.warning("Production auth fix module not available")
+    
+    # Register direct authentication system (bypasses CSRF completely)
+    try:
+        from direct_auth import register_direct_auth
+        register_direct_auth(app)
+        app.logger.info("Direct authentication system registered successfully")
+    except ImportError:
+        app.logger.warning("Direct auth module not available")
 
 # ============================================================================
 # DEMOGRAPHICS COLLECTION FUNCTIONALITY
