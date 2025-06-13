@@ -18,6 +18,10 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(256), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
+    def __init__(self, **kwargs):
+        """Initialize User with keyword arguments"""
+        super(User, self).__init__(**kwargs)
+    
     # Profile information from Replit Auth
     first_name = db.Column(db.String(64), nullable=True)
     last_name = db.Column(db.String(64), nullable=True)

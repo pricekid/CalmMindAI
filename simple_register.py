@@ -26,56 +26,85 @@ def simple_register():
     
     form = RegistrationForm()
     
-    # Check if this is a POST request
+    # Handle form submission
     if form.is_submitted():
+        logger.debug(f"Form submitted with data: username={form.username.data}, email={form.email.data}")
+        
         try:
-            # Validate the form and capture detailed errors
-            if form.validate():
-                # Convert email to lowercase for case-insensitive matching
-                email = form.email.data.lower() if form.email.data else None
-                
-                # Check for existing user with comprehensive error handling
-                existing_user_by_email = User.query.filter_by(email=email).first()
-                if existing_user_by_email:
-                    if not hasattr(form.email, 'errors') or form.email.errors is None:
-                        form.email.errors = []
-                    form.email.errors = list(form.email.errors) + ['That email is already registered. Please use a different one.']
-                    logger.warning(f"Registration attempt with existing email: {email}")
-                    return render_template('register_simple.html', title='Register', form=form)
-                
-                existing_user_by_username = User.query.filter_by(username=form.username.data).first()
-                if existing_user_by_username:
-                    if not hasattr(form.username, 'errors') or form.username.errors is None:
-                        form.username.errors = []
-                    form.username.errors = list(form.username.errors) + ['That username is already taken. Please choose a different one.']
-                    logger.warning(f"Registration attempt with existing username: {form.username.data}")
-                    return render_template('register_simple.html', title='Register', form=form)
-                
-                # Create new user
-                user = User(username=form.username.data, email=email)
-                user.set_password(form.password.data)
-                
-                db.session.add(user)
-                db.session.commit()
-                
-                logger.info(f"New user registered successfully: {email}")
-                flash('Your account has been created successfully! You can now log in.', 'success')
-                return redirect('/stable-login')
-            else:
-                # Form validation failed - log and display errors
-                logger.warning(f"Form validation errors: {form.errors}")
-                
-                # Flash specific validation errors
+            # Manual validation to catch all edge cases
+            validation_errors = []
+            
+            # Check required fields
+            if not form.username.data or len(form.username.data.strip()) < 3:
+                validation_errors.append(('username', 'Username must be at least 3 characters long'))
+            
+            if not form.email.data or '@' not in form.email.data:
+                validation_errors.append(('email', 'Please enter a valid email address'))
+            
+            if not form.password.data or len(form.password.data) < 6:
+                validation_errors.append(('password', 'Password must be at least 6 characters long'))
+            
+            if form.password.data != form.confirm_password.data:
+                validation_errors.append(('confirm_password', 'Passwords must match'))
+            
+            # If manual validation fails, display errors
+            if validation_errors:
+                for field, error in validation_errors:
+                    flash(f'{field.title()}: {error}', 'danger')
+                logger.warning(f"Manual validation failed: {validation_errors}")
+                return render_template('register_simple.html', title='Register', form=form)
+            
+            # Check WTF validation
+            if not form.validate():
                 for field, errors in form.errors.items():
                     for error in errors:
                         flash(f'{field.title()}: {error}', 'danger')
+                logger.warning(f"WTF validation failed: {form.errors}")
+                return render_template('register_simple.html', title='Register', form=form)
+            
+            # Convert email to lowercase for consistency
+            email = form.email.data.lower().strip()
+            username = form.username.data.strip()
+            
+            # Check for existing users
+            existing_user_by_email = User.query.filter_by(email=email).first()
+            if existing_user_by_email:
+                flash('Email: That email is already registered. Please use a different one.', 'danger')
+                logger.warning(f"Registration attempt with existing email: {email}")
+                return render_template('register_simple.html', title='Register', form=form)
+            
+            existing_user_by_username = User.query.filter_by(username=username).first()
+            if existing_user_by_username:
+                flash('Username: That username is already taken. Please choose a different one.', 'danger')
+                logger.warning(f"Registration attempt with existing username: {username}")
+                return render_template('register_simple.html', title='Register', form=form)
+            
+            # Create new user with explicit error handling
+            try:
+                user = User()
+                user.username = username
+                user.email = email
+                user.set_password(form.password.data)
                 
+                # Add to database with transaction
+                db.session.add(user)
+                db.session.flush()  # Get user ID but don't commit yet
+                db.session.commit()
+                
+                logger.info(f"New user registered successfully: {email} (ID: {user.id})")
+                flash('Your account has been created successfully! You can now log in.', 'success')
+                return redirect('/stable-login')
+                
+            except Exception as db_error:
+                db.session.rollback()
+                logger.error(f"Database error during user creation: {str(db_error)}", exc_info=True)
+                flash('There was an error creating your account. Please try again.', 'danger')
                 return render_template('register_simple.html', title='Register', form=form)
                 
         except Exception as e:
             logger.error(f"Critical error during registration: {str(e)}", exc_info=True)
             db.session.rollback()
-            flash('There was an unexpected error creating your account. Please try again later.', 'danger')
+            flash('An unexpected error occurred. Please try again later.', 'danger')
             return render_template('register_simple.html', title='Register', form=form)
     
     # For GET requests or validation failures, render the form
