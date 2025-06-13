@@ -1128,22 +1128,29 @@ footer a:hover {
     backdrop-filter: blur(10px);
 }
 
-/* Universal text contrast override - ensures all text is readable */
-* {
-    text-shadow: none !important;
+/* Consolidated text contrast rules */
+.card:not(.bg-dark):not(.coping-statement),
+.dashboard-widget,
+.journal-card,
+.recommendation-card,
+.badge-container .card,
+.achievement-card,
+.streak-badge-card,
+.demographics-card,
+.anxiety-management-tools .card {
+    color: #212529 !important;
 }
 
-/* Force dark text on all white/light cards */
 .card:not(.bg-dark):not(.coping-statement) *,
 .dashboard-widget *,
 .journal-card *,
 .recommendation-card *,
-.badge-container *,
+.badge-container .card *,
 .achievement-card *,
 .streak-badge-card *,
 .demographics-card *,
 .anxiety-management-tools .card * {
-    color: #212529 !important;
+    color: inherit !important;
     text-shadow: none !important;
 }
 
