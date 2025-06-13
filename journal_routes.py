@@ -11,7 +11,7 @@ from journal_service import (
 from recommendation_handler import safe_process_pattern
 from datetime import datetime, timedelta
 from sqlalchemy import desc
-from sqlalchemy.orm import load_only, defer, undefer
+from sqlalchemy.orm import load_only, defer, undefer, joinedload
 import logging
 import gamification
 from utils.activity_tracker import track_journal_entry
@@ -19,6 +19,11 @@ import markdown
 import re
 import json
 from flask_wtf.csrf import generate_csrf, validate_csrf
+from cache_service import (
+    cached_query, cache_user_entries, get_cached_user_entries,
+    cache_entry_details, get_cached_entry_details, invalidate_user_cache,
+    preload_user_data, cache_user_stats, get_cached_user_stats
+)
 
 # Set up logging with more details
 logger = logging.getLogger(__name__)
@@ -711,32 +716,76 @@ def save_reflection():
 def journal_list():
     page = request.args.get('page', 1, type=int)
     
-    # Log the current user for debugging
     logger.info(f"User {current_user.id} accessing journal list page {page}")
 
-    # Use load_only to specify only the columns we need, avoiding the deferred user_reflection column
-    entries_query = JournalEntry.query\
-        .options(load_only(
-            JournalEntry.id,
-            JournalEntry.title,
-            JournalEntry.content,
-            JournalEntry.created_at,
-            JournalEntry.updated_at,
-            JournalEntry.is_analyzed,
-            JournalEntry.anxiety_level,
-            JournalEntry.user_id
-        ))\
-        .filter(JournalEntry.user_id == current_user.id)\
-        .order_by(desc(JournalEntry.created_at))
+    # Try to get cached entries first for performance optimization
+    cached_entries = get_cached_user_entries(current_user.id)
     
-    # Log the query for debugging
-    logger.debug(f"Journal entries query: {str(entries_query)}")
+    if cached_entries and page == 1:
+        # Use cached data for first page
+        logger.debug(f"Using cached entries for user {current_user.id}")
+        
+        # Create pagination-like structure from cached data
+        per_page = 10
+        start_idx = (page - 1) * per_page
+        end_idx = start_idx + per_page
+        page_entries = cached_entries[start_idx:end_idx]
+        
+        # Convert cached data back to objects for template compatibility
+        class CachedEntry:
+            def __init__(self, data):
+                self.id = data['id']
+                self.title = data['title']
+                self.content = data['content']
+                self.anxiety_level = data['anxiety_level']
+                self.created_at = datetime.fromisoformat(data['created_at']) if data['created_at'] else None
+                self.is_analyzed = data['is_analyzed']
+        
+        entries_items = [CachedEntry(entry) for entry in page_entries]
+        
+        # Create mock pagination object
+        class MockPagination:
+            def __init__(self, items, total, page, per_page):
+                self.items = items
+                self.total = total
+                self.page = page
+                self.per_page = per_page
+                self.pages = (total + per_page - 1) // per_page
+                self.has_prev = page > 1
+                self.has_next = page < self.pages
+                self.prev_num = page - 1 if self.has_prev else None
+                self.next_num = page + 1 if self.has_next else None
+        
+        entries = MockPagination(entries_items, len(cached_entries), page, per_page)
+        total_entries = len(cached_entries)
+        
+    else:
+        # Fall back to database query for non-first pages or when cache miss
+        logger.debug(f"Cache miss or non-first page, querying database for user {current_user.id}")
+        
+        # Use optimized query with load_only
+        entries_query = JournalEntry.query\
+            .options(load_only(
+                JournalEntry.id,
+                JournalEntry.title,
+                JournalEntry.content,
+                JournalEntry.created_at,
+                JournalEntry.updated_at,
+                JournalEntry.is_analyzed,
+                JournalEntry.anxiety_level,
+                JournalEntry.user_id
+            ))\
+            .filter(JournalEntry.user_id == current_user.id)\
+            .order_by(desc(JournalEntry.created_at))
+        
+        total_entries = entries_query.count()
+        entries = entries_query.paginate(page=page, per_page=10, error_out=False)
+        
+        # Preload data for caching on first page
+        if page == 1:
+            preload_user_data(current_user.id)
     
-    # Count total entries for this user
-    total_entries = entries_query.count()
     logger.info(f"Found {total_entries} total entries for user {current_user.id}")
-
-    entries = entries_query.paginate(page=page, per_page=10)
 
     # Get all entries for visualization (limiting to last 30 for performance)
     # Use load_only to specify only the columns we need, avoiding the deferred user_reflection column

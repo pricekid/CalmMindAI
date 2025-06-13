@@ -22,7 +22,8 @@ logging.basicConfig(level=logging.DEBUG)
 class Base(DeclarativeBase):
     pass
 
-db = SQLAlchemy(model_class=Base)
+# Import db from models to avoid circular imports
+from models import db
 csrf = CSRFProtect()
 mail = Mail()
 sess = Session()
