@@ -6,7 +6,7 @@ import logging
 from datetime import datetime
 from flask import Blueprint, render_template_string, redirect, url_for
 from flask_login import login_required, current_user
-from app import db
+from extensions import db
 from models import JournalEntry
 
 # Set up logger

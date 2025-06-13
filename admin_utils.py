@@ -2,7 +2,7 @@ import json
 import os
 from datetime import datetime, timedelta
 from models import User, JournalEntry, CBTRecommendation
-from app import db
+from extensions import db
 from flask_login import current_user
 
 # File paths
