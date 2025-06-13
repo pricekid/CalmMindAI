@@ -10,7 +10,7 @@ from wtforms import BooleanField, StringField, TimeField, SubmitField
 from wtforms.validators import DataRequired, Optional
 from app import db
 from models import User
-from csrf_utils import get_csrf_token
+from flask_wtf.csrf import generate_csrf
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

@@ -18,7 +18,7 @@ from utils.activity_tracker import track_journal_entry
 import markdown
 import re
 import json
-from csrf_utils import get_csrf_token, validate_csrf_token
+from flask_wtf.csrf import generate_csrf, validate_csrf
 
 # Set up logging with more details
 logger = logging.getLogger(__name__)
