@@ -1045,7 +1045,7 @@ def demographics():
     # Skip if already completed
     if current_user.demographics_collected:
         flash('Demographics already collected.', 'info')
-        return redirect(url_for('dashboard'))
+        return redirect('/dashboard')
     
     form = DemographicsForm()
     
@@ -1060,7 +1060,7 @@ def demographics():
         try:
             db.session.commit()
             flash('Thank you for completing your profile! This helps us personalize your experience.', 'success')
-            return redirect(url_for('dashboard'))
+            return redirect('/dashboard')
         except Exception as e:
             db.session.rollback()
             app.logger.error(f"Error saving demographics: {str(e)}")
