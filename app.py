@@ -644,6 +644,24 @@ with app.app_context():
     except ImportError:
         app.logger.warning("Simple registration module not available")
     
+    # Register working registration system (CSRF-exempt)
+    try:
+        from working_register import working_register_bp
+        csrf.exempt(working_register_bp)
+        app.register_blueprint(working_register_bp)
+        app.logger.info("Working registration system registered successfully")
+    except ImportError:
+        app.logger.warning("Working registration module not available")
+    
+    # Register final registration system (completely isolated)
+    try:
+        from final_register import final_register_bp
+        csrf.exempt(final_register_bp)
+        app.register_blueprint(final_register_bp)
+        app.logger.info("Final registration system registered successfully")
+    except ImportError:
+        app.logger.warning("Final registration module not available")
+    
     # We're keeping emergency_login_main.py, emergency_direct_login.py, and emergency_app.py
     # but removing redundant emergency files
     try:
