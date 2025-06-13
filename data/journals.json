@@ -177,5 +177,118 @@
       "strategies": []
     },
     "user_reflection": null
+  },
+  {
+    "id": 22,
+    "user_id": "b47a8f60-05c6-469b-beea-8b7471fe4d19",
+    "title": "My First Journal Entry",
+    "content": "I hate my father. so much",
+    "anxiety_level": 7,
+    "created_at": "2025-06-13T16:51:01.527336",
+    "updated_at": "2025-06-13T16:51:01.527339",
+    "is_analyzed": true,
+    "gpt_response": "It sounds like you're sitting with some intense feelings about your father. While the primary emotion you noted is neutral, beneath that surface, there might be anger or deep frustration. It's okay to feel this way, and it's a part of understanding the complex relationship you have with him. Take a moment to consider what it is about this relationship that feels most challenging right now. When we think about the expectations we hold and how they might not be met, it can uncover important emotional needs that are going unfulfilled. Remember, acknowledging these feelings is the first step toward healing. You're allowed to feel everything you're feeling, and it's a part of your journey. You are doing your best to navigate this complexity, and your courage is evident.\n\nWarmly,\nCoach Mira",
+    "cbt_patterns": [
+      {
+        "pattern": "All-or-Nothing Thinking",
+        "description": ""
+      },
+      {
+        "pattern": "Emotional Reasoning",
+        "description": ""
+      }
+    ],
+    "structured_data": {
+      "insight_text": "The intensity of your statement suggests feelings of anger and possibly betrayal or disappointment. It's a moment where your emotional needs for validation and connection might feel unmet. These emotions can be heavy and isolating.",
+      "reflection_prompt": "Take a moment. When you think about your father, what expectation or need feels the most unmet right now?",
+      "thought_patterns": [
+        "All-or-Nothing Thinking",
+        "Emotional Reasoning"
+      ],
+      "strategies": [
+        {
+          "title": "Communication Script Template",
+          "description": "Use this script when you want to express your feelings to your father in a calm and constructive way.",
+          "action_step": "I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request].",
+          "emotional_need_addressed": "The need for understanding and resolution"
+        },
+        {
+          "title": "Reality-Check Exercise",
+          "description": "Challenge assumptions about your father's behavior by listing evidence supporting and contradicting your beliefs.",
+          "action_step": "List evidence for and against your belief that [specific belief about the relationship].",
+          "emotional_need_addressed": "The need for clarity and perspective"
+        },
+        {
+          "title": "Emotion Regulation Technique",
+          "description": "Manage intense feelings using grounding techniques to stay present.",
+          "action_step": "When you feel overwhelmed, try a grounding technique like deep breathing or focusing on your senses.",
+          "emotional_need_addressed": "The need for emotional stability"
+        }
+      ],
+      "relationship_questions": [
+        "Has this feeling toward your father been consistent, or has something specific triggered it recently?"
+      ],
+      "followup_text": "Remember, understanding and naming your feelings is an essential part of healing. You're showing courage by confronting these emotions. Keep exploring these thoughts, and know that you're not alone in this journey."
+    },
+    "user_reflection": null
+  },
+  {
+    "id": 23,
+    "user_id": "b47a8f60-05c6-469b-beea-8b7471fe4d19",
+    "title": "Hopeful today",
+    "content": "I dislike my fatheer so mucg. cant stand teh sightof him\r\n",
+    "anxiety_level": 5,
+    "created_at": "2025-06-13T16:52:28.995794",
+    "updated_at": "2025-06-13T16:52:49.991969",
+    "is_analyzed": true,
+    "gpt_response": "It sounds like you're experiencing some intense feelings toward your father right now. The emotional tone here seems to carry a mix of frustration and perhaps a sense of being overwhelmed. This can be a challenging space to navigate, especially when it involves someone so central in your life. I wonder if the feelings of dislike might be connected to unmet emotional needs or past hurts. When you reflect on these feelings, is there a particular moment or pattern that stands out to you? Remember, it's okay to acknowledge these feelings as a step toward understanding them better. Whatever you're feeling is valid, and by exploring it, you're taking a step towards healing and clarity.\n\nWarmly,\nCoach Mira",
+    "cbt_patterns": [
+      {
+        "pattern": "Black-and-White Thinking",
+        "description": "You might be seeing the relationship in absolute terms, focusing only on negative aspects due to current emotions."
+      },
+      {
+        "pattern": "Overgeneralization",
+        "description": "This involves taking specific negative experiences and generalizing them to the whole relationship."
+      }
+    ],
+    "structured_data": {
+      "insight_text": "Your feelings of intense dislike toward your father suggest underlying emotions that might not yet be fully expressed. It's possible these emotions are tied to experiences or expectations not being met. Recognizing this is important as it highlights potential needs for understanding or change within this relationship.",
+      "reflection_prompt": "Take a moment. When you think about your relationship with your father, what specific incidents or patterns come to mind that might have contributed to this feeling?",
+      "thought_patterns": [
+        {
+          "pattern": "Black-and-White Thinking",
+          "description": "You might be seeing the relationship in absolute terms, focusing only on negative aspects due to current emotions.",
+          "emotional_need": "The need for emotional safety and clarity in relationships."
+        },
+        {
+          "pattern": "Overgeneralization",
+          "description": "This involves taking specific negative experiences and generalizing them to the whole relationship.",
+          "emotional_need": "A desire for consistent and reliable emotional support."
+        }
+      ],
+      "strategies": [
+        {
+          "title": "Communication Script Template",
+          "description": "Use this script to express your feelings to your father in a structured way.",
+          "action_step": "I feel [specific emotion] when [specific behavior] because [impact]. What I need is [clear request].",
+          "emotional_need_addressed": "The need for understanding and improved communication."
+        },
+        {
+          "title": "Reality-Check Exercise",
+          "description": "Challenge your assumptions about the relationship by listing evidence for and against your current feelings.",
+          "action_step": "List evidence for and against your perception that your relationship with your father can't improve.",
+          "emotional_need_addressed": "The need for a balanced view and hope for change."
+        },
+        {
+          "title": "Emotion Regulation Technique",
+          "description": "Manage intense emotions by grounding yourself.",
+          "action_step": "When you feel overwhelmed, try deep breathing or a brief walk to clear your mind.",
+          "emotional_need_addressed": "The need for emotional calm and control."
+        }
+      ],
+      "followup_text": "Exploring these feelings can help you gain clarity about your needs in this relationship. You're doing important work by acknowledging and reflecting on these emotions. Remember, taking small steps towards understanding can lead to meaningful change."
+    },
+    "user_reflection": null
   }
 ]

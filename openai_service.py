@@ -54,26 +54,18 @@ def analyze_journal_entry(journal_text, anxiety_level):
             raise ValueError("OpenAI API key is missing. Please check your environment variables or admin settings.")
             
         prompt = f"""
-        You are a therapist specializing in Cognitive Behavioral Therapy (CBT) for anxiety.
-        
-        Analyze the following journal entry where the user has reported an anxiety level of {anxiety_level}/10:
+        You are a CBT therapist analyzing a journal entry (anxiety level: {anxiety_level}/10):
         
         "{journal_text}"
         
-        Identify three thought patterns that might be contributing to anxiety, and provide three specific, actionable CBT techniques to help address them.
-        
-        Respond with a JSON object in this exact format:
+        Provide a complete analysis in JSON format:
         {{
             "thought_patterns": [
-                {{
-                    "pattern": "Identified thought pattern",
-                    "description": "Brief explanation of the pattern",
-                    "recommendation": "Specific CBT technique or exercise to address this pattern"
-                }}
+                {{"pattern": "Pattern name", "description": "Brief explanation", "recommendation": "CBT technique"}}
             ]
         }}
         
-        Keep each recommendation concise, practical and directly actionable by the user.
+        Keep responses concise and actionable.
         """
         
         # Attempt to make the API call with error handling
@@ -84,11 +76,12 @@ def analyze_journal_entry(journal_text, anxiety_level):
             response = client.chat.completions.create(
                 model=model,
                 messages=[
-                    {"role": "system", "content": "You are a CBT therapist specializing in anxiety. Provide evidence-based advice."},
+                    {"role": "system", "content": "You are a CBT therapist. Provide brief, actionable advice."},
                     {"role": "user", "content": prompt}
                 ],
                 response_format={"type": "json_object"},
-                temperature=0.7
+                temperature=0.3,
+                max_tokens=300
             )
             
             # Parse the response with improved error handling
@@ -607,54 +600,18 @@ def generate_coping_statement(anxiety_context):
             logger.error("OpenAI API key is not set")
             return fallback_statement
         
-        # Handle long journal content by creating a focused prompt
-        # Truncate very long content to avoid token limits
-        content_to_use = anxiety_context
-        if len(anxiety_context) > 1000:
-            logger.info("Journal content exceeds 1000 chars, using model to analyze key themes")
-            try:
-                client = get_openai_client()
-                
-                # First, get the key themes from the journal
-                summary_response = client.chat.completions.create(
-                    model=model,
-                    messages=[
-                        {"role": "system", "content": "You are an assistant that identifies key emotions and concerns from journal entries."},
-                        {"role": "user", "content": f"Extract the main emotional concerns and anxieties from this journal entry (be brief): \n\n{anxiety_context}"}
-                    ],
-                    temperature=0.3,
-                    max_tokens=100
-                )
-                
-                if summary_response.choices and hasattr(summary_response.choices[0], 'message'):
-                    content_to_use = summary_response.choices[0].message.content.strip()
-                    logger.debug(f"Extracted journal themes: {content_to_use}")
-            except Exception as summary_error:
-                logger.error(f"Error summarizing journal content: {str(summary_error)}")
-                # Keep first 1000 chars if summary fails
-                content_to_use = anxiety_context[:1000] + "..."
+        # Truncate long content directly to avoid extra API calls
+        content_to_use = anxiety_context[:800] + "..." if len(anxiety_context) > 800 else anxiety_context
         
-        prompt = f"""
-        Create a short, personalized coping statement for someone who wrote this journal entry:
-        
-        "{content_to_use}"
-        
-        The statement should be:
-        1. Brief (2-3 sentences)
-        2. Name a specific emotion the person is likely feeling based on their journal content
-        3. Provide a concrete CBT-based reframing of their situation
-        4. Include a specific actionable step they can take immediately
-        5. Be validating yet gently challenging of unhelpful thought patterns
-        6. Connect to a deeper emotional need (like security, validation, or belonging)
-        
-        Return only the statement text, no quotation marks, JSON formatting, or additional commentary.
-        Start with 'Mira suggests:' and then provide the coping statement.
-        
-        Examples:
-        - "Mira suggests: I can see how rejected and unimportant you're feeling right now. Remember that someone's availability doesn't determine your value—that's a thought pattern we can work through. Try writing down one piece of evidence that challenges this feeling, then take a moment to acknowledge your need for connection."
-        
-        - "Mira suggests: The uncertainty you're feeling about this relationship is creating real anxiety and worry. Instead of trying to predict the future, focus on what you actually know today. Take five minutes to write down three facts about your relationship that are supportive, then identify one small action that honors your need for clarity."
-        """
+        prompt = f"""Create a brief coping statement for: "{content_to_use}"
+
+Start with 'Mira suggests:' then:
+- Name the emotion they're feeling
+- Provide CBT reframing 
+- Give one actionable step
+- Be validating but gently challenging
+
+Example: "Mira suggests: I sense you're feeling overwhelmed about this situation. Remember that uncertainty doesn't mean danger—your mind is trying to protect you. Take three deep breaths and write down one thing you can control today."""
         
         # Attempt to make the API call with error handling
         try:
@@ -665,11 +622,11 @@ def generate_coping_statement(anxiety_context):
             response = client.chat.completions.create(
                 model=model,
                 messages=[
-                    {"role": "system", "content": "You are Mira, a CBT therapist specializing in anxiety. Generate brief coping statements."},
+                    {"role": "system", "content": "You are Mira, a CBT therapist. Generate brief coping statements."},
                     {"role": "user", "content": prompt}
                 ],
-                temperature=0.7,
-                max_tokens=100
+                temperature=0.3,
+                max_tokens=80
             )
             
             # Get the response content with improved error handling
