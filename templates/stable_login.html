@@ -208,6 +208,14 @@
             color: #fb7b7b;
         }
         
+        .alert-success {
+            background-color: rgba(40, 167, 69, 0.2);
+            border-color: #28a745;
+            color: #6dd589;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+        
         @media (max-width: 576px) {
             .login-container {
                 padding: 10px;
@@ -235,6 +243,16 @@
             </div>
             
             <div class="card-body p-4">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }} mb-4">
+                                <i class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-circle' }} me-2"></i>{{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                
                 {% if error %}
                 <div class="alert alert-danger mb-4">
                     <i class="fas fa-exclamation-circle me-2"></i>{{ error }}

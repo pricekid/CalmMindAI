@@ -25,6 +25,8 @@ def simple_register():
         return redirect('/dashboard')
     
     form = RegistrationForm()
+    
+    # Check if form submission is valid
     if form.validate_on_submit():
         try:
             # Convert email to lowercase for case-insensitive matching
@@ -35,13 +37,18 @@ def simple_register():
             db.session.add(user)
             db.session.commit()
             
-            flash('Your account has been created! You can now log in.', 'success')
+            flash('Your account has been created successfully! You can now log in.', 'success')
             # Use direct path instead of url_for
             return redirect('/stable-login')  # Use stable login route
         except Exception as e:
             logger.error(f"Error during registration: {str(e)}")
             db.session.rollback()
             flash('There was an error creating your account. Please try again.', 'danger')
+            return render_template('register_simple.html', title='Register', form=form)
+    else:
+        # Log validation errors for debugging
+        if form.errors:
+            logger.debug(f"Form validation errors: {form.errors}")
     
-    # If we get here, validation failed or it's a GET request - render with errors
+    # For GET requests or validation failures, render the form
     return render_template('register_simple.html', title='Register', form=form)
