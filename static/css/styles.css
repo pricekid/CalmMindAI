@@ -18,3 +18,50 @@ body {
 .navbar-brand {
     font-weight: 600;
 }
+
+/* Production-safe form input styling */
+.form-control {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    color: #333333 !important;
+    border: 2px solid rgba(230, 185, 128, 0.3) !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+}
+
+.form-control::placeholder {
+    color: #AAAAAA !important;
+    opacity: 1 !important;
+}
+
+.form-control:focus {
+    color: #333333 !important;
+    border-color: #C08553 !important;
+    box-shadow: 0 0 0 0.25rem rgba(192, 133, 83, 0.25) !important;
+    background-color: rgba(255, 255, 255, 1) !important;
+    outline: none !important;
+}
+
+.form-control:active,
+.form-control:hover {
+    color: #333333 !important;
+    background-color: rgba(255, 255, 255, 0.98) !important;
+}
+
+/* Ensure text inputs are always visible */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+textarea {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    color: #333333 !important;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+textarea:focus {
+    color: #333333 !important;
+    background-color: rgba(255, 255, 255, 1) !important;
+}
