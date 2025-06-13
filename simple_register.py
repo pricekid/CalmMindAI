@@ -232,8 +232,8 @@ def create_user(username, email, password):
                 demographics_collected, notifications_enabled,
                 morning_reminder_enabled, evening_reminder_enabled,
                 sms_notifications_enabled, welcome_message_shown
-            ) VALUES (%s, %s, %s, %s, NOW(), FALSE, TRUE, TRUE, TRUE, FALSE, FALSE)
-        """, (user_id, username, email, password_hash))
+            ) VALUES (%s, %s, %s, %s, NOW(), %s, %s, %s, %s, %s, %s)
+        """, (user_id, username, email, password_hash, False, True, True, True, False, False))
         
         conn.commit()
         cursor.close()
