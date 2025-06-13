@@ -8,6 +8,7 @@ from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
 from sqlalchemy import UniqueConstraint
 
 # Initialize db here to avoid circular imports
+from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class User(UserMixin, db.Model):
