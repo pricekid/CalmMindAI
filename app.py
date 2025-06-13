@@ -891,6 +891,22 @@ with app.app_context():
         app.logger.info("Emergency login blueprint registered with CSRF exemption")
     except ImportError:
         app.logger.warning("Emergency login blueprint not available")
+    
+    # Register emergency registration system
+    try:
+        from emergency_registration_fix import register_emergency_routes
+        register_emergency_routes(app)
+        app.logger.info("Emergency registration system registered successfully")
+    except ImportError:
+        app.logger.warning("Emergency registration module not available")
+    
+    # Register standalone registration system (bypasses SQLAlchemy issues)
+    try:
+        from standalone_registration import register_standalone_routes
+        register_standalone_routes(app)
+        app.logger.info("Standalone registration system registered successfully")
+    except ImportError:
+        app.logger.warning("Standalone registration module not available")
 
 # ============================================================================
 # DEMOGRAPHICS COLLECTION FUNCTIONALITY
