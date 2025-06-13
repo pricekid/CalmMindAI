@@ -101,9 +101,9 @@
                 <canvas id="moodChart"></canvas>
             </div>
             
-            <div class="card mt-3">
+            <div class="card mt-3 bg-light">
                 <div class="card-body">
-                    <h5 class="card-title">How are you feeling today?</h5>
+                    <h5 class="card-title text-dark">How are you feeling today?</h5>
                     <form method="POST" action="{{ url_for('log_mood') }}" id="mood-form">
                         {{ mood_form.hidden_tag() }}
                         
@@ -210,13 +210,13 @@
                 <div class="p-3">
                     <div class="row">
                         <div class="col-md-8">
-                            <p>Enable notifications to get timely reminders for:</p>
+                            <p class="text-light">Enable notifications to get timely reminders for:</p>
                             <ul class="list-unstyled">
-                                <li><i class="fas fa-check-circle text-success me-2"></i> Daily journal prompts</li>
-                                <li><i class="fas fa-check-circle text-success me-2"></i> Mood tracking reminders</li>
-                                <li><i class="fas fa-check-circle text-success me-2"></i> New features and updates</li>
+                                <li><i class="fas fa-check-circle text-success me-2"></i><span class="text-light">Daily journal prompts</span></li>
+                                <li><i class="fas fa-check-circle text-success me-2"></i><span class="text-light">Mood tracking reminders</span></li>
+                                <li><i class="fas fa-check-circle text-success me-2"></i><span class="text-light">New features and updates</span></li>
                             </ul>
-                            <p class="text-muted small">You can customize notification settings at any time.</p>
+                            <p class="text-light small">You can customize notification settings at any time.</p>
                             <div class="d-flex gap-2 mt-3">
                                 <a href="{{ url_for('push_notifications.notification_settings') }}" class="btn btn-sm btn-outline-secondary">
                                     <i class="fas fa-cog me-1"></i>Notification Settings
@@ -257,7 +257,7 @@
                     </div>
                     <div class="col">
                         <div class="d-flex justify-content-between align-items-center mb-1">
-                            <h5 class="mb-0">Level {{ badge_data.xp_data.level }}: {{ badge_data.xp_data.level_name }}</h5>
+                            <h5 class="mb-0 text-light">Level {{ badge_data.xp_data.level }}: {{ badge_data.xp_data.level_name }}</h5>
                             <span class="badge bg-info">{{ badge_data.xp_data.total_xp }} XP</span>
                         </div>
                         <div class="progress" style="height: 15px;">
@@ -268,11 +268,11 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-between mt-1">
-                            <small class="text-muted">Current level</small>
+                            <small class="text-light">Current level</small>
                             {% if badge_data.xp_data.next_level %}
-                            <small class="text-muted">{{ badge_data.xp_data.xp_needed }} XP to Level {{ badge_data.xp_data.next_level }}: {{ badge_data.xp_data.next_level_name }}</small>
+                            <small class="text-light">{{ badge_data.xp_data.xp_needed }} XP to Level {{ badge_data.xp_data.next_level }}: {{ badge_data.xp_data.next_level_name }}</small>
                             {% else %}
-                            <small class="text-muted">Max level reached!</small>
+                            <small class="text-light">Max level reached!</small>
                             {% endif %}
                         </div>
                     </div>
