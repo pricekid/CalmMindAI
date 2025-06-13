@@ -51,9 +51,7 @@ def nl2br_filter(s):
 def inject_csrf_token():
     """Make CSRF token function available in all templates"""
     from flask_wtf.csrf import generate_csrf
-    def csrf_token():
-        return generate_csrf()
-    return dict(csrf_token=csrf_token)
+    return dict(csrf_token=generate_csrf)
 
 # Configure the database
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///calm_journey.db")
@@ -187,7 +185,8 @@ def handle_exception(e):
             # Render the basic login template directly to avoid additional redirects
             try:
                 # Generate a CSRF token for the login form to avoid CSRF errors
-                csrf_token = csrf._get_csrf_token()
+                from flask_wtf.csrf import generate_csrf
+                csrf_token = generate_csrf()
                 
                 # Create an emergency login form that doesn't depend on the normal routes
                 emergency_html = f"""
