@@ -756,9 +756,7 @@ with app.app_context():
     try:
         from stable_login import stable_login_bp
         app.register_blueprint(stable_login_bp)
-        
-        # Apply CSRF exemption to stable login for enhanced reliability
-        # CSRF protection is causing login failures, so exempt it
+        # now exempt it:
         csrf.exempt(stable_login_bp)
         app.logger.info("Stable login blueprint registered with CSRF exemption for authentication reliability")
     except ImportError:

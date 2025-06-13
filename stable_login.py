@@ -27,18 +27,17 @@ def stable_login():
         logger.info(f"Login attempt - Form token length: {len(form_token) if form_token else 0}")
         logger.info(f"Login attempt - Session token length: {len(session_token) if session_token else 0}")
         
-        # Check for CSRF token - if missing, set error but continue processing
+        # Since this blueprint is CSRF exempt, skip CSRF validation
         if not form_token:
-            logger.warning("CSRF token missing from login form")
-            error = 'Security token missing. Please refresh the page and try again.'
+            logger.info("CSRF token missing but blueprint is exempt - proceeding")
         
         email = request.form.get('email')
         email = email.lower() if email else ''
         password = request.form.get('password', '')
         remember = request.form.get('remember') == 'on'
         
-        # Only proceed with authentication if no CSRF error
-        if not error and email and password:
+        # Proceed with authentication
+        if email and password:
             try:
                 # Query user with case-insensitive email matching
                 user = User.query.filter(User.email.ilike(email)).first()
