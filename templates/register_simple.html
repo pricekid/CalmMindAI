@@ -20,8 +20,9 @@
     }
 
     .form-control::placeholder {
-        color: #AAAAAA !important;
+        color: #666666 !important;
         opacity: 1;
+        font-weight: 500;
     }
 
     .form-control:focus {
@@ -58,26 +59,43 @@
 
     .form-help {
         font-size: 0.85rem;
-        color: #666666 !important;
+        color: #444444 !important;
         margin-top: 5px;
-        font-weight: 500;
+        font-weight: 600;
+        text-shadow: 0 1px 1px rgba(255, 255, 255, 0.9);
     }
 
     .form-label {
-        color: #333333 !important;
-        font-weight: 600 !important;
+        color: #2d2d2d !important;
+        font-weight: 700 !important;
         margin-bottom: 8px !important;
+        font-size: 0.95rem !important;
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
     }
 
     /* Override any light text styling on form elements */
     .bg-dark .form-label,
-    .card .form-label {
-        color: #333333 !important;
+    .card .form-label,
+    .form-floating > label {
+        color: #2d2d2d !important;
+        font-weight: 700 !important;
     }
 
     .bg-dark .form-help,
     .card .form-help {
-        color: #666666 !important;
+        color: #555555 !important;
+        font-weight: 500 !important;
+    }
+
+    /* Ensure all text inside form containers is dark */
+    .card-body,
+    .form-group,
+    .mb-3 {
+        color: #2d2d2d !important;
+    }
+
+    .card-body * {
+        color: inherit !important;
     }
 
     .card-header-custom {
@@ -123,10 +141,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-7 col-lg-6 mx-auto">
-            <div class="card enhanced-card bg-dark my-5">
+            <div class="card enhanced-card my-5" style="background-color: rgba(255, 255, 255, 0.95);">
                 <div class="card-header text-center card-header-custom" style="background: linear-gradient(145deg, rgba(230, 185, 128, 0.1), rgba(230, 185, 128, 0.2));">
-                    <h3 class="mb-2" style="color: var(--warm-peach);">Begin Your Wellness Journey</h3>
-                    <p class="text-light mb-0">Join thousands finding peace with Calm Journey</p>
+                    <h3 class="mb-2" style="color: #8B4513; font-weight: 700;">Begin Your Wellness Journey</h3>
+                    <p class="mb-0" style="color: #555555; font-weight: 600;">Join thousands finding peace with Calm Journey</p>
                 </div>
                 <div class="card-body p-4">
                     <form method="POST" action="">
