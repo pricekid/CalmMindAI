@@ -46,8 +46,18 @@ def nl2br_filter(s):
         return ""
     return s.replace('\n', '<br>')
 
-# CSRF token is automatically available via Flask-WTF as csrf_token()
-# No need for custom context processor as it conflicts with Flask-WTF's built-in functionality
+# Add custom CSRF token context processor since we disabled Flask-WTF's automatic one
+@app.context_processor
+def inject_csrf_token():
+    """Make CSRF token function available in all templates"""
+    def csrf_token():
+        try:
+            from flask_wtf.csrf import generate_csrf
+            return generate_csrf()
+        except Exception as e:
+            app.logger.error(f"CSRF token generation error: {e}")
+            return ""
+    return dict(csrf_token=csrf_token)
 
 # Configure the database
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///calm_journey.db")
@@ -71,6 +81,9 @@ app.config["WTF_CSRF_ENABLED"] = True  # Keep CSRF globally enabled
 app.config["WTF_CSRF_METHODS"] = ['POST', 'PUT', 'PATCH', 'DELETE']  # Only protect data-changing methods
 app.config["WTF_CSRF_CHECK_DEFAULT"] = True  # Apply CSRF checking by default
 app.config["WTF_CSRF_FIELD_NAME"] = "csrf_token"  # Consistent field name
+
+# Disable Flask-WTF's automatic context processor to prevent conflicts
+app.config["WTF_CSRF_CONTEXT_GLOBAL"] = False
 
 # Configure session cookies with secure settings
 from datetime import timedelta
@@ -99,6 +112,10 @@ app.config['BASE_URL'] = os.environ.get('BASE_URL', '')
 # Initialize the app with extensions
 db.init_app(app)
 csrf.init_app(app)
+
+# Remove Flask-WTF's automatic csrf_token injection after initialization
+if hasattr(app.jinja_env.globals, 'csrf_token'):
+    del app.jinja_env.globals['csrf_token']
 mail.init_app(app)
 sess.init_app(app)
 
