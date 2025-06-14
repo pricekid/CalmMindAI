@@ -31,8 +31,8 @@
 
     .inspiration-quote {
         padding: 20px;
-        color: white;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        color: #2d2d2d;
+        text-shadow: none;
     }
 
     .form-floating {
@@ -94,36 +94,70 @@
         color: #2d2d2d;
     }
 
-    /* Ensure all text elements have proper contrast */
+    /* Ensure all text elements have proper contrast and no shadows */
     .registration-container * {
         color: #2d2d2d !important;
+        text-shadow: none !important;
     }
     
     .registration-header {
         color: var(--warm-peach) !important;
+        text-shadow: none !important;
     }
     
     .form-floating .form-control {
         color: #2d2d2d !important;
         background-color: #ffffff !important;
+        text-shadow: none !important;
     }
     
     .form-floating label {
         color: #666666 !important;
+        text-shadow: none !important;
     }
     
     .form-help-text {
         color: #666666 !important;
+        text-shadow: none !important;
     }
     
     /* Fix placeholder text color */
     .form-floating .form-control::placeholder {
         color: #999999 !important;
+        text-shadow: none !important;
     }
     
     /* Ensure button text is dark */
     .btn-register {
         color: #2d2d2d !important;
+        text-shadow: none !important;
+    }
+    
+    /* Remove text shadows from all elements */
+    h1, h2, h3, h4, h5, h6, p, span, div, label, input, button {
+        text-shadow: none !important;
+    }
+    
+    /* Override any global text shadows specifically for registration page */
+    .registration-container,
+    .registration-container *,
+    .registration-container h1,
+    .registration-container h2,
+    .registration-container h3,
+    .registration-container h4,
+    .registration-container h5,
+    .registration-container h6,
+    .registration-container p,
+    .registration-container span,
+    .registration-container div,
+    .registration-container label,
+    .registration-container input,
+    .registration-container button,
+    .registration-container .form-control,
+    .registration-container .btn {
+        text-shadow: none !important;
+        -webkit-text-shadow: none !important;
+        -moz-text-shadow: none !important;
     }
 
     .registration-header {
