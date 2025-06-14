@@ -1016,6 +1016,77 @@ def health_check():
         app.logger.info("Complete authentication system registered successfully")
     except ImportError:
         app.logger.warning("Complete auth fix module not available")
+    
+    # Add production-specific routes for www.dearteddy.app
+    from environment_detection import is_production, get_base_url
+    if is_production():
+        @app.route('/production-status')
+        def production_status():
+            """Production environment status check"""
+            return {
+                "status": "production",
+                "base_url": get_base_url(),
+                "csrf_enabled": app.config.get('WTF_CSRF_ENABLED', False),
+                "database_connected": bool(os.environ.get('DATABASE_URL'))
+            }
+        
+        # Exempt production routes from CSRF for emergency access
+        @app.route('/emergency-prod-register', methods=['GET', 'POST'])
+        def emergency_prod_register():
+            """Emergency production registration without CSRF"""
+            if request.method == 'GET':
+                return render_template('register_simple.html', 
+                                     title='Register - Dear Teddy',
+                                     emergency_mode=True)
+            
+            # Handle POST registration
+            try:
+                from werkzeug.security import generate_password_hash
+                import uuid
+                
+                username = request.form.get('username', '').strip()
+                email = request.form.get('email', '').lower().strip()
+                password = request.form.get('password', '')
+                
+                if not all([username, email, password]):
+                    flash('All fields are required', 'error')
+                    return render_template('register_simple.html', emergency_mode=True)
+                
+                # Check if user exists
+                existing_user = User.query.filter_by(email=email).first()
+                if existing_user:
+                    flash('Email already registered', 'error')
+                    return render_template('register_simple.html', emergency_mode=True)
+                
+                # Create new user
+                new_user = User(
+                    id=str(uuid.uuid4()),
+                    username=username,
+                    email=email,
+                    password_hash=generate_password_hash(password),
+                    demographics_collected=False,
+                    notifications_enabled=True,
+                    morning_reminder_enabled=True,
+                    evening_reminder_enabled=True,
+                    sms_notifications_enabled=False,
+                    welcome_message_shown=False
+                )
+                
+                db.session.add(new_user)
+                db.session.commit()
+                
+                flash('Account created successfully! Please log in.', 'success')
+                return redirect('/emergency-prod-login')
+                
+            except Exception as e:
+                db.session.rollback()
+                app.logger.error(f"Production registration error: {str(e)}")
+                flash('Registration failed. Please try again.', 'error')
+                return render_template('register_simple.html', emergency_mode=True)
+        
+        # Exempt these routes from CSRF
+        csrf.exempt('emergency_prod_register')
+        app.logger.info("Production-specific emergency routes registered")
 
 # ============================================================================
 # DEMOGRAPHICS COLLECTION FUNCTIONALITY
