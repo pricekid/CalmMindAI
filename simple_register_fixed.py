@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """
 Clean, simple registration blueprint that uses the shared database instance correctly.
@@ -7,11 +6,17 @@ from flask import Blueprint, request, render_template_string, redirect, flash, j
 from werkzeug.security import generate_password_hash
 import uuid
 import re
+import logging
+import traceback
 
 # Import the shared database instance - DO NOT create a new one
 from extensions import db
 
 simple_register_bp = Blueprint('simple_register_fixed', __name__)
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 # Simple registration template
 REGISTRATION_TEMPLATE = '''
@@ -37,11 +42,11 @@ REGISTRATION_TEMPLATE = '''
 </head>
 <body>
     <h1>Create Account - Dear Teddy</h1>
-    
+
     {% if error %}
         <div class="error">{{ error }}</div>
     {% endif %}
-    
+
     {% if success %}
         <div class="success">{{ success }}</div>
     {% else %}
@@ -50,25 +55,25 @@ REGISTRATION_TEMPLATE = '''
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
             </div>
-            
+
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
             </div>
-            
+
             <div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            
+
             <div class="form-group">
                 <label for="confirm_password">Confirm Password:</label>
                 <input type="password" id="confirm_password" name="confirm_password" required>
             </div>
-            
+
             <button type="submit" class="btn">Create Account</button>
         </form>
-        
+
         <p><a href="/stable-login" style="color: #007bff;">Already have an account? Login</a></p>
     {% endif %}
 </body>
@@ -95,90 +100,104 @@ def validate_password(password):
 @simple_register_bp.route('/register-simple', methods=['GET', 'POST'])
 def register_simple():
     """Simple registration route with proper error handling"""
-    
-    if request.method == 'GET':
-        return render_template_string(REGISTRATION_TEMPLATE)
-    
-    # Handle POST request
     try:
-        # Get form data
-        username = request.form.get('username', '').strip()
-        email = request.form.get('email', '').strip().lower()
-        password = request.form.get('password', '')
-        confirm_password = request.form.get('confirm_password', '')
-        
-        # Validate input
-        if not username or not email or not password or not confirm_password:
-            return render_template_string(REGISTRATION_TEMPLATE, 
-                                        error="All fields are required")
-        
-        if len(username) < 3:
-            return render_template_string(REGISTRATION_TEMPLATE, 
-                                        error="Username must be at least 3 characters long")
-        
-        if not validate_email(email):
-            return render_template_string(REGISTRATION_TEMPLATE, 
-                                        error="Please enter a valid email address")
-        
-        valid_password, password_msg = validate_password(password)
-        if not valid_password:
-            return render_template_string(REGISTRATION_TEMPLATE, 
-                                        error=password_msg)
-        
-        if password != confirm_password:
-            return render_template_string(REGISTRATION_TEMPLATE, 
-                                        error="Passwords do not match")
-        
-        # Import User model here to avoid circular imports
-        from models import User
-        
-        # Check if user already exists
-        existing_user = User.query.filter(
-            (User.username == username) | (User.email == email)
-        ).first()
-        
-        if existing_user:
-            if existing_user.username == username:
-                error_msg = "Username already taken"
-            else:
-                error_msg = "Email already registered"
-            return render_template_string(REGISTRATION_TEMPLATE, error=error_msg)
-        
-        # Create new user
-        user_id = str(uuid.uuid4())
-        password_hash = generate_password_hash(password)
-        
-        new_user = User(
-            id=user_id,
-            username=username,
-            email=email,
-            password_hash=password_hash,
-            demographics_collected=False,
-            welcome_message_shown=False,
-            notifications_enabled=True
-        )
-        
-        # Save to database
-        db.session.add(new_user)
-        db.session.commit()
-        
-        # Success response
-        return render_template_string(REGISTRATION_TEMPLATE, 
-                                    success=f"Account created successfully! You can now login with username: {username}")
-        
-    except Exception as e:
-        # Log the error and rollback
-        import traceback
-        error_details = traceback.format_exc()
-        print(f"Registration error: {str(e)}")
-        print(f"Full traceback: {error_details}")
+        if request.method == 'GET':
+            return render_template_string(REGISTRATION_TEMPLATE)
+
+        # Handle POST request
         try:
+            # Get form data
+            username = request.form.get('username', '').strip()
+            email = request.form.get('email', '').strip().lower()
+            password = request.form.get('password', '')
+            confirm_password = request.form.get('confirm_password', '')
+
+            # Validate input
+            if not username or not email or not password or not confirm_password:
+                return render_template_string(REGISTRATION_TEMPLATE, 
+                                            error="All fields are required")
+
+            if len(username) < 3:
+                return render_template_string(REGISTRATION_TEMPLATE, 
+                                            error="Username must be at least 3 characters long")
+
+            if not validate_email(email):
+                return render_template_string(REGISTRATION_TEMPLATE, 
+                                            error="Please enter a valid email address")
+
+            valid_password, password_msg = validate_password(password)
+            if not valid_password:
+                return render_template_string(REGISTRATION_TEMPLATE, 
+                                            error=password_msg)
+
+            if password != confirm_password:
+                return render_template_string(REGISTRATION_TEMPLATE, 
+                                            error="Passwords do not match")
+
+            # Check if user already exists
+            logger.info("Checking for existing user")
+            from models import User
+            existing_user = User.query.filter(
+                (User.username == username) | (User.email == email)
+            ).first()
+
+            if existing_user:
+                if existing_user.username == username:
+                    error_msg = "Username already taken"
+                else:
+                    error_msg = "Email already registered"
+                logger.warning("Email already registered")
+                return render_template_string(REGISTRATION_TEMPLATE, error=error_msg)
+
+            # Create new user
+            logger.info("Creating new user")
+            user_id = str(uuid.uuid4())
+            password_hash = generate_password_hash(password)
+
+            new_user = User(
+                id=user_id,
+                username=username,
+                email=email,
+                password_hash=password_hash,
+                demographics_collected=False,
+                welcome_message_shown=False,
+                notifications_enabled=True
+            )
+
+            logger.info("Adding user to database")
+            db.session.add(new_user)
+            db.session.commit()
+
+            logger.info("User created successfully")
+            return render_template_string(REGISTRATION_TEMPLATE, 
+                                        success="Account created successfully! You can now login.")
+
+        except Exception as e:
+            logger.error(f"Exception in register_simple: {str(e)}")
+            logger.error(f"Full traceback: {traceback.format_exc()}")
             db.session.rollback()
-        except:
-            pass
-        
-        return render_template_string(REGISTRATION_TEMPLATE, 
-                                    error=f"Registration failed: {str(e)}")
+            return render_template_string(REGISTRATION_TEMPLATE,
+                                        error=f"Registration failed: {str(e)}")
+
+    except Exception as outer_e:
+        # Catch any exceptions from the entire function
+        print(f"CRITICAL ERROR in register_simple: {str(outer_e)}")
+        print(f"FULL TRACEBACK: {traceback.format_exc()}")
+        import sys
+        sys.stdout.flush()
+
+        # Return a basic error response
+        return f"""
+        <html>
+        <head><title>Registration Error</title></head>
+        <body>
+        <h1>Registration Error</h1>
+        <p>A critical error occurred: {str(outer_e)}</p>
+        <p>Please check the server logs for details.</p>
+        <a href="/register-simple">Try Again</a>
+        </body>
+        </html>
+        """, 500
 
 # Health check endpoint
 @simple_register_bp.route('/register-simple/health')
