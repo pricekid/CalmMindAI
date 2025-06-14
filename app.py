@@ -926,20 +926,20 @@ def status_check():
 csrf.exempt(health_check)
 csrf.exempt(status_check)
 
-
+# Register static pages blueprint
 try:
-        from static_pages import static_pages_bp
-        app.register_blueprint(static_pages_bp)
-        app.logger.info("Static pages blueprint registered successfully")
-    except ImportError:
-        app.logger.warning("Static pages module not available")
-    
-    # Add favicon route
-    @app.route('/favicon.ico')
-    def favicon():
-        """Serve favicon from static directory"""
-        from flask import send_from_directory
-        return send_from_directory('static', 'favicon.ico', mimetype='image/x-icon')
+    from static_pages import static_pages_bp
+    app.register_blueprint(static_pages_bp)
+    app.logger.info("Static pages blueprint registered successfully")
+except ImportError:
+    app.logger.warning("Static pages module not available")
+
+# Add favicon route
+@app.route('/favicon.ico')
+def favicon():
+    """Serve favicon from static directory"""
+    from flask import send_from_directory
+    return send_from_directory('static', 'favicon.ico', mimetype='image/x-icon')
     
     # Note: Removed problematic CSRF exemptions that caused 'str' object is not callable errors
     # API endpoints will use proper CSRF tokens in requests instead

@@ -27,23 +27,32 @@ def stable_login():
     error_message = None
 
     if request.method == 'POST':
-        email = request.form.get('email', '').strip().lower()
-        password = request.form.get('password', '')
-        remember = request.form.get('remember') == 'on'
+        import traceback
+        try:
+            email = request.form.get('email', '').strip().lower()
+            password = request.form.get('password', '')
+            remember = request.form.get('remember') == 'on'
 
-        # Always log CSRF token for debugging
-        form_token = request.form.get('csrf_token')
-        session_token = session.get('_csrf_token')
-        logger.info(f"Login attempt - Form token length: {len(form_token) if form_token else 0}")
-        logger.info(f"Login attempt - Session token length: {len(session_token) if session_token else 0}")
+            # Log comprehensive request details
+            form_token = request.form.get('csrf_token')
+            session_token = session.get('_csrf_token')
+            
+            logger.info(f"🔍 LOGIN ATTEMPT DETAILS:")
+            logger.info(f"  - Email: {email}")
+            logger.info(f"  - Password provided: {bool(password)}")
+            logger.info(f"  - Form token length: {len(form_token) if form_token else 0}")
+            logger.info(f"  - Session token length: {len(session_token) if session_token else 0}")
+            logger.info(f"  - Request headers: {dict(request.headers)}")
+            logger.info(f"  - Form data keys: {list(request.form.keys())}")
+            logger.info(f"  - Session keys: {list(session.keys())}")
 
-        # Since this blueprint is CSRF exempt, skip CSRF validation
-        if not form_token:
-            logger.info("CSRF token missing but blueprint is exempt - proceeding")
+            # Since this blueprint is CSRF exempt, skip CSRF validation
+            if not form_token:
+                logger.info("CSRF token missing but blueprint is exempt - proceeding")
 
-        # Proceed with authentication
-        if email and password:
-            try:
+            # Proceed with authentication
+            if email and password:
+                try:
                 # Query user with case-insensitive email matching
                 user = User.query.filter(User.email.ilike(email)).first()
                 logger.info(f"Login attempt - User found: {user is not None}")
