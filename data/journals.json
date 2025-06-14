@@ -290,5 +290,31 @@
       "followup_text": "Exploring these feelings can help you gain clarity about your needs in this relationship. You're doing important work by acknowledging and reflecting on these emotions. Remember, taking small steps towards understanding can lead to meaningful change."
     },
     "user_reflection": null
+  },
+  {
+    "id": 25,
+    "user_id": "49ec19a4-894b-427f-aa54-91e424e4e018",
+    "title": "loveley day",
+    "content": "i am spending teh day working on my next level progress in codein\r\n",
+    "anxiety_level": 4,
+    "created_at": "2025-06-14T15:08:59.649550",
+    "updated_at": "2025-06-14T15:09:01.518992",
+    "is_analyzed": true,
+    "gpt_response": "It's inspiring to see you dedicating time to your coding journey \u2014 each step forward is a testament to your commitment and growth.\n\nWhat aspect of working on your next level progress in coding brings you the most fulfillment?\n\nCelebrate this moment of progress and let it fuel your future endeavors.\n\n## Suggested Strategies\n\n\nWarmly,\nCoach Mira",
+    "cbt_patterns": [
+      {
+        "pattern": "Journal Reflection",
+        "description": "Your journal entry has been saved.",
+        "recommendation": "Continue journaling regularly to build self-awareness."
+      }
+    ],
+    "structured_data": {
+      "insight_text": "It's inspiring to see you dedicating time to your coding journey \u2014 each step forward is a testament to your commitment and growth.",
+      "reflection_prompt": "What aspect of working on your next level progress in coding brings you the most fulfillment?",
+      "followup_text": "Celebrate this moment of progress and let it fuel your future endeavors.",
+      "distortions": [],
+      "strategies": []
+    },
+    "user_reflection": null
   }
 ]
