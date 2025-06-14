@@ -927,7 +927,7 @@ csrf.exempt(health_check)
 csrf.exempt(status_check)
 
 
-    try:
+try:
         from static_pages import static_pages_bp
         app.register_blueprint(static_pages_bp)
         app.logger.info("Static pages blueprint registered successfully")
