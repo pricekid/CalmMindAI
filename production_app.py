@@ -122,7 +122,9 @@ def register():
                         flash('Username already taken.', 'error')
                 else:
                     # Create new user
-                    user = User(username=username, email=email)
+                    user = User()
+                    user.username = username
+                    user.email = email
                     user.set_password(password)
                     
                     db.session.add(user)

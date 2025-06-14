@@ -1,20 +1,5 @@
 #!/usr/bin/env python3
 """
-Production deployment fix for www.dearteddy.app
-Addresses the 500 errors by creating a minimal, production-ready Flask app
-"""
-
-import os
-import sys
-import subprocess
-import shutil
-from pathlib import Path
-
-def create_production_wsgi():
-    """Create a production-ready WSGI file"""
-    
-    wsgi_content = '''#!/usr/bin/env python3
-"""
 Production WSGI entry point for Dear Teddy
 Optimized for deployment platforms like Render, Heroku, etc.
 """
@@ -400,76 +385,3 @@ application = app
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=False)
-'''
-    
-    with open('wsgi.py', 'w') as f:
-        f.write(wsgi_content)
-    
-    print("Created production WSGI file: wsgi.py")
-
-def update_procfile():
-    """Update Procfile for proper deployment"""
-    
-    procfile_content = """web: gunicorn wsgi:application --bind 0.0.0.0:$PORT --workers 1 --timeout 120 --log-level info
-"""
-    
-    with open('Procfile', 'w') as f:
-        f.write(procfile_content)
-    
-    print("Updated Procfile for production deployment")
-
-def create_requirements():
-    """Create production requirements.txt"""
-    
-    requirements = """Flask==2.3.3
-Flask-Login==0.6.3
-Flask-SQLAlchemy==3.0.5
-Flask-WTF==1.1.1
-Werkzeug==2.3.7
-SQLAlchemy==2.0.21
-psycopg2-binary==2.9.7
-gunicorn==21.2.0
-WTForms==3.0.1
-"""
-    
-    with open('requirements.txt', 'w') as f:
-        f.write(requirements)
-    
-    print("Created production requirements.txt")
-
-def create_runtime():
-    """Create runtime.txt for Python version"""
-    
-    with open('runtime.txt', 'w') as f:
-        f.write('python-3.11.0\n')
-    
-    print("Created runtime.txt")
-
-def main():
-    """Main deployment preparation function"""
-    
-    print("=== Preparing Production Deployment ===")
-    
-    # Create production files
-    create_production_wsgi()
-    update_procfile()
-    create_requirements()
-    create_runtime()
-    
-    print("\n=== Production Files Created ===")
-    print("✓ wsgi.py - Production WSGI application")
-    print("✓ Procfile - Updated deployment configuration")
-    print("✓ requirements.txt - Production dependencies")
-    print("✓ runtime.txt - Python version specification")
-    
-    print("\n=== Next Steps ===")
-    print("1. Deploy these files to your production environment")
-    print("2. Ensure environment variables are set:")
-    print("   - DATABASE_URL")
-    print("   - SESSION_SECRET")
-    print("3. The production app will be accessible at wsgi:application")
-    
-    return True
-
-if __name__ == "__main__":
-    main()
