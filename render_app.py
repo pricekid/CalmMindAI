@@ -1,217 +1,361 @@
+#!/usr/bin/env python3
+"""
+Clean production app for Render deployment
+Avoids model conflicts by using a completely separate entry point
+"""
+
 import os
+import sys
+import uuid
 import logging
-from flask import Flask, url_for, redirect, request, flash, render_template, session
+from datetime import datetime
+from flask import Flask, render_template_string, request, redirect, flash, session, jsonify, url_for
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import DeclarativeBase
-from flask_login import LoginManager, current_user, login_required as original_login_required
-from flask_wtf.csrf import CSRFProtect
-from flask_mail import Mail
-from flask_session import Session
-from functools import wraps
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class Base(DeclarativeBase):
     pass
 
-db = SQLAlchemy(model_class=Base)
-csrf = CSRFProtect()
-mail = Mail()
-sess = Session()
-
-# Create the app
+# Create Flask app
 app = Flask(__name__)
 
-# Ensure a strong secret key for sessions
-if os.environ.get("SESSION_SECRET"):
-    app.secret_key = os.environ.get("SESSION_SECRET")
-else:
-    import secrets
-    app.logger.warning("No SESSION_SECRET found, generating a temporary one")
-    app.secret_key = secrets.token_hex(32)
-
-# Add custom Jinja2 filters
-@app.template_filter('nl2br')
-def nl2br_filter(s):
-    """Convert newlines to HTML line breaks"""
-    if s is None:
-        return ""
-    return s.replace('\n', '<br>')
-
-# Configure the database with robust URL handling
-database_url = os.environ.get("DATABASE_URL")
-if database_url:
-    # Handle potential postgres:// vs postgresql:// URL schemes
-    if database_url.startswith("postgres://"):
-        database_url = database_url.replace("postgres://", "postgresql://", 1)
-    app.config["SQLALCHEMY_DATABASE_URI"] = database_url
-    # PostgreSQL-specific engine options
-    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
-        "pool_recycle": 300,
-        "pool_pre_ping": True,
-        "pool_timeout": 30,
-        "pool_size": 5,
-        "max_overflow": 10,
-        "connect_args": {
-            "connect_timeout": 10,
-            "sslmode": "prefer"
-        }
-    }
-else:
-    # Fallback to SQLite for development
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///calm_journey.db"
-    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
-        "pool_recycle": 300,
-        "pool_pre_ping": True
-    }
+# Configuration
+app.secret_key = os.environ.get("SESSION_SECRET", "dear-teddy-super-secret-key-2025-mental-wellness-app")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+    "pool_recycle": 300,
+    "pool_pre_ping": True,
+}
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-# Configure CSRF protection
-app.config["WTF_CSRF_TIME_LIMIT"] = 7200
-app.config["WTF_CSRF_SSL_STRICT"] = False
-app.config["WTF_CSRF_ENABLED"] = True
-
-# Configure session cookies
-from datetime import timedelta
-app.config['SESSION_COOKIE_SECURE'] = False
-app.config['SESSION_COOKIE_HTTPONLY'] = True
-app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
-app.config['SESSION_TYPE'] = 'filesystem'
-app.config['SESSION_USE_SIGNER'] = True
-app.config['SESSION_PERMANENT'] = True
-
-# Email configuration
-app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
-app.config['MAIL_PORT'] = int(os.environ.get('MAIL_PORT', 587))
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
-app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER')
-
-# Base URL for production
-app.config['BASE_URL'] = os.environ.get('BASE_URL', '')
+app.config["PERMANENT_SESSION_LIFETIME"] = 86400
 
 # Initialize extensions
-db.init_app(app)
-csrf.init_app(app)
-mail.init_app(app)
-sess.init_app(app)
-
-# Configure Flask-Login
+db = SQLAlchemy(app, model_class=Base)
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'stable_login'
+login_manager.login_view = 'login'
+
+# Session error handling
+@app.before_request
+def handle_session_errors():
+    try:
+        session.get('_test', None)
+        session['_test'] = 'ok'
+    except:
+        try:
+            session.clear()
+        except:
+            pass
+        session.permanent = True
+
+# User model
+class RenderUser(UserMixin, db.Model):
+    __tablename__ = "user"
+    id = db.Column(db.String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    username = db.Column(db.String(64), unique=True, nullable=True)
+    email = db.Column(db.String(120), unique=True, nullable=True)
+    password_hash = db.Column(db.String(256), nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    first_name = db.Column(db.String(64), nullable=True)
+    last_name = db.Column(db.String(64), nullable=True)
+    profile_image_url = db.Column(db.String(256), nullable=True)
+    notifications_enabled = db.Column(db.Boolean, default=True)
+    demographics_collected = db.Column(db.Boolean, default=False)
+    welcome_message_shown = db.Column(db.Boolean, default=False)
+    
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+    
+    def check_password(self, password):
+        if not self.password_hash:
+            return False
+        return check_password_hash(self.password_hash, password)
 
 @login_manager.user_loader
 def load_user(user_id):
     try:
-        from models import User
-        return User.query.get(user_id)
+        return RenderUser.query.get(user_id)
     except:
         return None
 
-@login_manager.unauthorized_handler
-def unauthorized():
-    flash('Please log in to access this page.', 'warning')
-    return redirect(url_for('stable_login'))
-
-# Custom login_required decorator
-def login_required(f):
-    @wraps(f)
-    def decorated_view(*args, **kwargs):
-        if not current_user.is_authenticated:
-            flash('Please log in to access this page.', 'warning')
-            return redirect(url_for('stable_login'))
-        return f(*args, **kwargs)
-    return decorated_view
-
-# Error handlers
-@app.errorhandler(Exception)
-def handle_exception(e):
-    app.logger.error(f"Unhandled exception: {e}")
-    return render_template('error.html', error="An unexpected error occurred"), 500
-
-# Core routes for production
-@app.route('/complete-landing')
-def complete_landing():
-    """Complete landing page for marketing integration"""
-    return render_template('complete_landing_page.html')
-
+# Routes
 @app.route('/')
 def index():
-    """Main application route"""
-    if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))
-    return redirect(url_for('complete_landing'))
+    try:
+        if current_user.is_authenticated:
+            return redirect(url_for('dashboard'))
+        return redirect(url_for('login'))
+    except:
+        return '<h1>Dear Teddy</h1><a href="/login">Login</a> | <a href="/register">Register</a>'
 
-def initialize_app():
-    """Initialize the application after database setup to avoid circular imports"""
-    with app.app_context():
-        # Database is already initialized above, just import models and create tables
-        try:
-            import models
-            db.create_all()
-            app.logger.info("Database tables created")
-        except Exception as e:
-            app.logger.error(f"Error creating database tables: {e}")
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    try:
+        if current_user.is_authenticated:
+            return redirect(url_for('dashboard'))
+        
+        if request.method == 'POST':
+            username = request.form.get('username', '').strip()
+            email = request.form.get('email', '').strip().lower()
+            password = request.form.get('password', '')
+            confirm_password = request.form.get('confirm_password', '')
+            
+            if not all([username, email, password, confirm_password]):
+                flash('All fields are required.', 'error')
+            elif password != confirm_password:
+                flash('Passwords do not match.', 'error')
+            elif len(password) < 6:
+                flash('Password must be at least 6 characters long.', 'error')
+            else:
+                try:
+                    existing_user = RenderUser.query.filter(
+                        (RenderUser.email.ilike(email)) | (RenderUser.username == username)
+                    ).first()
+                    
+                    if existing_user:
+                        if existing_user.email and existing_user.email.lower() == email:
+                            flash('Email already registered.', 'error')
+                        else:
+                            flash('Username already taken.', 'error')
+                    else:
+                        user = RenderUser()
+                        user.username = username
+                        user.email = email
+                        user.set_password(password)
+                        
+                        db.session.add(user)
+                        db.session.commit()
+                        
+                        session.clear()
+                        session.permanent = True
+                        
+                        if login_user(user, remember=True):
+                            flash('Registration successful! Welcome to Dear Teddy.', 'success')
+                            session.modified = True
+                            return redirect(url_for('dashboard'))
+                        else:
+                            flash('Account created but login failed. Please login manually.', 'warning')
+                            return redirect(url_for('login'))
+                            
+                except Exception as e:
+                    db.session.rollback()
+                    logger.error(f"Registration error: {e}")
+                    flash('Registration failed. Please try again.', 'error')
+        
+        return render_template_string("""
+        <!DOCTYPE html>
+        <html>
+        <head><title>Register - Dear Teddy</title>
+        <style>body{font-family:Arial;max-width:400px;margin:50px auto;padding:20px;background:#f8f9fa}
+        .container{background:white;padding:30px;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,0.1)}
+        .form-group{margin-bottom:15px}label{display:block;margin-bottom:5px;font-weight:500}
+        input{width:100%;padding:10px;border:1px solid #ddd;border-radius:4px;box-sizing:border-box}
+        button{width:100%;background:#007bff;color:white;padding:10px;border:none;border-radius:4px;cursor:pointer}
+        button:hover{background:#0056b3}
+        .error{color:#dc3545;margin-bottom:10px;padding:8px;background:#f8d7da;border-radius:4px}
+        .success{color:#155724;margin-bottom:10px;padding:8px;background:#d4edda;border-radius:4px}</style>
+        </head>
+        <body>
+        <div class="container">
+        <h2>Create Account</h2>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form method="post">
+            <div class="form-group">
+                <label>Username:</label>
+                <input type="text" name="username" required>
+            </div>
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label>Password:</label>
+                <input type="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label>Confirm Password:</label>
+                <input type="password" name="confirm_password" required>
+            </div>
+            <button type="submit">Create Account</button>
+        </form>
+        <p><a href="/login">Already have an account? Login here</a></p>
+        </div>
+        </body></html>
+        """)
+        
+    except Exception as e:
+        logger.error(f"Registration route error: {e}")
+        return f"Registration error: {str(e)}", 500
 
-        # Register essential routes
-        try:
-            import routes
-            app.logger.info("Core routes registered")
-        except Exception as e:
-            app.logger.error(f"Error registering routes: {e}")
+@app.route('/login', methods=['GET', 'POST'])
+@app.route('/stable-login', methods=['GET', 'POST'])
+def login():
+    try:
+        if current_user.is_authenticated:
+            return redirect(url_for('dashboard'))
+        
+        if request.method == 'POST':
+            email = request.form.get('email', '').strip().lower()
+            password = request.form.get('password', '')
+            remember = request.form.get('remember') == 'on'
+            
+            if not email or not password:
+                flash('Please enter both email and password.', 'error')
+            else:
+                try:
+                    user = RenderUser.query.filter(RenderUser.email.ilike(email)).first()
+                    
+                    if user and user.check_password(password):
+                        session.clear()
+                        session.permanent = True
+                        
+                        if login_user(user, remember=remember):
+                            session.modified = True
+                            next_page = request.args.get('next')
+                            if next_page and next_page.startswith('/'):
+                                return redirect(next_page)
+                            return redirect(url_for('dashboard'))
+                        else:
+                            flash('Login failed. Please try again.', 'error')
+                    else:
+                        flash('Invalid email or password.', 'error')
+                        
+                except Exception as e:
+                    logger.error(f"Login error: {e}")
+                    flash('Login failed. Please try again.', 'error')
+        
+        return render_template_string("""
+        <!DOCTYPE html>
+        <html>
+        <head><title>Login - Dear Teddy</title>
+        <style>body{font-family:Arial;max-width:400px;margin:50px auto;padding:20px;background:#f8f9fa}
+        .container{background:white;padding:30px;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,0.1)}
+        .form-group{margin-bottom:15px}label{display:block;margin-bottom:5px;font-weight:500}
+        input{width:100%;padding:10px;border:1px solid #ddd;border-radius:4px;box-sizing:border-box}
+        button{width:100%;background:#007bff;color:white;padding:10px;border:none;border-radius:4px;cursor:pointer}
+        button:hover{background:#0056b3}
+        .error{color:#dc3545;margin-bottom:10px;padding:8px;background:#f8d7da;border-radius:4px}
+        .note{background:#fff3cd;padding:10px;border-radius:4px;margin-bottom:15px;font-size:14px}</style>
+        </head>
+        <body>
+        <div class="container">
+        <h2>Welcome Back</h2>
+        <div class="note">
+            <strong>Note:</strong> If you registered before June 2025, try password: temp_[username]_2025
+        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form method="post">
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label>Password:</label>
+                <input type="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" name="remember"> Remember me</label>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <p><a href="/register">Don't have an account? Register here</a></p>
+        </div>
+        </body></html>
+        """)
+        
+    except Exception as e:
+        logger.error(f"Login route error: {e}")
+        return f"Login error: {str(e)}", 500
 
-        # Register admin routes
-        try:
-            import admin_routes
-            app.logger.info("Admin routes registered")
-        except Exception as e:
-            app.logger.error(f"Error registering admin routes: {e}")
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    try:
+        if not current_user or not current_user.is_authenticated:
+            return redirect(url_for('login'))
+            
+        return render_template_string("""
+        <!DOCTYPE html>
+        <html>
+        <head><title>Dashboard - Dear Teddy</title>
+        <style>body{font-family:Arial;margin:0;padding:0;background:#f8f9fa}
+        .header{background:white;box-shadow:0 2px 4px rgba(0,0,0,0.1);padding:15px 20px;margin-bottom:20px}
+        .header-content{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+        .logout-btn{background:#dc3545;color:white;padding:8px 16px;text-decoration:none;border-radius:4px}
+        .container{max-width:1200px;margin:0 auto;padding:0 20px}
+        .welcome{background:white;padding:30px;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,0.1);margin-bottom:20px}
+        </style>
+        </head>
+        <body>
+        <div class="header">
+            <div class="header-content">
+                <h1>Dear Teddy Dashboard</h1>
+                <a href="/logout" class="logout-btn">Logout</a>
+            </div>
+        </div>
+        <div class="container">
+            <div class="welcome">
+                <h2>Welcome back, {{ user.username }}!</h2>
+                <p>Your mental wellness companion is here to help.</p>
+                <p>Account created: {{ user.created_at.strftime('%B %d, %Y') }}</p>
+                <p>Email: {{ user.email }}</p>
+            </div>
+        </div>
+        </body></html>
+        """, user=current_user)
+    except Exception as e:
+        logger.error(f"Dashboard error: {e}")
+        return redirect(url_for('login'))
 
-        # Register marketing integration
-        try:
-            import marketing_integration
-            app.logger.info("Marketing integration registered")
-        except Exception as e:
-            app.logger.error(f"Error registering marketing integration: {e}")
+@app.route('/logout')
+def logout():
+    try:
+        logout_user()
+        session.clear()
+        flash('You have been logged out.', 'info')
+    except:
+        pass
+    return redirect(url_for('login'))
 
-        # Register stable login blueprint
-        try:
-            from stable_login import stable_login_bp
-            app.register_blueprint(stable_login_bp)
-            app.logger.info("Stable login blueprint registered")
-        except Exception as e:
-            app.logger.error(f"Error registering stable login blueprint: {e}")
+@app.route('/health')
+def health():
+    try:
+        db.session.execute(db.text('SELECT 1'))
+        return jsonify({"status": "healthy", "timestamp": datetime.utcnow().isoformat()})
+    except Exception as e:
+        return jsonify({"status": "error", "error": str(e), "timestamp": datetime.utcnow().isoformat()}), 500
 
-        # Register simple register blueprint
-        try:
-            from simple_register import simple_register_bp
-            app.register_blueprint(simple_register_bp)
-            app.logger.info("Simple register blueprint registered")
-        except Exception as e:
-            app.logger.error(f"Error registering simple register blueprint: {e}")
+@app.errorhandler(500)
+def internal_error(error):
+    db.session.rollback()
+    return '<h1>Server Error</h1><p>Please try again.</p><a href="/">Home</a>', 500
 
-        # Register password reset blueprint
-        try:
-            from pwd_reset import pwd_reset_bp
-            app.register_blueprint(pwd_reset_bp)
-            app.logger.info("Password reset blueprint registered")
-        except Exception as e:
-            app.logger.error(f"Error registering password reset blueprint: {e}")
+# Initialize database
+with app.app_context():
+    try:
+        db.create_all()
+        logger.info("Database initialized successfully")
+    except Exception as e:
+        logger.error(f"Database initialization error: {e}")
 
-        # Register static pages blueprint
-        try:
-            from static_pages import static_pages_bp
-            app.register_blueprint(static_pages_bp)
-            app.logger.info("Static pages blueprint registered")
-        except Exception as e:
-            app.logger.error(f"Error registering static pages blueprint: {e}")
-
-# Initialize the application
-initialize_app()
-
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)

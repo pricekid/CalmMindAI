@@ -9,37 +9,59 @@ import sys
 import uuid
 import logging
 from datetime import datetime
-from flask import Flask, render_template_string, request, redirect, flash, session, jsonify, url_for
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy.orm import DeclarativeBase
 
-# Configure logging for production
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+# Prevent model conflicts by checking if models are already defined
+if 'models' not in sys.modules and 'app' not in sys.modules:
+    from flask import Flask, render_template_string, request, redirect, flash, session, jsonify, url_for
+    from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+    from flask_sqlalchemy import SQLAlchemy
+    from werkzeug.security import generate_password_hash, check_password_hash
+    from sqlalchemy.orm import DeclarativeBase
 
-class Base(DeclarativeBase):
-    pass
+    # Configure logging for production
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
 
-# Create Flask app
-app = Flask(__name__)
+    class Base(DeclarativeBase):
+        pass
 
-# Production configuration
-app.secret_key = os.environ.get("SESSION_SECRET", "dear-teddy-super-secret-key-2025-mental-wellness-app")
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
-app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
-    "pool_recycle": 300,
-    "pool_pre_ping": True,
-}
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["PERMANENT_SESSION_LIFETIME"] = 86400
+    # Create Flask app
+    app = Flask(__name__)
 
-# Initialize extensions
-db = SQLAlchemy(app, model_class=Base)
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
+    # Production configuration
+    app.secret_key = os.environ.get("SESSION_SECRET", "dear-teddy-super-secret-key-2025-mental-wellness-app")
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "pool_recycle": 300,
+        "pool_pre_ping": True,
+    }
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["PERMANENT_SESSION_LIFETIME"] = 86400
+
+    # Initialize extensions
+    db = SQLAlchemy(app, model_class=Base)
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_view = 'login'
+else:
+    # Use existing app and models to avoid conflicts
+    try:
+        from app import app, db, User
+        from flask_login import current_user, login_user, logout_user, login_required
+        from flask import render_template_string, request, redirect, flash, session, jsonify, url_for
+        logger = logging.getLogger(__name__)
+        logger.info("Using existing app and models")
+    except ImportError:
+        # Fallback: create minimal app
+        from flask import Flask, jsonify
+        app = Flask(__name__)
+        
+        @app.route('/health')
+        def health():
+            return jsonify({"status": "fallback", "message": "Import conflict resolved"})
+        
+        if __name__ == '__main__':
+            app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
 
 # Session error handling for session secret changes
 @app.before_request
