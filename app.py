@@ -941,6 +941,13 @@ def health_check():
         app.logger.info("Push notification routes registered successfully")
     except ImportError:
         app.logger.warning("Push notification routes not available")
+        
+    # Register notification settings route as fallback
+    @app.route('/notification-settings')
+    @login_required
+    def notification_settings():
+        """Fallback notification settings page"""
+        return render_template('notification_settings.html', title='Notification Settings')
     
     # Register journal reminder routes
     try:
