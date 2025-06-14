@@ -916,6 +916,16 @@ def health_check():
         "environment": "production" if app.config.get('ENV') == 'production' else "development"
     }
 
+# Add status endpoint for uptime monitoring
+@app.route('/status')
+def status_check():
+    """Simple status endpoint for uptime monitoring"""
+    return {"status": "OK"}
+
+# Exempt health and status endpoints from CSRF protection for uptime monitoring
+csrf.exempt(health_check)
+csrf.exempt(status_check)
+
 
     try:
         from static_pages import static_pages_bp
