@@ -760,6 +760,15 @@ with app.app_context():
     except ImportError:
         app.logger.warning("Stable login blueprint not available")
     
+    # Register the working registration blueprint
+    try:
+        from working_registration import working_registration_bp
+        app.register_blueprint(working_registration_bp)
+        csrf.exempt(working_registration_bp)
+        app.logger.info("Working registration blueprint registered with CSRF exemption")
+    except ImportError:
+        app.logger.warning("Working registration blueprint not available")
+    
     # Register the stable login as the primary login option
     # This makes all other login paths redirect to stable-login
     try:

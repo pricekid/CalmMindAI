@@ -92,50 +92,49 @@ def register():
 
     # Handle form submission with or without WTF validation
     if request.method == 'POST':
-        if form_valid or not form:
-            # Get form data directly if form validation fails
-            username = request.form.get('username', '').strip() if not form else form.username.data
-            email = request.form.get('email', '').strip().lower() if not form else form.email.data.lower()
-            password = request.form.get('password', '') if not form else form.password.data
-            confirm_password = request.form.get('confirm_password', '') if not form else form.confirm_password.data
+        # Get form data directly from request
+        username = request.form.get('username', '').strip()
+        email = request.form.get('email', '').strip().lower()
+        password = request.form.get('password', '')
+        confirm_password = request.form.get('confirm_password', '')
 
-            # Basic validation
-            if not all([username, email, password, confirm_password]):
-                flash('All fields are required.', 'error')
-            elif password != confirm_password:
-                flash('Passwords do not match.', 'error')
-            elif len(password) < 6:
-                flash('Password must be at least 6 characters long.', 'error')
-            else:
-                try:
-                    # Check if user already exists
-                    existing_user = User.query.filter(
-                        (func.lower(User.email) == email) | (User.username == username)
-                    ).first()
+        # Basic validation
+        if not all([username, email, password, confirm_password]):
+            flash('All fields are required.', 'error')
+        elif password != confirm_password:
+            flash('Passwords do not match.', 'error')
+        elif len(password) < 6:
+            flash('Password must be at least 6 characters long.', 'error')
+        else:
+            try:
+                # Check if user already exists
+                existing_user = User.query.filter(
+                    (func.lower(User.email) == email) | (User.username == username)
+                ).first()
 
-                    if existing_user:
-                        if existing_user.email.lower() == email:
-                            flash('Email already registered. Please use a different email.', 'error')
-                        else:
-                            flash('Username already taken. Please choose a different username.', 'error')
+                if existing_user:
+                    if existing_user.email.lower() == email:
+                        flash('Email already registered. Please use a different email.', 'error')
                     else:
-                        # Create new user
-                        user = User(username=username, email=email)
-                        user.set_password(password)
+                        flash('Username already taken. Please choose a different username.', 'error')
+                else:
+                    # Create new user
+                    user = User(username=username, email=email)
+                    user.set_password(password)
 
-                        db.session.add(user)
-                        db.session.commit()
+                    db.session.add(user)
+                    db.session.commit()
 
-                        # Log in the user immediately
-                        login_user(user)
+                    # Log in the user immediately
+                    login_user(user)
 
-                        flash('Registration successful! Welcome to Dear Teddy.', 'success')
-                        return redirect('/onboarding/step-1')
+                    flash('Registration successful! Welcome to Dear Teddy.', 'success')
+                    return redirect('/dashboard')
 
-                except Exception as e:
-                    db.session.rollback()
-                    app.logger.error(f"Registration error: {str(e)}")
-                    flash('An error occurred during registration. Please try again.', 'error')
+            except Exception as e:
+                db.session.rollback()
+                app.logger.error(f"Registration error: {str(e)}")
+                flash('An error occurred during registration. Please try again.', 'error')
 
     return render_template('register.html', form=form)
 
