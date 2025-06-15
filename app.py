@@ -32,10 +32,14 @@ def create_app():
     # Configure secret key
     if os.environ.get("SESSION_SECRET"):
         app.secret_key = os.environ.get("SESSION_SECRET")
+        # Use the same secret for CSRF protection
+        app.config['WTF_CSRF_SECRET_KEY'] = os.environ.get("SESSION_SECRET")
     else:
         import secrets
         app.logger.warning("No SESSION_SECRET found, generating a temporary one")
-        app.secret_key = secrets.token_hex(32)
+        secret = secrets.token_hex(32)
+        app.secret_key = secret
+        app.config['WTF_CSRF_SECRET_KEY'] = secret
     
     # Configure database
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")

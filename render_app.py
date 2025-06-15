@@ -27,8 +27,10 @@ def create_render_app():
     """
     app = Flask(__name__)
     
-    # Production configuration
-    app.config['SECRET_KEY'] = os.environ.get('SESSION_SECRET', 'fallback-secret-key')
+    # Production configuration with CSRF secret
+    session_secret = os.environ.get('SESSION_SECRET', 'fallback-secret-key')
+    app.config['SECRET_KEY'] = session_secret
+    app.config['WTF_CSRF_SECRET_KEY'] = session_secret
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
@@ -40,6 +42,10 @@ def create_render_app():
         }
     }
     
+    # Fix HTTPS/HTTP mismatch for Render deployment
+    from werkzeug.middleware.proxy_fix import ProxyFix
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1, x_for=1)
+    
     # Session configuration for production
     app.config['SESSION_PERMANENT'] = True
     app.config['SESSION_TYPE'] = 'filesystem'
@@ -47,7 +53,8 @@ def create_render_app():
     app.config['SESSION_COOKIE_HTTPONLY'] = True
     app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
     
-    # CSRF configuration for production
+    # CSRF configuration for production - disable secure for mixed content
+    app.config['WTF_CSRF_SSL_STRICT'] = False
     app.config['WTF_CSRF_ENABLED'] = False  # Disable CSRF to resolve login issues
     app.config['WTF_CSRF_SSL_STRICT'] = False
     
