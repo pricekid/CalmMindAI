@@ -168,14 +168,14 @@ def emergency_template(name):
     except Exception as e:
         return f"Error loading template: {str(e)}"
 
-# Error handlers
-@app.errorhandler(404)
-def page_not_found(e):
+# Error handlers disabled to prevent interference with main application routing
+# @app.errorhandler(404)
+def page_not_found_disabled(e):
     return render_template('emergency_error.html', error_title="Page Not Found", 
                           error_message="The page you're looking for doesn't exist."), 404
 
-@app.errorhandler(500)
-def server_error(e):
+# @app.errorhandler(500)
+def server_error_disabled(e):
     return render_template('emergency_error.html', error_title="Server Error", 
                           error_message="Something went wrong on our end. Please try again later."), 500
 

@@ -213,36 +213,6 @@ def login_required(f):
         
         return f(*args, **kwargs)
     return decorated_view
-    @wraps(f)
-    def decorated_view(*args, **kwargs):
-        # First check if user is authenticated at all
-        if not current_user.is_authenticated:
-            return login_manager.unauthorized()
-        
-        # Check for admin impersonation mode
-        is_admin_impersonating = session.get('is_admin_impersonating') == True
-        
-        # Check if current route is for regular users but user is an admin
-        if (not request.path.startswith('/admin') and 
-            hasattr(current_user, 'get_id') and 
-            current_user.get_id().startswith('admin_') and
-            not is_admin_impersonating):
-            flash('You are logged in as an admin. Regular user pages are not accessible.', 'warning')
-            # Use direct path instead of url_for
-            return redirect('/admin/dashboard')
-            
-        # Check if current route is for admins but user is not an admin
-        if request.path.startswith('/admin') and (not hasattr(current_user, 'get_id') or not current_user.get_id().startswith('admin_')):
-            # If in impersonation mode and trying to access admin routes, let them return to admin
-            if is_admin_impersonating and request.path.startswith('/admin/return-to-admin'):
-                pass  # Allow access to return-to-admin route
-            else:
-                flash('You need admin privileges to access this page.', 'warning')
-                # Use direct path instead of url_for
-                return redirect('/dashboard')
-            
-        return f(*args, **kwargs)
-    return decorated_view
 
 # Set up the login_manager.user_loader before importing routes
 from models import User
