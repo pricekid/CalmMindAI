@@ -77,26 +77,26 @@ def create_render_app():
         except Exception as e:
             logger.error(f"Database table creation error: {e}")
     
-    # Register core routes
-    register_core_routes(app)
+    # Register only essential routes that exist
+    try:
+        import routes
+        logger.info("Core routes registered")
+    except Exception as e:
+        logger.error(f"Core routes error: {e}")
     
-    # Register admin routes
-    register_admin_routes(app)
+    try:
+        from stable_login import stable_login_bp
+        app.register_blueprint(stable_login_bp)
+        logger.info("Stable login registered")
+    except Exception as e:
+        logger.error(f"Stable login error: {e}")
     
-    # Register marketing integration
-    register_marketing_integration(app)
-    
-    # Register stable login blueprint
-    register_stable_login(app)
-    
-    # Register simple register blueprint
-    register_simple_register(app)
-    
-    # Register password reset blueprint
-    register_password_reset(app)
-    
-    # Register static pages blueprint
-    register_static_pages(app)
+    try:
+        from minimal_register import minimal_register_bp
+        app.register_blueprint(minimal_register_bp)
+        logger.info("Minimal register registered")
+    except Exception as e:
+        logger.error(f"Minimal register error: {e}")
     
     logger.info("Render app initialization complete")
     return app
@@ -139,16 +139,16 @@ def register_stable_login(app):
 def register_simple_register(app):
     """Register simple register blueprint"""
     try:
-        from register_simple import register_simple_bp
-        app.register_blueprint(register_simple_bp)
-        logger.info("Simple register blueprint registered")
+        from minimal_register import minimal_register_bp
+        app.register_blueprint(minimal_register_bp)
+        logger.info("Minimal register blueprint registered")
     except Exception as e:
-        logger.error(f"Simple register registration error: {e}")
+        logger.error(f"Minimal register registration error: {e}")
 
 def register_password_reset(app):
     """Register password reset blueprint"""
     try:
-        from password_reset import password_reset_bp
+        from updated_password_reset import password_reset_bp
         app.register_blueprint(password_reset_bp)
         logger.info("Password reset blueprint registered")
     except Exception as e:
@@ -157,8 +157,8 @@ def register_password_reset(app):
 def register_static_pages(app):
     """Register static pages blueprint"""
     try:
-        from static_pages import static_pages_bp
-        app.register_blueprint(static_pages_bp)
+        from fallback_routes import fallback_bp
+        app.register_blueprint(fallback_bp)
         logger.info("Static pages blueprint registered")
     except Exception as e:
         logger.error(f"Static pages registration error: {e}")
