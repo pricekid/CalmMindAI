@@ -379,6 +379,43 @@ body.bg-dark .form-text {
     font-weight: 500;
 }
 
+/* Breathing exercise text contrast fixes */
+.alert-info {
+    background-color: #2c5a5c !important;
+    border-color: #1D4D4F !important;
+    color: #ffffff !important;
+}
+
+.alert-info .fas {
+    color: #ffffff !important;
+}
+
+/* Stay Connected card specific fixes */
+.dashboard-widget .card-header {
+    background-color: #1D4D4F !important;
+    color: #ffffff !important;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.dashboard-widget .card-body p,
+.dashboard-widget .card-body span,
+.dashboard-widget .card-body li {
+    color: #212529 !important;
+    font-weight: 500 !important;
+}
+
+.dashboard-widget .small {
+    color: #6c757d !important;
+    font-weight: 500 !important;
+}
+
+/* Enhanced notification button styling */
+#enable-push-btn:hover {
+    background: linear-gradient(45deg, #8b4513, #b8956b) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(160, 92, 44, 0.3);
+}
+
 /* Streak badge styling for better contrast */
 .streak-badge {
     color: #212529 !important;
