@@ -1,0 +1,145 @@
+
+
+Live tail
+AST
+
+Menu
+[notice] A new release of pip is available: 24.0 -> 25.1.1
+[notice] To update, run: pip install --upgrade pip
+==> Uploading build...
+==> Uploaded in 16.0s. Compression took 17.6s
+==> Build successful 🎉
+==> Deploying...
+==> Running 'gunicorn --bind 0.0.0.0:$PORT --reuse-port --reload main:app'
+INFO:render_app:Database tables created
+INFO:render_compatibility:Render.com environment detected - applying compatibility settings
+INFO:render_compatibility:Applied Render.com-specific cookie and CSRF settings
+INFO:app:Render compatibility settings applied: True
+INFO:root:Password reset routes registered with SendGrid email integration
+INFO:app:Password reset functionality enabled with SendGrid
+INFO:root:Admin login-as-user routes registered successfully
+INFO:app:Admin login-as-user functionality enabled
+INFO:marketing_integration:Marketing integration registered. Configure these URLs on dearteddy.app:
+INFO:marketing_integration:  login_url: https://dear-teddy.onrender.com/marketing-login
+INFO:marketing_integration:  signup_url: https://dear-teddy.onrender.com/marketing-signup
+INFO:marketing_integration:  get_started_url: https://dear-teddy.onrender.com/from-marketing?action=get-started
+INFO:marketing_integration:  app_redirect_url: https://dear-teddy.onrender.com/app-redirect
+INFO:app:Marketing integration registered successfully
+INFO:app:Login routes registered successfully
+WARNING:app:Simple login module not available
+INFO:app:Test reflection routes registered successfully
+INFO:app:Simple dashboard registered successfully
+WARNING:app:Special login module not available
+INFO:app:Standalone reflection test routes registered successfully
+INFO:app:Simple registration blueprint registered successfully
+INFO:app:Working registration system registered successfully
+INFO:app:Final registration system registered successfully
+INFO:app:Minimal registration blueprint registered successfully
+WARNING:app:Emergency main login module not available
+INFO:app:Simple TTS blueprint registered successfully
+INFO:app:Direct TTS blueprint registered successfully
+INFO:app:Simple direct TTS blueprint registered successfully
+INFO:app:TTS routes blueprint registered successfully
+INFO:app:Premium TTS service blueprint registered successfully
+INFO:app:Enhanced TTS service blueprint registered successfully
+INFO:app:OpenAI TTS service blueprint registered successfully
+INFO:app:Stable login blueprint registered with CSRF exemption for reliability
+INFO:redirect_to_stable:Login redirection to stable-login registered successfully
+INFO:app:All login paths now redirect to stable login
+INFO:emergency_hardcoded_login:Hardcoded test login registered
+INFO:app:Hardcoded test user login registered - use /test-login
+INFO:emergency_direct_render:Emergency Render login routes registered successfully
+INFO:app:Ultra-emergency Render login system registered and CSRF disabled
+INFO:render_init:Render deployment mode: True
+INFO:app:Render-specific optimized login routes registered successfully
+INFO:direct_login_fix:Direct login blueprint registered successfully
+INFO:app:Emergency direct login system registered successfully
+INFO:app:Onboarding blueprint registered successfully
+INFO:app:Emergency admin blueprint registered with CSRF exemption
+INFO:app:Standalone admin blueprint registered with CSRF exemption
+INFO:app:CSRF exemption applied to direct_tts_bp
+INFO:app:CSRF exemption applied to simple_direct_tts_bp
+INFO:app:CSRF exemption applied to premium_tts_bp
+INFO:app:CSRF exemption applied to enhanced_tts_bp
+INFO:app:CSRF exemption applied to openai_tts_bp
+INFO:app:Email preview blueprint registered successfully
+INFO:app:Emergency dashboard blueprint registered successfully
+INFO:app:Password reset blueprint registered successfully
+INFO:app:Static pages blueprint registered successfully
+INFO:app:Push notification routes registered successfully
+INFO:app:Push notification routes registered successfully
+INFO:app:Journal reminder routes registered successfully
+INFO:app:Emergency login blueprint registered with CSRF exemption
+INFO:root:Emergency registration route registered at /emergency-register
+INFO:app:Emergency registration system registered successfully
+WARNING:app:Standalone registration module not available
+INFO:app:Production registration fix registered successfully
+INFO:updated_password_reset:Password reset routes registered with updated SendGrid email integration
+INFO:environment_detection:Detected environment: Render
+INFO:environment_detection:Base URL: https://dearteddy-4vqj.onrender.com
+INFO:updated_password_reset:Password reset configured for Render environment
+INFO:updated_password_reset:Using base URL: https://dearteddy-4vqj.onrender.com
+INFO:app:Updated password reset functionality enabled with working SendGrid
+INFO:root:Fallback email routes registered successfully
+INFO:app:Fallback email routes registered successfully
+INFO:render_app:Core routes registered
+INFO:render_app:Admin routes registered
+INFO:render_app:Marketing integration registered
+INFO:render_app:Stable login blueprint registered
+INFO:render_app:Simple register blueprint registered
+INFO:render_app:Password reset blueprint registered
+INFO:render_app:Static pages blueprint registered
+[2025-06-15 01:41:25 +0000] [102] [INFO] Starting gunicorn 23.0.0
+[2025-06-15 01:41:25 +0000] [102] [INFO] Listening at: http://0.0.0.0:10000 (102)
+[2025-06-15 01:41:25 +0000] [102] [INFO] Using worker: sync
+[2025-06-15 01:41:25 +0000] [103] [INFO] Booting worker with pid: 103
+Production registration fix registered at /production-register
+127.0.0.1 - - [15/Jun/2025:01:41:26 +0000] "HEAD / HTTP/1.1" 302 0 "-" "Go-http-client/1.1"
+==> Your service is live 🎉
+==> 
+==> ///////////////////////////////////////////////////////////
+==> 
+==> Available at your primary URL https://www.dearteddy.app + 2 more domains
+==> 
+==> ///////////////////////////////////////////////////////////
+10.214.45.159 - - [15/Jun/2025:01:41:45 +0000] "GET /complete-landing HTTP/1.1" 200 32577 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.15"
+==> Detected service running on port 10000
+==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
+10.214.45.159 - - [15/Jun/2025:01:56:47 +0000] "GET /complete-landing HTTP/1.1" 200 32577 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.15"
+10.214.16.39 - - [15/Jun/2025:01:56:50 +0000] "GET /complete-landing HTTP/1.1" 200 32577 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.15"
+10.214.218.110 - - [15/Jun/2025:01:56:52 +0000] "GET /register-simple HTTP/1.1" 200 4485 "https://www.dearteddy.app/complete-landing" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.15"
+10.214.28.149 - - [15/Jun/2025:01:57:32 +0000] "POST /register-simple HTTP/1.1" 200 4584 "https://www.dearteddy.app/register-simple" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.15"
+10.214.102.148 - - [15/Jun/2025:01:57:35 +0000] "GET /stable-login HTTP/1.1" 200 12834 "https://www.dearteddy.app/register-simple" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.15"
+10.214.118.117 - - [15/Jun/2025:01:57:35 +0000] "GET /static/images/logo.svg HTTP/1.1" 200 0 "https://www.dearteddy.app/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.15"
+10.214.13.78 - - [15/Jun/2025:01:57:35 +0000] "GET /static/css/custom.css HTTP/1.1" 200 0 "https://www.dearteddy.app/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.15"
+INFO:stable_login:Login attempt - Form token length: 91
+INFO:stable_login:Login attempt - Session token length: 0
+ERROR:stable_login:Login error: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+10.214.45.159 - - [15/Jun/2025:01:57:53 +0000] "POST /stable-login HTTP/1.1" 200 13044 "https://www.dearteddy.app/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.15"
+10.214.28.149 - - [15/Jun/2025:01:57:54 +0000] "GET /static/css/custom.css HTTP/1.1" 304 0 "https://www.dearteddy.app/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.15"
+10.214.13.78 - - [15/Jun/2025:01:57:54 +0000] "GET /static/images/logo.svg HTTP/1.1" 304 0 "https://www.dearteddy.app/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.15"
+10.214.224.59 - - [15/Jun/2025:01:58:24 +0000] "GET /complete-landing HTTP/1.1" 200 32577 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.218.110 - - [15/Jun/2025:01:58:26 +0000] "GET /complete-landing HTTP/1.1" 200 32577 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+ERROR:render_app:Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+10.214.45.159 - - [15/Jun/2025:01:58:26 +0000] "GET /favicon.ico HTTP/1.1" 500 8062 "https://www.dearteddy.app/complete-landing" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.13.78 - - [15/Jun/2025:01:58:32 +0000] "GET /stable-login HTTP/1.1" 200 12834 "https://www.dearteddy.app/complete-landing" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.28.149 - - [15/Jun/2025:01:58:32 +0000] "GET /static/css/custom.css HTTP/1.1" 200 0 "https://www.dearteddy.app/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.28.149 - - [15/Jun/2025:01:58:32 +0000] "GET /static/images/logo.svg HTTP/1.1" 200 0 "https://www.dearteddy.app/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+ERROR:render_app:Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+10.214.102.148 - - [15/Jun/2025:01:58:32 +0000] "GET /favicon.ico HTTP/1.1" 500 8062 "https://www.dearteddy.app/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+INFO:stable_login:Login attempt - Form token length: 91
+INFO:stable_login:Login attempt - Session token length: 0
+ERROR:stable_login:Login error: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+10.214.218.110 - - [15/Jun/2025:01:58:40 +0000] "POST /stable-login HTTP/1.1" 200 13044 "https://www.dearteddy.app/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.102.148 - - [15/Jun/2025:01:58:40 +0000] "GET /static/images/logo.svg HTTP/1.1" 304 0 "https://www.dearteddy.app/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.224.59 - - [15/Jun/2025:01:58:41 +0000] "GET /static/css/custom.css HTTP/1.1" 304 0 "https://www.dearteddy.app/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+ERROR:render_app:Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+10.214.224.59 - - [15/Jun/2025:01:58:41 +0000] "GET /favicon.ico HTTP/1.1" 500 8062 "https://www.dearteddy.app/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.45.159 - - [15/Jun/2025:01:58:54 +0000] "POST /stable-login HTTP/1.1" 200 13044 "https://www.dearteddy.app/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+INFO:stable_login:Login attempt - Form token length: 91
+INFO:stable_login:Login attempt - Session token length: 0
+ERROR:stable_login:Login error: The current Flask app is not registered with this 'SQLAlchemy' instance. Did you forget to call 'init_app', or did you create multiple 'SQLAlchemy' instances?
+10.214.28.149 - - [15/Jun/2025:01:58:54 +0000] "GET /static/images/logo.svg HTTP/1.1" 304 0 "https://www.dearteddy.app/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+10.214.16.39 - - [15/Jun/2025:01:58:54 +0000] "GET /static/css/custom.css HTTP/1.1" 304 0 "https://www.dearteddy.app/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+ERROR:render_app:Unhandled exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+10.214.16.39 - - [15/Jun/2025:01:58:54 +0000] "GET /favicon.ico HTTP/1.1" 500 8062 "https://www.dearteddy.app/stable-login" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"

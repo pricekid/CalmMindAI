@@ -6,7 +6,8 @@ Provides a Blueprint to handle user authentication with enhanced CSRF protection
 import logging
 from flask import Blueprint, render_template, redirect, request, flash, session
 from flask_login import login_user, current_user
-from models import User, db
+from extensions import db
+from models import User
 from flask_wtf.csrf import generate_csrf
 import os
 
