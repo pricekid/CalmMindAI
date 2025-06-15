@@ -27,32 +27,45 @@ sess = Session()
 
 def create_app():
     """Application factory to create Flask app with proper initialization"""
-    app = Flask(__name__)
+    import logging
+    import traceback
     
-    # Configure secret key
-    if os.environ.get("SESSION_SECRET"):
-        app.secret_key = os.environ.get("SESSION_SECRET")
-        # Use the same secret for CSRF protection
-        app.config['WTF_CSRF_SECRET_KEY'] = os.environ.get("SESSION_SECRET")
-    else:
-        import secrets
-        app.logger.warning("No SESSION_SECRET found, generating a temporary one")
-        secret = secrets.token_hex(32)
-        app.secret_key = secret
-        app.config['WTF_CSRF_SECRET_KEY'] = secret
+    logger = logging.getLogger(__name__)
     
-    # Configure database
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
-    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
-        "pool_recycle": 300,
-        "pool_pre_ping": True,
-    }
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    
-    # Initialize database with app
-    db.init_app(app)
-    
-    return app
+    try:
+        logger.info("🚀 Initializing Flask app...")
+        app = Flask(__name__)
+        
+        # Configure secret key
+        if os.environ.get("SESSION_SECRET"):
+            app.secret_key = os.environ.get("SESSION_SECRET")
+            # Use the same secret for CSRF protection
+            app.config['WTF_CSRF_SECRET_KEY'] = os.environ.get("SESSION_SECRET")
+        else:
+            import secrets
+            app.logger.warning("No SESSION_SECRET found, generating a temporary one")
+            secret = secrets.token_hex(32)
+            app.secret_key = secret
+            app.config['WTF_CSRF_SECRET_KEY'] = secret
+        
+        # Configure database
+        app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+        app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+            "pool_recycle": 300,
+            "pool_pre_ping": True,
+        }
+        app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+        
+        # Initialize database with app
+        db.init_app(app)
+        
+        logger.info("✅ Flask app initialization completed successfully")
+        return app
+        
+    except Exception as e:
+        logger.error(f"🔥 CRITICAL ERROR in create_app: {str(e)}")
+        logger.error(traceback.format_exc())
+        raise
 
 # Create app instance
 app = create_app()
