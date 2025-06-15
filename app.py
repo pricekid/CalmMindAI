@@ -73,8 +73,20 @@ def inject_csrf_token():
             return ""
     return dict(csrf_token=csrf_token)
 
-# Database configuration is already set in create_app() function
-# Remove duplicate configuration here
+# Configure the database
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///calm_journey.db")
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+    "pool_recycle": 300,
+    "pool_pre_ping": True,
+    "pool_timeout": 60,
+    "pool_size": 10,
+    "max_overflow": 20,
+    "isolation_level": "READ COMMITTED",  # More forgiving isolation level for general web apps
+    "connect_args": {
+        "connect_timeout": 10
+    }
+}
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # Configure CSRF protection with consistent settings
 app.config["WTF_CSRF_TIME_LIMIT"] = 7200  # 2 hour token expiration (extended)
@@ -118,23 +130,17 @@ csrf.init_app(app)
 AUTH_EXEMPT_PATHS = [
     '/minimal-register', '/auth-register', '/auth-login', '/auth-test-login',
     '/production-register', '/production-login', '/direct-register', '/direct-login',
-    '/stable-login', '/emergency-register', '/test-login', '/register', '/login',
-    '/register-simple'
+    '/stable-login', '/emergency-register', '/test-login'
 ]
 
-# Apply CSRF exemption using before_request handler
-@app.before_request
+@csrf.exempt
 def exempt_auth_endpoints():
     """Exempt authentication endpoints from CSRF validation"""
-    if request.path in AUTH_EXEMPT_PATHS and request.method == 'POST':
-        csrf._exempt_views.add(request.endpoint)
+    return request.path in AUTH_EXEMPT_PATHS
 
-# Additional route-specific exemptions
+# Apply CSRF exemption to authentication paths
 for path in AUTH_EXEMPT_PATHS:
-    try:
-        csrf.exempt(path)
-    except:
-        pass
+    csrf.exempt(path)
 
 # Remove Flask-WTF's automatic csrf_token injection after initialization to prevent conflicts
 if 'csrf_token' in app.jinja_env.globals:
@@ -175,15 +181,12 @@ def handle_exception(e):
     from flask import render_template, redirect, url_for, Response
     from json.decoder import JSONDecodeError
     from flask_wtf.csrf import CSRFError
-    import traceback
     
     # Don't handle CSRF validation errors - let them be handled normally
     if isinstance(e, CSRFError) or "'str' object is not callable" in str(e):
         return None  # Let Flask handle the error normally
     
-    # Log the full traceback for better debugging
     app.logger.error(f"Unhandled exception: {str(e)}")
-    app.logger.error(f"Full traceback: {traceback.format_exc()}")
     error_message = "Your data was saved, but we couldn't complete the analysis."
     
     # Check if it's a JSON parsing error (which is likely from OpenAI response)
@@ -649,14 +652,13 @@ with app.app_context():
     except ImportError:
         app.logger.warning("Standalone reflection test module not available")
     
-    # Register the fixed simple registration blueprint with minimal dependencies (CSRF-exempt)
+    # Register the simple registration blueprint with minimal dependencies
     try:
-        from simple_register_fixed import simple_register_bp
+        from simple_register import simple_register_bp
         app.register_blueprint(simple_register_bp)
-        csrf.exempt(simple_register_bp)
-        app.logger.info("Clean registration blueprint registered successfully with CSRF exemption")
+        app.logger.info("Simple registration blueprint registered successfully")
     except ImportError:
-        app.logger.warning("Clean registration module not available")
+        app.logger.warning("Simple registration module not available")
     
     # Register working registration system (CSRF-exempt)
     try:
@@ -676,7 +678,7 @@ with app.app_context():
     except ImportError:
         app.logger.warning("Final registration module not available")
     
-    # Register minimal registration blueprint (backup)
+    # Register minimal registration blueprint
     try:
         from minimal_register import bp as minimal_register_bp
         csrf.exempt(minimal_register_bp)
@@ -754,20 +756,11 @@ with app.app_context():
     try:
         from stable_login import stable_login_bp
         app.register_blueprint(stable_login_bp)
-        # Apply CSRF exemption properly
+        # now exempt it:
         csrf.exempt(stable_login_bp)
         app.logger.info("Stable login blueprint registered with CSRF exemption for authentication reliability")
     except ImportError:
         app.logger.warning("Stable login blueprint not available")
-    
-    # Register the working registration blueprint
-    try:
-        from working_registration import working_registration_bp
-        app.register_blueprint(working_registration_bp)
-        csrf.exempt(working_registration_bp)
-        app.logger.info("Working registration blueprint registered with CSRF exemption")
-    except ImportError:
-        app.logger.warning("Working registration blueprint not available")
     
     # Register the stable login as the primary login option
     # This makes all other login paths redirect to stable-login
@@ -906,49 +899,19 @@ with app.app_context():
         app.logger.warning("Password reset module not available")
     
     # Register static pages blueprint
-
-
-# Add a health check endpoint for production debugging
-@app.route('/health')
-def health_check():
-    """Simple health check endpoint"""
     try:
-        # Test database connection
-        db.session.execute('SELECT 1')
-        db_status = "OK"
-    except Exception as e:
-        db_status = f"ERROR: {str(e)}"
+        from static_pages import static_pages_bp
+        app.register_blueprint(static_pages_bp)
+        app.logger.info("Static pages blueprint registered successfully")
+    except ImportError:
+        app.logger.warning("Static pages module not available")
     
-    return {
-        "status": "running",
-        "database": db_status,
-        "environment": "production" if app.config.get('ENV') == 'production' else "development"
-    }
-
-# Add status endpoint for uptime monitoring
-@app.route('/status')
-def status_check():
-    """Simple status endpoint for uptime monitoring"""
-    return {"status": "OK"}
-
-# Exempt health and status endpoints from CSRF protection for uptime monitoring
-csrf.exempt(health_check)
-csrf.exempt(status_check)
-
-# Register static pages blueprint
-try:
-    from static_pages import static_pages_bp
-    app.register_blueprint(static_pages_bp)
-    app.logger.info("Static pages blueprint registered successfully")
-except ImportError:
-    app.logger.warning("Static pages module not available")
-
-# Add favicon route
-@app.route('/favicon.ico')
-def favicon():
-    """Serve favicon from static directory"""
-    from flask import send_from_directory
-    return send_from_directory('static', 'favicon.ico', mimetype='image/x-icon')
+    # Add favicon route
+    @app.route('/favicon.ico')
+    def favicon():
+        """Serve favicon from static directory"""
+        from flask import send_from_directory
+        return send_from_directory('static', 'favicon.ico', mimetype='image/x-icon')
     
     # Note: Removed problematic CSRF exemptions that caused 'str' object is not callable errors
     # API endpoints will use proper CSRF tokens in requests instead
@@ -960,13 +923,6 @@ def favicon():
         app.logger.info("Push notification routes registered successfully")
     except ImportError:
         app.logger.warning("Push notification routes not available")
-        
-    # Register notification settings route as fallback
-    @app.route('/notification-settings')
-    @login_required
-    def notification_settings():
-        """Fallback notification settings page"""
-        return render_template('notification_settings.html', title='Notification Settings')
     
     # Register journal reminder routes
     try:
@@ -1035,77 +991,6 @@ def favicon():
         app.logger.info("Complete authentication system registered successfully")
     except ImportError:
         app.logger.warning("Complete auth fix module not available")
-    
-    # Add production-specific routes for www.dearteddy.app
-    from environment_detection import is_production, get_base_url
-    if is_production():
-        @app.route('/production-status')
-        def production_status():
-            """Production environment status check"""
-            return {
-                "status": "production",
-                "base_url": get_base_url(),
-                "csrf_enabled": app.config.get('WTF_CSRF_ENABLED', False),
-                "database_connected": bool(os.environ.get('DATABASE_URL'))
-            }
-        
-        # Exempt production routes from CSRF for emergency access
-        @app.route('/emergency-prod-register', methods=['GET', 'POST'])
-        def emergency_prod_register():
-            """Emergency production registration without CSRF"""
-            if request.method == 'GET':
-                return render_template('register_simple.html', 
-                                     title='Register - Dear Teddy',
-                                     emergency_mode=True)
-            
-            # Handle POST registration
-            try:
-                from werkzeug.security import generate_password_hash
-                import uuid
-                
-                username = request.form.get('username', '').strip()
-                email = request.form.get('email', '').lower().strip()
-                password = request.form.get('password', '')
-                
-                if not all([username, email, password]):
-                    flash('All fields are required', 'error')
-                    return render_template('register_simple.html', emergency_mode=True)
-                
-                # Check if user exists
-                existing_user = User.query.filter_by(email=email).first()
-                if existing_user:
-                    flash('Email already registered', 'error')
-                    return render_template('register_simple.html', emergency_mode=True)
-                
-                # Create new user
-                new_user = User(
-                    id=str(uuid.uuid4()),
-                    username=username,
-                    email=email,
-                    password_hash=generate_password_hash(password),
-                    demographics_collected=False,
-                    notifications_enabled=True,
-                    morning_reminder_enabled=True,
-                    evening_reminder_enabled=True,
-                    sms_notifications_enabled=False,
-                    welcome_message_shown=False
-                )
-                
-                db.session.add(new_user)
-                db.session.commit()
-                
-                flash('Account created successfully! Please log in.', 'success')
-                return redirect('/emergency-prod-login')
-                
-            except Exception as e:
-                db.session.rollback()
-                app.logger.error(f"Production registration error: {str(e)}")
-                flash('Registration failed. Please try again.', 'error')
-                return render_template('register_simple.html', emergency_mode=True)
-        
-        # Exempt these routes from CSRF
-        csrf.exempt('emergency_prod_register')
-        app.logger.info("Production-specific emergency routes registered")
 
 # ============================================================================
 # DEMOGRAPHICS COLLECTION FUNCTIONALITY

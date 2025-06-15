@@ -218,10 +218,10 @@
                             </ul>
                             <p style="color: #000 !important;" class="small">You can customize notification settings at any time.</p>
                             <div class="d-flex gap-2 mt-3">
-                                <a href="/notification-settings" class="btn btn-sm btn-outline-secondary">
+                                <a href="{{ url_for('push_notifications.notification_settings') }}" class="btn btn-sm btn-outline-secondary">
                                     <i class="fas fa-cog me-1"></i>Notification Settings
                                 </a>
-                                <a href="/journal-reminder-settings" class="btn btn-sm btn-outline-secondary">
+                                <a href="{{ url_for('journal_reminder.journal_reminder_settings') }}" class="btn btn-sm btn-outline-secondary">
                                     <i class="fas fa-clock me-1"></i>Journal Reminders
                                 </a>
                             </div>

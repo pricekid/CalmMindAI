@@ -28,18 +28,6 @@ def is_replit():
     """
     return os.environ.get('REPL_ID') is not None
 
-def is_production():
-    """
-    Check if the application is running on the production domain
-    
-    Returns:
-        bool: True if running on production, False otherwise
-    """
-    # Check for production environment variables or domain
-    return (os.environ.get('PRODUCTION', '').lower() == 'true' or 
-            os.environ.get('DOMAIN', '').lower() == 'www.dearteddy.app' or
-            os.environ.get('HOST', '').lower() == 'www.dearteddy.app')
-
 def get_base_url():
     """
     Get the base URL for the current environment
@@ -47,10 +35,7 @@ def get_base_url():
     Returns:
         str: The base URL for the current environment
     """
-    if is_production():
-        # Production deployment URL
-        return "https://www.dearteddy.app"
-    elif is_render():
+    if is_render():
         # Render deployment URL
         return "https://dearteddy-4vqj.onrender.com"
     elif is_replit():

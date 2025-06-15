@@ -19,7 +19,6 @@ from cache_service import (
     get_cached_user_entries, cache_user_stats, get_cached_user_stats,
     preload_user_data
 )
-from sqlalchemy import func
 
 # Import password reset module (initialization happens in app.py)
 try:
@@ -71,72 +70,16 @@ def index():
     # For returning users who are logged in, redirect to the dashboard
     if current_user.is_authenticated:
         return redirect(url_for('dashboard'))
-
+        
     # For new users, redirect to login
     return redirect('/stable-login')
 
 # User registration
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    """User registration route with CSRF exemption handling"""
-    if current_user.is_authenticated:
-        return redirect('/dashboard')
-
-    # Try to create form, but handle CSRF issues gracefully
-    try:
-        form = RegistrationForm()
-        form_valid = form.validate_on_submit()
-    except:
-        form = None
-        form_valid = False
-
-    # Handle form submission with or without WTF validation
-    if request.method == 'POST':
-        # Get form data directly from request
-        username = request.form.get('username', '').strip()
-        email = request.form.get('email', '').strip().lower()
-        password = request.form.get('password', '')
-        confirm_password = request.form.get('confirm_password', '')
-
-        # Basic validation
-        if not all([username, email, password, confirm_password]):
-            flash('All fields are required.', 'error')
-        elif password != confirm_password:
-            flash('Passwords do not match.', 'error')
-        elif len(password) < 6:
-            flash('Password must be at least 6 characters long.', 'error')
-        else:
-            try:
-                # Check if user already exists
-                existing_user = User.query.filter(
-                    (func.lower(User.email) == email) | (User.username == username)
-                ).first()
-
-                if existing_user:
-                    if existing_user.email.lower() == email:
-                        flash('Email already registered. Please use a different email.', 'error')
-                    else:
-                        flash('Username already taken. Please choose a different username.', 'error')
-                else:
-                    # Create new user
-                    user = User(username=username, email=email)
-                    user.set_password(password)
-
-                    db.session.add(user)
-                    db.session.commit()
-
-                    # Log in the user immediately
-                    login_user(user)
-
-                    flash('Registration successful! Welcome to Dear Teddy.', 'success')
-                    return redirect('/dashboard')
-
-            except Exception as e:
-                db.session.rollback()
-                app.logger.error(f"Registration error: {str(e)}")
-                flash('An error occurred during registration. Please try again.', 'error')
-
-    return render_template('register.html', form=form)
+    # Redirect to the simplified registration page that doesn't have JSON parsing issues
+    # Use direct path instead of url_for
+    return redirect('/register-simple')
 
 # Fallback route for any hardcoded links to /simple-register
 @app.route('/simple-register', methods=['GET', 'POST'])
@@ -147,8 +90,26 @@ def simple_register_fallback():
 # Main login route that chooses the appropriate implementation based on environment
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    """User login route - redirects to stable login"""
-    return redirect('/stable-login')
+    """
+    Main login route with environment-specific redirect
+    """
+    if current_user.is_authenticated:
+        return redirect('/dashboard')
+    
+    # Check if we're running on Render.com
+    render_env = os.environ.get('RENDER') == 'true'
+    
+    # Force render login for testing
+    if request.args.get('use_render_login') == 'true':
+        render_env = True
+    
+    # Log which login path we're using
+    if render_env:
+        app.logger.info("Using stable login for Render environment (most reliable option)")
+        return redirect('/stable-login')
+    else:
+        app.logger.info("Using stable login for Replit environment")
+        return redirect('/stable-login')
 
 # Token-based login route for email links
 @app.route('/login/token/<token>')
@@ -213,7 +174,7 @@ def dashboard():
     # Make sure we're not logged in as admin trying to access regular dashboard
     if hasattr(current_user, 'get_id') and current_user.get_id().startswith('admin_'):
         return redirect('/admin/dashboard')
-
+        
     # Check if this is a Render authentication session and set appropriate flags
     if request.args.get('render_auth') == 'true' or session.get('render_authenticated'):
         # Make sure the authentication flag persists in the session
@@ -225,7 +186,7 @@ def dashboard():
     # Check if demographics need to be collected FIRST (before onboarding)
     if not getattr(current_user, 'demographics_collected', False):
         return redirect('/demographics')
-
+    
     # Check if the user is new and needs onboarding
     from onboarding_routes import is_new_user
     if is_new_user(current_user.id):
@@ -238,11 +199,11 @@ def dashboard():
 
     # Try to get recent journal entries from cache for faster performance
     cached_entries = get_cached_user_entries(current_user.id)
-
+    
     if cached_entries:
         # Use cached data - take first 5 entries
         recent_entries_data = cached_entries[:5]
-
+        
         # Convert cached data to objects for template compatibility
         class CachedEntry:
             def __init__(self, data):
@@ -252,7 +213,7 @@ def dashboard():
                 self.anxiety_level = data['anxiety_level']
                 self.created_at = datetime.fromisoformat(data['created_at']) if data['created_at'] else None
                 self.is_analyzed = data['is_analyzed']
-
+        
         recent_entries = [CachedEntry(entry) for entry in recent_entries_data]
     else:
         # Fall back to database query if cache miss
@@ -270,7 +231,7 @@ def dashboard():
             .filter(JournalEntry.user_id == current_user.id)\
             .order_by(desc(JournalEntry.created_at))\
             .limit(5).all()
-
+        
         # Preload user data for future requests
         preload_user_data(current_user.id)
 
@@ -371,7 +332,7 @@ def dashboard():
     if not current_user.welcome_message_shown:
         logging.info(f"New user {current_user.id} needs onboarding, redirecting to onboarding step 1")
         return redirect('/onboarding/step-1')
-
+    
     return render_template('dashboard.html', 
                           title='Dashboard',
                           recent_entries=recent_entries,
@@ -389,17 +350,17 @@ def dashboard():
 def journal():
     try:
         app.logger.info("Using emergency journal route")
-
+        
         # Very simplified query with minimal dependencies
         entries = db.session.query(JournalEntry)\
             .filter(JournalEntry.user_id == current_user.id)\
             .order_by(JournalEntry.created_at.desc())\
             .limit(20).all()
-
+        
         return render_template('journal_simple.html', 
                              title='Your Journal', 
                              entries=entries)
-
+                             
     except Exception as e:
         app.logger.error(f"Error in emergency journal route: {str(e)}")
         flash("There was an issue loading your journal entries. Please try again later.", "warning")
@@ -486,7 +447,7 @@ def breathing_complete():
             'success': False,
             'message': 'Error recording breathing exercise completion.'
         }), 500
-
+        
 # Offline route for PWA fallback
 @app.route('/offline')
 def offline():
@@ -521,7 +482,7 @@ def download_app():
     """
     os_type = request.args.get('os', 'generic')
     redirect_after = request.args.get('redirect', 'false').lower() == 'true'
-
+    
     # Create a mapping of OS types to installer filenames
     installer_files = {
         'mac': 'DearTeddyInstaller-Mac.zip',
@@ -529,30 +490,30 @@ def download_app():
         'linux': 'DearTeddyInstaller-Linux.zip',
         'generic': 'DearTeddyInstaller.zip'
     }
-
+    
     # Get the appropriate installer file name
     installer_file = installer_files.get(os_type, 'DearTeddyInstaller.zip')
-
+    
     # Check if the specific OS installer exists, if not, fall back to the generic one
     if not os.path.exists(os.path.join('static/downloads', installer_file)):
         installer_file = 'DearTeddyInstaller.zip'
-
+    
     # Remember that this user downloaded the app
     session['downloaded_app'] = True
     session['downloaded_os'] = os_type
-
+    
     # Generate a unique download ID for tracking this download
     import uuid
     download_id = str(uuid.uuid4())
     session['download_id'] = download_id
-
+    
     # If redirect is requested, use JavaScript to initiate download and then redirect
     if redirect_after:
         return render_template('auto_download.html', 
                               filename=installer_file,
                               os_type=os_type,
                               download_id=download_id)
-
+    
     # Normal download without redirect
     return send_from_directory('static/downloads', installer_file, as_attachment=True)
 
@@ -695,13 +656,13 @@ def log_mood():
             # Flash XP notifications
             if xp_data and xp_data.get('xp_gained'):
                 flash(f"🌟 You earned {xp_data['xp_gained']} XP for tracking your mood!", 'success')
-
+                
                 # Show level up message if user leveled up
                 if xp_data.get('leveled_up'):
                     level = xp_data['level']
                     level_name = xp_data['level_name']
                     flash(f"🎉 Level Up! You're now Level {level}: {level_name}", 'success')
-
+            
             flash('Your mood has been logged!', 'success')
         else:
             # Handle form validation errors
@@ -714,7 +675,7 @@ def log_mood():
                         app.logger.warning(f"CSRF validation failed in mood logging: {error}")
                     else:
                         flash(f"Error in form field '{field}': {error}", "danger")
-
+            
             if not csrf_error:
                 flash('There was an error logging your mood. Please try again.', 'danger')
     except Exception as e:
