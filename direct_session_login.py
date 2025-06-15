@@ -12,8 +12,10 @@ direct_login_bp = Blueprint('session_login', __name__)
 @direct_login_bp.route('/direct-login', methods=['GET', 'POST'])
 def direct_login():
     """Direct login using sessions only"""
-    if request.method == 'POST':
-        try:
+    try:
+        print("🟢 E1 - Direct login route accessed")
+        if request.method == 'POST':
+            try:
             # Get form data
             email = request.form.get('email', '').lower().strip()
             password = request.form.get('password', '')

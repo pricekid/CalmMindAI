@@ -10,14 +10,22 @@ basic_test_bp = Blueprint('basic_test', __name__)
 def basic_test():
     """Ultra-basic test endpoint"""
     try:
-        print("BASIC TEST: Route accessed successfully")
+        print("🟢 BASIC TEST: Route accessed successfully")
         return "Basic test working - authentication system is operational"
     except Exception as e:
-        print(f"BASIC TEST ERROR: {e}")
-        return f"Basic test error: {str(e)}", 500
+        import traceback
+        print("🔥 BASIC TEST EXCEPTION:")
+        traceback.print_exc()
+        return f"<h2>Basic Test Route Error</h2><pre>{str(e)}</pre>", 500
 
 @basic_test_bp.route('/ping')
 def ping():
     """Simple ping endpoint"""
-    print("PING: Route accessed")
-    return "pong"
+    try:
+        print("🟢 PING: Route accessed successfully")
+        return "pong"
+    except Exception as e:
+        import traceback
+        print("🔥 PING EXCEPTION:")
+        traceback.print_exc()
+        return f"<h2>Ping Route Error</h2><pre>{str(e)}</pre>", 500

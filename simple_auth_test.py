@@ -9,8 +9,8 @@ simple_auth_bp = Blueprint('simple_auth', __name__)
 @simple_auth_bp.route('/simple-login-test', methods=['GET', 'POST'])
 def simple_login_test():
     """Ultra-simple login test that only uses sessions"""
-    print("A1 - Simple login test route accessed")
     try:
+        print("🟢 A1 - Simple login test route accessed")
         print("A2 - Checking request method")
         if request.method == 'POST':
             print("A3 - POST request detected")
@@ -119,20 +119,36 @@ def simple_login_test():
         '''
         
     except Exception as e:
-        print(f"A11 - Exception in route: {e}")
-        return f"Error: {str(e)}", 500
+        import traceback
+        print("🔥 SIMPLE LOGIN TEST EXCEPTION:")
+        traceback.print_exc()
+        return f"<h2>Simple Login Test Route Error</h2><pre>{str(e)}</pre>", 500
 
 @simple_auth_bp.route('/simple-logout-test')
 def simple_logout_test():
     """Simple logout"""
-    session.clear()
-    return jsonify({'success': True, 'message': 'Logged out successfully'})
+    try:
+        print("🟢 B1 - Simple logout test route accessed")
+        session.clear()
+        return jsonify({'success': True, 'message': 'Logged out successfully'})
+    except Exception as e:
+        import traceback
+        print("🔥 SIMPLE LOGOUT TEST EXCEPTION:")
+        traceback.print_exc()
+        return f"<h2>Simple Logout Test Route Error</h2><pre>{str(e)}</pre>", 500
 
 @simple_auth_bp.route('/simple-status-test')
 def simple_status_test():
     """Check authentication status"""
-    return jsonify({
-        'authenticated': session.get('authenticated', False),
-        'user_email': session.get('user_email'),
-        'user_id': session.get('user_id')
-    })
+    try:
+        print("🟢 C1 - Simple status test route accessed")
+        return jsonify({
+            'authenticated': session.get('authenticated', False),
+            'user_email': session.get('user_email'),
+            'user_id': session.get('user_id')
+        })
+    except Exception as e:
+        import traceback
+        print("🔥 SIMPLE STATUS TEST EXCEPTION:")
+        traceback.print_exc()
+        return f"<h2>Simple Status Test Route Error</h2><pre>{str(e)}</pre>", 500
