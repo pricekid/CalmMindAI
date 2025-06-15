@@ -1,0 +1,258 @@
+
+
+Live tail
+AST
+
+Menu
+  Using cached http_ece-1.2.1-py2.py3-none-any.whl
+Collecting six>=1.15.0 (from pywebpush>=1.14.0->-r requirements.txt (line 20))
+  Using cached six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting py-vapid>=1.7.0 (from pywebpush>=1.14.0->-r requirements.txt (line 20))
+  Using cached py_vapid-1.9.2-py3-none-any.whl.metadata (4.4 kB)
+Collecting soupsieve>1.2 (from beautifulsoup4>=4.12.2->-r requirements.txt (line 21))
+  Using cached soupsieve-2.7-py3-none-any.whl.metadata (4.6 kB)
+Collecting certifi (from trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Downloading certifi-2025.6.15-py3-none-any.whl.metadata (2.4 kB)
+Collecting charset_normalizer>=3.4.0 (from trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Using cached charset_normalizer-3.4.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (35 kB)
+Collecting courlan>=1.3.2 (from trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Using cached courlan-1.3.2-py3-none-any.whl.metadata (17 kB)
+Collecting htmldate>=1.9.2 (from trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Using cached htmldate-1.9.3-py3-none-any.whl.metadata (10 kB)
+Collecting justext>=3.0.1 (from trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Using cached justext-3.0.2-py2.py3-none-any.whl.metadata (7.3 kB)
+Collecting lxml>=5.3.0 (from trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Using cached lxml-5.4.0-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (3.5 kB)
+Collecting urllib3<3,>=1.26 (from trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Using cached urllib3-2.4.0-py3-none-any.whl.metadata (6.5 kB)
+Collecting aiohappyeyeballs>=2.5.0 (from aiohttp>=3.8.4->twilio>=8.0.0->-r requirements.txt (line 9))
+  Using cached aiohappyeyeballs-2.6.1-py3-none-any.whl.metadata (5.9 kB)
+Collecting aiosignal>=1.1.2 (from aiohttp>=3.8.4->twilio>=8.0.0->-r requirements.txt (line 9))
+  Using cached aiosignal-1.3.2-py2.py3-none-any.whl.metadata (3.8 kB)
+Collecting attrs>=17.3.0 (from aiohttp>=3.8.4->twilio>=8.0.0->-r requirements.txt (line 9))
+  Using cached attrs-25.3.0-py3-none-any.whl.metadata (10 kB)
+Collecting frozenlist>=1.1.1 (from aiohttp>=3.8.4->twilio>=8.0.0->-r requirements.txt (line 9))
+  Using cached frozenlist-1.7.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (18 kB)
+Collecting multidict<7.0,>=4.5 (from aiohttp>=3.8.4->twilio>=8.0.0->-r requirements.txt (line 9))
+  Using cached multidict-6.4.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
+Collecting propcache>=0.2.0 (from aiohttp>=3.8.4->twilio>=8.0.0->-r requirements.txt (line 9))
+  Using cached propcache-0.3.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (12 kB)
+Collecting yarl<2.0,>=1.17.0 (from aiohttp>=3.8.4->twilio>=8.0.0->-r requirements.txt (line 9))
+  Using cached yarl-1.20.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (73 kB)
+Collecting babel>=2.16.0 (from courlan>=1.3.2->trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Using cached babel-2.17.0-py3-none-any.whl.metadata (2.0 kB)
+Collecting tld>=0.13 (from courlan>=1.3.2->trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Using cached tld-0.13.1-py2.py3-none-any.whl.metadata (10 kB)
+Collecting cffi>=1.14 (from cryptography>=2.6.1->pywebpush>=1.14.0->-r requirements.txt (line 20))
+  Using cached cffi-1.17.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.5 kB)
+Collecting dateparser>=1.1.2 (from htmldate>=1.9.2->trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Using cached dateparser-1.2.1-py3-none-any.whl.metadata (29 kB)
+Collecting python-dateutil>=2.9.0.post0 (from htmldate>=1.9.2->trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting httpcore==1.* (from httpx<1,>=0.23.0->openai>=1.0.0->-r requirements.txt (line 8))
+  Using cached httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting h11>=0.16 (from httpcore==1.*->httpx<1,>=0.23.0->openai>=1.0.0->-r requirements.txt (line 8))
+  Using cached h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting annotated-types>=0.6.0 (from pydantic<3,>=1.9.0->openai>=1.0.0->-r requirements.txt (line 8))
+  Using cached annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.33.2 (from pydantic<3,>=1.9.0->openai>=1.0.0->-r requirements.txt (line 8))
+  Using cached pydantic_core-2.33.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+Collecting typing-inspection>=0.4.0 (from pydantic<3,>=1.9.0->openai>=1.0.0->-r requirements.txt (line 8))
+  Using cached typing_inspection-0.4.1-py3-none-any.whl.metadata (2.6 kB)
+Collecting greenlet>=1 (from sqlalchemy>=2.0.16->flask-sqlalchemy>=3.0.3->-r requirements.txt (line 3))
+  Using cached greenlet-3.2.3-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (4.1 kB)
+Collecting pycparser (from cffi>=1.14->cryptography>=2.6.1->pywebpush>=1.14.0->-r requirements.txt (line 20))
+  Using cached pycparser-2.22-py3-none-any.whl.metadata (943 bytes)
+Collecting regex!=2019.02.19,!=2021.8.27,>=2015.06.24 (from dateparser>=1.1.2->htmldate>=1.9.2->trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Using cached regex-2024.11.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (40 kB)
+Collecting lxml_html_clean (from lxml[html_clean]>=4.4.2->justext>=3.0.1->trafilatura>=1.4.1->-r requirements.txt (line 22))
+  Using cached lxml_html_clean-0.4.2-py3-none-any.whl.metadata (2.4 kB)
+Using cached flask-3.1.1-py3-none-any.whl (103 kB)
+Using cached gunicorn-23.0.0-py3-none-any.whl (85 kB)
+Using cached flask_sqlalchemy-3.1.1-py3-none-any.whl (25 kB)
+Using cached psycopg2_binary-2.9.10-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.0 MB)
+Using cached Flask_Login-0.6.3-py3-none-any.whl (17 kB)
+Using cached flask_wtf-1.2.2-py3-none-any.whl (12 kB)
+Using cached APScheduler-3.11.0-py3-none-any.whl (64 kB)
+Using cached openai-1.86.0-py3-none-any.whl (730 kB)
+Using cached twilio-9.6.3-py2.py3-none-any.whl (1.9 MB)
+Using cached sendgrid-6.12.4-py3-none-any.whl (102 kB)
+Using cached flask_mail-0.10.0-py3-none-any.whl (8.5 kB)
+Using cached gTTS-2.5.4-py3-none-any.whl (29 kB)
+Using cached flask_session-0.8.0-py3-none-any.whl (24 kB)
+Using cached azure_cognitiveservices_speech-1.44.0-py3-none-manylinux1_x86_64.whl (41.0 MB)
+Using cached itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Using cached markdown-3.8-py3-none-any.whl (106 kB)
+Using cached email_validator-2.2.0-py3-none-any.whl (33 kB)
+Using cached pytz-2025.2-py2.py3-none-any.whl (509 kB)
+Using cached flask_dance-7.1.0-py3-none-any.whl (62 kB)
+Using cached pywebpush-2.0.3-py3-none-any.whl (21 kB)
+Using cached beautifulsoup4-4.13.4-py3-none-any.whl (187 kB)
+Using cached trafilatura-2.0.0-py3-none-any.whl (132 kB)
+Using cached oauthlib-3.2.2-py3-none-any.whl (151 kB)
+Using cached requests-2.32.4-py3-none-any.whl (64 kB)
+Using cached werkzeug-3.1.3-py3-none-any.whl (224 kB)
+Using cached wtforms-3.2.1-py3-none-any.whl (152 kB)
+Using cached psutil-7.0.0-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (277 kB)
+Using cached PyJWT-2.10.1-py3-none-any.whl (22 kB)
+Using cached aiohttp-3.12.13-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.7 MB)
+Using cached aiohttp_retry-2.9.1-py3-none-any.whl (10.0 kB)
+Using cached anyio-4.9.0-py3-none-any.whl (100 kB)
+Using cached azure_core-1.34.0-py3-none-any.whl (207 kB)
+Using cached blinker-1.9.0-py3-none-any.whl (8.5 kB)
+Downloading certifi-2025.6.15-py3-none-any.whl (157 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 157.7/157.7 kB 4.5 MB/s eta 0:00:00
+Using cached charset_normalizer-3.4.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (147 kB)
+Using cached click-8.1.8-py3-none-any.whl (98 kB)
+Using cached courlan-1.3.2-py3-none-any.whl (33 kB)
+Using cached cryptography-45.0.4-cp311-abi3-manylinux_2_34_x86_64.whl (4.5 MB)
+Using cached distro-1.9.0-py3-none-any.whl (20 kB)
+Using cached dnspython-2.7.0-py3-none-any.whl (313 kB)
+Using cached ecdsa-0.19.1-py2.py3-none-any.whl (150 kB)
+Using cached htmldate-1.9.3-py3-none-any.whl (31 kB)
+Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+Using cached idna-3.10-py3-none-any.whl (70 kB)
+Using cached jinja2-3.1.6-py3-none-any.whl (134 kB)
+Using cached jiter-0.10.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (352 kB)
+Using cached justext-3.0.2-py2.py3-none-any.whl (837 kB)
+Using cached lxml-5.4.0-cp311-cp311-manylinux_2_28_x86_64.whl (4.9 MB)
+Using cached MarkupSafe-3.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (23 kB)
+Using cached msgspec-0.19.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (210 kB)
+Using cached py_vapid-1.9.2-py3-none-any.whl (21 kB)
+Using cached pydantic-2.11.7-py3-none-any.whl (444 kB)
+Using cached pydantic_core-2.33.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.0 MB)
+Using cached python_http_client-3.3.7-py3-none-any.whl (8.4 kB)
+Using cached requests_oauthlib-2.0.0-py2.py3-none-any.whl (24 kB)
+Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+Using cached sniffio-1.3.1-py3-none-any.whl (10 kB)
+Using cached soupsieve-2.7-py3-none-any.whl (36 kB)
+Using cached sqlalchemy-2.0.41-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.3 MB)
+Using cached tqdm-4.67.1-py3-none-any.whl (78 kB)
+Using cached typing_extensions-4.14.0-py3-none-any.whl (43 kB)
+Using cached tzlocal-5.3.1-py3-none-any.whl (18 kB)
+Using cached urllib3-2.4.0-py3-none-any.whl (128 kB)
+Using cached cachelib-0.13.0-py3-none-any.whl (20 kB)
+Using cached packaging-25.0-py3-none-any.whl (66 kB)
+Using cached aiohappyeyeballs-2.6.1-py3-none-any.whl (15 kB)
+Using cached aiosignal-1.3.2-py2.py3-none-any.whl (7.6 kB)
+Using cached annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Using cached attrs-25.3.0-py3-none-any.whl (63 kB)
+Using cached babel-2.17.0-py3-none-any.whl (10.2 MB)
+Using cached cffi-1.17.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (467 kB)
+Using cached dateparser-1.2.1-py3-none-any.whl (295 kB)
+Using cached frozenlist-1.7.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (235 kB)
+Using cached greenlet-3.2.3-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (585 kB)
+Using cached multidict-6.4.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (223 kB)
+Using cached propcache-0.3.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (213 kB)
+Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Using cached tld-0.13.1-py2.py3-none-any.whl (274 kB)
+Using cached typing_inspection-0.4.1-py3-none-any.whl (14 kB)
+Using cached yarl-1.20.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (348 kB)
+Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+Using cached regex-2024.11.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (792 kB)
+Using cached lxml_html_clean-0.4.2-py3-none-any.whl (14 kB)
+Using cached pycparser-2.22-py3-none-any.whl (117 kB)
+Installing collected packages: urlobject, pytz, urllib3, tzlocal, typing-extensions, tqdm, tld, soupsieve, sniffio, six, regex, python-http-client, pyjwt, pycparser, psycopg2-binary, psutil, propcache, packaging, oauthlib, multidict, msgspec, markupsafe, markdown, lxml, jiter, itsdangerous, idna, h11, greenlet, frozenlist, dnspython, distro, click, charset_normalizer, certifi, cachelib, blinker, babel, attrs, annotated-types, aiohappyeyeballs, yarl, wtforms, werkzeug, typing-inspection, sqlalchemy, requests, python-dateutil, pydantic-core, lxml_html_clean, jinja2, httpcore, gunicorn, email-validator, ecdsa, courlan, cffi, beautifulsoup4, apscheduler, anyio, aiosignal, sendgrid, requests-oauthlib, pydantic, httpx, gtts, flask, dateparser, cryptography, azure-core, aiohttp, py-vapid, openai, justext, http-ece, htmldate, flask-wtf, flask-sqlalchemy, flask-session, flask-mail, flask-login, flask-dance, azure-cognitiveservices-speech, aiohttp-retry, twilio, trafilatura, pywebpush
+Successfully installed aiohappyeyeballs-2.6.1 aiohttp-3.12.13 aiohttp-retry-2.9.1 aiosignal-1.3.2 annotated-types-0.7.0 anyio-4.9.0 apscheduler-3.11.0 attrs-25.3.0 azure-cognitiveservices-speech-1.44.0 azure-core-1.34.0 babel-2.17.0 beautifulsoup4-4.13.4 blinker-1.9.0 cachelib-0.13.0 certifi-2025.6.15 cffi-1.17.1 charset_normalizer-3.4.2 click-8.1.8 courlan-1.3.2 cryptography-45.0.4 dateparser-1.2.1 distro-1.9.0 dnspython-2.7.0 ecdsa-0.19.1 email-validator-2.2.0 flask-3.1.1 flask-dance-7.1.0 flask-login-0.6.3 flask-mail-0.10.0 flask-session-0.8.0 flask-sqlalchemy-3.1.1 flask-wtf-1.2.2 frozenlist-1.7.0 greenlet-3.2.3 gtts-2.5.4 gunicorn-23.0.0 h11-0.16.0 htmldate-1.9.3 http-ece-1.2.1 httpcore-1.0.9 httpx-0.28.1 idna-3.10 itsdangerous-2.2.0 jinja2-3.1.6 jiter-0.10.0 justext-3.0.2 lxml-5.4.0 lxml_html_clean-0.4.2 markdown-3.8 markupsafe-3.0.2 msgspec-0.19.0 multidict-6.4.4 oauthlib-3.2.2 openai-1.86.0 packaging-25.0 propcache-0.3.2 psutil-7.0.0 psycopg2-binary-2.9.10 py-vapid-1.9.2 pycparser-2.22 pydantic-2.11.7 pydantic-core-2.33.2 pyjwt-2.10.1 python-dateutil-2.9.0.post0 python-http-client-3.3.7 pytz-2025.2 pywebpush-2.0.3 regex-2024.11.6 requests-2.32.4 requests-oauthlib-2.0.0 sendgrid-6.12.4 six-1.17.0 sniffio-1.3.1 soupsieve-2.7 sqlalchemy-2.0.41 tld-0.13.1 tqdm-4.67.1 trafilatura-2.0.0 twilio-9.6.3 typing-extensions-4.14.0 typing-inspection-0.4.1 tzlocal-5.3.1 urllib3-2.4.0 urlobject-2.4.3 werkzeug-3.1.3 wtforms-3.2.1 yarl-1.20.1
+[notice] A new release of pip is available: 24.0 -> 25.1.1
+[notice] To update, run: pip install --upgrade pip
+==> Uploading build...
+==> Uploaded in 15.5s. Compression took 6.0s
+==> Build successful 🎉
+==> Deploying...
+==> Running 'gunicorn --bind 0.0.0.0:$PORT --reuse-port --reload main:app'
+INFO:render_app:Database tables created
+INFO:render_compatibility:Render.com environment detected - applying compatibility settings
+INFO:render_compatibility:Applied Render.com-specific cookie and CSRF settings
+INFO:app:Render compatibility settings applied: True
+INFO:root:Password reset routes registered with SendGrid email integration
+INFO:app:Password reset functionality enabled with SendGrid
+INFO:root:Admin login-as-user routes registered successfully
+INFO:app:Admin login-as-user functionality enabled
+INFO:marketing_integration:Marketing integration registered. Configure these URLs on dearteddy.app:
+INFO:marketing_integration:  login_url: https://dear-teddy.onrender.com/marketing-login
+INFO:marketing_integration:  signup_url: https://dear-teddy.onrender.com/marketing-signup
+INFO:marketing_integration:  get_started_url: https://dear-teddy.onrender.com/from-marketing?action=get-started
+INFO:marketing_integration:  app_redirect_url: https://dear-teddy.onrender.com/app-redirect
+INFO:app:Marketing integration registered successfully
+INFO:app:Login routes registered successfully
+WARNING:app:Simple login module not available
+INFO:app:Test reflection routes registered successfully
+INFO:app:Simple dashboard registered successfully
+WARNING:app:Special login module not available
+INFO:app:Standalone reflection test routes registered successfully
+INFO:app:Simple registration blueprint registered successfully
+INFO:app:Working registration system registered successfully
+INFO:app:Final registration system registered successfully
+INFO:app:Minimal registration blueprint registered successfully
+WARNING:app:Emergency main login module not available
+INFO:app:Simple TTS blueprint registered successfully
+INFO:app:Direct TTS blueprint registered successfully
+INFO:app:Simple direct TTS blueprint registered successfully
+INFO:app:TTS routes blueprint registered successfully
+INFO:app:Premium TTS service blueprint registered successfully
+INFO:app:Enhanced TTS service blueprint registered successfully
+INFO:app:OpenAI TTS service blueprint registered successfully
+INFO:app:Stable login blueprint registered with CSRF exemption for reliability
+INFO:redirect_to_stable:Login redirection to stable-login registered successfully
+INFO:app:All login paths now redirect to stable login
+INFO:emergency_hardcoded_login:Hardcoded test login registered
+INFO:app:Hardcoded test user login registered - use /test-login
+INFO:emergency_direct_render:Emergency Render login routes registered successfully
+INFO:app:Ultra-emergency Render login system registered and CSRF disabled
+INFO:render_init:Render deployment mode: True
+INFO:app:Render-specific optimized login routes registered successfully
+INFO:direct_login_fix:Direct login blueprint registered successfully
+INFO:app:Emergency direct login system registered successfully
+INFO:app:Onboarding blueprint registered successfully
+INFO:app:Emergency admin blueprint registered with CSRF exemption
+INFO:app:Standalone admin blueprint registered with CSRF exemption
+INFO:app:CSRF exemption applied to direct_tts_bp
+INFO:app:CSRF exemption applied to simple_direct_tts_bp
+INFO:app:CSRF exemption applied to premium_tts_bp
+INFO:app:CSRF exemption applied to enhanced_tts_bp
+INFO:app:CSRF exemption applied to openai_tts_bp
+INFO:app:Email preview blueprint registered successfully
+INFO:app:Emergency dashboard blueprint registered successfully
+INFO:app:Password reset blueprint registered successfully
+INFO:app:Static pages blueprint registered successfully
+INFO:app:Push notification routes registered successfully
+INFO:app:Push notification routes registered successfully
+INFO:app:Journal reminder routes registered successfully
+INFO:app:Emergency login blueprint registered with CSRF exemption
+INFO:root:Emergency registration route registered at /emergency-register
+INFO:app:Emergency registration system registered successfully
+WARNING:app:Standalone registration module not available
+INFO:app:Production registration fix registered successfully
+INFO:updated_password_reset:Password reset routes registered with updated SendGrid email integration
+INFO:environment_detection:Detected environment: Render
+INFO:environment_detection:Base URL: https://dearteddy-4vqj.onrender.com
+INFO:updated_password_reset:Password reset configured for Render environment
+INFO:updated_password_reset:Using base URL: https://dearteddy-4vqj.onrender.com
+INFO:app:Updated password reset functionality enabled with working SendGrid
+INFO:root:Fallback email routes registered successfully
+INFO:app:Fallback email routes registered successfully
+INFO:render_app:Core routes registered
+INFO:render_app:Admin routes registered
+INFO:render_app:Marketing integration registered
+INFO:render_app:Stable login blueprint registered
+INFO:render_app:Simple register blueprint registered
+INFO:render_app:Password reset blueprint registered
+INFO:render_app:Static pages blueprint registered
+[2025-06-15 02:51:25 +0000] [103] [INFO] Starting gunicorn 23.0.0
+[2025-06-15 02:51:25 +0000] [103] [INFO] Listening at: http://0.0.0.0:10000 (103)
+[2025-06-15 02:51:25 +0000] [103] [INFO] Using worker: sync
+[2025-06-15 02:51:25 +0000] [105] [INFO] Booting worker with pid: 105
+Production registration fix registered at /production-register
+127.0.0.1 - - [15/Jun/2025:02:51:25 +0000] "HEAD / HTTP/1.1" 302 0 "-" "Go-http-client/1.1"
+==> Your service is live 🎉
+==> 
+==> ///////////////////////////////////////////////////////////
+==> 
+==> Available at your primary URL https://www.dearteddy.app + 2 more domains
+==> 
+==> ///////////////////////////////////////////////////////////
+10.214.224.59 - - [15/Jun/2025:02:53:36 +0000] "GET / HTTP/1.1" 302 221 "-" "python-requests/2.32.4"
+==> Detected service running on port 10000
+==> Docs on specifying a port: https://render.com/docs/web-services#port-binding

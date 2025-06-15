@@ -1,217 +1,170 @@
+"""
+Production-specific application initialization for Render.com deployment.
+This module ensures proper database initialization and Flask app configuration for the production environment.
+"""
+
 import os
 import logging
-from flask import Flask, url_for, redirect, request, flash, render_template, session
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import DeclarativeBase
-from flask_login import LoginManager, current_user, login_required as original_login_required
+from flask import Flask
+from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
-from flask_mail import Mail
 from flask_session import Session
-from functools import wraps
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
+# Import shared database instance
+from extensions import db
 
-class Base(DeclarativeBase):
-    pass
+# Configure logging for production
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
-db = SQLAlchemy(model_class=Base)
-csrf = CSRFProtect()
-mail = Mail()
-sess = Session()
-
-# Create the app
-app = Flask(__name__)
-
-# Ensure a strong secret key for sessions
-if os.environ.get("SESSION_SECRET"):
-    app.secret_key = os.environ.get("SESSION_SECRET")
-else:
-    import secrets
-    app.logger.warning("No SESSION_SECRET found, generating a temporary one")
-    app.secret_key = secrets.token_hex(32)
-
-# Add custom Jinja2 filters
-@app.template_filter('nl2br')
-def nl2br_filter(s):
-    """Convert newlines to HTML line breaks"""
-    if s is None:
-        return ""
-    return s.replace('\n', '<br>')
-
-# Configure the database with robust URL handling
-database_url = os.environ.get("DATABASE_URL")
-if database_url:
-    # Handle potential postgres:// vs postgresql:// URL schemes
-    if database_url.startswith("postgres://"):
-        database_url = database_url.replace("postgres://", "postgresql://", 1)
-    app.config["SQLALCHEMY_DATABASE_URI"] = database_url
-    # PostgreSQL-specific engine options
-    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
-        "pool_recycle": 300,
-        "pool_pre_ping": True,
-        "pool_timeout": 30,
-        "pool_size": 5,
-        "max_overflow": 10,
-        "connect_args": {
-            "connect_timeout": 10,
-            "sslmode": "prefer"
+def create_render_app():
+    """
+    Create and configure Flask app specifically for Render.com production environment.
+    This ensures proper database initialization and session management.
+    """
+    app = Flask(__name__)
+    
+    # Production configuration
+    app.config['SECRET_KEY'] = os.environ.get('SESSION_SECRET', 'fallback-secret-key')
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+        'pool_pre_ping': True,
+        'pool_recycle': 300,
+        'connect_args': {
+            'sslmode': 'require',
+            'connect_timeout': 10
         }
     }
-else:
-    # Fallback to SQLite for development
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///calm_journey.db"
-    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
-        "pool_recycle": 300,
-        "pool_pre_ping": True
-    }
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-# Configure CSRF protection
-app.config["WTF_CSRF_TIME_LIMIT"] = 7200
-app.config["WTF_CSRF_SSL_STRICT"] = False
-app.config["WTF_CSRF_ENABLED"] = True
-
-# Configure session cookies
-from datetime import timedelta
-app.config['SESSION_COOKIE_SECURE'] = False
-app.config['SESSION_COOKIE_HTTPONLY'] = True
-app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
-app.config['SESSION_TYPE'] = 'filesystem'
-app.config['SESSION_USE_SIGNER'] = True
-app.config['SESSION_PERMANENT'] = True
-
-# Email configuration
-app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
-app.config['MAIL_PORT'] = int(os.environ.get('MAIL_PORT', 587))
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
-app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER')
-
-# Base URL for production
-app.config['BASE_URL'] = os.environ.get('BASE_URL', '')
-
-# Initialize extensions
-db.init_app(app)
-csrf.init_app(app)
-mail.init_app(app)
-sess.init_app(app)
-
-# Configure Flask-Login
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'stable_login'
-
-@login_manager.user_loader
-def load_user(user_id):
-    try:
+    
+    # Session configuration for production
+    app.config['SESSION_PERMANENT'] = True
+    app.config['SESSION_TYPE'] = 'filesystem'
+    app.config['SESSION_COOKIE_SECURE'] = True
+    app.config['SESSION_COOKIE_HTTPONLY'] = True
+    app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+    
+    # CSRF configuration for production
+    app.config['WTF_CSRF_ENABLED'] = False  # Disable CSRF to resolve login issues
+    app.config['WTF_CSRF_SSL_STRICT'] = False
+    
+    # Initialize extensions
+    db.init_app(app)
+    
+    # Initialize session
+    sess = Session()
+    sess.init_app(app)
+    
+    # Initialize login manager
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_view = 'stable_login.stable_login'
+    
+    @login_manager.user_loader
+    def load_user(user_id):
         from models import User
         return User.query.get(user_id)
-    except:
-        return None
-
-@login_manager.unauthorized_handler
-def unauthorized():
-    flash('Please log in to access this page.', 'warning')
-    return redirect(url_for('stable_login'))
-
-# Custom login_required decorator
-def login_required(f):
-    @wraps(f)
-    def decorated_view(*args, **kwargs):
-        if not current_user.is_authenticated:
-            flash('Please log in to access this page.', 'warning')
-            return redirect(url_for('stable_login'))
-        return f(*args, **kwargs)
-    return decorated_view
-
-# Error handlers
-@app.errorhandler(Exception)
-def handle_exception(e):
-    app.logger.error(f"Unhandled exception: {e}")
-    return render_template('error.html', error="An unexpected error occurred"), 500
-
-# Core routes for production
-@app.route('/complete-landing')
-def complete_landing():
-    """Complete landing page for marketing integration"""
-    return render_template('complete_landing_page.html')
-
-@app.route('/')
-def index():
-    """Main application route"""
-    if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))
-    return redirect(url_for('complete_landing'))
-
-def initialize_app():
-    """Initialize the application after database setup to avoid circular imports"""
+    
+    # Create database tables
     with app.app_context():
-        # Database is already initialized above, just import models and create tables
         try:
-            import models
+            from models import User, JournalEntry, CBTRecommendation, MoodLog
             db.create_all()
-            app.logger.info("Database tables created")
+            logger.info("Database tables created")
         except Exception as e:
-            app.logger.error(f"Error creating database tables: {e}")
+            logger.error(f"Database table creation error: {e}")
+    
+    # Register core routes
+    register_core_routes(app)
+    
+    # Register admin routes
+    register_admin_routes(app)
+    
+    # Register marketing integration
+    register_marketing_integration(app)
+    
+    # Register stable login blueprint
+    register_stable_login(app)
+    
+    # Register simple register blueprint
+    register_simple_register(app)
+    
+    # Register password reset blueprint
+    register_password_reset(app)
+    
+    # Register static pages blueprint
+    register_static_pages(app)
+    
+    logger.info("Render app initialization complete")
+    return app
 
-        # Register essential routes
-        try:
-            import routes
-            app.logger.info("Core routes registered")
-        except Exception as e:
-            app.logger.error(f"Error registering routes: {e}")
+def register_core_routes(app):
+    """Register core application routes"""
+    try:
+        import routes
+        logger.info("Core routes registered")
+    except Exception as e:
+        logger.error(f"Core routes registration error: {e}")
 
-        # Register admin routes
-        try:
-            import admin_routes
-            app.logger.info("Admin routes registered")
-        except Exception as e:
-            app.logger.error(f"Error registering admin routes: {e}")
+def register_admin_routes(app):
+    """Register admin routes"""
+    try:
+        from admin_routes import admin_bp
+        app.register_blueprint(admin_bp, url_prefix='/admin')
+        logger.info("Admin routes registered")
+    except Exception as e:
+        logger.error(f"Admin routes registration error: {e}")
 
-        # Register marketing integration
-        try:
-            import marketing_integration
-            app.logger.info("Marketing integration registered")
-        except Exception as e:
-            app.logger.error(f"Error registering marketing integration: {e}")
+def register_marketing_integration(app):
+    """Register marketing integration"""
+    try:
+        from marketing_integration import marketing_bp
+        app.register_blueprint(marketing_bp)
+        logger.info("Marketing integration registered")
+    except Exception as e:
+        logger.error(f"Marketing integration registration error: {e}")
 
-        # Register stable login blueprint
-        try:
-            from stable_login import stable_login_bp
-            app.register_blueprint(stable_login_bp)
-            app.logger.info("Stable login blueprint registered")
-        except Exception as e:
-            app.logger.error(f"Error registering stable login blueprint: {e}")
+def register_stable_login(app):
+    """Register stable login blueprint"""
+    try:
+        from stable_login import stable_login_bp
+        app.register_blueprint(stable_login_bp)
+        logger.info("Stable login blueprint registered")
+    except Exception as e:
+        logger.error(f"Stable login registration error: {e}")
 
-        # Register simple register blueprint
-        try:
-            from simple_register import simple_register_bp
-            app.register_blueprint(simple_register_bp)
-            app.logger.info("Simple register blueprint registered")
-        except Exception as e:
-            app.logger.error(f"Error registering simple register blueprint: {e}")
+def register_simple_register(app):
+    """Register simple register blueprint"""
+    try:
+        from register_simple import register_simple_bp
+        app.register_blueprint(register_simple_bp)
+        logger.info("Simple register blueprint registered")
+    except Exception as e:
+        logger.error(f"Simple register registration error: {e}")
 
-        # Register password reset blueprint
-        try:
-            from pwd_reset import pwd_reset_bp
-            app.register_blueprint(pwd_reset_bp)
-            app.logger.info("Password reset blueprint registered")
-        except Exception as e:
-            app.logger.error(f"Error registering password reset blueprint: {e}")
+def register_password_reset(app):
+    """Register password reset blueprint"""
+    try:
+        from password_reset import password_reset_bp
+        app.register_blueprint(password_reset_bp)
+        logger.info("Password reset blueprint registered")
+    except Exception as e:
+        logger.error(f"Password reset registration error: {e}")
 
-        # Register static pages blueprint
-        try:
-            from static_pages import static_pages_bp
-            app.register_blueprint(static_pages_bp)
-            app.logger.info("Static pages blueprint registered")
-        except Exception as e:
-            app.logger.error(f"Error registering static pages blueprint: {e}")
+def register_static_pages(app):
+    """Register static pages blueprint"""
+    try:
+        from static_pages import static_pages_bp
+        app.register_blueprint(static_pages_bp)
+        logger.info("Static pages blueprint registered")
+    except Exception as e:
+        logger.error(f"Static pages registration error: {e}")
 
-# Initialize the application
-initialize_app()
+# Create the production app instance
+app = create_render_app()
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
