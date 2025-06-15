@@ -114,6 +114,22 @@ def create_render_app():
     except Exception as e:
         logger.error(f"Simple register error: {e}")
     
+    try:
+        from production_login_fix import production_login_bp
+        app.register_blueprint(production_login_bp)
+        logger.info("Production login fix registered")
+    except Exception as e:
+        logger.error(f"Production login error: {e}")
+    
+    try:
+        from emergency_production_fix import emergency_bp
+        app.register_blueprint(emergency_bp)
+        # Set emergency login as fallback login view
+        login_manager.login_view = 'emergency.emergency_production_login'
+        logger.info("Emergency production fix registered")
+    except Exception as e:
+        logger.error(f"Emergency production error: {e}")
+    
     logger.info("Render app initialization complete")
     return app
 
