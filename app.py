@@ -986,6 +986,21 @@ with app.app_context():
         app.logger.info("Minimal production login registered successfully")
     except ImportError as e:
         app.logger.warning(f"Minimal production login not available: {e}")
+    
+    # Register direct session login system (bypasses Flask-Login)
+    try:
+        print("Y1 - Importing direct session login")
+        from direct_session_login import direct_login_bp
+        print("Y2 - Direct session login imported")
+        app.register_blueprint(direct_login_bp)
+        print("Y3 - Direct session login blueprint registered")
+        app.logger.info("Direct session login registered successfully")
+    except ImportError as e:
+        print(f"Y4 - Import error: {e}")
+        app.logger.warning(f"Direct session login not available: {e}")
+    except Exception as e:
+        print(f"Y5 - Registration error: {e}")
+        app.logger.error(f"Error registering direct session login: {e}")
 
 # ============================================================================
 # DEMOGRAPHICS COLLECTION FUNCTIONALITY

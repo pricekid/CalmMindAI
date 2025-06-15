@@ -19,16 +19,23 @@ logger.addHandler(file_handler)
 logger.addHandler(stream_handler)
 
 try:
+    print("X1 - Starting application initialization")
     logger.info("🚀 Starting Dear Teddy application...")
     
+    print("X2 - Checking environment")
     # Use simplified app for Render deployment, full app for development
     if os.environ.get('RENDER'):
+        print("X3 - Using Render configuration")
         logger.info("🔧 Using Render production configuration")
         from render_app import app
+        print("X4 - Render app imported successfully")
     else:
+        print("X5 - Using development configuration")
         logger.info("🔧 Using development configuration")
         from app import app
+        print("X6 - Development app imported successfully")
     
+    print("X7 - App creation completed")
     logger.info("✅ Application created successfully")
     
 except Exception as e:

@@ -7,7 +7,7 @@ from flask import Blueprint, request, redirect, session, jsonify, render_templat
 from werkzeug.security import check_password_hash
 import os
 
-direct_login_bp = Blueprint('direct_login', __name__)
+direct_login_bp = Blueprint('session_login', __name__)
 
 @direct_login_bp.route('/direct-login', methods=['GET', 'POST'])
 def direct_login():
