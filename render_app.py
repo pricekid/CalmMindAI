@@ -69,6 +69,14 @@ def create_render_app():
     def load_user(user_id):
         try:
             from models import User
+            from admin_models import Admin
+            
+            # Check if this is an admin user
+            if isinstance(user_id, str) and user_id.startswith('admin_'):
+                admin_id = user_id.split('_')[1]
+                return Admin.get(admin_id)
+            
+            # Regular user
             return User.query.get(user_id)
         except Exception as e:
             logger.error(f"Error loading user {user_id}: {e}")
