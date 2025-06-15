@@ -1,105 +1,122 @@
+#!/usr/bin/env python3
 """
 Create test user credentials for testing the application
 """
+import requests
 import os
-import sys
-from werkzeug.security import generate_password_hash
-from app import app, db
-from models import User
 
 def create_test_user():
     """Create a test user with known credentials"""
-    with app.app_context():
-        # Test user credentials
-        test_email = "test@example.com"
-        test_username = "testuser"
-        test_password = "testpass123"
-        
-        # Check if user already exists
-        existing_user = User.query.filter_by(email=test_email).first()
-        if existing_user:
-            print(f"Test user already exists with email: {test_email}")
-            print(f"Username: {existing_user.username}")
-            print(f"Password: testpass123")
-            return existing_user
-        
-        # Create new test user
-        test_user = User(
-            username=test_username,
-            email=test_email,
-            password_hash=generate_password_hash(test_password),
-            welcome_message_shown=False  # So they see onboarding
+    base_url = "http://localhost:5000"
+    
+    # Test user credentials
+    test_username = "testuser"
+    test_email = "test@example.com"
+    test_password = "test123"
+    
+    print(f"Creating test user:")
+    print(f"Username: {test_username}")
+    print(f"Email: {test_email}")
+    print(f"Password: {test_password}")
+    
+    # Register the test user
+    register_data = {
+        'username': test_username,
+        'email': test_email,
+        'password': test_password
+    }
+    
+    try:
+        response = requests.post(
+            f"{base_url}/minimal-register",
+            data=register_data,
+            headers={'Content-Type': 'application/x-www-form-urlencoded'}
         )
         
-        try:
-            db.session.add(test_user)
-            db.session.commit()
+        print(f"\nRegistration response status: {response.status_code}")
+        print(f"Registration response: {response.text}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            if result.get('success'):
+                print(f"✅ Test user created successfully with ID: {result.get('user_id')}")
+                return True
+            else:
+                print("❌ Registration failed")
+                return False
+        else:
+            print("❌ Registration request failed")
+            return False
             
-            print("✅ Test user created successfully!")
-            print(f"Email: {test_email}")
-            print(f"Username: {test_username}")
-            print(f"Password: {test_password}")
-            print(f"User ID: {test_user.id}")
-            
-            return test_user
-            
-        except Exception as e:
-            db.session.rollback()
-            print(f"❌ Error creating test user: {e}")
-            return None
+    except Exception as e:
+        print(f"❌ Error creating test user: {e}")
+        return False
 
 def create_returning_user():
     """Create a returning user (completed onboarding)"""
-    with app.app_context():
-        # Returning user credentials
-        returning_email = "returning@example.com"
-        returning_username = "returninguser"
-        returning_password = "return123"
-        
-        # Check if user already exists
-        existing_user = User.query.filter_by(email=returning_email).first()
-        if existing_user:
-            print(f"Returning user already exists with email: {returning_email}")
-            print(f"Username: {existing_user.username}")
-            print(f"Password: return123")
-            return existing_user
-        
-        # Create returning user
-        returning_user = User(
-            username=returning_username,
-            email=returning_email,
-            password_hash=generate_password_hash(returning_password),
-            welcome_message_shown=True  # Skip onboarding
+    base_url = "http://localhost:5000"
+    
+    # Returning user credentials
+    test_username = "returninguser"
+    test_email = "returning@example.com"
+    test_password = "return123"
+    
+    print(f"\nCreating returning user:")
+    print(f"Username: {test_username}")
+    print(f"Email: {test_email}")
+    print(f"Password: {test_password}")
+    
+    # Register the returning user
+    register_data = {
+        'username': test_username,
+        'email': test_email,
+        'password': test_password
+    }
+    
+    try:
+        response = requests.post(
+            f"{base_url}/minimal-register",
+            data=register_data,
+            headers={'Content-Type': 'application/x-www-form-urlencoded'}
         )
         
-        try:
-            db.session.add(returning_user)
-            db.session.commit()
+        print(f"Registration response status: {response.status_code}")
+        print(f"Registration response: {response.text}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            if result.get('success'):
+                print(f"✅ Returning user created successfully with ID: {result.get('user_id')}")
+                return True
+            else:
+                print("❌ Registration failed")
+                return False
+        else:
+            print("❌ Registration request failed")
+            return False
             
-            print("✅ Returning user created successfully!")
-            print(f"Email: {returning_email}")
-            print(f"Username: {returning_username}")
-            print(f"Password: {returning_password}")
-            print(f"User ID: {returning_user.id}")
-            
-            return returning_user
-            
-        except Exception as e:
-            db.session.rollback()
-            print(f"❌ Error creating returning user: {e}")
-            return None
+    except Exception as e:
+        print(f"❌ Error creating returning user: {e}")
+        return False
 
 if __name__ == "__main__":
     print("Creating test user credentials...")
-    print("=" * 50)
     
-    # Create new user (will see onboarding)
-    print("\n🆕 NEW USER (will see onboarding):")
-    create_test_user()
+    success1 = create_test_user()
+    success2 = create_returning_user()
     
-    # Create returning user (skips onboarding)
-    print("\n🔄 RETURNING USER (skips onboarding):")
-    create_returning_user()
-    
-    print("\n" + "=" * 50)
-    print("Test credentials ready! Use these to test login and onboarding.")
+    if success1 and success2:
+        print("\n🎉 All test users created successfully!")
+        print("\nTest Credentials:")
+        print("=================")
+        print("New User:")
+        print("  Username: testuser")
+        print("  Email: test@example.com")
+        print("  Password: test123")
+        print("")
+        print("Returning User:")
+        print("  Username: returninguser")
+        print("  Email: returning@example.com")
+        print("  Password: return123")
+    else:
+        print("\n💥 Some test users failed to create")
