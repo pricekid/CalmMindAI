@@ -185,9 +185,9 @@ def unauthorized():
     # Use direct path instead of url_for
     return redirect('/stable-login')
 
-# Add global error handler with authentication route exclusions
-@app.errorhandler(Exception)
-def handle_exception(e):
+# Global error handler temporarily disabled to allow route-level error handling
+# @app.errorhandler(Exception)
+def handle_exception_disabled(e):
     from flask import render_template, redirect, url_for, Response, request
     from json.decoder import JSONDecodeError
     from flask_wtf.csrf import CSRFError
@@ -1044,6 +1044,18 @@ with app.app_context():
     except Exception as e:
         print(f"T4 - Basic test error: {e}")
         app.logger.error(f"Error registering basic test: {e}")
+    
+    # Register isolated test for diagnosis
+    try:
+        print("I1 - Importing isolated test")
+        from isolated_test import isolated_bp
+        print("I2 - Isolated test imported")
+        app.register_blueprint(isolated_bp)
+        print("I3 - Isolated test blueprint registered")
+        app.logger.info("Isolated test registered successfully")
+    except Exception as e:
+        print(f"I4 - Isolated test error: {e}")
+        app.logger.error(f"Error registering isolated test: {e}")
 
 # ============================================================================
 # DEMOGRAPHICS COLLECTION FUNCTIONALITY
