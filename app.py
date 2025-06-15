@@ -185,9 +185,9 @@ def unauthorized():
     # Use direct path instead of url_for
     return redirect('/stable-login')
 
-# Global error handler temporarily disabled to allow route-level error handling
-# @app.errorhandler(Exception)
-def handle_exception_disabled(e):
+# Global error handler re-enabled to provide system stability
+@app.errorhandler(Exception)
+def handle_exception(e):
     from flask import render_template, redirect, url_for, Response, request
     from json.decoder import JSONDecodeError
     from flask_wtf.csrf import CSRFError
@@ -1056,6 +1056,18 @@ with app.app_context():
     except Exception as e:
         print(f"I4 - Isolated test error: {e}")
         app.logger.error(f"Error registering isolated test: {e}")
+    
+    # Register minimal authentication fix
+    try:
+        print("M1 - Importing minimal auth fix")
+        from minimal_auth_fix import minimal_auth_bp
+        print("M2 - Minimal auth fix imported")
+        app.register_blueprint(minimal_auth_bp)
+        print("M3 - Minimal auth fix blueprint registered")
+        app.logger.info("Minimal auth fix registered successfully")
+    except Exception as e:
+        print(f"M4 - Minimal auth fix error: {e}")
+        app.logger.error(f"Error registering minimal auth fix: {e}")
 
 # ============================================================================
 # DEMOGRAPHICS COLLECTION FUNCTIONALITY
