@@ -185,9 +185,9 @@ def unauthorized():
     # Use direct path instead of url_for
     return redirect('/stable-login')
 
-# Add global error handler
-@app.errorhandler(Exception)
-def handle_exception(e):
+# Add global error handler - TEMPORARILY DISABLED FOR AUTHENTICATION DEBUGGING
+# @app.errorhandler(Exception)
+def handle_exception_disabled(e):
     from flask import render_template, redirect, url_for, Response, request
     from json.decoder import JSONDecodeError
     from flask_wtf.csrf import CSRFError
@@ -206,7 +206,10 @@ def handle_exception(e):
     ]
     
     current_path = request.path if request else ''
+    print(f"ERROR HANDLER: Path={current_path}, Exception={str(e)[:100]}")
+    
     if current_path in auth_routes or current_path.startswith('/auth/'):
+        print(f"ERROR HANDLER: Skipping error handling for auth route: {current_path}")
         return None  # Let authentication routes handle their own responses
     
     app.logger.error(f"Unhandled exception: {str(e)}")
