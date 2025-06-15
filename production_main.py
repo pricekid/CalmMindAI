@@ -29,11 +29,56 @@ try:
     app.config['ENV'] = 'production'
     app.config['DEBUG'] = False
     
+    # Initialize Flask-Login properly
+    from flask_login import LoginManager
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_view = 'login'
+    
+    @login_manager.user_loader
+    def load_user(user_id):
+        from models import User
+        return User.query.get(user_id)
+    
     # Import all routes to ensure full functionality
-    import routes
-    import admin_routes
-    import journal_routes
-    import account_routes
+    try:
+        import routes
+        import admin_routes
+        import journal_routes
+        import account_routes
+        logger.info("All route modules imported successfully")
+    except Exception as route_error:
+        logger.error(f"Route import error: {route_error}")
+        # Add basic fallback routes if main routes fail
+        from flask import redirect, render_template, request, flash
+        from flask_login import current_user, login_user
+        from werkzeug.security import check_password_hash
+        
+        @app.route('/')
+        def index():
+            if current_user.is_authenticated:
+                return redirect('/dashboard')
+            return redirect('/login')
+        
+        @app.route('/login', methods=['GET', 'POST'])
+        def login():
+            if request.method == 'POST':
+                email = request.form.get('email', '').strip().lower()
+                password = request.form.get('password', '')
+                if email and password:
+                    from models import User
+                    user = User.query.filter_by(email=email).first()
+                    if user and user.password_hash and check_password_hash(user.password_hash, password):
+                        login_user(user, remember=True)
+                        return redirect('/dashboard')
+                flash('Invalid email or password.', 'error')
+            return render_template('login.html')
+        
+        @app.route('/dashboard')
+        def dashboard():
+            if not current_user.is_authenticated:
+                return redirect('/login')
+            return render_template('dashboard.html', user=current_user)
     
     logger.info("Full Dear Teddy application imported successfully")
     
