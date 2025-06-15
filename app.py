@@ -188,13 +188,26 @@ def unauthorized():
 # Add global error handler
 @app.errorhandler(Exception)
 def handle_exception(e):
-    from flask import render_template, redirect, url_for, Response
+    from flask import render_template, redirect, url_for, Response, request
     from json.decoder import JSONDecodeError
     from flask_wtf.csrf import CSRFError
     
     # Don't handle CSRF validation errors - let them be handled normally
     if isinstance(e, CSRFError) or "'str' object is not callable" in str(e):
         return None  # Let Flask handle the error normally
+    
+    # Don't intercept authentication and test routes - let them execute normally
+    auth_routes = [
+        '/simple-login-test', '/simple-logout-test', '/simple-status-test',
+        '/direct-login', '/direct-logout', '/direct-status',
+        '/basic-test', '/ping', '/test-login', '/stable-login',
+        '/emergency-login', '/production-login', '/minimal-login',
+        '/direct-session-login', '/direct-session-logout', '/direct-session-status'
+    ]
+    
+    current_path = request.path if request else ''
+    if current_path in auth_routes or current_path.startswith('/auth/'):
+        return None  # Let authentication routes handle their own responses
     
     app.logger.error(f"Unhandled exception: {str(e)}")
     error_message = "Your data was saved, but we couldn't complete the analysis."
@@ -1016,6 +1029,18 @@ with app.app_context():
     except Exception as e:
         print(f"Z5 - Registration error: {e}")
         app.logger.error(f"Error registering simple auth test: {e}")
+    
+    # Register basic test system
+    try:
+        print("T1 - Importing basic test")
+        from basic_test import basic_test_bp
+        print("T2 - Basic test imported")
+        app.register_blueprint(basic_test_bp)
+        print("T3 - Basic test blueprint registered")
+        app.logger.info("Basic test registered successfully")
+    except Exception as e:
+        print(f"T4 - Basic test error: {e}")
+        app.logger.error(f"Error registering basic test: {e}")
 
 # ============================================================================
 # DEMOGRAPHICS COLLECTION FUNCTIONALITY
