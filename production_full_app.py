@@ -49,6 +49,8 @@ def create_production_app():
         
         # Import and register all routes
         try:
+            # Import routes in the correct order to avoid circular imports
+            import forms  # Import forms first
             import routes
             import admin_routes
             import journal_routes
@@ -56,7 +58,27 @@ def create_production_app():
             logger.info("All Dear Teddy routes loaded successfully")
         except Exception as e:
             logger.error(f"Routes import error: {e}")
-            # Continue with basic functionality
+            # Add basic login route with form
+            from flask import render_template, request, flash, redirect, url_for
+            from flask_login import login_user
+            from werkzeug.security import check_password_hash
+            
+            @app.route('/login', methods=['GET', 'POST'])
+            def login():
+                try:
+                    from forms import LoginForm
+                    form = LoginForm()
+                    if form.validate_on_submit():
+                        from models import User
+                        user = User.query.filter_by(email=form.email.data.lower().strip()).first()
+                        if user and check_password_hash(user.password_hash, form.password.data):
+                            login_user(user, remember=True)
+                            return redirect(url_for('dashboard'))
+                        flash('Invalid email or password.', 'error')
+                    return render_template('login.html', form=form)
+                except Exception as e:
+                    logger.error(f"Login route error: {e}")
+                    return "Login temporarily unavailable", 500
         
         # Create database tables
         with app.app_context():

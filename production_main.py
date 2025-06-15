@@ -21,7 +21,20 @@ logger = logging.getLogger(__name__)
 
 try:
     logger.info("Starting Dear Teddy production application")
-    from production_full_app import app
+    # Import the full application with all features
+    from app import create_app
+    app = create_app()
+    
+    # Apply production-specific configurations
+    app.config['ENV'] = 'production'
+    app.config['DEBUG'] = False
+    
+    # Import all routes to ensure full functionality
+    import routes
+    import admin_routes
+    import journal_routes
+    import account_routes
+    
     logger.info("Full Dear Teddy application imported successfully")
     
 except Exception as e:

@@ -33,10 +33,10 @@ try:
     )
     
     if is_production:
-        print("X3 - Using minimal Render configuration")
-        logger.info("🔧 Using minimal Render production configuration")
-        from minimal_render_app import app
-        print("X4 - Minimal Render app imported successfully")
+        print("X3 - Using full production configuration")
+        logger.info("🔧 Using full Dear Teddy production configuration")
+        from production_full_app import app
+        print("X4 - Full production app imported successfully")
     else:
         print("X5 - Using development configuration")
         logger.info("🔧 Using development configuration")
