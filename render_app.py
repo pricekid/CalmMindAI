@@ -97,49 +97,27 @@ def create_render_app():
         except Exception as e:
             logger.error(f"Database table creation error: {e}")
     
-    # Register only essential routes that exist
+    # Register production-compatible routes
     try:
-        import routes
-        logger.info("Core routes registered")
+        from production_routes import register_production_routes
+        register_production_routes(app)
+        
+        # Set login view for Flask-Login
+        login_manager.login_view = 'login'
+        login_manager.login_message = 'Please log in to access this page.'
+        
+        logger.info("Production routes registered successfully")
+        
     except Exception as e:
-        logger.error(f"Core routes error: {e}")
-    
-    try:
-        from stable_login import stable_login_bp
-        app.register_blueprint(stable_login_bp)
-        # Set login view after blueprint registration
-        login_manager.login_view = 'stable_login.stable_login'
-        logger.info("Stable login registered")
-    except Exception as e:
-        logger.error(f"Stable login error: {e}")
-    
-    try:
-        from simple_register import simple_register_bp
-        app.register_blueprint(simple_register_bp)
-        logger.info("Simple register registered")
-    except Exception as e:
-        logger.error(f"Simple register error: {e}")
-    
-    try:
-        from production_login_fix import production_login_bp
-        app.register_blueprint(production_login_bp)
-        logger.info("Production login fix registered")
-    except Exception as e:
-        logger.error(f"Production login error: {e}")
-    
-    try:
-        from emergency_production_fix import emergency_bp
-        app.register_blueprint(emergency_bp)
-        logger.info("Emergency production fix registered")
-    except Exception as e:
-        logger.error(f"Emergency production error: {e}")
-    
-    try:
-        from production_environment_test import test_bp
-        app.register_blueprint(test_bp)
-        logger.info("Production environment test registered")
-    except Exception as e:
-        logger.error(f"Production test error: {e}")
+        logger.error(f"Production routes error: {e}")
+        # Create a basic root route as fallback
+        @app.route('/')
+        def fallback_home():
+            return '''
+            <h1>Dear Teddy - Mental Wellness Journal</h1>
+            <p>The application is starting up. Please try again in a moment.</p>
+            <a href="/login">Login</a> | <a href="/register">Register</a>
+            '''
     
     logger.info("Render app initialization complete")
     return app
