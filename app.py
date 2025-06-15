@@ -185,43 +185,14 @@ def unauthorized():
     # Use direct path instead of url_for
     return redirect('/stable-login')
 
-# Global error handler re-enabled to provide system stability
-@app.errorhandler(Exception)
-def handle_exception(e):
-    from flask import render_template, redirect, url_for, Response, request
-    from json.decoder import JSONDecodeError
-    from flask_wtf.csrf import CSRFError
-    
-    # Don't handle CSRF validation errors - let them be handled normally
-    if isinstance(e, CSRFError) or "'str' object is not callable" in str(e):
-        return None  # Let Flask handle the error normally
-    
-    # Don't intercept authentication and test routes - let them execute normally
-    auth_routes = [
-        '/simple-login-test', '/simple-logout-test', '/simple-status-test',
-        '/direct-login', '/direct-logout', '/direct-status',
-        '/basic-test', '/ping', '/test-login', '/stable-login',
-        '/emergency-login', '/production-login', '/minimal-login',
-        '/direct-session-login', '/direct-session-logout', '/direct-session-status'
-    ]
-    
-    current_path = request.path if request else ''
-    print(f"ERROR HANDLER: Path={current_path}, Exception={str(e)[:100]}")
-    
-    if current_path in auth_routes or current_path.startswith('/auth/'):
-        print(f"ERROR HANDLER: Skipping error handling for auth route: {current_path}")
-        return None  # Let authentication routes handle their own responses
-    
-    app.logger.error(f"Unhandled exception: {str(e)}")
-    error_message = "Your data was saved, but we couldn't complete the analysis."
-    
-    # Check if it's a JSON parsing error (which is likely from OpenAI response)
-    err_str = str(e).lower()
-    
-    # For BuildError exceptions (URL building issues) - avoid template rendering which might cause infinite recursion
-    if "builderror" in err_str or "could not build url" in err_str:
-        app.logger.error(f"URL build error: {str(e)}")
-        emergency_html = """
+# Global error handler completely disabled to restore normal Flask routing
+# The error handler was intercepting all requests and causing system-wide routing failure
+def handle_exception_disabled(e):
+    # This function is completely disabled and should not execute
+    pass
+
+# Find the end of the error handling section to remove all problematic code
+# Searching for the end of the error handling HTML template
         <!DOCTYPE html>
         <html>
         <head>
