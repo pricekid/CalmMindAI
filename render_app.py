@@ -59,15 +59,20 @@ def create_render_app():
     sess.init_app(app)
     
     # Initialize login manager
+    from flask_login import LoginManager
     login_manager = LoginManager()
     login_manager.init_app(app)
-    login_manager.login_view = '/stable-login'  # Use direct path instead of blueprint route
+    # Set login view after blueprint registration
     login_manager.login_message_category = 'info'
     
     @login_manager.user_loader
     def load_user(user_id):
-        from models import User
-        return User.query.get(user_id)
+        try:
+            from models import User
+            return User.query.get(user_id)
+        except Exception as e:
+            logger.error(f"Error loading user {user_id}: {e}")
+            return None
     
     # Create database tables
     with app.app_context():
@@ -88,6 +93,8 @@ def create_render_app():
     try:
         from stable_login import stable_login_bp
         app.register_blueprint(stable_login_bp)
+        # Set login view after blueprint registration
+        login_manager.login_view = 'stable_login.stable_login'
         logger.info("Stable login registered")
     except Exception as e:
         logger.error(f"Stable login error: {e}")
