@@ -33,10 +33,13 @@ try:
     )
     
     if is_production:
-        print("X3 - Using full production configuration")
-        logger.info("🔧 Using full Dear Teddy production configuration")
-        from production_full_app import app
-        print("X4 - Full production app imported successfully")
+        print("X3 - Using production configuration")
+        logger.info("🔧 Using production configuration")
+        from app import app
+        # Set production-specific configs
+        app.config['ENV'] = 'production'
+        app.config['DEBUG'] = False
+        print("X4 - Production app imported successfully")
     else:
         print("X5 - Using development configuration")
         logger.info("🔧 Using development configuration")
