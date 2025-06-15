@@ -400,13 +400,23 @@ body.bg-dark .form-text {
 .dashboard-widget .card-body p,
 .dashboard-widget .card-body span,
 .dashboard-widget .card-body li {
-    color: #212529 !important;
-    font-weight: 500 !important;
+    color: #000000 !important;
+    font-weight: 600 !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
 }
 
 .dashboard-widget .small {
-    color: #6c757d !important;
+    color: #000000 !important;
     font-weight: 500 !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
+}
+
+/* Override any global text hiding styles */
+.dashboard-widget * {
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 /* Enhanced notification button styling */
