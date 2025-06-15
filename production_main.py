@@ -21,8 +21,8 @@ logger = logging.getLogger(__name__)
 
 try:
     logger.info("Starting Dear Teddy production application")
-    from minimal_render_app import app
-    logger.info("Minimal render app imported successfully")
+    from production_full_app import app
+    logger.info("Full Dear Teddy application imported successfully")
     
 except Exception as e:
     logger.error(f"Critical error during app creation: {e}")
