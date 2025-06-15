@@ -3,14 +3,31 @@
 <head>
     <title>Login - Dear Teddy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        :root {
+            --teddy-brown: #A05C2C;
+            --teddy-light-brown: #d1a673;
+            --teddy-teal: #1D4D4F;
+            --teddy-dark-teal: #2c5a5c;
+            --bg-gradient-start: #f8f8f8;
+            --bg-gradient-end: #e9e2d5;
         }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+            color: #333;
+        }
+        
         .login-container {
             max-width: 420px;
             margin: 50px auto;
@@ -21,6 +38,7 @@
             background: rgba(255, 255, 255, 0.95);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
+        
         .teddy-logo {
             max-width: 80px;
             margin: 0 auto 30px;
@@ -28,96 +46,143 @@
             border-radius: 50%;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
+        
         .welcome-title {
+            font-family: 'Montserrat', sans-serif;
             font-size: 28px;
             font-weight: 700;
-            color: #2c3e50;
+            color: var(--teddy-brown);
             text-align: center;
             margin-bottom: 30px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
+        
         .form-control {
             border: 2px solid #e9ecef;
             border-radius: 12px;
-            padding: 12px 16px;
+            padding: 14px 18px;
             font-size: 16px;
+            font-family: 'Poppins', sans-serif;
             transition: all 0.3s ease;
             background: #f8f9fa;
         }
+        
         .form-control:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            border-color: var(--teddy-teal);
+            box-shadow: 0 0 0 0.2rem rgba(29, 77, 79, 0.25);
             background: white;
+            outline: none;
         }
+        
         .form-label {
             font-weight: 600;
-            color: #495057;
+            color: var(--teddy-brown);
             margin-bottom: 8px;
+            font-family: 'Poppins', sans-serif;
         }
+        
         .btn-primary {
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: linear-gradient(45deg, var(--teddy-brown), var(--teddy-light-brown));
             border: none;
             border-radius: 12px;
-            padding: 14px;
+            padding: 14px 24px;
             font-size: 16px;
             font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            width: 100%;
         }
+        
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-            background: linear-gradient(45deg, #5a6fd8, #6a42a0);
+            box-shadow: 0 8px 25px rgba(160, 92, 44, 0.3);
+            background: linear-gradient(45deg, var(--teddy-dark-teal), var(--teddy-teal));
         }
+        
         .security-badge {
             font-size: 12px;
-            color: #6c757d;
+            color: var(--teddy-teal);
             display: flex;
             align-items: center;
             justify-content: center;
             margin-top: 25px;
-            padding: 10px;
-            background: rgba(108, 117, 125, 0.1);
-            border-radius: 8px;
+            padding: 12px;
+            background: rgba(29, 77, 79, 0.1);
+            border-radius: 10px;
+            font-weight: 500;
         }
-        .security-badge svg {
-            margin-right: 6px;
+        
+        .security-badge i {
+            margin-right: 8px;
+            font-size: 14px;
         }
+        
         .forgot-password {
-            color: #667eea;
+            color: var(--teddy-teal);
             text-decoration: none;
             font-weight: 500;
+            font-family: 'Poppins', sans-serif;
             transition: color 0.3s ease;
         }
+        
         .forgot-password:hover {
-            color: #764ba2;
+            color: var(--teddy-brown);
             text-decoration: underline;
         }
+        
         .alert {
             border-radius: 12px;
             border: none;
-            padding: 12px 16px;
+            padding: 14px 18px;
             margin-bottom: 20px;
-        }
-        .alert-danger {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
-            color: white;
-        }
-        .alert-success {
-            background: linear-gradient(45deg, #51cf66, #40c057);
-            color: white;
-        }
-        .form-check-input:checked {
-            background-color: #667eea;
-            border-color: #667eea;
-        }
-        .form-check-label {
-            color: #6c757d;
             font-weight: 500;
+        }
+        
+        .alert-danger {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            color: white;
+        }
+        
+        .alert-success {
+            background: linear-gradient(45deg, var(--teddy-teal), var(--teddy-dark-teal));
+            color: white;
+        }
+        
+        .form-check-input:checked {
+            background-color: var(--teddy-teal);
+            border-color: var(--teddy-teal);
+        }
+        
+        .form-check-input:focus {
+            box-shadow: 0 0 0 0.2rem rgba(29, 77, 79, 0.25);
+        }
+        
+        .form-check-label {
+            color: var(--teddy-brown);
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        /* Loading animation */
+        .btn-primary:disabled {
+            opacity: 0.7;
+        }
+        
+        .btn-primary:disabled:after {
+            content: "";
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-left: 10px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -178,10 +243,7 @@
             </form>
             
             <div class="security-badge">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shield-lock" viewBox="0 0 16 16">
-                    <path d="M5.338 1.59a61 61 0 0 0-2.837.856.48.48 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533q.115.055.215.095a.54.54 0 0 0 .428 0q.1-.04.215-.095c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453c-.386.273-.744.482-1.048.625-.28.132-.581.24-.829.24s-.548-.108-.829-.24c-.304-.143-.662-.352-1.048-.625a11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56z"/>
-                    <path d="M9.5 6.5a1.5 1.5 0 0 1-1 1.415l.1.585A.5.5 0 0 1 8.1 9H7.9a.5.5 0 0 1-.498-.5l.1-.585A1.5 1.5 0 0 1 6.5 6.5 1.5 1.5 0 0 1 8 5a1.5 1.5 0 0 1 1.5 1.5z"/>
-                </svg>
+                <i class="fas fa-shield-alt"></i>
                 Secure Connection
             </div>
             
