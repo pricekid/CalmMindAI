@@ -23,12 +23,20 @@ try:
     logger.info("🚀 Starting Dear Teddy application...")
     
     print("X2 - Checking environment")
-    # Use simplified app for Render deployment, full app for development
-    if os.environ.get('RENDER'):
-        print("X3 - Using Render configuration")
-        logger.info("🔧 Using Render production configuration")
-        from render_app import app
-        print("X4 - Render app imported successfully")
+    # Use minimal app for Render deployment, full app for development
+    # Check multiple production environment indicators
+    is_production = (
+        os.environ.get('RENDER') or 
+        os.environ.get('RENDER_SERVICE_ID') or
+        'render.com' in os.environ.get('DATABASE_URL', '') or
+        os.environ.get('PORT') == '10000'
+    )
+    
+    if is_production:
+        print("X3 - Using minimal Render configuration")
+        logger.info("🔧 Using minimal Render production configuration")
+        from minimal_render_app import app
+        print("X4 - Minimal Render app imported successfully")
     else:
         print("X5 - Using development configuration")
         logger.info("🔧 Using development configuration")
