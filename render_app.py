@@ -55,8 +55,7 @@ def create_render_app():
     
     # CSRF configuration for production - disable secure for mixed content
     app.config['WTF_CSRF_SSL_STRICT'] = False
-    app.config['WTF_CSRF_ENABLED'] = False  # Disable CSRF to resolve login issues
-    app.config['WTF_CSRF_SSL_STRICT'] = False
+    app.config['WTF_CSRF_ENABLED'] = False  # Temporarily disable CSRF to resolve login issues
     
     # Initialize extensions
     db.init_app(app)
@@ -131,11 +130,16 @@ def create_render_app():
     try:
         from emergency_production_fix import emergency_bp
         app.register_blueprint(emergency_bp)
-        # Set emergency login as fallback login view
-        login_manager.login_view = 'emergency.emergency_production_login'
         logger.info("Emergency production fix registered")
     except Exception as e:
         logger.error(f"Emergency production error: {e}")
+    
+    try:
+        from production_environment_test import test_bp
+        app.register_blueprint(test_bp)
+        logger.info("Production environment test registered")
+    except Exception as e:
+        logger.error(f"Production test error: {e}")
     
     logger.info("Render app initialization complete")
     return app
