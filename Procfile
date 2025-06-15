@@ -1,1 +1,1 @@
-web: gunicorn --bind 0.0.0.0:$PORT stable_production:app
+web: gunicorn --bind 0.0.0.0:$PORT landing_main:app
