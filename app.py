@@ -123,24 +123,8 @@ app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER')
 # Use environment variable if available, otherwise URLs will be relative
 app.config['BASE_URL'] = os.environ.get('BASE_URL', '')
 
-# Initialize CSRF with authentication endpoint exemptions
+# Initialize the app with extensions
 csrf.init_app(app)
-
-# Exempt authentication endpoints from CSRF protection
-AUTH_EXEMPT_PATHS = [
-    '/minimal-register', '/auth-register', '/auth-login', '/auth-test-login',
-    '/production-register', '/production-login', '/direct-register', '/direct-login',
-    '/stable-login', '/emergency-register', '/test-login'
-]
-
-@csrf.exempt
-def exempt_auth_endpoints():
-    """Exempt authentication endpoints from CSRF validation"""
-    return request.path in AUTH_EXEMPT_PATHS
-
-# Apply CSRF exemption to authentication paths
-for path in AUTH_EXEMPT_PATHS:
-    csrf.exempt(path)
 
 # Remove Flask-WTF's automatic csrf_token injection after initialization to prevent conflicts
 if 'csrf_token' in app.jinja_env.globals:
@@ -756,9 +740,14 @@ with app.app_context():
     try:
         from stable_login import stable_login_bp
         app.register_blueprint(stable_login_bp)
-        # now exempt it:
-        csrf.exempt(stable_login_bp)
-        app.logger.info("Stable login blueprint registered with CSRF exemption for authentication reliability")
+        
+        # Apply CSRF exemption to stable login for enhanced reliability
+        # Only in emergency cases where the login still fails
+        if os.environ.get('EMERGENCY_MODE', 'false').lower() == 'true':
+            csrf.exempt(stable_login_bp)
+            app.logger.warning("Stable login blueprint registered with CSRF EXEMPTION (emergency mode)")
+        else:
+            app.logger.info("Stable login blueprint registered with enhanced CSRF handling")
     except ImportError:
         app.logger.warning("Stable login blueprint not available")
     
@@ -966,31 +955,6 @@ with app.app_context():
         app.logger.info("Production registration fix registered successfully")
     except ImportError:
         app.logger.warning("Production registration fix module not available")
-    
-    # Register production authentication fix with CSRF exemption
-    try:
-        from production_auth_fix import production_auth_bp
-        csrf.exempt(production_auth_bp)
-        app.register_blueprint(production_auth_bp)
-        app.logger.info("Production authentication fix registered successfully")
-    except ImportError:
-        app.logger.warning("Production auth fix module not available")
-    
-    # Register direct authentication system (bypasses CSRF completely)
-    try:
-        from direct_auth import register_direct_auth
-        register_direct_auth(app)
-        app.logger.info("Direct authentication system registered successfully")
-    except ImportError:
-        app.logger.warning("Direct auth module not available")
-    
-    # Register complete authentication fix (final solution)
-    try:
-        from complete_auth_fix import register_complete_auth
-        register_complete_auth(app)
-        app.logger.info("Complete authentication system registered successfully")
-    except ImportError:
-        app.logger.warning("Complete auth fix module not available")
 
 # ============================================================================
 # DEMOGRAPHICS COLLECTION FUNCTIONALITY
@@ -1045,7 +1009,7 @@ def demographics():
     # Skip if already completed
     if current_user.demographics_collected:
         flash('Demographics already collected.', 'info')
-        return redirect('/dashboard')
+        return redirect(url_for('dashboard'))
     
     form = DemographicsForm()
     
@@ -1060,7 +1024,7 @@ def demographics():
         try:
             db.session.commit()
             flash('Thank you for completing your profile! This helps us personalize your experience.', 'success')
-            return redirect('/dashboard')
+            return redirect(url_for('dashboard'))
         except Exception as e:
             db.session.rollback()
             app.logger.error(f"Error saving demographics: {str(e)}")

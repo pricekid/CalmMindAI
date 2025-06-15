@@ -23,16 +23,9 @@ def register():
         
         data = request.form or json_data or {}
         required = ['username','email','password']
-        
-        # Check for missing fields
         if not all(k in data for k in required):
             missing = [k for k in required if k not in data]
             return jsonify(error=f'Missing fields: {missing}'), 400
-        
-        # Check for empty fields
-        empty_fields = [k for k in required if not data.get(k, '').strip()]
-        if empty_fields:
-            return jsonify(error=f'Empty fields not allowed: {empty_fields}'), 400
 
         # Debug: Log we're attempting DB connection
         current_app.logger.info("Attempting database connection...")
