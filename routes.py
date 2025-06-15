@@ -110,8 +110,8 @@ def login():
         password = form.password.data
         
         user = User.query.filter_by(email=email).first()
-        if user and check_password_hash(user.password_hash, password):
-            login_user(user, remember=form.remember_me.data)
+        if user and user.password_hash and check_password_hash(user.password_hash, password):
+            login_user(user, remember=form.remember.data)
             flash('Login successful!', 'success')
             return redirect('/dashboard')
         else:
