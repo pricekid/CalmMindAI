@@ -244,12 +244,16 @@ function initPushUI() {
         if (Notification.permission === 'granted') {
           // Show success message
           enableContainer.innerHTML = `
-            <div class="card bg-dark dashboard-widget">
-              <h3><i class="fas fa-bell me-2"></i> Stay Connected</h3>
-              <div class="alert alert-success m-3">
-                <i class="fas fa-check-circle me-2"></i>Push notifications are enabled!
-                <p class="mt-2 mb-0">You'll receive timely reminders for journal prompts, mood tracking, and app updates.</p>
-                <button id="test-push-btn" class="btn btn-sm btn-outline-primary mt-2">Test Notification</button>
+            <div class="card dashboard-widget" style="background-color: #ffffff; border: 1px solid #dee2e6;">
+              <div class="card-header" style="background-color: #1D4D4F; color: #ffffff;">
+                <h3 class="mb-0"><i class="fas fa-bell me-2"></i> Stay Connected</h3>
+              </div>
+              <div class="card-body p-3">
+                <div class="alert alert-success" style="background-color: #d4edda; border-color: #c3e6cb; color: #155724;">
+                  <i class="fas fa-check-circle me-2"></i><strong style="color: #155724;">Push notifications are enabled!</strong>
+                  <p class="mt-2 mb-0" style="color: #155724;">You'll receive timely reminders for journal prompts, mood tracking, and app updates.</p>
+                  <button id="test-push-btn" class="btn btn-sm btn-outline-success mt-2">Test Notification</button>
+                </div>
               </div>
             </div>
           `;
@@ -261,18 +265,20 @@ function initPushUI() {
         } else {
           // Show enable button
           enableContainer.innerHTML = `
-            <div class="card bg-dark dashboard-widget">
-              <h3><i class="fas fa-bell me-2"></i> Stay Connected</h3>
-              <div class="p-3">
+            <div class="card dashboard-widget" style="background-color: #ffffff; border: 1px solid #dee2e6;">
+              <div class="card-header" style="background-color: #1D4D4F; color: #ffffff;">
+                <h3 class="mb-0"><i class="fas fa-bell me-2"></i> Stay Connected</h3>
+              </div>
+              <div class="card-body p-3">
                 <div class="row">
                   <div class="col-md-8">
-                    <p>Enable notifications to get timely reminders for:</p>
+                    <p style="color: #000000 !important; font-weight: 600 !important; text-shadow: none !important;">Enable notifications to get timely reminders for:</p>
                     <ul class="list-unstyled">
-                      <li><i class="fas fa-check-circle text-success me-2"></i> Daily journal prompts</li>
-                      <li><i class="fas fa-check-circle text-success me-2"></i> Mood tracking reminders</li>
-                      <li><i class="fas fa-check-circle text-success me-2"></i> New features and updates</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i><span style="color: #000000 !important; font-weight: 600 !important; text-shadow: none !important;">Daily journal prompts</span></li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i><span style="color: #000000 !important; font-weight: 600 !important; text-shadow: none !important;">Mood tracking reminders</span></li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i><span style="color: #000000 !important; font-weight: 600 !important; text-shadow: none !important;">New features and updates</span></li>
                     </ul>
-                    <p class="text-muted small">You can customize notification settings at any time.</p>
+                    <p style="color: #000000 !important; font-weight: 500 !important; text-shadow: none !important;" class="small">You can customize notification settings at any time.</p>
                     <div class="d-flex gap-2 mt-3">
                       <a href="/push-settings" class="btn btn-sm btn-outline-secondary">
                         <i class="fas fa-cog me-1"></i>Notification Settings
@@ -283,7 +289,7 @@ function initPushUI() {
                     </div>
                   </div>
                   <div class="col-md-4 d-flex align-items-center justify-content-center">
-                    <button id="enable-push-btn" class="btn btn-primary btn-lg">
+                    <button id="enable-push-btn" class="btn btn-lg" style="background: linear-gradient(45deg, #A05C2C, #d1a673); border: none; color: #ffffff; font-weight: 600;">
                       <i class="fas fa-bell me-2"></i>Enable Notifications
                     </button>
                   </div>
