@@ -45,6 +45,12 @@ class User(UserMixin, db.Model):
     id = db.Column(db.String, primary_key=True)
     email = db.Column(db.String, unique=True, nullable=False)
     password_hash = db.Column(db.String, nullable=False)
+    
+    def __init__(self, **kwargs):
+        super().__init__()
+        self.id = kwargs.get('id')
+        self.email = kwargs.get('email')
+        self.password_hash = kwargs.get('password_hash')
 
 @login_manager.user_loader
 def load_user(user_id):
