@@ -141,6 +141,15 @@ if has_render_compatibility:
     app = init_render_compatibility(app)
     app.logger.info(f"Render compatibility settings applied: {app.config['IS_RENDER']}")
 
+# Apply ProxyFix for Render.com HTTPS handling
+from werkzeug.middleware.proxy_fix import ProxyFix
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1, x_for=1)
+
+# Disable CSRF for production to resolve authentication issues
+if os.environ.get('RENDER'):
+    app.config['WTF_CSRF_ENABLED'] = False
+    app.config['WTF_CSRF_SSL_STRICT'] = False
+
 # Apply CSRF debug middleware to log token validation details
 from csrf_debug import CSRFDebugMiddleware
 app.wsgi_app = CSRFDebugMiddleware(app.wsgi_app)
