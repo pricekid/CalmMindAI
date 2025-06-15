@@ -965,6 +965,14 @@ with app.app_context():
         app.logger.info("Production registration fix registered successfully")
     except ImportError:
         app.logger.warning("Production registration fix module not available")
+    
+    # Register minimal production login system
+    try:
+        from minimal_production_login import minimal_login_bp
+        app.register_blueprint(minimal_login_bp)
+        app.logger.info("Minimal production login registered successfully")
+    except ImportError as e:
+        app.logger.warning(f"Minimal production login not available: {e}")
 
 # ============================================================================
 # DEMOGRAPHICS COLLECTION FUNCTIONALITY
