@@ -1001,6 +1001,21 @@ with app.app_context():
     except Exception as e:
         print(f"Y5 - Registration error: {e}")
         app.logger.error(f"Error registering direct session login: {e}")
+    
+    # Register simple auth test system
+    try:
+        print("Z1 - Importing simple auth test")
+        from simple_auth_test import simple_auth_bp
+        print("Z2 - Simple auth test imported")
+        app.register_blueprint(simple_auth_bp)
+        print("Z3 - Simple auth test blueprint registered")
+        app.logger.info("Simple auth test registered successfully")
+    except ImportError as e:
+        print(f"Z4 - Import error: {e}")
+        app.logger.warning(f"Simple auth test not available: {e}")
+    except Exception as e:
+        print(f"Z5 - Registration error: {e}")
+        app.logger.error(f"Error registering simple auth test: {e}")
 
 # ============================================================================
 # DEMOGRAPHICS COLLECTION FUNCTIONALITY
