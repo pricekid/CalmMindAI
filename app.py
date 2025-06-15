@@ -340,29 +340,7 @@ with app.app_context():
     
     # Core registration is handled in routes.py - no additional registration blueprints needed
     
-    # Register the simple text-to-speech blueprint (keep browser-based TTS)
-    try:
-        from simple_tts import tts_simple_bp
-        app.register_blueprint(tts_simple_bp)
-        app.logger.info("Simple TTS blueprint registered successfully")
-    except ImportError:
-        app.logger.warning("Simple TTS module not available")
-    
-    # Register the direct TTS blueprint (serves audio directly without CSRF issues)
-    try:
-        from direct_tts import direct_tts_bp
-        app.register_blueprint(direct_tts_bp)
-        app.logger.info("Direct TTS blueprint registered successfully")
-    except ImportError:
-        app.logger.warning("Direct TTS module not available")
-    
-    # Register the simplified direct TTS blueprint
-    try:
-        from simple_direct_tts import simple_direct_tts_bp
-        app.register_blueprint(simple_direct_tts_bp)
-        app.logger.info("Simple direct TTS blueprint registered successfully")
-    except ImportError:
-        app.logger.warning("Simple direct TTS module not available")
+    # TTS functionality integrated into core routes
     
     # Register TTS routes for test page
     try:
@@ -396,72 +374,13 @@ with app.app_context():
     except ImportError:
         app.logger.warning("OpenAI TTS service module not available")
     
-    # Register the stable login blueprint with improved CSRF handling
+    # Render-specific login optimization
     try:
-        from stable_login import stable_login_bp
-        app.register_blueprint(stable_login_bp)
-        
-        # Apply CSRF exemption to stable login for enhanced reliability
-        # Enable by default to fix authentication issues
-        csrf.exempt(stable_login_bp)
-        app.logger.info("Stable login blueprint registered with CSRF exemption for reliability")
+        from render_init import register_render_routes
+        register_render_routes(app)
+        app.logger.info("Render-specific optimized login routes registered successfully")
     except ImportError:
-        app.logger.warning("Stable login blueprint not available")
-    
-    # Register the stable login as the primary login option
-    # This makes all other login paths redirect to stable-login
-    try:
-        from redirect_to_stable import register_login_redirects
-        register_login_redirects(app)
-        app.logger.info("All login paths now redirect to stable login")
-    except ImportError as e:
-        app.logger.warning(f"Login redirect module not available: {str(e)}")
-    
-    # Keep emergency login options (but they'll redirect to stable login)
-    try:
-        # FINAL HARDCODED LOGIN: Completely hardcoded test user login
-        try:
-            from emergency_hardcoded_login import register_hardcoded_login
-            register_hardcoded_login(app)
-            app.logger.info("Hardcoded test user login registered - use /test-login")
-        except ImportError as e:
-            app.logger.warning(f"Hardcoded test login not available: {str(e)}")
-        
-        # ULTRA-EMERGENCY LOGIN: This completely bypasses CSRF and template rendering
-        try:
-            from emergency_direct_render import register_emergency_render_routes
-            register_emergency_render_routes(app)
-            app.logger.info("Ultra-emergency Render login system registered and CSRF disabled")
-        except ImportError as e:
-            app.logger.warning(f"Ultra-emergency login not available: {str(e)}")
-            
-        # Try our optimized Render login system
-        try:
-            from render_init import register_render_routes
-            # Initialize the Render routes with CSRF exemption
-            register_render_routes(app)
-            app.logger.info("Render-specific optimized login routes registered successfully")
-            
-            # Also register the direct login solution for emergency access
-            try:
-                from direct_login_fix import register_direct_login
-                register_direct_login(app)
-                app.logger.info("Emergency direct login system registered successfully")
-            except ImportError as e:
-                app.logger.warning(f"Direct login solution not available: {str(e)}")
-                
-        except ImportError as e:
-            app.logger.warning(f"New Render login routes not available, falling back to legacy: {str(e)}")
-            
-            # Fall back to legacy render login if needed
-            import render_login_fix
-            app.register_blueprint(render_login_fix.render_login_bp)
-            
-            # For Render.com, exempt CSRF to avoid cross-environment issues
-            csrf.exempt(render_login_fix.render_login_bp)
-            app.logger.info("Legacy Render login blueprint registered with CSRF exemption")
-    except ImportError as e:
-        app.logger.warning(f"All Render login solutions unavailable: {str(e)}")
+        pass  # Optional optimization
     
     # Register the onboarding blueprint
     try:
@@ -533,103 +452,13 @@ with app.app_context():
     
     # Core authentication handled in routes.py
     
-    # Register emergency registration system
-    try:
-        from emergency_registration_fix import register_emergency_routes
-        register_emergency_routes(app)
-        app.logger.info("Emergency registration system registered successfully")
-    except ImportError:
-        app.logger.warning("Emergency registration module not available")
-    
-    # Register standalone registration system (bypasses SQLAlchemy issues)
-    try:
-        from standalone_registration import register_standalone_routes
-        register_standalone_routes(app)
-        app.logger.info("Standalone registration system registered successfully")
-    except ImportError:
-        app.logger.warning("Standalone registration module not available")
-    
-    # Register production registration fix (direct database access)
+    # Production registration is available as a backup system
     try:
         from production_registration_fix import register_production_fix
         register_production_fix(app)
-        app.logger.info("Production registration fix registered successfully")
+        app.logger.info("Production registration backup available")
     except ImportError:
-        app.logger.warning("Production registration fix module not available")
-    
-    # Register minimal production login system
-    try:
-        from minimal_production_login import minimal_login_bp
-        app.register_blueprint(minimal_login_bp)
-        app.logger.info("Minimal production login registered successfully")
-    except ImportError as e:
-        app.logger.warning(f"Minimal production login not available: {e}")
-    
-    # Register direct session login system (bypasses Flask-Login)
-    try:
-        print("Y1 - Importing direct session login")
-        from direct_session_login import direct_login_bp
-        print("Y2 - Direct session login imported")
-        app.register_blueprint(direct_login_bp)
-        print("Y3 - Direct session login blueprint registered")
-        app.logger.info("Direct session login registered successfully")
-    except ImportError as e:
-        print(f"Y4 - Import error: {e}")
-        app.logger.warning(f"Direct session login not available: {e}")
-    except Exception as e:
-        print(f"Y5 - Registration error: {e}")
-        app.logger.error(f"Error registering direct session login: {e}")
-    
-    # Register simple auth test system
-    try:
-        print("Z1 - Importing simple auth test")
-        from simple_auth_test import simple_auth_bp
-        print("Z2 - Simple auth test imported")
-        app.register_blueprint(simple_auth_bp)
-        print("Z3 - Simple auth test blueprint registered")
-        app.logger.info("Simple auth test registered successfully")
-    except ImportError as e:
-        print(f"Z4 - Import error: {e}")
-        app.logger.warning(f"Simple auth test not available: {e}")
-    except Exception as e:
-        print(f"Z5 - Registration error: {e}")
-        app.logger.error(f"Error registering simple auth test: {e}")
-    
-    # Register basic test system
-    try:
-        print("T1 - Importing basic test")
-        from basic_test import basic_test_bp
-        print("T2 - Basic test imported")
-        app.register_blueprint(basic_test_bp)
-        print("T3 - Basic test blueprint registered")
-        app.logger.info("Basic test registered successfully")
-    except Exception as e:
-        print(f"T4 - Basic test error: {e}")
-        app.logger.error(f"Error registering basic test: {e}")
-    
-    # Register isolated test for diagnosis
-    try:
-        print("I1 - Importing isolated test")
-        from isolated_test import isolated_bp
-        print("I2 - Isolated test imported")
-        app.register_blueprint(isolated_bp)
-        print("I3 - Isolated test blueprint registered")
-        app.logger.info("Isolated test registered successfully")
-    except Exception as e:
-        print(f"I4 - Isolated test error: {e}")
-        app.logger.error(f"Error registering isolated test: {e}")
-    
-    # Register minimal authentication fix
-    try:
-        print("M1 - Importing minimal auth fix")
-        from minimal_auth_fix import minimal_auth_bp
-        print("M2 - Minimal auth fix imported")
-        app.register_blueprint(minimal_auth_bp)
-        print("M3 - Minimal auth fix blueprint registered")
-        app.logger.info("Minimal auth fix registered successfully")
-    except Exception as e:
-        print(f"M4 - Minimal auth fix error: {e}")
-        app.logger.error(f"Error registering minimal auth fix: {e}")
+        pass  # Optional backup system
 
 # ============================================================================
 # DEMOGRAPHICS COLLECTION FUNCTIONALITY

@@ -72,7 +72,7 @@ def index():
         return redirect(url_for('dashboard'))
         
     # For new users, redirect to login
-    return redirect('/stable-login')
+    return redirect('/login')
 
 # User registration
 @app.route('/register', methods=['GET', 'POST'])
@@ -103,13 +103,21 @@ def login():
     if request.args.get('use_render_login') == 'true':
         render_env = True
     
-    # Log which login path we're using
-    if render_env:
-        app.logger.info("Using stable login for Render environment (most reliable option)")
-        return redirect('/stable-login')
-    else:
-        app.logger.info("Using stable login for Replit environment")
-        return redirect('/stable-login')
+    # Show the login form directly
+    form = LoginForm()
+    if form.validate_on_submit():
+        email = form.email.data.lower().strip()
+        password = form.password.data
+        
+        user = User.query.filter_by(email=email).first()
+        if user and check_password_hash(user.password_hash, password):
+            login_user(user, remember=form.remember_me.data)
+            flash('Login successful!', 'success')
+            return redirect('/dashboard')
+        else:
+            flash('Invalid email or password', 'danger')
+    
+    return render_template('login.html', form=form)
 
 # Token-based login route for email links
 @app.route('/login/token/<token>')
