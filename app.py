@@ -316,29 +316,7 @@ with app.app_context():
     except ImportError as e:
         app.logger.warning(f"Marketing integration not available: {str(e)}")
     
-    # Register the login blueprint for specialized login handling
-    try:
-        from login_routes import login_bp
-        app.register_blueprint(login_bp)
-        app.logger.info("Login routes registered successfully")
-    except ImportError:
-        app.logger.warning("Login routes module not available")
-    
-    # Comment out missing basic_login blueprint that's no longer needed
-    # since we implemented the login directly in routes.py
-    """
-    # Register the basic login blueprint with minimal dependencies
-    from basic_login import basic_login_bp
-    app.register_blueprint(basic_login_bp)
-    """
-    
-    # Try to register simple login as a fallback
-    try:
-        from simple_login import simple_login_bp
-        app.register_blueprint(simple_login_bp)
-        app.logger.info("Simple login fallback registered successfully")
-    except ImportError:
-        app.logger.warning("Simple login module not available")
+    # Core authentication is handled in routes.py - no additional login blueprints needed
     
     # Try to register test reflection page
     try:
@@ -360,65 +338,7 @@ with app.app_context():
     except ImportError:
         app.logger.warning("Simple dashboard module not available")
     
-    # Register the completely standalone login system
-    try:
-        from special_login import special_login_bp
-        app.register_blueprint(special_login_bp)
-        app.logger.info("Special login routes registered successfully")
-    except ImportError:
-        app.logger.warning("Special login module not available")
-    
-    # Register the standalone reflection test page
-    try:
-        from standalone_reflection_test import reflection_test_bp
-        app.register_blueprint(reflection_test_bp)
-        app.logger.info("Standalone reflection test routes registered successfully")
-    except ImportError:
-        app.logger.warning("Standalone reflection test module not available")
-    
-    # Register the simple registration blueprint with minimal dependencies
-    try:
-        from simple_register import simple_register_bp
-        app.register_blueprint(simple_register_bp)
-        app.logger.info("Simple registration blueprint registered successfully")
-    except ImportError:
-        app.logger.warning("Simple registration module not available")
-    
-    # Register working registration system (CSRF-exempt)
-    try:
-        from working_register import working_register_bp
-        csrf.exempt(working_register_bp)
-        app.register_blueprint(working_register_bp)
-        app.logger.info("Working registration system registered successfully")
-    except ImportError:
-        app.logger.warning("Working registration module not available")
-    
-    # Register final registration system (completely isolated)
-    try:
-        from final_register import final_register_bp
-        csrf.exempt(final_register_bp)
-        app.register_blueprint(final_register_bp)
-        app.logger.info("Final registration system registered successfully")
-    except ImportError:
-        app.logger.warning("Final registration module not available")
-    
-    # Register minimal registration blueprint
-    try:
-        from minimal_register import bp as minimal_register_bp
-        csrf.exempt(minimal_register_bp)
-        app.register_blueprint(minimal_register_bp)
-        app.logger.info("Minimal registration blueprint registered successfully")
-    except ImportError:
-        app.logger.warning("Minimal registration module not available")
-    
-    # We're keeping emergency_login_main.py, emergency_direct_login.py, and emergency_app.py
-    # but removing redundant emergency files
-    try:
-        from emergency_login_main import emergency_main_bp
-        app.register_blueprint(emergency_main_bp)
-        app.logger.info("Emergency main login blueprint registered successfully")
-    except ImportError:
-        app.logger.warning("Emergency main login module not available")
+    # Core registration is handled in routes.py - no additional registration blueprints needed
     
     # Register the simple text-to-speech blueprint (keep browser-based TTS)
     try:
@@ -551,54 +471,7 @@ with app.app_context():
     except ImportError:
         app.logger.warning("Onboarding module not available")
         
-    # Register the emergency admin blueprint
-    if has_emergency_admin:
-        app.register_blueprint(emergency_admin_bp)
-        csrf.exempt(emergency_admin_bp)
-        app.logger.info("Emergency admin blueprint registered with CSRF exemption")
-        
-    # Register the standalone admin blueprint
-    if has_standalone_admin:
-        app.register_blueprint(standalone_admin_bp)
-        csrf.exempt(standalone_admin_bp)
-        app.logger.info("Standalone admin blueprint registered with CSRF exemption")
-    
-    # Explicitly exempt specific routes from CSRF protection only if they exist
-    # This prevents errors when certain blueprints aren't loaded
-    try:
-        if 'direct_tts_bp' in locals():
-            csrf.exempt(direct_tts_bp)
-            app.logger.info("CSRF exemption applied to direct_tts_bp")
-    except:
-        pass
-        
-    try:
-        if 'simple_direct_tts_bp' in locals():
-            csrf.exempt(simple_direct_tts_bp)
-            app.logger.info("CSRF exemption applied to simple_direct_tts_bp")
-    except:
-        pass
-        
-    try:
-        if 'premium_tts_bp' in locals():
-            csrf.exempt(premium_tts_bp)
-            app.logger.info("CSRF exemption applied to premium_tts_bp")
-    except:
-        pass
-        
-    try:
-        if 'enhanced_tts_bp' in locals():
-            csrf.exempt(enhanced_tts_bp)
-            app.logger.info("CSRF exemption applied to enhanced_tts_bp")
-    except:
-        pass
-        
-    try:
-        if 'openai_tts_bp' in locals():
-            csrf.exempt(openai_tts_bp)
-            app.logger.info("CSRF exemption applied to openai_tts_bp")
-    except:
-        pass
+    # TTS and admin functionality integrated into core routes
         
     # Register the email template preview blueprint
     try:
@@ -658,16 +531,7 @@ with app.app_context():
     except ImportError:
         app.logger.warning("Journal reminder routes not available")
     
-    # Register emergency login blueprint with CSRF exemption
-    try:
-        from emergency_direct_login import emergency_bp
-        app.register_blueprint(emergency_bp)
-        # Explicitly exempt the emergency blueprint from CSRF protection
-        # This is needed to ensure we can log in even if CSRF validation fails
-        csrf.exempt(emergency_bp)
-        app.logger.info("Emergency login blueprint registered with CSRF exemption")
-    except ImportError:
-        app.logger.warning("Emergency login blueprint not available")
+    # Core authentication handled in routes.py
     
     # Register emergency registration system
     try:
