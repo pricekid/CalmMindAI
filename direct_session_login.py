@@ -16,43 +16,45 @@ def direct_login():
         print("🟢 E1 - Direct login route accessed")
         if request.method == 'POST':
             try:
-            # Get form data
-            email = request.form.get('email', '').lower().strip()
-            password = request.form.get('password', '')
-            
-            if not email or not password:
-                return jsonify({'error': 'Email and password required'}), 400
-            
-            # Import models inside the route to avoid initialization issues
-            from models import User
-            
-            # Query user
-            user = User.query.filter(User.email.ilike(email)).first()
-            
-            if user and user.password_hash:
-                if check_password_hash(user.password_hash, password):
-                    # Set session data (no Flask-Login needed)
-                    session['user_id'] = user.id
-                    session['user_email'] = user.email
-                    session['user_first_name'] = user.first_name or 'User'
-                    session['authenticated'] = True
-                    session.permanent = True
-                    
-                    # Success response for AJAX
-                    if request.headers.get('Content-Type') == 'application/json':
-                        return jsonify({'success': True, 'redirect': '/dashboard'})
-                    
-                    return redirect('/dashboard')
-                else:
-                    return jsonify({'error': 'Invalid credentials'}), 401
-            else:
-                return jsonify({'error': 'User not found'}), 401
+                print("E2 - Processing POST request")
+                # Get form data
+                email = request.form.get('email', '').lower().strip()
+                password = request.form.get('password', '')
                 
-        except Exception as e:
-            return jsonify({'error': f'Login failed: {str(e)}'}), 500
-    
-    # GET request - show login form
-    login_html = '''
+                if not email or not password:
+                    return jsonify({'error': 'Email and password required'}), 400
+                
+                # Import models inside the route to avoid initialization issues
+                from models import User
+                
+                # Query user
+                user = User.query.filter(User.email.ilike(email)).first()
+                
+                if user and user.password_hash:
+                    if check_password_hash(user.password_hash, password):
+                        # Set session data (no Flask-Login needed)
+                        session['user_id'] = user.id
+                        session['user_email'] = user.email
+                        session['user_first_name'] = user.first_name or 'User'
+                        session['authenticated'] = True
+                        session.permanent = True
+                        
+                        # Success response for AJAX
+                        if request.headers.get('Content-Type') == 'application/json':
+                            return jsonify({'success': True, 'redirect': '/dashboard'})
+                        
+                        return redirect('/dashboard')
+                    else:
+                        return jsonify({'error': 'Invalid credentials'}), 401
+                else:
+                    return jsonify({'error': 'User not found'}), 401
+                    
+            except Exception as e:
+                return jsonify({'error': f'Login failed: {str(e)}'}), 500
+        
+        print("E3 - GET request - showing login form")
+        # GET request - show login form
+        login_html = '''
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -156,24 +158,44 @@ def direct_login():
 </body>
 </html>
     '''
-    
-    return login_html
+        
+        return login_html
+        
+    except Exception as e:
+        import traceback
+        print("🔥 DIRECT LOGIN EXCEPTION:")
+        traceback.print_exc()
+        return f"<h2>Direct Login Route Error</h2><pre>{str(e)}</pre>", 500
 
 @direct_login_bp.route('/direct-logout')
 def direct_logout():
     """Direct logout"""
-    session.clear()
-    return redirect('/')
+    try:
+        print("🟢 F1 - Direct logout route accessed")
+        session.clear()
+        return redirect('/')
+    except Exception as e:
+        import traceback
+        print("🔥 DIRECT LOGOUT EXCEPTION:")
+        traceback.print_exc()
+        return f"<h2>Direct Logout Route Error</h2><pre>{str(e)}</pre>", 500
 
 @direct_login_bp.route('/direct-status')
 def direct_status():
     """Check authentication status"""
-    return jsonify({
-        'authenticated': session.get('authenticated', False),
-        'user_id': session.get('user_id'),
-        'user_email': session.get('user_email'),
-        'user_name': session.get('user_first_name', 'User')
-    })
+    try:
+        print("🟢 G1 - Direct status route accessed")
+        return jsonify({
+            'authenticated': session.get('authenticated', False),
+            'user_id': session.get('user_id'),
+            'user_email': session.get('user_email'),
+            'user_name': session.get('user_first_name', 'User')
+        })
+    except Exception as e:
+        import traceback
+        print("🔥 DIRECT STATUS EXCEPTION:")
+        traceback.print_exc()
+        return f"<h2>Direct Status Route Error</h2><pre>{str(e)}</pre>", 500
 
 # Simple middleware function to check authentication
 def require_auth():
