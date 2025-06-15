@@ -40,11 +40,12 @@
         }
         
         .teddy-logo {
-            max-width: 80px;
-            margin: 0 auto 30px;
+            max-width: 100px;
+            height: 100px;
+            margin: 0 auto 25px;
             display: block;
-            border-radius: 50%;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            object-fit: contain;
+            filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.1));
         }
         
         .welcome-title {
@@ -189,7 +190,7 @@
 <body>
     <div class="container">
         <div class="login-container">
-            <img src="{{ url_for('static', filename='img/teddy-logo.png') }}" alt="Dear Teddy Logo" class="teddy-logo">
+            <img src="{{ url_for('static', filename='images/teddy-logo.svg') }}" alt="Dear Teddy Logo" class="teddy-logo">
             <h2 class="welcome-title">Welcome Back</h2>
             
             {% if error %}
